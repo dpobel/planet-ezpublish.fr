@@ -1,0 +1,5 @@
+- Make a specific favicon
+- Minify the CSS
+- Correct some xHTML problems (target on link, ...)
+- Make a tag system from search engine index ?
+- http://validator.w3.org/feed/docs/warning/MissingAtomSelfLink.html

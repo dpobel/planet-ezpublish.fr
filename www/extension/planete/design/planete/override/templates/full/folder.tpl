@@ -15,13 +15,13 @@
                                               'sort_by', array( 'modified', false() ),
                                               'limit', 5 ) )}
     <div class="post-content">
-        <h2><a href={$site.data_map.url.content|ezurl()}>{$site.name|wash()}</a> : les derniers billets</h2>
+        <h2><a href={$site.data_map.url.content|wash()|ezurl()}>{$site.name|wash()}</a> : les derniers billets</h2>
     {if $posts|not()}
         <p>Pas encore de billet</p>
     {else}
         <ul>
         {foreach $posts as $post}
-            <li><a href={$post.data_map.url.content|ezurl()}>{$post.name|wash()}</a></li>
+            <li><a href={$post.data_map.url.content|wash()|ezurl()}>{$post.name|wash()}</a></li>
         {/foreach}
         </ul>
     {/if}

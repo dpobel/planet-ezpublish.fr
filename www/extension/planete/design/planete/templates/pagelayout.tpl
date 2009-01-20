@@ -37,6 +37,7 @@
     <link rel="Shortcut icon" href={'favicon.ico'|ezimage()} type="image/x-icon" />
 </head>
 <body>
+<div>
 {include uri="design:parts/hmenu.tpl"}
 <br class="spacer" />
 <div id="planet">
@@ -49,7 +50,7 @@
         <p>Mise sur orbite par <a href="http://ez.no">eZ Publish</a> - Conception, développement et hébergement par <a href="http://pwet.fr/cv">Damien POBEL</a></p>
     </div>
 </div>
-
+</div>
 <!--DEBUG_REPORT-->
 </body>
 </html>
