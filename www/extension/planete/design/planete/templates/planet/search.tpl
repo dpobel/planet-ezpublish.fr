@@ -4,7 +4,7 @@
             <legend>Recherche</legend>
             <p>
                 <input class="text" type="text" name="SearchText" value="{$search_text|wash}" />
-                <input class="button" name="SearchButton" type="submit" value="Rechercher" />
+                <input class="button" type="submit" value="Rechercher" />
             </p>
         </fieldset>
     </form>
@@ -22,23 +22,27 @@
         </p>
     {/section}
     </div>
-
-    {def $meta_description = 'Résultat de la recherche, '}
+    {def $meta_description = 'Résultat de la recherche'}
     {foreach $search_result as $item}
        {node_view_gui view=full content_node=$item}
        {set $meta_description = concat( $meta_description, ', ', $item.name )}
     {/foreach}
     {if ezhttp_hasvariable( 'SearchText', 'get' )}
-        {set scope='global' persistent_variable=hash( 'title_page', concat( 'Recherche de "', ezhttp( 'SearchText', 'get' ), '"' ),
-                                                      'meta_description', $meta_description )}
+        {if $search_count|eq( 0 )}
+            {set scope='global' persistent_variable=hash( 'title_page', concat( 'Recherche de "', ezhttp( 'SearchText', 'get' ), '"' ),
+                                                          'meta_description', concat( 'Aucun résultat pour la recherche de ', ezhttp( 'SearchText', 'get' ) ) )}
+        {else}
+            {set scope='global' persistent_variable=hash( 'title_page', concat( 'Recherche de "', ezhttp( 'SearchText', 'get' ), '"' ),
+                                                          'meta_description', $meta_description )}
+        {/if}
     {else}
-        {set scope='global' persistent_variable=hash( 'title_page', 'Recherche',
-                                                      'meta_description', 'Aucun résultat' )}
+        {set scope='global' persistent_variable=hash( 'title_page', 'Rechercher sur Planet eZ Publish.fr',
+                                                      'meta_description', 'Moteur de recherche de Planet eZ Publish.fr' )}
     {/if}
     {include name=Navigator
          uri='design:navigator/google.tpl'
-         page_uri='/planete/search'
-         page_uri_suffix=concat('?SearchText=',$search_text|urlencode,$search_timestamp|gt(0)|choose('',concat('&SearchTimestamp=',$search_timestamp)), '&SubTreeArray=',$search_subtree_array|implode( ',' ) )
+         page_uri='planet/search'
+         page_uri_suffix=concat( '?SearchText=', $search_text|urlencode )
          item_count=$search_count
          view_parameters=$view_parameters
          item_limit=$page_limit}

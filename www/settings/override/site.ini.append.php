@@ -10,17 +10,12 @@ Database=ezplanete
 Charset=
 Socket=disabled
 
-[InformationCollectionSettings]
-EmailReceiver=
-
 [ExtensionSettings]
 ActiveExtensions[]
-#ActiveExtensions[]=ezdhtml
-#ActiveExtensions[]=ezodf
 ActiveExtensions[]=planete
 #ActiveExtensions[]=ezdevtools
+ActiveExtensions[]=ezclasslists
 ActiveExtensions[]=ezoe
-#ActiveExtensions[]=ezclasslists
 
 [Session]
 SessionNameHandler=custom
@@ -46,11 +41,8 @@ HostMatchMapItems[]=admin.planet-ezpublish.fr;bo
 [FileSettings]
 VarDir=var/planete
 
-[DebugSettings]
-DebugOutput=disabled
-
 [MailSettings]
 Transport=sendmail
 AdminEmail=dpobel@free.fr
-EmailSender=
+EmailSender=dpobel@free.fr
 */ ?>
