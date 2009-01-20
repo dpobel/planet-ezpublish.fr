@@ -37,4 +37,19 @@ EmailReceiver=dpobel@free.fr
 [MailSettings]
 EmailSender=dpobel@free.fr
 
+[SiteAccessRules]
+Rules[]
+Rules[]=access;enable
+Rules[]=moduleall
+Rules[]=access;disable
+Rules[]=module;user
+Rules[]=module;content/search
+Rules[]=module;content/advancedsearch
+Rules[]=module;content/browse
+Rules[]=module;content/newcontent
+Rules[]=module;content/tipafriend
+Rules[]=module;ezinfo/about
+Rules[]=module;ezinfo/copyright
+Rules[]=module;ezinfo/is_alive
+
 */ ?>
