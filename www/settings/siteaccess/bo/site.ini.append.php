@@ -1,9 +1,5 @@
 <?php /* #?ini charset="utf-8"?
 
-[DebugSettings]
-DebugOutput=enabled
-DebugRedirection=disabled
-
 [SiteSettings]
 SiteName=Planète eZ Publish
 SiteURL=planet.loc
