@@ -28,11 +28,12 @@ ViewCaching=enabled
 
 [TemplateSettings]
 ShowUsedTemplates=enabled
-TemplateCompile=enabled
-TemplateCache=enabled
+TemplateCompile=disabled
+TemplateCache=disaled
 
 [DebugSettings]
 DebugRedirection=enabled
+DebugOutput=enabled
 
 [InformationCollectionSettings]
 EmailReceiver=dpobel@free.fr
