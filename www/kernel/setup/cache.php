@@ -1,0 +1,126 @@
+<?php
+//
+// Created on: <15-Apr-2003 11:25:31 bf>
+//
+// SOFTWARE NAME: eZ Publish
+// SOFTWARE RELEASE: 4.0.1
+// BUILD VERSION: 22260
+// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE LICENSE: GNU General Public License v2.0
+// NOTICE: >
+//   This program is free software; you can redistribute it and/or
+//   modify it under the terms of version 2.0  of the GNU General
+//   Public License as published by the Free Software Foundation.
+//
+//   This program is distributed in the hope that it will be useful,
+//   but WITHOUT ANY WARRANTY; without even the implied warranty of
+//   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//   GNU General Public License for more details.
+//
+//   You should have received a copy of version 2.0 of the GNU General
+//   Public License along with this program; if not, write to the Free
+//   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
+//   MA 02110-1301, USA.
+//
+//
+
+$http = eZHTTPTool::instance();
+$module = $Params['Module'];
+
+require_once( "kernel/common/template.php" );
+//include_once( "kernel/classes/ezcache.php" );
+//include_once( 'lib/ezutils/classes/ezhttptool.php' );
+//include_once( 'lib/ezfile/classes/ezdir.php' );
+
+$ini = eZINI::instance( );
+$tpl = templateInit();
+
+$cacheList = eZCache::fetchList();
+
+$cacheCleared = array( 'all' => false,
+                       'content' => false,
+                       'ini' => false,
+                       'template' => false,
+                       'list' => false,
+                       'static' => false );
+
+$contentCacheEnabled = $ini->variable( 'ContentSettings', 'ViewCaching' ) == 'enabled';
+$iniCacheEnabled = true;
+$templateCacheEnabled = $ini->variable( 'TemplateSettings', 'TemplateCache' ) == 'enabled';
+
+$cacheEnabledList = array();
+foreach ( $cacheList as $cacheItem )
+{
+    $cacheEnabledList[$cacheItem['id']] = $cacheItem['enabled'];
+}
+
+$cacheEnabled = array( 'all' => true,
+                       'content' => $contentCacheEnabled,
+                       'ini' => $iniCacheEnabled,
+                       'template' => $templateCacheEnabled,
+                       'list' => $cacheEnabledList );
+
+if ( $module->isCurrentAction( 'ClearAllCache' ) )
+{
+    eZCache::clearAll();
+    $cacheCleared['all'] = true;
+}
+
+if ( $module->isCurrentAction( 'ClearContentCache' ) )
+{
+    eZCache::clearByTag( 'content' );
+    $cacheCleared['content'] = true;
+}
+
+if ( $module->isCurrentAction( 'ClearINICache' ) )
+{
+    eZCache::clearByTag( 'ini' );
+    $cacheCleared['ini'] = true;
+}
+
+if ( $module->isCurrentAction( 'ClearTemplateCache' ) )
+{
+    eZCache::clearByTag( 'template' );
+    $cacheCleared['template'] = true;
+}
+
+if ( $module->isCurrentAction( 'ClearCache' ) && $module->hasActionParameter( 'CacheList' ) && is_array( $module->actionParameter( 'CacheList' ) ) )
+{
+    $cacheClearList = $module->actionParameter( 'CacheList' );
+    eZCache::clearByID( $cacheClearList );
+    $cacheItemList = array();
+    foreach ( $cacheClearList as $cacheClearItem )
+    {
+        foreach ( $cacheList as $cacheItem )
+        {
+            if ( $cacheItem['id'] == $cacheClearItem )
+            {
+                $cacheItemList[] = $cacheItem;
+                break;
+            }
+        }
+    }
+    $cacheCleared['list'] = $cacheItemList;
+}
+
+if ( $module->isCurrentAction( 'RegenerateStaticCache' ) )
+{
+    //include_once( 'kernel/classes/ezstaticcache.php' );
+
+    $staticCache = new eZStaticCache();
+    $staticCache->generateCache( true, true );
+    eZStaticCache::executeActions();
+    $cacheCleared['static'] = true;
+}
+
+$tpl->setVariable( "cache_cleared", $cacheCleared );
+$tpl->setVariable( "cache_enabled", $cacheEnabled );
+$tpl->setVariable( 'cache_list', $cacheList );
+
+
+$Result = array();
+$Result['content'] = $tpl->fetch( "design:setup/cache.tpl" );
+$Result['path'] = array( array( 'url' => false,
+                                'text' => ezi18n( 'kernel/setup', 'Cache admin' ) ) );
+
+?>

@@ -1,0 +1,6 @@
+<?php /*
+
+[urlalias]
+Commands[]=lowercase
+
+*/ ?>

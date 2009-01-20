@@ -1,0 +1,80 @@
+<?php
+//
+// Definition of  class
+//
+// Created on: <25-Nov-2002 15:40:10 wy>
+//
+// SOFTWARE NAME: eZ Publish
+// SOFTWARE RELEASE: 4.0.1
+// BUILD VERSION: 22260
+// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE LICENSE: GNU General Public License v2.0
+// NOTICE: >
+//   This program is free software; you can redistribute it and/or
+//   modify it under the terms of version 2.0  of the GNU General
+//   Public License as published by the Free Software Foundation.
+//
+//   This program is distributed in the hope that it will be useful,
+//   but WITHOUT ANY WARRANTY; without even the implied warranty of
+//   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//   GNU General Public License for more details.
+//
+//   You should have received a copy of version 2.0 of the GNU General
+//   Public License along with this program; if not, write to the Free
+//   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
+//   MA 02110-1301, USA.
+//
+//
+
+require_once( "kernel/common/template.php" );
+//include_once( "kernel/classes/ezdiscountrule.php" );
+//include_once( "lib/ezutils/classes/ezhttppersistence.php" );
+
+$module = $Params['Module'];
+
+$http = eZHTTPTool::instance();
+
+$discountGroupArray = eZDiscountRule::fetchList();
+
+if ( $http->hasPostVariable( "AddDiscountGroupButton" ) )
+{
+    $params = array();
+    $Module->redirectTo( $Module->functionURI( "discountgroupedit" ) );
+    return;
+}
+
+if ( $http->hasPostVariable( "EditGroupButton" ) && $http->hasPostVariable( "EditGroupID" ) )
+{
+    $Module->redirectTo( $Module->functionURI( "discountgroupedit" ) . "/" . $http->postVariable( "EditGroupID" ) );
+    return;
+}
+
+if ( $http->hasPostVariable( "RemoveDiscountGroupButton" ) )
+{
+    $discountRuleIDList = $http->postVariable( "discountGroupIDList" );
+
+    $db = eZDB::instance();
+    $db->begin();
+    foreach ( $discountRuleIDList  as $discountRuleID )
+    {
+        eZDiscountRule::removeByID( $discountRuleID );
+    }
+    $db->commit();
+
+    // we changed prices of products (no discount now) => remove content caches
+    //include_once( 'kernel/classes/ezcontentcachemanager.php' );
+    eZContentCacheManager::clearAllContentCache();
+
+    $module->redirectTo( $module->functionURI( "discountgroup" ) . "/" );
+    return;
+}
+$module->setTitle( "View discount group" );
+$tpl = templateInit();
+$tpl->setVariable( "discountgroup_array", $discountGroupArray );
+$tpl->setVariable( "module", $module );
+
+$Result = array();
+$Result['content'] = $tpl->fetch( "design:shop/discountgroup.tpl" );
+$Result['path'] = array( array( 'url' => '/shop/discountgroup/',
+                                'text' => ezi18n( 'kernel/shop', 'Discount group' ) ) );
+?>
