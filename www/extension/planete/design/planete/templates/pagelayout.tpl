@@ -29,6 +29,12 @@
 {undef $revision}
 
     <link rel="alternate" type="application/rss+xml" title="Flux RSS" href={'feed/planet'|ezurl()} />
+    <meta name="robots" content="noodp" />
+    <meta name="MSSmartTagsPreventParsing" content="TRUE" />
+    <meta name="generator" content="eZ Publish" />
+    <meta http-equiv="Content-language" content="fr-FR" />
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+    <link rel="Shortcut icon" href={'favicon.ico'|ezimage()} type="image/x-icon" />
 </head>
 <body>
 {include uri="design:parts/hmenu.tpl"}
