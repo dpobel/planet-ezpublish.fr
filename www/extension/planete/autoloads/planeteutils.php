@@ -88,11 +88,19 @@ class eZPlaneteUtils
 
     static function cleanTags( $xpath )
     {
+        // get rid of <a /> used as anchor
         $anchorNodes = $xpath->query( '//a[not( @href )]' );
         foreach( $anchorNodes as $anchor )
         {
             $parent = $anchor->parentNode;
             $parent->removeChild( $anchor );
+        }
+        // get rid of target attribute on link
+        $targetAttributes = $xpath->query( '//@*[local-name() = "target" and local-name( .. ) = "a"]' );
+        foreach( $targetAttributes as $attr )
+        {
+            $aNode = $attr->parentNode;
+            $aNode->removeAttributeNode( $attr );
         }
     }
 
