@@ -17,4 +17,7 @@ PostURLAttributeID=186
 PostDescriptionAttributeID=185
 PostOwnerID=14
 
+LogFile=planete.log
+MaxLogSize=1073741824
+
 */ ?>

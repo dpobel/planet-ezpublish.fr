@@ -18,10 +18,13 @@ $blogPostContentClass = eZContentClass::fetch( $postClassID );
 
 $db = eZDB::instance();
 
+eZLog::setMaxLogSize( $planetINI->variable( 'ImportSettings', 'MaxLogSize' ) );
+$logFile = $planetINI->variable( 'ImportSettings', 'LogFile' );
+
 $updated = false;
 foreach ( $blogNodes as $blog )
 {
-    $cli->output( $blog->attribute( 'name' ) );
+    eZLog::write( $blog->attribute( 'name' ), $logFile );
     $dataMap = $blog->attribute( 'data_map' );
     $rssSource = $dataMap['rss']->attribute( 'content' );
     try
@@ -30,22 +33,19 @@ foreach ( $blogNodes as $blog )
     }
     catch( Exception $e )
     {
-        if ( !$isQuiet )
-        {
-            $cli->output( 'Planet RSSImport ' . $rssSource
-                                              . ' failed to import document' );
-        }
+        eZLog::write( 'Planet RSSImport ' . $rssSource
+                      . ' failed to import document', $logFile );
         continue ;
     }
     if ( !is_array( $feed->item ) )
     {
-        continue ;
+        continue;
     }
 
     $blogContentObject = $blog->attribute( 'object' );
     foreach( $feed->item as $item )
     {
-        $cli->output( '  ' . $item->title . ' ', false );
+        eZLog::write( $item->title, $logFile );
         if ( isset( $item->id ) )
         {
             $md5Sum = md5( $item->id );
@@ -54,13 +54,13 @@ foreach ( $blogNodes as $blog )
         {
             $md5Sum = md5( $item->link[0] );
         }
-        $remoteID = $md5Sum . '_Planete_RSSImport';
+        $remoteID = $md5Sum . '_' . $blog->attribute( 'node_id' ) . '_Planete_RSSImport';
         $contentObject = eZContentObject::fetchByRemoteID( $remoteID );
         $dataMap = null;
         $db->begin();
         if ( !is_object( $contentObject ) )
         {
-            $cli->output( '-> Creating new content object' );
+            eZLog::write( '-> Creating new content object', $logFile );
             $contentObject = $blogPostContentClass->instantiate( $postOwnerID, $blogContentObject->attribute( 'section_id' ) );
             $contentObject->store();
             $contentObjectID = $contentObject->attribute( 'id' );
@@ -83,7 +83,7 @@ foreach ( $blogNodes as $blog )
             $dataMapObject = $contentObject->attribute( 'data_map' );
             foreach( $dataMapObject as $k => $contentAttribute )
             {
-                $data = $dataMapObject[$k]->toString();
+                $data = $dataMapObject[$k]->attribute( 'content' );
                 if ( $contentAttribute->attribute( 'contentclassattribute_id' ) == $titleAttributeID )
                 {
                     if ( $data != trim( $item->title ) )
@@ -116,10 +116,8 @@ foreach ( $blogNodes as $blog )
         }
         if ( $dataMap !== null )
         {
-            if ( !$isQuiet )
-            {
-                $cli->output( '-> ' . $contentObject->attribute( 'name' ) . ' need update' );
-            }
+            eZLog::write( '-> ' . $contentObject->attribute( 'name' )
+                                . ' need update', $logFile );
             foreach( $dataMap as $k => $contentAttribute )
             {
                 if ( $contentAttribute->attribute( 'contentclassattribute_id' ) == $titleAttributeID )
@@ -149,16 +147,14 @@ foreach ( $blogNodes as $blog )
                 $contentObject->setAttribute( 'published', $ts );
                 $contentObject->setAttribute( 'modified', $ts );
                 $contentObject->store();
+                $version = $contentObject->attribute( 'current' );
                 $version->setAttribute( 'created', $ts );
                 $version->store();
             }
         }
         else
         {
-            if ( !$isQuiet )
-            {
-                $cli->output( ' -> nothing to do' );
-            }
+            eZLog::write( ' -> nothing to do', $logFile );
         }
         $db->commit();
     }
@@ -167,13 +163,10 @@ if ( $updated )
 {
     $ini = eZINI::instance();
     // need to clear feed/planet cache
-    if ( !$isQuiet )
-    {
-        $cli->output( 'Need to clear feed/planet cache' );
-    }
+    eZLog::write( 'Need to clear feed/planet cache', $logFile );
     $cacheInfo = eZPlaneteUtils::rssCacheInfo();
     eZFSFileHandler::fileDelete( $cacheInfo['cache-dir'] . '/' . $cacheInfo['cache-file'] );
-    // make sure we always serve a cache file
+    // make sure we always serve a cached file
     file_get_contents( 'http://' . $ini->variable( 'SiteSettings', 'SiteURL' ) . '/feed/planet' );
 }
 

@@ -2,7 +2,7 @@
 
 [SiteSettings]
 SiteName=Planet eZ Publish.fr, Ze french corner !
-SiteURL=planet.loc
+SiteURL=www.planet-ezpublish.fr
 LoginPage=embedded
 MetaDataArray[keywords]=ez publish,ezpublish,cms,blog,flux rss,actualités,php,mysql,lamp,framework,planète,planet,francophone
 
