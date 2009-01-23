@@ -2,6 +2,4 @@
 - Correct some xHTML problems (target on link, ...)
 - Make a tag system from search engine index ?
 - http://validator.w3.org/feed/docs/warning/MissingAtomSelfLink.html
-- Order of sites in left column seems buggy
-- Objects seem to not be well published (draft warning when editing an objet)
 - Clean up script for imported object in the planetarium

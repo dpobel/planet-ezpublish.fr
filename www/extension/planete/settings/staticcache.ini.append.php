@@ -1,7 +1,7 @@
 <?php /*
 
 [CacheSettings]
-HostName=planet.loc
+HostName=www.planet-ezpublish.fr
 StaticStorageDir=static
 MaxCacheDepth=1
 CachedURLArray[]
