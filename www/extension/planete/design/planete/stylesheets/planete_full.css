@@ -80,7 +80,7 @@ font-weight:bold;
 color:#fff;
 height:100%;
 }
-#header ul li a:hover
+#header ul li a:hover, #header ul li.selected a
 {
 text-decoration:underline;
 }
@@ -100,6 +100,10 @@ div.post h1 a, div.post h1
 display:block;
 color:#fff;
 text-decoration:none;
+}
+div.post h1 a.search-rs
+{
+display:inline;
 }
 div.post h1 a span
 {

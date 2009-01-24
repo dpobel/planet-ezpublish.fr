@@ -2,7 +2,6 @@
 
 [StylesheetSettings]
 SiteCSS=stylesheets/planete.css
-
 FullSiteCSS=stylesheets/planete_full.css
 
 */ ?>

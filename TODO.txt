@@ -1,5 +1,4 @@
 - Make a specific favicon
-- Correct some xHTML problems (target on link, ...)
 - Make a tag system from search engine index ?
 - http://validator.w3.org/feed/docs/warning/MissingAtomSelfLink.html
 - Clean up script for imported object in the planetarium

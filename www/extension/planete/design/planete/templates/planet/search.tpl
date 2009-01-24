@@ -10,7 +10,18 @@
     </form>
 </div>
 <div class="post">
-    <h1 class="search-title">{if ezhttp_hasvariable( 'SearchText', 'get' )}Recherche de &laquo;&nbsp;{ezhttp( 'SearchText', 'get' )|wash()}&nbsp;&raquo;&nbsp;: {/if}{$search_count} résultat{cond( $search_count|gt( 1 ), 's', '' )}</h1>
+    <h1 class="search-title">
+    {if ezhttp_hasvariable( 'SearchText', 'get' )}
+        {def $text = ezhttp( 'SearchText', 'get' )}
+        Recherche de &laquo;&nbsp;<a class="search-rs" href={concat( 'planet/search?SearchText=', $text|urlencode )|ezurl()}>{$text|wash()}</a>&nbsp;&raquo;&nbsp;:
+        {undef $text}
+    {/if}
+    {if $search_count|ne( 0 )}
+        {$search_count} résultat{cond( $search_count|gt( 1 ), 's', '' )}
+    {else}
+        Aucun résultat
+    {/if}
+    </h1>
     <div class="post-content">
     {section show=$stop_word_array}
         <p>

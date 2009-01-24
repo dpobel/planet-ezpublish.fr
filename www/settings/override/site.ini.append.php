@@ -9,6 +9,7 @@ Password=
 Database=ezplanete
 Charset=
 Socket=disabled
+SQLOutput=enabled
 
 [ExtensionSettings]
 ActiveExtensions[]
