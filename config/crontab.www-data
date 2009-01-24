@@ -1,0 +1,7 @@
+################## Planet ##################################
+SHELL=/bin/sh
+PHP=/usr/bin/php5
+PLANET=/home/tigrou/web/planet-ezpublish.fr/www/
+# toutes les demies heures
+58  * * * *     cd $PLANET ; $PHP runcronjobs.php planete >> /tmp/planet-ezpublish.fr.log 2>&1
+28  * * * *     cd $PLANET ; $PHP runcronjobs.php planete >> /tmp/planet-ezpublish.fr.log 2>&1
