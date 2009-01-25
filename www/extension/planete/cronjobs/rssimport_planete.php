@@ -95,7 +95,12 @@ foreach ( $blogNodes as $blog )
                 }
                 elseif ( $contentAttribute->attribute( 'contentclassattribute_id' ) == $descriptionAttributeID )
                 {
-                    if ( $data != trim( $item->description ) )
+                    $content = trim( $item->description );
+                    if ( isset( $item->Content ) && isset( $item->Content->encoded ) )
+                    {
+                        $content = trim( $item->Content->encoded );
+                    }
+                    if ( $data != $content )
                     {
                         $version = $contentObject->createNewVersion();
                         $dataMap = $version->attribute( 'data_map' );
@@ -127,7 +132,12 @@ foreach ( $blogNodes as $blog )
                 }
                 elseif ( $contentAttribute->attribute( 'contentclassattribute_id' ) == $descriptionAttributeID )
                 {
-                    $dataMap[$k]->fromString( trim( $item->description ) );
+                    $content = trim( $item->description );
+                    if ( isset( $item->Content ) && isset( $item->Content->encoded ) )
+                    {
+                        $content = trim( $item->Content->encoded );
+                    }
+                    $dataMap[$k]->fromString( $content );
                     $dataMap[$k]->store();
                 }
                 elseif ( $contentAttribute->attribute( 'contentclassattribute_id' ) == $urlAttributeID )

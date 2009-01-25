@@ -46,6 +46,10 @@ else
         $item->published = $node->attribute( 'object' )->attribute( 'published' );
         $item->description = eZPlaneteUtils::cleanRewriteXHTML( $dataMap['html']->attribute( 'content' ),
                                                                 $dataMap['url']->attribute( 'content' ) );
+        $parentNode = $node->attribute( 'parent' );
+        $dataMapParent = $parentNode->attribute( 'data_map' );
+        $author = $item->add( 'author' );
+        $author->name = $dataMapParent['url']->attribute( 'data_text' );
     }
     $content = $feed->generate( 'rss2' );
     $cache->addVariable( 'content', $content );
