@@ -9,5 +9,6 @@ ShowClasses[]=site
 ShowClasses[]=page
 ShowClasses[]=contact
 ShowClasses[]=planet
+ShowClasses[]=post
 
 */ ?>
