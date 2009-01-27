@@ -37,19 +37,21 @@ else
     {
         $item = $feed->add( 'item' );
         $dataMap = $node->attribute( 'data_map' );
-        $item->title = $node->attribute( 'name' );
+        $item->title = htmlspecialchars( $node->attribute( 'name' ), ENT_NOQUOTES, 'UTF-8' );
         $guid = $item->add( 'id' );
         $guid->id = $node->attribute( 'remote_id' );
         $guid->isPermaLink = "false";
-        $item->link = $dataMap['url']->attribute( 'content' );
+        $item->link = htmlspecialchars( $dataMap['url']->attribute( 'content' ), ENT_NOQUOTES, 'UTF-8' );
         $item->pubDate = $node->attribute( 'object' )->attribute( 'published' );
         $item->published = $node->attribute( 'object' )->attribute( 'published' );
         $item->description = eZPlaneteUtils::cleanRewriteXHTML( $dataMap['html']->attribute( 'content' ),
                                                                 $dataMap['url']->attribute( 'content' ) );
         $parentNode = $node->attribute( 'parent' );
         $dataMapParent = $parentNode->attribute( 'data_map' );
-        $author = $item->add( 'author' );
-        $author->name = $dataMapParent['url']->attribute( 'data_text' );
+        $dublinCore = $item->addModule( 'DublinCore' );
+        $creator = $dublinCore->add( 'creator' );
+        $creator->name = htmlspecialchars( $dataMapParent['url']->attribute( 'data_text' ), ENT_NOQUOTES, 'UTF-8' );
+        $creator->language = 'fr';
     }
     $content = $feed->generate( 'rss2' );
     $cache->addVariable( 'content', $content );
