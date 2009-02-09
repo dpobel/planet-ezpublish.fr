@@ -102,6 +102,13 @@ class eZPlaneteUtils
             $aNode = $attr->parentNode;
             $aNode->removeAttributeNode( $attr );
         }
+        // get rid of valign and align attributes
+        $targetAttributes = $xpath->query( '//@*[local-name() = "align" or local-name() = "valign"]' );
+        foreach( $targetAttributes as $attr )
+        {
+            $aNode = $attr->parentNode;
+            $aNode->removeAttributeNode( $attr );
+        }
     }
 
     static function cleanScript( $xpath )

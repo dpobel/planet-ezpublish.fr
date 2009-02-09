@@ -197,13 +197,49 @@ div.post-content pre code
 {
 font-size:100%;
 }
+div.post-content div.object-left p,div.post-content div.object-right p
+{
+margin-bottom:0;
+}
 div.post-content div.object-center
 {
 text-align:center;
 }
+div.post-content div.object-left
+{
+float:left;
+padding-right:8px;
+}
+div.post-content div.object-right
+{
+float:right;
+padding-left:8px;
+}
 div.post-content table
 {
 margin-bottom:10px;
+border-collapse:collapse;
+}
+div.post-content table p
+{
+margin-bottom:0;
+}
+div.post-content th,div.post-content tr,div.post-content td
+{
+border:1px solid #254B72;
+}
+div.post-content th
+{
+font-weight:bold;
+text-align:center;
+background:#254B72;
+color:#fff;
+padding:2px;
+}
+div.post-content td
+{
+padding:2px 5px;
+background:#F1F2F6;
 }
 div.summary div.post-content h2 a
 {

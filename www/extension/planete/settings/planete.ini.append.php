@@ -1,7 +1,7 @@
 <?php /*
 
 [PageSettings]
-Revision=20090126
+Revision=20090209
 PostByPage=10
 
 [TreeSettings]
