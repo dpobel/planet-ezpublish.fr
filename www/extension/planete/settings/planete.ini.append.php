@@ -1,7 +1,7 @@
 <?php /*
 
 [PageSettings]
-Revision=20090209
+Revision=20090211
 PostByPage=10
 BookmarkURL[]
 BookmarkURL[Delicious]=http://del.icio.us/post?url=%url&title=%title
