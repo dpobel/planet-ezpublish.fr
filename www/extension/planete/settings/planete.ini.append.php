@@ -3,6 +3,14 @@
 [PageSettings]
 Revision=20090209
 PostByPage=10
+BookmarkURL[]
+BookmarkURL[Delicious]=http://del.icio.us/post?url=%url&title=%title
+BookmarkURL[Blogmark]=http://blogmarks.net/my/new.php?url=%url&title=%title&summary=%title
+BookmarkURL[Google Bookmark]=http://www.google.com/bookmarks/mark?op=edit&bkmk=%url&title=%titlE
+BookmarkURL[Linkedin]=http://www.linkedin.com/shareArticle?mini=true&url=%url&title=%title&summary=&source=
+BookmarkURL[Yahoo! Bookmark]=http://bookmarks.yahoo.com/toolbar/savebm?opener=tb&u=%url&t=%title
+BookmarkImgSize=16
+BookmarkImgPadding=5
 
 [TreeSettings]
 PlanetRootNodeID=2

@@ -164,6 +164,11 @@ color:#000;
 border-top:1px dotted #888;
 border-bottom:1px dotted #888;
 }
+div.post div.info img
+{
+float:right;
+border:0;
+}
 div.post-content h1
 {
 font-size:20px;

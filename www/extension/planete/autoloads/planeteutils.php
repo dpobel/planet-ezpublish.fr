@@ -6,7 +6,7 @@ class eZPlaneteUtils
 
     function __construct()
     {
-        $this->Operators = array( 'clean_rewrite_xhtml' );
+        $this->Operators = array( 'clean_rewrite_xhtml', 'bookmarkize' );
     }
 
     function operatorList()
@@ -23,7 +23,13 @@ class eZPlaneteUtils
     {
         return array( 'clean_rewrite_xhtml' => array( 'url_site' => array( 'type' => 'string',
                                                                            'required' => true,
-                                                                           'default' => '' ) ) );
+                                                                           'default' => '' ) ),
+                      'bookmarkize' => array( 'post_url' => array( 'type' => 'string',
+                                                                   'required' => true,
+                                                                   'default' => '' ),
+                                              'post_name' => array( 'type' => 'string',
+                                                                    'required' => false,
+                                                                    'default' => false ) ) );
     }
 
 
@@ -34,7 +40,24 @@ class eZPlaneteUtils
             $html = $operatorValue;
             $operatorValue = self::cleanRewriteXHTML( $html, $namedParameters['url_site'] );
         }
+        elseif ( $operatorName == 'bookmarkize' )
+        {
+            $url = $operatorValue;
+            $postName = $namedParameters['post_url'];
+            $postURL = $namedParameters['post_url'];
+            if ( isset( $namedParameters['post_name'] ) && $namedParameters['post_name'] )
+            {
+                $postName = $namedParameters['post_name'];
+            }
+            $operatorValue = self::bookmarkize( $url, $postURL, $postName );
+        }
+    }
 
+
+    static function bookmarkize( $url, $postURL, $postName )
+    {
+        $url = str_replace( '%url', $postURL, $url );
+        return str_replace( '%title', $postName, $url );
     }
 
     static function cleanRewriteXHTML( $html, $urlSite )
