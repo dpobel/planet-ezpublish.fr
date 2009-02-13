@@ -38,7 +38,9 @@ class eZPlaneteUtils
         if ( $operatorName == 'clean_rewrite_xhtml' )
         {
             $html = $operatorValue;
+            eZDebug::accumulatorStart( 'planete', 'Planete', 'Clean rewrite operator' );
             $operatorValue = self::cleanRewriteXHTML( $html, $namedParameters['url_site'] );
+            eZDebug::accumulatorStop( 'planete' );
         }
         elseif ( $operatorName == 'bookmarkize' )
         {
@@ -131,6 +133,15 @@ class eZPlaneteUtils
         {
             $aNode = $attr->parentNode;
             $aNode->removeAttributeNode( $attr );
+        }
+        // remove developper.com stuffs
+        $divNodes = $xpath->query( '//div[contains( @style, "font-size" )
+                                          and contains( a/@href, "http://blog.developpez.com/" )]' );
+        if ( $divNodes && $divNodes->length === 1 )
+        {
+            $divNode = $divNodes->item( 0 );
+            $contentNode = $divNode->parentNode;
+            $contentNode->removeChild( $divNode );
         }
     }
 
