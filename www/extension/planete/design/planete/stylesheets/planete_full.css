@@ -446,3 +446,21 @@ font-size:18px;
 font-family:"Trebuchet MS", sans-serif;
 padding:0 8px;
 }
+blockquote
+{
+color:#222;
+background:#ededed;
+border:1px solid #aaa;
+padding:5px 20px;
+font-style:italic;
+width:80%;
+margin:0 auto 5px auto;
+}
+div.post-content blockquote p
+{
+margin:0;
+}
+blockquote span.quoteleft,blockquote span.quoteright
+{
+display:none;
+}

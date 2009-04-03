@@ -78,18 +78,24 @@ class eZPlaneteUtils
         // manual cleanup
         $xml = '<div>' . $res . '</div>';
         $dom = new DomDocument();
-        $dom->loadXML( $xml );
-        $xpath = new DomXPath( $dom );
-        // avoid XSS attacks
-        self::cleanScript( $xpath );
-        // remove unnecessary tags
-        self::cleanTags( $xpath );
-        // rewriting malformed URIs
-        self::rewriteURI( $xpath, $urlSite );
-        $res = str_replace( '<?xml version="1.0"?>', '', $dom->saveXML() );
-        //eZDebug::writeDebug( $html, 'Before' );
-        //eZDebug::writeDebug( $res, 'After' );
-        return $res;
+        $parsing = $dom->loadXML( $xml );
+        if ( $parsing )
+        {
+            $xpath = new DomXPath( $dom );
+            // avoid XSS attacks
+            self::cleanScript( $xpath );
+            // remove unnecessary tags
+            self::cleanTags( $xpath );
+            // rewriting malformed URIs
+            self::rewriteURI( $xpath, $urlSite );
+            $res = str_replace( '<?xml version="1.0"?>', '', $dom->saveXML() );
+            return $res;
+        }
+        else
+        {
+            eZDebug::writeError( $xml, 'Failed to parse XML in ' . __METHOD__ );
+        }
+        return $xml;
     }
 
     static function rewriteURI( $xpath, $urlSite )
