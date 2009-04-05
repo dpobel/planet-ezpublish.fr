@@ -3,9 +3,9 @@
 // Created on: <29-May-2002 10:38:45 bf>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -31,12 +31,12 @@
 class eZPublishSDK
 {
     const VERSION_MAJOR = 4;
-    const VERSION_MINOR = 0;
-    const VERSION_RELEASE = 1;
+    const VERSION_MINOR = 1;
+    const VERSION_RELEASE = 0;
     const VERSION_STATE = '';
     const VERSION_DEVELOPMENT = false;
-    const VERSION_REVISION_STRING = '$Rev: 22261 $';
-    const VERSION_ALIAS = '4.0';
+    const VERSION_REVISION_STRING = '$Rev: 23233 $';
+    const VERSION_ALIAS = '4.1';
     const VERSION_REVISION = 19785;
 
     /*!
@@ -129,7 +129,6 @@ class eZPublishSDK
     */
     static function databaseVersion( $withRelease = true )
     {
-        //include_once( 'lib/ezdb/classes/ezdb.php' );
         $db = eZDB::instance();
         $rows = $db->arrayQuery( "SELECT value as version FROM ezsite_data WHERE name='ezpublish-version'" );
         $version = false;
@@ -150,7 +149,6 @@ class eZPublishSDK
     */
     static function databaseRelease()
     {
-        //include_once( 'lib/ezdb/classes/ezdb.php' );
         $db = eZDB::instance();
         $rows = $db->arrayQuery( "SELECT value as release FROM ezsite_data WHERE name='ezpublish-release'" );
         $release = false;

@@ -2,9 +2,9 @@
 // Created on: <1-Aug-2002 16:45:00 fh>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -289,7 +289,7 @@ function ezpopmenu_doItemSubstitution( menuID, menuHeader )
                 var partialContent = menuArray[menuID]['elements'][i]['content'];
                 for ( var substItem in CurrentSubstituteValues )
                 {
-                    if ( typeof CurrentSubstituteValues[substItem] != 'object' )
+                    if ( typeof CurrentSubstituteValues[substItem] != 'object' && typeof CurrentSubstituteValues[substItem] != 'function' )
                     {
                         partialContent = partialContent.replace( substItem, CurrentSubstituteValues[substItem] );
                     }
@@ -345,7 +345,7 @@ function ezpopup_substituteString( replaceString, substituteValues )
     // loop though substitute values and substitute for each of them
     for ( var substItem in substituteValues )
     {
-        if ( typeof substituteValues[substItem] != 'object' )
+        if ( typeof substituteValues[substItem] != 'object' && typeof substituteValues[substItem] != 'function' )
         {
             replaceString = replaceString.replace( substItem, substituteValues[substItem] );
         }

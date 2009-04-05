@@ -5,9 +5,9 @@
 // Created on: <06-Oct-2002 16:19:31 amos>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -26,7 +26,7 @@
 //
 //
 
-/*! \file ezuserfunctioncollection.php
+/*! \file
 */
 
 /*!
@@ -34,8 +34,6 @@
   \brief The class eZUserFunctionCollection does
 
 */
-
-//include_once( 'kernel/error/errors.php' );
 
 class eZUserFunctionCollection
 {
@@ -48,7 +46,6 @@ class eZUserFunctionCollection
 
     function fetchCurrentUser()
     {
-        //include_once( 'kernel/classes/datatypes/ezuser/ezuser.php' );
         $user = eZUser::currentUser();
         if ( $user === null )
         {
@@ -64,44 +61,36 @@ class eZUserFunctionCollection
 
     function fetchIsLoggedIn( $userID )
     {
-        //include_once( 'kernel/classes/datatypes/ezuser/ezuser.php' );
         $isLoggedIn = eZUser::isUserLoggedIn( $userID );
         return array( 'result' => $isLoggedIn );
     }
 
     function fetchLoggedInCount()
     {
-        //include_once( 'kernel/classes/datatypes/ezuser/ezuser.php' );
         $count = eZUser::fetchLoggedInCount();
         return array( 'result' => $count );
     }
 
     function fetchAnonymousCount()
     {
-        //include_once( 'kernel/classes/datatypes/ezuser/ezuser.php' );
         $count = eZUser::fetchAnonymousCount();
         return array( 'result' => $count );
     }
 
     function fetchLoggedInList( $sortBy, $offset, $limit )
     {
-        //include_once( 'kernel/classes/datatypes/ezuser/ezuser.php' );
         $list = eZUser::fetchLoggedInList( false, $offset, $limit, $sortBy );
         return array( 'result' => $list );
     }
 
     function fetchLoggedInUsers( $sortBy, $offset, $limit )
     {
-        //include_once( 'kernel/classes/datatypes/ezuser/ezuser.php' );
         $list = eZUser::fetchLoggedInList( true, $offset, $limit, $sortBy );
         return array( 'result' => $list );
     }
 
     function fetchUserRole( $userID )
     {
-        //include_once( 'kernel/classes/datatypes/ezuser/ezuser.php' );
-        //include_once( 'kernel/classes/ezrole.php' );
-        //include_once( "kernel/classes/ezpolicylimitation.php" );
         $user = eZUser::fetch( $userID );
         $userGroupObjects = $user ? $user->groups( true ) : array();
         $userGroupArray = array();
@@ -143,9 +132,16 @@ class eZUserFunctionCollection
                         {
                             foreach ( $function as $limitationKey => $limitation )
                             {
-                                if ( $limitationKey != '*' )
+                                if ( $limitationKey !== '*' )
                                 {
                                     $policyID = str_replace( 'p_', '', $limitationKey );
+                                    $userRoleIdSeperator = strpos( $policyID, '_' );
+
+                                    if ( $userRoleIdSeperator !== false )
+                                    {
+                                        $policyID = substr( $policyID, 0, $userRoleIdSeperator );
+                                    }
+                                    
                                     $limitationValue = eZPolicyLimitation::fetchByPolicyID( $policyID );
                                     $resultArray[] = array( 'moduleName' => $moduleName, 'functionName' => $functionName, 'limitation' =>  $limitationValue );
                                 }
@@ -178,13 +174,11 @@ class eZUserFunctionCollection
 
     function fetchMemberOf( $id )
     {
-        //include_once( 'kernel/classes/ezrole.php' );
         return array( 'result' => eZRole::fetchByUser( array( $id ), true ) );
     }
 
     function hasAccessTo( $module, $view, $userID )
     {
-        //include_once( 'kernel/classes/datatypes/ezuser/ezuser.php' );
         if ( $userID )
         {
             $user = eZUser::fetch( $userID );

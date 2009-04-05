@@ -3,9 +3,9 @@
 // Created on: <05-Oct-2002 21:27:11 amos>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -24,7 +24,7 @@
 //
 //
 
-/*! \file eztemplateautoload.php
+/*! \file
 */
 
 // Operator autoloading
@@ -125,7 +125,6 @@ if ( !function_exists( 'eZPHPOperatorInit' ) )
 {
     function eZPHPOperatorInit()
         {
-            //include_once( 'lib/eztemplate/classes/eztemplatephpoperator.php' );
             $ini = eZINI::instance( 'template.ini' );
             $operatorList = $ini->variable( 'PHP', 'PHPOperatorList' );
             return new eZTemplatePHPOperator( $operatorList );
@@ -146,7 +145,6 @@ if ( !function_exists( 'eZObjectForwardInit' ) )
 {
     function eZObjectForwardInit()
         {
-            //include_once( 'kernel/common/ezobjectforwarder.php' );
             $forward_rules = array(
                 'attribute_edit_gui' => array( 'template_root' => 'content/datatype/edit',
                                                'input_name' => 'attribute',
@@ -195,7 +193,7 @@ if ( !function_exists( 'eZObjectForwardInit' ) )
                                                'attribute_keys' => array( 'attribute_identifier' => array( 'contentclass_attribute_identifier' ),
                                                                           'attribute' => array( 'contentclassattribute_id' ),
                                                                           'class_identifier' => array( 'object', 'class_identifier' ),
-                                                                          'class' => array( 'object', 'contentclass_id' ) ),                                               'attribute_access' => array( array( 'view_template' ) ),
+                                                                          'class' => array( 'object', 'contentclass_id' ) ),
                                                'attribute_access' => array( array( 'view_template' ) ),
                                                'use_views' => false ),
 
@@ -219,6 +217,7 @@ if ( !function_exists( 'eZObjectForwardInit' ) )
                                              'attribute_keys' => array( 'object' => array( 'id' ),
                                                                         'class' => array( 'class_id' ),
                                                                         'section' => array( 'section_id' ),
+                                                                        'remote_id' => array( 'remote_id' ),
                                                                         'class_identifier' => array( 'class_identifier' ) ),
                                              'attribute_access' => array(),
                                              'use_views' => 'view' ),
@@ -238,7 +237,10 @@ if ( !function_exists( 'eZObjectForwardInit' ) )
                                                                         'class_group' => array( 'match_ingroup_id_list' ),
                                                                         'class' => array( 'contentclass_id' ),
                                                                         'section' => array( 'section_id' ),
-                                                                        'class_identifier' => array( 'class_identifier' ) ),
+                                                                        'class_identifier' => array( 'class_identifier' ),
+                                                                        'remote_id' => array( 'remote_id' ),
+                                                                        'state' => array( 'state_id_array' ),
+                                                                        'state_identifier' => array( 'state_identifier_array' ) ),
                                              'attribute_access' => array(),
                                              'use_views' => 'view' ),
 
@@ -250,6 +252,7 @@ if ( !function_exists( 'eZObjectForwardInit' ) )
                                              'attribute_keys' => array( 'object' => array( 'id' ),
                                                                         'class' => array( 'contentclass_id' ),
                                                                         'section' => array( 'section_id' ),
+                                                                        'remote_id' => array( 'remote_id' ),
                                                                         'class_identifier' => array( 'class_identifier' ) ),
                                              'attribute_access' => array(),
                                              'use_views' => 'view' ),
@@ -275,10 +278,15 @@ if ( !function_exists( 'eZObjectForwardInit' ) )
                                                                      'class' => array( 'object', 'contentclass_id' ),
                                                                      'section' => array( 'object', 'section_id' ),
                                                                      'class_identifier' => array( 'object', 'class_identifier' ),
-                                                                     'class_group' => array( 'object','match_ingroup_id_list' ),
+                                                                     'class_group' => array( 'object', 'match_ingroup_id_list' ),
+                                                                     'state' => array( 'object', 'state_id_array' ),
+                                                                     'state_identifier' => array( 'object', 'state_identifier_array' ),
                                                                      'parent_node' => array( 'parent_node_id' ),
                                                                      'depth' => array( 'depth' ),
-                                                                     'url_alias' => array( 'url_alias' ) ),
+                                                                     'url_alias' => array( 'url_alias' ),
+                                                                     'remote_id' => array( 'object', 'remote_id' ),
+                                                                     'node_remote_id' => array( 'remote_id' ),
+                                                                     'parent_class_identifier' => array( 'parent', 'class_identifier' ) ),
                                           'attribute_access' => array(),
                                           'use_views' => 'view' ),
 

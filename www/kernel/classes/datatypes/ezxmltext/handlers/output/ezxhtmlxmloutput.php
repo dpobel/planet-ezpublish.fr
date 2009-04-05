@@ -5,9 +5,9 @@
 // Created on: <18-Aug-2006 15:05:00 ks>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -26,11 +26,6 @@
 //
 //
 
-/*!
-*/
-
-//include_once( 'kernel/classes/datatypes/ezxmltext/ezxmloutputhandler.php' );
-////include_once( 'lib/eztemplate/classes/eztemplateincludefunction.php' );
 
 class eZXHTMLXMLOutput extends eZXMLOutputHandler
 {
@@ -165,14 +160,15 @@ class eZXHTMLXMLOutput extends eZXMLOutputHandler
         else
             $parentParams['section_level']++;
 
-        // init header counter for current level and resert it for the next level
+        // init header counter for current level and for the next level if needed
         $level = $parentParams['section_level'];
         if ( $level != 0 )
         {
             if ( !isset( $this->HeaderCount[$level] ) )
                 $this->HeaderCount[$level] = 0;
 
-            $this->HeaderCount[$level + 1] = 0;
+            if ( !isset( $this->HeaderCount[$level + 1] ) )
+                $this->HeaderCount[$level + 1] = 0;
         }
 
         return $ret;
@@ -215,12 +211,13 @@ class eZXHTMLXMLOutput extends eZXMLOutputHandler
         if ( $element->getAttribute( 'url_id' ) != null )
         {
             $linkID = $element->getAttribute( 'url_id' );
-            $href = $this->LinkArray[$linkID];
+            if ( isset( $this->LinkArray[$linkID] ) )
+                $href = $this->LinkArray[$linkID];
         }
         elseif ( $element->getAttribute( 'node_id' ) != null )
         {
             $nodeID = $element->getAttribute( 'node_id' );
-            $node = $this->NodeArray[$nodeID];
+            $node = isset( $this->NodeArray[$nodeID] ) ? $this->NodeArray[$nodeID] : null;
 
             if ( $node != null )
             {

@@ -5,9 +5,9 @@
 // Created on: <14-Aug-2003 11:25:33 amos>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -26,12 +26,13 @@
 //
 //
 
-/*! \file ezarchivehandler.php
+/*! \file
 */
 
 /*!
   \class eZArchiveHandler ezarchivehandler.php
   \brief General handling of file archives
+  \deprecated This class will be removed in eZ Publish 4.2
 
   This class handles the abstraction of handling various
   kinds of archive formats. The actual handling of the
@@ -42,8 +43,6 @@ $handler = eZArchiveHandler::instance( 'tar', 'ezpublish.tar' );
 \endcode
 
 */
-
-//include_once( 'lib/ezfile/classes/ezfilehandler.php' );
 
 class eZArchiveHandler
 {
@@ -243,7 +242,8 @@ class eZArchiveHandler
     */
     static function instance( $identifier, $fileHandlerType = false, $arhiveFilename = false )
     {
-        //include_once( 'lib/ezutils/classes/ezini.php' );
+        eZDebug::writeWarning( __METHOD__ . " is deprecated, use ezcArchive instead" );
+
         $ini = eZINI::instance( 'file.ini' );
         $handlers = $ini->variable( 'ArchiveSettings', 'Handlers' );
         $instance = false;

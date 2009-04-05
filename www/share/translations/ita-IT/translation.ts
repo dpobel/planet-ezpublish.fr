@@ -1,9 +1,25 @@
 <!DOCTYPE TS><TS>
+<defaultcodec></defaultcodec>
 <context>
     <name>contentstructuremenu/show_content_structure</name>
     <message>
         <source>Node ID: %node_id Visibility: %visibility</source>
         <translation>ID Nodo: %node_id Visibilità: %visibility</translation>
+    </message>
+</context>
+<context>
+    <name>design</name>
+    <message>
+        <source>%group_name [Content object state group]</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit</source>
+        <translation type="unfinished">Modifica</translation>
+    </message>
+    <message>
+        <source>%state_name [Content object state]</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -147,7 +163,7 @@
     </message>
     <message>
         <source>The class definition was successfully stored.</source>
-        <translation>La definizione della classe è stata registrata con successo.</translation>
+        <translation>Registrazione della definizione della classe riuscita.</translation>
     </message>
     <message>
         <source>Edit &lt;%class_name&gt; [Class]</source>
@@ -653,7 +669,7 @@
     </message>
     <message>
         <source>Flags</source>
-        <translation>Bandiere</translation>
+        <translation>Flags</translation>
     </message>
     <message>
         <source>Is required</source>
@@ -1803,7 +1819,7 @@
     </message>
     <message>
         <source>Manage versions</source>
-        <translation>Amministra versioni</translation>
+        <translation>Gestisci versioni</translation>
     </message>
     <message>
         <source>View and manage (copy, delete, etc.) the versions of this object.</source>
@@ -1819,11 +1835,11 @@
     </message>
     <message>
         <source>View</source>
-        <translation>Vista</translation>
+        <translation>Visualizza</translation>
     </message>
     <message>
         <source>View the draft that is being edited.</source>
-        <translation>Mostra la bozza in fase di modifica.</translation>
+        <translation>Visualizza la bozza in fase di modifica.</translation>
     </message>
     <message>
         <source>Store and exit</source>
@@ -1911,7 +1927,7 @@
     </message>
     <message>
         <source>The draft was successfully stored.</source>
-        <translation>Bozza registrata con successo.</translation>
+        <translation>Registrazione bozza riuscita.</translation>
     </message>
     <message>
         <source>Are you sure you want to discard the draft?</source>
@@ -2024,6 +2040,14 @@
     <message>
         <source>You cannot manage the versions of this object because there is only one version available (the one that is being edited).</source>
         <translation>Non puoi gestire le versioni di quest&apos;oggetto perché c&apos;è solo una versione disponibile (quella che viene modificata).</translation>
+    </message>
+    <message>
+        <source>States</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The following data is invalid according to the custom validation rules</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2525,7 +2549,7 @@
     </message>
     <message>
         <source>Manage versions</source>
-        <translation>Amministra versioni</translation>
+        <translation>Gestisci versioni</translation>
     </message>
     <message>
         <source>Current draft</source>
@@ -2644,7 +2668,7 @@
     </message>
     <message>
         <source>Manage versions</source>
-        <translation>Amministra versioni</translation>
+        <translation>Gestisci versioni</translation>
     </message>
     <message>
         <source>Current draft</source>
@@ -2722,7 +2746,7 @@
     </message>
     <message>
         <source>Restore original locations</source>
-        <translation>Ristabilisci le collocazione originali</translation>
+        <translation>Ristabilisci le collocazioni originali</translation>
     </message>
     <message>
         <source>Restore &lt;%name&gt; to the specified location.</source>
@@ -3228,7 +3252,7 @@
     </message>
     <message>
         <source>Manage versions</source>
-        <translation>Amministra versioni</translation>
+        <translation>Gestisci versioni</translation>
     </message>
     <message>
         <source>Current draft</source>
@@ -3330,11 +3354,11 @@
     <name>design/admin/content/urlalias</name>
     <message>
         <source>The selected aliases were successfully removed.</source>
-        <translation>Alias eliminati con successo.</translation>
+        <translation>Eliminazione degli alias riuscita.</translation>
     </message>
     <message>
         <source>All aliases for this node were successfully removed.</source>
-        <translation>Tutti gli alias di questo nodo sono stati eliminati con successo.</translation>
+        <translation>Eliminazione di tutti gli alias di questo nodo riuscita.</translation>
     </message>
     <message>
         <source>The specified language code &lt;%language&gt; is not valid.</source>
@@ -3442,7 +3466,7 @@
     </message>
     <message>
         <source>The URL alias &amp;lt;%new_alias&amp;gt; already exists, and it points to &amp;lt;%action_url&amp;gt;</source>
-        <translation>L&apos;URL alias &amp;lt;%new_alias&amp;gt; esiste già, e punta a &amp;lt;%action_url&amp;gt;</translation>
+        <translation>L&apos;URL alias &amp;lt;%new_alias&amp;gt; esiste già, e indirizza su &amp;lt;%action_url&amp;gt;</translation>
     </message>
     <message>
         <source>You cannot remove any aliases because you do not have permission to edit the current item.</source>
@@ -3458,74 +3482,74 @@
     </message>
     <message>
         <source>Create new URL forwarding with wildcard</source>
-        <translation type="unfinished"></translation>
+        <translation>Crea un nuovo reindirizzamento URL con wildcard</translation>
     </message>
     <message>
         <source>Redirecting URL</source>
-        <translation type="unfinished">Reindirizzamanto URL</translation>
+        <translation>Reindirizzamanto URL</translation>
     </message>
     <message>
         <source>Type</source>
-        <translation type="unfinished">Tipo</translation>
+        <translation>Tipo</translation>
     </message>
     <message>
         <source>Redirect</source>
-        <translation type="unfinished">Reindirizza</translation>
+        <translation>Reindirizza</translation>
     </message>
     <message>
         <source>Direct</source>
-        <translation type="unfinished"></translation>
+        <translation>Indirizza</translation>
     </message>
     <message>
         <source>URL alias name:</source>
-        <translation type="unfinished"></translation>
+        <translation>Nome URL alias:</translation>
     </message>
     <message>
         <source>Destination:</source>
-        <translation type="unfinished"></translation>
+        <translation>Destinazione:</translation>
     </message>
     <message>
         <source>Destination.</source>
-        <translation type="unfinished"></translation>
+        <translation>Destinazione.</translation>
     </message>
     <message>
         <source>Language:</source>
-        <translation type="unfinished"></translation>
+        <translation>Lingua:</translation>
     </message>
     <message>
         <source>Alias should redirect to its destination</source>
-        <translation type="unfinished"></translation>
+        <translation>L&apos;alias deve reindirizzare verso la sua destinazione</translation>
     </message>
     <message>
         <source>With &lt;em&gt;Alias should redirect to its destination&lt;/em&gt; checked eZ Publish will redirect to the destination using a HTTP 301 response. Un-check it and the URL will stay the same &amp;#8212; no redirection will be performed.</source>
-        <translation type="unfinished"></translation>
+        <translation>Selezionando &lt;em&gt;L&apos;alias deve reindirizzare verso la sua destinazione&lt;/em&gt; eZ Publish reindirizzerà verso la destinazione con una risposta HTTP 301. Non selezionandolo la URL rimarrà invariata &amp;#8212; non verrà eseguito alcun reindirizzamento.</translation>
     </message>
     <message>
         <source>If checked the alias will start from the parent of the current node. If un-checked the aliases will start from the root of the site.</source>
-        <translation type="unfinished"></translation>
+        <translation>Se selezionato l&apos;alias partirà dal genitore del nodo corrente. Se non selezionato gli aliases partiranno dal nodo principale.</translation>
     </message>
     <message>
         <source>Place alias on the site root</source>
-        <translation type="unfinished"></translation>
+        <translation>Posiziona l&apos;alias sul nodo principale</translation>
     </message>
     <message>
         <source>The new alias be placed under %link</source>
-        <translation type="unfinished"></translation>
+        <translation>Il nuovo alias verrà posizionato sotto  %link</translation>
     </message>
     <message>
         <source>&lt;em&gt;Un-check&lt;/em&gt; to create the new alias under %link. Leave it checked and the new alias will be created on &lt;em&gt;&lt;a href=&apos;/&apos;&gt;%siteroot&lt;/a&gt;&lt;/em&gt;.</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;em&gt;Deselezionare&lt;/em&gt; per creare il nuovo alias sotto %link. Lasciare selezionato ed il nuovo alias verrà creato su &lt;em&gt;&lt;a href=&apos;/&apos;&gt;%siteroot&lt;/a&gt;&lt;/em&gt;.</translation>
     </message>
 </context>
 <context>
     <name>design/admin/content/urlalias_global</name>
     <message>
         <source>The selected aliases were successfully removed.</source>
-        <translation>Alias eliminati con successo.</translation>
+        <translation>Eliminazione degli alias selezionati riuscita.</translation>
     </message>
     <message>
         <source>All global aliases were successfully removed.</source>
-        <translation>Tutti gli alias globali sono stati eliminati con successo.</translation>
+        <translation>Eliminazione di tutti gli alias globali riuscita.</translation>
     </message>
     <message>
         <source>The specified language code &lt;%language&gt; is not valid.</source>
@@ -3640,10 +3664,6 @@
         <translation>Nuovo URL alias</translation>
     </message>
     <message>
-        <source>Destination (path to existing funtionality or resource)</source>
-        <translation>Destinazione (percorso verso una funzionalità o risorsa esistente)</translation>
-    </message>
-    <message>
         <source>Enter text in the input box to create a new alias.</source>
         <translation>Inserisci un testo nel box per creare nuovo alias.</translation>
     </message>
@@ -3657,7 +3677,7 @@
     </message>
     <message>
         <source>Built-in functionality, e.g. %example.</source>
-        <translation>Funztionalità inclusa, ad es. %example.</translation>
+        <translation>Funzionalità predefinita, ad es. %example.</translation>
     </message>
     <message>
         <source>Existing objects or functionality with the same name take precedence on the name.</source>
@@ -3665,7 +3685,7 @@
     </message>
     <message>
         <source>The URL alias &amp;lt;%new_alias&amp;gt; already exists, and it points to &amp;lt;%action_url&amp;gt;</source>
-        <translation>L&apos;URL alias &amp;lt;%new_alias&amp;gt; esiste già, e punta a &amp;lt;%action_url&amp;gt;</translation>
+        <translation>L&apos;URL alias &amp;lt;%new_alias&amp;gt; esiste già, e indirizza su &amp;lt;%action_url&amp;gt;</translation>
     </message>
     <message>
         <source>Always available</source>
@@ -3677,22 +3697,26 @@
     </message>
     <message>
         <source>Note that the new alias points to a node and will not be displayed in the global list. It can be examined on the URL-Alias page of the node, %node_link.</source>
-        <translation>Nota che il nuovo alias punta ad un nodo e non verrà mostrato nell&apos;elenco globale. Puoi esaminarlo sulla pagina dell&apos;URL-Alias del nodo, %node_link.</translation>
+        <translation>Nota che il nuovo alias indirizza su un nodo e non verrà mostrato nell&apos;elenco globale. Puoi esaminarlo sulla pagina dell&apos;URL-Alias del nodo, %node_link.</translation>
     </message>
     <message>
         <source>Alias should redirect to its destination</source>
-        <translation type="unfinished"></translation>
+        <translation>L&apos;alias deve reindirizzare verso la sua destinazione</translation>
     </message>
     <message>
         <source>Type</source>
-        <translation type="unfinished">Tipo</translation>
+        <translation>Tipo</translation>
     </message>
     <message>
         <source>Redirect</source>
-        <translation type="unfinished">Reindirizza</translation>
+        <translation>Reindirizza</translation>
     </message>
     <message>
         <source>Direct</source>
+        <translation>Indirizza</translation>
+    </message>
+    <message>
+        <source>Destination (path to existing functionality or resource)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3700,126 +3724,126 @@
     <name>design/admin/content/urlalias_wildcard</name>
     <message>
         <source>The selected aliases were successfully removed.</source>
-        <translation type="unfinished">Alias eliminati con successo.</translation>
+        <translation>Eliminazione degli alias selezionati riuscita.</translation>
     </message>
     <message>
         <source>All wildcard aliases were successfully removed.</source>
-        <translation type="unfinished"></translation>
+        <translation>Eliminazione di tutti gli alias con wildcard riuscita.</translation>
     </message>
     <message>
         <source>Text is missing for the URL alias</source>
-        <translation type="unfinished">Manca il testo per l&apos;URL alias</translation>
+        <translation>Manca il testo per l&apos;URL alias</translation>
     </message>
     <message>
         <source>Enter text in the input box to create a new alias.</source>
-        <translation type="unfinished">Inserisci un testo nel box per creare nuovo alias.</translation>
+        <translation>Inserisci un testo nel box per creare nuovo alias.</translation>
     </message>
     <message>
         <source>Text is missing for the URL alias destination</source>
-        <translation type="unfinished">Manca il testo per la destinazione dell&apos;URL alias</translation>
+        <translation>Manca il testo per la destinazione dell&apos;URL alias</translation>
     </message>
     <message>
         <source>Enter some text in the destination input box to create a new alias.</source>
-        <translation type="unfinished">Inserisci un testo nel box di destinazione per creare nuovo alias.</translation>
+        <translation>Inserisci un testo nel box di destinazione per creare nuovo alias.</translation>
     </message>
     <message>
         <source>The URL alias &lt;%wildcard_src_url&gt; was successfully created</source>
-        <translation type="unfinished"></translation>
+        <translation>L&apos;URL alias &lt;%wildcard_src_url&gt; è stato creato con successo</translation>
     </message>
     <message>
         <source>The URL alias &lt;%wildcard_src_url&gt; already exists, and it points to &lt;%wildcard_dst_url&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>L&apos;URL alias &lt;%wildcard_src_url&gt; esiste già, e indirizza su &lt;%wildcard_dst_url&gt;</translation>
     </message>
     <message>
         <source>Defined URL aliases with wildcard[%wildcard_count]</source>
-        <translation type="unfinished"></translation>
+        <translation>URL aliases definiti con wildcard[%wildcard_count]</translation>
     </message>
     <message>
         <source>Show %number_of items per page.</source>
-        <translation type="unfinished">Mostra %number_of elementi per pagina.</translation>
+        <translation>Mostra %number_of elementi per pagina.</translation>
     </message>
     <message>
         <source>The URL wildcard list does not contain any aliases.</source>
-        <translation type="unfinished"></translation>
+        <translation>La lista delle URL con wildcard non contiene alcun alias.</translation>
     </message>
     <message>
         <source>Invert selection.</source>
-        <translation type="unfinished">Inverti selezione.</translation>
+        <translation>Inverti selezione.</translation>
     </message>
     <message>
         <source>URL alias wildcard</source>
-        <translation type="unfinished"></translation>
+        <translation>URL alias wildcard</translation>
     </message>
     <message>
         <source>Destination</source>
-        <translation type="unfinished">Destinazione</translation>
+        <translation>Destinazione</translation>
     </message>
     <message>
         <source>Type</source>
-        <translation type="unfinished">Tipo</translation>
+        <translation>Tipo</translation>
     </message>
     <message>
         <source>Forward</source>
-        <translation type="unfinished"></translation>
+        <translation>Inoltra</translation>
     </message>
     <message>
         <source>Direct</source>
-        <translation type="unfinished"></translation>
+        <translation>Indirizza</translation>
     </message>
     <message>
         <source>Undefined</source>
-        <translation type="unfinished">Indefinito</translation>
+        <translation>Indefinito</translation>
     </message>
     <message>
         <source>Remove selected</source>
-        <translation type="unfinished"></translation>
+        <translation>Elimina selezionati</translation>
     </message>
     <message>
         <source>Remove selected aliases from the list above.</source>
-        <translation type="unfinished">Elimina gli alias selezionati dalla lista in alto.</translation>
+        <translation>Elimina gli alias selezionati dalla lista in alto.</translation>
     </message>
     <message>
         <source>Are you sure you want to remove the selected wildcards?</source>
-        <translation type="unfinished"></translation>
+        <translation>Sei sicuro di voler rimuovere i wildcard selezionati?</translation>
     </message>
     <message>
         <source>Remove all</source>
-        <translation type="unfinished">Elimina tutti</translation>
+        <translation>Elimina tutti</translation>
     </message>
     <message>
         <source>Remove all wildcard aliases.</source>
-        <translation type="unfinished"></translation>
+        <translation>Rimuovi tutti gli alias con wildcard.</translation>
     </message>
     <message>
         <source>Are you sure you want to remove all wildcard aliases?</source>
-        <translation type="unfinished"></translation>
+        <translation>Sei sicuro di voler rimuovere tutti gli alias con wildcard?</translation>
     </message>
     <message>
         <source>There are no removable aliases.</source>
-        <translation type="unfinished">Non ci sono alias da rimuovere.</translation>
+        <translation>Non ci sono alias da rimuovere.</translation>
     </message>
     <message>
         <source>New URL wildcard</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Enter the URL for the new wildcard. Example: /developer/*</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Enter the destination URL for the new wildcard. Example: /dev/{1\}</source>
-        <translation type="unfinished"></translation>
+        <translation>Nuovo URL wildcard</translation>
     </message>
     <message>
         <source>Perform redirecting.</source>
-        <translation type="unfinished"></translation>
+        <translation>Esegui reindirizzamento.</translation>
     </message>
     <message>
         <source>Create</source>
-        <translation type="unfinished">Crea</translation>
+        <translation>Crea</translation>
     </message>
     <message>
         <source>Create a new wildcard URL alias.</source>
+        <translation>Crea un nuovo URL alias con wildcard.</translation>
+    </message>
+    <message>
+        <source>Enter the URL for the new wildcard. Example: developer/*</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enter the destination URL for the new wildcard. Example: dev/{1\}</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4010,7 +4034,7 @@
     </message>
     <message>
         <source>Manage versions</source>
-        <translation>Amministra versioni</translation>
+        <translation>Gestisci versioni</translation>
     </message>
     <message>
         <source>View and manage (copy, delete, etc.) the versions of this object.</source>
@@ -4054,7 +4078,7 @@
     </message>
     <message>
         <source>View control</source>
-        <translation>Controllo delle vista</translation>
+        <translation>Controllo visualizzazione</translation>
     </message>
     <message>
         <source>Translation</source>
@@ -4070,7 +4094,7 @@
     </message>
     <message>
         <source>Update view</source>
-        <translation>Aggiorna vista</translation>
+        <translation>Aggiorna visualizzazione</translation>
     </message>
     <message>
         <source>View the version that is currently being displayed using the selected language, location and design.</source>
@@ -4149,7 +4173,7 @@
     </message>
     <message>
         <source>[%classname] Click on the icon to display a context-sensitive menu.</source>
-        <translation>[%classname] Clicca sull icona per mostrare un menù appropriato.</translation>
+        <translation>[%classname] Clicca sull&apos; icona per mostrare un menù appropriato.</translation>
     </message>
 </context>
 <context>
@@ -4237,15 +4261,15 @@
     </message>
     <message>
         <source>The requested view &lt;%view&gt; could not be found in the &lt;%module&gt; module.</source>
-        <translation>La vista &lt;%view&gt; che hai richiesto non è stata trovata nel modulo &lt;%module&gt;.</translation>
+        <translation>La visualizzazione &lt;%view&gt; che hai richiesto non è stata trovata nel modulo &lt;%module&gt;.</translation>
     </message>
     <message>
         <source>The name of the view was misspelled. Try changing the URL.</source>
-        <translation>Il nome della vista è stato scritto male. Prova a cambiare la URL.</translation>
+        <translation>Il nome della visualizzazione è stato scritto male. Prova a cambiare la URL.</translation>
     </message>
     <message>
         <source>The &lt;%module&gt; module does not have a &lt;%view&gt; view.</source>
-        <translation>Il modulo &lt;%module&gt; non ha una vista &lt;%view&gt;.</translation>
+        <translation>Il modulo &lt;%module&gt; non ha una visualizzazione &lt;%view&gt;.</translation>
     </message>
     <message>
         <source>The requested page could not be displayed. (22)</source>
@@ -4293,7 +4317,7 @@
     </message>
     <message>
         <source>The requested view cannot be accessed.</source>
-        <translation>Non si può accedere alla vista richiesta.</translation>
+        <translation>Non si può accedere alla visualizzazione richiesta.</translation>
     </message>
     <message>
         <source>The &lt;%view&gt; within the &lt;%module&gt; is disabled and thus it cannot be accessed.</source>
@@ -4683,7 +4707,7 @@
     </message>
     <message>
         <source>The system will let you restore the object &lt;%name&gt;. Specify where you wish to restore it.</source>
-        <translation>Il sistema di permetterà di recuperare l&apos;oggetto &lt;%name&gt;. Scegli dove vuoi ripristinarlo.</translation>
+        <translation>Il sistema ti permetterà di recuperare l&apos;oggetto &lt;%name&gt;. Scegli dove vuoi ripristinarlo.</translation>
     </message>
     <message>
         <source>The lines marked with red contain more than the maximum possible nodes for subtree removal and will not be deleted. You can remove this subtree using the ezsubtreeremove.php script.</source>
@@ -5382,6 +5406,58 @@
         <source>The item being displayed has only one location, which is by default the main location.</source>
         <translation>L&apos;elemento che viene mostrato ha una sola collocazione, che per default è la collocazione principale.</translation>
     </message>
+    <message>
+        <source>Move selected</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Move the selected items from the list above.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You do not have permission to move any of the items from the list above.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Object states for object</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Content object state group</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Available states</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No content object state is configured. This can be done %urlstart here %urlend.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Set states</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Apply states from the list above.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No state to be applied to this content object. You might need to be assigned a more permissive access policy.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Object states</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Hide state assignment widget.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show state assignment widget.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>design/admin/node/view/line</name>
@@ -5398,7 +5474,7 @@
     <name>design/admin/node/view/thumbnail</name>
     <message>
         <source>[%classname] Click on the icon to display a context-sensitive menu.</source>
-        <translation>[%classname] Clicca sull icona per mostrare un menù appropriato.</translation>
+        <translation>[%classname] Clicca sull&apos; icona per mostrare un menù appropriato.</translation>
     </message>
 </context>
 <context>
@@ -5601,11 +5677,11 @@
     </message>
     <message>
         <source>Available wizards</source>
-        <translation>Wizard disponibili</translation>
+        <translation>Procedure guidate disponibili</translation>
     </message>
     <message>
         <source>Choose one of the following wizards for creating a package</source>
-        <translation>Scegli uno dei seguenti wizard per creare un pacchetto</translation>
+        <translation>Scegli una delle seguenti procedure guidate per creare un pacchetto</translation>
     </message>
     <message>
         <source>Specify export properties. The default settings will most likely be suitable for your needs.</source>
@@ -5705,7 +5781,7 @@
     </message>
     <message>
         <source>Package wizard: %wizardname</source>
-        <translation>Wizard pacchetto: %wizardname</translation>
+        <translation>Creazione guidata pacchetto: %wizardname</translation>
     </message>
     <message>
         <source>Install package</source>
@@ -5721,7 +5797,7 @@
     </message>
     <message>
         <source>Package install wizard: %wizardname</source>
-        <translation>Wizard installazione pacchetto: %wizardname</translation>
+        <translation>Installazione guidata pacchetto: %wizardname</translation>
     </message>
     <message>
         <source>Next %arrowright</source>
@@ -5846,11 +5922,12 @@
     <message>
         <source>Select an image file to be included in the package then click Next.
 Click &quot;Next&quot; without choosing an image to continue to the next step.</source>
-        <translation>Seleziona un&apos;immagine da includere nel pacchetto e quindi clicca Successivo.Premi &quot;Successivo&quot; senza scegliere nessuna immagine per continuare con il passo successivo.</translation>
+        <translation>Seleziona un&apos;immagine da includere nel pacchetto e quindi premi Successivo.
+Premi &quot;Successivo&quot; senza scegliere nessuna immagine per continuare con il passo successivo.</translation>
     </message>
     <message>
         <source>Regarding eZ Publish package &apos;%packagename&apos;</source>
-        <translation>A proposito del pacchetto eZ publish &apos;%packagename&apos;</translation>
+        <translation>A proposito del pacchetto eZ Publish &apos;%packagename&apos;</translation>
     </message>
     <message>
         <source>The package can be installed on your system. Installing the package will copy files, create content classes etc., depending on the package.
@@ -6148,7 +6225,7 @@ Note: The packages will not be uninstalled.</source>
     </message>
     <message>
         <source>[%classname] Click on the icon to display a context-sensitive menu.</source>
-        <translation>[%classname] Clicca sull icona per mostrare un menù appropriato.</translation>
+        <translation>[%classname] Clicca sull&apos; icona per mostrare un menù appropriato.</translation>
     </message>
 </context>
 <context>
@@ -6414,6 +6491,10 @@ Note: The packages will not be uninstalled.</source>
     </message>
     <message>
         <source>URL wildcards</source>
+        <translation>URL con wildcard</translation>
+    </message>
+    <message>
+        <source>States</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -6532,7 +6613,7 @@ Note: The packages will not be uninstalled.</source>
     </message>
     <message>
         <source>Access control</source>
-        <translation>Gestione accessi</translation>
+        <translation>Controllo accessi</translation>
     </message>
 </context>
 <context>
@@ -6832,7 +6913,7 @@ Note: The packages will not be uninstalled.</source>
     </message>
     <message>
         <source>Manage versions</source>
-        <translation>Amministra versioni</translation>
+        <translation>Gestisci versioni</translation>
     </message>
     <message>
         <source>Edit class in</source>
@@ -6991,11 +7072,11 @@ Note: The packages will not be uninstalled.</source>
     </message>
     <message>
         <source>Click one of the &quot;Grant..&quot; buttons (explained below) in order to go to the next step.</source>
-        <translation>Premi uno dei pulsanti &quot;Dai..&quot;  (descritti sotto) per andare al passo successivo..</translation>
+        <translation>Premi uno dei pulsanti &quot;Dài..&quot;  (descritti sotto) per andare al passo successivo..</translation>
     </message>
     <message>
         <source>The &quot;Grant access to all functions&quot; button will create a policy that grants unlimited access to all functions of the selected module. If you wish to limit the access method to a specific function, use the &quot;Grant access to a function&quot; button. Please note that function limitation is only supported by some modules (the next step will reveal if it works or not).</source>
-        <translation>Il pulsante &quot;Dai accesso a tutte le funzioni&quot; creerà una policy che darà accesso illimitato a tutte le funzioni del modulo selezionato. Se vuoi limitare il metodo di accesso ad una funzione specifica, usa il pulsante &quot;Dai accesso ad una funzione&quot;. Nota che la limitazione della funzione viene supportata solo da alcuni moduli (il passo successivo rivelerà se funziona o no).</translation>
+        <translation>Il pulsante &quot;Dài accesso a tutte le funzioni&quot; creerà una policy che darà accesso illimitato a tutte le funzioni del modulo selezionato. Se vuoi limitare il metodo di accesso ad una funzione specifica, usa il pulsante &quot;Dài accesso ad una funzione&quot;. Nota che la limitazione della funzione viene supportata solo da alcuni moduli (il passo successivo rivelerà se funziona o no).</translation>
     </message>
     <message>
         <source>Module</source>
@@ -7007,11 +7088,11 @@ Note: The packages will not be uninstalled.</source>
     </message>
     <message>
         <source>Grant access to all functions</source>
-        <translation>Dai accesso a tutte le funzioni</translation>
+        <translation>Dài accesso a tutte le funzioni</translation>
     </message>
     <message>
         <source>Grant access to one function</source>
-        <translation>Dai accesso ad una funzione</translation>
+        <translation>Dài accesso ad una funzione</translation>
     </message>
     <message>
         <source>OK</source>
@@ -7023,7 +7104,7 @@ Note: The packages will not be uninstalled.</source>
     </message>
     <message>
         <source>Welcome to the policy wizard. This three-step wizard will help you create a new policy that will be added to the role that is currently being edited. The wizard can be aborted at any stage by using the &quot;Cancel&quot; button.</source>
-        <translation>Benvenuti nel policy wizard. Questo wizard in tre passi vi aiuterà a creare una nuova policy che verrà aggiunta al ruolo attualmente in fase di modifica. Il wizard può essere annullato in qualsiasi momento tramite il pulsante &quot;Annulla&quot;.</translation>
+        <translation>Benvenuti nella creazione guidata della policy. Questa creazione guidata in tre passi vi aiuterà a creare una nuova policy che verrà aggiunta al ruolo attualmente in fase di modifica. La procedura guidata può essere annullata in qualsiasi momento tramite il pulsante &quot;Annulla&quot;.</translation>
     </message>
     <message>
         <source>Use the drop-down menu to select the module that you want to grant access to.</source>
@@ -7066,15 +7147,15 @@ Note: The packages will not be uninstalled.</source>
     </message>
     <message>
         <source>Grant full access</source>
-        <translation>Dai pieno accesso</translation>
+        <translation>Dài pieno accesso</translation>
     </message>
     <message>
         <source>Grant limited access</source>
-        <translation>Dai accesso limitato</translation>
+        <translation>Dài accesso limitato</translation>
     </message>
     <message>
         <source>The selected module (%module_name) does not support limitations on the function level. Please go back to step one and use the &quot;Grant access to all functions&quot; option instead.</source>
-        <translation>Il modulo selezionato (%module_name) non supporta limitazioni a livello di funzione. Torna al passo uno ed usa invece l&apos;opzione &quot;Dai accesso a tutte le funzioni&quot;.</translation>
+        <translation>Il modulo selezionato (%module_name) non supporta limitazioni a livello di funzione. Torna al passo uno ed usa invece l&apos;opzione &quot;Dài accesso a tutte le funzioni&quot;.</translation>
     </message>
     <message>
         <source>Go back to step one</source>
@@ -7094,11 +7175,11 @@ Note: The packages will not be uninstalled.</source>
     </message>
     <message>
         <source>Click on one of the &quot;Grant..&quot; buttons (explained below) in order to go to the next step.</source>
-        <translation>Premi uno dei pulsanti &quot;Dai..&quot;  (descritti sotto) per andare al passo successivo..</translation>
+        <translation>Premi uno dei pulsanti &quot;Dài..&quot;  (descritti sotto) per andare al passo successivo..</translation>
     </message>
     <message>
         <source>Welcome to the policy wizard. This three-step wizard will help you set up a new policy. The policy will be added to the role that is currently being edited. The wizard can be aborted at any stage by using the &quot;Cancel&quot; button.</source>
-        <translation>Benvenuti nel policy wizard. Questo wizard in tre passi vi aiuterà ad impostare una nuova policy che verrà aggiunta al ruolo attualmente in fase di modifica. Il wizard può essere annullato in qualsiasi momento tramite il pulsante &quot;Annulla&quot;.</translation>
+        <translation>Benvenuti nella creazione guidata della policy. Questa creazione guidata in tre passi vi aiuterà a creare una nuova policy che verrà aggiunta al ruolo attualmente in fase di modifica. La procedura guidata può essere annullata in qualsiasi momento tramite il pulsante &quot;Annulla&quot;.</translation>
     </message>
     <message>
         <source>Use the drop-down menu to select the function that you want to grant access to.</source>
@@ -7106,11 +7187,11 @@ Note: The packages will not be uninstalled.</source>
     </message>
     <message>
         <source>The &quot;Grant full access&quot; button will create a policy that grants unlimited access to the selected function within the module that was specified in step one. If you want to limit the access method, click the &quot;Grant limited access&quot; button. Function limitation is only supported by some functions. If unsupported, eZ Publish will set up a policy with unlimited access to the selected function.</source>
-        <translation>Il pulsante &quot;Dai pieno accesso&quot; creerà una policy che darà accesso illimitato alla funzione selezionata nel modulo specificato nel passo primo. Se vuoi limitare il metodo di accesso, usa il pulsante &quot;Dai accesso limitato&quot;. Nota che la limitazione della funzione viene supportata solo da alcune funzioni. Se non è supportata, eZ publish imposterà un accesso illimitato alla funzione selezionata.</translation>
+        <translation>Il pulsante &quot;Dài pieno accesso&quot; creerà una policy che darà accesso illimitato alla funzione selezionata nel modulo specificato nel passo primo. Se vuoi limitare il metodo di accesso, usa il pulsante &quot;Dài accesso limitato&quot;. Nota che la limitazione della funzione viene supportata solo da alcune funzioni. Se non è supportata, eZ Publish imposterà un accesso illimitato alla funzione selezionata.</translation>
     </message>
     <message>
         <source>It is not possible to grant limited access to all modules at once. To grant unlimited access to all modules and their functions, go back to step one and select &quot;Grant access to all functions&quot;. To grant limited access to different functions within different modules, you must set up a collection of policies.</source>
-        <translation>Non è possibile dare accesso limitato a tutti i moduli in una volta sola. Per dare accesso illimitato a tutti i moduli e alle loro funzioni, torna al passo primo e seleziona &quot;Dai accesso a tutte le funzioni&quot;. Per garantire accesso limitato a funzioni diverse con moduli diversi, devi impostare un insieme di policy.</translation>
+        <translation>Non è possibile dare accesso limitato a tutti i moduli in una volta sola. Per dare accesso illimitato a tutti i moduli e alle loro funzioni, torna al passo primo e seleziona &quot;Dài accesso a tutte le funzioni&quot;. Per garantire accesso limitato a funzioni diverse con moduli diversi, devi impostare un insieme di policy.</translation>
     </message>
 </context>
 <context>
@@ -7161,7 +7242,7 @@ Note: The packages will not be uninstalled.</source>
     </message>
     <message>
         <source>Click the &quot;OK&quot; button to finish the wizard. The policy will be added to the role that is currently being edited.</source>
-        <translation>Premi il pulsante &quot;OK&quot; per terminare il wizard. La policy verrà attribuita al ruolo attualmente in fase di modifica.</translation>
+        <translation>Premi il pulsante &quot;OK&quot; per terminare la procedura guidata. La policy verrà attribuita al ruolo attualmente in fase di modifica.</translation>
     </message>
     <message>
         <source>Any</source>
@@ -7221,7 +7302,7 @@ Note: The packages will not be uninstalled.</source>
     </message>
     <message>
         <source>Welcome to the policy wizard. This three-step wizard will help you set up a new policy. The policy will be added to the role that is currently being edited. The wizard can be aborted at any stage by using the &quot;Cancel&quot; button.</source>
-        <translation>Benvenuti nel policy wizard. Questo wizard in tre passi vi aiuterà ad impostare una nuova policy. La policy verrà attribuita al ruolo attualmente in fase di modifica. Il wizard può essere annullato in qualsiasi momento tramite il pulsante &quot;Annulla&quot;.</translation>
+        <translation>Benvenuti nella creazione guidata della policy. Questa creazione guidata in tre passi vi aiuterà a creare una nuova policy che verrà aggiunta al ruolo attualmente in fase di modifica. La procedura guidata può essere annullata in qualsiasi momento tramite il pulsante &quot;Annulla&quot;.</translation>
     </message>
 </context>
 <context>
@@ -7564,7 +7645,7 @@ Note: The packages will not be uninstalled.</source>
     </message>
     <message>
         <source>Navigate using the available tabs (above), the tree menu (left) and the content list (middle).</source>
-        <translation>Naviga utilizzando i tasti disponibili (in alto), il menù ad albero (a sinistra) e la lista dei contenuti (al centro).</translation>
+        <translation>Naviga utilizzando le schede disponibili (in alto), il menù ad albero (a sinistra) e la lista dei contenuti (al centro).</translation>
     </message>
     <message>
         <source>Use the radio buttons to choose a destination location for RSS import then click &quot;OK&quot;.</source>
@@ -7594,7 +7675,7 @@ Note: The packages will not be uninstalled.</source>
     </message>
     <message>
         <source>Navigate using the available tabs (above), the tree menu (left) and the content list (middle).</source>
-        <translation>Naviga utilizzando i tasti disponibili (in alto), il menù ad albero (a sinistra) e la lista dei contenuti (al centro).</translation>
+        <translation>Naviga utilizzando le schede disponibili (in alto), il menù ad albero (a sinistra) e la lista dei contenuti (al centro).</translation>
     </message>
     <message>
         <source>Use the radio buttons to choose the item that you want to export using RSS then click &quot;OK&quot;.</source>
@@ -7609,7 +7690,7 @@ Note: The packages will not be uninstalled.</source>
     </message>
     <message>
         <source>Navigate using the available tabs (above), the tree menu (left) and the content list (middle).</source>
-        <translation>Naviga utilizzando i tasti disponibili (in alto), il menù ad albero (a sinistra) e la lista dei contenuti (al centro).</translation>
+        <translation>Naviga utilizzando le schede disponibili (in alto), il menù ad albero (a sinistra) e la lista dei contenuti (al centro).</translation>
     </message>
     <message>
         <source>Use the radio buttons to choose a user then click &quot;OK&quot;. The user will become the owner of the objects that were imported using RSS.</source>
@@ -7795,8 +7876,24 @@ Note: The packages will not be uninstalled.</source>
         <translation>Usa questo menù a tendina per selezionare quale attributo deve essere esportato come descrizione dell&apos;esportazione RSS.</translation>
     </message>
     <message>
-        <source>Leave this field emty if you want system automaticaly detect the URL of your site from the URL you access feed with</source>
+        <source>Leave this field empty if you want system automaticaly detect the URL of your site from the URL you access feed with</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Category</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>optional</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use this drop-down to select the attribute that should be exported as the category of the RSS export entry.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Skip</source>
+        <translation type="unfinished">Salta</translation>
     </message>
 </context>
 <context>
@@ -8087,7 +8184,7 @@ Note: The packages will not be uninstalled.</source>
     </message>
     <message>
         <source>Navigate using the available tabs (above), the tree menu (left) and the content list (middle).</source>
-        <translation>Naviga utilizzando i tasti disponibili (in alto), il menù ad albero (a sinistra) e l&apos;elenco dei contenuti (al centro).</translation>
+        <translation>Naviga utilizzando le schede disponibili (in alto), il menù ad albero (a sinistra) e l&apos;elenco dei contenuti (al centro).</translation>
     </message>
     <message>
         <source>Note that the section assignment of the sub items will also be changed.</source>
@@ -8500,6 +8597,10 @@ Note: The packages will not be uninstalled.</source>
         <source>Please select an ini file from the drop-down below</source>
         <translation>Sei pregato di selezionare un file ini dal sottostante menù a tendina</translation>
     </message>
+    <message>
+        <source>Values for each location setting are shown. The first values have lowest priority; the values toward the end have higher priority than the first ones.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>design/admin/setup</name>
@@ -8509,11 +8610,11 @@ Note: The packages will not be uninstalled.</source>
     </message>
     <message>
         <source>Database check OK.</source>
-        <translation>Controllo Database OK.</translation>
+        <translation>Controllo database OK.</translation>
     </message>
     <message>
         <source>The database is not consistent with the distribution database.</source>
-        <translation>Il database con è consistente con il database della distribuzione.</translation>
+        <translation>Il database non è consistente con il database della distribuzione.</translation>
     </message>
     <message>
         <source>To synchronize your database with the distribution setup, run the following SQL commands</source>
@@ -8545,11 +8646,11 @@ Note: The packages will not be uninstalled.</source>
     </message>
     <message>
         <source>Before upgrading eZ Publish to a newer version, it is important to check that the current installation is ready for upgrading.</source>
-        <translation>Prima di aggiornare eZ publish ad una nuova versione, è importante controllare che l&apos;installazione corrente sia pronta per l&apos;aggiornamento.</translation>
+        <translation>Prima di aggiornare eZ Publish ad una nuova versione, è importante controllare che l&apos;installazione corrente sia pronta per l&apos;aggiornamento.</translation>
     </message>
     <message>
         <source>Remember to make a backup of the eZ Publish directory and the database before you upgrade.</source>
-        <translation>Ricordati di effettuare un backup della directory di eZ publish e del database prima di effettuare un aggiornamento.</translation>
+        <translation>Ricordati di effettuare un backup della directory di eZ Publish e del database prima di effettuare un aggiornamento.</translation>
     </message>
     <message>
         <source>The file consistency tool checks if you have altered any of the files that came with the current installation. Altered files may be replaced by new versions that contain bugfixes, new features, etc. Make sure that you backup and then merge your changes into the new versions of the files.</source>
@@ -8557,7 +8658,7 @@ Note: The packages will not be uninstalled.</source>
     </message>
     <message>
         <source>The database consistency tool checks if the current database is consistent with the database schema that came with the eZ Publish distribution. If there are any inconsistencies, the tool will suggest the necessary SQL statements that should be run in order to bring the database into a consistent state. Please run the suggested SQL statements before upgrading.</source>
-        <translation>Lo strumento di controllo consistenza database verifica se il database corrente è consistente con lo schema del database incluso nella distribuzione di eZ publish. Se vi sono altre inconsistenze, lo strumento suggerisce le necessarie dichiarazioni SQL che devono essere lanciate per portare il database in uno stato di consistenza. Sei pregato di lanciare le dichiarazioni SQL suggerite prima di aggiornare.</translation>
+        <translation>Lo strumento di controllo consistenza database verifica se il database corrente è consistente con lo schema del database incluso nella distribuzione di eZ Publish. Se vi sono altre inconsistenze, lo strumento suggerisce le necessarie dichiarazioni SQL che devono essere lanciate per portare il database in uno stato di consistenza. Sei pregato di lanciare le dichiarazioni SQL suggerite prima di aggiornare.</translation>
     </message>
     <message>
         <source>The upgrade checking tools require a lot of system resources. They may take some time to run.</source>
@@ -8734,10 +8835,14 @@ Note: The packages will not be uninstalled.</source>
     </message>
     <message>
         <source>Regenerate autoload arrays for extensions</source>
-        <translation type="unfinished"></translation>
+        <translation>Rigenera gli autoload arrays per le estensioni</translation>
     </message>
     <message>
         <source>Click this button to regenerate the autoload arrays used by the system for extensions.</source>
+        <translation>Premi questo pulsante per rigenerare gli autoload arrays usati dal sistema per le estensioni.</translation>
+    </message>
+    <message>
+        <source>Problems detected during autoload generation:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -8862,7 +8967,7 @@ Note: The packages will not be uninstalled.</source>
     <message>
         <source>Database name</source>
         <comment>Database name</comment>
-        <translation>Nome Database</translation>
+        <translation>Nome database</translation>
     </message>
     <message>
         <source>Connection retry count</source>
@@ -8889,7 +8994,7 @@ Note: The packages will not be uninstalled.</source>
     </message>
     <message>
         <source>There is no slave database in use.</source>
-        <translation>Non vi sono Slave Database in uso.</translation>
+        <translation>Non vi sono slave database in uso.</translation>
     </message>
     <message>
         <source>PHP</source>
@@ -8969,6 +9074,15 @@ Note: The packages will not be uninstalled.</source>
         <source>Web server (hardware)</source>
         <translation>Webserver (hardware)</translation>
     </message>
+    <message>
+        <source>Details</source>
+        <comment>Detailed PHP information</comment>
+        <translation type="unfinished">Dettagli</translation>
+    </message>
+    <message>
+        <source>PHP autoload functions</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>design/admin/setup/operatorcode</name>
@@ -8990,7 +9104,7 @@ Note: The packages will not be uninstalled.</source>
     </message>
     <message>
         <source>\\return an array with the template operator name.</source>
-        <translation type="unfinished"></translation>
+        <translation>\\return un array con il nome dell&apos;operatore del template.</translation>
     </message>
 </context>
 <context>
@@ -9005,15 +9119,15 @@ Note: The packages will not be uninstalled.</source>
     </message>
     <message>
         <source>Template operator wizard</source>
-        <translation>Wizard dell&apos;operatore dei template</translation>
+        <translation>Creazione guidata dell&apos;operatore dei template</translation>
     </message>
     <message>
         <source>Datatype wizard</source>
-        <translation>Wizard dei datatype</translation>
+        <translation>Creazione guidata dei datatype</translation>
     </message>
     <message>
         <source>Template operator wizard (step 1 of 3)</source>
-        <translation>Wizard dell&apos;operatore dei template (passo 1 di 3)</translation>
+        <translation>Creazione guidata dell&apos;operatore dei template (passo 1 di 3)</translation>
     </message>
     <message>
         <source>Restart</source>
@@ -9025,18 +9139,18 @@ Note: The packages will not be uninstalled.</source>
     </message>
     <message>
         <source>The rapid application development (RAD) tools make the creation of new/extended functionality for eZ Publish easier. Currently there are two RAD tools available: the template operator wizard and the datatype wizard. The template operator wizard basically generates a valid framework (PHP code) for a new template operator. The datatype wizard generates a valid framework (PHP code) for a new datatype.</source>
-        <translation>Gli strumenti di sviluppo rapido di applicazioni (RAD) facilitano la creazione di funzioni nuove/estese per eZ publish. Al momento vi sono due strumenti RAD disponibili: il wizard per gli operatori di template e il wizard per datatype. Il wizard per gli operatori di template genera semplicemente un valido framework (codice PHP) per un nuovo operatore di template. Il wizard per datatype genera un valido framework (codice PHP) per un nuovo datatype.</translation>
+        <translation>Gli strumenti di sviluppo rapido di applicazioni (RAD) facilitano la creazione di funzioni nuove/estese per eZ Publish. Al momento vi sono due strumenti RAD disponibili: l&apos;installazione guidata per gli operatori di template e l&apos;installazione guidata per datatype. L&apos;installazione guidata per gli operatori di template genera semplicemente un valido framework (codice PHP) per un nuovo operatore di template. l&apos;installazione guidata per datatype genera un valido framework (codice PHP) per un nuovo datatype.</translation>
     </message>
     <message>
         <source>Welcome to the template operator wizard. Template operators are usually used for manipulating template variables. However, they can also be used to generate or fetch data. This wizard will take you through a couple of steps with some basic choices. When finished, eZ Publish will generate a PHP framework for a new operator (which will be available for download).</source>
-        <translation>Benvenuto nel wizard per gli operatori di template. Gli operatori di template vengono usati di solito per manipolare variabili di template. Comunque, posso anche essere in grado di generare o richiamare dati. Il wizard ti guiderà in un paio di passi con alcune scelte di base. Una volta finito, eZ Publish genererà un framework in PHP per un nuovo operatore (che sarà disponibile per il download).</translation>
+        <translation>Benvenuto nella creazione guidata dell&apos;operatore dei template. Gli operatori di template vengono usati di solito per manipolare variabili di template. Comunque, posso anche essere in grado di generare o richiamare dati. La procedura guidata ti farà scegliere in un paio di passi alcune impostazioni di base. Una volta finito, eZ Publish genererà un framework in PHP per un nuovo operatore (che sarà disponibile per il download).</translation>
     </message>
 </context>
 <context>
     <name>design/admin/setup/rad/datatype</name>
     <message>
         <source>Datatype wizard (step 1 of 3)</source>
-        <translation>Wizard dei datatype (passo 1 di 3)</translation>
+        <translation>Creazione guidata dei datatype (passo 1 di 3)</translation>
     </message>
     <message>
         <source>Restart</source>
@@ -9048,7 +9162,7 @@ Note: The packages will not be uninstalled.</source>
     </message>
     <message>
         <source>Datatype wizard (step 2 of 3)</source>
-        <translation>Wizard dei datatype (passo 2 di 3)</translation>
+        <translation>Installazione guidata dei datatype (passo 2 di 3)</translation>
     </message>
     <message>
         <source>Name</source>
@@ -9064,7 +9178,7 @@ Note: The packages will not be uninstalled.</source>
     </message>
     <message>
         <source>Datatype wizard (step 3 of 3)</source>
-        <translation>Wizard dei datatype (passo 3 di 3)</translation>
+        <translation>Creazione guidata dei datatype (passo 3 di 3)</translation>
     </message>
     <message>
         <source>Name of class</source>
@@ -9092,18 +9206,18 @@ Note: The packages will not be uninstalled.</source>
     </message>
     <message>
         <source>Welcome to the wizard for creating a new datatype. Everything stored in a content object are called attributes. Attributes are defined as data types. To customize storing and validation of attributes, you can create your own data types.</source>
-        <translation>Benvenuto nel wizard per creare un nuovo tipo di dato (datatype). Tutto quello che metti negli oggetti è chiamato attributo. Gli attributi sono definiti come tipi di dato. Per personalizzare la validazione e il salvataggio di questi attributi, puoi creare i tuoi tipi di dato.</translation>
+        <translation>Benvenuto nella procedura guidata per creare un nuovo tipo di dato (datatype). Tutto quello che metti negli oggetti è chiamato attributo. Gli attributi sono definiti come tipi di dato. Per personalizzare la validazione e il salvataggio di questi attributi, puoi creare i tuoi tipi di dato.</translation>
     </message>
     <message>
         <source>Class constant name</source>
-        <translation type="unfinished"></translation>
+        <translation>Nome costante della classe</translation>
     </message>
 </context>
 <context>
     <name>design/admin/setup/rad/templateoperator</name>
     <message>
         <source>Template operator wizard (step 2 of 3)</source>
-        <translation>Wizard dell&apos;operatore dei template (passo 2 di 3)</translation>
+        <translation>Creazione guidata dell&apos;operatore dei template (passo 2 di 3)</translation>
     </message>
     <message>
         <source>Name</source>
@@ -9147,7 +9261,7 @@ Note: The packages will not be uninstalled.</source>
     </message>
     <message>
         <source>Template operator wizard (step 3 of 3)</source>
-        <translation>Wizard dell&apos;operatore dei template (passo 3 di 3)</translation>
+        <translation>Creazione guidata dell&apos;operatore dei template (passo 3 di 3)</translation>
     </message>
     <message>
         <source>Class name</source>
@@ -9186,7 +9300,7 @@ Note: The packages will not be uninstalled.</source>
     <name>design/admin/setup/session</name>
     <message>
         <source>The sessions were successfully removed.</source>
-        <translation>Sessioni eliminate con successo.</translation>
+        <translation>Eliminazione delle sessioni riuscita.</translation>
     </message>
     <message>
         <source>Session administration</source>
@@ -9562,7 +9676,7 @@ Note: The packages will not be uninstalled.</source>
     </message>
     <message>
         <source>Navigate using the available tabs (above), the tree menu (left) and the content list (middle).</source>
-        <translation>Naviga utilizzando i tasti disponibili (in alto), il menù ad albero (a sinistra) e l&apos;elenco dei contenuti (al centro).</translation>
+        <translation>Naviga utilizzando le schede disponibili (in alto), il menù ad albero (a sinistra) e l&apos;elenco dei contenuti (al centro).</translation>
     </message>
 </context>
 <context>
@@ -9577,7 +9691,7 @@ Note: The packages will not be uninstalled.</source>
     </message>
     <message>
         <source>Navigate using the available tabs (above), the tree menu (left) and the content list (middle).</source>
-        <translation>Naviga utilizzando i tasti disponibili (in alto), il menù ad albero (a sinistra) e l&apos;elenco dei contenuti (al centro).</translation>
+        <translation>Naviga utilizzando le schede disponibili (in alto), il menù ad albero (a sinistra) e l&apos;elenco dei contenuti (al centro).</translation>
     </message>
 </context>
 <context>
@@ -10760,11 +10874,11 @@ Note: The packages will not be uninstalled.</source>
     </message>
     <message>
         <source>First name</source>
-        <translation>Cognome</translation>
+        <translation>Nome</translation>
     </message>
     <message>
         <source>Last name</source>
-        <translation>Nome</translation>
+        <translation>Cognome</translation>
     </message>
     <message>
         <source>Company</source>
@@ -11006,6 +11120,201 @@ Note: The packages will not be uninstalled.</source>
     <message>
         <source>Click this button to store changes if you have modified quantity and/or option values.</source>
         <translation>Premi questo pulsante per registrare le modifiche se hai modificato la quantità e/o i valori opzionali.</translation>
+    </message>
+</context>
+<context>
+    <name>design/admin/state/edit</name>
+    <message>
+        <source>The content object state was successfully stored.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The content object state could not be stored.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Required data is either missing or is invalid</source>
+        <translation type="unfinished">I dati richiesti sono mancanti o non corretti</translation>
+    </message>
+    <message>
+        <source>Edit content object state &quot;%state_name&quot;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>New content object state</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save changes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save changes to this states.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Annulla</translation>
+    </message>
+    <message>
+        <source>Cancel saving any changes.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>design/admin/state/group</name>
+    <message>
+        <source>Object states in this group [%state_count]</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Invert selection.</source>
+        <translation type="unfinished">Inverti selezione.</translation>
+    </message>
+    <message>
+        <source>ID</source>
+        <translation type="unfinished">ID</translation>
+    </message>
+    <message>
+        <source>Identifier</source>
+        <translation type="unfinished">Identificatore</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation type="unfinished">Nome</translation>
+    </message>
+    <message>
+        <source>Object count</source>
+        <translation type="unfinished">Numero oggetti</translation>
+    </message>
+    <message>
+        <source>Order</source>
+        <translation type="unfinished">Ordine</translation>
+    </message>
+    <message>
+        <source>Select content object state group for removal.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove selected</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove selected states.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Create new</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Create a new state.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Update ordering</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Update the order of the content object states in this group.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>design/admin/state/group_edit</name>
+    <message>
+        <source>Edit content object state group &quot;%group_name&quot;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>New content object state group</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save changes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save changes to this state group.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Annulla</translation>
+    </message>
+    <message>
+        <source>Cancel saving any changes.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Create</source>
+        <translation type="unfinished">Crea</translation>
+    </message>
+    <message>
+        <source>Create this state group.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel creating this state group.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>design/admin/state/groups</name>
+    <message>
+        <source>The content object state group was successfully stored.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The content object state group could not be stored.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Required data is either missing or is invalid</source>
+        <translation type="unfinished">I dati richiesti sono mancanti o non corretti</translation>
+    </message>
+    <message>
+        <source>Invert selection.</source>
+        <translation type="unfinished">Inverti selezione.</translation>
+    </message>
+    <message>
+        <source>ID</source>
+        <translation type="unfinished">ID</translation>
+    </message>
+    <message>
+        <source>Identifier</source>
+        <translation type="unfinished">Identificatore</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation type="unfinished">Nome</translation>
+    </message>
+    <message>
+        <source>Select content object state group for removal.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove selected</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove selected state groups.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Create new</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Create a new state group.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>design/admin/state_groups</name>
+    <message>
+        <source>Content object state groups [%group_count]</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -11284,7 +11593,7 @@ Note: The packages will not be uninstalled.</source>
     </message>
     <message>
         <source>Your account was successfully created.</source>
-        <translation>Account creato con successo.</translation>
+        <translation>La creazione del tuo account è riuscita.</translation>
     </message>
     <message>
         <source>OK</source>
@@ -11294,7 +11603,7 @@ Note: The packages will not be uninstalled.</source>
         <source>Your account was successfully created. An email will be sent to the specified
 email address. Follow the instructions in that mail to activate
 your account.</source>
-        <translation>Il tuo account è stato creato con successo. Un&apos; email verrà inviata all&apos;indirizzo email specificato. Segui le istruzioni che troverai nel messaggio per attivare il tuo account.</translation>
+        <translation>La creazione del tuo account è riuscita. Un&apos;email verrà inviata all&apos;indirizzo email specificato. Segui le istruzioni che troverai nel messaggio per attivare il tuo account.</translation>
     </message>
 </context>
 <context>
@@ -11430,7 +11739,7 @@ your account.</source>
     </message>
     <message>
         <source>The password was successfully changed.</source>
-        <translation>Password modificata con successo.</translation>
+        <translation>Modifica password riuscita.</translation>
     </message>
     <message>
         <source>Change password for &lt;%username&gt;</source>
@@ -11524,7 +11833,7 @@ your account.</source>
     </message>
     <message>
         <source>Account has been locked because the maximum number of failed login attempts was exceeded.</source>
-        <translation type="unfinished"></translation>
+        <translation>L&apos;account è stato bloccato a causa del superamento del numero massimo di tentativi di login falliti.</translation>
     </message>
 </context>
 <context>
@@ -11618,7 +11927,7 @@ your account.</source>
     </message>
     <message>
         <source>View (without children)</source>
-        <translation>Vista (senza figli)</translation>
+        <translation>Visualizzazione (senza figli)</translation>
     </message>
     <message>
         <source>Any</source>
@@ -12381,7 +12690,7 @@ your account.</source>
     </message>
     <message>
         <source>Read more...</source>
-        <translation>Leggi...</translation>
+        <translation>Leggi tutto...</translation>
     </message>
     <message>
         <source>Contact information</source>
@@ -12774,7 +13083,7 @@ your account.</source>
     </message>
     <message>
         <source>Powered by %linkStartTag eZ Publish&amp;reg;&amp;trade; open source content management system %linkEndTag and development framework.</source>
-        <translation>Powered by %linkStartTag eZ publish&amp;reg;&amp;trade; open source content management system %linkEndTag and development framework.</translation>
+        <translation>Powered by %linkStartTag eZ Publish&amp;reg;&amp;trade; open source content management system %linkEndTag and development framework.</translation>
     </message>
     <message>
         <source>Powered by %linkStartTag eZ Publish&amp;reg; open source content management system %linkEndTag and development framework.</source>
@@ -13401,7 +13710,7 @@ your account.</source>
     </message>
     <message>
         <source>View mode</source>
-        <translation>Modalità vista</translation>
+        <translation>Modalità visualizzazione</translation>
     </message>
     <message>
         <source>Combo box</source>
@@ -13409,7 +13718,7 @@ your account.</source>
     </message>
     <message>
         <source>Icon view</source>
-        <translation>Vista Icona</translation>
+        <translation>Visualizzazione icona</translation>
     </message>
     <message>
         <source>VAT</source>
@@ -13465,7 +13774,7 @@ your account.</source>
     </message>
     <message>
         <source>icon view</source>
-        <translation>vista icona</translation>
+        <translation>Visualizzazione icona</translation>
     </message>
     <message>
         <source>Default VAT</source>
@@ -13591,6 +13900,26 @@ your account.</source>
         <source>Ini File: </source>
         <translation>File Ini: </translation>
     </message>
+    <message>
+        <source>Use seconds</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Second</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Silverlight</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tag preset</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>seconds(s)</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>design/standard/class/datatype </name>
@@ -13615,7 +13944,7 @@ your account.</source>
     </message>
     <message>
         <source>Input was stored successfully</source>
-        <translation>Inserimento registrato con successo</translation>
+        <translation>Registrazione inserimento riuscita</translation>
     </message>
     <message>
         <source>Attributes</source>
@@ -14045,7 +14374,7 @@ your account.</source>
         <source>This email is to inform you that &quot;%objectname&quot; awaits your attention at %sitename.
 The publishing process has been halted and it is up to you to decide if it should continue or stop.
 The approval can be viewed by using the URL below.</source>
-        <translation>Questa email ti informa che &quot;%objectname&quot; attende la tua approvazione su %sitename.Il processo di pubblicazione è stato arrestato e dipende da te decidere se farlo proseguire o fermarlo.L&apos;approvazione può essere vista usando la URL sottostante.</translation>
+        <translation>Questa email ti informa che &quot;%objectname&quot; attende la tua approvazione su %sitename. Il processo di pubblicazione è stato arrestato e dipende da te decidere se farlo proseguire o fermarlo. L&apos;approvazione può essere visualizzata usando la URL sottostante.</translation>
     </message>
     <message>
         <source>Do you want to send a message to the person approving it?</source>
@@ -14670,7 +14999,7 @@ Se vuoi inviare commenti all&apos;approvatore o vederne lo stato usa la URL sott
     </message>
     <message>
         <source>New file for upload</source>
-        <translation>Nuovo file per l&apos;upload</translation>
+        <translation>Nuovo file da caricare</translation>
     </message>
     <message>
         <source>Current image</source>
@@ -14686,7 +15015,7 @@ Se vuoi inviare commenti all&apos;approvatore o vederne lo stato usa la URL sott
     </message>
     <message>
         <source>New image file for upload</source>
-        <translation>Nuovo file immagine per l&apos;upload</translation>
+        <translation>Nuovo file immagine da caricare</translation>
     </message>
     <message>
         <source>Select row for removal.</source>
@@ -14906,7 +15235,7 @@ Se vuoi inviare commenti all&apos;approvatore o vederne lo stato usa la URL sott
     </message>
     <message>
         <source>Using tag &apos;%tagname&apos; with class &apos;%class&apos; is not allowed.</source>
-        <translation>Non è permesso usare la tag &apos;%tagname&apos; con la classe &apos;%class&apos;.</translation>
+        <translation>Non è permesso usare la stringa &apos;%tagname&apos; con la classe &apos;%class&apos;.</translation>
     </message>
     <message>
         <source>Add group</source>
@@ -14983,6 +15312,14 @@ Se vuoi inviare commenti all&apos;approvatore o vederne lo stato usa la URL sott
     <message>
         <source>Published</source>
         <translation>Pubblicato</translation>
+    </message>
+    <message>
+        <source>Second</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Silverlight</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -15176,7 +15513,7 @@ Se vuoi inviare commenti all&apos;approvatore o vederne lo stato usa la URL sott
     </message>
     <message>
         <source>Input was stored successfully</source>
-        <translation>Inserimento registrato con successo</translation>
+        <translation>Registrazione inserimento riuscita</translation>
     </message>
     <message>
         <source>Confirm</source>
@@ -15606,11 +15943,11 @@ Puoi sia contattare la persona per la bozza che creare una nuova bozza per una m
     </message>
     <message>
         <source>Versionview not supported in PDF yet</source>
-        <translation>La vista delle versioni non è ancora disponibile nel modulo PDF</translation>
+        <translation>La visualizzazione delle versioni non è ancora disponibile nel modulo PDF</translation>
     </message>
     <message>
         <source>eZ Publish PDF export</source>
-        <translation>Esportazione in PDf di eZ publish</translation>
+        <translation>Esportazione in PDf di eZ Publish</translation>
     </message>
 </context>
 <context>
@@ -15937,7 +16274,7 @@ Puoi sia contattare la persona per la bozza che creare una nuova bozza per una m
     </message>
     <message>
         <source>Click here to upload a file. The file will be placed within the location that is specified using the dropdown menu on the top.</source>
-        <translation>Clicca qui  per caricare un file. Il file verrà inserito nella collocazione selezionata usando il menù a cascata in alto.</translation>
+        <translation>Clicca qui per caricare un file. Il file verrà inserito nella collocazione selezionata usando il menù a cascata in alto.</translation>
     </message>
     <message>
         <source>Name</source>
@@ -16191,7 +16528,8 @@ Puoi sia contattare la persona per la bozza che creare una nuova bozza per una m
     <message>
         <source>These are the current objects you are working on. The drafts are owned by you and can only be seen by you.
       You can either edit the drafts or remove them if you do not need them any more.</source>
-        <translation>Questi sono gli oggetti correnti sui quali stai lavorando. Le bozze sono di tua proprietà e possono essere viste solo da te.      Puoi modificare le bozze o eliminarle se non ti servono più.</translation>
+        <translation>Questi sono gli oggetti correnti sui quali stai lavorando. Le bozze sono di tua proprietà e possono essere viste solo da te.
+      Puoi modificare le bozze o eliminarle se non ti servono più.</translation>
     </message>
     <message>
         <source>Please choose where you want the default selection of object relation to start from.
@@ -16199,7 +16537,11 @@ Puoi sia contattare la persona per la bozza che creare una nuova bozza per una m
     Select the placement then click the %buttonname button.
     Using the recent and bookmark items for quick placement is also possible.
     Click on placement names to change the browse listing.</source>
-        <translation>Scegli  dove vuoi iniziare la selezione predefinita della relazione oggetti.    Scegli la collocazione e premi il pulsante %buttonname.    È possibile usare gli elementi preferiti e recenti per una veloce collocazione.    Clicca sui nomi delle collocazioni per modificare l&apos;elenco da sfogliare.</translation>
+        <translation>Scegli dove vuoi iniziare la selezione predefinita della relazione oggetti.
+
+    Scegli la collocazione e premi il pulsante %buttonname.
+    È possibile usare gli elementi preferiti e recenti per una veloce collocazione.
+    Clicca sui nomi delle collocazioni per modificare l&apos;elenco da sfogliare.</translation>
     </message>
     <message>
         <source>Please choose where you want to place the new %classname.
@@ -16207,7 +16549,11 @@ Puoi sia contattare la persona per la bozza che creare una nuova bozza per una m
     Select the placement then click the %buttonname button.
     Using the recent and bookmark items for quick placement is also possible.
     Click on placement names to change the browse listing.</source>
-        <translation>Scegli dove vuoi collocare il nuovo %classname.   Seleziona la collocazione e premi il pulsante %buttonname.   È possibile usare gli elementi preferiti e recenti per una veloce collocazione.   Clicca sui nomi delle collocazioni per modificare l&apos;elenco da sfogliare.</translation>
+        <translation>Scegli dove vuoi collocare il nuovo %classname.
+
+    Seleziona la collocazione e premi il pulsante %buttonname.
+    È possibile usare gli elementi preferiti e recenti per una veloce collocazione.
+    Clicca sui nomi delle collocazioni per modificare l&apos;elenco da sfogliare.</translation>
     </message>
     <message>
         <source>These are the objects you have bookmarked. Click on an object to view it or if you have permission you can edit the object by clicking the edit button.
@@ -16224,7 +16570,11 @@ Puoi sia contattare la persona per la bozza che creare una nuova bozza per una m
     Select your items then click the %buttonname button.
     Using the recent and bookmark items for quick selection is also possible.
     Click on item names to change the browse listing.</source>
-        <translation>Scegli  gli elementi da aggiungere al tuo elenco dei preferiti.   Scegli  i tuoi elementi e premi il pulsante %buttonname.   È possibile usare gli elementi preferiti e recenti per una veloce collocazione.   Clicca sui nomi degli elementi per modificare l&apos;elenco da sfogliare.</translation>
+        <translation>Scegli gli elementi da aggiungere al tuo elenco dei preferiti.
+   
+Scegli i tuoi elementi e premi il pulsante %buttonname.
+   È possibile usare gli elementi preferiti e recenti per una veloce collocazione.
+   Clicca sui nomi degli elementi per modificare l&apos;elenco da sfogliare.</translation>
     </message>
     <message>
         <source>Please choose where you want to copy %objectname.
@@ -16232,7 +16582,11 @@ Puoi sia contattare la persona per la bozza che creare una nuova bozza per una m
     Select the new location then click the %buttonname button.
     Using the recent and bookmark items for quick placement is also possible.
     Click on placement names to change the browse listing.</source>
-        <translation>Scegli dove vuoi copiare %objectname.   Seleziona la nuova collocazione e premi il pulsante %buttonname.   È possibile usare gli elementi preferiti e recenti per una veloce collocazione.   Clicca sui nomi delle collocazioni per modificare l&apos;elenco da sfogliare.</translation>
+        <translation>Scegli dove vuoi copiare %objectname. 
+
+    Seleziona la nuova collocazione e premi il pulsante %buttonname.
+    È possibile usare gli elementi preferiti e recenti per una veloce collocazione.
+    Clicca sui nomi delle collocazioni per modificare l&apos;elenco da sfogliare.</translation>
     </message>
     <message>
         <source>Please choose where you want to copy subtree of node %node_name.
@@ -16288,7 +16642,11 @@ Puoi sia contattare la persona per la bozza che creare una nuova bozza per una m
     Select the node then click the %buttonname button.
     Using the recent and bookmark items for quick placement is also possible.
     Click on placement names to change the browse listing.</source>
-        <translation>Scegli quale node vuoi scambiare con %objectname.    Seleziona il nodo e premi il pulsante %buttonname.    È possibile usare gli elementi preferiti e recenti per una veloce collocazione.    Clicca sui nomi degli elementi per modificare l&apos;elenco da sfogliare.</translation>
+        <translation>Scegli quale node vuoi scambiare con %objectname.
+
+    Seleziona il nodo e premi il pulsante %buttonname.
+    È possibile usare gli elementi preferiti e recenti per una veloce collocazione.
+    Clicca sui nomi degli elementi per modificare l&apos;elenco da sfogliare.</translation>
     </message>
     <message>
         <source>Choose a file from your locale machine then click the &quot;Upload&quot; button. An object will be created according to file type and placed in your chosen location.
@@ -16305,7 +16663,7 @@ Puoi sia contattare la persona per la bozza che creare una nuova bozza per una m
     </message>
     <message>
         <source>[%classname] Click on the icon to display a context-sensitive menu.</source>
-        <translation>[%classname] Clicca sull icona per mostrare un menù appropriato.</translation>
+        <translation>[%classname] Clicca sull&apos; icona per mostrare un menù appropriato.</translation>
     </message>
 </context>
 <context>
@@ -16387,7 +16745,7 @@ Puoi sia contattare la persona per la bozza che creare una nuova bozza per una m
     </message>
     <message>
         <source>View (without children)</source>
-        <translation>Vista (senza figli)</translation>
+        <translation>Visualizzazione (senza figli)</translation>
     </message>
     <message>
         <source>Any</source>
@@ -16578,11 +16936,11 @@ Puoi sia contattare la persona per la bozza che creare una nuova bozza per una m
     </message>
     <message>
         <source>View not found</source>
-        <translation>Vista non trovata</translation>
+        <translation>Visualizzazione non trovata</translation>
     </message>
     <message>
         <source>View is disabled</source>
-        <translation>Vista disabilitata</translation>
+        <translation>Visualizzazione disabilitata</translation>
     </message>
     <message>
         <source>Module is disabled</source>
@@ -16610,15 +16968,15 @@ Puoi sia contattare la persona per la bozza che creare una nuova bozza per una m
     </message>
     <message>
         <source>The requested view %view could not be found in module %module</source>
-        <translation>La vista %view che hai richiesto non è stata trovata nel modulo %module</translation>
+        <translation>La visualizzazione %view che hai richiesto non è stata trovata nel modulo %module</translation>
     </message>
     <message>
         <source>The view does not exist for the module %module.</source>
-        <translation>La vista non esiste per il modulo %module.</translation>
+        <translation>La visualizzazione non esiste per il modulo %module.</translation>
     </message>
     <message>
         <source>The view %module/%view is disabled and cannot be accessed.</source>
-        <translation>La vista %module/%view è disabilitata e non puoi accedervi.</translation>
+        <translation>La visualizzazione %module/%view è disabilitata e non puoi accedervi.</translation>
     </message>
     <message>
         <source>The module %module is disabled and cannot be accessed.</source>
@@ -16850,7 +17208,7 @@ Puoi sia contattare la persona per la bozza che creare una nuova bozza per una m
     </message>
     <message>
         <source>Redirecting to %url</source>
-        <translation>Reindirizza a %url</translation>
+        <translation>Reindirizza su %url</translation>
     </message>
     <message>
         <source>New</source>
@@ -17083,7 +17441,7 @@ Se procedi verranno anche eliminati i figli.</translation>
     </message>
     <message>
         <source>Default object view.</source>
-        <translation>Vista predefinita dell&apos;oggetto.</translation>
+        <translation>Visualizzazione predefinita dell&apos;oggetto.</translation>
     </message>
     <message>
         <source>Node ID</source>
@@ -17370,11 +17728,11 @@ Puoi vederlo usando la URL sottostante.</translation>
     </message>
     <message>
         <source>Available wizards</source>
-        <translation>Wizard disponibili</translation>
+        <translation>Procedure guidate disponibili</translation>
     </message>
     <message>
         <source>Choose one of the following wizards for creating a package</source>
-        <translation>Scegli uno dei seguenti wizard per creare un pacchetto</translation>
+        <translation>Scegli una delle seguenti procedure guidate per creare un pacchetto</translation>
     </message>
     <message>
         <source>Class list</source>
@@ -17386,7 +17744,7 @@ Puoi vederlo usando la URL sottostante.</translation>
     </message>
     <message>
         <source>Package wizard: %wizardname</source>
-        <translation>Wizard pacchetto: %wizardname</translation>
+        <translation>Creazione guidata pacchetto: %wizardname</translation>
     </message>
     <message>
         <source>Install items</source>
@@ -17506,7 +17864,7 @@ Puoi vederlo usando la URL sottostante.</translation>
     </message>
     <message>
         <source>Package install wizard: %wizardname</source>
-        <translation>Wizard installazione pacchetto: %wizardname</translation>
+        <translation>Installazione guidata pacchetto: %wizardname</translation>
     </message>
     <message>
         <source>You must now choose which siteaccess the package contents should be installed to.
@@ -17581,10 +17939,6 @@ Se non sei sicuro, scegli il SiteAccess che riflette la parte utente del tuo sit
         <translation>Annulla</translation>
     </message>
     <message>
-        <source>Please select an extension to be exported.</source>
-        <translation>Sei pregato di selezionare un&apos;estensione da esportare.</translation>
-    </message>
-    <message>
         <source>Installing package</source>
         <translation>Installazione pacchetto</translation>
     </message>
@@ -17627,7 +17981,8 @@ Se non sei sicuro, scegli il SiteAccess che riflette la parte utente del tuo sit
     <message>
         <source>Please select a thumbnail file to be included in the package,
 if you do not want to have a thumbnail simply click Next.</source>
-        <translation>Seleziona un&apos;icona da includere nel pacchetto.Se non vuoi alcuna icona clicca Successivo.</translation>
+        <translation>Seleziona un&apos;icona da includere nel pacchetto,
+se non vuoi alcuna icona premi Successivo.</translation>
     </message>
     <message>
         <source>Unhandled installation error has occurred.</source>
@@ -17665,7 +18020,8 @@ The change will continue to the next change marker.</source>
     <message>
         <source>Select an image file to be included in the package then click Next.
 When you are done with adding images click Next without choosing an image.</source>
-        <translation>Seleziona un&apos;immagine da includere nel pacchetto e clicca Successivo.Quando hai finito di aggiungere immagini clicca Successivo senza scegliere nessuna immagine.</translation>
+        <translation>Seleziona un&apos;immagine da includere nel pacchetto e clicca Successivo.
+Quando hai finito di aggiungere immagini premi Successivo senza scegliere nessuna immagine.</translation>
     </message>
     <message>
         <source>If you want to change the placement click the browse button.</source>
@@ -17704,6 +18060,14 @@ Inoltre puoi eliminare il pacchetto senza disinstallarlo dalla lista dei pacchet
     <message>
         <source>Select the file containing the package then click the upload button</source>
         <translation>Seleziona il file contenente il pacchetto e premi il pulsante di caricamento</translation>
+    </message>
+    <message>
+        <source>Please select the extensions to be exported.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use content object modification and publication dates from the package.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -17778,7 +18142,7 @@ Inoltre puoi eliminare il pacchetto senza disinstallarlo dalla lista dei pacchet
     </message>
     <message>
         <source>Specify export properties. Default settings will probably be suitable for your needs.</source>
-        <translation>Specificare le proprietà di esportazione. Le impostazioni predefinite dovrebbero soddisfare le tue necessità.</translation>
+        <translation>Specifica le proprietà di esportazione. Le impostazioni predefinite dovrebbero soddisfare le tue necessità.</translation>
     </message>
     <message>
         <source>Include templates related to exported objects.</source>
@@ -18027,7 +18391,7 @@ menu on the top.</source>
     </message>
     <message>
         <source>Role view</source>
-        <translation>Vista ruolo</translation>
+        <translation>Visualizzazione ruolo</translation>
     </message>
     <message>
         <source>Edit</source>
@@ -18047,7 +18411,7 @@ menu on the top.</source>
     </message>
     <message>
         <source>Give access to module</source>
-        <translation>Dai accesso al modulo</translation>
+        <translation>Dài accesso al modulo</translation>
     </message>
     <message>
         <source>Module</source>
@@ -18423,6 +18787,18 @@ menu on the top.</source>
         <source>Use this field to enter the base URL of your site. It is used to produce the URLs in the export, composed by the Site URL (e.g. &quot;http://www.example.com/index.php&quot;) and the path to the object (e.g. &quot;/articles/my_article&quot;). The Site URL depends on your Web server and eZ Publish configuration.</source>
         <translation>Usa questo campo per inserire la URL di base del tuo sito web. Viene usata per produrre le URL nell&apos;esportazione, composta dal Site URL (es. &quot;http://www.esempio.com/index.php&quot;) e dal percorso dell&apos;oggetto (e.g. &quot;/articoli/miei_articoli&quot;). La Site URL dipende dal tuo webserver e dalla configurazione di eZ Publish.</translation>
     </message>
+    <message>
+        <source>Category</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>optional</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Skip</source>
+        <translation type="unfinished">Salta</translation>
+    </message>
 </context>
 <context>
     <name>design/standard/rss/list</name>
@@ -18629,11 +19005,11 @@ menu on the top.</source>
     </message>
     <message>
         <source>View cache is enabled.</source>
-        <translation>Cache Vista contenuto abilitata.</translation>
+        <translation>Cache visualizzazione contenuto abilitata.</translation>
     </message>
     <message>
         <source>View cache is disabled.</source>
-        <translation>Cache Vista contenuto disabilitata.</translation>
+        <translation>Cache visualizzazione contenuto disabilitata.</translation>
     </message>
     <message>
         <source>Clear</source>
@@ -18653,7 +19029,7 @@ menu on the top.</source>
     </message>
     <message>
         <source>Datatype wizard</source>
-        <translation>Wizard dei datatype</translation>
+        <translation>Creazione guidata dei datatype</translation>
     </message>
     <message>
         <source>Start</source>
@@ -18826,7 +19202,7 @@ Usando %datatypename potrai ...</translation>
     </message>
     <message>
         <source>Template operator wizard</source>
-        <translation>Wizard dell&apos;operatore dei template</translation>
+        <translation>Creazione guidata dell&apos;operatore dei template</translation>
     </message>
     <message>
         <source>Create new template override for</source>
@@ -18882,7 +19258,7 @@ Usando %datatypename potrai ...</translation>
     </message>
     <message>
         <source>View ( without children )</source>
-        <translation>Vista (senza figli)</translation>
+        <translation>Visualizzazione (senza figli)</translation>
     </message>
     <message>
         <source>Object</source>
@@ -18997,7 +19373,7 @@ Usando %operatorname potrai ...</translation>
     </message>
     <message>
         <source>Template view</source>
-        <translation>Vista template</translation>
+        <translation>Visualizzazione template</translation>
     </message>
     <message>
         <source>Default template resource</source>
@@ -19215,7 +19591,7 @@ Usando %operatorname potrai ...</translation>
     </message>
     <message>
         <source>Database check OK</source>
-        <translation>Controllo Database OK</translation>
+        <translation>Controllo database OK</translation>
     </message>
     <message>
         <source>Warning, your database is not consistent with the distribution database.</source>
@@ -19227,7 +19603,7 @@ Usando %operatorname potrai ...</translation>
     </message>
     <message>
         <source>Check database</source>
-        <translation>Controllo Database</translation>
+        <translation>Controllo database</translation>
     </message>
     <message>
         <source>Any</source>
@@ -19343,7 +19719,8 @@ Usando %operatorname potrai ...</translation>
         <source>If you want you can add some example code to explain how your operator should work.
 The default code was made from the basic parameters you chose.</source>
         <comment>Template operator</comment>
-        <translation>Volendo puoi aggiungere del codice di esempio per spiegare come il tuo operatore dovrebbe funzionare.Il codice predefinito è stato fatto dai parametri di base che hai scelto.</translation>
+        <translation>Volendo puoi aggiungere del codice di esempio per spiegare come il tuo operatore dovrebbe funzionare.
+Il codice predefinito è stato ricavato dai parametri di base che hai scelto.</translation>
     </message>
     <message>
         <source>Siteaccess</source>
@@ -19388,7 +19765,7 @@ The default code was made from the basic parameters you chose.</source>
     <message>
         <source>Class constant name</source>
         <comment>Datatype</comment>
-        <translation type="unfinished"></translation>
+        <translation>Nome costante della classe</translation>
     </message>
 </context>
 <context>
@@ -19442,11 +19819,11 @@ The default code was made from the basic parameters you chose.</source>
     </message>
     <message>
         <source>configuration option you enable PHP to access MySQL databases. If you use this option without specifying the path to MySQL, PHP will use the built-in MySQL client libraries.</source>
-        <translation>opzione di configurazione abiliterai PHP ad accedere al database MySQL. Se usi questa opzione senza specificare la path a MySQL, PHP userà  le librerie client di sistema di MySQL.</translation>
+        <translation>opzione di configurazione abiliterai PHP ad accedere al database MySQL. Se usi questa opzione senza specificare il percorso di MySQL, PHP userà le librerie client predefinite di MySQL.</translation>
     </message>
     <message>
         <source>More information on the MySQL extension can be found at</source>
-        <translation>Maggiori informazioni sull&apos;estensione di MySQL possono essere trovate presso</translation>
+        <translation>Maggiori informazioni sull&apos;estensione di MySQL si trovano</translation>
     </message>
     <message>
         <source>PostgreSQL</source>
@@ -19474,7 +19851,7 @@ The default code was made from the basic parameters you chose.</source>
     </message>
     <message>
         <source>More information on the PostgreSQL extension can be found at</source>
-        <translation>Maggiori informazioni sull&apos;estensione di PostgreSQL possono essere trovate presso</translation>
+        <translation>Maggiori informazioni sull&apos;estensione di PostgreSQL si trovano</translation>
     </message>
     <message>
         <source>From their homepage</source>
@@ -19494,25 +19871,29 @@ The default code was made from the basic parameters you chose.</source>
     </message>
     <message>
         <source>MySQL Improved</source>
-        <translation type="unfinished"></translation>
+        <translation>MySQL Avanzato</translation>
     </message>
     <message>
         <source>configuration option you enable PHP to access MySQL databases through the MySQL Improved extension. If you use this option without specifying the path to MySQL, PHP will use the built-in MySQL client libraries.</source>
-        <translation type="unfinished"></translation>
+        <translation>opzione di configurazione con la quale si abilita PHP ad accedere ai database MySQL tramite l&apos;estensione MySQL avanzato. Usando questa opzione senza specificare il percorso a MySQL, PHP userà le librerie del client MySQL standard.</translation>
     </message>
     <message>
         <source>More information on the MySQLi extension can be found at</source>
-        <translation type="unfinished"></translation>
+        <translation>Maggiori informazioni sull&apos;estensione di MySQLi si trovano</translation>
     </message>
 </context>
 <context>
     <name>design/standard/setup/extensions</name>
     <message>
         <source>Regenerate autoload arrays for extensions</source>
-        <translation type="unfinished"></translation>
+        <translation>Rigenera gli autoload arrays per le estensioni</translation>
     </message>
     <message>
         <source>Click this button to regenerate the autoload arrays used by the system for extensions.</source>
+        <translation>Premi questo pulsante per rigenerare gli autoload arrays usati dal sistema per le estensioni.</translation>
+    </message>
+    <message>
+        <source>Problems detected during autoload generation:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -19520,1358 +19901,1365 @@ The default code was made from the basic parameters you chose.</source>
     <name>design/standard/setup/init</name>
     <message>
         <source>Install demo data?</source>
-        <translation type="unfinished"></translation>
+        <translation>Installa dati demo?</translation>
     </message>
     <message>
         <source>Cannot install demo data, the zlib extension is missing from your PHP installation.</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossibile installare dati demo, l&apos;estensione zlib manca dalla tua installazione di PHP.</translation>
     </message>
     <message>
         <source>does not support installing demo data at this point.</source>
-        <translation type="unfinished"></translation>
+        <translation>non supporta l&apos;installazione di dati demo a questo punto.</translation>
     </message>
     <message>
         <source>Demo data failure</source>
-        <translation type="unfinished"></translation>
+        <translation>Installazione dati demo non riuscita</translation>
     </message>
     <message>
         <source>Could not unpack the demo data.</source>
-        <translation type="unfinished"></translation>
+        <translation>I dati demo non possono essere scompattati.</translation>
     </message>
     <message>
         <source>You should try to install without demo data.</source>
-        <translation type="unfinished"></translation>
+        <translation>Prova ad installare senza i dati demo.</translation>
     </message>
     <message>
         <source>Initialization failed</source>
-        <translation type="unfinished"></translation>
+        <translation>Inizializzazione non riuscita</translation>
     </message>
     <message>
         <source>The database could not be properly initialized.</source>
-        <translation type="unfinished"></translation>
+        <translation>Il database non può essere inizializzato correttamente.</translation>
     </message>
     <message>
         <source>Warning</source>
-        <translation type="unfinished">Attenzione</translation>
+        <translation>Attenzione</translation>
     </message>
     <message>
         <source>Your database already contains data.</source>
-        <translation type="unfinished"></translation>
+        <translation>Il tuo database contiene già dei dati.</translation>
     </message>
     <message>
         <source>The setup can continue with the initialization but may damage the present data.</source>
-        <translation type="unfinished"></translation>
+        <translation>La configuazione può proseguire con l&apos;inizializzazione ma può danneggiare i dati presenti.</translation>
     </message>
     <message>
         <source>What do you want the setup to do?</source>
-        <translation type="unfinished"></translation>
+        <translation>Cosa vuoi che faccia la configurazione?</translation>
     </message>
     <message>
         <source>Continue but leave the data as it is.</source>
-        <translation type="unfinished"></translation>
+        <translation>Continua ma lascia i dati come sono.</translation>
     </message>
     <message>
         <source>Let me choose a new database.</source>
-        <translation type="unfinished"></translation>
+        <translation>Fammi scegliere un altro database.</translation>
     </message>
     <message>
         <source>Language Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Opzioni Lingue</translation>
     </message>
     <message>
         <source>no</source>
-        <translation type="unfinished"></translation>
+        <translation>no</translation>
     </message>
     <message>
         <source>yes</source>
-        <translation type="unfinished"></translation>
+        <translation>sì</translation>
     </message>
     <message>
         <source>Configure</source>
-        <translation type="unfinished"></translation>
+        <translation>Configura</translation>
     </message>
     <message>
         <source>button.</source>
-        <translation type="unfinished"></translation>
+        <translation>pulsante.</translation>
     </message>
     <message>
         <source>No finetuning is required on your system, you can continue by clicking the</source>
-        <translation type="unfinished"></translation>
+        <translation>Non si richiede alcuna messa a punto del sistema, continua cliccando il</translation>
     </message>
     <message>
         <source>Next</source>
-        <translation type="unfinished">Successivo</translation>
+        <translation>Successivo</translation>
     </message>
     <message>
         <source>The system check found some issues that, when resolved, may give improved performance or more features. Please have a look through the results below for more information on what might be done. Each issue will give you instructions on how to do the finetuning.</source>
-        <translation type="unfinished"></translation>
+        <translation>Il controllo del sistema ha rilevato alcuni problemi che, se risolti, possono migliorare le prestazioni o aggiungere funzioni. Sei pregato di dare un&apos;occhiata ai risultati sottostanti per sapere di più sul da farsi. Per ogni problema ti verranno date le istruzioni per la messa a punto.</translation>
     </message>
     <message>
         <source>After you have fixed the problems click the</source>
-        <translation type="unfinished"></translation>
+        <translation>Dopo aver risolto i problemi premi</translation>
     </message>
     <message>
         <source>button to re-run the system checking. This is recommended after system changes to check for critical failures. You can also click the</source>
-        <translation type="unfinished"></translation>
+        <translation>pulsante per far ripartire il controllo del sistema. Si consiglia di effettuare questa operazione dopo aver modificato il sistema per sicurezza. Puoi anche premere il</translation>
     </message>
     <message>
         <source>Check Again</source>
-        <translation type="unfinished"></translation>
+        <translation>Ricontrolla</translation>
     </message>
     <message>
         <source>Issues</source>
-        <translation type="unfinished"></translation>
+        <translation>Problemi</translation>
     </message>
     <message>
         <source>Failed writing</source>
-        <translation type="unfinished"></translation>
+        <translation>Scrittura non riuscita</translation>
     </message>
     <message>
         <source>The setup could not write to the file.</source>
-        <translation type="unfinished"></translation>
+        <translation>L&apos;installazione non può scrivere il file.</translation>
     </message>
     <message>
         <source>The setup could not get write access to the</source>
-        <translation type="unfinished"></translation>
+        <translation>L&apos;installazione non ha accesso di scrittura alla</translation>
     </message>
     <message>
         <source>directory. This is required to disable the initialization. Following the instructions found in</source>
-        <translation type="unfinished"></translation>
+        <translation>directory. Ciò è richiesto per disabilitare l&apos;inizializzazione. Seguendo le istruzioni che si trovano in</translation>
     </message>
     <message>
         <source>Try Again</source>
-        <translation type="unfinished"></translation>
+        <translation>Riprova</translation>
     </message>
     <message>
         <source>Change the second line from</source>
-        <translation type="unfinished"></translation>
+        <translation>Modifica la seconda riga da</translation>
     </message>
     <message>
         <source>to</source>
-        <translation type="unfinished"></translation>
+        <translation>in</translation>
     </message>
     <message>
         <source>The setup is now disabled, click</source>
-        <translation type="unfinished"></translation>
+        <translation>Ora l&apos;istallazione è disabilitata, clicca</translation>
     </message>
     <message>
         <source>to get back to the site.</source>
-        <translation type="unfinished"></translation>
+        <translation>per tornare al sito.</translation>
     </message>
     <message>
         <source>You can choose from either</source>
-        <translation type="unfinished"></translation>
+        <translation>Puoi scegliere sia</translation>
     </message>
     <message>
         <source>sendmail</source>
-        <translation type="unfinished"></translation>
+        <translation>sendmail</translation>
     </message>
     <message>
         <source>SMTP</source>
-        <translation type="unfinished"></translation>
+        <translation>SMTP</translation>
     </message>
     <message>
         <source>Password</source>
-        <translation type="unfinished">Password</translation>
+        <translation>Password</translation>
     </message>
     <message>
         <source>Done</source>
-        <translation type="unfinished"></translation>
+        <translation>Fatto</translation>
     </message>
     <message>
         <source>Summary</source>
-        <translation type="unfinished">Riepilogo</translation>
+        <translation>Riepilogo</translation>
     </message>
     <message>
         <source>button, or the</source>
-        <translation type="unfinished"></translation>
+        <translation>pulsante, o il</translation>
     </message>
     <message>
         <source>Language Details</source>
-        <translation type="unfinished"></translation>
+        <translation>Dettagli Lingue</translation>
     </message>
     <message>
         <source>button to select language variations.</source>
-        <translation type="unfinished"></translation>
+        <translation>pulsante per selezionare le variazioni della lingua.</translation>
     </message>
     <message>
         <source>The languages you choose will help determine the charset to use on the site.</source>
-        <translation type="unfinished"></translation>
+        <translation>Le lingue che hai scelto determineranno il charset da usare per il sito.</translation>
     </message>
     <message>
         <source>Language name</source>
-        <translation type="unfinished">Nome lingua</translation>
+        <translation>Nome lingua</translation>
     </message>
     <message>
         <source>Selection</source>
-        <translation type="unfinished">Selezione</translation>
+        <translation>Selezione</translation>
     </message>
     <message>
         <source>Default</source>
-        <translation type="unfinished">Valore predefinito</translation>
+        <translation>Valore predefinito</translation>
     </message>
     <message>
         <source>Send Registration</source>
-        <translation type="unfinished"></translation>
+        <translation>Invia registrazione</translation>
     </message>
     <message>
         <source>Skip Registration</source>
-        <translation type="unfinished"></translation>
+        <translation>Salta la registrazione</translation>
     </message>
     <message>
         <source>What kind of language support should this site have. The type of support determines the language selection and charset.</source>
-        <translation type="unfinished"></translation>
+        <translation>Che genere di supporto linguistico il sito dovrà avere. Il tipo di supporto determinerà la selezione della lingua e il charset.</translation>
     </message>
     <message>
         <source>Monolingual (one language)</source>
-        <translation type="unfinished"></translation>
+        <translation>Monolingua (una lingua)</translation>
     </message>
     <message>
         <source>Multilingual (multiple languages with one charset)</source>
-        <translation type="unfinished"></translation>
+        <translation>Multilingua (più lingue con un charset)</translation>
     </message>
     <message>
         <source>Multilingual (Unicode, no limit)</source>
-        <translation type="unfinished"></translation>
+        <translation>Multilingua (Unicode, nessun limite)</translation>
     </message>
     <message>
         <source>Regional Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Opzioni Regionali</translation>
     </message>
     <message>
         <source>Here you will see a summary of the basic settings for your site. If you are satisfied with the settings you can click the</source>
-        <translation type="unfinished"></translation>
+        <translation>Di seguito troverai un riassunto delle impostazioni di base del tuo sito. Se sei soddisfatto delle impostazioni puoi premere il</translation>
     </message>
     <message>
         <source>Setup Database</source>
-        <translation type="unfinished"></translation>
+        <translation>Impostazione Database</translation>
     </message>
     <message>
         <source>However if you want to change your settings click the</source>
-        <translation type="unfinished"></translation>
+        <translation>Comunque se vuoi cambiare le tue impostazioni premi il</translation>
     </message>
     <message>
         <source>Start Over</source>
-        <translation type="unfinished"></translation>
+        <translation>Comincia</translation>
     </message>
     <message>
         <source>button which will restart the collecting of information (Existing settings are kept).</source>
-        <translation type="unfinished"></translation>
+        <translation>pulsante che farà ripartire la raccolta delle infomazioni (Le impostazioni esistenti vengono mantenute).</translation>
     </message>
     <message>
         <source>Database settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Impostazioni database</translation>
     </message>
     <message>
         <source>Database</source>
-        <translation type="unfinished">Database</translation>
+        <translation>Database</translation>
     </message>
     <message>
         <source>Driver</source>
-        <translation type="unfinished"></translation>
+        <translation>Driver</translation>
     </message>
     <message>
         <source>Unicode support</source>
-        <translation type="unfinished"></translation>
+        <translation>Supporto Unicode</translation>
     </message>
     <message>
         <source>Language settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Impostazioni lingua</translation>
     </message>
     <message>
         <source>Language type</source>
-        <translation type="unfinished"></translation>
+        <translation>Tipo lingua</translation>
     </message>
     <message>
         <source>Monolingual</source>
-        <translation type="unfinished"></translation>
+        <translation>Monolingua</translation>
     </message>
     <message>
         <source>Multilingual</source>
-        <translation type="unfinished"></translation>
+        <translation>Multilingua</translation>
     </message>
     <message>
         <source>Languages</source>
-        <translation type="unfinished">Lingue</translation>
+        <translation>Lingue</translation>
     </message>
     <message>
         <source>No problems was found with your system, you can continue by clicking the</source>
-        <translation type="unfinished"></translation>
+        <translation>Non è stato rilevato alcun problema nel sistema, continua cliccando il</translation>
     </message>
     <message>
         <source>Finetune System</source>
-        <translation type="unfinished"></translation>
+        <translation>Sistema di messa a punto</translation>
     </message>
     <message>
         <source>Please have a look through the results below for more information on what the problems are.</source>
-        <translation type="unfinished"></translation>
+        <translation>Sei pregato di dare un&apos;occhiata ai risultati sottostanti per saperne di più sui problemi rilevati.</translation>
     </message>
     <message>
         <source>Each problem will give you instructions on how to fix the problem.</source>
-        <translation type="unfinished"></translation>
+        <translation>Per ogni problema ti verranno date le istruzioni per risolverlo.</translation>
     </message>
     <message>
         <source>The database is ready for initialization, click the %1 button when ready.</source>
-        <translation type="unfinished"></translation>
+        <translation>Il database è pronto per essere inizializzato, quando sei pronto premi il pulsante  %1.</translation>
     </message>
     <message>
         <source>Continue</source>
-        <translation type="unfinished">Continua</translation>
+        <translation>Continua</translation>
     </message>
     <message>
         <source>Continue but remove the data first.</source>
-        <translation type="unfinished"></translation>
+        <translation>Continua ma prima rimuovi i dati.</translation>
     </message>
     <message>
         <source>Keep data and skip database initialization.</source>
-        <translation type="unfinished"></translation>
+        <translation>Mantieni i dati e salta l&apos;inizializzazione del database.</translation>
     </message>
     <message>
         <source>Type</source>
-        <translation type="unfinished">Tipo</translation>
+        <translation>Tipo</translation>
     </message>
     <message>
         <source>Click the %1 button to start the configuration process.</source>
-        <translation type="unfinished"></translation>
+        <translation>Premi il pulsante %1 per iniziare il processo di configurazione.</translation>
     </message>
     <message>
         <source>Username</source>
-        <translation type="unfinished">Nome utente</translation>
+        <translation>Nome utente</translation>
     </message>
     <message>
         <source>which must be available on the server or</source>
-        <translation type="unfinished"></translation>
+        <translation>che deve essere disponibile sul server o</translation>
     </message>
     <message>
         <source>ez.no</source>
-        <translation type="unfinished"></translation>
+        <translation>ez.no</translation>
     </message>
     <message>
         <source>Click on the URL to access your new %ezlink or click the %donebutton button. Enjoy one of the most successful web content management systems!</source>
-        <translation type="unfinished"></translation>
+        <translation>Clicca sull&apos; URL per accedere al tuo nuovo %ezlink o premi il pulsante %donebutton. Buon lavoro con uno dei sistemi di content management di maggior successo!</translation>
     </message>
     <message>
         <source>Change the second line from %false to %true.</source>
-        <translation type="unfinished"></translation>
+        <translation>Cambia la seconda riga da %false a %true.</translation>
     </message>
     <message>
         <source>The default username for the administrator is %1 and the default password is %2.</source>
-        <translation type="unfinished"></translation>
+        <translation>Il nome utente predefinito dell&apos;amministratore è %1 e la password predefinita è %2.</translation>
     </message>
     <message>
         <source>Database choice</source>
-        <translation type="unfinished"></translation>
+        <translation>Scelta database</translation>
     </message>
     <message>
         <source>The database would not accept the connection, please review your settings and try again.</source>
-        <translation type="unfinished"></translation>
+        <translation>Connessione al database rifiutata, sei pregato di ricontrollare le tue impostazioni e riprovare.</translation>
     </message>
     <message>
         <source>Password entries did not match.</source>
-        <translation type="unfinished"></translation>
+        <translation>Le password inserite non coincidono.</translation>
     </message>
     <message>
         <source>The selected database was not empty, please choose from the alternatives below.</source>
-        <translation type="unfinished"></translation>
+        <translation>Il database selezionato non è vuoto, scegli una delle alternative di seguito elencate.</translation>
     </message>
     <message>
         <source>Database initalization</source>
-        <translation type="unfinished"></translation>
+        <translation>Inizializzazione database</translation>
     </message>
     <message>
         <source>Email settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Impostazioni email</translation>
     </message>
     <message>
         <source>Finished</source>
-        <translation type="unfinished"></translation>
+        <translation>Completato</translation>
     </message>
     <message>
         <source>Language options</source>
-        <translation type="unfinished"></translation>
+        <translation>Opzioni lingua</translation>
     </message>
     <message>
         <source>Registration</source>
-        <translation type="unfinished"></translation>
+        <translation>Registrazione</translation>
     </message>
     <message>
         <source>Securing site</source>
-        <translation type="unfinished"></translation>
+        <translation>Messa in sicurezza del sito</translation>
     </message>
     <message>
         <source>Site access</source>
-        <translation type="unfinished">SiteAccess</translation>
+        <translation>SiteAccess</translation>
     </message>
     <message>
         <source>Site details</source>
-        <translation type="unfinished"></translation>
+        <translation>Dettagli del sito</translation>
     </message>
     <message>
         <source>Site template selection</source>
-        <translation type="unfinished"></translation>
+        <translation>Selezione del template del sito</translation>
     </message>
     <message>
         <source>System check</source>
-        <translation type="unfinished">Controllo sistema</translation>
+        <translation>Controllo sistema</translation>
     </message>
     <message>
         <source>Choose database system</source>
-        <translation type="unfinished"></translation>
+        <translation>Scegli il sistema del database</translation>
     </message>
     <message>
         <source>Next</source>
         <comment>next button in installation</comment>
-        <translation type="unfinished">Successivo</translation>
+        <translation>Successivo</translation>
     </message>
     <message>
         <source>here</source>
         <comment>link to unicode info</comment>
-        <translation type="unfinished">qui</translation>
+        <translation>qui</translation>
     </message>
     <message>
         <source>Database initialization</source>
-        <translation type="unfinished"></translation>
+        <translation>Inizializzazione database</translation>
     </message>
     <message>
         <source>If you are using MySQL and do not know what to enter in the socket field, leave it blank</source>
-        <translation type="unfinished"></translation>
+        <translation>Se usi MySQL e non sai cosa inserire nel campo socket, lascialo in bianco</translation>
     </message>
     <message>
         <source>Title</source>
-        <translation type="unfinished">Titolo</translation>
+        <translation>Titolo</translation>
     </message>
     <message>
         <source>URL</source>
-        <translation type="unfinished">URL</translation>
+        <translation>URL</translation>
     </message>
     <message>
         <source>User site</source>
-        <translation type="unfinished"></translation>
+        <translation>Sito utente</translation>
     </message>
     <message>
         <source>Admin site</source>
-        <translation type="unfinished"></translation>
+        <translation>Sito amministratore</translation>
     </message>
     <message>
         <source>Make sure to visit the %1 and the %2 web site.</source>
-        <translation type="unfinished"></translation>
+        <translation>Assicurati di visitare i siti web %1 e %2.</translation>
     </message>
     <message>
         <source>No Unicode support</source>
-        <translation type="unfinished"></translation>
+        <translation>Nessun supporto Unicode</translation>
     </message>
     <message>
         <source>The database server you connected to does not support Unicode which means that you cannot choose all the languages as you did.
 To fix this problem you must do one of the following:</source>
-        <translation type="unfinished"></translation>
+        <translation>Il database server al quale ti sei collegato non supporta Unicode per cui non puoi scegliere tutte le lingue come hai fatto.
+Per risolvere il problema devi eseguire una delle seguenti operazioni:</translation>
     </message>
     <message>
         <source>Make sure the database server is configured to use Unicode or that it has the latest software which supports Unicode.</source>
-        <translation type="unfinished"></translation>
+        <translation>Assicurati che il database server sia configurato per usare Unicode o che abbia l&apos;ultimo software che supporti Unicode.</translation>
     </message>
     <message>
         <source>These and other additional languages can also be installed later.</source>
-        <translation type="unfinished"></translation>
+        <translation>Questa ed altre lingue addizionali possono essere installate in seguito.</translation>
     </message>
     <message>
         <source>documentation</source>
         <comment>language information link</comment>
-        <translation type="unfinished"></translation>
+        <translation>Documentazione</translation>
     </message>
     <message>
         <source>Site registration</source>
-        <translation type="unfinished"></translation>
+        <translation>Registrazione sito</translation>
     </message>
     <message>
         <source>Site access configuration</source>
-        <translation type="unfinished"></translation>
+        <translation>Configurazione SiteAccess</translation>
     </message>
     <message>
         <source>URL (recommended)</source>
-        <translation type="unfinished"></translation>
+        <translation>URL (consigliato)</translation>
     </message>
     <message>
         <source>Port. Note: Requires web server configuration </source>
-        <translation type="unfinished"></translation>
+        <translation>Porta. Nota: Richiede la confiurazione del web server </translation>
     </message>
     <message>
         <source>Hostname. Note: Requires DNS setup.</source>
-        <translation type="unfinished"></translation>
+        <translation>Hostname. Nota: Richiede la configurazione del DNS.</translation>
     </message>
     <message>
         <source>The path determines access.</source>
-        <translation type="unfinished"></translation>
+        <translation>Il percorso determina l&apos;accesso.</translation>
     </message>
     <message>
         <source>e.g. %adminsite and %usersite</source>
-        <translation type="unfinished"></translation>
+        <translation>ad es. %adminsite e %usersite</translation>
     </message>
     <message>
         <source>Port</source>
-        <translation type="unfinished"></translation>
+        <translation>Porta</translation>
     </message>
     <message>
         <source>The port number determines access.*</source>
-        <translation type="unfinished"></translation>
+        <translation>Il numero della porta determina l&apos;accesso.*</translation>
     </message>
     <message>
         <source>Hostname</source>
-        <translation type="unfinished"></translation>
+        <translation>Hostname</translation>
     </message>
     <message>
         <source>The hostname determines access.*</source>
-        <translation type="unfinished"></translation>
+        <translation>L&apos;hostname determina l&apos;accesso.*</translation>
     </message>
     <message>
         <source>online documentation</source>
         <comment>site access documentation link</comment>
-        <translation type="unfinished"></translation>
+        <translation>documentazione online</translation>
     </message>
     <message>
         <source>You have chosen the same database for two or more site templates. Please change where indicated by *</source>
-        <translation type="unfinished"></translation>
+        <translation>Hai scelto lo stesso database per due o più templates del sito. Sei pregato di modificare dove indicato con *</translation>
     </message>
     <message>
         <source>Site url</source>
-        <translation type="unfinished"></translation>
+        <translation>URL Sito</translation>
     </message>
     <message>
         <source>Leave the data and add new</source>
-        <translation type="unfinished"></translation>
+        <translation>Lascia i vecchi dati ed aggiungi i nuovi</translation>
     </message>
     <message>
         <source>Remove existing data</source>
-        <translation type="unfinished"></translation>
+        <translation>Elimina i dati esistenti</translation>
     </message>
     <message>
         <source>Leave the data and do nothing</source>
-        <translation type="unfinished"></translation>
+        <translation>Lascia i dati e non fare nulla</translation>
     </message>
     <message>
         <source>documentation</source>
         <comment>site access documentation link</comment>
-        <translation type="unfinished"></translation>
+        <translation>documentazione</translation>
     </message>
     <message>
         <source>Select which sites you would like to install on your system.</source>
-        <translation type="unfinished"></translation>
+        <translation>Seleziona quali siti vuoi installare sul tuo sistema.</translation>
     </message>
     <message>
         <source>After you have fixed the problems click the %1 button to re-run the system checking. You may also ignore specific tests by clicking the check boxes.</source>
-        <translation type="unfinished"></translation>
+        <translation>Dopo aver risolto i problemi premi il pulsante %1 per far ripartire il controllo del sistema. Puoi anche ignorare i tests specifici selezionando i checkboxes.</translation>
     </message>
     <message>
         <source>Ignore this test</source>
-        <translation type="unfinished"></translation>
+        <translation>Ignora questo test</translation>
     </message>
     <message>
         <source>which will relay the emails. If unsure what to use, ask your webhost. Some webhosts do not support</source>
-        <translation type="unfinished"></translation>
+        <translation>che inoltrerà le emails. Se non sei sicuro cosa usare, chiedi al tuo webhost. Alcuni webhosts non lo supportano</translation>
     </message>
     <message>
         <source>Back</source>
         <comment>back button in installation</comment>
-        <translation type="unfinished">Indietro</translation>
+        <translation>Indietro</translation>
     </message>
     <message>
         <source>Refresh</source>
         <comment>Refresh button in installation</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ricarica</translation>
     </message>
     <message>
         <source>The system check found some issues that need to be resolved before the setup can continue.</source>
-        <translation type="unfinished"></translation>
+        <translation>Il controllo del sistema ha rilevato alcuni problemi che devono essere risolti prima che l&apos;installazione possa procedere. </translation>
     </message>
     <message>
         <source>This section will contain information/help about each step in the setup wizard.</source>
-        <translation type="unfinished"></translation>
+        <translation>Questa sezione conterrà informazioni e aiuti su ogni passo della procedura guidata di installazione.</translation>
     </message>
     <message>
         <source>The summary section below will contain information about configured settings.</source>
-        <translation type="unfinished"></translation>
+        <translation>La seguente sezione riassuntiva conterrà informazioni circa le impostazioni configurate.</translation>
     </message>
     <message>
         <source>here</source>
         <comment>manual installation link</comment>
-        <translation type="unfinished">qui</translation>
+        <translation>qui</translation>
     </message>
     <message>
         <source>Both MySQL and PostgreSQL support was detected on your system. Please choose the database system you would like to use.</source>
-        <translation type="unfinished"></translation>
+        <translation>Sono stati rilevati sul tuo sistema i supporti sia per MySQL che per PostgreSQL. Sei pregato di scegliere il sistema di database che vuoi utilizzare.</translation>
     </message>
     <message>
         <source>Please input database access information in the form below.</source>
-        <translation type="unfinished"></translation>
+        <translation>Sei pregato di inserire le informazioni per l&apos;accesso al database nel modulo sottostante.</translation>
     </message>
     <message>
         <source>SMTP is recommended for MS Windows users.</source>
-        <translation type="unfinished"></translation>
+        <translation>SMTP è raccomandato agli utenti MS Windows.</translation>
     </message>
     <message>
         <source>Server name: </source>
-        <translation type="unfinished"></translation>
+        <translation>Nome del server: </translation>
     </message>
     <message>
         <source>Username (optional): </source>
-        <translation type="unfinished"></translation>
+        <translation>Username (opzionale): </translation>
     </message>
     <message>
         <source>Password (optional): </source>
-        <translation type="unfinished"></translation>
+        <translation>Password (opzionale): </translation>
     </message>
     <message>
         <source>Email is used for sending out important notices such as user registration and content approval.</source>
-        <translation type="unfinished"></translation>
+        <translation>La posta elettronica è utilizzata per inviare segnalazioni importanti come la registrazione degli utenti e l&apos;approvazione dei contenuti.</translation>
     </message>
     <message>
         <source>Most Unix systems support sendmail, while windows users must choose SMTP.</source>
-        <translation type="unfinished"></translation>
+        <translation>La maggior parte dei sistemi Unix supporta Sendmail, mentre gli utenti Windows devono scegliere SMTP.</translation>
     </message>
     <message>
         <source>forums</source>
         <comment>forum link</comment>
-        <translation type="unfinished"></translation>
+        <translation>forums</translation>
     </message>
     <message>
         <source>Language support</source>
-        <translation type="unfinished"></translation>
+        <translation>Supporto lingua</translation>
     </message>
     <message>
         <source>The selected languages are used to determine character sets, date / number formats, etc.</source>
-        <translation type="unfinished"></translation>
+        <translation>Le lingue selezionate vengono usate per determinare i set di caratteri, il formato della data e dei numeri, ecc.</translation>
     </message>
     <message>
         <source>For more information about language customization, please refer to the %1.</source>
-        <translation type="unfinished"></translation>
+        <translation>Per saperne di più sulla personalizzazione della lingua, fai riferimento alla %1.</translation>
     </message>
     <message>
         <source>Send registration</source>
-        <translation type="unfinished"></translation>
+        <translation>Invia registrazione</translation>
     </message>
     <message>
         <source>System details (OS type, etc)</source>
-        <translation type="unfinished"></translation>
+        <translation>Dettagli sistema (tipo OS type, ecc.)</translation>
     </message>
     <message>
         <source>The test results</source>
-        <translation type="unfinished"></translation>
+        <translation>Risultati del test</translation>
     </message>
     <message>
         <source>The database type</source>
-        <translation type="unfinished"></translation>
+        <translation>Il tipo di database</translation>
     </message>
     <message>
         <source>The site name</source>
-        <translation type="unfinished"></translation>
+        <translation>Il nome del sito</translation>
     </message>
     <message>
         <source>The url of the site</source>
-        <translation type="unfinished"></translation>
+        <translation>L&apos;URL del sito</translation>
     </message>
     <message>
         <source>Languages chosen</source>
-        <translation type="unfinished"></translation>
+        <translation>Lingue scelte</translation>
     </message>
     <message>
         <source>Site security</source>
-        <translation type="unfinished"></translation>
+        <translation>Sicurezza sito</translation>
     </message>
     <message>
         <source>If you do not have shell access, you will have to copy the file using an FTP client or ask your hosting provider to do this for you.</source>
-        <translation type="unfinished"></translation>
+        <translation>Se non hai accesso alla shell, dovrai copiare il file usando un FTP client o dovrai chiedere al tuo hosting provider di farlo per te.</translation>
     </message>
     <message>
         <source>This security tweak takes care of protecting configuration files and other important files.</source>
-        <translation type="unfinished"></translation>
+        <translation>Questo ritocco di sicurezza protegge i files di configurazione ed altri files importanti.</translation>
     </message>
     <message>
         <source>Port*</source>
-        <translation type="unfinished"></translation>
+        <translation>Porta*</translation>
     </message>
     <message>
         <source>* Requires web server setup.</source>
-        <translation type="unfinished"></translation>
+        <translation>* Richiede la configurazione del web server.</translation>
     </message>
     <message>
         <source>Hostname*</source>
-        <translation type="unfinished"></translation>
+        <translation>Hostname*</translation>
     </message>
     <message>
         <source>* Requires DNS setup.</source>
-        <translation type="unfinished"></translation>
+        <translation>* Richiede la configurazione del DNS.</translation>
     </message>
     <message>
         <source>User path</source>
-        <translation type="unfinished"></translation>
+        <translation>Percorso sito utente</translation>
     </message>
     <message>
         <source>User port</source>
-        <translation type="unfinished"></translation>
+        <translation>Porta sito utente</translation>
     </message>
     <message>
         <source>User hostname</source>
-        <translation type="unfinished"></translation>
+        <translation>Hostname sito utente</translation>
     </message>
     <message>
         <source>Admin path</source>
-        <translation type="unfinished"></translation>
+        <translation>Percorso sito amministratore</translation>
     </message>
     <message>
         <source>Admin port</source>
-        <translation type="unfinished"></translation>
+        <translation>Porta sito amministratore</translation>
     </message>
     <message>
         <source>Admin hostname</source>
-        <translation type="unfinished"></translation>
+        <translation>Hostname sito amministratore</translation>
     </message>
     <message>
         <source>You may modify the details for each site.</source>
-        <translation type="unfinished"></translation>
+        <translation>Puoi modificare i dettagli per ogni sito.</translation>
     </message>
     <message>
         <source>Use the refresh button to update the database listing.</source>
-        <translation type="unfinished"></translation>
+        <translation>Usa il pulsante ricarica per aggiornare l&apos;elenco dei database.</translation>
     </message>
     <message>
         <source>Next &amp;gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>Successivo &amp;gt;</translation>
     </message>
     <message>
         <source>There are some important issues that have to be resolved. A list of issues / problems is presented below. Each section contains a description and a suggested / recommended solution.</source>
-        <translation type="unfinished"></translation>
+        <translation>Vi sono alcuni importanti problemi che devono essere risolti. Di seguito troverai un elenco dei problemi. Ogni sezione contiene una loro descrizione e la soluzione consigliata.</translation>
     </message>
     <message>
         <source>Once the problems / issues are fixed, you may click the &lt;i&gt;Next&lt;/i&gt; button to continue. The system check will be run again. If everything is okay, the setup will go to the next stage. If there are problems, the system check page will reappear.</source>
-        <translation type="unfinished"></translation>
+        <translation>Una volta che i problemi saranno risolti, potrai premere il pulsante &lt;i&gt;Successivo&lt;/i&gt; per continuare. Il controllo del sistema ripartirà. Se tutto è ok, l&apos;installazione passerà al livello successivo. Se vi sono problemi, la pagina del controllo del sistema riapparirà.</translation>
     </message>
     <message>
         <source>Some issues may be ignored by checking the &lt;i&gt;Ignore this test&lt;/i&gt; checkbox(es); however, this is not recommended.</source>
-        <translation type="unfinished"></translation>
+        <translation>Alcuni  problemi possono essere ignorati selezionando il / i checkbox(es) &lt;i&gt;Ignora questo test&lt;/i&gt;; comunque, tale procedura è sconsigliata.</translation>
     </message>
     <message>
         <source>The system check page is being displayed. This means that there are some problems/issues present.</source>
-        <translation type="unfinished"></translation>
+        <translation>Viene mostrata la pagina del controllo del sistema. Ciò significa che vi sono dei problemi.</translation>
     </message>
     <message>
         <source>No data will be stored in the database until the final step of the setup.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nessun dato verrà registrato nel database fino al completamento dell&apos;installazione.</translation>
     </message>
     <message>
         <source>System finetuning</source>
-        <translation type="unfinished"></translation>
+        <translation>Messa a punto del sistema</translation>
     </message>
     <message>
         <source>Finetune</source>
         <comment>Finetune button in installation</comment>
-        <translation type="unfinished"></translation>
+        <translation>Messa a punto</translation>
     </message>
     <message>
         <source>Your passwords do not match.</source>
-        <translation type="unfinished"></translation>
+        <translation>Le tue password non coincidono.</translation>
     </message>
     <message>
         <source>First name</source>
-        <translation type="unfinished">Cognome</translation>
+        <translation>Nome</translation>
     </message>
     <message>
         <source>Last name</source>
-        <translation type="unfinished">Nome</translation>
+        <translation>Cognome</translation>
     </message>
     <message>
         <source>Site packages</source>
-        <translation type="unfinished"></translation>
+        <translation>Pacchetti del sito</translation>
     </message>
     <message>
         <source>Each package will create a unique web site.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ogni pacchetto creerà un unico sito web.</translation>
     </message>
     <message>
         <source>Since each web site is unique, each package requires a unique database.</source>
-        <translation type="unfinished"></translation>
+        <translation>Poichè ogni sito web è unico, ogni pacchetto richiede un unico database.</translation>
     </message>
     <message>
         <source>It is also possible to do some finetuning of your system, click &lt;i&gt;Finetune&lt;/i&gt; instead &lt;i&gt;Next&lt;/i&gt; if you want to see the finetuning hints.</source>
-        <translation type="unfinished"></translation>
+        <translation>E&apos; possibile effettuare una messa a punto del tuo sistema, premi &lt;i&gt;Finetune&lt;/i&gt; invece di &lt;i&gt;Successivo&lt;/i&gt; se vuoi vedere i suggerimenti di messa a punto.</translation>
     </message>
     <message>
         <source>There are some issues that should be resolved to get maximum performance and features. A list of issues is presented below. Each section contains a description and a suggested / recommended solution.</source>
-        <translation type="unfinished"></translation>
+        <translation>Vi sono alcuni importanti  problemi che devono essere risolti per avere il massimo delle prestazioni e delle funzionalità. Di seguito troverai un elenco dei problemi. Ogni sezione contiene una descrizione e la soluzione consigliata.</translation>
     </message>
     <message>
         <source>Once the issues are handled, you may click the &lt;i&gt;Finetune&lt;/i&gt; button to continue. The system check will be run again. If everything is okay, the setup will go to the next stage. If the issues are not solved the system finetune page will reappear.</source>
-        <translation type="unfinished"></translation>
+        <translation>Una volta che i problemi saranno risolti, potrai premere il pulsante &lt;i&gt;Successivo&lt;/i&gt; per continuare. Il controllo del sistema ripartirà. Se tutto è ok, l&apos;installazione passerà al livello successivo. Se vi sono problemi, la pagina del controllo del sistema riapparirà.</translation>
     </message>
     <message>
         <source>If you do not want to fix these issues just click &lt;i&gt;Next&lt;/i&gt;.</source>
-        <translation type="unfinished"></translation>
+        <translation>Se non vuoi risolvere i problemi segnalati clicca &lt;i&gt;Successivo&lt;/i&gt;.</translation>
     </message>
     <message>
         <source>The system finetune page is being displayed. This means that there are some issues which can be solved to improve the performance or features.</source>
-        <translation type="unfinished"></translation>
+        <translation>Viene mostrata la pagina del controllo del sistema. Ciò significa che vi sono dei problemi che devono essere risolti per migliorare le prestazioni o le funzionalità.</translation>
     </message>
     <message>
         <source>Site administrator</source>
-        <translation type="unfinished"></translation>
+        <translation>Amministratore del sito</translation>
     </message>
     <message>
         <source>Site functionality</source>
-        <translation type="unfinished"></translation>
+        <translation>Funzionalità del sito</translation>
     </message>
     <message>
         <source>Site selection</source>
-        <translation type="unfinished"></translation>
+        <translation>Selezione del sito</translation>
     </message>
     <message>
         <source>You need to fill in the first name.</source>
-        <translation type="unfinished"></translation>
+        <translation>Devi inserire il nome.</translation>
     </message>
     <message>
         <source>You need to fill in the last name.</source>
-        <translation type="unfinished"></translation>
+        <translation>Devi inserire il cognome.</translation>
     </message>
     <message>
         <source>You need to fill in a password.</source>
-        <translation type="unfinished"></translation>
+        <translation>Devi inserire una password.</translation>
     </message>
     <message>
         <source>Administrator settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Impostazioni Amministratore</translation>
     </message>
     <message>
         <source>Login</source>
-        <translation type="unfinished">Login</translation>
+        <translation>Login</translation>
     </message>
     <message>
         <source>Confirm password</source>
-        <translation type="unfinished">Conferma password</translation>
+        <translation>Conferma password</translation>
     </message>
     <message>
         <source>The login name is fixed and cannot be changed.
 After the setup is done you can login with %admin_login and your password.</source>
-        <translation type="unfinished"></translation>
+        <translation>Il nome del login è stato stabilito e non può essere cambiato.
+Alla fine dell&apos;installazione puoi effettuare il login con %admin_login e la tua password.</translation>
     </message>
     <message>
         <source>Your database already contain data.
 The setup can continue with the initialization but may damage the present data.</source>
-        <translation type="unfinished"></translation>
+        <translation>Il tuo database contiene già dei dati.
+L&apos;installazione può continuare con l&apos;inizializzazione ma può danneggiare i dati presenti.</translation>
     </message>
     <message>
         <source>Select what to do from the drop-down box.</source>
-        <translation type="unfinished"></translation>
+        <translation>Seleziona l&apos;azione da eseguire dal menù a cascata.</translation>
     </message>
     <message>
         <source>Action: </source>
-        <translation type="unfinished"></translation>
+        <translation>Azione: </translation>
     </message>
     <message>
         <source>Current site functionality</source>
-        <translation type="unfinished"></translation>
+        <translation>Attuale funzionalità del sito</translation>
     </message>
     <message>
         <source>Please select additional functionality</source>
-        <translation type="unfinished"></translation>
+        <translation>Seleziona una funzionalità aggiuntiva</translation>
     </message>
     <message>
         <source>The type of site will choose some basic settings for toolbars, menus, color and functionality.
 It is possible to change these settings at a later time.</source>
-        <translation type="unfinished"></translation>
+        <translation>Il tipo di sito determinerà alcune impostazioni di base per le barre degli strumenti, menu, colori e funzionalità.
+Queste impostazioni possono essere modificate in seguito.</translation>
     </message>
     <message>
         <source>First time users are advised to install the demo data.</source>
-        <translation type="unfinished"></translation>
+        <translation>Si consiglia agli utenti inesperti di installare i dati demo. </translation>
     </message>
     <message>
         <source>Note</source>
-        <translation type="unfinished">Nota</translation>
+        <translation>Nota</translation>
     </message>
     <message>
         <source>Servername</source>
-        <translation type="unfinished"></translation>
+        <translation>Nome del server</translation>
     </message>
     <message>
         <source>Socket (optional)</source>
-        <translation type="unfinished"></translation>
+        <translation>Socket (opzionale)</translation>
     </message>
     <message>
         <source>PostgreSQL username and password is not tested until database names are selected.</source>
-        <translation type="unfinished"></translation>
+        <translation>Username and password di PostgreSQL non vengono testati finchè i nomi dei database non vengono selezionati.</translation>
     </message>
     <message>
         <source>Optionally you may disable this manually, edit the &lt;i&gt;settings/site.ini&lt;/i&gt; file and look for a line that says</source>
-        <translation type="unfinished"></translation>
+        <translation>Per disabilitarlo manualmente, modifica il file &lt;i&gt;settings/site.ini&lt;/i&gt; e cerca la riga che dice</translation>
     </message>
     <message>
         <source>Failed to send the registration email using</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossibile inviare l&apos;email di registrazione con</translation>
     </message>
     <message>
         <source>If you ever want to restart this setup, edit the file %filename and look for a line that says</source>
-        <translation type="unfinished"></translation>
+        <translation>Nel caso tu voglia far ripartire questa installazione, modifica il file %filename e cerca la riga che dice</translation>
     </message>
     <message>
         <source>Comments</source>
-        <translation type="unfinished">Commenti</translation>
+        <translation>Commenti</translation>
     </message>
     <message>
         <source>Creating sites</source>
-        <translation type="unfinished"></translation>
+        <translation>Creazione dei siti</translation>
     </message>
     <message>
         <source>Please make sure that the username and the password is correct. Verify that your PostgreSQL database is configured correctly.&lt;br&gt;See the PHP documentation for more information about this.&lt;br&gt;Remember to start postmaster with the -i option.&lt;br&gt;Note that PostgreSQL 7.2 is not supported.</source>
-        <translation type="unfinished"></translation>
+        <translation>Assicurati che username e password siano corretti. Verifica che il tuo database PostgreSQL sia configurato correttamente.&lt;br&gt;Consulta la documentazione di PHP per saperne di più.&lt;br&gt;Ricordati di far partire il postmaster con l&apos;opzione -i.&lt;br&gt;Nota che PostgreSQL 7.2 non è supportato.</translation>
     </message>
     <message>
         <source>Your database version %version does not fit the minimum requirement which is %req_version.</source>
-        <translation type="unfinished"></translation>
+        <translation>La tue versione %version di database non ha i requisiti minimi della %req_version.</translation>
     </message>
     <message>
         <source>The setup wizard was not able to complete the creation of your selected sites.</source>
-        <translation type="unfinished"></translation>
+        <translation>La procedura guidata di configurazione non ha potuto completare la creazione dei siti da te selezionati.</translation>
     </message>
     <message>
         <source>The setup wizard failed to create the sites.</source>
-        <translation type="unfinished"></translation>
+        <translation>La procedura guidata di configurazione non è riuscita a creare i siti.</translation>
     </message>
     <message>
         <source>Retry</source>
         <comment>Retry button in installation</comment>
-        <translation type="unfinished">Ritenta</translation>
+        <translation>Ritenta</translation>
     </message>
     <message>
         <source>The following errors were detected</source>
-        <translation type="unfinished"></translation>
+        <translation>Sono stati rilevati i seguenti errori</translation>
     </message>
     <message>
         <source>There are two options:&lt;br&gt;- Direct delivery through transfer agent (must be available on the server).&lt;br&gt;- Indirect delivery using an SMTP relay server.</source>
-        <translation type="unfinished"></translation>
+        <translation>Vi sono due opzioni:&lt;br&gt;- Invio diretto tramite transfer agent (deve essere disponibile sul server).&lt;br&gt;- Invio indiretto tramite SMTP relay server.</translation>
     </message>
     <message>
         <source>Sendmail/MTA</source>
-        <translation type="unfinished"></translation>
+        <translation>Sendmail/MTA</translation>
     </message>
     <message>
         <source>&lt;b&gt;Sendmail/MTA:&lt;/b&gt;&lt;br&gt;Mail is delivered directly using the mail transfer agent. The most common agent, sendmail, is usually available on most Linux/UNIX systems. If a mail transfer agent is not available then SMTP should be used.</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;Sendmail/MTA:&lt;/b&gt;&lt;br&gt;i messaggi di posta vengono inviati direttamente usando il mail transfer agent. Il più comune, Sendmail, è in genere disponibile sul maggior numero di sistemi Linux/UNIX. Se un mail transfer agent non è disponibile, allora deve essere usato SMTP.</translation>
     </message>
     <message>
         <source>Cannot write to file</source>
-        <translation type="unfinished"></translation>
+        <translation>Impossibile scrivere sul file</translation>
     </message>
     <message>
         <source>Download of package &apos;%pkg&apos; failed. You may upload the package manually.</source>
-        <translation type="unfinished"></translation>
+        <translation>Download del pacchetto &apos;%pkg&apos; non riuscito. Puoi caricare il pacchetto manualmente.</translation>
     </message>
     <message>
         <source>Invalid package</source>
-        <translation type="unfinished"></translation>
+        <translation>Pacchetto non valido</translation>
     </message>
     <message>
         <source>No package selected for upload</source>
-        <translation type="unfinished"></translation>
+        <translation>Nessun pacchetto selezionato da caricare</translation>
     </message>
     <message>
         <source>Failed fetching upload package file</source>
-        <translation type="unfinished"></translation>
+        <translation>Ricerca del file del pacchetto da caricare non riuscita</translation>
     </message>
     <message>
         <source>Site package</source>
-        <translation type="unfinished"></translation>
+        <translation>Pacchetto del sito</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation type="unfinished">Errore</translation>
+        <translation>Errore</translation>
     </message>
     <message>
         <source>Imported</source>
-        <translation type="unfinished">Importato</translation>
+        <translation>Importato</translation>
     </message>
     <message>
         <source>Not imported</source>
-        <translation type="unfinished"></translation>
+        <translation>Non importato</translation>
     </message>
     <message>
         <source>Upload</source>
-        <translation type="unfinished">Upload</translation>
+        <translation>Upload</translation>
     </message>
     <message>
         <source>The database [%database_name] cannot be used, the setup wizard wants to create the site in [%req_charset] but the database has been created using character set [%charset]. You will have to choose a database having support for [%req_charset] or modify [%database_name] .</source>
-        <translation type="unfinished"></translation>
+        <translation>Il database [%database_name] non può essere usato, la procedura guidata dell&apos;installazione vuole creare il sito in [%req_charset] ma il database è stato creato usando il set di caratteri [%charset]. Devi scegliere un database con il supporto per [%req_charset] o modificare [%database_name] .</translation>
     </message>
     <message>
         <source>Failed to copy %url to local file %filename</source>
-        <translation type="unfinished"></translation>
+        <translation>Copia di %url sul file locale %filename non riuscita</translation>
     </message>
     <message>
         <source>Access method</source>
-        <translation type="unfinished"></translation>
+        <translation>Metodo di accesso</translation>
     </message>
     <message>
         <source>&apos;User path&apos; and &apos;Admin path&apos; should only contain letters (&apos;a-zA-Z&apos;), digits (&apos;0-9&apos;) and underscores (&apos;_&apos;). The access values must not be named &apos;admin&apos; or &apos;user&apos; and each value must be unique. Please change invalid values on site indicated by *</source>
-        <translation type="unfinished"></translation>
+        <translation>&apos;Percorso Utente&apos; e &apos;Percorso Amministratore&apos; devono solo contenere lettere (&apos;a-zA-Z&apos;), numeri (&apos;0-9&apos;) e underscores (&apos;_&apos;). I valori di accesso non devono essere &apos;admin&apos; o &apos;user&apos; ed ogni valore deve essere unico. Sei pregato di modificare i valori non validi sul sito indicati da *</translation>
     </message>
     <message>
         <source>&apos;User port&apos; and &apos;Admin port&apos; should only contain digits (&apos;0-9&apos;). Please change invalid values on site indicated by *</source>
-        <translation type="unfinished"></translation>
+        <translation>&apos;Porta Utente&apos; e &apos;Porta Amministratore&apos; devono solo contenere numeri (&apos;0-9&apos;). Sei pregato di modificare i valori non validi sul sito indicati da *</translation>
     </message>
     <message>
         <source>&apos;User hostname&apos; and &apos;Admin hostname&apos; should only contain letters (&apos;a-zA-Z&apos;), digits (&apos;0-9&apos;), dashes (&apos;-&apos;), dots (&apos;.&apos;) and colons (&apos;:&apos;). Please change invalid values on site indicated by *</source>
-        <translation type="unfinished"></translation>
+        <translation>&apos;Hostname Utente&apos; e &apos;Hostname Amministratore&apos; devono solo contenere lettere (&apos;a-zA-Z&apos;), numeri (&apos;0-9&apos;), trattini (&apos;-&apos;), punti (&apos;.&apos;) e doppi punti (&apos;:&apos;). Sei pregato di modificare i valori non validi sul sito indicati da *</translation>
     </message>
     <message>
         <source>Upload package</source>
-        <translation type="unfinished">Carica pacchetto</translation>
+        <translation>Carica pacchetto</translation>
     </message>
     <message>
         <source>Package &apos;%packageName&apos; and it&apos;s dependencies have been downloaded successfully. Press &apos;Next&apos; to continue.</source>
-        <translation type="unfinished"></translation>
+        <translation>Il pacchetto &apos;%packageName&apos; e le sue dipendenze sono stati scaricati con successo. Premi &apos;Successivo&apos; per continuare.</translation>
     </message>
     <message>
         <source>Use the radio buttons to choose the default language, and the checkboxes to choose additional languages. You will be able to use any of the selected languages for translating your content. The default language will determine the locale settings and will be used as the most prioritized language for your site.</source>
-        <translation type="unfinished"></translation>
+        <translation>Usa questi pulsanti radio per scegliere la lingua predefinita, e i checkboxes per scegliere le lingue aggiuntive.  Potrai utilizzare una qualsiasi delle lingue selezionate per tradurre il tuo contenuto. La lingua predefinita determinerà le impostazioni di localizzazione e verrà usata come lingua prioritaria per il tuo sito.</translation>
     </message>
     <message>
         <source>Default/Additional</source>
-        <translation type="unfinished"></translation>
+        <translation>Predefinito/Addizionale</translation>
     </message>
     <message>
         <source>Unknown</source>
-        <translation type="unfinished">Sconosciuto</translation>
+        <translation>Sconosciuto</translation>
     </message>
     <message>
         <source>No dependencies</source>
-        <translation type="unfinished"></translation>
+        <translation>Nessuna dipendenza</translation>
     </message>
     <message>
         <source>Outgoing Email</source>
-        <translation type="unfinished"></translation>
+        <translation>Email in uscita</translation>
     </message>
     <message>
         <source>Email delivery</source>
-        <translation type="unfinished"></translation>
+        <translation>Spedizione email</translation>
     </message>
     <message>
         <source>&lt;b&gt;SMTP:&lt;/b&gt;&lt;br&gt;Mail is delivered through an SMTP server. At the minimum, the hostname of the SMTP server must be specified. Hint: check the SMTP settings in your email application.</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;SMTP:&lt;/b&gt;&lt;br&gt;i messaggi di posta vengono inviati tramite un server SMTP. Bisogna come minimo indicare l&apos;hostname del server SMTP. Consiglio: controlla le impostazioni SMTP del tuo programma di posta.</translation>
     </message>
     <message>
         <source>Sending email failed</source>
-        <translation type="unfinished"></translation>
+        <translation>Invio email non riuscita</translation>
     </message>
     <message>
         <source>The registration email</source>
-        <translation type="unfinished"></translation>
+        <translation>Messaggio di registrazione</translation>
     </message>
     <message>
         <source>Sending out the email and generating your site will take about 10 to 30 seconds depending on your machine. Please wait until the next page loads. Clicking the button again will only send out duplicate emails, and may corrupt the installation.</source>
-        <translation type="unfinished"></translation>
+        <translation>L&apos;invio del messaggio e la generazione del sito richiederà da 10 a 30 secondi a seconda della tua macchina. Sei pregato di attendere fino al caricamento della pagina successiva. Premere di nuovo il pulsante manderà messaggi doppi, e può rovinare l&apos;installazione.</translation>
     </message>
     <message>
         <source>This page lets you modify the administrator for your site. This ensures that your site is secure and has proper name and email set.</source>
-        <translation type="unfinished"></translation>
+        <translation>Questa pagina serve a modificare l&apos;amministratore del sito. In questo modo renderai sicuro il tuo sito ed imposterai il nome giusto e l&apos;email corretta.</translation>
     </message>
     <message>
         <source>You need to fill in an email address.</source>
-        <translation type="unfinished"></translation>
+        <translation>Devi inserire un indirizzo email.</translation>
     </message>
     <message>
         <source>You need to fill in a valid email address.</source>
-        <translation type="unfinished"></translation>
+        <translation>Devi inserire un indirizzo email valido.</translation>
     </message>
     <message>
         <source>Email address</source>
-        <translation type="unfinished"></translation>
+        <translation>Indirizzo email</translation>
     </message>
     <message>
         <source>Package language options</source>
-        <translation type="unfinished"></translation>
+        <translation>Opzioni pacchetto lingue</translation>
     </message>
     <message>
         <source>Language mapping</source>
-        <translation type="unfinished"></translation>
+        <translation>Puntamento lingua</translation>
     </message>
     <message>
         <source>Language</source>
-        <translation type="unfinished">Lingua</translation>
+        <translation>Lingua</translation>
     </message>
     <message>
         <source>Action</source>
-        <translation type="unfinished"></translation>
+        <translation>Azione</translation>
     </message>
     <message>
         <source>Skip content in this language</source>
-        <translation type="unfinished"></translation>
+        <translation>Salta il contenuto in questa lingua</translation>
     </message>
     <message>
         <source>Create language</source>
-        <translation type="unfinished"></translation>
+        <translation>Crea lingua</translation>
     </message>
     <message>
         <source>Map to </source>
-        <translation type="unfinished"></translation>
+        <translation>Indirizza su </translation>
     </message>
     <message>
         <source>The password is too short.</source>
-        <translation type="unfinished"></translation>
+        <translation>La password è troppo corta.</translation>
     </message>
     <message>
         <source>Select installation language</source>
-        <translation type="unfinished"></translation>
+        <translation>Seleziona la lingua per l&apos;installazione</translation>
     </message>
     <message>
         <source>Please choose what kind of functionality you want on your site.</source>
-        <translation type="unfinished"></translation>
+        <translation>Seleziona il tipo di funzionalità vuoi per il tuo sito.</translation>
     </message>
     <message>
         <source>Please choose a site package you would like to test or base your site on.</source>
-        <translation type="unfinished"></translation>
+        <translation>Seleziona un pacchetto sul quale testare o costruire il tuo sito.</translation>
     </message>
     <message>
         <source>If you want you can let the setup add some demo data to your database, this demo data will give a good demonstration of the capabilities of eZ Publish</source>
-        <translation type="unfinished"></translation>
+        <translation>Se preferisci puoi far installare al sistema alcuni dati demo sul tuo database, che ti mostreranno le funzionalità di eZ Publish</translation>
     </message>
     <message>
         <source>It can take some time to initialize the database so please be patient and wait until the new page is finished.</source>
-        <translation type="unfinished"></translation>
+        <translation>L&apos;inizializzazione del database richiede del tempo, sei pregato di aspettare fino al caricamento della nuova pagina.</translation>
     </message>
     <message>
         <source>eZ Publish supports both MySQL and PostgreSQL.</source>
-        <translation type="unfinished"></translation>
+        <translation>eZ Publish supporta sia MySQL che PostgreSQL.</translation>
     </message>
     <message>
         <source>PostgreSQL or MySQL &gt;= 4.1 are required for unicode support in eZ Publish.</source>
-        <translation type="unfinished"></translation>
+        <translation>PostgreSQL o MySQL &gt;= 4.1 sono richiesti per il supporto unicode in eZ Publish.</translation>
     </message>
     <message>
         <source>More information about eZ Publish and unicode support can be found %1.</source>
-        <translation type="unfinished"></translation>
+        <translation>Maggiori informazioni su eZ Publish ed il supporto unicode si trovano %1.</translation>
     </message>
     <message>
         <source>The database was successfully initialized. You are now ready for some post configuration of the site.</source>
-        <translation type="unfinished"></translation>
+        <translation>Inizializzazione del database riuscita. Ora puoi effettuare delle ulteriori configurazioni per il tuo sito.</translation>
     </message>
     <message>
         <source>If you don&apos;t have access to a database, you should obtain access now. eZ Publish is capable of running multiple sites, each site needs its own database. This means that you need to create several databases if you plan to run multiple sites. Please refer to the database system user manual if you&apos;re unsure about how to create a database.</source>
-        <translation type="unfinished"></translation>
+        <translation>Se non hai accesso al database, ora dovresti ottenerlo. eZ Publish è in grado di gestire siti multipli, ogni sito necessita del suo database. Ciò significa che hai bisogno di creare diversi database se hai programmato di gestire siti multipli. Fai riferimento al manuale utente del sistema a base dati se non sei sicuro su come creare un database.</translation>
     </message>
     <message>
         <source>This section is used to configure how eZ Publish delivers its outgoing Email.</source>
-        <translation type="unfinished"></translation>
+        <translation>Questa sezione serve a configurare il modo in cui eZ Publish consegna la posta in uscita.</translation>
     </message>
     <message>
         <source>The eZ Publish system uses email to send out important notices such as user registration and content approval. On Linux/UNIX: try to use sendmail. On Windows: use an SMTP server.</source>
-        <translation type="unfinished"></translation>
+        <translation>Il sistema eZ Publish usa la posta per inviare importanti informazioni come la registrazione degli utenti e l&apos;approvazione del contenuto. Su Linux/UNIX: prova ad usare Sendmail. Su Windows: usa un server SMTP.</translation>
     </message>
     <message>
         <source>eZ Publish has been installed with your select site setup. You will find the username mentioned in the details below.</source>
-        <translation type="unfinished"></translation>
+        <translation>eZ Publish è stato installato con la configurazione del sito prescelta. Troverai il nome utente tra le seguenti infomazioni dettagliate.</translation>
     </message>
     <message>
         <source>The first time the user or admin site is accessed it will take some time (30 to 60 seconds). This is because eZ Publish prepares the site for your machine.</source>
-        <translation type="unfinished"></translation>
+        <translation>La prima volta che il sito lato utente o quello lato amministratore verrà visitato ci metterà un pò di tempo (30 o 60 secondi). Ciò perchè eZ Publish prapara il sito per la tua macchina.</translation>
     </message>
     <message>
         <source>Tip: Store this page as an html file by clicking Save-As in your web browser menu, alternatively you may write down the URLs for your sites.</source>
-        <translation type="unfinished"></translation>
+        <translation>Consiglio: Memorizza questa pagina come file html scegliendo Salva Come dal menù del tuo browser, in alternativa puoi trascrivere le URL dei tuoi siti.</translation>
     </message>
     <message>
         <source>Congratulations, eZ Publish should now run on your system.</source>
-        <translation type="unfinished"></translation>
+        <translation>Congratulazioni, eZ Publish ora funziona sul tuo sistema.</translation>
     </message>
     <message>
         <source>If you need help with eZ Publish, you can go to %ezlink and get help in the forums.
   If you find a bug (error), please go to %buglink and report it.
   With your help we can fix the errors eZ Publish might have and implement new features.</source>
-        <translation type="unfinished"></translation>
+        <translation>Se hai bisogno di aiuto per eZ Publish, puoi andare su %ezlink e torvare aiuto nei forums.
+  Se trovi un bug (errore), ti preghiamo di andare su %buglink e segnalarlo.
+  Con il tuo aiuto possiamo correggere gli errori che eZ Publish può avere ed implementare nuove funzionalità.</translation>
     </message>
     <message>
         <source>eZ Publish bug reports</source>
-        <translation type="unfinished"></translation>
+        <translation>eZ Publish bug reports</translation>
     </message>
     <message>
         <source>eZ Publish website</source>
-        <translation type="unfinished"></translation>
+        <translation>eZ Publish website</translation>
     </message>
     <message>
         <source>Choose only languages that use similar characters, for instance: English and Norwegian will work together while English and Russian will not work.</source>
-        <translation type="unfinished"></translation>
+        <translation>Scegli solo lingue che usano gli stessi caratteri, per esempio: Inglese e Norvegese possono funzionare insieme, mentre Inglese e Russo non possono.</translation>
     </message>
     <message>
         <source>eZ Publish supports multiple languages.</source>
-        <translation type="unfinished"></translation>
+        <translation>eZ Publish supporta lingue multiple.</translation>
     </message>
     <message>
         <source>The languages you have chose for site do not match languages in chosen packages. To resolve conflict please select language mapping:</source>
-        <translation type="unfinished"></translation>
+        <translation>Le lingue che hai scelto per il sito non coincidono con le lingue nei pacchetti prescelti. Per risolvere questo conflitto sei pregato di scegliere come indirizzare le lingue:</translation>
     </message>
     <message>
         <source>Select the language this site should support.</source>
-        <translation type="unfinished"></translation>
+        <translation>Seleziona le lingue che questo sito deve supportare.</translation>
     </message>
     <message>
         <source>Select the languages this site should support. Select your primary language and check any additional languages.</source>
-        <translation type="unfinished"></translation>
+        <translation>Seleziona le lingue che questo sito deve supportare. Seleziona la lingua principale e scegli una qualsiasi lingua aggiuntiva. </translation>
     </message>
     <message>
         <source>Once you are done, click the</source>
-        <translation type="unfinished"></translation>
+        <translation>Quando hai finito, premi il</translation>
     </message>
     <message>
         <source>It is now possible to select a variation for your language. A variation does small adjustments to the language, such as adding Euro support or date format changes. Using variations are optional so you may safely skip this step. Once your are done click the</source>
-        <translation type="unfinished"></translation>
+        <translation>Ora puoi scegliere una variazione per la tua lingua. Una variazione effettua piccoli aggiustamenti alla lingua, come aggiungere il supporto per l&apos;Euro o modificare il formato data. L&apos;uso delle variazioni è opzionale per cui puoi saltarlo. Quando hai terminato premi il</translation>
     </message>
     <message>
         <source>It is now possible to select variations for your languages. Variations do small adjustments to the language, such as adding Euro support or date format changes. Using variations are optional so you may safely skip this step. Once you are done click the</source>
-        <translation type="unfinished"></translation>
+        <translation>Ora puoi scegliere una variazione per la tua lingua. Le variazioni effettuano piccoli aggiustamenti alla lingua, come aggiungere il supporto per l&apos;Euro o modificare il formato data. L&apos;uso delle variazioni è opzionale per cui puoi saltarlo. Quando hai terminato premi il</translation>
     </message>
     <message>
         <source>If you want, you can register this installation by sending some information to eZ Systems. No confidential data will be transmitted and eZ Systems will not use or sell your details for unsolicited emails.</source>
-        <translation type="unfinished"></translation>
+        <translation>Se vuoi, puoi registrare l&apos;installazione inviando alcune informazioni a eZ Systems. Non verrà trasmesso alcun dato confidenziale e eZ Systems non userà o venderà le informazioni per inviare posta indesiderata.</translation>
     </message>
     <message>
         <source>If you want, you can also add some comments, which will be included in the registration email.</source>
-        <translation type="unfinished"></translation>
+        <translation>Se vuoi, puoi anche aggiungere dei commenti, che verranno inseriti nel messaggio di registrazione.</translation>
     </message>
     <message>
         <source>By sending registration the following data will be sent to eZ Systems</source>
-        <translation type="unfinished"></translation>
+        <translation>Inviando la registrazione verranno inviati ad eZ Systems i seguenti dati</translation>
     </message>
     <message>
         <source>Your site is not running in a virtual host mode, this is insecure. It is recommended to run eZ Publish in virtual host mode. If you do not have the possibility to use virtual host mode, you should follow the instructions below about how to install an .htaccess file. The .htaccess file tells the web server to restrict the access to certain files.</source>
-        <translation type="unfinished"></translation>
+        <translation>Il tuo sito non funziona in modalità a virtual host, e ciò è insicuro. Si raccommanda di far funzionare eZ Publish in modalità virtual host. Se non hai la possibilità di usare la modalità virtual host, devi seguire le seguenti instruzioni su come installare un file .htaccess. Il file .htaccess dice al web server di restringere l&apos;accesso ad alcuni files.</translation>
     </message>
     <message>
         <source>If you have shell access, you can run the following commands.</source>
-        <translation type="unfinished"></translation>
+        <translation>Se hai accesso alla shell, puoi lanciare i seguenti comandi.</translation>
     </message>
     <message>
         <source>Please choose the access method you want to use for your site. The access method determines how the site will be accessed from within a web browser. If unsure: choose URL.</source>
-        <translation type="unfinished"></translation>
+        <translation>Sei pregato di scegliere il metodo di accesso che vuoi usare per il tuo sito. Il metodo di accesso determina il modo in cui si può accedere al sito tramite un web browser. Se non sei sicuro: usa URL.</translation>
     </message>
     <message>
         <source>For more detailed information on site access, refer to the %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Per maggiori informazioni sul Siteaccess, fai riferimento alla %1</translation>
     </message>
     <message>
         <source>This page lets you modify information about the site you have chosen to install. In addition, it also lets you choose a database for the site.</source>
-        <translation type="unfinished"></translation>
+        <translation>Da questa pagina puoi modificare le informazioni sul sito che hai scelto di installare. Inoltre, da qui puoi scegliere un database per il sito.</translation>
     </message>
     <message>
         <source>I have chosen a new database</source>
-        <translation type="unfinished"></translation>
+        <translation>Hai scelto un nuovo database</translation>
     </message>
     <message>
         <source>For more information about how to configure site access, refer to the %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Per saperne di più su come configurare il siteaccess, fai riferimento alla %1</translation>
     </message>
     <message>
         <source>Each site comes with a predefined set of functionality, however it is possible to add extra functionality.
 This functionality is also available at a later time from the Administration Interface.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ogni sito ha già una serie di funzionalità predefinite, ma si può comunque aggiungerne altre.
+Questa funzionalità la troverai anche sull&apos;Interfaccia di Amministrazione.</translation>
     </message>
     <message>
         <source>Please choose one or more of the demo sites you would like to test or base your sites on. Use Plain if you want to start from scratch.</source>
-        <translation type="unfinished"></translation>
+        <translation>Seleziona uno o più siti demo sul quale testare o costruire il tuo sito. Se preferisci partire da zero usa Plain.</translation>
     </message>
     <message>
         <source>These issues have to be resolved/fixed, or else, eZ Publish will not function properly.</source>
-        <translation type="unfinished"></translation>
+        <translation>Questi problemi devono essere risolti/sistemati, altrimenti eZ Publish non funzionerà correttamente. </translation>
     </message>
     <message>
         <source>These issues do not need to be resolved/fixed. eZ Publish will function properly without them.</source>
-        <translation type="unfinished"></translation>
+        <translation>Questi problemi non devono necessariamente essere risolti/sistemati. eZ Publish funzionerà comunque correttamente. </translation>
     </message>
     <message>
         <source>Welcome to eZ Publish %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Benvenuti in eZ Publish %1</translation>
     </message>
     <message>
         <source>Welcome to the eZ Publish content management system and development framework. This wizard will help you set up eZ Publish.&lt;br&gt;Your system is not optimal, if you wish you can click the &lt;i&gt;Finetune&lt;/i&gt; button. This will present hints on how to fix these issues.&lt;br/&gt; Click &lt;i&gt;Next&lt;/i&gt; to continue without finetuning.</source>
-        <translation type="unfinished"></translation>
+        <translation>Benvenuti in eZ Publish sistema di content management e ambiente di sviluppo. Questa procedura guidata ti aiuterà a configurare eZ Publish.&lt;br&gt;Il tuo sistema non è ottimale, se vuoi puoi premere il pulsante &lt;i&gt;Messa a punto&lt;/i&gt;. Vedrai alcuni suggerimenti su come risolvere questi problemi.&lt;br/&gt; Premi &lt;i&gt;Successivo&lt;/i&gt; per continuare senza la messa a punto.</translation>
     </message>
     <message>
         <source>Welcome to the eZ Publish content management system and development framework. This wizard will help you set up eZ Publish.&lt;br&gt;Click &lt;i&gt;Next&lt;/i&gt; to continue.</source>
-        <translation type="unfinished"></translation>
+        <translation>Benvenuti in eZ Publish sistema di content management e ambiente di sviluppo. Questa procedura guidata ti aiuterà a configurare eZ Publish.&lt;br&gt; Premi &lt;i&gt;Successivo&lt;/i&gt;.</translation>
     </message>
     <message>
         <source>The selected user has not got access to any databases. Change user or create a database for the user.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>The &apos;digest&apos; procedure is not available in your database, you cannot run eZ Publish without this. Visit the FAQ for more information.</source>
-        <translation type="unfinished"></translation>
+        <translation>L&apos;utente selezionato non ha accesso ad alcun database. Cambia utente o crea un database per l&apos;utente.</translation>
     </message>
     <message>
         <source>No packages chosen.</source>
-        <translation type="unfinished"></translation>
+        <translation>Non è stato scelto nessun pacchetto.</translation>
     </message>
     <message>
         <source>No templates chosen.</source>
-        <translation type="unfinished"></translation>
+        <translation>Non è stato scelto nessun template.</translation>
     </message>
     <message>
         <source>Uploaded file is not an eZ Publish package</source>
-        <translation type="unfinished"></translation>
+        <translation>Il file caricato non è un pacchetto eZ Publish</translation>
     </message>
     <message>
         <source>No site package chosen.</source>
-        <translation type="unfinished"></translation>
+        <translation>Non è stato scelto nessun pacchetto sito.</translation>
     </message>
     <message>
         <source>Retrieving remote site packages list failed. You may upload packages manually.</source>
-        <translation type="unfinished"></translation>
+        <translation>La lista dei pacchetti dei siti non può essere richiamata. Puoi caricare i pacchetti manualmente.</translation>
     </message>
     <message>
         <source>Welcome to eZ Publish</source>
-        <translation type="unfinished"></translation>
+        <translation>Benvenuti in eZ Publish</translation>
     </message>
     <message>
         <source>If you think you have fixed the errors you can try then click the &quot;Retry&quot; button.</source>
-        <translation type="unfinished"></translation>
+        <translation>Se pensi di aver corretto gli errori allora puoi provare a premere il pulsante &quot;Riprova&quot;.</translation>
     </message>
     <message>
         <source>If possible try to fix these errors then click &quot;Retry&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>Se possibile prova a correggere gli errori e quindi premi &quot;Riprova&quot;.</translation>
     </message>
     <message>
         <source>Re-run System Check</source>
-        <translation type="unfinished"></translation>
+        <translation>Fai ripartire il Controllo del Sistema</translation>
     </message>
     <message>
         <source>button to re-run the finetuning checks. However if you want you can skip straight to the next step by clicking the</source>
-        <translation type="unfinished"></translation>
+        <translation>pulsante per far ripartire il controllo del sistema. Comunque puoi anche saltare al passo successivo premendo il</translation>
     </message>
     <message>
         <source>to enable write access then click the</source>
-        <translation type="unfinished"></translation>
+        <translation>per abilitare l&apos;accesso di scrittura quindi premi il</translation>
     </message>
     <message>
         <source>&lt;b&gt;SMTP&lt;/b&gt;: If you are unsure what to enter, refer to the settings in your email application.</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;SMTP&lt;/b&gt;: Se non sei sicuro cosa usare, fai riferimento alle impostazioni del tuo client di posta.</translation>
     </message>
     <message>
         <source>Select your language then click the</source>
-        <translation type="unfinished"></translation>
+        <translation>Seleziona la tua lingua e premi il</translation>
     </message>
     <message>
         <source>This data will help to improve future releases of eZ Publish.</source>
-        <translation type="unfinished"></translation>
+        <translation>Questi dati servono a migliorare le future versioni di eZ Publish.</translation>
     </message>
     <message>
         <source>The problems are usually file-system related and can be easily fixed by copy / paste / running the suggested commands in a system shell.</source>
-        <translation type="unfinished"></translation>
+        <translation>I problemi sono solitamente collegati al file_system e possono essere facilmente risolti copiando / incollando / eseguendo i comandi da una shell di sistema.</translation>
     </message>
     <message>
         <source>Information about how to set up eZ Publish manually is available %1.</source>
-        <translation type="unfinished"></translation>
+        <translation>Informazioni su come configurare eZ Publish manualmente si trovano %1.</translation>
     </message>
     <message>
         <source>The setup will not do an upgrade from older eZ Publish versions (such as 2.2.7) if you leave the data as it is. This is only meant for people who have existing data that they don&apos;t want to lose. If you have existing eZ Publish 4.0 data (such as from an RC release) you should skip DB initialization, however you will then need to do a manual upgrade.</source>
-        <translation type="unfinished"></translation>
+        <translation>L&apos;installazione non effettuerà aggiornamenti da versioni di eZ Publish più vecchie (ad es. 2.2.7) se lasci i dati come sono. Questo vale solo per chi ha dati esistenti che non vuole perdere. Se hai dati esistenti da eZ Publish  (ad esempio dalla RC release) devi saltare l&apos;inizializzazione DB, ma comunque dovrai effettuare un aggiornamento manuale.</translation>
     </message>
     <message>
         <source>eZ Publish</source>
         <comment>eZ Publish link</comment>
-        <translation type="unfinished">eZ Publish</translation>
+        <translation>eZ Publish</translation>
+    </message>
+    <message>
+        <source>The &apos;digest&apos; function is not available in your database, you cannot run eZ Publish without this. See the documentation for more information.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -20894,7 +21282,7 @@ This functionality is also available at a later time from the Administration Int
     </message>
     <message>
         <source>\\return an array with the template operator name.</source>
-        <translation type="unfinished"></translation>
+        <translation>\\return un array con il nome dell&apos;operatore del template.</translation>
     </message>
 </context>
 <context>
@@ -20905,7 +21293,7 @@ This functionality is also available at a later time from the Administration Int
     </message>
     <message>
         <source>The sessions were successfully removed.</source>
-        <translation>Sessioni eliminate con successo.</translation>
+        <translation>Eliminazione delle sessioni riuscita.</translation>
     </message>
     <message>
         <source>Sessions</source>
@@ -21060,14 +21448,10 @@ This functionality is also available at a later time from the Administration Int
     </message>
     <message>
         <source>Note:</source>
-        <translation type="unfinished">Nota:</translation>
+        <translation>Nota:</translation>
     </message>
     <message>
         <source>Missing ImageMagick program</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>If you known where the program is installed (the executable is called</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -21088,7 +21472,7 @@ This functionality is also available at a later time from the Administration Int
     </message>
     <message>
         <source>Installation</source>
-        <translation type="unfinished">Installazione</translation>
+        <translation>Installazione</translation>
     </message>
     <message>
         <source>ImageMagick may be downloaded from</source>
@@ -21188,7 +21572,7 @@ This functionality is also available at a later time from the Administration Int
     </message>
     <message>
         <source>Next</source>
-        <translation type="unfinished">Successivo</translation>
+        <translation>Successivo</translation>
     </message>
     <message>
         <source>Open the php.ini file and change the memory_limit value to at least %1, and press %2</source>
@@ -21268,7 +21652,7 @@ This functionality is also available at a later time from the Administration Int
     </message>
     <message>
         <source>Note</source>
-        <translation type="unfinished">Nota</translation>
+        <translation>Nota</translation>
     </message>
     <message>
         <source>File uploading is not possible</source>
@@ -21553,6 +21937,38 @@ To do this you need to change the %chown commands under Alternative shell comman
         <source>If you want to keep UTC as your time zone, check &lt;strong&gt;Ignore this test&lt;/strong&gt; below to proceed.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Missing cURL extension</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>It is recommended to enable the PHP cURL extension, otherwise some features requiring a proxy or SSL will not work.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>To enable the PHP cURL functions you need to compile PHP with support for it. Configure PHP with</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>More information on this subject is available at</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>If you know where the program is installed (the executable is called</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>PHP does not register environment variables</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>PHP is currently not configured to register enviroment variables in the global variable $_ENV.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>To fix this, edit your php.ini configuration and add E to the variables_order setting.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>design/standard/setup/toolbar</name>
@@ -21661,7 +22077,7 @@ To do this you need to change the %chown commands under Alternative shell comman
     </message>
     <message>
         <source>Group view</source>
-        <translation>Vista gruppo</translation>
+        <translation>Visualizzazione gruppo</translation>
     </message>
     <message>
         <source>Percent</source>
@@ -21846,11 +22262,11 @@ To do this you need to change the %chown commands under Alternative shell comman
     </message>
     <message>
         <source>First name</source>
-        <translation>Cognome</translation>
+        <translation>Nome</translation>
     </message>
     <message>
         <source>Last name</source>
-        <translation>Nome</translation>
+        <translation>Cognome</translation>
     </message>
     <message>
         <source>Email</source>
@@ -21926,7 +22342,7 @@ To do this you need to change the %chown commands under Alternative shell comman
     </message>
     <message>
         <source>View</source>
-        <translation>Vista</translation>
+        <translation>Visualizzazione</translation>
     </message>
     <message>
         <source>Are you sure you want to remove order: </source>
@@ -22601,7 +23017,7 @@ To do this you need to change the %chown commands under Alternative shell comman
     </message>
     <message>
         <source>The URL points to %1.</source>
-        <translation>La URL punta a %1.</translation>
+        <translation>La URL indirizza su %1.</translation>
     </message>
     <message>
         <source>Last modified at %1</source>
@@ -22755,7 +23171,7 @@ To do this you need to change the %chown commands under Alternative shell comman
     </message>
     <message>
         <source>Input was stored successfully</source>
-        <translation>Inserimento registrato con successo</translation>
+        <translation>Registrazione inserimento riuscita</translation>
     </message>
     <message>
         <source>Register</source>
@@ -22787,7 +23203,7 @@ To do this you need to change the %chown commands under Alternative shell comman
     </message>
     <message>
         <source>Your account was successfully created.</source>
-        <translation>Account creato con successo.</translation>
+        <translation>La creazione del tuo account è riuscita.</translation>
     </message>
     <message>
         <source>Login</source>
@@ -22817,7 +23233,7 @@ To do this you need to change the %chown commands under Alternative shell comman
     </message>
     <message>
         <source>Password successfully updated.</source>
-        <translation>Password aggiornata con successo.</translation>
+        <translation>Aggiornamento password riuscito.</translation>
     </message>
     <message>
         <source>Edit profile</source>
@@ -22892,12 +23308,20 @@ To do this you need to change the %chown commands under Alternative shell comman
         <source>Your account was successfully created. An email will be sent to the specified
 email address. Follow the instructions in that mail to activate
 your account.</source>
-        <translation>Il tuo account è stato creato con successo. Un&apos;email verrà inviata all&apos;indirizzo 
+        <translation>La creazione del tuo account è riuscita. Un&apos;email verrà inviata all&apos;indirizzo 
 email specificato.  Segui le istruzioni che troverai nel messaggio 
 per attivare il tuo account.</translation>
     </message>
     <message>
         <source>Please note that your browser must use and support cookies to register a new user.</source>
+        <translation>Si noti che il browser deve fare uso e supportare i cookies per registrare un nuovo utente.</translation>
+    </message>
+    <message>
+        <source>Your browser does not seem to support cookies, to register a new user, cookies need to be supported and enabled!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Try again</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -22905,7 +23329,7 @@ per attivare il tuo account.</translation>
     <name>design/standard/user/</name>
     <message>
         <source>The new password must be at least %1 characters long. Please retype your new password.</source>
-        <translation type="unfinished"></translation>
+        <translation>La nuova password deve contenere almeno %1 caratteri. Sei pregato di reinserire la nuova password.</translation>
     </message>
 </context>
 <context>
@@ -22924,7 +23348,7 @@ per attivare il tuo account.</translation>
     </message>
     <message>
         <source>Password was successfully generated and sent to: %1</source>
-        <translation>Password generata con successo ed inviata a: %1</translation>
+        <translation>Generazione password riuscita ed inviata a: %1</translation>
     </message>
     <message>
         <source>The key is invalid or has been used. </source>
@@ -23102,7 +23526,7 @@ per attivare il tuo account.</translation>
     </message>
     <message>
         <source>View (without children)</source>
-        <translation>Vista (senza figli)</translation>
+        <translation>Visualizzazione (senza figli)</translation>
     </message>
     <message>
         <source>Any</source>
@@ -23122,7 +23546,7 @@ per attivare il tuo account.</translation>
     </message>
     <message>
         <source>Extension</source>
-        <translation type="unfinished"></translation>
+        <translation>Estensione</translation>
     </message>
 </context>
 <context>
@@ -23785,6 +24209,10 @@ per attivare il tuo account.</translation>
         <source>Content tree menu (browser cache)</source>
         <translation>Menu ad albero del contenuto (memoria tampone browser)</translation>
     </message>
+    <message>
+        <source>State limitations cache</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>kernel/class</name>
@@ -23971,7 +24399,7 @@ per attivare il tuo account.</translation>
     </message>
     <message>
         <source>Workflow redirects user view</source>
-        <translation>Il workflow reindirizza la vista dell&apos;utente</translation>
+        <translation>Il workflow reindirizza la visualizzazione dell&apos;utente</translation>
     </message>
     <message>
         <source>New RSS Export</source>
@@ -23984,6 +24412,22 @@ per attivare il tuo account.</translation>
     <message>
         <source>Canceled whole workflow</source>
         <translation>Workflow eliminato del tutto</translation>
+    </message>
+    <message>
+        <source>Replace existing object</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Skip object</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Keep existing and create a new one</source>
+        <translation type="unfinished">Mantieni l&apos;oggetto esistente e creane uno nuovo</translation>
+    </message>
+    <message>
+        <source>Update existing object</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -24406,7 +24850,7 @@ per attivare il tuo account.</translation>
     </message>
     <message>
         <source>Invalid reference in &amp;lt;embed&amp;gt; tag. Note that &lt;embed&gt; tag supports only &apos;eznode&apos; and &apos;ezobject&apos; protocols.</source>
-        <translation>Riferimento non valido in &amp;lt;embed&amp;gt; tag. Nota che la tag &lt;embed&gt; supporta solo i protocolli &apos;eznode&apos; e &apos;ezobject&apos;.</translation>
+        <translation>Riferimento non valido in &amp;lt;embed&amp;gt; tag. Nota che la stringa &lt;embed&gt; supporta solo i protocolli &apos;eznode&apos; e &apos;ezobject&apos;.</translation>
     </message>
     <message>
         <source>The ISBN number is not correct. </source>
@@ -24480,12 +24924,20 @@ per attivare il tuo account.</translation>
         <source>You cannot remove the last class holding user accounts.</source>
         <translation>Non puoi eliminare l&apos;ultima classe che possiede gli account degli utenti.</translation>
     </message>
+    <message>
+        <source>Missing email input.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Input required</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>kernel/classes/datatypes/ezbinaryfile</name>
     <message>
         <source>Failed to store file %filename. Please contact the site administrator.</source>
-        <translation>Salvataggio del file %filename fallito. Pregasi contattare l&apos;amministratore del sito.</translation>
+        <translation>Salvataggio del file %filename fallito. Sei pregato di contattare l&apos;amministratore del sito.</translation>
     </message>
 </context>
 <context>
@@ -24499,26 +24951,26 @@ per attivare il tuo account.</translation>
     <name>kernel/classes/datatypes/ezmedia</name>
     <message>
         <source>Failed to store media file %filename. Please contact the site administrator.</source>
-        <translation>Salvataggio file multimediale %filename fallito. Pregasi contattare l&apos;amministratore del sito.</translation>
+        <translation>Salvataggio file multimediale %filename fallito. Sei pregato di contattare l&apos;amministratore del sito.</translation>
     </message>
 </context>
 <context>
     <name>kernel/classes/datatypes/ezxmltext</name>
     <message>
         <source>Wrong closing tag : &amp;lt;/%1&amp;gt;.</source>
-        <translation>Tag di chiusura sbagliata: &amp;lt;/%1&amp;gt;.</translation>
+        <translation>Stringa di chiusura sbagliata: &amp;lt;/%1&amp;gt;.</translation>
     </message>
     <message>
         <source>Unknown tag: &amp;lt;%1&amp;gt;.</source>
-        <translation>Tag sconosciuta: &amp;lt;%1&amp;gt;.</translation>
+        <translation>Stringa sconosciuta: &amp;lt;%1&amp;gt;.</translation>
     </message>
     <message>
         <source>Can&apos;t convert tag&apos;s name: &amp;lt;%1&amp;gt;.</source>
-        <translation>Non si può convertire il nome della tag: &amp;lt;%1&amp;gt;.</translation>
+        <translation>Non si può convertire il nome della stringa: &amp;lt;%1&amp;gt;.</translation>
     </message>
     <message>
         <source>Required attribute &apos;%1&apos; is not presented in tag &amp;lt;%2&amp;gt;.</source>
-        <translation>L&apos;attributo richiesto &apos;%1&apos; non è presente nella tag &amp;lt;%2&amp;gt;.</translation>
+        <translation>L&apos;attributo richiesto &apos;%1&apos; non è presente nella stringa &amp;lt;%2&amp;gt;.</translation>
     </message>
     <message>
         <source>%1 is not allowed to be a child of &amp;lt;%2&amp;gt;.</source>
@@ -24534,39 +24986,39 @@ per attivare il tuo account.</translation>
     </message>
     <message>
         <source>Wrong closing tag</source>
-        <translation>Tag di chiusura sbagliata</translation>
+        <translation>Stringa di chiusura sbagliata</translation>
     </message>
     <message>
         <source>Wrong opening tag</source>
-        <translation>Tag di apertura sbagliata</translation>
+        <translation>Stringa di apertura sbagliata</translation>
     </message>
     <message>
         <source>Custom tag &apos;%1&apos; is not allowed.</source>
-        <translation>Tag speciale &apos;%1&apos; non possibile.</translation>
+        <translation>Stringa personale &apos;%1&apos; non ammessa.</translation>
     </message>
     <message>
         <source>&amp;lt;%1&amp;gt; tag can&apos;t be empty.</source>
-        <translation>La tag &amp;lt;%1&amp;gt; non può essere vuota.</translation>
+        <translation>La stringa &amp;lt;%1&amp;gt; non può essere vuota.</translation>
     </message>
     <message>
         <source>Incorrect headers nesting</source>
-        <translation>Intreccio intestazioni non corretto</translation>
+        <translation>Annidamento intestazioni non corretto</translation>
     </message>
     <message>
         <source>Node &apos;%1&apos; does not exist.</source>
-        <translation type="unfinished">Il nodo &apos;%1&apos; non esiste.</translation>
+        <translation>Il nodo &apos;%1&apos; non esiste.</translation>
     </message>
     <message>
         <source>Using scripts in links is not allowed, link &apos;%1&apos; has been removed</source>
-        <translation type="unfinished">Usare scripts nei links non è permesso, il link &apos;%1&apos; è stato eliminato</translation>
+        <translation>Usare scripts nei links non è permesso, il link &apos;%1&apos; è stato eliminato</translation>
     </message>
     <message>
         <source>Invalid e-mail address: &apos;%1&apos;</source>
-        <translation type="unfinished">Indirizzo e-mail non valido: &apos;%1&apos;</translation>
+        <translation>Indirizzo e-mail non valido: &apos;%1&apos;</translation>
     </message>
     <message>
         <source>Object %1 can not be embeded to itself.</source>
-        <translation type="unfinished">L&apos;oggetto %1 non può essere allegato a se stesso.</translation>
+        <translation>L&apos;oggetto %1 non può essere allegato a se stesso.</translation>
     </message>
 </context>
 <context>
@@ -24831,7 +25283,7 @@ per attivare il tuo account.</translation>
     </message>
     <message>
         <source>Successfully DONE.</source>
-        <translation>FATTO con successo.</translation>
+        <translation>Operazione riuscita.</translation>
     </message>
 </context>
 <context>
@@ -24944,7 +25396,7 @@ per attivare il tuo account.</translation>
     <name>kernel/content/urlalias_wildcard</name>
     <message>
         <source>URL wildcard aliases</source>
-        <translation type="unfinished"></translation>
+        <translation>URL aliases wildcard</translation>
     </message>
 </context>
 <context>
@@ -24970,7 +25422,7 @@ per attivare il tuo account.</translation>
     </message>
     <message>
         <source>Template view</source>
-        <translation>Vista template</translation>
+        <translation>Visualizzazione template</translation>
     </message>
     <message>
         <source>Create new template</source>
@@ -25277,20 +25729,8 @@ per attivare il tuo account.</translation>
         <translation>Il nome del pacchetto %packagename non è valido, può contenere solo caratteri nell&apos;ambito di a-z, 0-9 e underscore.</translation>
     </message>
     <message>
-        <source>Select an extension to be exported</source>
-        <translation>Seleziona un&apos;estensione da esportare</translation>
-    </message>
-    <message>
         <source>Extension export</source>
         <translation>Export estensione</translation>
-    </message>
-    <message>
-        <source>Extension:</source>
-        <translation>Estensione:</translation>
-    </message>
-    <message>
-        <source>You must select an extension</source>
-        <translation>Seleziona un&apos;estensione</translation>
     </message>
     <message>
         <source>%number content objects</source>
@@ -25376,6 +25816,30 @@ per attivare il tuo account.</translation>
         <source>Remove object and its sub-item(s)</source>
         <translation>Elimina l&apos;oggetto ed i suoi sotto-elementi</translation>
     </message>
+    <message>
+        <source>Extensions to include</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Extension list</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You must select at least one extension</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Package contains an invalid extension name: %extensionname</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Advanced options</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The package name %packagename is invalid, cannot import the package</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>kernel/pdf</name>
@@ -25393,13 +25857,6 @@ per attivare il tuo account.</translation>
     <message>
         <source>New PDF Export</source>
         <translation>Nuova Esportazione in PDF</translation>
-    </message>
-</context>
-<context>
-    <name>kernel/reference</name>
-    <message>
-        <source>Reference documentation</source>
-        <translation>Documentazione di riferimento</translation>
     </message>
 </context>
 <context>
@@ -25473,6 +25930,10 @@ per attivare il tuo account.</translation>
         <source>Selected class does not exist</source>
         <translation>La classe selezionata non esiste</translation>
     </message>
+    <message>
+        <source>Invalid selection for category class %1 does not have attribute &quot;%2&quot;</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>kernel/search</name>
@@ -25512,7 +25973,7 @@ per attivare il tuo account.</translation>
     </message>
     <message>
         <source>Template operator wizard</source>
-        <translation>Wizard dell&apos;operatore dei template</translation>
+        <translation>Creazione guidata dell&apos;operatore dei template</translation>
     </message>
     <message>
         <source>Extension configuration</source>
@@ -25544,7 +26005,7 @@ per attivare il tuo account.</translation>
     </message>
     <message>
         <source>Datatype wizard</source>
-        <translation>Wizard dei datatype</translation>
+        <translation>Creazione guidata dei datatype</translation>
     </message>
 </context>
 <context>
@@ -25563,7 +26024,7 @@ per attivare il tuo account.</translation>
     </message>
     <message>
         <source>Group view of discount rule</source>
-        <translation>Vista gruppo regole di sconto</translation>
+        <translation>Visualizzazione gruppo regole di sconto</translation>
     </message>
     <message>
         <source>Editing rule</source>
@@ -25751,7 +26212,7 @@ per attivare il tuo account.</translation>
     </message>
     <message>
         <source>Changes were stored successfully.</source>
-        <translation>Modifiche registrate con successo.</translation>
+        <translation>Registrazione modifiche riuscita.</translation>
     </message>
 </context>
 <context>
@@ -25853,6 +26314,80 @@ per attivare il tuo account.</translation>
     </message>
 </context>
 <context>
+    <name>kernel/state</name>
+    <message>
+        <source>State</source>
+        <translation type="unfinished">Stato</translation>
+    </message>
+    <message>
+        <source>Assign</source>
+        <translation type="unfinished">Assegna</translation>
+    </message>
+    <message>
+        <source>New</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit</source>
+        <translation type="unfinished">Modifica</translation>
+    </message>
+    <message>
+        <source>Groups</source>
+        <translation type="unfinished">Gruppi</translation>
+    </message>
+    <message>
+        <source>New group</source>
+        <translation type="unfinished">Nuovo gruppo</translation>
+    </message>
+    <message>
+        <source>Group edit</source>
+        <translation type="unfinished">Modifica gruppo</translation>
+    </message>
+</context>
+<context>
+    <name>kernel/state/edit</name>
+    <message>
+        <source>Identifier: input required</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Identifier: invalid, it can only consist of characters in the range a-z, 0-9 and underscore.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Identifier: invalid, maximum %max characters allowed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Identifier: a content object state group with this identifier already exists, please give another identifier</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%language_name: this language is the default but neither name or description were provided for this language</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Translations: you need to add at least one localization</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Translations: there are multiple localizations but you did not specify which is the default one</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Identifier: identifiers starting with &quot;ez&quot; are reserved.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Name in %language_name is too long. Maximum 45 characters allowed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Name in %language_name: input required</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>kernel/trigger</name>
     <message>
         <source>Trigger</source>
@@ -25875,7 +26410,7 @@ per attivare il tuo account.</translation>
     </message>
     <message>
         <source>View</source>
-        <translation>Vista</translation>
+        <translation>Visualizzazione</translation>
     </message>
     <message>
         <source>URL edit</source>
@@ -25976,7 +26511,7 @@ per attivare il tuo account.</translation>
     </message>
     <message>
         <source>View</source>
-        <translation>Vista</translation>
+        <translation>Visualizzazione</translation>
     </message>
     <message>
         <source>You have to have at least one group that the workflow belongs to!</source>
@@ -26052,14 +26587,14 @@ per attivare il tuo account.</translation>
     <name>lib/eztemplate</name>
     <message>
         <source>Some template errors occurred, see debug for more information.</source>
-        <translation>Si sono verificati degli errori elaborando i template, controllare il debug per maggiori informazioni.</translation>
+        <translation>Si sono verificati degli errori nell&apos;elaborazione del template, controlla il debug per saperne di più.</translation>
     </message>
 </context>
 <context>
     <name>lib/template</name>
     <message>
         <source>The maximum nesting level of %max has been reached. The execution is stopped to avoid infinite recursion.</source>
-        <translation type="unfinished"></translation>
+        <translation>Il numero massimo di livelli annidati di  %max è stato raggiunto. L&apos;esecuzione è stata interrotta per evitare infiniti ricorsi.</translation>
     </message>
 </context>
 <context>
@@ -26088,7 +26623,7 @@ per attivare il tuo account.</translation>
     </message>
     <message>
         <source>View</source>
-        <translation>Vista</translation>
+        <translation>Visualizzazione</translation>
     </message>
 </context>
 <context>

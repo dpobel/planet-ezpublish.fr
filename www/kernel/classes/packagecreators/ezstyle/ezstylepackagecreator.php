@@ -5,9 +5,9 @@
 // Created on: <21-Nov-2003 12:39:59 amos>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -26,7 +26,7 @@
 //
 //
 
-/*! \file ezstylepackagecreator.php
+/*! \file
 */
 
 /*!
@@ -35,8 +35,6 @@
   \brief The class eZStylePackageCreator does
 
 */
-
-//include_once( 'kernel/classes/ezpackagecreationhandler.php' );
 
 class eZStylePackageCreator extends eZPackageCreationHandler
 {
@@ -168,7 +166,6 @@ class eZStylePackageCreator extends eZPackageCreationHandler
     }
 
     /*!
-     \reimp
      \return \c 'import'
     */
     function packageInstallType( $package, &$persistentData )
@@ -177,7 +174,6 @@ class eZStylePackageCreator extends eZPackageCreationHandler
     }
 
     /*!
-     \reimp
      Returns \c 'stable', site style packages are always stable.
     */
     function packageInitialState( $package, &$persistentData )
@@ -203,7 +199,6 @@ class eZStylePackageCreator extends eZPackageCreationHandler
     */
     function validateCSSFile( $package, $http, $currentStepID, &$stepMap, &$persistentData, &$errorList )
     {
-        //include_once( 'lib/ezutils/classes/ezhttpfile.php' );
         $hasSiteFile = eZHTTPFile::canFetch( 'PackageSiteCSSFile' );
         $hasClassesFile = eZHTTPFile::canFetch( 'PackageClassesCSSFile' );
 
@@ -229,10 +224,8 @@ class eZStylePackageCreator extends eZPackageCreationHandler
 
     function commitCSSFile( $package, $http, $step, &$persistentData, $tpl )
     {
-        //include_once( 'lib/ezutils/classes/ezhttpfile.php' );
         $siteFile = eZHTTPFile::fetch( 'PackageSiteCSSFile' );
         $classesFile = eZHTTPFile::fetch( 'PackageClassesCSSFile' );
-        //include_once( 'lib/ezutils/classes/ezmimetype.php' );
         $siteMimeData = eZMimeType::findByFileContents( $siteFile->attribute( 'original_filename' ) );
         $dir = eZSys::storageDirectory() . '/temp';
         eZMimeType::changeDirectoryPath( $siteMimeData, $dir );
@@ -255,7 +248,6 @@ class eZStylePackageCreator extends eZPackageCreationHandler
     */
     function validateImageFiles( $package, $http, $currentStepID, &$stepMap, &$persistentData, &$errorList )
     {
-        //include_once( 'lib/ezutils/classes/ezhttpfile.php' );
         // If we don't have an image we continue as normal
         if ( !eZHTTPFile::canFetch( 'PackageImageFile' ) )
             return true;
@@ -265,7 +257,6 @@ class eZStylePackageCreator extends eZPackageCreationHandler
         $result = true;
         if ( $file )
         {
-            //include_once( 'lib/ezutils/classes/ezmimetype.php' );
             $mimeData = eZMimeType::findByFileContents( $file->attribute( 'original_filename' ) );
             $dir = eZSys::storageDirectory() .  '/temp';
             eZMimeType::changeDirectoryPath( $mimeData, $dir );
@@ -281,7 +272,6 @@ class eZStylePackageCreator extends eZPackageCreationHandler
     }
 
     /*!
-     \reimp
      Fetches the selected content classes and generates a name, summary and description from the selection.
     */
     function generatePackageInformation( &$packageInformation, $package, $http, $step, &$persistentData )

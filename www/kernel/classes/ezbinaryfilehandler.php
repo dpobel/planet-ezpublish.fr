@@ -5,9 +5,9 @@
 // Created on: <30-Apr-2002 16:47:08 bf>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -27,7 +27,7 @@
 //
 
 /*!
- \group eZBinaryHandlers Binary file handlers
+ \defgroup eZBinaryHandlers Binary file handlers
 */
 
 /*!
@@ -220,8 +220,6 @@ class eZBinaryFileHandler
 
     function handleDownload( $contentObject, $contentObjectAttribute, $type )
     {
-        //include_once( 'lib/ezutils/classes/ezmimetype.php' );
-        //include_once( 'kernel/classes/datatypes/ezimage/ezimagealiashandler.php' );
         $contentObjectAttributeID = $contentObjectAttribute->attribute( 'id' );
         $version = $contentObject->attribute( 'current_version' );
 
@@ -264,25 +262,15 @@ class eZBinaryFileHandler
         $instance =& $GLOBALS['eZBinaryFileHandlerInstance-' . $identifier];
         if ( !isset( $instance ) )
         {
-            $handlerDirectory = $identifier;
-            $handlerFilename = $identifier . "handler.php";
-            if ( eZExtension::findExtensionType( array( 'ini-name' => 'file.ini',
-                                                    'repository-group' => 'BinaryFileSettings',
-                                                    'repository-variable' => 'Repositories',
-                                                    'extension-group' => 'BinaryFileSettings',
-                                                    'extension-variable' => 'ExtensionRepositories',
-                                                    'type-directory' => true,
-                                                    'type' => $identifier,
-                                                    'subdir' => 'binaryhandlers',
-                                                    'extension-subdir' => 'binaryhandlers',
-                                                    'suffix-name' => 'handler.php' ),
-                                             $out ) )
-            {
-                include_once( $out['found-file-path'] );
-                $classname = $identifier . "handler";
-                $instance = new $classname();
-            }
-            else
+            $optionArray = array( 'iniFile'     => 'file.ini',
+                                  'iniSection'  => 'BinaryFileSettings',
+                                  'iniVariable' => 'Handler'  );
+
+            $options = new ezpExtensionOptions( $optionArray );
+
+            $instance = eZExtension::getHandlerClass( $options );
+
+            if( $instance === false )
             {
                 eZDebug::writeError( "Could not find binary file handler '$identifier'", 'eZBinaryFileHandler::instance' );
             }

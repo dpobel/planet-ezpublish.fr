@@ -3,9 +3,9 @@
 // Created on: <24-Apr-2002 16:06:53 bf>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -24,16 +24,7 @@
 //
 //
 
-//include_once( "lib/ezutils/classes/ezhttptool.php" );
-//include_once( "lib/ezutils/classes/ezmail.php" );
-//include_once( "lib/ezutils/classes/ezmailtransport.php" );
-//include_once( "lib/ezutils/classes/ezsys.php" );
-//include_once( "lib/ezutils/classes/ezini.php" );
-
-//include_once( "kernel/classes/datatypes/ezuser/ezuser.php" );
 require_once( "kernel/common/template.php" );
-//include_once( 'kernel/classes/ezcontentobjecttreenode.php' );
-
 
 $http = eZHTTPTool::instance();
 
@@ -124,7 +115,6 @@ if ( $http->hasPostVariable( 'SendButton' ) )
     if ( $fromEmail == null )
         $fromEmail = $yourEmail;
 
-    //include_once( "kernel/classes/eztipafriendrequest.php" );
     if ( !eZTipafriendRequest::checkReceiver( $receiversEmail ) )
         $error_strings[] = ezi18n( 'kernel/content', 'The receiver has already received the maximum number of tipafriend mails the last hours' );
 
@@ -139,6 +129,8 @@ if ( $http->hasPostVariable( 'SendButton' ) )
         // fetch
         $res = eZTemplateDesignResource::instance();
         $res->setKeys( array( array( 'object',           $object->attribute( 'id' ) ),
+                              array( 'remote_id',        $object->attribute( 'remote_id' ) ),
+                              array( 'node_remote_id',   $node->attribute( 'remote_id' ) ),
                               array( 'class',            $object->attribute( 'contentclass_id' ) ),
                               array( 'class_identifier', $object->attribute( 'class_identifier' ) ),
                               array( 'class_group',      $object->attribute( 'match_ingroup_id_list' ) ),
@@ -162,6 +154,9 @@ if ( $http->hasPostVariable( 'SendButton' ) )
         $mailtpl->setVariable( 'comment', $comment );
         $mailtext = $mailtpl->fetch( 'design:content/tipafriendmail.tpl' );
 
+        if ( $mailtpl->hasVariable( 'content_type' ) )
+            $mail->setContentType( $mailtpl->variable( 'content_type' ) );
+
         $mail->setBody( $mailtext );
 
         // mail was sent ok
@@ -173,7 +168,6 @@ if ( $http->hasPostVariable( 'SendButton' ) )
             $request->store();
 
             // Increase tipafriend count for this node
-            //include_once( "kernel/classes/eztipafriendcounter.php" );
             $counter = eZTipafriendCounter::create( $NodeID );
             $counter->store();
         }
@@ -197,6 +191,8 @@ if ( !$overrideKeysAreSet )
 {
     $res = eZTemplateDesignResource::instance();
     $res->setKeys( array( array( 'object',           $object->attribute( 'id' ) ),
+                          array( 'remote_id',        $object->attribute( 'remote_id' ) ),
+                          array( 'node_remote_id',   $node->attribute( 'remote_id' ) ),
                           array( 'class',            $object->attribute( 'contentclass_id' ) ),
                           array( 'class_identifier', $object->attribute( 'class_identifier' ) ),
                           array( 'class_group',      $object->attribute( 'match_ingroup_id_list' ) ),

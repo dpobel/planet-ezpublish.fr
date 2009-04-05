@@ -5,9 +5,9 @@
 // Created on: <01-Nov-2002 13:51:17 amos>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -26,7 +26,7 @@
 //
 //
 
-/*! \file ezcontentoperationcollection.php
+/*! \file
 */
 
 /*!
@@ -34,8 +34,6 @@
   \brief The class eZContentOperationCollection does
 
 */
-
-require_once( 'kernel/classes/ezcontentlanguage.php' );
 
 class eZContentOperationCollection
 {
@@ -124,7 +122,6 @@ class eZContentOperationCollection
 
     function publishObjectExtensionHandler( $contentObjectID, $contentObjectVersion )
     {
-        //include_once( 'kernel/classes/ezcontentobjectedithandler.php' );
         eZContentObjectEditHandler::executePublish( $contentObjectID, $contentObjectVersion );
     }
 
@@ -139,26 +136,8 @@ class eZContentOperationCollection
         $version = $object->version( $versionNum );
         if ( !$version )
             return;
-        switch ( $status )
-        {
-            case 1:
-            {
-                $statusName = 'pending';
-                $version->setAttribute( 'status', eZContentObjectVersion::STATUS_PENDING );
-            } break;
-            case 2:
-            {
-                $statusName = 'archived';
-                $version->setAttribute( 'status', eZContentObjectVersion::STATUS_ARCHIVED );
-            } break;
-            case 3:
-            {
-                $statusName = 'published';
-                $version->setAttribute( 'status', eZContentObjectVersion::STATUS_PUBLISHED );
-            } break;
-            default:
-                $statusName = 'none';
-        }
+
+        $version->setAttribute( 'status', $status );
         $version->store();
     }
 
@@ -183,8 +162,9 @@ class eZContentOperationCollection
             $object->setAttribute( 'published', time() );
         }
         $object->setAttribute( 'modified', time() );
+        $classID = $object->attribute( 'contentclass_id' );
 
-        $class = eZContentClass::fetch( $object->attribute( 'contentclass_id' ) );
+        $class = eZContentClass::fetch( $classID );
         $objectName = $class->contentObjectName( $object );
         $object->setName( $objectName, $versionNum );
         $existingTranslations = $version->translations( false );
@@ -214,14 +194,9 @@ class eZContentOperationCollection
 
         $db->commit();
 
-        /* Check if current class is the user class, and if so, clean up the
-         * user-policy cache */
-        //include_once( "lib/ezutils/classes/ezini.php" );
-        $ini = eZINI::instance();
-        $userClassID = $ini->variable( "UserSettings", "UserClassID" );
-        if ( $object->attribute( 'contentclass_id' ) == $userClassID )
+        /* Check if current class is the user class, and if so, clean up the user-policy cache */
+        if ( in_array( $classID, eZUser::contentClassIDs() ) )
         {
-            //include_once( "kernel/classes/datatypes/ezuser/ezuser.php" );
             eZUser::cleanupCache();
         }
     }
@@ -245,9 +220,8 @@ class eZContentOperationCollection
 
      \param $objectID The ID of the content object to generate caches for.
     */
-    function generateObjectViewCache( $objectID )
+    static public function generateObjectViewCache( $objectID )
     {
-        //include_once( 'kernel/classes/ezcontentcachemanager.php' );
         eZContentCacheManager::generateObjectViewCache( $objectID );
     }
 
@@ -260,15 +234,12 @@ class eZContentOperationCollection
      \param $additionalNodeList An array with node IDs to add to clear list,
                                 or \c false for no additional nodes.
     */
-    function clearObjectViewCache( $objectID, $versionNum = true, $additionalNodeList = false )
+    static public function clearObjectViewCache( $objectID, $versionNum = true, $additionalNodeList = false )
     {
-        //include_once( 'kernel/classes/ezcontentcachemanager.php' );
         eZContentCacheManager::clearContentCacheIfNeeded( $objectID, $versionNum, $additionalNodeList );
     }
 
 
-    /*!
-    */
     function publishNode( $parentNodeID, $objectID, $versionNum, $mainNodeID )
     {
         $object         = eZContentObject::fetch( $objectID );
@@ -303,7 +274,7 @@ class eZContentOperationCollection
             $db->commit();
             if ( $mainNodeID == false )
             {
-                return $existingNode->attribute( 'node_id' );
+                return $object->attribute( 'main_node_id' );
             }
 
             return;
@@ -324,7 +295,6 @@ class eZContentOperationCollection
                 {
                     $parentNode = eZContentObjectTreeNode::fetch( $nodeID );
 
-                    //include_once( 'kernel/classes/ezcontentbrowserecent.php' );
                     $user = eZUser::currentUser();
                     eZContentBrowseRecent::createNew( $user->id(), $parentNode->attribute( 'node_id' ), $parentNode->attribute( 'name' ) );
                     $updateFields = true;
@@ -352,7 +322,6 @@ class eZContentOperationCollection
                     // clear cache for old placement.
                     $additionalNodeIDList = array( $fromNodeID );
 
-                    //include_once( 'kernel/classes/ezcontentcachemanager.php' );
                     eZContentCacheManager::clearContentCacheIfNeeded( $objectID, $versionNum, $additionalNodeIDList );
 
                     $originalNode = eZContentObjectTreeNode::fetchNode( $originalObjectID, $fromNodeID );
@@ -390,7 +359,6 @@ class eZContentOperationCollection
             $existingNodeID = $existingNode->attribute( 'node_id' );
             if ( $existingNodeID != $mainNodeID )
             {
-                //include_once( 'kernel/classes/ezcontentbrowserecent.php' );
                 eZContentBrowseRecent::updateNodeID( $existingNodeID, $mainNodeID );
             }
             $existingNode->setAttribute( 'main_node_id', $mainNodeID );
@@ -413,7 +381,7 @@ class eZContentOperationCollection
         }
     }
 
-    function updateSectionID( $objectID, $versionNum )
+    static public function updateSectionID( $objectID, $versionNum )
     {
         $object = eZContentObject::fetch( $objectID );
 
@@ -563,34 +531,50 @@ class eZContentOperationCollection
      \note Transaction unsafe. If you call several transaction unsafe methods you must enclose
      the calls within a db transaction; thus within db->begin and db->commit.
      */
-    static function registerSearchObject( $objectID, $versionNum )
+    static public function registerSearchObject( $objectID, $versionNum )
     {
         eZDebug::createAccumulatorGroup( 'search_total', 'Search Total' );
 
-        //include_once( "lib/ezutils/classes/ezini.php" );
-
         $ini = eZINI::instance( 'site.ini' );
-        $delayedIndexing = ( $ini->variable( 'SearchSettings', 'DelayedIndexing' ) == 'enabled' );
+        $delayedIndexing = $ini->variable( 'SearchSettings', 'DelayedIndexing' );
 
-        if ( $delayedIndexing )
+        if ( $delayedIndexing == 'enabled' )
         {
-            //include_once( "lib/ezdb/classes/ezdb.php" );
-
             $db = eZDB::instance();
-            $db->query( 'INSERT INTO ezpending_actions( action, param ) VALUES ( \'index_object\', '. (int)$objectID. ' )' );
+            $rows = $db->arrayQuery( 'SELECT param FROM ezpending_actions WHERE action = \'index_object\' AND param = '. (int)$objectID );
+            if ( count( $rows ) == 0 )
+            {
+                $db->query( 'INSERT INTO ezpending_actions( action, param ) VALUES ( \'index_object\', '. (int)$objectID. ' )' );
+            return;
+            }
         }
-        else
+        elseif ( $delayedIndexing == 'classbased' )
         {
-            //include_once( "kernel/classes/ezsearch.php" );
+            $classList = $ini->variable( 'SearchSettings', 'DelayedIndexingClassList' );
             $object = eZContentObject::fetch( $objectID );
-            // Register the object in the search engine.
-            eZDebug::accumulatorStart( 'remove_object', 'search_total', 'remove object' );
-            eZSearch::removeObject( $object );
-            eZDebug::accumulatorStop( 'remove_object' );
-            eZDebug::accumulatorStart( 'add_object', 'search_total', 'add object' );
-            eZSearch::addObject( $object );
-            eZDebug::accumulatorStop( 'add_object' );
+            $classIdentifier = $object->attribute( 'class_identifier' );
+            if ( is_array( $classList ) && in_array( $classIdentifier, $classList ) )
+            {
+                $db = eZDB::instance();
+                $db->query( 'INSERT INTO ezpending_actions( action, param ) VALUES ( \'index_object\', '. (int)$objectID. ' )' );
+                return;
+            }
         }
+
+        $object = eZContentObject::fetch( $objectID );
+        // Register the object in the search engine.
+        $needCommit = eZSearch::needCommit();
+        $doDeleteFirst = eZSearch::needRemoveWithUpdate();
+        if ($doDeleteFirst)
+        {
+            eZDebug::accumulatorStart( 'remove_object', 'search_total', 'remove object' );
+            eZSearch::removeObject( $object, $needCommit );
+            eZDebug::accumulatorStop( 'remove_object' );
+        }
+
+        eZDebug::accumulatorStart( 'add_object', 'search_total', 'add object' );
+        eZSearch::addObject( $object, $needCommit );
+        eZDebug::accumulatorStop( 'add_object' );
     }
 
     /*!
@@ -599,7 +583,6 @@ class eZContentOperationCollection
      */
     function createNotificationEvent( $objectID, $versionNum )
     {
-        //include_once( 'kernel/classes/notification/eznotificationevent.php' );
         $event = eZNotificationEvent::create( 'ezpublish', array( 'object' => $objectID,
                                                                    'version' => $versionNum ) );
         $event->store();
@@ -607,6 +590,8 @@ class eZContentOperationCollection
 
     /*!
       Start global transaction.
+
+      \deprecated since version 4.1.0, this method will be removed in future major releases
      */
     function beginPublish()
     {
@@ -616,6 +601,8 @@ class eZContentOperationCollection
 
     /*!
      Stop (commit) global transaction.
+
+     \deprecated since version 4.1.0, this method will be removed in future major releases
      */
     function endPublish()
     {
@@ -703,6 +690,580 @@ class eZContentOperationCollection
         $object = eZContentObject::fetch( $objectID );
         $object->cleanupInternalDrafts( eZUser::currentUserID() );
     }
-}
 
+    /**
+     * Moves a node
+     *
+     * @param int $nodeID
+     * @param int $objectID
+     * @param int $newParentNodeID
+     *
+     * @return array An array with operation status, always true
+     */
+    static public function moveNode( $nodeID, $objectID, $newParentNodeID )
+    {
+       if( !eZContentObjectTreeNodeOperations::move( $nodeID, $newParentNodeID ) )
+       {
+           eZDebug::writeError( "Failed to move node $nodeID as child of parent node $newParentNodeID",
+                                'content/action' );
+
+           return array( 'status' => false );
+       }
+
+       eZContentObject::fixReverseRelations( $objectID, 'move' );
+
+       return array( 'status' => true );
+    }
+
+    /**
+     * Adds a new nodeAssignment
+     *
+     * @param int $nodeID
+     * @param int $objectId
+     * @param array $selectedNodeIDArray
+     *
+     * @return array An array with operation status, always true
+     */
+    static public function addAssignment( $nodeID, $objectID, $selectedNodeIDArray )
+    {
+        $userClassIDArray = eZUser::contentClassIDs();
+
+        $object = eZContentObject::fetch( $objectID );
+        $class = $object->contentClass();
+
+        $nodeAssignmentList = eZNodeAssignment::fetchForObject( $objectID, $object->attribute( 'current_version' ), 0, false );
+        $assignedNodes = $object->assignedNodes();
+
+        $parentNodeIDArray = array();
+
+        foreach ( $assignedNodes as $assignedNode )
+        {
+            $append = false;
+            foreach ( $nodeAssignmentList as $nodeAssignment )
+            {
+                if ( $nodeAssignment['parent_node'] == $assignedNode->attribute( 'parent_node_id' ) )
+                {
+                    $append = true;
+                    break;
+                }
+            }
+            if ( $append )
+            {
+                $parentNodeIDArray[] = $assignedNode->attribute( 'parent_node_id' );
+            }
+        }
+
+        $db = eZDB::instance();
+        $db->begin();
+        $locationAdded = false;
+        $node = eZContentObjectTreeNode::fetch( $nodeID );
+        foreach ( $selectedNodeIDArray as $selectedNodeID )
+        {
+            if ( !in_array( $selectedNodeID, $parentNodeIDArray ) )
+            {
+                $parentNode = eZContentObjectTreeNode::fetch( $selectedNodeID );
+                $parentNodeObject = $parentNode->attribute( 'object' );
+
+                $canCreate = ( ( $parentNode->checkAccess( 'create', $class->attribute( 'id' ), $parentNodeObject->attribute( 'contentclass_id' ) ) == 1 ) ||
+                                ( $parentNode->canAddLocation() && $node->canRead() ) );
+
+                if ( $canCreate )
+                {
+                    $insertedNode = $object->addLocation( $selectedNodeID, true );
+
+                    // Now set is as published and fix main_node_id
+                    $insertedNode->setAttribute( 'contentobject_is_published', 1 );
+                    $insertedNode->setAttribute( 'main_node_id', $node->attribute( 'main_node_id' ) );
+                    $insertedNode->setAttribute( 'contentobject_version', $node->attribute( 'contentobject_version' ) );
+                    // Make sure the url alias is set updated.
+                    $insertedNode->updateSubTreePath();
+                    $insertedNode->sync();
+
+                    $locationAdded = true;
+                }
+            }
+        }
+        if ( $locationAdded )
+        {
+            
+            //call appropriate method from search engine
+            eZSearch::addNodeAssignment( $nodeID, $objectID, $selectedNodeIDArray );
+
+            // clear user policy cache if this was a user object
+            if ( in_array( $object->attribute( 'contentclass_id' ), $userClassIDArray ) )
+            {
+                eZUser::cleanupCache();
+            }
+
+           
+        }
+        $db->commit();
+
+        eZContentCacheManager::clearContentCacheIfNeeded( $objectID );
+
+        return array( 'status' => true );
+    }
+
+    /**
+     * Removes a nodeAssignment or a list of nodeAssigments
+     *
+     * @param int $nodeID
+     * @param int $objectID
+     * @param array $removeList
+     * @param bool $moveToTrash
+     *
+     * @return array An array with operation status, always true
+     */
+    static public function removeAssignment( $nodeID, $objectID, $removeList, $moveToTrash )
+    {
+        $mainNodeChanged      = false;
+        $nodeIDList           = array();
+        $mainNodeID           = $nodeID;
+        $userClassIDArray     = eZUser::contentClassIDs();
+        $object               = eZContentObject::fetch( $objectID );
+        $nodeAssignmentList   = eZNodeAssignment::fetchForObject( $objectID,
+                                                                  $object->attribute( 'current_version' ),
+                                                                  0,
+                                                                  false );
+        $nodeAssignmentIDList = array();
+
+        $db = eZDB::instance();
+        $db->begin();
+
+        foreach ( $removeList as $key => $node )
+        {
+            foreach ( $nodeAssignmentList as $nodeAssignmentKey => $nodeAssignment )
+            {
+                if ( $nodeAssignment['parent_node'] == $node->attribute( 'parent_node_id' ) )
+                {
+                    $nodeAssignmentIDList[] = $nodeAssignment['id'];
+                    unset( $nodeAssignmentList[$nodeAssignmentKey] );
+                }
+            }
+
+            if ( $node->attribute( 'node_id' ) == $node->attribute( 'main_node_id' ) )
+                $mainNodeChanged = true;
+            $node->removeThis();
+
+            $nodeIDList[] = $node->attribute( 'node_id' );
+        }
+
+        // Give other search engines that the default one a chance to reindex
+        // when removing locations.
+        // include_once( 'kernel/classes/ezsearch.php' );
+        if ( !eZSearch::getEngine() instanceof eZSearchEngine )
+        {
+            // include_once( 'kernel/content/ezcontentoperationcollection.php' );
+            eZContentOperationCollection::registerSearchObject( $objectID, $object->attribute( 'current_version' ) );
+        }
+
+        eZNodeAssignment::purgeByID( array_unique( $nodeAssignmentIDList ) );
+
+        if ( $mainNodeChanged )
+        {
+            $allNodes   = $object->assignedNodes();
+            $mainNode   = $allNodes[0];
+            $mainNodeID = $mainNode->attribute( 'node_id' );
+            eZContentObjectTreeNode::updateMainNodeID( $mainNodeID, $objectID, false, $mainNode->attribute( 'parent_node_id' ) );
+        }
+
+        $db->commit();
+
+        
+        //call appropriate method from search engine
+        eZSearch::removeNodeAssignment( $nodeID, $mainNodeID, $objectID, $nodeIDList );
+
+        eZContentCacheManager::clearObjectViewCacheIfNeeded( $objectID );
+    
+        // clear user policy cache if this was a user object
+        if ( in_array( $object->attribute( 'contentclass_id' ), $userClassIDArray ) )
+        {
+            eZUser::cleanupCache();
+        }
+    
+        // we don't clear template block cache here since it's cleared in eZContentObjectTreeNode::removeNode()
+
+        return array( 'status' => true );
+    }
+
+    /**
+     * Deletes a content object, or a list of content objects
+     *
+     * @param array $deleteIDArray
+     * @param bool $moveToTrash
+     *
+     * @return array An array with operation status, always true
+     */
+    static public function deleteObject( $deleteIDArray, $moveToTrash = false )
+    {
+       eZContentObjectTreeNode::removeSubtrees( $deleteIDArray, $moveToTrash );
+       return array( 'status' => true );
+    }
+
+    /** 
+     * Changes an contentobject's status
+     *
+     * @param int $nodeID
+     *
+     * @return array An array with operation status, always true
+     */
+    static public function changeHideStatus( $nodeID )
+    {
+        $action = 'hide';
+
+        $curNode = eZContentObjectTreeNode::fetch( $nodeID );
+        if ( is_object( $curNode ) )
+        {
+            if ( $curNode->attribute( 'is_hidden' ) )
+            {
+                eZContentObjectTreeNode::unhideSubTree( $curNode );
+                $action = 'show';
+            }
+            else
+                eZContentObjectTreeNode::hideSubTree( $curNode );
+        }
+        
+        //call appropriate method from search engine
+        eZSearch::updateNodeVisibility( $nodeID, $action );
+
+        return array( 'status' => true );
+    }
+
+    /**
+     * Swap a node with another one
+     *
+     * @param int $nodeID
+     * @param int $selectedNodeID
+     * @param array $nodeIdList
+     *
+     * @return array An array with operation status, always true
+     */
+    static public function swapNode( $nodeID, $selectedNodeID, $nodeIdList = array() )
+    {
+        $userClassIDArray = eZUser::contentClassIDs();
+
+        $node             = eZContentObjectTreeNode::fetch( $nodeID );
+        $selectedNode     = eZContentObjectTreeNode::fetch( $selectedNodeID );
+        $object           = $node->object();
+        $nodeParentNodeID = $node->attribute( 'parent_node_id' );
+        $nodeParent       = $node->attribute( 'parent' );
+
+        $objectID      = $object->attribute( 'id' );
+        $objectVersion = $object->attribute( 'current_version' );
+
+        $selectedObject           = $selectedNode->object();
+        $selectedObjectID         = $selectedObject->attribute( 'id' );
+        $selectedObjectVersion    = $selectedObject->attribute( 'current_version' );
+        $selectedNodeParentNodeID = $selectedNode->attribute( 'parent_node_id' );
+        $selectedNodeParent       = $selectedNode->attribute( 'parent' );
+
+        $db = eZDB::instance();
+        $db->begin();
+
+        $node->setAttribute( 'contentobject_id', $selectedObjectID );
+        $node->setAttribute( 'contentobject_version', $selectedObjectVersion );
+
+        $selectedNode->setAttribute( 'contentobject_id', $objectID );
+        $selectedNode->setAttribute( 'contentobject_version', $objectVersion );
+
+        // fix main node id
+        if ( $node->isMain() && !$selectedNode->isMain() )
+        {
+            $node->setAttribute( 'main_node_id', $selectedNode->attribute( 'main_node_id' ) );
+            $selectedNode->setAttribute( 'main_node_id', $selectedNode->attribute( 'node_id' ) );
+        }
+        else if ( $selectedNode->isMain() && !$node->isMain() )
+        {
+            $selectedNode->setAttribute( 'main_node_id', $node->attribute( 'main_node_id' ) );
+            $node->setAttribute( 'main_node_id', $node->attribute( 'node_id' ) );
+        }
+
+        $node->store();
+        $selectedNode->store();
+
+        // clear user policy cache if this was a user object
+        if ( in_array( $object->attribute( 'contentclass_id' ), $userClassIDArray ) or
+             in_array( $selectedObject->attribute( 'contentclass_id' ), $userClassIDArray ) )
+        {
+            eZUser::cleanupCache();
+        }
+
+        // modify path string
+        $changedOriginalNode = eZContentObjectTreeNode::fetch( $nodeID );
+        $changedOriginalNode->updateSubTreePath();
+        $changedTargetNode = eZContentObjectTreeNode::fetch( $selectedNodeID );
+        $changedTargetNode->updateSubTreePath();
+
+        // modify section
+        if ( $changedOriginalNode->isMain() )
+        {
+            $changedOriginalObject = $changedOriginalNode->object();
+            $parentObject = $nodeParent->object();
+            if ( $changedOriginalObject->attribute( 'section_id' ) != $parentObject->attribute( 'section_id' ) )
+            {
+
+                eZContentObjectTreeNode::assignSectionToSubTree( $changedOriginalNode->attribute( 'main_node_id' ),
+                                                                $parentObject->attribute( 'section_id' ),
+                                                                $changedOriginalObject->attribute( 'section_id' ) );
+            }
+        }
+        if ( $changedTargetNode->isMain() )
+        {
+            $changedTargetObject = $changedTargetNode->object();
+            $selectedParentObject = $selectedNodeParent->object();
+            if ( $changedTargetObject->attribute( 'section_id' ) != $selectedParentObject->attribute( 'section_id' ) )
+            {
+
+                eZContentObjectTreeNode::assignSectionToSubTree( $changedTargetNode->attribute( 'main_node_id' ),
+                                                                $selectedParentObject->attribute( 'section_id' ),
+                                                                $changedTargetObject->attribute( 'section_id' ) );
+            }
+        }
+
+        eZContentObject::fixReverseRelations( $objectID, 'swap' );
+        eZContentObject::fixReverseRelations( $selectedObjectID, 'swap' );
+
+        $db->commit();
+
+        // clear cache for new placement.
+        eZContentCacheManager::clearContentCacheIfNeeded( $objectID );
+
+        eZSearch::swapNode( $nodeID, $selectedNodeID, $nodeIdList = array() );
+
+        return array( 'status' => true );
+    }
+
+    /**
+     * Assigns a node to a section
+     *
+     * @param int $nodeID
+     * @param int $selectedSectionID
+     *
+     * @return array An array with operation status, always true
+     */
+    static public function updateSection( $nodeID, $selectedSectionID )
+    {
+        eZContentObjectTreeNode::assignSectionToSubTree( $nodeID, $selectedSectionID );
+
+        //call appropriate method from search engine
+        eZSearch::updateNodeSection( $nodeID, $selectedSectionID );
+    }
+
+    /**
+     * Changes the status of a translation
+     *
+     * @param int $objectID
+     * @param int $status
+     *
+     * @return array An array with operation status, always true
+     */
+    static public function changeTranslationAvailableStatus( $objectID, $status = false )
+    {
+        $object = eZContentObject::fetch( $objectID );
+        if ( !$object->canEdit() )
+        {
+            return array( 'status' => false );
+        }
+        if ( $object->isAlwaysAvailable() & $status == false )
+        {
+            $object->setAlwaysAvailableLanguageID( false );
+            eZContentCacheManager::clearContentCacheIfNeeded( $objectID );
+        }
+        else if ( !$object->isAlwaysAvailable() & $status == true )
+        {
+            $object->setAlwaysAvailableLanguageID( $object->attribute( 'initial_language_id' ) );
+            eZContentCacheManager::clearContentCacheIfNeeded( $objectID );
+        }
+        return array( 'status' => true );
+    }
+
+    /**
+     * Changes the sort order for a node
+     *
+     * @param int $nodeID
+     * @param string $sortingField
+     * @param bool $sortingOrder
+     *
+     * @return array An array with operation status, always true
+     */
+    static public function changeSortOrder( $nodeID, $sortingField, $sortingOrder = false )
+    {
+        $curNode = eZContentObjectTreeNode::fetch( $nodeID );
+        if ( is_object( $curNode ) )
+        {
+             $db = eZDB::instance();
+             $db->begin();
+             $curNode->setAttribute( 'sort_field', $sortingField );
+             $curNode->setAttribute( 'sort_order', $sortingOrder );
+             $curNode->store();
+             $db->commit();
+             $object = $curNode->object();
+             eZContentCacheManager::clearContentCache( $object->attribute( 'id' ) );
+        }
+        return array( 'status' => true );
+    }
+
+    /**
+     * Updates the priority of a node
+     *
+     * @param int $nodeID
+     * @param array $priorityArray
+     * @param array $priorityArray
+     *
+     * @return array An array with operation status, always true
+     */
+    static public function updatePriority( $nodeID, $priorityArray = array(), $priorityIDArray = array() )
+    {
+        $curNode = eZContentObjectTreeNode::fetch( $nodeID );
+        if ( is_object( $curNode ) )
+        {
+             $db = eZDB::instance();
+             $db->begin();
+             for ( $i = 0, $l = count( $priorityArray ); $i < $l; $i++ )
+             {
+                 $priority = (int) $priorityArray[$i];
+                 $nodeID = (int) $priorityIDArray[$i];
+                 $db->query( "UPDATE ezcontentobject_tree SET priority=$priority WHERE node_id=$nodeID" );
+             }
+             $curNode->updateAndStoreModified();
+             $db->commit();
+        }
+        return array( 'status' => true );
+    }
+
+    /**
+     * Update a node's main assignement
+     *
+     * @param int $mainAssignmentID
+     * @param int $objectID
+     * @param int $mainAssignmentParentID
+     *
+     * @return array An array with operation status, always true
+     */
+    static public function UpdateMainAssignment( $mainAssignmentID, $ObjectID, $mainAssignmentParentID )
+    {
+        eZContentObjectTreeNode::updateMainNodeID( $mainAssignmentID, $ObjectID, false, $mainAssignmentParentID );
+        eZContentCacheManager::clearContentCacheIfNeeded( $ObjectID );
+        return array( 'status' => true );
+    }
+
+    /**
+     * Updates an contentobject's initial language
+     *
+     * @param int $objectID
+     * @param int $newInitialLanguageID
+     *
+     * @return array An array with operation status, always true
+     */
+    static public function updateInitialLanguage( $objectID, $newInitialLanguageID )
+    {
+        $object = eZContentObject::fetch( $objectID );
+        $language = eZContentLanguage::fetch( $newInitialLanguageID );
+        if ( $language and !$language->attribute( 'disabled' ) )
+        {
+            $object->setAttribute( 'initial_language_id', $newInitialLanguageID );
+            $objectName = $object->name( false, $language->attribute( 'locale' ) );
+            $object->setAttribute( 'name', $objectName );
+            $object->store();
+
+            if ( $object->isAlwaysAvailable() )
+            {
+                $object->setAlwaysAvailableLanguageID( $newInitialLanguageID );
+            }
+
+            $nodes = $object->assignedNodes();
+            foreach ( $nodes as $node )
+            {
+                $node->updateSubTreePath();
+            }
+        }
+
+        eZContentCacheManager::clearContentCacheIfNeeded( $objectID );
+
+        return array( 'status' => true );
+    }
+
+    /**
+     * Set the always available flag for a content object
+     *
+     * @param int $objectID
+     * @param int $newAlwaysAvailable
+     * @return array An array with operation status, always true
+     */
+    static public function updateAlwaysAvailable( $objectID, $newAlwaysAvailable )
+    {
+        $object = eZContentObject::fetch( $objectID );
+
+        if ( $object->isAlwaysAvailable() & $newAlwaysAvailable == false )
+        {
+            $object->setAlwaysAvailableLanguageID( false );
+            eZContentCacheManager::clearContentCacheIfNeeded( $objectID );
+        }
+        else if ( !$object->isAlwaysAvailable() & $newAlwaysAvailable == true )
+        {
+            $object->setAlwaysAvailableLanguageID( $object->attribute( 'initial_language_id' ) );
+            eZContentCacheManager::clearContentCacheIfNeeded( $objectID );
+        }
+
+        return array( 'status' => true );
+    }
+
+    /**
+     * Removes a translation for a contentobject
+     *
+     * @param int $objectID
+     * @param array
+     * @return array An array with operation status, always true
+     */
+    static public function removeTranslation( $objectID, $languageIDArray )
+    {
+        $object = eZContentObject::fetch( $objectID );
+
+        foreach( $languageIDArray as $languageID )
+        {
+            if ( !$object->removeTranslation( $languageID ) )
+            {
+                eZDebug::writeError( "Object with id $objectID: cannot remove the translation with language id $languageID!",
+                                     'content/translation' );
+            }
+        }
+
+        eZContentOperationCollection::registerSearchObject( $object->attribute( 'id' ), $object->attribute( 'current_version' ) );
+
+        eZContentCacheManager::clearContentCacheIfNeeded( $objectID );
+
+        return array( 'status' => true );
+    }
+
+    /**
+     * Update a contentobject's state
+     *
+     * @param int $objectID
+     * @param int $selectedStateIDList
+     *
+     * @return array An array with operation status, always true
+     */
+    static public function updateObjectState( $objectID, $selectedStateIDList )
+    {
+        $object = eZContentObject::fetch( $objectID );
+
+        // we don't need to re-assign states the object currently already has assigned
+        $currentStateIDArray = $object->attribute( 'state_id_array' );
+        $selectedStateIDList = array_diff( $selectedStateIDList, $currentStateIDArray );
+
+        // filter out any states the current user is not allowed to assign
+        $canAssignStateIDList = $object->attribute( 'allowed_assign_state_id_list' );
+        $selectedStateIDList = array_intersect( $selectedStateIDList, $canAssignStateIDList );
+
+        foreach ( $selectedStateIDList as $selectedStateID )
+        {
+            $state = eZContentObjectState::fetchById( $selectedStateID );
+            $object->assignState( $state );
+        }
+        //call appropriate method from search engine
+        eZSearch::updateObjectState($objectID, $selectedStateIDList);
+
+        return array( 'status' => true );
+    }
+}
 ?>

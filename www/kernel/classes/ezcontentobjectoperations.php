@@ -5,9 +5,9 @@
 // Created on: <23-Jan-2006 14:38:57 vs>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -26,7 +26,7 @@
 //
 //
 
-/*! \file ezcontentobjectoperations.php
+/*! \file
 */
 
 /*!
@@ -37,8 +37,6 @@
   which is not directly related to content objects (e.g. clearing caches, etc).
 */
 
-//include_once( 'kernel/classes/ezcontentobject.php' );
-
 class eZContentObjectOperations
 {
     /*!
@@ -47,7 +45,6 @@ class eZContentObjectOperations
     */
     static function remove( $objectID, $removeSubtrees = true )
     {
-        //include_once( 'kernel/classes/ezcontentcachemanager.php' );
         eZContentCacheManager::clearContentCacheIfNeeded( $objectID );
 
         $object = eZContentObject::fetch( $objectID );

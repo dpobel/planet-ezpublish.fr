@@ -5,9 +5,9 @@
 //Created on: <28-Jun-2002 11:12:51 sp>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -33,11 +33,6 @@
 
 */
 
-//include_once( "kernel/classes/ezdatatype.php" );
-
-//include_once( "kernel/classes/datatypes/ezoption/ezoption.php" );
-//include_once( 'lib/ezutils/classes/ezstringutils.php' );
-
 class eZOptionType extends eZDataType
 {
     const DEFAULT_NAME_VARIABLE = "_ezoption_default_name_";
@@ -50,8 +45,6 @@ class eZOptionType extends eZDataType
                            array( 'serialize_supported' => true ) );
     }
 
-    /*!
-    */
     function validateCollectionAttributeHTTPInput( $http, $base, $contentObjectAttribute )
     {
         $classAttribute = $contentObjectAttribute->contentClassAttribute();
@@ -219,8 +212,6 @@ class eZOptionType extends eZDataType
         return false;
     }
 
-    /*!
-    */
     function customObjectAttributeHTTPAction( $http, $action, $contentObjectAttribute, $parameters )
     {
         switch ( $action )
@@ -334,9 +325,6 @@ class eZOptionType extends eZDataType
         }
     }
 
-    /*!
-     \reimp
-    */
     function fetchClassAttributeHTTPInput( $http, $base, $classAttribute )
     {
         $defaultValueName = $base . self::DEFAULT_NAME_VARIABLE . $classAttribute->attribute( 'id' );
@@ -398,28 +386,21 @@ class eZOptionType extends eZDataType
         return $option;
 
     }
-    /*!
-     \reimp
-    */
     function serializeContentClassAttribute( $classAttribute, $attributeNode, $attributeParametersNode )
     {
         $defaultValue = $classAttribute->attribute( 'data_text1' );
-        $defaultValueNode = $attributeParametersNode->ownerDocument->createElement( 'default-value', $defaultValue );
+        $dom = $attributeParametersNode->ownerDocument;
+        $defaultValueNode = $dom->createElement( 'default-value' );
+        $defaultValueNode->appendChild( $dom->createTextNode( $defaultValue ) );
         $attributeParametersNode->appendChild( $defaultValueNode );
     }
 
-    /*!
-     \reimp
-    */
     function unserializeContentClassAttribute( $classAttribute, $attributeNode, $attributeParametersNode )
     {
         $defaultValue = $attributeParametersNode->getElementsByTagName( 'default-value' )->item( 0 )->textContent;
         $classAttribute->setAttribute( 'data_text1', $defaultValue );
     }
 
-    /*!
-     \reimp
-    */
     function serializeContentObjectAttribute( $package, $objectAttribute )
     {
         $node = $this->createContentObjectAttributeDOMNode( $objectAttribute );
@@ -433,9 +414,6 @@ class eZOptionType extends eZDataType
         return $node;
     }
 
-    /*!
-     \reimp
-    */
     function unserializeContentObjectAttribute( $package, $objectAttribute, $attributeNode )
     {
         $xmlString = '';
@@ -464,12 +442,21 @@ class eZOptionType extends eZDataType
         $objectAttribute->setAttribute( 'data_text', $xmlString );
     }
 
-    /*!
-     \reimp
-    */
     function isInformationCollector()
     {
         return true;
+    }
+
+    function supportsBatchInitializeObjectAttribute()
+    {
+        return true;
+    }
+
+    function batchInitializeObjectAttributeData( $classAttribute )
+    {
+        $option = new eZOption( $classAttribute->attribute( 'data_text1' ) );
+        $db = eZDB::instance();
+        return array( 'data_text' =>  "'" . $db->escapeString( $option->xmlString() ) . "'" );
     }
 }
 

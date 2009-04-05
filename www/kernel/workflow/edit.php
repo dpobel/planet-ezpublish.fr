@@ -3,9 +3,9 @@
 // Created on: <16-Apr-2002 11:00:12 amos>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -23,13 +23,6 @@
 //   MA 02110-1301, USA.
 //
 //
-
-//include_once( "kernel/classes/ezworkflow.php" );
-//include_once( "kernel/classes/ezworkflowgrouplink.php" );
-//include_once( "kernel/classes/ezworkflowevent.php" );
-//include_once( "kernel/classes/ezworkflowtype.php" );
-//include_once( "lib/ezutils/classes/ezhttptool.php" );
-//include_once( "lib/ezutils/classes/ezhttppersistence.php" );
 
 $Module = $Params['Module'];
 
@@ -113,7 +106,6 @@ if ( is_numeric( $WorkflowID ) )
 else
 {
     // if WorkflowID was not given then create new workflow
-    //include_once( "kernel/classes/datatypes/ezuser/ezuser.php" );
     $user = eZUser::currentUser();
     $user_id = $user->attribute( "contentobject_id" );
     $workflow = eZWorkflow::create( $user_id );
@@ -164,16 +156,12 @@ $validation = array( 'processed' => false,
 
 if ( $http->hasPostVariable( "AddGroupButton" ) && $http->hasPostVariable( "Workflow_group") )
 {
-    //include_once( "kernel/workflow/ezworkflowfunctions.php" );
-
     $selectedGroup = $http->postVariable( "Workflow_group" );
     eZWorkflowFunctions::addGroup( $WorkflowID, $WorkflowVersion, $selectedGroup );
 }
 
 if ( $http->hasPostVariable( "DeleteGroupButton" ) && $http->hasPostVariable( "group_id_checked" ) )
 {
-    //include_once( "kernel/workflow/ezworkflowfunctions.php" );
-
     $selectedGroup = $http->postVariable( "group_id_checked" );
     if ( !eZWorkflowFunctions::removeGroup( $WorkflowID, $WorkflowVersion, $selectedGroup ) )
     {
@@ -208,7 +196,6 @@ if ( $http->hasPostVariable( "DeleteButton" ) )
 }
 
 // Validate input
-//include_once( "lib/ezutils/classes/ezinputvalidator.php" );
 $canStore = true;
 $requireFixup = false;
 foreach( $event_list as $event )
@@ -247,7 +234,6 @@ $workflow->setVersion( 1, $event_list );
 // Set new modification date
 $date_time = time();
 $workflow->setAttribute( "modified", $date_time );
-//include_once( "kernel/classes/datatypes/ezuser/ezuser.php" );
 $user = eZUser::currentUser();
 $user_id = $user->attribute( "contentobject_id" );
 $workflow->setAttribute( "modifier_id", $user_id );

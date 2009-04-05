@@ -5,9 +5,9 @@
 // Created on: <12-Jan-2005 10:29:21 dr>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -26,7 +26,7 @@
 //
 //
 
-/*! \file ezstaticcache.php
+/*! \file
 */
 
 /*!
@@ -46,9 +46,6 @@
   To generate the URLs that must always be updated call generateAlwaysUpdatedCache()
 
 */
-
-//include_once( 'lib/ezutils/classes/ezini.php' );
-//include_once( 'kernel/classes/ezurlaliasml.php' );
 
 class eZStaticCache
 {
@@ -340,10 +337,6 @@ class eZStaticCache
         foreach ( $dirs as $dir )
         {
             $cacheFiles = array();
-            if ( !is_dir( $staticStorageDir . $dir ) )
-            {
-                eZDir::mkdir( $staticStorageDir . $dir, 0777, true );
-            }
 
             $cacheFiles[] = $this->buildCacheFilename( $staticStorageDir, $dir . $url );
             foreach ( $alternativeStaticLocations as $location )
@@ -408,7 +401,7 @@ class eZStaticCache
         $dir = dirname( $file );
         if ( !is_dir( $dir ) )
         {
-            eZDir::mkdir( $dir, 0777, true );
+            eZDir::mkdir( $dir, false, true );
         }
 
         $oldumask = umask( 0 );
@@ -424,8 +417,10 @@ class eZStaticCache
         {
             fwrite( $fp, $content . '<!-- Generated: '. date( 'Y-m-d H:i:s' ). " -->\n\n" );
             fclose( $fp );
-            //include_once( 'lib/ezfile/classes/ezfile.php' );
             eZFile::rename( $tmpFileName, $file );
+
+            $perm = eZINI::instance()->variable( 'FileSettings', 'StorageFilePermissions' );
+            chmod( $file, octdec( $perm ) );
         }
 
         umask( $oldumask );
@@ -475,7 +470,6 @@ class eZStaticCache
 
         if ( $clearByCronjob )
         {
-            //include_once( "lib/ezdb/classes/ezdb.php" );
             $db = eZDB::instance();
         }
 

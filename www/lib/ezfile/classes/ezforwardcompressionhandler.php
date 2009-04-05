@@ -5,9 +5,9 @@
 // Created on: <13-Aug-2003 16:20:19 amos>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -26,7 +26,7 @@
 //
 //
 
-/*! \file ezgzipcompressionhandler.php
+/*! \file
 */
 
 /*!
@@ -36,8 +36,6 @@
   This class is a wrapper of the eZGZIPZLIBCompressionHandler and
   eZGZIPShellCompressionHandler classes.
 */
-
-//include_once( 'lib/ezfile/classes/ezcompressionhandler.php' );
 
 class eZForwardCompressionHandler extends eZCompressionHandler
 {
@@ -59,128 +57,82 @@ class eZForwardCompressionHandler extends eZCompressionHandler
         return $this->ForwardHandler;
     }
 
-    /*!
-     \reimp
-    */
     function doOpen( $filename, $mode )
     {
         return $this->ForwardHandler->doOpen( $filename, $mode );
     }
 
-    /*!
-     \reimp
-    */
     function doClose()
     {
         return $this->ForwardHandler->doClose();
     }
 
-    /*!
-     \reimp
-    */
     function doRead( $uncompressedLength = false )
     {
         return $this->ForwardHandler->doRead( $uncompressedLength );
     }
 
-    /*!
-     \reimp
-    */
     function doWrite( $data, $uncompressedLength = false )
     {
         return $this->ForwardHandler->doWrite( $data, $uncompressedLength );
     }
 
-    /*!
-     \reimp
-    */
     function doFlush()
     {
         return $this->ForwardHandler->doFlush();
     }
 
-    /*!
-     \reimp
-    */
     function doSeek( $offset, $whence )
     {
         return $this->ForwardHandler->doSeek( $offset, $whence );
     }
 
-    /*!
-     \reimp
-    */
     function doRewind()
     {
         return $this->ForwardHandler->doRewind();
     }
 
-    /*!
-     \reimp
-    */
     function doTell()
     {
         return $this->ForwardHandler->doTell();
     }
 
-    /*!
-     \reimp
-    */
     function doEOF()
     {
         return $this->ForwardHandler->doEOF();
     }
 
-    /*!
-     \reimp
-    */
     function doPasstrough( $closeFile = true )
     {
         return $this->ForwardHandler->doPasstrough( $closeFile );
     }
 
-    /*!
-     \reimp
-    */
     function compress( $source )
     {
         return $this->ForwardHandler->compress( $source );
     }
 
-    /*!
-     \reimp
-    */
     function decompress( $source )
     {
         return $this->ForwardHandler->decompress( $source );
     }
 
-    /*!
-     \reimp
-    */
     function error()
     {
         return $this->ForwardHandler->error();
     }
 
-    /*!
-     \reimp
-    */
     function errorString()
     {
         return $this->ForwardHandler->errorString();
     }
 
-    /*!
-     \reimp
-    */
     function errorNumber()
     {
         return $this->ForwardHandler->errorNumber();
     }
 
     /*!
-     \reimp
      Duplicates the forward compression handler by calling duplicate() on the handler
      which gets the forwarded requests and then creates a new eZForwardCompressionHandler.
     */

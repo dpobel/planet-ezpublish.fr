@@ -5,9 +5,9 @@
 // Created on: <08-Mar-2004 16:09:21 kk>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -26,7 +26,7 @@
 //
 //
 
-/*! \file ezimportlookuptable.php
+/*! \file
 
   This class is for storing node and object id transformations which occur during import of objects.
 */
@@ -38,6 +38,7 @@ class eZImportLookupTable
     */
     function eZImportLookupTable()
     {
+        eZDebug::writeWarning( "The class " . __CLASS__ . " is deprecated and will be removed from future versions of eZ Publish." );
     }
 
     /*!

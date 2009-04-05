@@ -5,9 +5,9 @@
 // Created on: <13-Aug-2003 11:17:34 kk>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -26,10 +26,8 @@
 //
 //
 
-/*! \file ezstep_registration.php
+/*! \file
 */
-//include_once( 'kernel/setup/steps/ezstep_installer.php');
-//include_once( "kernel/setup/ezsetuptests.php" );
 require_once( "kernel/common/i18n.php" );
 
 /*!
@@ -107,7 +105,6 @@ class eZStepRegistration extends eZStepInstaller
         {
             $webserverInfo = array( 'version' => apache_get_version() );
         }
-        //include_once( 'lib/ezutils/classes/ezsysinfo.php' );
         $systemInfo = new eZSysInfo();
         $systemInfo->scan();
 
@@ -136,7 +133,6 @@ class eZStepRegistration extends eZStepInstaller
         $mailTpl->setVariable( 'system', $systemInfo );
         $mailTpl->setVariable( 'os', array( 'name' => php_uname() ) );
         $mailTpl->setVariable( 'optional_tests', $testResults );
-        //include_once( 'lib/version.php' );
         $mailTpl->setVariable( "version", array( "text" => eZPublishSDK::version(),
                                                  "major" => eZPublishSDK::majorVersion(),
                                                  "minor" => eZPublishSDK::minorVersion(),
@@ -145,9 +141,6 @@ class eZStepRegistration extends eZStepInstaller
         return $mailTpl->fetch( 'design:setup/registration_email.tpl' );
     }
 
-    /*!
-     \reimp
-    */
     function processPostData()
     {
         if ( !$this->Http->hasPostVariable( 'eZSetupSendRegistration' ) )// skip site registration
@@ -166,8 +159,6 @@ class eZStepRegistration extends eZStepInstaller
         $subject = $mailTpl->variable( 'subject' );
 
         // Fill in E-Mail data and send it
-        //include_once( 'lib/ezutils/classes/ezmail.php' );
-        //include_once( 'lib/ezutils/classes/ezmailtransport.php' );
         $mail = new eZMail();
         $mail->setReceiver( 'registerezsite@ez.no', 'eZ Site Registration' );
         $mail->setSender( 'registerezsite@ez.no' );
@@ -181,9 +172,6 @@ class eZStepRegistration extends eZStepInstaller
         return true; // Always continue
     }
 
-    /*!
-     \reimp
-     */
     function init()
     {
         if ( $this->hasKickstartData() )
@@ -203,8 +191,6 @@ class eZStepRegistration extends eZStepInstaller
                     $subject = $mailTpl->variable( 'subject' );
 
                     // Fill in E-Mail data and send it
-                    //include_once( 'lib/ezutils/classes/ezmail.php' );
-                    //include_once( 'lib/ezutils/classes/ezmailtransport.php' );
                     $mail = new eZMail();
                     $mail->setReceiver( 'registerezsite@ez.no', 'eZ Site Registration' );
                     $mail->setSender( 'registerezsite@ez.no' );
@@ -229,9 +215,6 @@ class eZStepRegistration extends eZStepInstaller
         return false; // Always display registration information
     }
 
-    /*!
-     \reimp
-    */
     function display()
     {
         require_once( 'kernel/common/template.php' );

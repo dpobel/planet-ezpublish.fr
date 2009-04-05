@@ -5,9 +5,9 @@
 // Created on: <11-Aug-2003 18:30:26 amos>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -26,7 +26,7 @@
 //
 //
 
-/*! \file ezpackagefunctioncollection.php
+/*! \file
 */
 
 /*!
@@ -34,8 +34,6 @@
   \brief The class eZPackageFunctionCollection does
 
 */
-
-//include_once( 'kernel/error/errors.php' );
 
 class eZPackageFunctionCollection
 {
@@ -108,7 +106,6 @@ class eZPackageFunctionCollection
         if ( $repositoryID )
             $params['repository_id'] = $repositoryID;
 
-        //include_once( 'kernel/classes/ezpackage.php' );
         $packageList = eZPackage::fetchPackages( $params,
                                                  $filterParams );
         if ( $packageList === null )
@@ -119,7 +116,6 @@ class eZPackageFunctionCollection
 
     function fetchPackage( $packageName, $repositoryID )
     {
-        //include_once( 'kernel/classes/ezpackage.php' );
         $package = eZPackage::fetch( $packageName, false, $repositoryID );
         if ( $package === false )
         {
@@ -196,7 +192,6 @@ class eZPackageFunctionCollection
                 }
             }
         }
-        //include_once( 'kernel/classes/ezpackage.php' );
         $package = eZPackage::fetch( $packageName, false, $repositoryID );
         $packageList = $package->fetchDependentPackages( $filterParams );
         if ( $packageList === false )
@@ -213,7 +208,6 @@ class eZPackageFunctionCollection
 
     function fetchMaintainerRoleList( $packageType, $checkRoles )
     {
-        //include_once( 'kernel/classes/ezpackage.php' );
         $list = eZPackage::fetchMaintainerRoleList( $packageType, $checkRoles );
         if ( $list === false )
             return array( 'error' => array( 'error_type' => 'kernel',
@@ -223,7 +217,6 @@ class eZPackageFunctionCollection
 
     function fetchRepositoryList()
     {
-        //include_once( 'kernel/classes/ezpackage.php' );
         $list = eZPackage::packageRepositories();
         if ( $list === false )
             return array( 'error' => array( 'error_type' => 'kernel',

@@ -5,9 +5,9 @@
 // Created on: <06-Nov-2002 15:10:02 wy>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -26,7 +26,7 @@
 //
 //
 
-/*! \file ezxmloutputhandler.php
+/*! \file
 */
 
 /*!
@@ -36,12 +36,7 @@
 
 */
 
-//include_once( 'kernel/classes/datatypes/ezurl/ezurl.php' );
-//include_once( 'lib/eztemplate/classes/eztemplateincludefunction.php' );
-
 // if ( !class_exists( 'eZXMLSchema' ) )
-    //include_once( 'kernel/classes/datatypes/ezxmltext/ezxmlschema.php' );
-
 class eZXMLOutputHandler
 {
     /*!
@@ -50,8 +45,9 @@ class eZXMLOutputHandler
     function eZXMLOutputHandler( $xmlData, $aliasedType, $contentObjectAttribute = null )
     {
         $this->XMLData = $xmlData;
-        $this->AliasedType = $aliasedType;
         $this->AliasedHandler = null;
+        // use of $aliasedType is deprecated as of 4.1 and setting is ignored in aliased_handler
+        $this->AliasedType = $aliasedType;
 
         if ( is_object( $contentObjectAttribute ) )
         {
@@ -104,6 +100,7 @@ class eZXMLOutputHandler
             } break;
             case 'aliased_type':
             {
+                eZDebug::writeWarning( "'aliased_type' is deprecated as of 4.1 and not in use anymore, meaning it will always return false.", __METHOD__ );
                 return $this->AliasedType;
             } break;
             case 'view_template_name':
@@ -112,8 +109,7 @@ class eZXMLOutputHandler
             } break;
             case 'aliased_handler':
             {
-                if ( $this->AliasedType !== false and
-                     $this->AliasHandler === null )
+                if ( $this->AliasHandler === null )
                 {
                     $this->AliasedHandler = eZXMLText::inputHandler( $this->XMLData,
                                                                       $this->AliasedType,
@@ -502,16 +498,11 @@ class eZXMLOutputHandler
                 $designKeys = array_merge( $designKeys, $result['design_keys'] );
             }
 
+            // Save existing keys and set new ones
             $existingKeys = $this->Res->keys();
-            $savedKeys = array();
-
-            // Save old keys values and set new design keys
-            foreach( $designKeys as $key=>$value )
+            $this->Res->Keys = array();
+            foreach( $designKeys as $key => $value )
             {
-                if ( isset( $existingKeys[$key] ) )
-                {
-                    $savedKeys[$key] = $existingKeys[$key];
-                }
                 $this->Res->setKeys( array( array( $key, $value ) ) );
             }
 
@@ -531,18 +522,8 @@ class eZXMLOutputHandler
 
         if ( !isset( $currentTag['quickRender'] ) )
         {
-            // Restore saved template override keys and remove others
-            foreach( $designKeys as $key => $value )
-            {
-                if ( isset( $savedKeys[$key] ) )
-                {
-                    $this->Res->setKeys( array( array( $key, $savedKeys[$key] ) ) );
-                }
-                else
-                {
-                    $this->Res->removeKey( $key );
-                }
-            }
+            // Restore saved template override keys
+            $this->Res->Keys = $existingKeys;
 
             // Unset variables
             foreach ( $vars as $name=>$value )

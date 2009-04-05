@@ -5,9 +5,9 @@
 // Created on: <04-Nov-2005 12:26:52 dl>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -26,7 +26,7 @@
 //
 //
 
-/*! \file ezshopfunctions.php
+/*! \file
 */
 
 class eZShopFunctions
@@ -139,7 +139,6 @@ class eZShopFunctions
 
     static function productClassList()
     {
-        //include_once( 'kernel/classes/ezcontentclass.php' );
         $productClassList = array();
         $classList = eZContentClass::fetchList();
         foreach ( $classList as $class )
@@ -185,10 +184,8 @@ class eZShopFunctions
     */
     static function preferredCurrencyCode()
     {
-        //include_once( 'kernel/classes/ezpreferences.php' );
         if( !$currencyCode = eZPreferences::value( 'user_preferred_currency' ) )
         {
-            //include_once( 'lib/ezutils/classes/ezini.php' );
             $ini = eZINI::instance( 'shop.ini' );
             $currencyCode = $ini->variable( 'CurrencySettings', 'PreferredCurrency' );
         }
@@ -200,12 +197,9 @@ class eZShopFunctions
     */
     static function setPreferredCurrencyCode( $currencyCode )
     {
-        //include_once( 'kernel/shop/errors.php' );
-
         $error = eZShopFunctions::isPreferredCurrencyValid( $currencyCode );
         if ( $error === eZError::SHOP_OK )
         {
-            //include_once( 'kernel/classes/ezpreferences.php' );
             eZPreferences::setValue( 'user_preferred_currency', $currencyCode );
         }
 
@@ -218,7 +212,6 @@ class eZShopFunctions
     */
     static function getUserCountry()
     {
-        require_once( 'kernel/classes/ezvatmanager.php' );
         return eZVATManager::getUserCountry( false, false );
     }
 
@@ -229,7 +222,6 @@ class eZShopFunctions
     */
     static function getPreferredUserCountry()
     {
-        //include_once( 'kernel/classes/ezpreferences.php' );
         return eZPreferences::value( 'user_preferred_country' );
     }
 
@@ -239,10 +231,8 @@ class eZShopFunctions
     */
     static function setPreferredUserCountry( $country )
     {
-        //include_once( 'kernel/classes/ezpreferences.php' );
         eZPreferences::setValue( 'user_preferred_country', $country );
 
-        //include_once( 'kernel/shop/errors.php' );
         return eZError::SHOP_OK;
     }
 
@@ -251,13 +241,10 @@ class eZShopFunctions
     */
     static function isPreferredCurrencyValid( $currencyCode = false )
     {
-        //include_once( 'kernel/shop/errors.php' );
-
         $error = eZError::SHOP_OK;
         if ( $currencyCode === false )
             $currencyCode = eZShopFunctions::preferredCurrencyCode();
 
-        //include_once( 'kernel/shop/classes/ezcurrencydata.php' );
         $currency = eZCurrencyData::fetch( $currencyCode );
         if ( $currency )
         {
@@ -281,9 +268,6 @@ class eZShopFunctions
     */
     static function createCurrency( $currencyParams )
     {
-        //include_once( 'kernel/shop/classes/ezcurrencydata.php' );
-        //include_once( 'kernel/shop/classes/ezmultipricedata.php' );
-
         $currency = eZCurrencyData::create( $currencyParams['code'],
                                             $currencyParams['symbol'],
                                             $currencyParams['locale'],
@@ -304,9 +288,6 @@ class eZShopFunctions
 
     static function removeCurrency( $currencyCodeList )
     {
-        //include_once( 'kernel/shop/classes/ezcurrencydata.php' );
-        //include_once( 'kernel/shop/classes/ezmultipricedata.php' );
-
         $db = eZDB::instance();
         $db->begin();
 
@@ -322,9 +303,6 @@ class eZShopFunctions
 
         if ( strcmp( $oldCurrencyCode, $newCurrencyCode ) !== 0 )
         {
-            //include_once( 'kernel/shop/classes/ezcurrencydata.php' );
-            //include_once( 'kernel/shop/classes/ezmultipricedata.php' );
-
             $errCode = eZCurrencyData::canCreate( $newCurrencyCode );
             if ( $errCode === eZCurrencyData::ERROR_OK )
             {
@@ -353,7 +331,6 @@ class eZShopFunctions
 
     static function updateAutoprices()
     {
-        //include_once( 'kernel/shop/classes/ezmultipricedata.php' );
         return eZMultiPriceData::updateAutoprices();
     }
 
@@ -362,7 +339,6 @@ class eZShopFunctions
         if ( $toCurrency == false )
             return $value;
 
-        //include_once( 'kernel/shop/classes/ezcurrencyconverter.php' );
         $converter = eZCurrencyConverter::instance();
         $converter->setRoundingType( eZCurrencyConverter::ROUNDING_TYPE_ROUND );
         $converter->setRoundingPrecision( 2 );
@@ -373,9 +349,6 @@ class eZShopFunctions
 
     static function updateAutoRates()
     {
-        //include_once( 'kernel/shop/errors.php' );
-        //include_once( 'kernel/shop/classes/exchangeratehandlers/ezexchangeratesupdatehandler.php' );
-
         $error = array( 'code' => eZExchangeRatesUpdateHandler::OK,
                         'description' => '' );
 
@@ -411,7 +384,6 @@ class eZShopFunctions
                                 $rateList[$handlerBaseCurrency] = '1.0000';
                             }
 
-                            //include_once( 'kernel/shop/classes/ezcurrencydata.php' );
                             $currencyList = eZCurrencyData::fetchList();
                             if ( is_array( $currencyList ) && count( $currencyList ) > 0 )
                             {

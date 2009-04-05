@@ -5,9 +5,9 @@
 // Created on: <12-May-2003 13:29:25 sp>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -26,7 +26,7 @@
 //
 //
 
-/*! \file ezcollaborationeventtype.php
+/*! \file
 */
 
 /*!
@@ -34,9 +34,6 @@
   \brief The class eZCollaborationEventType does
 
 */
-
-//include_once( 'kernel/classes/notification/eznotificationeventtype.php' );
-//include_once( 'kernel/classes/ezcollaborationitem.php' );
 
 class eZCollaborationEventType extends eZNotificationEventType
 {

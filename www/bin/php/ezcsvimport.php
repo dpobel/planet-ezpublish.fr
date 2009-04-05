@@ -6,9 +6,9 @@
 // Created on: <27-Sep-2006 22:23:27 sp>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -27,20 +27,8 @@
 //
 //
 
-/*! \file ezcsvimport.php
+/*! \file
 */
-
-/*!
-  \class eZCsvimport ezcsvimport.php
-  \brief The class eZCsvimport does
-
-*/
-
-
-//include_once( 'lib/ezutils/classes/ezcli.php' );
-//include_once( 'kernel/classes/ezscript.php' );
-//include_once( 'kernel/classes/ezcontentobjecttreenode.php' );
-//include_once( "lib/ezlocale/classes/ezdatetime.php" );
 
 require 'autoload.php';
 
@@ -68,12 +56,11 @@ $options = $script->getOptions( "[class:][creator:][storage-dir:]",
                                 array( 'user' => true ));
 $script->initialize();
 
-if ( !$options['node'] and count( $options['arguments'] ) < 2 )
+if ( count( $options['arguments'] ) < 2 )
 {
-    $cli->error( "Need a parenrt node to place object under and file to read data from" );
+    $cli->error( "Need a parent node to place object under and file to read data from" );
     $script->shutdown( 1 );
 }
-
 
 $nodeID = $options['arguments'][0];
 $inputFileName = $options['arguments'][1];
@@ -90,9 +77,7 @@ else
 
 $csvLineLength = 100000;
 
-
-$cli->output( "Going to import objects of class " . $createClass . " under  node " . $nodeID . " from file " . $inputFileName .  "\n" );
-
+$cli->output( "Going to import objects of class $createClass under node $nodeID from file $inputFileName\n" );
 
 $node = eZContentObjectTreeNode::fetch( $nodeID );
 if ( !$node )
@@ -101,8 +86,6 @@ if ( !$node )
     $script->shutdown( 1 );
 }
 $parentObject = $node->attribute( 'object' );
-
-
 
 $class = eZContentClass::fetchByIdentifier( $createClass );
 
@@ -139,13 +122,9 @@ while ( $objectData = fgetcsv( $fp, $csvLineLength , ';', '"' ) )
     $version->setAttribute( 'status', eZContentObjectVersion::STATUS_DRAFT );
     $version->store();
 
-
     $contentObjectID = $contentObject->attribute( 'id' );
 
     $attributes = $contentObject->attribute( 'contentobject_attributes' );
-
-
-
 
     while ( list( $key, $attribute ) = each( $attributes ) )
     {
@@ -156,7 +135,7 @@ while ( $objectData = fgetcsv( $fp, $csvLineLength , ';', '"' ) )
             case 'ezbinaryfile':
             case 'ezmedia':
             {
-                $dataString = $storageDir . $dataString;
+                $dataString = eZDir::path( array( $storageDir, $dataString ) );
                 break;
             }
             default:
@@ -165,7 +144,6 @@ while ( $objectData = fgetcsv( $fp, $csvLineLength , ';', '"' ) )
         $attribute->store();
     }
 
-    //include_once( 'lib/ezutils/classes/ezoperationhandler.php' );
     $operationResult = eZOperationHandler::execute( 'content', 'publish', array( 'object_id' => $contentObjectID,
                                                                                  'version' => 1 ) );
 }
@@ -173,7 +151,5 @@ while ( $objectData = fgetcsv( $fp, $csvLineLength , ';', '"' ) )
 fclose( $fp );
 
 $script->shutdown();
-
-
 
 ?>

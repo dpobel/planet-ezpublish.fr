@@ -3,9 +3,9 @@
 // Created on: <08-Aug-2006 15:23:10 bjorn>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -24,7 +24,7 @@
 //
 //
 
-/*! \file ezdefaultconfirmorderhandler.php
+/*! \file
 */
 
 /*!
@@ -68,13 +68,14 @@ class eZDefaultConfirmOrderHandler
 
             $subject = $tpl->variable( 'subject' );
 
-            //include_once( 'lib/ezutils/classes/ezmail.php' );
-            //include_once( 'lib/ezutils/classes/ezmailtransport.php' );
             $mail = new eZMail();
 
             $emailSender = $ini->variable( 'MailSettings', 'EmailSender' );
             if ( !$emailSender )
                 $emailSender = $ini->variable( "MailSettings", "AdminEmail" );
+
+            if ( $tpl->hasVariable( 'content_type' ) )
+                $mail->setContentType( $tpl->variable( 'content_type' ) );
 
             $mail->setReceiver( $email );
             $mail->setSender( $emailSender );
@@ -85,6 +86,9 @@ class eZDefaultConfirmOrderHandler
             $email = $ini->variable( 'MailSettings', 'AdminEmail' );
 
             $mail = new eZMail();
+
+            if ( $tpl->hasVariable( 'content_type' ) )
+                $mail->setContentType( $tpl->variable( 'content_type' ) );
 
             $mail->setReceiver( $email );
             $mail->setSender( $emailSender );

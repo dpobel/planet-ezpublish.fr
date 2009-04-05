@@ -5,9 +5,9 @@
 // Created on: <20-Feb-2006 11:11:19 vs>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -35,8 +35,6 @@
   Country is stored as text string.
 */
 
-//include_once( 'kernel/classes/ezdatatype.php' );
-//include_once( 'lib/ezutils/classes/ezintegervalidator.php' );
 require_once( 'kernel/common/i18n.php' );
 
 class eZCountryType extends eZDataType
@@ -75,7 +73,6 @@ class eZCountryType extends eZDataType
     */
     static function fetchTranslatedNames( &$countries )
     {
-        //include_once( "lib/ezlocale/classes/ezlocale.php" );
         $locale = eZLocale::instance();
         $translatedCountryNames = $locale->translatedCountryNames();
         foreach ( array_keys( $countries ) as $countryKey )
@@ -114,9 +111,6 @@ class eZCountryType extends eZDataType
         return $result;
     }
 
-    /*!
-     \reimp
-    */
     function fetchClassAttributeHTTPInput( $http, $base, $classAttribute )
     {
         $classAttributeID = $classAttribute->attribute( 'id' );
@@ -154,9 +148,6 @@ class eZCountryType extends eZDataType
         return true;
     }
 
-    /*!
-     \reimp
-    */
     function preStoreClassAttribute( $classAttribute, $version )
     {
         $content = $classAttribute->content();
@@ -194,9 +185,6 @@ class eZCountryType extends eZDataType
         }
     }
 
-    /*!
-     \reimp
-    */
     function validateObjectAttributeHTTPInput( $http, $base, $contentObjectAttribute )
     {
         if ( !$contentObjectAttribute->validateIsRequired() )
@@ -215,9 +203,6 @@ class eZCountryType extends eZDataType
         return eZInputValidator::STATE_INVALID;
     }
 
-    /*!
-     \reimp
-    */
     function validateCollectionAttributeHTTPInput( $http, $base, $contentObjectAttribute )
     {
         if ( !$contentObjectAttribute->validateIsRequired() )
@@ -296,9 +281,6 @@ class eZCountryType extends eZDataType
         return false;
     }
 
-    /*!
-     \reimp
-    */
     function storeObjectAttribute( $contentObjectAttribute )
     {
         $content = $contentObjectAttribute->content();
@@ -310,7 +292,6 @@ class eZCountryType extends eZDataType
     }
 
     /*!
-     \reimp
      Simple string insertion is supported.
     */
     function isSimpleStringInsertionSupported()
@@ -318,9 +299,6 @@ class eZCountryType extends eZDataType
         return true;
     }
 
-    /*!
-     \reimp
-    */
     function insertSimpleString( $object, $objectVersion, $objectLanguage,
                                  $objectAttribute, $string,
                                  &$result )
@@ -347,7 +325,7 @@ class eZCountryType extends eZDataType
             $resultList[$alpha2] = $eZCountry ? $eZCountry : '';
         }
         // Supporting of previous version format.
-        // For backwards compatability.
+        // For backwards compatibility.
         if ( count( $resultList ) == 1 and $resultList[$value] == '' )
             $resultList = $value;
 
@@ -355,9 +333,6 @@ class eZCountryType extends eZDataType
         return $content;
     }
 
-    /*!
-     \reimp
-    */
     function classAttributeContent( $classAttribute )
     {
         $defaultCountry = $classAttribute->attribute( self::DEFAULT_LIST_FIELD );
@@ -440,28 +415,18 @@ class eZCountryType extends eZDataType
         return $result;
     }
 
-    /*!
-     \reimp
-    */
     function isIndexable()
     {
         return true;
     }
 
-    /*!
-     \reimp
-    */
     function isInformationCollector()
     {
         return true;
     }
 
-    /*!
-     \reimp
-    */
     function sortKey( $contentObjectAttribute )
     {
-        //include_once( 'lib/ezi18n/classes/ezchartransform.php' );
         $trans = eZCharTransform::instance();
         $content = $contentObjectAttribute->content();
         if ( is_array( $content['value'] ) )
@@ -481,20 +446,19 @@ class eZCountryType extends eZDataType
         return $trans->transformByGroup( $content['value'], 'lowercase' );
     }
 
-    /*!
-     \reimp
-    */
     function sortKeyType()
     {
         return 'string';
     }
 
-    /*!
-      \reimp
-    */
     function diff( $old, $new, $options = false )
     {
         return null;
+    }
+
+    function supportsBatchInitializeObjectAttribute()
+    {
+        return true;
     }
 }
 

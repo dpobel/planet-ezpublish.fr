@@ -3,9 +3,9 @@
 // Created on: <03-May-2002 15:17:01 bf>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -24,12 +24,6 @@
 //
 //
 
-
-//include_once( 'kernel/classes/ezcontentobject.php' );
-//include_once( 'kernel/classes/ezcontentclass.php' );
-//include_once( 'kernel/classes/ezcontentobjecttreenode.php' );
-
-//include_once( 'lib/ezutils/classes/ezhttptool.php' );
 
 require_once( 'kernel/common/template.php' );
 
@@ -109,7 +103,6 @@ if ( $module->isCurrentAction( 'Confirm' ) )
     }
     elseif ( $type == 2 )
     {
-        //include_once( 'kernel/classes/ezcontentbrowse.php' );
         $languageCode = $object->attribute( 'initial_language_code' );
         eZContentBrowse::browse( array( 'action_name' => 'AddNodeAssignment',
                                         'description_template' => 'design:content/browse_placement.tpl',
@@ -138,7 +131,6 @@ if ( $module->isCurrentAction( 'AddLocation' ) )
     // if not get the browse data.
     if ( !isset( $selectedNodeIDArray ) )
     {
-        //include_once( 'kernel/classes/ezcontentbrowse.php' );
         $selectedNodeIDArray = eZContentBrowse::result( 'AddNodeAssignment' );
         if ( !$selectedNodeIDArray )
         {
@@ -201,7 +193,6 @@ if ( $module->isCurrentAction( 'AddLocation' ) )
     $version->store();
 
     $user = eZUser::currentUser();
-    //include_once( 'lib/ezutils/classes/ezoperationhandler.php' );
     $operationResult = eZOperationHandler::execute( 'content', 'publish', array( 'object_id' => $objectID,
                                                                                  'version' => $version->attribute( 'version' ) ) );
     if ( ( array_key_exists( 'status', $operationResult ) && $operationResult['status'] != eZModuleOperationInfo::STATUS_CONTINUE ) )
@@ -219,7 +210,6 @@ if ( $module->isCurrentAction( 'AddLocation' ) )
     $object = eZContentObject::fetch( $objectID );
     $mainNodeID = $object->attribute( 'main_node_id' );
 
-    //include_once( 'kernel/classes/ezcontentobjecttrashnode.php' );
     eZContentObjectTrashNode::purgeForObject( $objectID  );
 
     if ( $locationAdded )
@@ -242,6 +232,7 @@ $tpl = templateInit();
 $res = eZTemplateDesignResource::instance();
 
 $designKeys = array( array( 'object', $object->attribute( 'id' ) ), // Object ID
+                     array( 'remote_id', $object->attribute( 'remote_id' ) ),
                      array( 'class', $class->attribute( 'id' ) ), // Class ID
                      array( 'class_identifier', $class->attribute( 'identifier' ) ) ); // Class identifier
 

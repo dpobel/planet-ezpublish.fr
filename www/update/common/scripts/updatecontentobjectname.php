@@ -4,9 +4,9 @@
 // Created on: <28-Nov-2002 12:45:40 bf>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -28,11 +28,6 @@
 require 'autoload.php';
 
 set_time_limit( 0 );
-
-//include_once( "lib/ezutils/classes/ezextension.php" );
-//include_once( "lib/ezutils/classes/ezmodule.php" );
-//include_once( 'lib/ezutils/classes/ezcli.php' );
-//include_once( 'kernel/classes/ezscript.php' );
 
 $cli = eZCLI::instance();
 $script = eZScript::instance( array( 'debug-message' => '',
@@ -279,16 +274,12 @@ $script->setUseSiteAccess( $siteaccess );
 
 $script->initialize();
 
-print( "Starting object re-indexing\n" );
+print( "Updating content object names\n" );
 
 //eZDebug::setHandleType( eZDebug::HANDLE_FROM_PHP );
 
-//include_once( "lib/ezutils/classes/ezmodule.php" );
 // eZModule::setGlobalPathList( array( "kernel" ) );
-require_once( 'lib/ezutils/classes/ezexecution.php' );
-require_once( "lib/ezutils/classes/ezdebug.php" );
-
-//include_once( 'kernel/classes/ezcontentobjecttreenode.php' );
+eZExecution::registerShutdownHandler( );
 
 $db = eZDB::instance();
 
@@ -323,7 +314,7 @@ foreach ( array_keys ( $topNodeArray ) as $key  )
     $subTreeCount += $topNodeArray[$key]->subTreeCount( array( 'Limitation' => false ) );
 }
 
-print( "Number of objects to index: $subTreeCount $endl" );
+print( "Number of objects to update: $subTreeCount $endl" );
 
 $i = 0;
 $dotMax = 70;

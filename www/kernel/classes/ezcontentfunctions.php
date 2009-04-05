@@ -4,9 +4,9 @@
 // Created on: <13-Nov-2006 15:00:00 dl>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -29,10 +29,6 @@ class eZContentFunctions
 {
     static function createAndPublishObject( $params )
     {
-        //include_once( 'kernel/classes/ezcontentobject.php' );
-        //include_once( 'kernel/classes/ezcontentobjecttreenode.php' );
-        //include_once( 'lib/ezlocale/classes/ezdatetime.php' );
-
         $parentNodeID = $params['parent_node_id'];
         $classIdentifier = $params['class_identifier'];
         $creatorID = isset( $params['creator_id'] ) ? $params['creator_id'] : false;
@@ -97,7 +93,6 @@ class eZContentFunctions
 
                 $db->commit();
 
-                //include_once( 'lib/ezutils/classes/ezoperationhandler.php' );
                 $operationResult = eZOperationHandler::execute( 'content', 'publish', array( 'object_id' => $contentObject->attribute( 'id' ),
                                                                                              'version' => 1 ) );
             }

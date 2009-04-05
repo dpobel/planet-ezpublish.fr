@@ -5,9 +5,9 @@
 // Created on: <08-Nov-2002 11:00:54 kd>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -34,6 +34,7 @@ define( 'EZ_SETUP_TEST_FAILURE', 2 );
 function eZSetupTestTable()
 {
     return array( 'phpversion' => array( 'eZSetupTestPhpVersion' ),
+                  'variables_order' => array( 'eZSetupTestVariablesOrder' ),
                   'php_session' => array( 'eZSetupTestExtension' ),
                   'directory_permissions' => array( 'eZSetupTestDirectoryPermissions' ),
                   'settings_permission' => array( 'eZSetupTestFilePermissions' ),
@@ -43,6 +44,7 @@ function eZSetupTestTable()
                   'magic_quotes_runtime' => array( 'eZSetupCheckMagicQuotesRuntime' ),
                   'php_register_globals' => array( 'eZSetupCheckRegisterGlobals' ),
                   'mbstring_extension' => array( 'eZSetupMBStringExtension' ),
+                  'curl_extension' => array( 'eZSetupTestExtension' ),
                   'zlib_extension' => array( 'eZSetupTestExtension' ),
                   'dom_extension' => array( 'eZSetupTestExtension' ),
                   'file_upload' => array( 'eZSetupTestFileUpload' ),
@@ -87,7 +89,6 @@ function eZSetupRunTests( $testList, $client, &$givenPersistentList )
     $persistenceResults = array();
     $testResult = EZ_SETUP_TEST_SUCCESS;
     $successCount = 0;
-    //include_once( 'lib/ezutils/classes/ezhttptool.php' );
     $http = eZHTTPTool::instance();
     foreach ( $testList as $testItem )
     {
@@ -322,6 +323,19 @@ function eZSetupTestPhpVersion( $type )
                   'warning_version' => $warningVersion );
 }
 
+function eZSetupTestVariablesOrder( $type )
+{
+    $variablesOrder = ini_get( 'variables_order' );
+    $result = strpos( $variablesOrder, 'E' ) !== false;
+    return array(
+        'result' => $result,
+        'persistent_data' => array(
+            'result' => array( 'value' => $result ),
+            'found' => array( 'value' => $variablesOrder )
+         )
+    );
+}
+
 /*!
   Test if allowed to open URLs using fopen
 */
@@ -446,8 +460,6 @@ function eZSetupTestExtension( $type )
 
 function eZSetupTestDirectoryPermissions( $type )
 {
-    //include_once( 'lib/ezfile/classes/ezdir.php' );
-
     $dirList = eZSetupConfigVariableArray( $type, 'CheckList' );
 
     $ini = eZINI::instance();
@@ -479,7 +491,7 @@ function eZSetupTestDirectoryPermissions( $type )
                 $dirPath = './' . $dir;
             else
                 $dirPath = $rootDir . '/' . $dir;
-            $res = @mkdir( $dirPath, $dirPermOctal );
+            $res = eZDir::mkdir( $dirPath, $dirPermOctal );
             if ( $res )
             {
                 $resultElement['permission'] = $dirPermission;
@@ -523,8 +535,6 @@ function eZSetupTestDirectoryPermissions( $type )
 function eZSetupTestFilePermissions( $type )
 {
     $fileList = eZSetupConfigVariableArray( $type, 'CheckList' );
-    //include_once( 'lib/ezfile/classes/ezdir.php' );
-
     $ini = eZINI::instance();
     $dirPermission = $ini->variable( 'FileSettings', 'StorageDirPermissions' );
     $filePermission = $ini->variable( 'FileSettings', 'StorageFilePermissions' );
@@ -609,9 +619,6 @@ function eZSetupPrvPosixExtension()
 */
 function eZSetupCheckExecutable( $type )
 {
-    //include_once( 'lib/ezutils/classes/ezsys.php' );
-    //include_once( 'lib/ezfile/classes/ezdir.php' );
-    //include_once( 'lib/ezutils/classes/ezhttptool.php' );
     $http = eZHTTPTool::instance();
 
     $filesystemType = eZSys::filesystemType();
@@ -776,7 +783,6 @@ function eZSetupCheckGDVersion( $type )
 */
 function eZSetupMBStringExtension( $type )
 {
-    //include_once( "lib/ezi18n/classes/ezmbstringmapper.php" );
     $result = eZMBStringMapper::hasMBStringExtension();
     $charsetList = eZMBStringMapper::charsetList();
     return array( 'result' => $result,
@@ -958,7 +964,6 @@ function eZSetupPrvtExtractExtraPaths( &$givenPersistentList )
  */
 function eZSetupPrvtAreDirAndFilesWritable( $dir )
 {
-    //include_once( 'lib/ezfile/classes/ezfile.php' );
     if ( !eZDir::isWriteable( $dir ) )
         return FALSE;
 

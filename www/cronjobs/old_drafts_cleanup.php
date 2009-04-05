@@ -3,9 +3,9 @@
 // Created on: <23-Aug-2006 11:00:00 amos>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -24,12 +24,9 @@
 //
 //
 
-/*! \file remove_old_drafts.php
+/*! \file
 */
 
-
-//include_once( 'lib/ezutils/classes/ezini.php' );
-//include_once( 'kernel/classes/ezcontentobjectversion.php' );
 
 if ( !$isQuiet )
     $cli->output( "Cleaning up user's drafts..." );

@@ -5,9 +5,9 @@
 // Created on: <21-Mar-2005 16:53:41 dl>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -26,7 +26,7 @@
 //
 //
 
-/*! \file ezsubtreecache.php
+/*! \file
 */
 
 /*!
@@ -34,8 +34,6 @@
   \brief The class eZSubtreeCache does
 
 */
-
-//include_once( 'lib/eztemplate/classes/eztemplatecachefunction.php' );
 
 class eZSubtreeCache
 {
@@ -60,7 +58,6 @@ class eZSubtreeCache
         }
         else
         {
-            //include_once( 'kernel/classes/ezcontentobjecttreenode.php' );
             $nodeList = eZContentObjectTreeNode::fetch( $nodeIDList );
             if ( $nodeList )
             {
@@ -115,18 +112,14 @@ class eZSubtreeCache
     */
     static function cleanupCacheDir( $cacheDir )
     {
-        if ( file_exists( $cacheDir ) )
+        $ini = eZINI::instance();
+        if ( $ini->variable( 'TemplateSettings', 'DelayedCacheBlockCleanup' ) === 'enabled' )
         {
-            //include_once( 'lib/ezutils/classes/ezini.php' );
-            $ini = eZINI::instance();
-            if ( $ini->variable( 'TemplateSettings', 'DelayedCacheBlockCleanup' ) === 'enabled' )
-            {
-                eZSubtreeCache::renameDir( $cacheDir );
-            }
-            else
-            {
-                eZSubtreeCache::removeExpiryCacheFromDisk( $cacheDir );
-            }
+            eZSubtreeCache::renameDir( $cacheDir );
+        }
+        else
+        {
+            eZSubtreeCache::removeExpiryCacheFromDisk( $cacheDir );
         }
     }
 
@@ -146,7 +139,6 @@ class eZSubtreeCache
 
         if ( $dir )
         {
-            //include_once( 'lib/ezfile/classes/ezfile.php' );
             $expiryCacheDir = eZTemplateCacheFunction::expiryTemplateBlockCacheDir();
 
             $uniqid = md5( uniqid( 'ezpsubtreecache'. getmypid(), true ) );
@@ -154,9 +146,7 @@ class eZSubtreeCache
 
             if ( !file_exists( $expiryCacheDir ) )
             {
-                $ini = eZINI::instance();
-                $perm = octdec( $ini->variable( 'FileSettings', 'StorageDirPermissions' ) );
-                eZDir::mkdir( $expiryCacheDir, $perm, true );
+                eZDir::mkdir( $expiryCacheDir, false, true );
             }
             eZFile::rename( $dir, $expiryCacheDir );
         }
@@ -181,9 +171,10 @@ class eZSubtreeCache
     */
     static function removeExpiryCacheFromDisk( $expiryCachePath )
     {
-        require_once( 'kernel/classes/ezclusterfilehandler.php' );
         $fileHandler = eZClusterFileHandler::instance();
-        if ( $fileHandler instanceof eZFSFileHandler )
+        if ( $fileHandler instanceof eZFSFileHandler
+             or
+             $fileHandler instanceof eZFS2FileHandler )
         {
             // We will only delete files if the FS file handler is used,
             // if the DB file handler is in use the system will

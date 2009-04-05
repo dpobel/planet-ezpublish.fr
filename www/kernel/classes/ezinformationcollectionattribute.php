@@ -3,9 +3,9 @@
 // Created on: <02-Dec-2002 14:39:39 bf>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -30,8 +30,6 @@
   \brief The class eZInformationCollectionAttribute handles collected attribute information
 
 */
-
-//include_once( 'kernel/classes/ezpersistentobject.php' );
 
 class eZInformationCollectionAttribute extends eZPersistentObject
 {
@@ -163,30 +161,22 @@ class eZInformationCollectionAttribute extends eZPersistentObject
         return null;
     }
 
-    /*!
-    */
     function contentObject()
     {
         return eZContentObject::fetch( $this->attribute( 'contentobject_id' ) );
     }
 
-    /*!
-    */
     function contentObjectAttribute()
     {
         $contentObject = $this->contentObject();
         return eZContentObjectAttribute::fetch( $this->attribute( 'contentobject_attribute_id' ), $contentObject->attribute( 'current_version' ) );
     }
 
-    /*!
-    */
     function contentClassAttribute()
     {
         return eZContentClassAttribute::fetch( $this->attribute( 'contentclass_attribute_id' ) );
     }
 
-    /*!
-    */
     function dataType()
     {
         $contentClassAttribute = $this->contentClassAttribute();
@@ -195,8 +185,6 @@ class eZInformationCollectionAttribute extends eZPersistentObject
         return null;
     }
 
-    /*!
-    */
     function contentClassAttributeName()
     {
         $db = eZDB::instance();

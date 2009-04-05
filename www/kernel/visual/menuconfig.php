@@ -5,9 +5,9 @@
 // Created on: <05-Mar-2004 14:34:34 bf>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -29,11 +29,7 @@
 $http = eZHTTPTool::instance();
 $module = $Params['Module'];
 
-//include_once( 'lib/ezutils/classes/ezhttptool.php' );
-//include_once( 'lib/ezfile/classes/ezdir.php' );
 require_once( "kernel/common/template.php" );
-//include_once( "kernel/classes/ezsiteaccess.php" );
-
 $ini = eZINI::instance();
 $tpl = templateInit();
 
@@ -113,7 +109,6 @@ if ( $module->isCurrentAction( 'Store' ) )
     eZDir::unlinkWildcard( $compiledTemplateDir . "/", "*pagelayout*.*" );
 
     // Expire template block cache
-    //include_once( 'kernel/classes/ezcontentcachemanager.php' );
     eZContentCacheManager::clearTemplateBlockCacheIfNeeded( false );
 }
 

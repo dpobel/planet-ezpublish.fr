@@ -3,9 +3,9 @@
 // Created on: <21-Apr-2004 11:04:30 kk>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -24,7 +24,7 @@
 //
 //
 
-/*! \file ezdbschemainterface.php
+/*! \file
  Database schema abstraction layer.
 */
 
@@ -83,8 +83,6 @@ class eZDBSchemaInterface
     /*!
      Constructor
 
-     \param eZDB instance
-
      \sa eZDB
      */
     function eZDBSchemaInterface( $params )
@@ -109,7 +107,6 @@ class eZDBSchemaInterface
     }
 
     /*!
-     \virtual
      Fetches the data for all tables and returns an array containing the data.
 
      \param $schema A schema array which defines tables to fetch from.
@@ -165,7 +162,6 @@ class eZDBSchemaInterface
     }
 
     /*!
-     \virtual
      Validates the current schema and returns \c true if it is correct or
      \c false if something must be fixed.
      \note This should not be reimplemented by normal handlers, only schema
@@ -177,7 +173,6 @@ class eZDBSchemaInterface
     }
 
     /*!
-     \virtual
      \protected
      Fetches all rows for table defined in \a $tableInfo and returns this structure:
      - fields - Array with fields that were fetched from table, the order of the fields
@@ -235,7 +230,7 @@ class eZDBSchemaInterface
      \pure
      Write upgrade sql to file
 
-     \param difference array
+     \param differences array
      \param filename
     */
     function writeUpgradeFile( $differences, $filename, $params = array() )
@@ -433,6 +428,9 @@ class eZDBSchemaInterface
         if ( $includeData )
         {
             $data = $this->data( $schema, false, array( 'format' => 'local' ) );
+
+            $this->DBInstance->begin();
+
             foreach ( $schema as $tableName => $table )
             {
                 // Skip the information array, this is not a table
@@ -450,10 +448,13 @@ class eZDBSchemaInterface
                     if ( !$this->DBInstance->query( $sql ) )
                     {
                         eZDebug::writeError( "Failed inserting the SQL:\n$sql" );
+                        $this->DBInstance->rollback();
                         return false;
                     }
                 }
             }
+
+            $this->DBInstance->commit();
 
             // Update sequences for databases that require this
             if ( method_exists( $this->DBInstance, 'correctSequenceValues' ) )
@@ -469,7 +470,7 @@ class eZDBSchemaInterface
 
     /*!
      \private
-     \param database schema
+     \param schema database schema
      \return schema for file output
     */
     function generateDataFile( $schema, $data, $params )
@@ -500,7 +501,7 @@ class eZDBSchemaInterface
 
     /*!
      \private
-     \param database schema
+     \param schema database schema
      \return schema for file output
     */
     function generateSchemaFile( $schema, $params = array() )
@@ -663,7 +664,6 @@ class eZDBSchemaInterface
     }
 
     /*!
-     \virtual
      \protected
 
      \note Calls generateTableInsertSQLList and joins the SQLs to a string
@@ -674,7 +674,6 @@ class eZDBSchemaInterface
     }
 
     /*!
-     \virtual
      \protected
     */
     function generateTableInsertSQLList( $tableName, $tableDef, $dataEntries, $params, $withClosure = true )
@@ -798,7 +797,6 @@ class eZDBSchemaInterface
     }
 
     /*!
-     \virtual
      \protected
     */
     function generateDataValueTextSQL( $fieldDef, $value )
@@ -887,7 +885,6 @@ class eZDBSchemaInterface
     }
 
     /*!
-     \virtual
      \protected
      \return \c true if the schema system supports multi inserts.
              The default is to return \c false.
@@ -926,7 +923,6 @@ class eZDBSchemaInterface
      */
     function loadSchemaTransformationRules( $schemaType )
     {
-        //include_once( 'lib/ezutils/classes/ezini.php' );
         $ini = eZINI::instance( 'dbschema.ini' );
 
         if ( !$ini )
@@ -1053,7 +1049,6 @@ class eZDBSchemaInterface
 
     /*!
     \protected
-    \virtual
     \return true on success, false otherwise
 
     Transforms database schema to the given direction, applying the transformation rules.
@@ -1325,7 +1320,6 @@ class eZDBSchemaInterface
 
     /*!
     \protected
-    \virtual
     \return true on success, false otherwise
 
     Transforms database data to the given direction, applying the transformation rules.

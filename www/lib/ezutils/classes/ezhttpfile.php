@@ -5,9 +5,9 @@
 // Created on: <06-May-2002 10:06:57 amos>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -36,9 +36,6 @@
   to store it, if not the file will be removed when the PHP script is done.
 
 */
-
-require_once( "lib/ezutils/classes/ezdebug.php" );
-//include_once( "lib/ezutils/classes/ezini.php" );
 
 class eZHTTPFile
 {
@@ -83,7 +80,6 @@ class eZHTTPFile
     */
     function store( $sub_dir = false, $suffix = false, $mimeData = false )
     {
-        //include_once( 'lib/ezfile/classes/ezdir.php' );
         if ( !$this->IsTemporary )
         {
             eZDebug::writeError( "Cannot store non temporary file: " . $this->Filename,
@@ -102,8 +98,6 @@ class eZHTTPFile
         if ( $mimeData )
             $dir = $mimeData['dirpath'];
 
-        // VS-DBFILE : TODO
-
         if ( !$mimeData )
         {
             $dir .= $this->MimeCategory;
@@ -111,7 +105,7 @@ class eZHTTPFile
 
         if ( !file_exists( $dir ) )
         {
-            if ( !eZDir::mkdir( $dir, eZDir::directoryPermission(), true ) )
+            if ( !eZDir::mkdir( $dir, false, true ) )
             {
                 return false;
             }
@@ -130,8 +124,6 @@ class eZHTTPFile
             $dest_name = $dir . "/" . md5( basename( $this->Filename ) . microtime() . mt_rand() ) . $suffixString;
         }
 
-        // VS-DBFILE : TODO
-
         if ( !move_uploaded_file( $this->Filename, $dest_name ) )
         {
             eZDebug::writeError( "Failed moving uploaded file " . $this->Filename . " to destination $dest_name" );
@@ -148,7 +140,6 @@ class eZHTTPFile
             umask( $oldumask );
 
             // Write log message to storage.log
-            //include_once( 'lib/ezfile/classes/ezlog.php' );
             $storageDir = $dir . "/";
             eZLog::writeStorageLog( basename( $this->Filename ), $storageDir );
         }
@@ -277,8 +268,6 @@ class eZHTTPFile
             if ( isset( $_FILES[$http_name] ) and
                  $_FILES[$http_name]["name"] != "" )
             {
-                //include_once( 'lib/ezutils/classes/ezmimetype.php' );
-                //include_once( 'lib/ezfile/classes/ezfile.php' );
                 $mimeType = eZMimeType::findByURL( $_FILES[$http_name]['name'] );
                 $_FILES[$http_name]['type'] = $mimeType['name'];
                 $GLOBALS["eZHTTPFile-$http_name"] = new eZHTTPFile( $http_name, $_FILES[$http_name] );

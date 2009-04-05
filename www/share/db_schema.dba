@@ -118,7 +118,7 @@ $schema = array (
       ),
       'mime_type' => 
       array (
-        'length' => 50,
+        'length' => 255,
         'type' => 'varchar',
         'not_null' => '1',
         'default' => '',
@@ -147,6 +147,274 @@ $schema = array (
         array (
           0 => 'contentobject_attribute_id',
           1 => 'version',
+        ),
+      ),
+    ),
+  ),
+  'ezcobj_state' => 
+  array (
+    'name' => 'ezcobj_state',
+    'fields' => 
+    array (
+      'default_language_id' => 
+      array (
+        'length' => 11,
+        'type' => 'int',
+        'not_null' => '1',
+        'default' => 0,
+      ),
+      'group_id' => 
+      array (
+        'length' => 11,
+        'type' => 'int',
+        'not_null' => '1',
+        'default' => 0,
+      ),
+      'id' => 
+      array (
+        'type' => 'auto_increment',
+        'default' => false,
+      ),
+      'identifier' => 
+      array (
+        'length' => 45,
+        'type' => 'varchar',
+        'not_null' => '1',
+        'default' => '',
+      ),
+      'language_mask' => 
+      array (
+        'length' => 11,
+        'type' => 'int',
+        'not_null' => '1',
+        'default' => 0,
+      ),
+      'priority' => 
+      array (
+        'length' => 11,
+        'type' => 'int',
+        'not_null' => '1',
+        'default' => 0,
+      ),
+    ),
+    'indexes' => 
+    array (
+      'PRIMARY' => 
+      array (
+        'type' => 'primary',
+        'fields' => 
+        array (
+          0 => 'id',
+        ),
+      ),
+      'ezcobj_state_identifier' => 
+      array (
+        'type' => 'unique',
+        'fields' => 
+        array (
+          0 => 'group_id',
+          1 => 'identifier',
+        ),
+      ),
+      'ezcobj_state_lmask' => 
+      array (
+        'type' => 'non-unique',
+        'fields' => 
+        array (
+          0 => 'language_mask',
+        ),
+      ),
+      'ezcobj_state_priority' => 
+      array (
+        'type' => 'non-unique',
+        'fields' => 
+        array (
+          0 => 'priority',
+        ),
+      ),
+    ),
+  ),
+  'ezcobj_state_group' => 
+  array (
+    'name' => 'ezcobj_state_group',
+    'fields' => 
+    array (
+      'default_language_id' => 
+      array (
+        'length' => 11,
+        'type' => 'int',
+        'not_null' => '1',
+        'default' => 0,
+      ),
+      'id' => 
+      array (
+        'type' => 'auto_increment',
+        'default' => false,
+      ),
+      'identifier' => 
+      array (
+        'length' => 45,
+        'type' => 'varchar',
+        'not_null' => '1',
+        'default' => '',
+      ),
+      'language_mask' => 
+      array (
+        'length' => 11,
+        'type' => 'int',
+        'not_null' => '1',
+        'default' => 0,
+      ),
+    ),
+    'indexes' => 
+    array (
+      'PRIMARY' => 
+      array (
+        'type' => 'primary',
+        'fields' => 
+        array (
+          0 => 'id',
+        ),
+      ),
+      'ezcobj_state_group_identifier' => 
+      array (
+        'type' => 'unique',
+        'fields' => 
+        array (
+          0 => 'identifier',
+        ),
+      ),
+      'ezcobj_state_group_lmask' => 
+      array (
+        'type' => 'non-unique',
+        'fields' => 
+        array (
+          0 => 'language_mask',
+        ),
+      ),
+    ),
+  ),
+  'ezcobj_state_group_language' => 
+  array (
+    'name' => 'ezcobj_state_group_language',
+    'fields' => 
+    array (
+      'contentobject_state_group_id' => 
+      array (
+        'length' => 11,
+        'type' => 'int',
+        'not_null' => '1',
+        'default' => 0,
+      ),
+      'description' => 
+      array (
+        'type' => 'longtext',
+        'not_null' => '1',
+        'default' => false,
+      ),
+      'language_id' => 
+      array (
+        'length' => 11,
+        'type' => 'int',
+        'not_null' => '1',
+        'default' => 0,
+      ),
+      'name' => 
+      array (
+        'length' => 45,
+        'type' => 'varchar',
+        'not_null' => '1',
+        'default' => '',
+      ),
+    ),
+    'indexes' => 
+    array (
+      'PRIMARY' => 
+      array (
+        'type' => 'primary',
+        'fields' => 
+        array (
+          0 => 'contentobject_state_group_id',
+          1 => 'language_id',
+        ),
+      ),
+    ),
+  ),
+  'ezcobj_state_language' => 
+  array (
+    'name' => 'ezcobj_state_language',
+    'fields' => 
+    array (
+      'contentobject_state_id' => 
+      array (
+        'length' => 11,
+        'type' => 'int',
+        'not_null' => '1',
+        'default' => 0,
+      ),
+      'description' => 
+      array (
+        'type' => 'longtext',
+        'not_null' => '1',
+        'default' => false,
+      ),
+      'language_id' => 
+      array (
+        'length' => 11,
+        'type' => 'int',
+        'not_null' => '1',
+        'default' => 0,
+      ),
+      'name' => 
+      array (
+        'length' => 45,
+        'type' => 'varchar',
+        'not_null' => '1',
+        'default' => '',
+      ),
+    ),
+    'indexes' => 
+    array (
+      'PRIMARY' => 
+      array (
+        'type' => 'primary',
+        'fields' => 
+        array (
+          0 => 'contentobject_state_id',
+          1 => 'language_id',
+        ),
+      ),
+    ),
+  ),
+  'ezcobj_state_link' => 
+  array (
+    'name' => 'ezcobj_state_link',
+    'fields' => 
+    array (
+      'contentobject_id' => 
+      array (
+        'length' => 11,
+        'type' => 'int',
+        'not_null' => '1',
+        'default' => 0,
+      ),
+      'contentobject_state_id' => 
+      array (
+        'length' => 11,
+        'type' => 'int',
+        'not_null' => '1',
+        'default' => 0,
+      ),
+    ),
+    'indexes' => 
+    array (
+      'PRIMARY' => 
+      array (
+        'type' => 'primary',
+        'fields' => 
+        array (
+          0 => 'contentobject_id',
+          1 => 'contentobject_state_id',
         ),
       ),
     ),
@@ -2788,6 +3056,14 @@ $schema = array (
           0 => 'id',
         ),
       ),
+      'ezforgot_password_user' => 
+      array (
+        'type' => 'non-unique',
+        'fields' => 
+        array (
+          0 => 'user_id',
+        ),
+      ),
     ),
   ),
   'ezgeneral_digest_user_settings' => 
@@ -2846,65 +3122,12 @@ $schema = array (
           0 => 'id',
         ),
       ),
-    ),
-  ),
-  'ezimage' => 
-  array (
-    'name' => 'ezimage',
-    'fields' => 
-    array (
-      'alternative_text' => 
+      'ezgeneral_digest_user_settings_address' => 
       array (
-        'length' => 255,
-        'type' => 'varchar',
-        'not_null' => '1',
-        'default' => '',
-      ),
-      'contentobject_attribute_id' => 
-      array (
-        'length' => 11,
-        'type' => 'int',
-        'not_null' => '1',
-        'default' => 0,
-      ),
-      'filename' => 
-      array (
-        'length' => 255,
-        'type' => 'varchar',
-        'not_null' => '1',
-        'default' => '',
-      ),
-      'mime_type' => 
-      array (
-        'length' => 50,
-        'type' => 'varchar',
-        'not_null' => '1',
-        'default' => '',
-      ),
-      'original_filename' => 
-      array (
-        'length' => 255,
-        'type' => 'varchar',
-        'not_null' => '1',
-        'default' => '',
-      ),
-      'version' => 
-      array (
-        'length' => 11,
-        'type' => 'int',
-        'not_null' => '1',
-        'default' => 0,
-      ),
-    ),
-    'indexes' => 
-    array (
-      'PRIMARY' => 
-      array (
-        'type' => 'primary',
+        'type' => 'unique',
         'fields' => 
         array (
-          0 => 'contentobject_attribute_id',
-          1 => 'version',
+          0 => 'address',
         ),
       ),
     ),
@@ -2957,82 +3180,6 @@ $schema = array (
         'fields' => 
         array (
           0 => 'filepath',
-        ),
-      ),
-    ),
-  ),
-  'ezimagevariation' => 
-  array (
-    'name' => 'ezimagevariation',
-    'fields' => 
-    array (
-      'additional_path' => 
-      array (
-        'length' => 255,
-        'type' => 'varchar',
-        'default' => NULL,
-      ),
-      'contentobject_attribute_id' => 
-      array (
-        'length' => 11,
-        'type' => 'int',
-        'not_null' => '1',
-        'default' => 0,
-      ),
-      'filename' => 
-      array (
-        'length' => 255,
-        'type' => 'varchar',
-        'not_null' => '1',
-        'default' => '',
-      ),
-      'height' => 
-      array (
-        'length' => 11,
-        'type' => 'int',
-        'not_null' => '1',
-        'default' => 0,
-      ),
-      'requested_height' => 
-      array (
-        'length' => 11,
-        'type' => 'int',
-        'not_null' => '1',
-        'default' => 0,
-      ),
-      'requested_width' => 
-      array (
-        'length' => 11,
-        'type' => 'int',
-        'not_null' => '1',
-        'default' => 0,
-      ),
-      'version' => 
-      array (
-        'length' => 11,
-        'type' => 'int',
-        'not_null' => '1',
-        'default' => 0,
-      ),
-      'width' => 
-      array (
-        'length' => 11,
-        'type' => 'int',
-        'not_null' => '1',
-        'default' => 0,
-      ),
-    ),
-    'indexes' => 
-    array (
-      'PRIMARY' => 
-      array (
-        'type' => 'primary',
-        'fields' => 
-        array (
-          0 => 'contentobject_attribute_id',
-          1 => 'version',
-          2 => 'requested_width',
-          3 => 'requested_height',
         ),
       ),
     ),
@@ -4297,8 +4444,7 @@ $schema = array (
       ),
       'vat_value' => 
       array (
-        'length' => 11,
-        'type' => 'int',
+        'type' => 'float',
         'not_null' => '1',
         'default' => 0,
       ),
@@ -4699,6 +4845,12 @@ $schema = array (
         'type' => 'longtext',
         'default' => false,
       ),
+      'created' => 
+      array (
+        'length' => 11,
+        'type' => 'int',
+        'default' => NULL,
+      ),
     ),
     'indexes' => 
     array (
@@ -4708,6 +4860,14 @@ $schema = array (
         'fields' => 
         array (
           0 => 'action',
+        ),
+      ),
+      'ezpending_actions_created' => 
+      array (
+        'type' => 'non-unique',
+        'fields' => 
+        array (
+          0 => 'created',
         ),
       ),
     ),
@@ -5229,6 +5389,12 @@ $schema = array (
         'type' => 'int',
         'default' => NULL,
       ),
+      'node_id' => 
+      array (
+        'length' => 11,
+        'type' => 'int',
+        'default' => NULL,
+      ),
       'number_of_objects' => 
       array (
         'length' => 11,
@@ -5286,6 +5452,12 @@ $schema = array (
     'name' => 'ezrss_export_item',
     'fields' => 
     array (
+      'category' => 
+      array (
+        'length' => 255,
+        'type' => 'varchar',
+        'default' => NULL,
+      ),
       'class_id' => 
       array (
         'length' => 11,
@@ -5852,6 +6024,13 @@ $schema = array (
         'not_null' => '1',
         'default' => 0,
       ),
+      'user_hash' => 
+      array (
+        'length' => 32,
+        'type' => 'varchar',
+        'not_null' => '1',
+        'default' => '',
+      ),
     ),
     'indexes' => 
     array (
@@ -6388,7 +6567,7 @@ $schema = array (
         'length' => 11,
         'type' => 'int',
         'not_null' => '1',
-        'default' => '1',
+        'default' => 1,
       ),
       'id' => 
       array (
@@ -6550,6 +6729,29 @@ $schema = array (
           0 => 'text',
           1 => 'lang_mask',
           2 => 'parent',
+        ),
+      ),
+    ),
+  ),
+  'ezurlalias_ml_incr' => 
+  array (
+    'name' => 'ezurlalias_ml_incr',
+    'fields' => 
+    array (
+      'id' => 
+      array (
+        'type' => 'auto_increment',
+        'default' => false,
+      ),
+    ),
+    'indexes' => 
+    array (
+      'PRIMARY' => 
+      array (
+        'type' => 'primary',
+        'fields' => 
+        array (
+          0 => 'id',
         ),
       ),
     ),
@@ -6861,6 +7063,13 @@ $schema = array (
         'not_null' => '1',
         'default' => 0,
       ),
+      'login_count' => 
+      array (
+        'length' => 11,
+        'type' => 'int',
+        'not_null' => '1',
+        'default' => 0,
+      ),
       'user_id' => 
       array (
         'length' => 11,
@@ -6877,6 +7086,15 @@ $schema = array (
         'fields' => 
         array (
           0 => 'user_id',
+        ),
+      ),
+      'ezuservisit_co_visit_count' => 
+      array (
+        'type' => 'non-unique',
+        'fields' => 
+        array (
+          0 => 'current_visit_timestamp',
+          1 => 'login_count',
         ),
       ),
     ),
@@ -7300,6 +7518,11 @@ $schema = array (
         'length' => 50,
         'type' => 'varchar',
         'default' => NULL,
+      ),
+      'data_text5' => 
+      array (
+        'type' => 'longtext',
+        'default' => false,
       ),
       'description' => 
       array (

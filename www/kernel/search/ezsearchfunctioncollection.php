@@ -5,9 +5,9 @@
 // Created on: <06-Oct-2002 16:19:31 amos>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -26,7 +26,7 @@
 //
 //
 
-/*! \file ezcontentfunctioncollection.php
+/*! \file
 */
 
 /*!
@@ -34,8 +34,6 @@
   \brief The class eZSearchFunctionCollection does
 
 */
-
-//include_once( 'kernel/error/errors.php' );
 
 class eZSearchFunctionCollection
 {
@@ -48,8 +46,6 @@ class eZSearchFunctionCollection
 
     function fetchSearchListCount()
     {
-        //include_once( "kernel/classes/ezsearchlog.php" );
-
         $db = eZDB::instance();
         $query = "SELECT count(*) as count FROM ezsearch_search_phrase";
         $searchListCount = $db->arrayQuery( $query );
@@ -59,8 +55,6 @@ class eZSearchFunctionCollection
 
     function fetchSearchList( $offset, $limit )
     {
-        //include_once( "kernel/classes/ezsearchlog.php" );
-
         $parameters = array( 'offset' => $offset, 'limit'  => $limit );
         $mostFrequentPhraseArray = eZSearchLog::mostFrequentPhraseArray( $parameters );
 

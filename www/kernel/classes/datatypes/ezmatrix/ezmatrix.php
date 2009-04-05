@@ -5,9 +5,9 @@
 // Created on: <30-May-2003 16:46:50 sp>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -26,7 +26,7 @@
 //
 //
 
-/*! \file ezmatrix.php
+/*! \file
 */
 
 /*!
@@ -83,8 +83,8 @@ class eZMatrix
     /*!
         Check if column index differs, and so, set new index.
 
-        \param internal column index
-        \param new column index
+        \param columnIndex internal column index
+        \param newColumnIndex new column index
 
         \return true if index differs
     */
@@ -182,8 +182,8 @@ class eZMatrix
     /*!
         Check if new column name differs from existing column name, and sets new name.
 
-        \param internal column index
-        \param column name
+        \param columnIndex internal column index
+        \param newColumnName column name
 
         \return true if name differs
     */
@@ -283,8 +283,6 @@ class eZMatrix
         return $rules;
     }
 
-    /*!
-    */
     function reorderColumns()
     {
         $rules = $this->buildReorderRules();
@@ -349,9 +347,9 @@ class eZMatrix
     /*!
      Get column data and definition
 
-     \param column index
+     \param colIdx column index
 
-     \return columnt data and definition
+     \return column data and definition
     */
     function column( $colIdx )
     {
@@ -362,8 +360,8 @@ class eZMatrix
     /*!
      Set column definition.
 
-     \param column index
-     \param column definition
+     \param colIdx column index
+     \param columnDefinition column definition
     */
     protected function setColumnDefinition( $colIdx, $columnDefinition )
     {
@@ -373,7 +371,7 @@ class eZMatrix
     /*!
      Get column definition.
 
-     \param column index
+     \param colIdx column index
 
      \return column definition
     */
@@ -386,8 +384,8 @@ class eZMatrix
     /*!
      Set column cell data
 
-     \param column index
-     \param column definitio
+     \param colIdx column index
+     \param cellData column definition
     */
     protected function setColumnCellData( $colIdx, $cellData )
     {
@@ -406,7 +404,7 @@ class eZMatrix
     /*!
      Get column data
 
-     \param column index
+     \param colIdx column index
 
      \return column data
     */
@@ -429,23 +427,17 @@ class eZMatrix
         return $retArray;
     }
 
-    /*!
-    */
     function copyDataBetweenColumns( $firstColIdx, $secondColIdx )
     {
         $this->copyDefinitionBetweenColumns( $firstColIdx, $secondColIdx );
         $this->copyCellsDataBetweenColumns ( $firstColIdx, $secondColIdx );
     }
 
-    /*!
-    */
     protected function copyDefinitionBetweenColumns( $col1, $col2 )
     {
         $this->Matrix['columns']['sequential'][$col2] = $this->Matrix['columns']['sequential'][$col1];
     }
 
-    /*!
-    */
     protected function copyCellsDataBetweenColumns ( $firstColIdx, $secondColIdx )
     {
         $columnCount = $this->attribute( 'columnCount' );
@@ -508,7 +500,7 @@ class eZMatrix
     /*!
      Get internal column index by column indentifier
 
-     \param column identifier
+     \param columnIdent column identifier
 
      \return column index.
     */
@@ -833,7 +825,6 @@ class eZMatrix
         $xmlCharset = $ini->variable( 'RegionalSettings', 'ContentXMLCharset' );
         if ( $xmlCharset == 'enabled' )
         {
-            //include_once( 'lib/ezi18n/classes/eztextcodec.php' );
             $charset = eZTextCodec::internalCharset();
         }
         else if ( $xmlCharset == 'disabled' )
@@ -842,7 +833,6 @@ class eZMatrix
             $charset = $xmlCharset;
         if ( $charset !== true )
         {
-            //include_once( 'lib/ezi18n/classes/ezcharsetinfo.php' );
             $charset = eZCharsetInfo::realCharsetCode( $charset );
         }
         $domString = $domDocument->saveXML();

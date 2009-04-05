@@ -5,9 +5,9 @@
 // Created on: <22-Jan-2003 15:31:16 amos>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -26,7 +26,7 @@
 //
 //
 
-/*! \file ezcollaborationgroup.php
+/*! \file
 */
 
 /*!
@@ -34,9 +34,6 @@
   \brief The class eZCollaborationGroup does
 
 */
-
-//include_once( 'kernel/classes/ezpersistentobject.php' );
-//include_once( 'kernel/classes/ezcollaborationitem.php' );
 
 class eZCollaborationGroup extends eZPersistentObject
 {
@@ -335,7 +332,6 @@ class eZCollaborationGroup extends eZPersistentObject
     {
         if ( isset( $this->UserID ) and $this->UserID )
         {
-            //include_once( 'kernel/classes/datatypes/ezuser/ezuser.php' );
             return eZUser::fetch( $this->UserID );
         }
         return null;

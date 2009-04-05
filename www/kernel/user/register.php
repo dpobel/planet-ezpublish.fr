@@ -3,9 +3,9 @@
 // Created on: <01-Aug-2002 09:58:09 bf>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -24,14 +24,9 @@
 //
 //
 
-//include_once( "lib/ezutils/classes/ezhttptool.php" );
-//include_once( "kernel/classes/datatypes/ezuser/ezuser.php" );
-//include_once( "lib/ezutils/classes/ezmail.php" );
-//include_once( "kernel/classes/ezcontentclassattribute.php" );
-//include_once( "kernel/classes/ezcontentclass.php" );
-
 $http = eZHTTPTool::instance();
 $Module = $Params['Module'];
+$redirectNumber = $Params['redirect_number'];
 
 if ( isset( $Params['UserParameters'] ) )
 {
@@ -61,6 +56,46 @@ $db->begin();
 // Create new user object if user is not logged in
 if ( !$http->hasSessionVariable( "RegisterUserID" ) )
 {
+    // flag if user client supports cookies and session validates + if we should do redirect
+    $userClientValidates  = true;
+    $doValidationRedirect = false;
+    if ( !eZSession::userHasSessionCookie() )
+    {
+        if ( $redirectNumber == '2' )
+            $userClientValidates = false;
+        else
+            $doValidationRedirect = true;
+    }
+    else if ( !eZSession::userSessionIsValid() )
+    {
+        if ( $redirectNumber == '2' )
+            $userClientValidates = false;
+        else
+            $doValidationRedirect = true;
+    }
+
+    if ( $doValidationRedirect )
+    {
+        $db->rollback();
+        return $Module->redirectTo( '/user/register/2' );
+    }
+    else if ( !$userClientValidates )
+    {
+        $db->rollback();
+
+        $tpl->setVariable( 'user_has_cookie', eZSession::userHasSessionCookie(), 'User' );
+        $tpl->setVariable( 'user_session_validates', eZSession::userSessionIsValid(), 'User' );      
+
+        $Result = array();
+        $Result['content'] = $tpl->fetch( 'design:user/register_user_not_valid.tpl' );
+        $Result['path'] = array( array( 'url' => false,
+                                'text' => ezi18n( 'kernel/user', 'User' ) ),
+                         array( 'url' => false,
+                                'text' => ezi18n( 'kernel/user', 'Register' ) ) );
+        return $Result;
+    }
+    // else create user object
+    
     $ini = eZINI::instance();
     $errMsg = '';
     $checkErrNodeId = false;
@@ -98,7 +133,7 @@ if ( !$http->hasSessionVariable( "RegisterUserID" ) )
                                                        'is_main' => 1 ) );
     $nodeAssignment->store();
 }
-else if ( $http->hasSessionVariable( "RegisterUserID" ) )
+else
 {
     $userID = $http->sessionVariable( "RegisterUserID" );
 }
@@ -113,8 +148,15 @@ if ( !function_exists( 'checkContentActions' ) )
     {
         if ( $module->isCurrentAction( 'Cancel' ) )
         {
-            //include_once( 'kernel/classes/ezredirectmanager.php' );
-            eZRedirectManager::redirectTo( $module, '/' );
+            $http = eZHTTPTool::instance();
+            if ( $http->hasPostVariable( 'RedirectIfDiscarded' ) )
+            {
+                eZRedirectManager::redirectTo( $module, $http->postVariable( 'RedirectIfDiscarded' ) );
+            }
+            else
+            {
+               eZRedirectManager::redirectTo( $module, '/' );
+            }
 
             $version->removeThis();
 
@@ -128,7 +170,6 @@ if ( !function_exists( 'checkContentActions' ) )
             $http = eZHTTPTool::instance();
 
             $user = eZUser::currentUser();
-            //include_once( 'lib/ezutils/classes/ezoperationhandler.php' );
             $operationResult = eZOperationHandler::execute( 'content', 'publish', array( 'object_id' => $object->attribute( 'id' ),
                                                                                          'version' => $version->attribute( 'version') ) );
 
@@ -145,8 +186,6 @@ if ( !function_exists( 'checkContentActions' ) )
             {
             }
             require_once( "kernel/common/template.php" );
-            //include_once( 'lib/ezutils/classes/ezmail.php' );
-            //include_once( 'lib/ezutils/classes/ezmailtransport.php' );
             $ini = eZINI::instance();
             $tpl = templateInit();
             $tpl->setVariable( 'user', $user );
@@ -158,9 +197,17 @@ if ( !function_exists( 'checkContentActions' ) )
             $tpl->setVariable( 'password', $password );
 
             // Check whether account activation is required.
-            $verifyUserEmail = $ini->variable( 'UserSettings', 'VerifyUserEmail' );
+            $verifyUserType = $ini->variable( 'UserSettings', 'VerifyUserType' );
+            $sendUserMail = !!$verifyUserType;
+            // For compatibility with old setting
+            if ( $verifyUserType === 'email'
+              && $ini->hasVariable( 'UserSettings', 'VerifyUserEmail' )
+              && $ini->variable( 'UserSettings', 'VerifyUserEmail' ) !== 'enabled' )
+            {
+                $verifyUserType = false;
+            }
 
-            if ( $verifyUserEmail == "enabled" ) // and if it is
+            if ( $verifyUserType === 'email' ) // and if it is email type
             {
                 // Disable user account and send verification mail to the user
                 $userSetting = eZUserSetting::fetch( $user->attribute( 'contentobject_id' ) );
@@ -172,25 +219,48 @@ if ( !function_exists( 'checkContentActions' ) )
 
                 // Create enable account hash and send it to the newly registered user
                 $hash = md5( time() . $user->attribute( 'contentobject_id' ) );
-                //include_once( "kernel/classes/datatypes/ezuser/ezuseraccountkey.php" );
                 $accountKey = eZUserAccountKey::createNew( $user->attribute( 'contentobject_id' ), $hash, time() );
                 $accountKey->store();
 
                 $tpl->setVariable( 'hash', $hash );
+
+                $sendUserMail = true;
+            }
+            else if ( $verifyUserType )// custom account activation
+            {
+                $verifyUserTypeClass = false;
+                // load custom verify user settings
+                if ( $ini->hasGroup( 'VerifyUserType_' . $verifyUserType ) )
+                {
+                    if ( $ini->hasVariable( 'VerifyUserType_' . $verifyUserType, 'File' ) )
+                        include_once( $ini->variable( 'VerifyUserType_' . $verifyUserType, 'File' ) );
+                    $verifyUserTypeClass = $ini->variable( 'VerifyUserType_' . $verifyUserType, 'Class' );
+                }
+                // try to call the verify user class with function verifyUser
+                if ( $verifyUserTypeClass && method_exists( $verifyUserTypeClass, 'verifyUser' ) )
+                    $sendUserMail  = call_user_func( array( $verifyUserTypeClass, 'verifyUser' ), $user, $tpl );
+                else
+                    eZDebug::writeWarning( "Unknown VerifyUserType '$verifyUserType'", 'user/register' );
             }
 
-            $templateResult = $tpl->fetch( 'design:user/registrationinfo.tpl' );
-            $emailSender = $ini->variable( 'MailSettings', 'EmailSender' );
-            if ( !$emailSender )
-                $emailSender = $ini->variable( 'MailSettings', 'AdminEmail' );
-            $mail->setSender( $emailSender );
-            $mail->setReceiver( $receiver );
-            $subject = ezi18n( 'kernel/user/register', 'Registration info' );
-            if ( $tpl->hasVariable( 'subject' ) )
-                $subject = $tpl->variable( 'subject' );
-            $mail->setSubject( $subject );
-            $mail->setBody( $templateResult );
-            $mailResult = eZMailTransport::send( $mail );
+            // send verification mail to user if email type or custum verify user type returned true
+            if ( $sendUserMail )
+            {
+                $templateResult = $tpl->fetch( 'design:user/registrationinfo.tpl' );
+                if ( $tpl->hasVariable( 'content_type' ) )
+                    $mail->setContentType( $tpl->variable( 'content_type' ) );
+                $emailSender = $ini->variable( 'MailSettings', 'EmailSender' );
+                if ( !$emailSender )
+                    $emailSender = $ini->variable( 'MailSettings', 'AdminEmail' );
+                $mail->setSender( $emailSender );
+                $mail->setReceiver( $receiver );
+                $subject = ezi18n( 'kernel/user/register', 'Registration info' );
+                if ( $tpl->hasVariable( 'subject' ) )
+                    $subject = $tpl->variable( 'subject' );
+                $mail->setSubject( $subject );
+                $mail->setBody( $templateResult );
+                $mailResult = eZMailTransport::send( $mail );
+            }
 
             $feedbackTypes = $ini->variableArray( 'UserSettings', 'RegistrationFeedback' );
             foreach ( $feedbackTypes as $feedbackType )
@@ -199,12 +269,16 @@ if ( !function_exists( 'checkContentActions' ) )
                 {
                     case 'email':
                     {
+                        // send feedback with the default email type
                         $mail = new eZMail();
                         $tpl->resetVariables();
                         $tpl->setVariable( 'user', $user );
                         $tpl->setVariable( 'object', $object );
                         $tpl->setVariable( 'hostname', $hostname );
                         $templateResult = $tpl->fetch( 'design:user/registrationfeedback.tpl' );
+
+                        if ( $tpl->hasVariable( 'content_type' ) )
+                            $mail->setContentType( $tpl->variable( 'content_type' ) );
 
                         $feedbackReceiver = $ini->variable( 'UserSettings', 'RegistrationEmail' );
                         if ( !$feedbackReceiver )
@@ -223,7 +297,19 @@ if ( !function_exists( 'checkContentActions' ) )
                     } break;
                     default:
                     {
-                        eZDebug::writeWarning( "Unknown feedback type '$feedbackType'", 'user/register' );
+                        $registrationFeedbackClass = false;
+                        // load custom registration feedback settings
+                        if ( $ini->hasGroup( 'RegistrationFeedback_' . $feedbackType ) )
+                        {
+                            if ( $ini->hasVariable( 'RegistrationFeedback_' . $feedbackType, 'File' ) )
+                                include_once( $ini->variable( 'RegistrationFeedback_' . $feedbackType, 'File' ) );
+                            $registrationFeedbackClass = $ini->variable( 'RegistrationFeedback_' . $feedbackType, 'Class' );
+                        }
+                        // try to call the registration feedback class with function registrationFeedback
+                        if ( $registrationFeedbackClass && method_exists( $registrationFeedbackClass, 'registrationFeedback' ) )
+                            call_user_func( array( $registrationFeedbackClass, 'registrationFeedback' ), $user, $tpl, $object, $hostname );
+                        else
+                            eZDebug::writeWarning( "Unknown feedback type '$feedbackType'", 'user/register' );
                     }
                 }
             }

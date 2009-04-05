@@ -3,9 +3,9 @@
 // Created on: <09-May-2003 10:44:02 bf>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -32,10 +32,6 @@ $overrideKeys = array( 'nodeID' => $Params['NodeID'],
                        'classID' => $Params['ClassID'] );
 
 require_once( "kernel/common/template.php" );
-//include_once( "kernel/common/eztemplatedesignresource.php" );
-//include_once( 'lib/ezutils/classes/ezhttptool.php' );
-//include_once( "kernel/classes/ezcontentclass.php" );
-
 $ini = eZINI::instance();
 $tpl = templateInit();
 
@@ -133,9 +129,7 @@ if ( $module->isCurrentAction( 'CreateOverride' ) )
 
         if ( !file_exists( $filePath ) )
         {
-            $dirPermission = $ini->variable( 'FileSettings', 'StorageDirPermissions' );
-
-            eZDir::mkdir( $filePath, eZDir::directoryPermission(), true );
+            eZDir::mkdir( $filePath, false, true );
         }
 
 
@@ -187,7 +181,6 @@ if ( $module->isCurrentAction( 'CreateOverride' ) )
             umask( $oldumask );
 
             // Expire content view cache
-            //include_once( 'kernel/classes/ezcontentcachemanager.php' );
             eZContentCacheManager::clearAllContentCache();
 
             // Clear override cache

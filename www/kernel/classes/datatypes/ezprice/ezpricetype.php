@@ -5,9 +5,9 @@
 // Created on: <26-Apr-2002 16:54:35 bf>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -32,9 +32,6 @@
   \brief Stores a price (float)
 
 */
-
-//include_once( "kernel/classes/ezdatatype.php" );
-//include_once( "kernel/classes/datatypes/ezprice/ezprice.php" );
 
 class eZPriceType extends eZDataType
 {
@@ -74,7 +71,6 @@ class eZPriceType extends eZDataType
         {
             $data = $http->postVariable( $base . "_data_price_" . $contentObjectAttribute->attribute( "id" ) );
 
-            //include_once( 'lib/ezlocale/classes/ezlocale.php' );
             $locale = eZLocale::instance();
             $data = $locale->internalCurrency( $data );
             $classAttribute = $contentObjectAttribute->contentClassAttribute();
@@ -87,6 +83,11 @@ class eZPriceType extends eZDataType
 
             $contentObjectAttribute->setValidationError( ezi18n( 'kernel/classes/datatypes',
                                                                  'Invalid price.' ) );
+            return eZInputValidator::STATE_INVALID;
+        }
+        else if ( $contentObjectAttribute->validateIsRequired() )
+        {
+            $contentObjectAttribute->setValidationError( ezi18n( 'kernel/classes/datatypes', 'Input required.' ) );
             return eZInputValidator::STATE_INVALID;
         }
         else
@@ -153,7 +154,6 @@ class eZPriceType extends eZDataType
         $vatType = $http->postVariable( $base . '_ezprice_vat_id_' . $contentObjectAttribute->attribute( 'id' ) );
         $vatExInc = $http->postVariable( $base . '_ezprice_inc_ex_vat_' . $contentObjectAttribute->attribute( 'id' ) );
 
-        //include_once( 'lib/ezlocale/classes/ezlocale.php' );
         $locale = eZLocale::instance();
         $data = $locale->internalCurrency( $data );
 
@@ -210,18 +210,12 @@ class eZPriceType extends eZDataType
         return $contentObjectAttribute->attribute( "data_float" );
     }
 
-    /*!
-     \reimp
-    */
     function sortKey( $contentObjectAttribute )
     {
         $intPrice = (int)($contentObjectAttribute->attribute( 'data_float' ) * 100.00);
         return $intPrice;
     }
 
-    /*!
-     \reimp
-    */
     function sortKeyType()
     {
         return 'int';
@@ -261,9 +255,6 @@ class eZPriceType extends eZDataType
         return true;
     }
 
-    /*!
-     \reimp
-    */
     function serializeContentClassAttribute( $classAttribute, $attributeNode, $attributeParametersNode )
     {
         $price = $classAttribute->content();
@@ -295,9 +286,6 @@ class eZPriceType extends eZDataType
         }
     }
 
-    /*!
-     \reimp
-    */
     function unserializeContentClassAttribute( $classAttribute, $attributeNode, $attributeParametersNode )
     {
         $vatNode = $attributeParametersNode->getElementsByTagName( 'vat-included' )->item( 0 );
@@ -331,6 +319,11 @@ class eZPriceType extends eZDataType
             $vatID = $vatType->attribute( 'id' );
         }
         $classAttribute->setAttribute( self::VAT_ID_FIELD, $vatID );
+    }
+
+    function supportsBatchInitializeObjectAttribute()
+    {
+        return true;
     }
 }
 

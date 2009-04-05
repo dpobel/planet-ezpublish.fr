@@ -5,9 +5,9 @@
 // Created on: <16-Feb-2006 11:15:42 ks>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -26,7 +26,7 @@
 //
 //
 
-/*! \file ezinstallscripterpackagehandler.php
+/*! \file
 */
 
 /*!
@@ -34,8 +34,6 @@
   \brief Empty handler to support package custom install scripts.
 
 */
-
-//include_once( 'kernel/classes/ezpackagehandler.php' );
 
 
 class eZInstallScriptPackageHandler extends eZPackageHandler
@@ -50,7 +48,6 @@ class eZInstallScriptPackageHandler extends eZPackageHandler
     }
 
     /*!
-     \reimp
      Returns an explanation for the extension install item.
     */
     function explainInstallItem( $package, $installItem, $requestedInfo = array() )
@@ -73,7 +70,6 @@ class eZInstallScriptPackageHandler extends eZPackageHandler
     }
 
     /*!
-     \reimp
      Do nothing
     */
     function uninstall( $package, $installType, $parameters,
@@ -85,7 +81,6 @@ class eZInstallScriptPackageHandler extends eZPackageHandler
     }
 
     /*!
-     \reimp
      Do nothing
     */
     function install( $package, $installType, $parameters,
@@ -96,14 +91,8 @@ class eZInstallScriptPackageHandler extends eZPackageHandler
         return true;
     }
 
-    /*!
-     \reimp
-    */
     function add( $packageType, $package, $cli, $parameters )
     {
-        //include_once( 'lib/ezutils/classes/ezini.php' );
-        //include_once( 'lib/ezfile/classes/ezdir.php' );
-
         $siteINI = eZINI::instance();
         $extensionDir = $siteINI->variable( 'ExtensionSettings', 'ExtensionDirectory' );
 
@@ -124,9 +113,6 @@ class eZInstallScriptPackageHandler extends eZPackageHandler
         }
     }
 
-    /*!
-     \reimp
-    */
     function handleAddParameters( $packageType, $package, $cli, $arguments )
     {
         $scriptArgumentList = array_chunk( $arguments, 3 );

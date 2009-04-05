@@ -5,9 +5,9 @@
 // Created on: <08-Oct-2002 19:44:48 bf>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -37,12 +37,8 @@
 
 */
 
-//include_once( 'kernel/classes/ezpersistentobject.php' );
-
 class eZURL extends eZPersistentObject
 {
-    /*!
-    */
     function eZURL( $row )
     {
         $this->eZPersistentObject( $row );
@@ -282,9 +278,7 @@ class eZURL extends eZPersistentObject
                 $isValid = (int) $isValid;
                 $conditionQuery = " AND ezurl.is_valid=$isValid ";
             }
-            //include_once( "lib/ezdb/classes/ezdb.php" );
             $db = eZDB::instance();
-            //include_once( 'kernel/classes/datatypes/ezurl/ezurlobjectlink.php' );
             $cObjAttrVersionColumn = eZPersistentObject::getShortAttributeName( $db, eZURLObjectLink::definition(), 'contentobject_attribute_version' );
 
             if ( $asCount )
@@ -424,7 +418,7 @@ class eZURL extends eZPersistentObject
 
     /*!
      \static
-     Returns the URL with the given URL. Returns false if the URL does not exists.
+     Returns the URL with the given URL. Returns false if the URL does not exist.
     */
     static function urlByURL( $urlText )
     {

@@ -5,9 +5,9 @@
 // Created on: <18-Sep-2003 14:49:54 kk>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -28,12 +28,7 @@
 
 $Module = $Params['Module'];
 
-//include_once( 'kernel/rss/edit_functions.php' );
 require_once( 'kernel/common/template.php' );
-//include_once( 'kernel/classes/ezrssexport.php' );
-//include_once( 'kernel/classes/ezrssexportitem.php' );
-//include_once( 'lib/ezutils/classes/ezhttppersistence.php' );
-
 $http = eZHTTPTool::instance();
 
 $valid = true;
@@ -80,7 +75,6 @@ else if ( $Module->isCurrentAction( 'Cancel' ) )
 else if ( $Module->isCurrentAction( 'BrowseImage' ) )
 {
     eZRSSEditFunction::storeRSSExport( $Module, $http );
-    //include_once( 'kernel/classes/ezcontentbrowse.php' );
     eZContentBrowse::browse( array( 'action_name' => 'RSSExportImageBrowse',
                                     'description_template' => 'design:rss/browse_image.tpl',
                                     'from_page' => '/rss/edit_export/'. $RSSExportID .'/0/ImageSource' ),
@@ -104,7 +98,6 @@ if ( $http->hasPostVariable( 'Item_Count' ) )
         if ( $http->hasPostVariable( 'SourceBrowse_'.$itemCount ) )
         {
             eZRSSEditFunction::storeRSSExport( $Module, $http );
-            //include_once( 'kernel/classes/ezcontentbrowse.php' );
             eZContentBrowse::browse( array( 'action_name' => 'RSSObjectBrowse',
                                             'description_template' => 'design:rss/browse_source.tpl',
                                             'from_page' => '/rss/edit_export/'. $RSSExportID .'/'. $http->postVariable( 'Item_ID_'.$itemCount ) .'/NodeSource' ),
@@ -139,7 +132,6 @@ if ( is_numeric( $RSSExportID ) )
 
     if ( $rssExport )
     {
-        //include_once( 'lib/ezlocale/classes/ezdatetime.php' );
         $user = eZUser::currentUser();
         $contentIni = eZINI::instance( 'content.ini' );
         $timeOut = $contentIni->variable( 'RSSExportSettings', 'DraftTimeout' );
@@ -188,8 +180,6 @@ if ( is_numeric( $RSSExportID ) )
         }
     }
 
-    //include_once( 'kernel/classes/ezcontentbrowse.php' );
-
     switch ( $Params['BrowseType'] )
     {
         case 'NodeSource':
@@ -215,7 +205,6 @@ if ( is_numeric( $RSSExportID ) )
 }
 else // New RSSExport
 {
-    //include_once( "kernel/classes/datatypes/ezuser/ezuser.php" );
     $user = eZUser::currentUser();
     $user_id = $user->attribute( "contentobject_id" );
 

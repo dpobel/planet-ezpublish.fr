@@ -7,6 +7,21 @@
     </message>
 </context>
 <context>
+    <name>design</name>
+    <message>
+        <source>%group_name [Content object state group]</source>
+        <translation>%group_name [Grup d&apos;estats de l&apos;objecte de contingut]</translation>
+    </message>
+    <message>
+        <source>Edit</source>
+        <translation>Edita</translation>
+    </message>
+    <message>
+        <source>%state_name [Content object state]</source>
+        <translation>%state_name [Estat de l&apos;objecte de contingut]</translation>
+    </message>
+</context>
+<context>
     <name>design/admin/class/classlist</name>
     <message>
         <source>%group_name [Class group]</source>
@@ -2025,6 +2040,14 @@
         <source>You cannot manage the versions of this object because there is only one version available (the one that is being edited).</source>
         <translation>No pots gestionar les versions d&apos;aquest objecte perquè només hi ha una versió disponible (la que s&apos;està editant).</translation>
     </message>
+    <message>
+        <source>The following data is invalid according to the custom validation rules</source>
+        <translation>La següent informació no és vàlida d&apos;acord amb les regles de validació personalitzades</translation>
+    </message>
+    <message>
+        <source>States</source>
+        <translation>Estats</translation>
+    </message>
 </context>
 <context>
     <name>design/admin/content/edit_attribute</name>
@@ -3458,63 +3481,63 @@
     </message>
     <message>
         <source>Create new URL forwarding with wildcard</source>
-        <translation type="unfinished"></translation>
+        <translation>Crea una nova redirecció d&apos;URL amb asterisc </translation>
     </message>
     <message>
         <source>Redirecting URL</source>
-        <translation type="unfinished">Redirigint URL</translation>
+        <translation>Redirigint URL</translation>
     </message>
     <message>
         <source>Type</source>
-        <translation type="unfinished">Tipus</translation>
+        <translation>Tipus</translation>
     </message>
     <message>
         <source>Redirect</source>
-        <translation type="unfinished">Redirecciona</translation>
+        <translation>Redirecciona</translation>
     </message>
     <message>
         <source>Direct</source>
-        <translation type="unfinished"></translation>
+        <translation>Directe</translation>
     </message>
     <message>
         <source>URL alias name:</source>
-        <translation type="unfinished"></translation>
+        <translation>Nom de l&apos;alias URL:</translation>
     </message>
     <message>
         <source>Destination:</source>
-        <translation type="unfinished"></translation>
+        <translation>Destinació:</translation>
     </message>
     <message>
         <source>Destination.</source>
-        <translation type="unfinished"></translation>
+        <translation>Destinació.</translation>
     </message>
     <message>
         <source>Language:</source>
-        <translation type="unfinished"></translation>
+        <translation>Idioma:</translation>
     </message>
     <message>
         <source>Alias should redirect to its destination</source>
-        <translation type="unfinished"></translation>
+        <translation>L&apos;alias ha de redirigir a la seva destinació</translation>
     </message>
     <message>
         <source>With &lt;em&gt;Alias should redirect to its destination&lt;/em&gt; checked eZ Publish will redirect to the destination using a HTTP 301 response. Un-check it and the URL will stay the same &amp;#8212; no redirection will be performed.</source>
-        <translation type="unfinished"></translation>
+        <translation>Amb l&apos;opció &lt;em&gt;Alias ha de redirigir a la seva destinació&lt;/em&gt; activada, eZ Publish redirigirà a la destinació fent servir una resposta HTTP 301. Desmarca la casella i la URL romandrà la mateixa &amp;#8212; no es farà cap redirecció.</translation>
     </message>
     <message>
         <source>If checked the alias will start from the parent of the current node. If un-checked the aliases will start from the root of the site.</source>
-        <translation type="unfinished"></translation>
+        <translation>Si es marca, l&apos;alias començarà des del pare del node actual. Si es desmarca, els alias començaràn des de l&apos;arrel del lloc web.</translation>
     </message>
     <message>
         <source>Place alias on the site root</source>
-        <translation type="unfinished"></translation>
+        <translation>Col.loca l&apos;alias a l&apos;arrel del lloc web</translation>
     </message>
     <message>
         <source>The new alias be placed under %link</source>
-        <translation type="unfinished"></translation>
+        <translation>El nou alias es col.locarà sota %link</translation>
     </message>
     <message>
         <source>&lt;em&gt;Un-check&lt;/em&gt; to create the new alias under %link. Leave it checked and the new alias will be created on &lt;em&gt;&lt;a href=&apos;/&apos;&gt;%siteroot&lt;/a&gt;&lt;/em&gt;.</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;em&gt;Desmarca&lt;/em&gt; per crear el nou alias dins de %link. Deixa desmarcat i el nou alias es crear+a a &lt;em&gt;&lt;a href=&apos;/&apos;&gt;%siteroot&lt;/a&gt;&lt;/em&gt;.</translation>
     </message>
 </context>
 <context>
@@ -3640,10 +3663,6 @@
         <translation>Nou alies de la URL</translation>
     </message>
     <message>
-        <source>Destination (path to existing funtionality or resource)</source>
-        <translation>Destinació (ruta a una funcionalitat o recurs existent)</translation>
-    </message>
-    <message>
         <source>Enter text in the input box to create a new alias.</source>
         <translation>Introdueix texte a la caixa de text per crear un nou alies.</translation>
     </message>
@@ -3681,146 +3700,150 @@
     </message>
     <message>
         <source>Alias should redirect to its destination</source>
-        <translation type="unfinished"></translation>
+        <translation>L&apos;alias ha de redirigir a la seva destinació</translation>
     </message>
     <message>
         <source>Type</source>
-        <translation type="unfinished">Tipus</translation>
+        <translation>Tipus</translation>
     </message>
     <message>
         <source>Redirect</source>
-        <translation type="unfinished">Redirecciona</translation>
+        <translation>Redirecciona</translation>
     </message>
     <message>
         <source>Direct</source>
-        <translation type="unfinished"></translation>
+        <translation>Directe</translation>
+    </message>
+    <message>
+        <source>Destination (path to existing functionality or resource)</source>
+        <translation>Destinació (ruta a la funcionalitat existent o recurs)</translation>
     </message>
 </context>
 <context>
     <name>design/admin/content/urlalias_wildcard</name>
     <message>
         <source>The selected aliases were successfully removed.</source>
-        <translation type="unfinished">S&apos;han esborrat correctament els alies seleccionats.</translation>
+        <translation>S&apos;han esborrat correctament els alies seleccionats.</translation>
     </message>
     <message>
         <source>All wildcard aliases were successfully removed.</source>
-        <translation type="unfinished"></translation>
+        <translation>S&apos;han esborrat tots els alies amb asterisc correctament.</translation>
     </message>
     <message>
         <source>Text is missing for the URL alias</source>
-        <translation type="unfinished">Manca text per a l&apos;alies de la URL</translation>
+        <translation>Manca text per a l&apos;alies de la URL</translation>
     </message>
     <message>
         <source>Enter text in the input box to create a new alias.</source>
-        <translation type="unfinished"></translation>
+        <translation>Introdueix texte a la caixa de texte per crear un nou alies.</translation>
     </message>
     <message>
         <source>Text is missing for the URL alias destination</source>
-        <translation type="unfinished">Manca text per a l&apos;alies de la URL de destinació</translation>
+        <translation>Manca text per a l&apos;alies de la URL de destinació</translation>
     </message>
     <message>
         <source>Enter some text in the destination input box to create a new alias.</source>
-        <translation type="unfinished">Introdueix texte a la caixa de texte destí per crear un nou alies.</translation>
+        <translation>Introdueix texte a la caixa de texte destí per crear un nou alies.</translation>
     </message>
     <message>
         <source>The URL alias &lt;%wildcard_src_url&gt; was successfully created</source>
-        <translation type="unfinished"></translation>
+        <translation>S&apos;ha creat correctament l&apos;alies d&apos;URL &lt;%wildcard_src_url&gt;</translation>
     </message>
     <message>
         <source>The URL alias &lt;%wildcard_src_url&gt; already exists, and it points to &lt;%wildcard_dst_url&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>Ja existeix l&apos;alies d&apos;URL &lt;%wildcard_src_url&gt;, i apunta a &lt;%wildcard_dst_url&gt;</translation>
     </message>
     <message>
         <source>Defined URL aliases with wildcard[%wildcard_count]</source>
-        <translation type="unfinished"></translation>
+        <translation>Alias d&apos;URL amb asterisc definits[%wildcard_count]</translation>
     </message>
     <message>
         <source>Show %number_of items per page.</source>
-        <translation type="unfinished">Mostra %number_of elements per pàgina.</translation>
+        <translation>Mostra %number_of elements per pàgina.</translation>
     </message>
     <message>
         <source>The URL wildcard list does not contain any aliases.</source>
-        <translation type="unfinished"></translation>
+        <translation>La llista d&apos;URLs amb asterisc no conté cap alies.</translation>
     </message>
     <message>
         <source>Invert selection.</source>
-        <translation type="unfinished">Inverteix la selecció.</translation>
+        <translation>Inverteix la selecció.</translation>
     </message>
     <message>
         <source>URL alias wildcard</source>
-        <translation type="unfinished"></translation>
+        <translation>Alies d&apos;URL amb asterisc</translation>
     </message>
     <message>
         <source>Destination</source>
-        <translation type="unfinished">Destinació</translation>
+        <translation>Destinació</translation>
     </message>
     <message>
         <source>Type</source>
-        <translation type="unfinished">Tipus</translation>
+        <translation>Tipus</translation>
     </message>
     <message>
         <source>Forward</source>
-        <translation type="unfinished"></translation>
+        <translation>Redirigeix</translation>
     </message>
     <message>
         <source>Direct</source>
-        <translation type="unfinished"></translation>
+        <translation>Directe</translation>
     </message>
     <message>
         <source>Undefined</source>
-        <translation type="unfinished">Indefinit</translation>
+        <translation>Indefinit</translation>
     </message>
     <message>
         <source>Remove selected</source>
-        <translation type="unfinished">Esborra els seleccionats</translation>
+        <translation>Esborra els seleccionats</translation>
     </message>
     <message>
         <source>Remove selected aliases from the list above.</source>
-        <translation type="unfinished">Esborra els alies seleccionats de la llista de dalt.</translation>
+        <translation>Esborra els alies seleccionats de la llista de dalt.</translation>
     </message>
     <message>
         <source>Are you sure you want to remove the selected wildcards?</source>
-        <translation type="unfinished"></translation>
+        <translation>Estàs segur de voler esborrar els alies amb asterisc seleccionats?</translation>
     </message>
     <message>
         <source>Remove all</source>
-        <translation type="unfinished">Esborra-ho tot</translation>
+        <translation>Esborra-ho tot</translation>
     </message>
     <message>
         <source>Remove all wildcard aliases.</source>
-        <translation type="unfinished"></translation>
+        <translation>Esborra tots els alies amb asterisc.</translation>
     </message>
     <message>
         <source>Are you sure you want to remove all wildcard aliases?</source>
-        <translation type="unfinished"></translation>
+        <translation>Estàs segur de voler esborrar tots els alies amb asterisc?</translation>
     </message>
     <message>
         <source>There are no removable aliases.</source>
-        <translation type="unfinished">No hi ha cap alias que es pugui esborrar.</translation>
+        <translation>No hi ha cap alias que es pugui esborrar.</translation>
     </message>
     <message>
         <source>New URL wildcard</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Enter the URL for the new wildcard. Example: /developer/*</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Enter the destination URL for the new wildcard. Example: /dev/{1\}</source>
-        <translation type="unfinished"></translation>
+        <translation>Nova URL amb asterisc</translation>
     </message>
     <message>
         <source>Perform redirecting.</source>
-        <translation type="unfinished"></translation>
+        <translation>Executa la redirecció.</translation>
     </message>
     <message>
         <source>Create</source>
-        <translation type="unfinished">Crea</translation>
+        <translation>Crea</translation>
     </message>
     <message>
         <source>Create a new wildcard URL alias.</source>
-        <translation type="unfinished"></translation>
+        <translation>Crea un nou alies d&apos;URL amb asterisc.</translation>
+    </message>
+    <message>
+        <source>Enter the URL for the new wildcard. Example: developer/*</source>
+        <translation>Escriu l&apos;URL per al nou asterisc. Exemple: developer/*</translation>
+    </message>
+    <message>
+        <source>Enter the destination URL for the new wildcard. Example: dev/{1\}</source>
+        <translation>Escriu la nova destinació URL per a l&apos;asterisc: dev/{1\}</translation>
     </message>
 </context>
 <context>
@@ -5382,6 +5405,58 @@
         <source>The item being displayed has only one location, which is by default the main location.</source>
         <translation>L&apos;element que s&apos;està mostrant només té una localització, aquesta localització es la localització principal predeterminada.</translation>
     </message>
+    <message>
+        <source>Move selected</source>
+        <translation>Mou els seleccionats</translation>
+    </message>
+    <message>
+        <source>Move the selected items from the list above.</source>
+        <translation>Mou els elements seleccionats de la llista de dalt.</translation>
+    </message>
+    <message>
+        <source>You do not have permission to move any of the items from the list above.</source>
+        <translation>No tens permís per moure alguns elements de la llista de dalt.</translation>
+    </message>
+    <message>
+        <source>Object states</source>
+        <translation>Estats de l&apos;objecte</translation>
+    </message>
+    <message>
+        <source>Content object state group</source>
+        <translation>Grup d&apos;estats de l&apos;objecte de contingut</translation>
+    </message>
+    <message>
+        <source>Available states</source>
+        <translation>Estats disponibles</translation>
+    </message>
+    <message>
+        <source>No content object state is configured. This can be done %urlstart here %urlend.</source>
+        <translation>No s&apos;ha configurat cap estat per l&apos;objecte de contingut. Ho pots fer %urlstart aquí %urlend.</translation>
+    </message>
+    <message>
+        <source>Set states</source>
+        <translation>Fixa estats</translation>
+    </message>
+    <message>
+        <source>Apply states from the list above.</source>
+        <translation>Aplica els estats de la llista de dalt.</translation>
+    </message>
+    <message>
+        <source>No state to be applied to this content object. You might need to be assigned a more permissive access policy.</source>
+        <translation>No hi ha cap estat per aplicar a l&apos;objecte de contingut. Has de tenir unes polítiques d&apos;accés més permissives.</translation>
+    </message>
+    <message>
+        <source>Hide state assignment widget.</source>
+        <translation>Amaga la caixa per assignar estats.</translation>
+    </message>
+    <message>
+        <source>Show state assignment widget.</source>
+        <translation>Mostra la caixa per assignar estats.</translation>
+    </message>
+    <message>
+        <source>Object states for object</source>
+        <translation>Estats per l&apos;objecte</translation>
+    </message>
 </context>
 <context>
     <name>design/admin/node/view/line</name>
@@ -6417,7 +6492,11 @@ Nota: Els paquets no seran desinstal·lats.</translation>
     </message>
     <message>
         <source>URL wildcards</source>
-        <translation type="unfinished"></translation>
+        <translation>URLs amb asterisc</translation>
+    </message>
+    <message>
+        <source>States</source>
+        <translation>Estats</translation>
     </message>
 </context>
 <context>
@@ -7798,8 +7877,24 @@ Nota: Els paquets no seran desinstal·lats.</translation>
         <translation>Fes servir aquest desplegable per triar l&apos;atribut que ha de ser exportat com a descripció de l&apos;exportació RSS.</translation>
     </message>
     <message>
-        <source>Leave this field emty if you want system automaticaly detect the URL of your site from the URL you access feed with</source>
-        <translation type="unfinished"></translation>
+        <source>Leave this field empty if you want system automaticaly detect the URL of your site from the URL you access feed with</source>
+        <translation>Deixa aquest camp buit si vols que el sistema detecti automàticament l&apos;URL del lloc des de l&apos;URL a la que accedeixes als subministraments</translation>
+    </message>
+    <message>
+        <source>Category</source>
+        <translation>Categoria</translation>
+    </message>
+    <message>
+        <source>optional</source>
+        <translation>opcional</translation>
+    </message>
+    <message>
+        <source>Use this drop-down to select the attribute that should be exported as the category of the RSS export entry.</source>
+        <translation>Fes servir aquest menú desplegable per triar l&apos;atribut que s&apos;exportarà com a categoria de l&apos;exportació RSS.</translation>
+    </message>
+    <message>
+        <source>Skip</source>
+        <translation>Salta</translation>
     </message>
 </context>
 <context>
@@ -8503,6 +8598,10 @@ Nota: Els paquets no seran desinstal·lats.</translation>
         <source>Please select an ini file from the drop-down below</source>
         <translation>Tria un fitxer ini del menú desplegable de sota</translation>
     </message>
+    <message>
+        <source>Values for each location setting are shown. The first values have lowest priority; the values toward the end have higher priority than the first ones.</source>
+        <translation>Es mostren els valors de configuració per a cada ubicació. Els primers valors són els de menys prioritat; els valors cap al final tenen prioritat més elevada que els primers.</translation>
+    </message>
 </context>
 <context>
     <name>design/admin/setup</name>
@@ -8737,11 +8836,15 @@ Nota: Els paquets no seran desinstal·lats.</translation>
     </message>
     <message>
         <source>Regenerate autoload arrays for extensions</source>
-        <translation type="unfinished"></translation>
+        <translation>Torna a generar les taules de càrrega automàtica per a les extensions</translation>
     </message>
     <message>
         <source>Click this button to regenerate the autoload arrays used by the system for extensions.</source>
-        <translation type="unfinished"></translation>
+        <translation>Prem aquest botó per a tornar a generar les taules de càrrega automàtica per a les extensions que fa servir el sistema.</translation>
+    </message>
+    <message>
+        <source>Problems detected during autoload generation:</source>
+        <translation>S&apos;han detectat problemes al generar les càrregues automàtiques:</translation>
     </message>
 </context>
 <context>
@@ -8972,6 +9075,15 @@ Nota: Els paquets no seran desinstal·lats.</translation>
         <source>Web server (hardware)</source>
         <translation>Servidor web (maquinari)</translation>
     </message>
+    <message>
+        <source>Details</source>
+        <comment>Detailed PHP information</comment>
+        <translation>Detalls</translation>
+    </message>
+    <message>
+        <source>PHP autoload functions</source>
+        <translation>Funcions de càrrega automàtica PHP</translation>
+    </message>
 </context>
 <context>
     <name>design/admin/setup/operatorcode</name>
@@ -8993,7 +9105,7 @@ Nota: Els paquets no seran desinstal·lats.</translation>
     </message>
     <message>
         <source>\\return an array with the template operator name.</source>
-        <translation type="unfinished"></translation>
+        <translation>\\retorna una taula amb el nom de l&apos;operador de plantilla.</translation>
     </message>
 </context>
 <context>
@@ -9099,7 +9211,7 @@ Nota: Els paquets no seran desinstal·lats.</translation>
     </message>
     <message>
         <source>Class constant name</source>
-        <translation type="unfinished"></translation>
+        <translation>Nom de la constant de classe</translation>
     </message>
 </context>
 <context>
@@ -11013,6 +11125,201 @@ Nota: Els paquets no seran desinstal·lats.</translation>
     </message>
 </context>
 <context>
+    <name>design/admin/state/edit</name>
+    <message>
+        <source>The content object state was successfully stored.</source>
+        <translation>L&apos;estat de l&apos;objecte de contingut s&apos;ha emmagatzemat correctament.</translation>
+    </message>
+    <message>
+        <source>The content object state could not be stored.</source>
+        <translation>L&apos;estat de l&apos;objecte de contingut no s&apos;ha pogut emmagatzemar.</translation>
+    </message>
+    <message>
+        <source>Required data is either missing or is invalid</source>
+        <translation>Cal informació requerida o no és vàlida</translation>
+    </message>
+    <message>
+        <source>Edit content object state &quot;%state_name&quot;</source>
+        <translation>Edita l&apos;estat &quot;%state_name&quot; de l&apos;objecte de contingut</translation>
+    </message>
+    <message>
+        <source>Save changes</source>
+        <translation>Emmagatzema els canvis</translation>
+    </message>
+    <message>
+        <source>Save changes to this states.</source>
+        <translation>Emmagatzema els canvis a aquests estats.</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Cancel·la</translation>
+    </message>
+    <message>
+        <source>Cancel saving any changes.</source>
+        <translation>Cancel.la qualsevol canvi.</translation>
+    </message>
+    <message>
+        <source>New content object state</source>
+        <translation>Nou estat d&apos;objecte de contingut</translation>
+    </message>
+</context>
+<context>
+    <name>design/admin/state/group</name>
+    <message>
+        <source>Object states in this group [%state_count]</source>
+        <translation>Estats d&apos;objecte en aquest grup [%state_count]</translation>
+    </message>
+    <message>
+        <source>Invert selection.</source>
+        <translation>Inverteix la selecció.</translation>
+    </message>
+    <message>
+        <source>ID</source>
+        <translation>ID</translation>
+    </message>
+    <message>
+        <source>Identifier</source>
+        <translation>Identificador</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation>Nom</translation>
+    </message>
+    <message>
+        <source>Object count</source>
+        <translation>Nombre d&apos;objectes</translation>
+    </message>
+    <message>
+        <source>Order</source>
+        <translation>Ordre</translation>
+    </message>
+    <message>
+        <source>Select content object state group for removal.</source>
+        <translation>Tria estat d&apos;objecte de contingut per esborrar.</translation>
+    </message>
+    <message>
+        <source>Remove selected</source>
+        <translation>Esborra els seleccionats</translation>
+    </message>
+    <message>
+        <source>Remove selected states.</source>
+        <translation>Esborra els estats seleccionats.</translation>
+    </message>
+    <message>
+        <source>Update ordering</source>
+        <translation>Actualitza l&apos;ordenació</translation>
+    </message>
+    <message>
+        <source>Update the order of the content object states in this group.</source>
+        <translation>Actualitza l&apos;ordre dels estats dels objectes de contingut en aquest grup.</translation>
+    </message>
+    <message>
+        <source>Create new</source>
+        <translation>Crea un de nou</translation>
+    </message>
+    <message>
+        <source>Create a new state.</source>
+        <translation>Crea un nou estat.</translation>
+    </message>
+</context>
+<context>
+    <name>design/admin/state/group_edit</name>
+    <message>
+        <source>Edit content object state group &quot;%group_name&quot;</source>
+        <translation>Edita el grup d&apos;estats &quot;%group_name&quot;</translation>
+    </message>
+    <message>
+        <source>Save changes</source>
+        <translation>Emmagatzema els canvis</translation>
+    </message>
+    <message>
+        <source>Save changes to this state group.</source>
+        <translation>Emmagatzema els canvis a aquest grup d&apos;estats.</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Cancel·la</translation>
+    </message>
+    <message>
+        <source>Cancel saving any changes.</source>
+        <translation>Cancel.la qualsevol canvi.</translation>
+    </message>
+    <message>
+        <source>New content object state group</source>
+        <translation>Nou grup d&apos;estats d&apos;objectes</translation>
+    </message>
+    <message>
+        <source>Create</source>
+        <translation>Crea</translation>
+    </message>
+    <message>
+        <source>Create this state group.</source>
+        <translation>Crea aquest grup d&apos;estats.</translation>
+    </message>
+    <message>
+        <source>Cancel creating this state group.</source>
+        <translation>Cancel.la la creació de grup d&apos;estats.</translation>
+    </message>
+</context>
+<context>
+    <name>design/admin/state/groups</name>
+    <message>
+        <source>The content object state group was successfully stored.</source>
+        <translation>El grup d&apos;estats s&apos;ha emmagatzemat correctament.</translation>
+    </message>
+    <message>
+        <source>The content object state group could not be stored.</source>
+        <translation>No s&apos;ha pogut emmagatzemar el grup d&apos;estats.</translation>
+    </message>
+    <message>
+        <source>Required data is either missing or is invalid</source>
+        <translation>Cal informació requerida o no és vàlida</translation>
+    </message>
+    <message>
+        <source>Invert selection.</source>
+        <translation>Inverteix la selecció.</translation>
+    </message>
+    <message>
+        <source>ID</source>
+        <translation>ID</translation>
+    </message>
+    <message>
+        <source>Identifier</source>
+        <translation>Identificador</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation>Nom</translation>
+    </message>
+    <message>
+        <source>Select content object state group for removal.</source>
+        <translation>Tria estat d&apos;objecte de contingut per esborrar.</translation>
+    </message>
+    <message>
+        <source>Remove selected</source>
+        <translation>Esborra els seleccionats</translation>
+    </message>
+    <message>
+        <source>Remove selected state groups.</source>
+        <translation>Esborra els grups d&apos;estat seleccionats.</translation>
+    </message>
+    <message>
+        <source>Create new</source>
+        <translation>Crea un de nou</translation>
+    </message>
+    <message>
+        <source>Create a new state group.</source>
+        <translation>Crea un nou grup d&apos;estats.</translation>
+    </message>
+</context>
+<context>
+    <name>design/admin/state_groups</name>
+    <message>
+        <source>Content object state groups [%group_count]</source>
+        <translation>Grups d&apos;estats d&apos;objecte [%group_count]</translation>
+    </message>
+</context>
+<context>
     <name>design/admin/trigger/list</name>
     <message>
         <source>Workflow triggers [%trigger_count]</source>
@@ -11529,7 +11836,7 @@ Segueix les instruccions d&apos;aquest correu per activar el teu compte.</transl
     </message>
     <message>
         <source>Account has been locked because the maximum number of failed login attempts was exceeded.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">El compte d&apos;usuari s&apos;ha bloquejat perquè s&apos;ha excedit el nombre màxim d&apos;intents per connectar.</translation>
     </message>
 </context>
 <context>
@@ -13596,6 +13903,26 @@ Segueix les instruccions d&apos;aquest correu per activar el teu compte.</transl
         <source>Ini File: </source>
         <translation>Arxiu Ini:</translation>
     </message>
+    <message>
+        <source>Use seconds</source>
+        <translation>Fes servir segons</translation>
+    </message>
+    <message>
+        <source>Second</source>
+        <translation>Segon</translation>
+    </message>
+    <message>
+        <source>Silverlight</source>
+        <translation>Silverlight</translation>
+    </message>
+    <message>
+        <source>seconds(s)</source>
+        <translation>segon(s)</translation>
+    </message>
+    <message>
+        <source>Tag preset</source>
+        <translation>Etiqueta prefixada</translation>
+    </message>
 </context>
 <context>
     <name>design/standard/class/datatype </name>
@@ -14989,6 +15316,14 @@ Si vols enviar comentaris a l&apos;encarregat d&apos;aprovar el contingut o veur
     <message>
         <source>Published</source>
         <translation>Publicat</translation>
+    </message>
+    <message>
+        <source>Second</source>
+        <translation>Segon</translation>
+    </message>
+    <message>
+        <source>Silverlight</source>
+        <translation>Silverlight</translation>
     </message>
 </context>
 <context>
@@ -17628,10 +17963,6 @@ Si no n&apos;estàs segur, tria l&apos;accés del lloc que reflecteix la part d&
         <translation>Cancel·la</translation>
     </message>
     <message>
-        <source>Please select an extension to be exported.</source>
-        <translation>Si us plau, tria una extensió per exportar.</translation>
-    </message>
-    <message>
         <source>Installing package</source>
         <translation>Instal.lant paquet</translation>
     </message>
@@ -17754,6 +18085,14 @@ També pots esborrar el paquet sense desinstal·lar-lo de la llista de paquets.<
     <message>
         <source>Select the file containing the package then click the upload button</source>
         <translation>Selecciona l&apos;arxiu que conté el paquet i llavors fes clic al botó de càrrega</translation>
+    </message>
+    <message>
+        <source>Please select the extensions to be exported.</source>
+        <translation>Si us plau, tria les extensions per a exportar.</translation>
+    </message>
+    <message>
+        <source>Use content object modification and publication dates from the package.</source>
+        <translation>Fes servir les dates de modificació i publicació des del paquet.</translation>
     </message>
 </context>
 <context>
@@ -18474,6 +18813,18 @@ Fes clic en els noms d&apos;ubicació per canviar la llista de navegació.</tran
     <message>
         <source>Use this field to enter the base URL of your site. It is used to produce the URLs in the export, composed by the Site URL (e.g. &quot;http://www.example.com/index.php&quot;) and the path to the object (e.g. &quot;/articles/my_article&quot;). The Site URL depends on your Web server and eZ Publish configuration.</source>
         <translation>Fes servir aquest camp per a indicar la URL base del teu lloc. Es fa servir per a produir les URLs en l&apos;exportació, compostes per la URL del lloc (ex. &quot;http://www.example.com/index.php&quot;) i la ruta a l&apos;objecte (ex. &quot;/articles/myarticle&quot;). La URL del lloc depèn del teu servidor Web i de la configuració del eZ Publish. </translation>
+    </message>
+    <message>
+        <source>Category</source>
+        <translation>Categoria</translation>
+    </message>
+    <message>
+        <source>optional</source>
+        <translation>opcional</translation>
+    </message>
+    <message>
+        <source>Skip</source>
+        <translation>Salta</translation>
     </message>
 </context>
 <context>
@@ -19441,7 +19792,7 @@ El codi predeterminat s&apos;ha fet a partir dels paràmetres bàsics que tu vas
     <message>
         <source>Class constant name</source>
         <comment>Datatype</comment>
-        <translation type="unfinished"></translation>
+        <translation>Nom de la constant de classe</translation>
     </message>
 </context>
 <context>
@@ -19547,26 +19898,30 @@ El codi predeterminat s&apos;ha fet a partir dels paràmetres bàsics que tu vas
     </message>
     <message>
         <source>MySQL Improved</source>
-        <translation type="unfinished"></translation>
+        <translation>MySQL Millorat</translation>
     </message>
     <message>
         <source>configuration option you enable PHP to access MySQL databases through the MySQL Improved extension. If you use this option without specifying the path to MySQL, PHP will use the built-in MySQL client libraries.</source>
-        <translation type="unfinished"></translation>
+        <translation>opció de configuració per fer que PHP accedeixi a les bases de dades MySQL fent servir l&apos;extensió del MySQL Millorat. Si fas servir aquesta opció sense especificar la ruta al MySQL, PHP farà servir la versió MySQL predeterminada.</translation>
     </message>
     <message>
         <source>More information on the MySQLi extension can be found at</source>
-        <translation type="unfinished"></translation>
+        <translation>Pots trobar més informació sobre l&apos;extensió de MySQLi a</translation>
     </message>
 </context>
 <context>
     <name>design/standard/setup/extensions</name>
     <message>
         <source>Regenerate autoload arrays for extensions</source>
-        <translation type="unfinished"></translation>
+        <translation>Torna a generar les taules de càrrega automàtica per a les extensions</translation>
     </message>
     <message>
         <source>Click this button to regenerate the autoload arrays used by the system for extensions.</source>
-        <translation type="unfinished"></translation>
+        <translation>Prem aquest botó per a tornar a generar les taules de càrrega automàtica per a les extensions que fa servir el sistema.</translation>
+    </message>
+    <message>
+        <source>Problems detected during autoload generation:</source>
+        <translation>S&apos;han detectat problemes al generar les càrregues automàtiques:</translation>
     </message>
 </context>
 <context>
@@ -20857,10 +21212,6 @@ També podràs fer-ho més endavant de la Interfície d&apos;Administració.</tr
         <translation>L&apos;usuari seleccionat no disposa d&apos;accés a cap base de dades. Canvia l&apos;usuari o crea una base de dades per a l&apos;usuari.</translation>
     </message>
     <message>
-        <source>The &apos;digest&apos; procedure is not available in your database, you cannot run eZ Publish without this. Visit the FAQ for more information.</source>
-        <translation>El procediment &apos;digest&apos; no està disponible en la teva base de dades. No es pot utilitzar eZ Publish sense aquesta funcionalitat. Mirar les FAQ per a obtenir més informació.</translation>
-    </message>
-    <message>
         <source>No packages chosen.</source>
         <translation>No s&apos;ha escollit cap paquet.</translation>
     </message>
@@ -20926,12 +21277,16 @@ També podràs fer-ho més endavant de la Interfície d&apos;Administració.</tr
     </message>
     <message>
         <source>The setup will not do an upgrade from older eZ Publish versions (such as 2.2.7) if you leave the data as it is. This is only meant for people who have existing data that they don&apos;t want to lose. If you have existing eZ Publish 4.0 data (such as from an RC release) you should skip DB initialization, however you will then need to do a manual upgrade.</source>
-        <translation type="unfinished">La configuració no farà una actualització de versions anteriors d&apos;eZ Publish (com ara la 2.2.7) si deixes les dades tal com estan. Això només serveix per als que hi tenen dades que no volen perder. Si tens dades d&apos;eZ Publish 4.0 (com ara una versió RC) cal que et saltis la inicialització de la base de dades. Tot i així, necessitaràs fer-ne una actualització manual.</translation>
+        <translation>La configuració no farà una actualització de versions anteriors d&apos;eZ Publish (com ara la 2.2.7) si deixes les dades tal com estan. Això només serveix per als que hi tenen dades que no volen perder. Si tens dades d&apos;eZ Publish 4.0 (com ara una versió RC) cal que et saltis la inicialització de la base de dades. Tot i així, necessitaràs fer-ne una actualització manual.</translation>
     </message>
     <message>
         <source>eZ Publish</source>
         <comment>eZ Publish link</comment>
-        <translation type="unfinished">eZ Publish</translation>
+        <translation>eZ Publish</translation>
+    </message>
+    <message>
+        <source>The &apos;digest&apos; function is not available in your database, you cannot run eZ Publish without this. See the documentation for more information.</source>
+        <translation>La funció &apos;recopil.lació&apos; no està disponible a la teva base de dades, no pots fer servir eZ Publish sense això. Llegeix la documentació per més informació.</translation>
     </message>
 </context>
 <context>
@@ -20954,7 +21309,7 @@ També podràs fer-ho més endavant de la Interfície d&apos;Administració.</tr
     </message>
     <message>
         <source>\\return an array with the template operator name.</source>
-        <translation type="unfinished"></translation>
+        <translation>\\retorna una taula amb el nom de l&apos;operador de plantilla.</translation>
     </message>
 </context>
 <context>
@@ -21126,10 +21481,6 @@ També podràs fer-ho més endavant de la Interfície d&apos;Administració.</tr
     <message>
         <source>Missing ImageMagick program</source>
         <translation>El programa ImageMagick és absent</translation>
-    </message>
-    <message>
-        <source>If you known where the program is installed (the executable is called</source>
-        <translation>Si saps on està instal·lat el programa (l&apos;executable es diu</translation>
     </message>
     <message>
         <source>or</source>
@@ -21579,47 +21930,79 @@ Per fer-ho, cal que canviïs els comandaments %chown sota els comandaments alter
     </message>
     <message>
         <source>directory.</source>
-        <translation type="unfinished"></translation>
+        <translation>directori.</translation>
     </message>
     <message>
         <source>Missing DOM extension</source>
-        <translation type="unfinished"></translation>
+        <translation>Falta l&apos;extensió DOM</translation>
     </message>
     <message>
         <source>The DOM extension is not available to eZ Publish. Without it eZ Publish will not work.</source>
-        <translation type="unfinished"></translation>
+        <translation>L&apos;extensió DOM no està disponible a eZ Publish. Sense això eZ Publish no funciona.</translation>
     </message>
     <message>
         <source>In most cases, the DOM extension is enabled by default because it is included in the PHP core. However, some Linux distributions have PHP without compiled-in support for DOM. Instead, they provide DOM as a shared module in a separate RPM package called &quot;php-xml&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>En molts casos, l&apos;extensió DOM està activada per defecte perquè està inclosa a l&apos;instal.lació del PHP. Encara que a vegades, algunes distribucions Linux tenen el PHP sense soport per DOM compil.lat. Aquestes distribucions proveeixen DOM com a un mòdul compartit en un paquet RPM anomenat &quot;php-xml&quot;.</translation>
     </message>
     <message>
         <source>Time zone configuration</source>
-        <translation type="unfinished"></translation>
+        <translation>Configuració de la franja horària</translation>
     </message>
     <message>
         <source>You are using the default time zone, UTC. It is important that you set your time zone to make sure date and time is handled correctly. To do this, set the &lt;strong&gt;date.timezone&lt;/strong&gt; setting in &lt;strong&gt;php.ini&lt;/strong&gt;.</source>
-        <translation type="unfinished"></translation>
+        <translation>Estàs fent servir la franja horària predeterminada, UTC. És important que fixis la teva franja horària per assegurar que la data i l&apos;hora es gestionarà correctament. Per fer això, fixa la configuració &lt;strong&gt;date.timezone&lt;/strong&gt; a &lt;strong&gt;php.ini&lt;/strong&gt;.</translation>
     </message>
     <message>
         <source>Example &lt;strong&gt;php.ini&lt;/strong&gt; configuration:</source>
-        <translation type="unfinished"></translation>
+        <translation>Exemple de configuració &lt;strong&gt;php.ini&lt;/strong&gt;:</translation>
     </message>
     <message>
         <source>For a list of valid time zones see the &lt;a href=&quot;http://php.net/timezones&quot;&gt;List of Supported Time zones&lt;/a&gt; in the PHP documentation.</source>
-        <translation type="unfinished"></translation>
+        <translation>Pots veure les franjes horàries vàlides a &lt;a href=&quot;http://php.net/timezones&quot;&gt;Llista de franjes horàries soportades&lt;/a&gt; a la documentació del PHP.</translation>
     </message>
     <message>
         <source>Alternatively, if you do not have access to modify &lt;strong&gt;php.ini&lt;/strong&gt;, you can change the time zone in &lt;strong&gt;config.php&lt;/strong&gt;. Time zone set in &lt;strong&gt;config.php&lt;/strong&gt; will override the &lt;strong&gt;php.ini&lt;/strong&gt; time zone setting.</source>
-        <translation type="unfinished"></translation>
+        <translation>Alternativament, si no tens accés per modificar &lt;strong&gt;php.ini&lt;/strong&gt;, pots canviar la franja horària a &lt;strong&gt;config.php&lt;/strong&gt;. La franja horària fixada a &lt;strong&gt;config.php&lt;/strong&gt; sobrescriurà la fixada a &lt;strong&gt;php.ini&lt;/strong&gt;.</translation>
     </message>
     <message>
         <source>Example &lt;strong&gt;config.php&lt;/strong&gt; configuration:</source>
-        <translation type="unfinished"></translation>
+        <translation>Exemple de configuració &lt;strong&gt;config.php&lt;/strong&gt;:</translation>
     </message>
     <message>
         <source>If you want to keep UTC as your time zone, check &lt;strong&gt;Ignore this test&lt;/strong&gt; below to proceed.</source>
-        <translation type="unfinished"></translation>
+        <translation>Si vols conservar UTC com a la teva franja horària, activa &lt;strong&gt;Ignora aquesta prova&lt;/strong&gt; a sota per continuar.</translation>
+    </message>
+    <message>
+        <source>Missing cURL extension</source>
+        <translation>Falta l&apos;extensió cURL</translation>
+    </message>
+    <message>
+        <source>It is recommended to enable the PHP cURL extension, otherwise some features requiring a proxy or SSL will not work.</source>
+        <translation>Es recomana activar l&apos;extensió PHP cURL, sinò algunes funcionalitats que requereixin un proxy o SSL no funcionaran.</translation>
+    </message>
+    <message>
+        <source>To enable the PHP cURL functions you need to compile PHP with support for it. Configure PHP with</source>
+        <translation>Per activar les funcions PHP cURL has de compil.lar PHP. Configura PHP amb</translation>
+    </message>
+    <message>
+        <source>More information on this subject is available at</source>
+        <translation>Hi ha més informació disponible sobre aquest tema a</translation>
+    </message>
+    <message>
+        <source>If you know where the program is installed (the executable is called</source>
+        <translation>Si saps on està instal.lat el programa ( l&apos;executable s&apos;anomena</translation>
+    </message>
+    <message>
+        <source>PHP does not register environment variables</source>
+        <translation>PHP no registra variables d&apos;entorn</translation>
+    </message>
+    <message>
+        <source>PHP is currently not configured to register enviroment variables in the global variable $_ENV.</source>
+        <translation>PHP no està configurat per registrar variables d&apos;entorn a la global global $_ENV.</translation>
+    </message>
+    <message>
+        <source>To fix this, edit your php.ini configuration and add E to the variables_order setting.</source>
+        <translation>Per arreglar això, edita la configuració del teu php.ini and afegeix E a al configuració variables_order.</translation>
     </message>
 </context>
 <context>
@@ -22965,14 +23348,22 @@ Segueix les instruccions d&apos;aquest correu per activar el teu compte. </trans
     </message>
     <message>
         <source>Please note that your browser must use and support cookies to register a new user.</source>
-        <translation type="unfinished"></translation>
+        <translation>Si us plau, tingues en compte que el teu navegador ha de fer servir i soportar cookies per registrar nous usuaris.</translation>
+    </message>
+    <message>
+        <source>Your browser does not seem to support cookies, to register a new user, cookies need to be supported and enabled!</source>
+        <translation>El teu navegador no soporta cookies, per registrar un nou usuari, les cookies han d&apos;estar activades!</translation>
+    </message>
+    <message>
+        <source>Try again</source>
+        <translation>Torna a provar</translation>
     </message>
 </context>
 <context>
     <name>design/standard/user/</name>
     <message>
         <source>The new password must be at least %1 characters long. Please retype your new password.</source>
-        <translation type="unfinished"></translation>
+        <translation>La nova contrasenya ha de tenir com a mínim %1 caràcters. Si us plau, torna a escriure la nova contrasenya.</translation>
     </message>
 </context>
 <context>
@@ -23189,7 +23580,7 @@ Segueix les instruccions d&apos;aquest correu per activar el teu compte. </trans
     </message>
     <message>
         <source>Extension</source>
-        <translation type="unfinished"></translation>
+        <translation>Extensió</translation>
     </message>
 </context>
 <context>
@@ -23852,6 +24243,10 @@ Segueix les instruccions d&apos;aquest correu per activar el teu compte. </trans
         <source>Content tree menu (browser cache)</source>
         <translation>Menú d&apos;arbre de contingut (memòria cau del navegador)</translation>
     </message>
+    <message>
+        <source>State limitations cache</source>
+        <translation>Memòria cau de limitacions d&apos;estat</translation>
+    </message>
 </context>
 <context>
     <name>kernel/class</name>
@@ -24051,6 +24446,22 @@ Segueix les instruccions d&apos;aquest correu per activar el teu compte. </trans
     <message>
         <source>Canceled whole workflow</source>
         <translation>S&apos;ha cancel·lat el flux de treball complet</translation>
+    </message>
+    <message>
+        <source>Replace existing object</source>
+        <translation>Reemplaçar l&apos;objecte existent</translation>
+    </message>
+    <message>
+        <source>Skip object</source>
+        <translation>Salta l&apos;objecte</translation>
+    </message>
+    <message>
+        <source>Keep existing and create a new one</source>
+        <translation>Conserva l&apos;existent i crea una de nova</translation>
+    </message>
+    <message>
+        <source>Update existing object</source>
+        <translation>Actualitza l&apos;objecte existent</translation>
     </message>
 </context>
 <context>
@@ -24547,6 +24958,14 @@ si has triat l&apos;opció &quot;%3&quot; des de &quot;%4&quot; </translation>
         <source>You cannot remove the last class holding user accounts.</source>
         <translation>No pots esborrar la darrera classe si conté comptes d&apos;usuari.</translation>
     </message>
+    <message>
+        <source>Missing email input.</source>
+        <translation>Falta entrada de correu electrònic.</translation>
+    </message>
+    <message>
+        <source>Input required</source>
+        <translation>Cal una entrada</translation>
+    </message>
 </context>
 <context>
     <name>kernel/classes/datatypes/ezbinaryfile</name>
@@ -24621,19 +25040,19 @@ si has triat l&apos;opció &quot;%3&quot; des de &quot;%4&quot; </translation>
     </message>
     <message>
         <source>Node &apos;%1&apos; does not exist.</source>
-        <translation type="unfinished"></translation>
+        <translation>No existeix el node &apos;%1&apos;.</translation>
     </message>
     <message>
         <source>Using scripts in links is not allowed, link &apos;%1&apos; has been removed</source>
-        <translation type="unfinished"></translation>
+        <translation>No es poden fer servir scripts als enllaços, s&apos;ha esborrat l&apos;enllaç &apos;%1&apos;</translation>
     </message>
     <message>
         <source>Invalid e-mail address: &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
+        <translation>Adreces de correu electrònic incorrectes: &apos;%1&apos;</translation>
     </message>
     <message>
         <source>Object %1 can not be embeded to itself.</source>
-        <translation type="unfinished">L&apos;objecte %1 no es pot adjuntar a ell mateix.</translation>
+        <translation>L&apos;objecte %1 no es pot adjuntar a ell mateix.</translation>
     </message>
 </context>
 <context>
@@ -25011,7 +25430,7 @@ si has triat l&apos;opció &quot;%3&quot; des de &quot;%4&quot; </translation>
     <name>kernel/content/urlalias_wildcard</name>
     <message>
         <source>URL wildcard aliases</source>
-        <translation type="unfinished"></translation>
+        <translation>Alies d&apos;URL amb asterisc</translation>
     </message>
 </context>
 <context>
@@ -25344,20 +25763,8 @@ si has triat l&apos;opció &quot;%3&quot; des de &quot;%4&quot; </translation>
         <translation>El nom del paquet %packagename no és vàlid, només por contenir caràcters dins el rang a-z, 0-9 i barra baixa.</translation>
     </message>
     <message>
-        <source>Select an extension to be exported</source>
-        <translation>Tria una extensió per exportar</translation>
-    </message>
-    <message>
         <source>Extension export</source>
         <translation>Exportació d&apos;extensió</translation>
-    </message>
-    <message>
-        <source>Extension:</source>
-        <translation>Extensió:</translation>
-    </message>
-    <message>
-        <source>You must select an extension</source>
-        <translation>Has de triar una extensió</translation>
     </message>
     <message>
         <source>Removing class &apos;%classname&apos; will result in the removal of %objectscount object(s) of this class and all their sub-items. Are you sure you want to uninstall it?</source>
@@ -25443,6 +25850,30 @@ si has triat l&apos;opció &quot;%3&quot; des de &quot;%4&quot; </translation>
         <source>Remove object and its sub-item(s)</source>
         <translation>Esborra l&apos;objecte i el(s) seu(s) sub-element(s)</translation>
     </message>
+    <message>
+        <source>Extensions to include</source>
+        <translation>Extensions per incloure</translation>
+    </message>
+    <message>
+        <source>Extension list</source>
+        <translation>Llista d&apos;extensions</translation>
+    </message>
+    <message>
+        <source>You must select at least one extension</source>
+        <translation>Has de triar al menys una extensió</translation>
+    </message>
+    <message>
+        <source>Advanced options</source>
+        <translation>Opcions avançades</translation>
+    </message>
+    <message>
+        <source>Package contains an invalid extension name: %extensionname</source>
+        <translation>El paquet conté un nom d&apos;extensió no vàlid: %extensionname</translation>
+    </message>
+    <message>
+        <source>The package name %packagename is invalid, cannot import the package</source>
+        <translation>El nom del paquet %packagename no és vàlid, no es pot importar el paquet</translation>
+    </message>
 </context>
 <context>
     <name>kernel/pdf</name>
@@ -25460,13 +25891,6 @@ si has triat l&apos;opció &quot;%3&quot; des de &quot;%4&quot; </translation>
     <message>
         <source>New PDF Export</source>
         <translation>Nova exportació a PDF</translation>
-    </message>
-</context>
-<context>
-    <name>kernel/reference</name>
-    <message>
-        <source>Reference documentation</source>
-        <translation>Documentació de referència</translation>
     </message>
 </context>
 <context>
@@ -25539,6 +25963,10 @@ si has triat l&apos;opció &quot;%3&quot; des de &quot;%4&quot; </translation>
     <message>
         <source>Selected class does not exist</source>
         <translation>La classe seleccinada no existeix</translation>
+    </message>
+    <message>
+        <source>Invalid selection for category class %1 does not have attribute &quot;%2&quot;</source>
+        <translation>Selecció incorrecta per la categoria de classe %1 que no te l&apos;atribut &quot;%2&quot;</translation>
     </message>
 </context>
 <context>
@@ -25920,6 +26348,80 @@ si has triat l&apos;opció &quot;%3&quot; des de &quot;%4&quot; </translation>
     </message>
 </context>
 <context>
+    <name>kernel/state</name>
+    <message>
+        <source>State</source>
+        <translation>Estat</translation>
+    </message>
+    <message>
+        <source>Edit</source>
+        <translation>Edita</translation>
+    </message>
+    <message>
+        <source>Groups</source>
+        <translation>Grups</translation>
+    </message>
+    <message>
+        <source>Group edit</source>
+        <translation>Edita el grup</translation>
+    </message>
+    <message>
+        <source>New</source>
+        <translation>Nou</translation>
+    </message>
+    <message>
+        <source>New group</source>
+        <translation>Nou grup</translation>
+    </message>
+    <message>
+        <source>Assign</source>
+        <translation>Assigna</translation>
+    </message>
+</context>
+<context>
+    <name>kernel/state/edit</name>
+    <message>
+        <source>Identifier: input required</source>
+        <translation>Identificador: Entrada requerida</translation>
+    </message>
+    <message>
+        <source>Identifier: invalid, it can only consist of characters in the range a-z, 0-9 and underscore.</source>
+        <translation>Identificador: no vàlid, només pot contenir caràcters a-z, 0-9 i barra baixa.</translation>
+    </message>
+    <message>
+        <source>Identifier: invalid, maximum %max characters allowed.</source>
+        <translation>Identificador: no vàlid, s&apos;han excedit els %max caràcters permesos.</translation>
+    </message>
+    <message>
+        <source>Identifier: a content object state group with this identifier already exists, please give another identifier</source>
+        <translation>Identificador: ja existeix un grup d&apos;estats d&apos;objectes amb aquest identificador, si us plau prova amb un altre</translation>
+    </message>
+    <message>
+        <source>%language_name: this language is the default but neither name or description were provided for this language</source>
+        <translation>%language_name: aquest idioma és el predeterminat però no s&apos;ha subministrat ni el nom ni la descripció</translation>
+    </message>
+    <message>
+        <source>Translations: you need to add at least one localization</source>
+        <translation>Traduccions: has d&apos;afegir al menys una locale</translation>
+    </message>
+    <message>
+        <source>Translations: there are multiple localizations but you did not specify which is the default one</source>
+        <translation>Traduccions: hi han multiple locales però no has especificat quina serà la predeterminada</translation>
+    </message>
+    <message>
+        <source>Name in %language_name is too long. Maximum 45 characters allowed.</source>
+        <translation>El nom a %language_name es massa llarg. El nombre màxim de caràcters permesos és 45.</translation>
+    </message>
+    <message>
+        <source>Name in %language_name: input required</source>
+        <translation>Nom a %language_name: entrada requerida</translation>
+    </message>
+    <message>
+        <source>Identifier: identifiers starting with &quot;ez&quot; are reserved.</source>
+        <translation>Identificador: els identificadors que comencen amb &quot;ez&quot; estàn reservats.</translation>
+    </message>
+</context>
+<context>
     <name>kernel/trigger</name>
     <message>
         <source>Trigger</source>
@@ -26126,7 +26628,7 @@ si has triat l&apos;opció &quot;%3&quot; des de &quot;%4&quot; </translation>
     <name>lib/template</name>
     <message>
         <source>The maximum nesting level of %max has been reached. The execution is stopped to avoid infinite recursion.</source>
-        <translation type="unfinished"></translation>
+        <translation>S&apos;ha arribat al nivell màxim d&apos;aniuament %max. S&apos;ha detingut l&apos;execució per evitar la recursió infinita.</translation>
     </message>
 </context>
 <context>

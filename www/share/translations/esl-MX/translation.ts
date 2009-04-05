@@ -7,6 +7,21 @@
     </message>
 </context>
 <context>
+    <name>design</name>
+    <message>
+        <source>%group_name [Content object state group]</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%state_name [Content object state]</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>design/admin/class/classlist</name>
     <message>
         <source>%group_name [Class group]</source>
@@ -2025,6 +2040,14 @@
         <source>You cannot manage the versions of this object because there is only one version available (the one that is being edited).</source>
         <translation>No se pueden administrar las versiones de este objeto porque sólo hay una versión disponible (la que se está editando).</translation>
     </message>
+    <message>
+        <source>States</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The following data is invalid according to the custom validation rules</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>design/admin/content/edit_attribute</name>
@@ -3640,10 +3663,6 @@
         <translation>Nuevo alias de URL</translation>
     </message>
     <message>
-        <source>Destination (path to existing funtionality or resource)</source>
-        <translation>Destino (ruta a una funcionalidad o recurso existente)</translation>
-    </message>
-    <message>
         <source>Enter text in the input box to create a new alias.</source>
         <translation>Escribir algún texto en la caja para crear un nuevo alias.</translation>
     </message>
@@ -3694,6 +3713,10 @@
     <message>
         <source>Direct</source>
         <translation type="unfinished">Directo</translation>
+    </message>
+    <message>
+        <source>Destination (path to existing functionality or resource)</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3803,14 +3826,6 @@
         <translation>Nuevo comodín de URL</translation>
     </message>
     <message>
-        <source>Enter the URL for the new wildcard. Example: /developer/*</source>
-        <translation>Insertar la URL para el nuevo comodín. Por ejemplo: /developer/*</translation>
-    </message>
-    <message>
-        <source>Enter the destination URL for the new wildcard. Example: /dev/{1\}</source>
-        <translation>Insertar la URL destino del nuevo comodín. Por ejemplo: /dev/ {1\}</translation>
-    </message>
-    <message>
         <source>Perform redirecting.</source>
         <translation>Realizar la redirección.</translation>
     </message>
@@ -3821,6 +3836,14 @@
     <message>
         <source>Create a new wildcard URL alias.</source>
         <translation>Crear un nuevo alias comodín de URL.</translation>
+    </message>
+    <message>
+        <source>Enter the URL for the new wildcard. Example: developer/*</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enter the destination URL for the new wildcard. Example: dev/{1\}</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5383,6 +5406,58 @@
         <source>The item being displayed has only one location, which is by default the main location.</source>
         <translation>El elemento que se está mostrando sólo tiene una ubicación, que por defecto es la principal.</translation>
     </message>
+    <message>
+        <source>Move selected</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Move the selected items from the list above.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You do not have permission to move any of the items from the list above.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Object states for object</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Content object state group</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Available states</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No content object state is configured. This can be done %urlstart here %urlend.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Set states</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Apply states from the list above.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No state to be applied to this content object. You might need to be assigned a more permissive access policy.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Object states</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Hide state assignment widget.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show state assignment widget.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>design/admin/node/view/line</name>
@@ -6419,6 +6494,10 @@ Nota: los paquetes no se desinstalarán.</translation>
     <message>
         <source>URL wildcards</source>
         <translation>Comodines de URL</translation>
+    </message>
+    <message>
+        <source>States</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -7799,8 +7878,24 @@ Nota: los paquetes no se desinstalarán.</translation>
         <translation>Usa el desplegable para seleccionar el atributo que se exportará como la descripción de la exportación RSS.</translation>
     </message>
     <message>
-        <source>Leave this field emty if you want system automaticaly detect the URL of your site from the URL you access feed with</source>
-        <translation>Si desea que el sistema detecte de manera automática el URL de su sitio al URL que se accesó, dejar este espacio vacío alimentado con</translation>
+        <source>Leave this field empty if you want system automaticaly detect the URL of your site from the URL you access feed with</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Category</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>optional</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use this drop-down to select the attribute that should be exported as the category of the RSS export entry.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Skip</source>
+        <translation type="unfinished">Saltar</translation>
     </message>
 </context>
 <context>
@@ -8504,6 +8599,10 @@ Nota: los paquetes no se desinstalarán.</translation>
         <source>Please select an ini file from the drop-down below</source>
         <translation>Por favor, elige un archivo ini en el desplegable abajo</translation>
     </message>
+    <message>
+        <source>Values for each location setting are shown. The first values have lowest priority; the values toward the end have higher priority than the first ones.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>design/admin/setup</name>
@@ -8744,6 +8843,10 @@ Nota: los paquetes no se desinstalarán.</translation>
         <source>Click this button to regenerate the autoload arrays used by the system for extensions.</source>
         <translation>Pulsa este botón para volver a generar las tablas de autocarga usados por el sistema para las extensiones.</translation>
     </message>
+    <message>
+        <source>Problems detected during autoload generation:</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>design/admin/setup/info</name>
@@ -8972,6 +9075,15 @@ Nota: los paquetes no se desinstalarán.</translation>
     <message>
         <source>Web server (hardware)</source>
         <translation>Servidor web (máquina)</translation>
+    </message>
+    <message>
+        <source>Details</source>
+        <comment>Detailed PHP information</comment>
+        <translation type="unfinished">Detalles</translation>
+    </message>
+    <message>
+        <source>PHP autoload functions</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -11011,6 +11123,201 @@ Nota: los paquetes no se desinstalarán.</translation>
     <message>
         <source>Click this button to store changes if you have modified quantity and/or option values.</source>
         <translation>Pulsar este botón para guardar los cambios si se ha modificado la cantidad y/o el estado de las casillas de verificación.</translation>
+    </message>
+</context>
+<context>
+    <name>design/admin/state/edit</name>
+    <message>
+        <source>The content object state was successfully stored.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The content object state could not be stored.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Required data is either missing or is invalid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit content object state &quot;%state_name&quot;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>New content object state</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save changes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save changes to this states.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Cancelar</translation>
+    </message>
+    <message>
+        <source>Cancel saving any changes.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>design/admin/state/group</name>
+    <message>
+        <source>Object states in this group [%state_count]</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Invert selection.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ID</source>
+        <translation type="unfinished">ID</translation>
+    </message>
+    <message>
+        <source>Identifier</source>
+        <translation type="unfinished">Identificador</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation type="unfinished">Nombre</translation>
+    </message>
+    <message>
+        <source>Object count</source>
+        <translation type="unfinished">Número de objetos</translation>
+    </message>
+    <message>
+        <source>Order</source>
+        <translation type="unfinished">Pedido</translation>
+    </message>
+    <message>
+        <source>Select content object state group for removal.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove selected</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove selected states.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Create new</source>
+        <translation type="unfinished">Crear nuevo</translation>
+    </message>
+    <message>
+        <source>Create a new state.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Update ordering</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Update the order of the content object states in this group.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>design/admin/state/group_edit</name>
+    <message>
+        <source>Edit content object state group &quot;%group_name&quot;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>New content object state group</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save changes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save changes to this state group.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Cancelar</translation>
+    </message>
+    <message>
+        <source>Cancel saving any changes.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Create</source>
+        <translation type="unfinished">Crear</translation>
+    </message>
+    <message>
+        <source>Create this state group.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel creating this state group.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>design/admin/state/groups</name>
+    <message>
+        <source>The content object state group was successfully stored.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The content object state group could not be stored.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Required data is either missing or is invalid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Invert selection.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ID</source>
+        <translation type="unfinished">ID</translation>
+    </message>
+    <message>
+        <source>Identifier</source>
+        <translation type="unfinished">Identificador</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation type="unfinished">Nombre</translation>
+    </message>
+    <message>
+        <source>Select content object state group for removal.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove selected</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove selected state groups.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Create new</source>
+        <translation type="unfinished">Crear nuevo</translation>
+    </message>
+    <message>
+        <source>Create a new state group.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>design/admin/state_groups</name>
+    <message>
+        <source>Content object state groups [%group_count]</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -13597,6 +13904,26 @@ especificada. Sigua las instrucciones de ese correo para activar su cuenta.</tra
         <source>Ini File: </source>
         <translation>Archivo Ini: </translation>
     </message>
+    <message>
+        <source>Use seconds</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Second</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Silverlight</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tag preset</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>seconds(s)</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>design/standard/class/datatype </name>
@@ -14991,6 +15318,14 @@ Si se desean enviar comentarios al encargado de aprobar el contenido o ver el es
     <message>
         <source>Published</source>
         <translation>Publicado</translation>
+    </message>
+    <message>
+        <source>Second</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Silverlight</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -17632,10 +17967,6 @@ Si no se está seguro, elige el acceso de sitio que representa la parte pública
         <translation>Cancelar</translation>
     </message>
     <message>
-        <source>Please select an extension to be exported.</source>
-        <translation>Seleccionar la extensión para exportar.</translation>
-    </message>
-    <message>
         <source>Installing package</source>
         <translation>Instalación de paquete</translation>
     </message>
@@ -17758,6 +18089,14 @@ También se puede eliminar el paquete sin desinstalarlo de la lista de paquetes.
     <message>
         <source>Select the file containing the package then click the upload button</source>
         <translation>Seleccionar el archivo que contiene el paquete y pulsar después el botón de carga</translation>
+    </message>
+    <message>
+        <source>Use content object modification and publication dates from the package.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please select the extensions to be exported.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -18478,6 +18817,18 @@ el menú superior.</translation>
     <message>
         <source>Use this field to enter the base URL of your site. It is used to produce the URLs in the export, composed by the Site URL (e.g. &quot;http://www.example.com/index.php&quot;) and the path to the object (e.g. &quot;/articles/my_article&quot;). The Site URL depends on your Web server and eZ Publish configuration.</source>
         <translation>Usar este campo para indicar la URL base de tu sitio. Se usa para producir las URLs en la exportación, compuestas por la URL del sitio (ej. &quot;http://www.example.com/index.php&quot;) y la ruta al objeto (ej. &quot;/articles/my_article&quot;). La URL del sitio depende de tu servidor Web y de la configuración del eZ Publish.</translation>
+    </message>
+    <message>
+        <source>Category</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>optional</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Skip</source>
+        <translation type="unfinished">Saltar</translation>
     </message>
 </context>
 <context>
@@ -19571,6 +19922,10 @@ El código por defecto ha sido hecho con los parámetros básicos que se eligier
     <message>
         <source>Click this button to regenerate the autoload arrays used by the system for extensions.</source>
         <translation>Pulsar este botón para volver a generar las tablas de autocarga que usa el sistema para extensiones.</translation>
+    </message>
+    <message>
+        <source>Problems detected during autoload generation:</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -20862,10 +21217,6 @@ Esta funcionalidad se encuentra también disponible más adelante desde la Inter
         <translation>El usuario seleccionado no tiene acceso a ninguna base de datos. Cambia el usuario o crea una base de datos para el usuario.</translation>
     </message>
     <message>
-        <source>The &apos;digest&apos; procedure is not available in your database, you cannot run eZ Publish without this. Visit the FAQ for more information.</source>
-        <translation>El procedimiento &apos;resumen&apos; no se encuentra disponible en la base de datos. No se puede usar eZ Publish sin esta funcionalidad. Mirar las FAQ para obtener más información.</translation>
-    </message>
-    <message>
         <source>No packages chosen.</source>
         <translation>Ningún paquete seleccionado.</translation>
     </message>
@@ -20937,6 +21288,10 @@ Esta funcionalidad se encuentra también disponible más adelante desde la Inter
         <source>eZ Publish</source>
         <comment>eZ Publish link</comment>
         <translation type="unfinished">eZ Publish</translation>
+    </message>
+    <message>
+        <source>The &apos;digest&apos; function is not available in your database, you cannot run eZ Publish without this. See the documentation for more information.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -21130,10 +21485,6 @@ Esta funcionalidad se encuentra también disponible más adelante desde la Inter
     <message>
         <source>Missing ImageMagick program</source>
         <translation>Programa ImageMagik perdido</translation>
-    </message>
-    <message>
-        <source>If you known where the program is installed (the executable is called</source>
-        <translation>Si sabes dónde está instalado el programa (el ejecutable se llama</translation>
     </message>
     <message>
         <source>or</source>
@@ -21623,6 +21974,38 @@ Para hacer esto necesitas cambiar los comandos %chown en comandos de consola alt
     </message>
     <message>
         <source>If you want to keep UTC as your time zone, check &lt;strong&gt;Ignore this test&lt;/strong&gt; below to proceed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>If you know where the program is installed (the executable is called</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>PHP does not register environment variables</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>PHP is currently not configured to register enviroment variables in the global variable $_ENV.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>To fix this, edit your php.ini configuration and add E to the variables_order setting.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Missing cURL extension</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>It is recommended to enable the PHP cURL extension, otherwise some features requiring a proxy or SSL will not work.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>To enable the PHP cURL functions you need to compile PHP with support for it. Configure PHP with</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>More information on this subject is available at</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -22973,6 +23356,14 @@ tu cuenta.</translation>
         <source>Please note that your browser must use and support cookies to register a new user.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Your browser does not seem to support cookies, to register a new user, cookies need to be supported and enabled!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Try again</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>design/standard/user/</name>
@@ -23858,6 +24249,10 @@ tu cuenta.</translation>
         <source>Content tree menu (browser cache)</source>
         <translation>Menú del árbol de contenido (caché del navegador)</translation>
     </message>
+    <message>
+        <source>State limitations cache</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>kernel/class</name>
@@ -24057,6 +24452,22 @@ tu cuenta.</translation>
     <message>
         <source>Canceled whole workflow</source>
         <translation>Se canceló todo el flujo de trabajo</translation>
+    </message>
+    <message>
+        <source>Replace existing object</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Skip object</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Keep existing and create a new one</source>
+        <translation type="unfinished">Conservar la existente y crear una nueva</translation>
+    </message>
+    <message>
+        <source>Update existing object</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -24552,6 +24963,14 @@ si se elegió la opción &quot;%3&quot; desde &quot;%4&quot; </translation>
     <message>
         <source>You cannot remove the last class holding user accounts.</source>
         <translation>No se puede eliminar la última clase al mantener las cuentas de usuario.</translation>
+    </message>
+    <message>
+        <source>Missing email input.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Input required</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -25350,20 +25769,8 @@ si se elegió la opción &quot;%3&quot; desde &quot;%4&quot; </translation>
         <translation>El nombre de paquete %packagename no es valido. Solo puede contener caracteros a-z, 0-9 y subrayado.</translation>
     </message>
     <message>
-        <source>Select an extension to be exported</source>
-        <translation>Seleccionar la extensión para exportar</translation>
-    </message>
-    <message>
         <source>Extension export</source>
         <translation>Exportación de extensión</translation>
-    </message>
-    <message>
-        <source>Extension:</source>
-        <translation>Extensión:</translation>
-    </message>
-    <message>
-        <source>You must select an extension</source>
-        <translation>Debes de seleccionar una extensión</translation>
     </message>
     <message>
         <source>Removing class &apos;%classname&apos; will result in the removal of %objectscount object(s) of this class and all their sub-items. Are you sure you want to uninstall it?</source>
@@ -25449,6 +25856,30 @@ si se elegió la opción &quot;%3&quot; desde &quot;%4&quot; </translation>
         <source>Remove object and its sub-item(s)</source>
         <translation>Eliminar el objeto y su(s) subelemento(s)</translation>
     </message>
+    <message>
+        <source>Advanced options</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Package contains an invalid extension name: %extensionname</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The package name %packagename is invalid, cannot import the package</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Extensions to include</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Extension list</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You must select at least one extension</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>kernel/pdf</name>
@@ -25466,13 +25897,6 @@ si se elegió la opción &quot;%3&quot; desde &quot;%4&quot; </translation>
     <message>
         <source>New PDF Export</source>
         <translation>Nueva exportación  a PDF</translation>
-    </message>
-</context>
-<context>
-    <name>kernel/reference</name>
-    <message>
-        <source>Reference documentation</source>
-        <translation>Documentación de referencia</translation>
     </message>
 </context>
 <context>
@@ -25545,6 +25969,10 @@ si se elegió la opción &quot;%3&quot; desde &quot;%4&quot; </translation>
     <message>
         <source>Selected class does not exist</source>
         <translation>La clase seleccionada no existe</translation>
+    </message>
+    <message>
+        <source>Invalid selection for category class %1 does not have attribute &quot;%2&quot;</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -25923,6 +26351,80 @@ si se elegió la opción &quot;%3&quot; desde &quot;%4&quot; </translation>
     <message>
         <source>Wrong VAT percentage (corrected).</source>
         <translation>Porcentaje de IVA incorrecto (corregido).</translation>
+    </message>
+</context>
+<context>
+    <name>kernel/state</name>
+    <message>
+        <source>State</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Assign</source>
+        <translation type="unfinished">Asignar</translation>
+    </message>
+    <message>
+        <source>New</source>
+        <translation type="unfinished">Nuevo</translation>
+    </message>
+    <message>
+        <source>Edit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Groups</source>
+        <translation type="unfinished">Grupos</translation>
+    </message>
+    <message>
+        <source>New group</source>
+        <translation type="unfinished">Nuevo grupo</translation>
+    </message>
+    <message>
+        <source>Group edit</source>
+        <translation type="unfinished">Editar grupo</translation>
+    </message>
+</context>
+<context>
+    <name>kernel/state/edit</name>
+    <message>
+        <source>Identifier: input required</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Identifier: invalid, it can only consist of characters in the range a-z, 0-9 and underscore.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Identifier: invalid, maximum %max characters allowed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Identifier: a content object state group with this identifier already exists, please give another identifier</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%language_name: this language is the default but neither name or description were provided for this language</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Translations: you need to add at least one localization</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Translations: there are multiple localizations but you did not specify which is the default one</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Identifier: identifiers starting with &quot;ez&quot; are reserved.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Name in %language_name is too long. Maximum 45 characters allowed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Name in %language_name: input required</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

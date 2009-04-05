@@ -5,9 +5,9 @@
 // Created on: <10-Dec-2002 15:20:20 amos>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -26,7 +26,7 @@
 //
 //
 
-/*! \file ezsmtptransport.php
+/*! \file
 */
 
 /*!
@@ -34,8 +34,6 @@
   \brief The class eZSMTPTransport does
 
 */
-
-//include_once( 'lib/ezutils/classes/ezmailtransport.php' );
 
 class eZSMTPTransport extends eZMailTransport
 {
@@ -46,9 +44,6 @@ class eZSMTPTransport extends eZMailTransport
     {
     }
 
-    /*!
-     \reimp
-    */
     function sendMail( eZMail $mail )
     {
         $ini = eZINI::instance();
@@ -94,8 +89,6 @@ class eZSMTPTransport extends eZMailTransport
         $sendData['headers'] = $mail->headerTextList();
         $sendData['body'] = $mail->body();
 
-        //include_once( "lib/ezutils/classes/ezsmtp.php" );
-
         $smtp = new smtp( $parameters );
         $smtpConnected = $smtp->connect();
         if ( $smtpConnected )
@@ -113,7 +106,10 @@ class eZSMTPTransport extends eZMailTransport
             $smtp->quit();
         }
         else
+        {
+            eZDebug::writeError( 'Unable to connect to SMTP server ' . $parameters['host'], 'error.log', __METHOD__ );
             $mailSent = false;
+        }
         return $mailSent;
     }
 }

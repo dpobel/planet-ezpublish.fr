@@ -5,9 +5,9 @@
 // Created on: <16-Apr-2002 11:08:14 amos>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -32,9 +32,7 @@
 
 */
 
-//include_once( "kernel/classes/ezworkflow.php" );
 require_once( "kernel/common/i18n.php" );
-require_once( "lib/ezutils/classes/ezdebug.php" );
 
 class eZWorkflowType
 {
@@ -87,7 +85,7 @@ class eZWorkflowType
         {
             $result = eZWorkflowType::loadAndRegisterType( $typeString );
             if ( $result === false )
-                return $def;
+                return null;
         }
 
         if ( isset( $types[$typeString] ) )
@@ -198,7 +196,6 @@ class eZWorkflowType
         $group = $typeElements[0];
         $type = $typeElements[1];
 
-        //include_once( 'lib/ezutils/classes/ezextension.php' );
         $baseDirectory = eZExtension::baseDirectory();
         $wfINI = eZINI::instance( 'workflow.ini' );
         $repositoryDirectories = $wfINI->variable( 'EventSettings', 'RepositoryDirectories' );
@@ -359,9 +356,9 @@ class eZWorkflowType
     /*!
      Check if specified trigger is allowed
 
-      \param module name
-      \param function name
-      \param connect type
+      \param $moduleName module name
+      \param $functionName function name
+      \param $connectType connection type
 
      \return true is allowed, false if not.
     */
@@ -392,14 +389,14 @@ class eZWorkflowType
      */
     static function statusNameMap()
     {
-        return array( eZWorkflowType::STATUS_NONE => ezi18n( 'kernel/classes', 'No state yet' ),
-                      eZWorkflowType::STATUS_ACCEPTED => ezi18n( 'kernel/classes', 'Accepted event' ),
-                      eZWorkflowType::STATUS_REJECTED => ezi18n( 'kernel/classes', 'Rejected event' ),
-                      eZWorkflowType::STATUS_DEFERRED_TO_CRON => ezi18n( 'kernel/classes', 'Event deferred to cron job' ),
-                      eZWorkflowType::STATUS_DEFERRED_TO_CRON_REPEAT => ezi18n( 'kernel/classes', 'Event deferred to cron job, event will be rerun' ),
-                      eZWorkflowType::STATUS_RUN_SUB_EVENT => ezi18n( 'kernel/classes', 'Event runs a sub event' ),
-                      eZWorkflowType::STATUS_WORKFLOW_CANCELLED => ezi18n( 'kernel/classes', 'Canceled whole workflow' ),
-                      eZWorkflowType::STATUS_WORKFLOW_RESET => ezi18n( 'kernel/classes', 'Workflow was reset for reuse' ) );
+        return array( self::STATUS_NONE => ezi18n( 'kernel/classes', 'No state yet' ),
+                      self::STATUS_ACCEPTED => ezi18n( 'kernel/classes', 'Accepted event' ),
+                      self::STATUS_REJECTED => ezi18n( 'kernel/classes', 'Rejected event' ),
+                      self::STATUS_DEFERRED_TO_CRON => ezi18n( 'kernel/classes', 'Event deferred to cron job' ),
+                      self::STATUS_DEFERRED_TO_CRON_REPEAT => ezi18n( 'kernel/classes', 'Event deferred to cron job, event will be rerun' ),
+                      self::STATUS_RUN_SUB_EVENT => ezi18n( 'kernel/classes', 'Event runs a sub event' ),
+                      self::STATUS_WORKFLOW_CANCELLED => ezi18n( 'kernel/classes', 'Canceled whole workflow' ),
+                      self::STATUS_WORKFLOW_RESET => ezi18n( 'kernel/classes', 'Workflow was reset for reuse' ) );
     }
 
     /// \privatesection

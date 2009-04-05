@@ -3,9 +3,9 @@
 // Created on: <05-Dec-2002 09:12:43 bf>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -39,9 +39,6 @@
   \sa eZProductCollection eZBasket eZOrder
 */
 
-//include_once( "kernel/classes/ezpersistentobject.php" );
-//include_once( "kernel/classes/ezvattype.php" );
-
 class eZOrderItem extends eZPersistentObject
 {
     function eZOrderItem( $row )
@@ -71,7 +68,7 @@ class eZOrderItem extends eZPersistentObject
                                                            'default' => 0,
                                                            'required' => true ),
                                          'vat_value' => array( 'name' => 'VATValue',
-                                                               'datatype' => 'integer',
+                                                               'datatype' => 'float',
                                                                'default' => 0,
                                                                'required' => true ),
                                          'is_vat_inc' => array( 'name' => 'IsVATIncluded',
@@ -138,6 +135,11 @@ class eZOrderItem extends eZPersistentObject
         }
 
         return $this->Price;
+    }
+
+    function remove()
+    {
+        return eZPersistentObject::removeObject( eZOrderItem::definition(), array( "id" => $this->ID ) );
     }
 
     /*!

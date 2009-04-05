@@ -5,9 +5,9 @@
 // Created on: <05-Mar-2003 10:02:29 amos>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -26,20 +26,16 @@
 //
 //
 
-/*! \file ezincludefunctions.php
+/*! \file
  Contains some useful kernel include functions which are nice to use in extensions.
 */
 
-/*!
-*/
 function kernel_include( $name )
 {
     $include = "kernel/$name";
     return include_once( $include );
 }
 
-/*!
-*/
 function kernel_common( $name )
 {
     $name = strtolower( $name );
@@ -47,8 +43,6 @@ function kernel_common( $name )
     return include_once( $include );
 }
 
-/*!
-*/
 function datatype_class( $datatype, $className )
 {
     $className = strtolower( $className );
@@ -68,7 +62,6 @@ function extension_path( $extension, $withWWWDir = false, $withHost = false, $wi
             $path .= $withProtocol;
         else
         {
-            //include_once( 'lib/ezutils/classes/ezsys.php' );
             $path .= eZSys::serverProtocol();
         }
         $path .= ':';
@@ -101,7 +94,6 @@ function extension_path( $extension, $withWWWDir = false, $withHost = false, $wi
 */
 function nameFromPath( $path )
 {
-    //include_once( 'lib/ezfile/classes/ezdir.php' );
     $path = eZDir::cleanPath( $path );
     $base = eZExtension::baseDirectory() . '/';
     $base = preg_quote( $base, '/' );
@@ -161,16 +153,12 @@ function ext_class( $extension, $name )
     return include_once( $include );
 }
 
-/*!
-*/
 function lib_include( $libName, $name )
 {
     $include = "lib/$libName/classes/$name";
     return include_once( $include );
 }
 
-/*!
-*/
 function lib_class( $libName, $name )
 {
     $name = strtolower( $name );
@@ -178,8 +166,6 @@ function lib_class( $libName, $name )
     return include_once( $include );
 }
 
-/*!
-*/
 function kernel_class( $name )
 {
     $name = strtolower( $name );

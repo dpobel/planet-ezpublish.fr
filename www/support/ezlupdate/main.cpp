@@ -7,7 +7,7 @@
 // Gunnstein Lye <gl@ez.no>
 // Created on: <10-Dec-2002 18:46:17 gl>
 //
-// Copyright (C) 1999-2008 eZ Systems AS. All rights reserved.
+// Copyright (C) 1999-2009 eZ Systems AS. All rights reserved.
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -50,11 +50,11 @@ extern void fetchtr_tpl( QFileInfo *fi, MetaTranslator *tor, bool mustExist, boo
 extern void merge( MetaTranslator *tor, const MetaTranslator *virginTor, const QString &language, bool verbose );
 
 static int verbose = 0;
-static QString version = "4.0.1"; // eZ Publish version plus local version
+static QString version = "4.1.0"; // eZ Publish version plus local version
 static QStringList dirs;          // Additional scan directories
 static bool extension = false;    // Extension mode
 static QDir extension_dir;        // Extension directory
-static QRegExp localeRE( "^[a-z]{3}-[A-Z]{2}$" );
+static QRegExp localeRE( "^[a-z]{3}-[A-Z]{2}(@.*)?$" );
 static bool untranslated = false;    // Untranslated translation is off by default
 
 static void printUsage()
@@ -177,7 +177,7 @@ int main( int argc, char **argv )
             QString language = argv[i];
             if ( localeRE.match( language ) == -1 )
             {
-                qFatal( "ERROR - Locale should be on the form aaa-AA. Examples: eng-GB, nor-NO" );
+            qFatal( "ERROR - Locale should be of the form aaa-AA or aaa-AA@variation. Examples: eng-GB, nor-NO, srp-RS@latin" );
             }
             else
                 languages.append( language );

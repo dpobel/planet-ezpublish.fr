@@ -5,9 +5,9 @@
 // Created on: <12-Aug-2003 17:35:47 kk>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -26,9 +26,8 @@
 //
 //
 
-/*! \file ezstep_site_access.php
+/*! \file
 */
-//include_once( 'kernel/setup/steps/ezstep_installer.php');
 require_once( "kernel/common/i18n.php" );
 
 /*!
@@ -48,9 +47,6 @@ class eZStepSiteAccess extends eZStepInstaller
                                 'site_access', 'Site access' );
     }
 
-    /*!
-     \reimp
-    */
     function processPostData()
     {
         $accessType = null;
@@ -73,9 +69,6 @@ class eZStepSiteAccess extends eZStepInstaller
         return true;
     }
 
-    /*!
-     \reimp
-     */
     function init()
     {
         if ( $this->hasKickstartData() )
@@ -97,7 +90,6 @@ class eZStepSiteAccess extends eZStepInstaller
         $siteType = $this->chosenSiteType();
 
         // If windows installer, install using url site access
-        //include_once( "kernel/setup/ezsetuptests.php" );
         if ( eZSetupTestInstaller() == 'windows' )
         {
             $siteType['access_type'] = 'url';
@@ -116,9 +108,6 @@ class eZStepSiteAccess extends eZStepInstaller
         return false; // Always show site access
     }
 
-    /*!
-     \reimp
-    */
     function display()
     {
         $siteType = $this->chosenSiteType();

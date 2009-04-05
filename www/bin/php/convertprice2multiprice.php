@@ -4,9 +4,9 @@
 // Created on: <20-Mar-2006 15:00:00 dl>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -37,8 +37,6 @@
 
 
 // script initializing
-//include_once( 'kernel/classes/ezscript.php' );
-
 require 'autoload.php';
 
 global $cli;
@@ -65,14 +63,6 @@ $scriptOptions = $script->getOptions( "",
 
 
 $script->initialize();
-
-//include_once( 'kernel/classes/ezcontentobjecttreenode.php' );
-//include_once( 'kernel/classes/ezcontentclass.php' );
-//include_once( 'kernel/shop/classes/ezshopfunctions.php' );
-//include_once( 'kernel/shop/classes/ezcurrencydata.php' );
-//include_once( 'kernel/classes/datatypes/ezmultiprice/ezmultipricetype.php' );
-//include_once( 'kernel/classes/datatypes/ezmultiprice/ezmultiprice.php' );
-//include_once( 'kernel/shop/classes/ezmultipricedata.php' );
 
 
 $convertedObjectsCount = 0;
@@ -173,7 +163,6 @@ if ( is_array( $currencyList ) )
 
 $db->commit();
 
-//include_once( 'kernel/classes/ezcontentcachemanager.php' );
 eZContentCacheManager::clearAllContentCache();
 
 $cli->output( "Total converted objects: $convertedObjectsCount" );

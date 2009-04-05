@@ -5,9 +5,9 @@
 // Created on: <29-Apr-2003 15:18:15 bf>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -32,8 +32,6 @@
   \brief A content datatype which handles keyword index instances
 
 */
-
-//include_once( "kernel/classes/ezcontentobjecttreenode.php" );
 
 class eZKeyword
 {
@@ -106,7 +104,7 @@ class eZKeyword
     /*!
      Stores the keyword index to database
     */
-    function store( &$attribute )
+    function store( $attribute )
     {
         $db = eZDB::instance();
 
@@ -114,15 +112,21 @@ class eZKeyword
         $classID = $object->attribute( 'contentclass_id' );
 
         // Get already existing keywords
-        $wordArray = array();
-        $escapedKeywordArray = array();
-        foreach( $this->KeywordArray as $keyword )
+        if ( count( $this->KeywordArray ) > 0 )
         {
-            $keyword = $db->escapeString( $keyword );
-            $escapedKeywordArray[] = $keyword;
+            $escapedKeywordArray = array();
+            foreach( $this->KeywordArray as $keyword )
+            {
+                $keyword = $db->escapeString( $keyword );
+                $escapedKeywordArray[] = $keyword;
+            }
+            $wordsString = implode( '\',\'', $escapedKeywordArray );
+            $existingWords = $db->arrayQuery( "SELECT * FROM ezkeyword WHERE keyword IN ( '$wordsString' ) AND class_id='$classID' " );
         }
-        $wordsString = implode( '\',\'', $escapedKeywordArray );
-        $existingWords = $db->arrayQuery( "SELECT * FROM ezkeyword WHERE keyword IN ( '$wordsString' ) AND class_id='$classID' " );
+        else
+        {
+            $existingWords = array();
+        }
 
         $newWordArray = array();
         $existingWordArray = array();
@@ -159,7 +163,7 @@ class eZKeyword
             $keyword = $db->escapeString( $keyword );
             $db->query( "INSERT INTO ezkeyword ( keyword, class_id ) VALUES ( '$keyword', '$classID' )" );
 
-            $keywordID = $db->lastSerialID( 'ezkeyword' );
+            $keywordID = $db->lastSerialID( 'ezkeyword', 'id' );
             $addRelationWordArray[] = array( 'keyword' => $keywordID, 'id' => $keywordID );
         }
 
@@ -290,18 +294,22 @@ class eZKeyword
     }
 
     /*!
-     Returns the objects which has atleast one of the same keywords
+     Returns the objects which have at least one keyword in common
+
+     \return an array of eZContentObjectTreeNode instances, or null if the attribute is not stored yet
     */
     function relatedObjects()
     {
         $return = false;
         if ( $this->ObjectAttributeID )
         {
+            $return = array();
+
             // Fetch words
             $db = eZDB::instance();
 
             $wordArray = $db->arrayQuery( "SELECT * FROM ezkeyword_attribute_link
-                                    WHERE objectattribute_id='" . $this->ObjectAttributeID ."' " );
+                                           WHERE objectattribute_id='" . $this->ObjectAttributeID ."' " );
 
             $keywordIDArray = array();
             // Fetch the objects which have one of these words
@@ -310,12 +318,12 @@ class eZKeyword
                 $keywordIDArray[] = $word['keyword_id'];
             }
 
-            $keywordString = implode( ", ", $keywordIDArray );
+            $keywordCondition = $db->generateSQLINStatement( $keywordIDArray, 'keyword_id' );
 
             if ( count( $keywordIDArray ) > 0 )
             {
                 $objectArray = $db->arrayQuery( "SELECT DISTINCT ezcontentobject_attribute.contentobject_id FROM ezkeyword_attribute_link, ezcontentobject_attribute
-                                                  WHERE keyword_id IN ( $keywordString ) AND
+                                                  WHERE $keywordCondition AND
                                                         ezcontentobject_attribute.id = ezkeyword_attribute_link.objectattribute_id
                                                         AND  objectattribute_id <> '" . $this->ObjectAttributeID ."' " );
 
@@ -325,13 +333,17 @@ class eZKeyword
                     $objectIDArray[] = $object['contentobject_id'];
                 }
 
-                $aNodes = eZContentObjectTreeNode::findMainNodeArray( $objectIDArray );
-                foreach ( $aNodes as $key => $node )
+                if ( count( $objectIDArray ) > 0 )
                 {
-                    $theObject = $node->object();
-                    if ( $theObject->canRead() )
+                    $aNodes = eZContentObjectTreeNode::findMainNodeArray( $objectIDArray );
+
+                    foreach ( $aNodes as $key => $node )
                     {
-                        $return[] = $node;
+                        $theObject = $node->object();
+                        if ( $theObject->canRead() )
+                        {
+                            $return[] = $node;
+                        }
                     }
                 }
             }

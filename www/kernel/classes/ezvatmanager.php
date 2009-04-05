@@ -5,9 +5,9 @@
 // Created on: <16-Feb-2006 23:02:53 vs>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -26,7 +26,7 @@
 //
 //
 
-/*! \file ezvatmanager.php
+/*! \file
 */
 
 /*!
@@ -138,7 +138,6 @@ class eZVATManager
         if ( $considerPreferedCountry )
         {
             // return it
-            //include_once( 'kernel/shop/classes/ezshopfunctions.php' );
             $country = eZShopFunctions::getPreferredUserCountry();
             if ( $country )
             {
@@ -151,7 +150,6 @@ class eZVATManager
 
         if ( $user === false )
         {
-            require_once( 'kernel/classes/datatypes/ezuser/ezuser.php' );
             $user = eZUser::currentUser();
         }
 
@@ -234,7 +232,6 @@ class eZVATManager
     {
         $userObject = $user->attribute( 'contentobject' );
         $requireUserCountry = eZVATManager::isUserCountryRequired();
-        require_once( 'kernel/classes/ezvatmanager.php' );
         $countryAttributeName = eZVATManager::getUserCountryAttributeName( $requireUserCountry );
         if ( $countryAttributeName === null )
         {

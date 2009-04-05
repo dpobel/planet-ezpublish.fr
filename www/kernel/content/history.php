@@ -3,9 +3,9 @@
 // Created on: <22-Apr-2002 15:41:30 bf>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -24,19 +24,7 @@
 //
 //
 
-//include_once( 'kernel/classes/ezcontentclass.php' );
-//include_once( 'kernel/classes/ezcontentclassattribute.php' );
-
-//include_once( 'kernel/classes/ezcontentobject.php' );
-//include_once( 'kernel/classes/ezcontentobjectversion.php' );
-//include_once( 'kernel/classes/ezcontentobjectattribute.php' );
-
 require_once( 'kernel/common/template.php' );
-//include_once( "lib/ezutils/classes/ezini.php" );
-//include_once( "lib/ezdb/classes/ezdb.php" );
-
-//include_once( 'lib/ezdiff/classes/ezdiff.php' );
-
 $tpl = templateInit();
 $http = eZHTTPTool::instance();
 
@@ -361,12 +349,12 @@ if ( $Module->isCurrentAction( 'CopyVersion' )  )
 
 $res = eZTemplateDesignResource::instance();
 $res->setKeys( array( array( 'object', $object->attribute( 'id' ) ), // Object ID
+                      array( 'remote_id', $object->attribute( 'remote_id' ) ),
                       array( 'class', $object->attribute( 'contentclass_id' ) ), // Class ID
                       array( 'class_identifier', $object->attribute( 'class_identifier' ) ), // Class identifier
                       array( 'section_id', $object->attribute( 'section_id' ) ) // Section ID
                       ) ); // Section ID, 0 so far
 
-//include_once( 'kernel/classes/ezsection.php' );
 eZSection::setGlobalID( $object->attribute( 'section_id' ) );
 $versionArray =( isset( $versionArray ) and is_array( $versionArray ) ) ? array_unique( $versionArray ) : array();
 $LastAccessesVersionURI = $http->hasSessionVariable( 'LastAccessesVersionURI' ) ? $http->sessionVariable( 'LastAccessesVersionURI' ) : null;
@@ -388,7 +376,7 @@ $newerDraftVersionListCount = is_array( $newerDraftVersionList ) ? count( $newer
 $versions = $object->versions();
 
 $tpl->setVariable( 'newerDraftVersionList', $newerDraftVersionList );
-$tpl->setVariable( 'newerDraftVersionListCount', $newerDraftVersionListCount[0]['count'] );
+$tpl->setVariable( 'newerDraftVersionListCount', $newerDraftVersionListCount );
 $tpl->setVariable( 'view_parameters', $viewParameters );
 $tpl->setVariable( 'object', $object );
 $tpl->setVariable( 'edit_version', $EditVersion );
@@ -402,5 +390,11 @@ $Result = array();
 $Result['content'] = $tpl->fetch( 'design:content/history.tpl' );
 $Result['path'] = array( array( 'text' => ezi18n( 'kernel/content', 'History' ),
                                 'url' => false ) );
+$section = eZSection::fetch( $object->attribute( 'section_id' ) );
+if ( $section )
+{
+    $Result['navigation_part'] = $section->attribute( 'navigation_part_identifier' );
+    $Result['section_id'] = $section->attribute( 'id' );
+}
 
 ?>

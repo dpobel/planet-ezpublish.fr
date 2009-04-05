@@ -3,9 +3,9 @@
 // Created on: <19-Jan-2004 20:18:59 kk>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -24,15 +24,7 @@
 //
 //
 
-//include_once( 'kernel/classes/ezcontentobject.php' );
-//include_once( 'kernel/classes/ezcontentclass.php' );
-//include_once( 'kernel/classes/ezcontentobjecttreenode.php' );
-//include_once( 'kernel/classes/eztrigger.php' );
-//include_once( 'kernel/common/eztemplatedesignresource.php' );
-//include_once( 'kernel/classes/ezcontentcache.php' );
 require_once( 'kernel/common/template.php' );
-//include_once( 'lib/eztemplate/classes/eztemplateincludefunction.php' );
-
 $NodeID = $Params['NodeID'];
 $Module = $Params['Module'];
 $LanguageCode = $Params['Language'];
@@ -110,7 +102,6 @@ $viewParameters = array_merge( $viewParameters, $UserParameters );
 if ( $viewCacheEnabled && ( $useTriggers == false ) )
 {
     // Note: this code is duplicate, see about 100 lines down
-    //include_once( 'kernel/classes/ezcontentcache.php' );
     $cacheInfo = eZContentObject::cacheInfo( $Params );
     $language = $cacheInfo['language'];
     $roleList = $cacheInfo['role_list'];
@@ -126,7 +117,6 @@ if ( $viewCacheEnabled && ( $useTriggers == false ) )
     }
 }
 
-//include_once( 'lib/ezutils/classes/ezoperationhandler.php' );
 $user = eZUser::currentUser();
 
 eZDebugSetting::addTimingPoint( 'kernel-content-pdf', 'Operation start' );
@@ -150,7 +140,6 @@ switch( $operationResult['status'] )
             if ( $viewCacheEnabled )
             {
                 // Note: this code is duplicate, see about 100 lines up
-                //include_once( 'kernel/classes/ezcontentcache.php' );
                 $cacheInfo = eZContentObject::cacheInfo( $Params );
                 $language = $cacheInfo['language'];
                 $roleList = $cacheInfo['role_list'];
@@ -245,7 +234,6 @@ switch( $operationResult['status'] )
 */
 function contentPDFPassthrough( $cacheFile )
 {
-    require_once( 'kernel/classes/ezclusterfilehandler.php' );
     $file = eZClusterFileHandler::instance( $cacheFile );
 
     if( !$file->exists() )
@@ -261,7 +249,7 @@ function contentPDFPassthrough( $cacheFile )
     header( 'Pragma: ' );
     header( 'Cache-Control: ' );
     /* Set cache time out to 10 seconds, this should be good enough to work around an IE bug */
-    header( "Expires: ". gmdate( 'D, d M Y H:i:s', time() + 10 ) . 'GMT' );
+    header( "Expires: ". gmdate( 'D, d M Y H:i:s', time() + 10 ) . ' GMT' );
     header( 'X-Powered-By: eZ Publish' );
 
     header( 'Content-Length: '. $file->size() );
@@ -275,7 +263,6 @@ function contentPDFPassthrough( $cacheFile )
     @fpassthru( $fp );
     fclose( $fp );
 
-    require_once( 'lib/ezutils/classes/ezexecution.php' );
     eZExecution::cleanExit();
 }
 
@@ -301,6 +288,8 @@ function contentPDFGenerate( $cacheFile,
 
     $res = eZTemplateDesignResource::instance();
     $res->setKeys( array( array( 'object', $node->attribute( 'contentobject_id' ) ),
+                          array( 'remote_id', $object->attribute( 'remote_id' ) ),
+                          array( 'node_remote_id', $node->attribute( 'remote_id' ) ),
                           array( 'section', $object->attribute( 'section_id' ) ),
                           array( 'node', $node->attribute( 'node_id' ) ),
                           array( 'parent_node', $node->attribute( 'parent_node_id' ) ),

@@ -5,9 +5,9 @@
 // Created on: <22-Jan-2003 15:44:48 amos>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -26,7 +26,7 @@
 //
 //
 
-/*! \file ezcollaborationitem.php
+/*! \file
 */
 
 /*!
@@ -34,9 +34,6 @@
   \brief The class eZCollaborationItem does
 
 */
-
-//include_once( 'kernel/classes/ezpersistentobject.php' );
-//include_once( 'kernel/classes/ezcollaborationitemstatus.php' );
 
 class eZCollaborationItem extends eZPersistentObject
 {
@@ -158,7 +155,6 @@ class eZCollaborationItem extends eZPersistentObject
         $type = $info['type-identifier'];
         if ( $subType )
             $type .= '_' . $subType;
-        //include_once( 'kernel/classes/notification/eznotificationevent.php' );
         $event = eZNotificationEvent::create( 'ezcollaboration', array( 'collaboration_id' => $this->attribute( 'id' ),
                                                                          'collaboration_identifier' => $type ) );
         $event->store();
@@ -180,7 +176,6 @@ class eZCollaborationItem extends eZPersistentObject
     {
         if ( isset( $this->CreatorID ) and $this->CreatorID )
         {
-            //include_once( 'kernel/classes/datatypes/ezuser/ezuser.php' );
             return eZUser::fetch( $this->CreatorID );
         }
         return null;
@@ -190,7 +185,6 @@ class eZCollaborationItem extends eZPersistentObject
     {
         if ( isset( $this->CreatorID ) and $this->CreatorID )
         {
-            //include_once( 'kernel/classes/datatypes/ezuser/ezuser.php' );
             return ( eZUser::currentUserID() == $this->CreatorID );
         }
         return false;
@@ -198,21 +192,17 @@ class eZCollaborationItem extends eZPersistentObject
 
     function participantList()
     {
-        //include_once( 'kernel/classes/ezcollaborationitemparticipantlink.php' );
         return eZCollaborationItemParticipantLink::fetchParticipantList( array('item_id' => $this->ID ) );
     }
 
     function userStatus()
     {
-        //include_once( 'kernel/classes/ezcollaborationitemstatus.php' );
-        //include_once( 'kernel/classes/datatypes/ezuser/ezuser.php' );
         $userID = eZUser::currentUserID();
         return eZCollaborationItemStatus::fetch( $this->ID, $userID );
     }
 
     function handler()
     {
-        //include_once( 'kernel/classes/ezcollaborationitemhandler.php' );
         return eZCollaborationItemHandler::instantiate( $this->attribute( 'type_identifier' ) );
     }
 

@@ -5,9 +5,9 @@
 // Created on: <15-Dec-2005 11:15:42 ks>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -26,7 +26,7 @@
 //
 //
 
-/*! \file ezextensionpackagehandler.php
+/*! \file
 */
 
 /*!
@@ -34,9 +34,6 @@
   \brief Handles extenstions in the package system
 
 */
-
-//include_once( 'kernel/classes/ezcontentobject.php' );
-//include_once( 'kernel/classes/ezpackagehandler.php' );
 
 class eZExtensionPackageHandler extends eZPackageHandler
 {
@@ -55,7 +52,6 @@ class eZExtensionPackageHandler extends eZPackageHandler
     }
 
     /*!
-     \reimp
      Returns an explanation for the extension install item.
     */
     function explainInstallItem( $package, $installItem, $requestedInfo = array() )
@@ -71,7 +67,7 @@ class eZExtensionPackageHandler extends eZPackageHandler
 
             $filepath = $package->path() . '/' . $filepath;
 
-            $dom =& $package->fetchDOMFromFile( $filepath );
+            $dom = $package->fetchDOMFromFile( $filepath );
             if ( $dom )
             {
                 $root = $dom->documentElement;
@@ -83,7 +79,6 @@ class eZExtensionPackageHandler extends eZPackageHandler
     }
 
     /*!
-     \reimp
      Uninstalls extensions.
     */
     function uninstall( $package, $installType, $parameters,
@@ -116,11 +111,13 @@ class eZExtensionPackageHandler extends eZPackageHandler
             $siteINI->save( 'site.ini.append', '.php', false, false );
         }
 
+        // Regenerate the autoloads to remove of no longer existing classes
+        $this->updateAutoload();
+
         return true;
     }
 
     /*!
-     \reimp
      Copy extension from the package to extension repository.
     */
     function install( $package, $installType, $parameters,
@@ -130,10 +127,21 @@ class eZExtensionPackageHandler extends eZPackageHandler
     {
         //$this->Package =& $package;
 
-        $extensionName = $content->getAttribute( 'name' );
+        $trans = eZCharTransform::instance();
+        $name = $content->getAttribute( 'name' );
+        $extensionName = $trans->transformByGroup( $name, 'urlalias' );
+        if ( strcmp( $name, $extensionName ) !== 0 )
+        {
+            $description = ezi18n( 'kernel/package', 'Package contains an invalid extension name: %extensionname', false, array( '%extensionname' => $name ) );
+            $installParameters['error'] = array( 'error_code' => false,
+                                                 'element_id' => $name,
+                                                 'description' => $description );
+            return false;
+        }
 
         $siteINI = eZINI::instance();
-        $extensionDir = $siteINI->variable( 'ExtensionSettings', 'ExtensionDirectory' ) . '/' . $extensionName;
+        $extensionRootDir = $siteINI->variable( 'ExtensionSettings', 'ExtensionDirectory' );
+        $extensionDir = $extensionRootDir . '/' . $extensionName;
         $packageExtensionDir = $package->path() . '/' . $parameters['sub-directory'] . '/' . $extensionName;
 
         // Error: extension already exists.
@@ -163,26 +171,11 @@ class eZExtensionPackageHandler extends eZPackageHandler
             }
         }
 
-        eZDir::mkdir( $extensionDir, eZDir::directoryPermission(), true );
+        eZDir::mkdir( $extensionDir, false, true );
+        eZDir::copy( $packageExtensionDir, $extensionRootDir );
 
-        //include_once( 'lib/ezfile/classes/ezfilehandler.php' );
-
-        $files = $content->getElementsByTagName( 'file' );
-        foreach ( $files as $file )
-        {
-            $path = $file->getAttribute( 'path' );
-            $destPath = $extensionDir . $path . '/' . $file->getAttribute( 'name' );
-
-            if ( $file->getAttribute( 'type' ) == 'dir' )
-            {
-                eZDir::mkdir( $destPath, eZDir::directoryPermission() );
-            }
-            else
-            {
-                $sourcePath = $packageExtensionDir . $path . '/' . $file->getAttribute( 'name' );
-                eZFileHandler::copy( $sourcePath, $destPath );
-            }
-        }
+        // Regenerate autoloads for extensions to pick up the newly created extension
+        $this->updateAutoload();
 
         // Activate extension
         $siteINI = eZINI::instance( 'site.ini', 'settings/override', null, null, false, true );
@@ -205,75 +198,67 @@ class eZExtensionPackageHandler extends eZPackageHandler
         return true;
     }
 
-    /*!
-     \reimp
-    */
     function add( $packageType, $package, $cli, $parameters )
     {
-        //include_once( 'lib/ezutils/classes/ezini.php' );
-        //include_once( 'lib/ezfile/classes/ezdir.php' );
-
-        // code taken from eZExtensionPackageCreator
-        $siteINI = eZINI::instance();
-        $extensionDir = $siteINI->variable( 'ExtensionSettings', 'ExtensionDirectory' );
-
         foreach ( $parameters as $extensionName )
         {
-            $cli->output( 'adding extension ' . $cli->style( 'dir' ) . $extensionName .  $cli->style( 'dir-end' ) );
-
-            $fileList = array();
-            $sourceDir = $extensionDir . '/' . $extensionName;
-            $targetDir = $package->path() . '/ezextension';
-
-            eZDir::mkdir( $targetDir, false, true );
-            eZDir::copy( $sourceDir, $targetDir );
-
-            eZDir::recursiveList( $targetDir, '', $fileList );
-
-            $doc = new DOMDocument;
-
-            $packageRoot = $doc->createElement( 'extension' );
-            $packageRoot->setAttribute( 'name', $extensionName );
-
-            foreach( $fileList as $file )
-            {
-                $fileNode = $doc->createElement( 'file' );
-                $fileNode->setAttribute( 'name', $file['name'] );
-
-                if ( $file['path'] )
-                    $fileNode->setAttribute( 'path', $file['path'] );
-
-                $fullPath = $targetDir . $file['path'] . '/' . $file['name'];
-                $fileNode->setAttribute( 'md5sum', $package->md5sum( $fullPath ) );
-
-                if ( $file['type'] == 'dir' )
-                     $fileNode->setAttribute( 'type', 'dir' );
-
-                $packageRoot->appendChild( $fileNode );
-                unset( $fileNode );
-            }
-
-            $filename = 'extension-' . $extensionName;
-
-            $package->appendInstall( 'ezextension', false, false, true,
-                                           $filename, 'ezextension',
-                                           array( 'content' => $packageRoot ) );
-            $package->appendInstall( 'ezextension', false, false, false,
-                                           $filename, 'ezextension',
-                                           array( 'content' => false ) );
+            $cli->output( 'adding extension ' . $cli->stylize( 'dir', $extensionName ) );
+            $this->addExtension( $package, $extensionName );
         }
     }
 
-    /*!
-     \reimp
-    */
+    static function addExtension( $package, $extensionName )
+    {
+        $siteINI = eZINI::instance();
+        $extensionDir = $siteINI->variable( 'ExtensionSettings', 'ExtensionDirectory' );
+
+        $fileList = array();
+        $sourceDir = $extensionDir . '/' . $extensionName;
+        $targetDir = $package->path() . '/ezextension';
+
+        eZDir::mkdir( $targetDir, false, true );
+        eZDir::copy( $sourceDir, $targetDir );
+
+        eZDir::recursiveList( $targetDir, '', $fileList );
+
+        $doc = new DOMDocument;
+
+        $packageRoot = $doc->createElement( 'extension' );
+        $packageRoot->setAttribute( 'name', $extensionName );
+
+        foreach( $fileList as $file )
+        {
+            $fileNode = $doc->createElement( 'file' );
+            $fileNode->setAttribute( 'name', $file['name'] );
+
+            if ( $file['path'] )
+                $fileNode->setAttribute( 'path', $file['path'] );
+
+            $fullPath = $targetDir . $file['path'] . '/' . $file['name'];
+            $fileNode->setAttribute( 'md5sum', $package->md5sum( $fullPath ) );
+
+            if ( $file['type'] == 'dir' )
+                 $fileNode->setAttribute( 'type', 'dir' );
+
+            $packageRoot->appendChild( $fileNode );
+            unset( $fileNode );
+        }
+
+        $filename = 'extension-' . $extensionName;
+
+        $package->appendInstall( 'ezextension', false, false, true,
+                                 $filename, 'ezextension',
+                                 array( 'content' => $packageRoot ) );
+        $package->appendInstall( 'ezextension', false, false, false,
+                                 $filename, 'ezextension',
+                                 array( 'content' => false ) );
+    }
+
     function handleAddParameters( $packageType, $package, $cli, $arguments )
     {
         $arguments = array_unique( $arguments );
         $extensionsToAdd = array();
 
-        //include_once( 'lib/ezutils/classes/ezini.php' );
-        //include_once( 'lib/ezfile/classes/ezdir.php' );
         $siteINI = eZINI::instance();
         $extensionDir = $siteINI->variable( 'ExtensionSettings', 'ExtensionDirectory' );
         $extensionList = eZDir::findSubItems( $extensionDir );
@@ -292,6 +277,27 @@ class eZExtensionPackageHandler extends eZPackageHandler
         }
 
         return $extensionsToAdd;
+    }
+
+    protected function updateAutoload()
+    {
+        $autoloadGenerator = new eZAutoloadGenerator();
+        try
+        {
+            $autoloadGenerator->buildAutoloadArrays();
+
+            $autoloadWarningMessages = $autoloadGenerator->getWarnings();
+            foreach ( $autoloadWarningMessages as $warning )
+            {
+                eZDebug::writeWarning( $warning, __METHOD__ );
+            }
+            
+            ezpAutoloader::reset();
+        }
+        catch ( Exception $e )
+        {
+            eZDebug::writeError( $e->getMessage(), __METHOD__ );
+        }
     }
 
     public $Package = null;

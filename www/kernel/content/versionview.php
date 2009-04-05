@@ -3,9 +3,9 @@
 // Created on: <03-May-2002 15:17:01 bf>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -24,12 +24,6 @@
 //
 //
 
-
-//include_once( 'kernel/classes/ezcontentobject.php' );
-//include_once( 'kernel/classes/ezcontentclass.php' );
-//include_once( 'kernel/classes/ezcontentobjecttreenode.php' );
-
-//include_once( 'lib/ezutils/classes/ezhttptool.php' );
 
 require_once( 'kernel/common/template.php' );
 require_once( 'access.php' );
@@ -178,7 +172,6 @@ $navigationPartIdentifier = false;
 if ( $sectionID !== false )
 {
     $designKeys[] = array( 'section', $sectionID ); // Section ID
-    //include_once( 'kernel/classes/ezsection.php' );
     eZSection::setGlobalID( $sectionID );
 
     $section = eZSection::fetch( $sectionID );
@@ -279,6 +272,7 @@ $res->setOverrideAccess( $siteAccess );
 
 $designKeys = array( array( 'object', $contentObject->attribute( 'id' ) ), // Object ID
                      array( 'node', $virtualNodeID ), // Node id
+                     array( 'remote_id', $contentObject->attribute( 'remote_id' ) ),
                      array( 'class', $class->attribute( 'id' ) ), // Class ID
                      array( 'class_identifier', $class->attribute( 'identifier' ) ), // Class identifier
                      array( 'viewmode', 'full' ) );  // View mode
@@ -293,13 +287,10 @@ if ( $assignment )
 
 $res->setKeys( $designKeys );
 
-//include_once( 'kernel/classes/eznodeviewfunctions.php' );
-
 unset( $contentObject );
 $contentObject = $node->attribute( 'object' ); // do not remove &
 
-$Result = eZNodeviewfunctions::generateNodeView( $tpl, $node, $contentObject, $LanguageCode, 'full', 0,
-                                                 false, false, false );
+$Result = eZNodeviewfunctions::generateNodeViewData( $tpl, $node, $contentObject, $LanguageCode, 'full', 0, $viewParameters );
 
 $Result['requested_uri_string'] = $requestedURIString;
 $Result['ui_context'] = 'view';

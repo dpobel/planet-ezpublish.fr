@@ -5,9 +5,9 @@
 // Created on: <26-Apr-2002 16:53:04 bf>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -33,10 +33,6 @@
 
 */
 
-//include_once( "kernel/classes/ezdatatype.php" );
-
-//include_once( "lib/ezlocale/classes/ezdate.php" );
-
 class eZDateType extends eZDataType
 {
     const DATA_TYPE_STRING = "ezdate";
@@ -56,7 +52,6 @@ class eZDateType extends eZDataType
 
     function validateDateTimeHTTPInput( $day, $month, $year, $contentObjectAttribute )
     {
-        //include_once( 'lib/ezutils/classes/ezdatetimevalidator.php' );
         $state = eZDateTimeValidator::validateDate( $day, $month, $year );
         if ( $state == eZInputValidator::STATE_INVALID )
         {
@@ -72,6 +67,8 @@ class eZDateType extends eZDataType
     */
     function validateObjectAttributeHTTPInput( $http, $base, $contentObjectAttribute )
     {
+        $classAttribute = $contentObjectAttribute->contentClassAttribute();
+
         if ( $http->hasPostVariable( $base . '_date_year_' . $contentObjectAttribute->attribute( 'id' ) ) and
              $http->hasPostVariable( $base . '_date_month_' . $contentObjectAttribute->attribute( 'id' ) ) and
              $http->hasPostVariable( $base . '_date_day_' . $contentObjectAttribute->attribute( 'id' ) ) )
@@ -79,7 +76,6 @@ class eZDateType extends eZDataType
             $year  = $http->postVariable( $base . '_date_year_' . $contentObjectAttribute->attribute( 'id' ) );
             $month = $http->postVariable( $base . '_date_month_' . $contentObjectAttribute->attribute( 'id' ) );
             $day   = $http->postVariable( $base . '_date_day_' . $contentObjectAttribute->attribute( 'id' ) );
-            $classAttribute = $contentObjectAttribute->contentClassAttribute();
 
             if ( $year == '' or $month == '' or $day == '' )
             {
@@ -99,8 +95,13 @@ class eZDateType extends eZDataType
                 return $this->validateDateTimeHTTPInput( $day, $month, $year, $contentObjectAttribute );
             }
         }
-        else
-            return eZInputValidator::STATE_ACCEPTED;
+        else if ( !$classAttribute->attribute( 'is_information_collector' ) and $contentObjectAttribute->validateIsRequired() )
+        {
+            $contentObjectAttribute->setValidationError( ezi18n( 'kernel/classes/datatypes', 'Missing date input.' ) );
+            return eZInputValidator::STATE_INVALID;
+        }
+
+        return eZInputValidator::STATE_ACCEPTED;
     }
 
     /*!
@@ -136,9 +137,6 @@ class eZDateType extends eZDataType
         return false;
     }
 
-    /*!
-     \reimp
-    */
     function validateCollectionAttributeHTTPInput( $http, $base, $contentObjectAttribute )
     {
         if ( $http->hasPostVariable( $base . '_date_year_' . $contentObjectAttribute->attribute( 'id' ) ) and
@@ -255,17 +253,11 @@ class eZDateType extends eZDataType
         return true;
     }
 
-    /*!
-     \reimp
-    */
     function isIndexable()
     {
         return true;
     }
 
-    /*!
-     \reimp
-    */
     function isInformationCollector()
     {
         return true;
@@ -308,25 +300,16 @@ class eZDateType extends eZDataType
         return $contentObjectAttribute->attribute( "data_int" ) != 0;
     }
 
-    /*!
-     \reimp
-    */
     function sortKey( $contentObjectAttribute )
     {
         return (int)$contentObjectAttribute->attribute( 'data_int' );
     }
 
-    /*!
-     \reimp
-    */
     function sortKeyType()
     {
         return 'int';
     }
 
-    /*!
-     \reimp
-    */
     function serializeContentClassAttribute( $classAttribute, $attributeNode, $attributeParametersNode )
     {
         $dom = $attributeParametersNode->ownerDocument;
@@ -346,9 +329,6 @@ class eZDateType extends eZDataType
         $attributeParametersNode->appendChild( $defaultValueNode );
     }
 
-    /*!
-     \reimp
-    */
     function unserializeContentClassAttribute( $classAttribute, $attributeNode, $attributeParametersNode )
     {
         $defaultNode = $attributeParametersNode->getElementsByTagName( 'default-value' )->item( 0 );
@@ -366,12 +346,6 @@ class eZDateType extends eZDataType
         }
     }
 
-    /*!
-     \param package
-     \param content attribute
-
-     \return a DOM representation of the content object attribute
-    */
     function serializeContentObjectAttribute( $package, $objectAttribute )
     {
         $node = $this->createContentObjectAttributeDOMNode( $objectAttribute );
@@ -380,27 +354,41 @@ class eZDateType extends eZDataType
 
         if ( !is_null( $stamp ) )
         {
-            //include_once( 'lib/ezlocale/classes/ezdateutils.php' );
-            $dateNode = $node->ownerDocument->createElement( 'date', eZDateUtils::rfc1123Date( $stamp ) );
+            $dom = $node->ownerDocument;
+            $dateNode = $dom->createElement( 'date' );
+            $dateNode->appendChild( $dom->createTextNode( eZDateUtils::rfc1123Date( $stamp ) ) );
             $node->appendChild( $dateNode );
         }
         return $node;
     }
 
-    /*!
-     \reimp
-     \param package
-     \param contentobject attribute object
-     \param domnode object
-    */
     function unserializeContentObjectAttribute( $package, $objectAttribute, $attributeNode )
     {
         $dateNode = $attributeNode->getElementsByTagName( 'date' )->item( 0 );
         if ( is_object( $dateNode ) )
         {
-            //include_once( 'lib/ezlocale/classes/ezdateutils.php' );
             $timestamp = eZDateUtils::textToDate( $dateNode->textContent );
             $objectAttribute->setAttribute( 'data_int', $timestamp );
+        }
+    }
+
+    function supportsBatchInitializeObjectAttribute()
+    {
+        return true;
+    }
+
+    function batchInitializeObjectAttributeData( $classAttribute )
+    {
+        $defaultType = $classAttribute->attribute( self::DEFAULT_FIELD );
+        if ( $defaultType == 1 )
+        {
+            $default = time();
+            return array( 'data_int'     => $default,
+                          'sort_key_int' => $default );
+        }
+        else
+        {
+            return array();
         }
     }
 }

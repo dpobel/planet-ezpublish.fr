@@ -5,9 +5,9 @@
 // Created on: <15-Aug-2003 15:15:15 bh>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -33,13 +33,6 @@
 
 */
 
-//include_once( 'lib/ezwebdav/classes/ezwebdavserver.php' );
-//include_once( 'kernel/classes/ezcontentobjecttreenode.php' );
-//include_once( "kernel/classes/datatypes/ezbinaryfile/ezbinaryfile.php" );
-//include_once( "lib/ezutils/classes/ezmimetype.php" );
-//include_once( 'lib/ezfile/classes/ezdir.php' );
-//include_once( "kernel/classes/ezurlaliasml.php" );
-//include_once( 'kernel/classes/datatypes/ezuser/ezuser.php' );
 require_once( 'access.php' );
 
 class eZWebDAVContentServer extends eZWebDAVServer
@@ -61,7 +54,6 @@ class eZWebDAVContentServer extends eZWebDAVServer
     }
 
     /*!
-     \reimp
      Makes sure $this->User is reinitialized with the current user,
      then calls the $super->processClientRequest().
     */
@@ -76,7 +68,6 @@ class eZWebDAVContentServer extends eZWebDAVServer
     */
 
     /*!
-      \reimp
       Fetch the file from eZCluster if needed before send.
     */
     function outputSendDataToClient( $output, $headers_only = false )
@@ -84,7 +75,6 @@ class eZWebDAVContentServer extends eZWebDAVServer
         if ( $output["file"] )
         {
             $realPath = $output["file"];
-            require_once( 'kernel/classes/ezclusterfilehandler.php' );
             $file = eZClusterFileHandler::instance( $realPath );
             $file->fetch();
         }
@@ -95,7 +85,6 @@ class eZWebDAVContentServer extends eZWebDAVServer
     }
 
     /*!
-      \reimp
       Restricts the allowed methods to only the subset that this server supports.
     */
     function options( $target )
@@ -109,7 +98,6 @@ class eZWebDAVContentServer extends eZWebDAVServer
     }
 
     /*!
-      \reimp
       Produces the collection content. Builds either the virtual start folder
       with the virtual content folder in it (and additional files). OR: if
       we're browsing within the content folder: it gets the content of the
@@ -202,7 +190,6 @@ class eZWebDAVContentServer extends eZWebDAVServer
     }
 
     /*!
-     \reimp
      Tries to figure out the filepath of the object being shown,
      if not we will pass the virtual url as the filepath.
     */
@@ -308,7 +295,6 @@ class eZWebDAVContentServer extends eZWebDAVServer
 
         $object = $node->attribute( 'object' );
 
-        //include_once( 'kernel/classes/ezcontentupload.php' );
         $upload = new eZContentUpload();
         $info = $upload->objectFileInfo( $object );
         if ( $info )
@@ -328,7 +314,6 @@ class eZWebDAVContentServer extends eZWebDAVServer
     }
 
     /*!
-     \reimp
      Tries to create/update an object at location \a $target with the file \a $tempFile.
     */
     function put( $target, $tempFile )
@@ -427,8 +412,6 @@ class eZWebDAVContentServer extends eZWebDAVServer
         $defaultObjectType = $webdavINI->variable( 'PutSettings', 'DefaultClass' );
 
         $existingNode = $this->fetchNodeByTranslation( $nodePath );
-        //include_once( 'kernel/classes/ezcontentupload.php' );
-
         $upload = new eZContentUpload();
         if ( !$upload->handleLocalFile( $result, $tempFile, $parentNodeID, $existingNode ) )
         {
@@ -452,7 +435,6 @@ class eZWebDAVContentServer extends eZWebDAVServer
     }
 
     /*!
-      \reimp
       Tries to create a collection at \a $target. In our case this is a content-class
       of a given type (most likely a folder).
     */
@@ -549,7 +531,6 @@ class eZWebDAVContentServer extends eZWebDAVServer
     }
 
     /*!
-      \reimp
       Removes the object from the node tree and leaves it in the trash.
     */
     function delete( $target )
@@ -643,7 +624,6 @@ class eZWebDAVContentServer extends eZWebDAVServer
     }
 
     /*!
-      \reimp
       Moves the object \a $source to destination \a $destination.
     */
     function move( $source, $destination )
@@ -815,7 +795,6 @@ class eZWebDAVContentServer extends eZWebDAVServer
         }
         else
         {
-            //include_once( 'kernel/classes/ezcontentobjecttreenodeoperations.php' );
             if( !eZContentObjectTreeNodeOperations::move( $sourceNode->attribute( 'node_id' ), $destinationNode->attribute( 'node_id' ) ) )
             {
                 $this->appendLogEntry( "Unable to move the node '$sourceSite':'$nodePath' to '$destinationSite':'$destinationNodePath'", 'CS:moveContent' );
@@ -870,8 +849,6 @@ class eZWebDAVContentServer extends eZWebDAVServer
 
         if ( $accessWord == 'limited' )
         {
-            //include_once( 'lib/ezutils/classes/ezsys.php' );
-
             $hasAccess = false;
             $policyChecked = false;
             foreach ( array_keys( $result['policies'] ) as $key )
@@ -950,7 +927,6 @@ class eZWebDAVContentServer extends eZWebDAVServer
     }
 
     /*!
-      \reimp
       Removes the www-dir and indexfile from the URL.
     */
     function processURL( $url )
@@ -973,9 +949,6 @@ class eZWebDAVContentServer extends eZWebDAVServer
         return $url;
     }
 
-    /*!
-     \reimp
-    */
     function headers()
     {
         header( "WebDAV-Powered-By: eZ Publish" );
@@ -1444,7 +1417,6 @@ class eZWebDAVContentServer extends eZWebDAVServer
         $entry["ctime"] = $object->attribute( 'published' );
         $entry["mtime"] = $object->attribute( 'modified' );
 
-        //include_once( 'kernel/classes/ezcontentupload.php' );
         $upload = new eZContentUpload();
         $info = $upload->objectFileInfo( $object );
         $suffix = '';
@@ -1572,7 +1544,6 @@ class eZWebDAVContentServer extends eZWebDAVServer
             $contentObjectAttributes[0]->store();
             $db->commit();
 
-            //include_once( 'lib/ezutils/classes/ezoperationhandler.php' );
             $operationResult = eZOperationHandler::execute( 'content', 'publish', array( 'object_id' => $contentObjectID,
                                                                                          'version' => 1 ) );
             return eZWebDAVServer::OK_CREATED;

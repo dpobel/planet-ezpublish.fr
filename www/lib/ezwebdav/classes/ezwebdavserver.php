@@ -5,9 +5,9 @@
 // Created on: <01-Aug-2003 13:13:13 bh>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -26,7 +26,7 @@
 //
 //
 
-/*! \file ezwebdavserver.php
+/*! \file
  WebDAV server base class.
 */
 
@@ -39,9 +39,6 @@
 
   \todo Add support for propall and propname
 */
-
-//include_once( "lib/ezutils/classes/ezmimetype.php" );
-//include_once( 'lib/ezfile/classes/ezdir.php' );
 
 /*!
   \return \c true if logging is enabled.
@@ -252,7 +249,6 @@ class eZWebDAVServer
                     $status = $this->put( $target, $tempFile );
 
                     unlink( $tempFile );
-                    //include_once( 'lib/ezfile/classes/ezdir.php' );
                     eZDir::cleanupEmptyDirectories( dirname( $tempFile ) );
                 }
                 // Else: something went wrong...
@@ -624,7 +620,7 @@ class eZWebDAVServer
             // Else: file/dir doesn't exist!
             else
             {
-                $this->appendLogEntry( "outputData: file DOES NOT exists on server...", 'outputSendDataToClient' );
+                $this->appendLogEntry( "outputData: file DOES NOT exist on server...", 'outputSendDataToClient' );
                 return eZWebDAVServer::FAILED_NOT_FOUND;
             }
         }
@@ -654,7 +650,6 @@ class eZWebDAVServer
 
         if ( !file_exists( $dir ) )
         {
-            //include_once( 'lib/ezfile/classes/ezdir.php' );
             eZDir::mkdir( $dir, false, true );
         }
 
@@ -921,8 +916,7 @@ class eZWebDAVServer
         $fileName = $varDir . '/' . $logDir . '/' . $logName;
         if ( !file_exists( $varDir . '/' . $logDir ) )
         {
-            //include_once( 'lib/ezfile/classes/ezdir.php' );
-            eZDir::mkdir( $varDir . '/' . $logDir, 0775, true );
+            eZDir::mkdir( $varDir . '/' . $logDir, false, true );
         }
 
         $logFile = fopen( $fileName, 'a' );
@@ -1044,7 +1038,6 @@ class eZWebDAVServer
     */
     function recode( $string, $fromCharset, $toCharset, $stop = false )
     {
-        //include_once( 'lib/ezi18n/classes/eztextcodec.php' );
         $codec = eZTextCodec::instance( $fromCharset, $toCharset, false );
         if ( $codec )
             $string = $codec->convertString( $string );
@@ -1063,7 +1056,7 @@ class eZWebDAVServer
         $tempDir = eZSys::varDirectory() . '/webdav/tmp';
         if ( !file_exists( $tempDir ) )
         {
-            eZDir::mkdir( $tempDir, eZDir::directoryPermission(), true );
+            eZDir::mkdir( $tempDir, false, true );
         }
         return $tempDir;
     }
@@ -1079,7 +1072,7 @@ class eZWebDAVServer
         $rootDir = eZSys::varDirectory() . '/webdav/root';
         if ( !file_exists( $rootDir ) )
         {
-            eZDir::mkdir( $rootDir, eZDir::directoryPermission(), true );
+            eZDir::mkdir( $rootDir, false, true );
         }
         return $rootDir;
     }

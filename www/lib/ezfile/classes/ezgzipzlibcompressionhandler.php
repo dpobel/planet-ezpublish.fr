@@ -5,9 +5,9 @@
 // Created on: <13-Aug-2003 16:20:19 amos>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -26,7 +26,7 @@
 //
 //
 
-/*! \file ezgzipzlibcompressionhandler.php
+/*! \file
 */
 
 /*!
@@ -37,12 +37,8 @@
    http://www.php.net/manual/en/ref.zlib.php
 */
 
-//include_once( 'lib/ezfile/classes/ezcompressionhandler.php' );
-
 class eZGZIPZLIBCompressionHandler extends eZCompressionHandler
 {
-    /*!
-    */
     function eZGZIPZLIBCompressionHandler()
     {
         $this->File = false;
@@ -84,18 +80,12 @@ class eZGZIPZLIBCompressionHandler extends eZCompressionHandler
         return extension_loaded( $extensionName );
     }
 
-    /*!
-     \reimp
-    */
     function doOpen( $filename, $mode )
     {
         $this->File = @gzopen( $filename, $mode );
         return $this->File;
     }
 
-    /*!
-     \reimp
-    */
     function doClose()
     {
         $result = @gzclose( $this->File );
@@ -103,17 +93,11 @@ class eZGZIPZLIBCompressionHandler extends eZCompressionHandler
         return $result;
     }
 
-    /*!
-     \reimp
-    */
     function doRead( $uncompressedLength = false )
     {
         return @gzread( $this->File, $uncompressedLength );
     }
 
-    /*!
-     \reimp
-    */
     function doWrite( $data, $uncompressedLength = false )
     {
         if ( $uncompressedLength )
@@ -122,17 +106,11 @@ class eZGZIPZLIBCompressionHandler extends eZCompressionHandler
             return @gzwrite( $this->File, $data );
     }
 
-    /*!
-     \reimp
-    */
     function doFlush()
     {
         return @fflush( $this->File );
     }
 
-    /*!
-     \reimp
-    */
     function doSeek( $offset, $whence )
     {
         if ( $whence == SEEK_CUR )
@@ -148,33 +126,21 @@ class eZGZIPZLIBCompressionHandler extends eZCompressionHandler
         return @gzseek( $this->File, $offset );
     }
 
-    /*!
-     \reimp
-    */
     function doRewind()
     {
         return @gzrewind( $this->File );
     }
 
-    /*!
-     \reimp
-    */
     function doTell()
     {
         return @gztell( $this->File );
     }
 
-    /*!
-     \reimp
-    */
     function doEOF()
     {
         return @gzeof( $this->File );
     }
 
-    /*!
-     \reimp
-    */
     function doPasstrough( $closeFile = true )
     {
         $result = @gzpasstru( $this->File );
@@ -188,33 +154,21 @@ class eZGZIPZLIBCompressionHandler extends eZCompressionHandler
         return $result;
     }
 
-    /*!
-     \reimp
-    */
     function compress( $source )
     {
         return @gzcompress( $source, $this->Level );
     }
 
-    /*!
-     \reimp
-    */
     function decompress( $source )
     {
         return @gzuncompress( $source );
     }
 
-    /*!
-     \reimp
-    */
     function errorString()
     {
         return false;
     }
 
-    /*!
-     \reimp
-    */
     function errorNumber()
     {
         return false;

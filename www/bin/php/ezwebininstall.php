@@ -4,9 +4,9 @@
 // Created on: <26-Jun-2007 15:00:00 dl>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -42,8 +42,6 @@
  includes
 */
 include_once( 'bin/php/ezwebincommon.php' );
-//include_once( 'kernel/classes/ezcontentlanguage.php' );
-
 require 'autoload.php';
 
 // script initializing
@@ -262,8 +260,6 @@ if( downloadPackages( $packageList, $packageURL, $packageDir, $packageRepository
             //
             // BC for eZWebin < 1.3
             //
-
-            //include_once( 'kernel/classes/ezsiteinstaller.php' );
 
             $siteInstaller = new eZSiteInstaller();
 

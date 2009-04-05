@@ -4,9 +4,9 @@
 // Created on: <28-Nov-2002 12:45:40 bf>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -26,9 +26,6 @@
 //
 
 set_time_limit( 0 );
-
-//include_once( 'lib/ezutils/classes/ezcli.php' );
-//include_once( 'kernel/classes/ezscript.php' );
 
 require 'autoload.php';
 
@@ -92,12 +89,7 @@ function changeSiteAccessSetting( $siteAccess )
 
 print( "Starting object re-indexing\n" );
 
-require_once( 'lib/ezutils/classes/ezexecution.php' );
-require_once( "lib/ezutils/classes/ezdebug.php" );
-//include_once( "kernel/classes/ezsearch.php" );
-
-//include_once( 'kernel/classes/ezcontentobjecttreenode.php' );
-
+eZExecution::registerShutdownHandler();
 $db = eZDB::instance();
 
 if ( $dbHost or $dbName or $dbUser or $dbImpl )
@@ -131,14 +123,8 @@ $def = eZContentObject::definition();
 $conds = array(
     'status' => eZContentObject::STATUS_PUBLISHED
 );
-$limit = null;
-$asObject = false;
-$fieldFilters = array();
-$customFields = array(
-    array( 'operation' => 'COUNT(id)', 'name' => 'object_count' )
-);
-$rows = eZPersistentObject::fetchObjectList( $def, $fieldFilters, $conds, null, $limit, $asObject, false, $customFields );
-$count = $rows[0]['object_count'];
+
+$count = eZPersistentObject::count( $def, $conds, 'id' );
 
 print( "Number of objects to index: $count $endl" );
 

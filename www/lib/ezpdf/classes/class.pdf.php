@@ -3,9 +3,9 @@
 // Created on: <26-Aug-2003 15:15:32 kk>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -24,7 +24,7 @@
 //
 //
 
-/*! \file class.pdf.php
+/*! \file
 */
 
 /*!
@@ -32,8 +32,6 @@
   \ingroup eZPDF
   \brief Cpdf provides
 */
-
-//include_once( 'lib/ezutils/classes/ezmath.php' );
 
 class Cpdf
 {
@@ -1701,7 +1699,7 @@ class Cpdf
     $this->checkAllHere();
 
     $xref=array();
-    $content="%PDF-1.3\n%âãÏÓ\n";
+    $content="%PDF-1.3\n%ï¿½ï¿½ï¿½ï¿½\n";
 //  $content="%PDF-1.3\n";
     $pos=strlen($content);
     foreach($this->objects as $k=>$v){
@@ -2591,7 +2589,7 @@ class Cpdf
         header( 'Pragma: ' );
         header( 'Cache-Control: ' );
         /* Set cache time out to 10 seconds, this should be good enough to work around an IE bug */
-        header( "Expires: ". gmdate( 'D, d M Y H:i:s', time() + 10 ) . 'GMT' );
+        header( "Expires: ". gmdate( 'D, d M Y H:i:s', time() + 10 ) . ' GMT' );
         header( 'X-Powered-By: eZ Publish' );
 
         header( 'Content-Length: '.strlen( $tmp ) );
@@ -2603,7 +2601,6 @@ class Cpdf
 
         echo $tmp;
 
-        require_once( 'lib/ezutils/classes/ezexecution.php' );
         eZExecution::cleanExit();
     }
 

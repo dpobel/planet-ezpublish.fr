@@ -5,9 +5,9 @@
 // Created on: <05-Mar-2002 12:52:10 amos>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -38,13 +38,6 @@
   If fontDir() is an empty string the font will be looked for in the system.
 */
 
-//include_once( "lib/eztemplate/classes/eztemplate.php" );
-//include_once( "lib/ezimage/classes/ezimageobject.php" );
-//include_once( "lib/ezimage/classes/ezimagelayer.php" );
-//include_once( "lib/ezimage/classes/ezimagetextlayer.php" );
-//include_once( 'lib/ezimage/classes/ezimagefont.php' );
-//include_once( "lib/ezutils/classes/ezini.php" );
-
 class eZTemplateImageOperator
 {
     /*!
@@ -58,7 +51,6 @@ class eZTemplateImageOperator
                                   $imageName,
                                   $imagefileName );
 
-        //include_once( "lib/ezutils/classes/ezsys.php" );
         $ini = eZINI::instance( 'texttoimage.ini' );
         $fontDirs = $ini->variable( "PathSettings", "FontDir" );
         $this->FontDir = array();
@@ -631,7 +623,9 @@ class eZTemplateImageOperator
         $file = "$name.$imageType";
         $splitMD5Path = eZDir::getPathFromFilename( $md5Text );
         $filePath = eZDir::path( array( $dirs, $base, $splitMD5Path, $md5Text, $file ) );
-        return file_exists( $filePath );
+
+        $fileHandler = eZClusterFileHandler::instance( $filePath );
+        return $fileHandler->exists();
     }
 
     function storeImage( $image, $dirs, $base, $md5Text, $alternativeText, $imageType )
@@ -646,13 +640,12 @@ class eZTemplateImageOperator
         $file = "$name.$imageType";
         $splitMD5Path = eZDir::getPathFromFilename( $md5Text );
         $dirPath = eZDir::path( array( $dirs, $base, $splitMD5Path, $md5Text ) );
-        if ( !file_exists( $dirPath ) )
-        {
-            $ini = eZINI::instance();
-            $mod = $ini->variable( 'FileSettings', 'StorageDirPermissions' );
-            eZDir::mkdir( $dirPath, octdec( $mod ), true );
-        }
         $image->store( $file, $dirPath, $imageType );
+
+        $fileHandler = eZClusterFileHandler::instance();
+        $filePath = eZDir::path( array( $dirPath, $file ) );
+        $mimeData = eZMimeType::findByURL( $filePath, true );
+        $fileHandler->fileStore( $filePath, 'texttoimage', false, $mimeData['name'] );
     }
 
     function setLoadImage( $image, $dirs, $base, $md5Text, $alternativeText, $imageType )
@@ -668,8 +661,14 @@ class eZTemplateImageOperator
         $splitMD5Path = eZDir::getPathFromFilename( $md5Text );
         $dirPath = eZDir::path( array( $dirs, $base, $splitMD5Path, $md5Text ) );
         $filePath = eZDir::path( array( $dirPath, $file ) );
-        if ( !file_exists( $filePath ) )
+        $fileHandler = eZClusterFileHandler::instance( $filePath );
+        if ( !$fileHandler->exists() )
+        {
             return null;
+        }
+
+        // we use a local cache of the file, because the eZImage library only works on files on the file system
+        $fileHandler->fetch( true );
         $image->setStoredFile( $file, $dirPath, $imageType );
     }
 
@@ -686,11 +685,16 @@ class eZTemplateImageOperator
         $splitMD5Path = eZDir::getPathFromFilename( $md5Text );
         $dirPath = eZDir::path( array( $dirs, $base, $splitMD5Path, $md5Text ) );
         $filePath = eZDir::path( array( $dirPath, $file ) );
-        if ( !file_exists( $filePath ) )
-            $layer = null;
-        else
-            $layer = eZImageLayer::createForFile( $file, $dirPath, $this->StoreAs );
-        return $layer;
+
+        $fileHandler = eZClusterFileHandler::instance( $filePath );
+        if ( !$fileHandler->exists() )
+        {
+            return null;
+        }
+
+        // we use a local cache of the file, because the eZImage library only works on files on the file system
+        $fileHandler->fetch( true );
+        return eZImageLayer::createForFile( $file, $dirPath, $this->StoreAs );
     }
 
     function readImageParameters( $tpl, $image, $operatorParameters, $rootNamespace, $currentNamespace, &$md5Input, &$alternativeText,

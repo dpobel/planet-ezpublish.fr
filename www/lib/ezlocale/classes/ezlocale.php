@@ -5,9 +5,9 @@
 // Created on: <01-Mar-2002 13:48:32 amos>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -79,7 +79,7 @@ https://lister.ping.uio.no/pipermail/lister.ping.uio.no/i18n-nn/2002-April.txt
 http://www.sprakrad.no/oss.htm
 
 
-The date and time formats are quite similar to the builting PHP date function,
+The date and time formats are quite similar to the builtin PHP date function,
 the main differences are those which returns textual representations of months
 and days.
 More info on the date function here:
@@ -124,8 +124,6 @@ The following characters are recognized in the format string:
 
 \sa eZLanguage
 */
-
-//include_once( 'lib/ezutils/classes/ezini.php' );
 
 class eZLocale
 {
@@ -681,6 +679,8 @@ class eZLocale
      but for some locales translation from other languages can be used
 
      e.g. por-MZ (Mozambique) uses por-PT for translation.
+
+     \deprecated since eZ Publish 4.1, use localeFullCode() instead
     */
     function translationCode()
     {
@@ -941,6 +941,21 @@ class eZLocale
     }
 
     /*!
+     Returns eZLocale object by HTTP locale code $httpLocaleCode
+    */
+    static function fetchByHttpLocaleCode( $httpLocaleCode )
+    {
+        $locales = self::localeList( true );
+        foreach ( $locales as $locale )
+        {
+            if ( $locale->httpLocaleCode() == $httpLocaleCode )
+                return $locale;
+        }
+
+        return false;
+    }
+
+    /*!
      Formats the time $time according to locale information and returns it. If $time
      is not specified the current time is used.
     */
@@ -1038,7 +1053,13 @@ class eZLocale
     function formatDateType( $fmt, $date = false )
     {
         if ( $date === false )
+        {
             $date = time();
+        }
+        else if ( empty( $date ) )
+        {
+            $date = 0;
+        }
 
         $text = date( eZLocale::transformToPHPFormat( $fmt, $this->DatePHPArray ), $date );
         return str_replace( array( '%D', '%l', '%M', '%F' ),
@@ -1057,7 +1078,13 @@ class eZLocale
     function formatDateTimeType( $fmt, $datetime = false )
     {
         if ( $datetime === false )
+        {
             $datetime = time();
+        }
+        else if ( empty( $datetime ) )
+        {
+            $datetime = 0;
+        }
 
         $text = date( eZLocale::transformToPHPFormat( $fmt, $this->DateTimePHPArray ), $datetime );
         // Replace some special 'date' formats that needs to be handled

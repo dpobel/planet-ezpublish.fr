@@ -35,6 +35,32 @@ CREATE SEQUENCE ezbasket_s
 
 
 
+CREATE SEQUENCE ezcobj_state_s
+    START 1
+    INCREMENT 1
+    MAXVALUE 9223372036854775807
+    MINVALUE 1
+    CACHE 1;
+
+
+
+
+
+
+
+CREATE SEQUENCE ezcobj_state_group_s
+    START 1
+    INCREMENT 1
+    MAXVALUE 9223372036854775807
+    MINVALUE 1
+    CACHE 1;
+
+
+
+
+
+
+
 CREATE SEQUENCE ezcollab_group_s
     START 1
     INCREMENT 1
@@ -893,6 +919,19 @@ CREATE SEQUENCE ezurlalias_s
 
 
 
+CREATE SEQUENCE ezurlalias_ml_incr_s
+    START 1
+    INCREMENT 1
+    MAXVALUE 9223372036854775807
+    MINVALUE 1
+    CACHE 1;
+
+
+
+
+
+
+
 CREATE SEQUENCE ezurlwildcard_s
     START 1
     INCREMENT 1
@@ -1091,9 +1130,74 @@ CREATE TABLE ezbinaryfile (
     contentobject_attribute_id integer DEFAULT 0 NOT NULL,
     download_count integer DEFAULT 0 NOT NULL,
     filename character varying(255) DEFAULT ''::character varying NOT NULL,
-    mime_type character varying(50) DEFAULT ''::character varying NOT NULL,
+    mime_type character varying(255) DEFAULT ''::character varying NOT NULL,
     original_filename character varying(255) DEFAULT ''::character varying NOT NULL,
     "version" integer DEFAULT 0 NOT NULL
+);
+
+
+
+
+
+
+
+CREATE TABLE ezcobj_state (
+    default_language_id integer DEFAULT 0 NOT NULL,
+    group_id integer DEFAULT 0 NOT NULL,
+    id integer DEFAULT nextval('ezcobj_state_s'::text) NOT NULL,
+    identifier character varying(45) DEFAULT ''::character varying NOT NULL,
+    language_mask integer DEFAULT 0 NOT NULL,
+    priority integer DEFAULT 0 NOT NULL
+);
+
+
+
+
+
+
+
+CREATE TABLE ezcobj_state_group (
+    default_language_id integer DEFAULT 0 NOT NULL,
+    id integer DEFAULT nextval('ezcobj_state_group_s'::text) NOT NULL,
+    identifier character varying(45) DEFAULT ''::character varying NOT NULL,
+    language_mask integer DEFAULT 0 NOT NULL
+);
+
+
+
+
+
+
+
+CREATE TABLE ezcobj_state_group_language (
+    contentobject_state_group_id integer DEFAULT 0 NOT NULL,
+    description text NOT NULL,
+    language_id integer DEFAULT 0 NOT NULL,
+    name character varying(45) DEFAULT ''::character varying NOT NULL
+);
+
+
+
+
+
+
+
+CREATE TABLE ezcobj_state_language (
+    contentobject_state_id integer DEFAULT 0 NOT NULL,
+    description text NOT NULL,
+    language_id integer DEFAULT 0 NOT NULL,
+    name character varying(45) DEFAULT ''::character varying NOT NULL
+);
+
+
+
+
+
+
+
+CREATE TABLE ezcobj_state_link (
+    contentobject_id integer DEFAULT 0 NOT NULL,
+    contentobject_state_id integer DEFAULT 0 NOT NULL
 );
 
 
@@ -1656,42 +1760,10 @@ CREATE TABLE ezgeneral_digest_user_settings (
 
 
 
-CREATE TABLE ezimage (
-    alternative_text character varying(255) DEFAULT ''::character varying NOT NULL,
-    contentobject_attribute_id integer DEFAULT 0 NOT NULL,
-    filename character varying(255) DEFAULT ''::character varying NOT NULL,
-    mime_type character varying(50) DEFAULT ''::character varying NOT NULL,
-    original_filename character varying(255) DEFAULT ''::character varying NOT NULL,
-    "version" integer DEFAULT 0 NOT NULL
-);
-
-
-
-
-
-
-
 CREATE TABLE ezimagefile (
     contentobject_attribute_id integer DEFAULT 0 NOT NULL,
     filepath text NOT NULL,
     id integer DEFAULT nextval('ezimagefile_s'::text) NOT NULL
-);
-
-
-
-
-
-
-
-CREATE TABLE ezimagevariation (
-    additional_path character varying(255),
-    contentobject_attribute_id integer DEFAULT 0 NOT NULL,
-    filename character varying(255) DEFAULT ''::character varying NOT NULL,
-    height integer DEFAULT 0 NOT NULL,
-    requested_height integer DEFAULT 0 NOT NULL,
-    requested_width integer DEFAULT 0 NOT NULL,
-    "version" integer DEFAULT 0 NOT NULL,
-    width integer DEFAULT 0 NOT NULL
 );
 
 
@@ -1981,7 +2053,7 @@ CREATE TABLE ezorder_item (
     order_id integer DEFAULT 0 NOT NULL,
     price double precision,
     "type" character varying(30),
-    vat_value integer DEFAULT 0 NOT NULL
+    vat_value double precision DEFAULT 0::double precision NOT NULL
 );
 
 
@@ -2071,7 +2143,8 @@ CREATE TABLE ezpdf_export (
 
 CREATE TABLE ezpending_actions (
     "action" character varying(64) DEFAULT ''::character varying NOT NULL,
-    param text
+    param text,
+    created integer
 );
 
 
@@ -2212,6 +2285,7 @@ CREATE TABLE ezrss_export (
     main_node_only integer DEFAULT 1 NOT NULL,
     modified integer,
     modifier_id integer,
+    node_id integer,
     number_of_objects integer DEFAULT 0 NOT NULL,
     rss_version character varying(255),
     site_access character varying(255),
@@ -2227,6 +2301,7 @@ CREATE TABLE ezrss_export (
 
 
 CREATE TABLE ezrss_export_item (
+    category character varying(255),
     class_id integer,
     description character varying(255),
     id integer DEFAULT nextval('ezrss_export_item_s'::text) NOT NULL,
@@ -2345,7 +2420,8 @@ CREATE TABLE ezsession (
     data text NOT NULL,
     expiration_time integer DEFAULT 0 NOT NULL,
     session_key character varying(32) DEFAULT ''::character varying NOT NULL,
-    user_id integer DEFAULT 0 NOT NULL
+    user_id integer DEFAULT 0 NOT NULL,
+    user_hash character varying(32) DEFAULT ''::character varying NOT NULL
 );
 
 
@@ -2481,6 +2557,16 @@ CREATE TABLE ezurlalias_ml (
 
 
 
+CREATE TABLE ezurlalias_ml_incr (
+    id integer DEFAULT nextval('ezurlalias_ml_incr_s'::text) NOT NULL
+);
+
+
+
+
+
+
+
 CREATE TABLE ezurlwildcard (
     destination_url text NOT NULL,
     id integer DEFAULT nextval('ezurlwildcard_s'::text) NOT NULL,
@@ -2564,6 +2650,7 @@ CREATE TABLE ezuservisit (
     current_visit_timestamp integer DEFAULT 0 NOT NULL,
     failed_login_attempts integer DEFAULT 0 NOT NULL,
     last_visit_timestamp integer DEFAULT 0 NOT NULL,
+    login_count integer DEFAULT 0 NOT NULL,
     user_id integer DEFAULT 0 NOT NULL
 );
 
@@ -2686,6 +2773,7 @@ CREATE TABLE ezworkflow_event (
     data_text2 character varying(50),
     data_text3 character varying(50),
     data_text4 character varying(50),
+    data_text5 text,
     description character varying(50) DEFAULT ''::character varying NOT NULL,
     id integer DEFAULT nextval('ezworkflow_event_s'::text) NOT NULL,
     placement integer DEFAULT 0 NOT NULL,
@@ -2759,6 +2847,46 @@ CREATE TABLE ezworkflow_process (
 
 
 CREATE INDEX ezbasket_session_id ON ezbasket USING btree (session_id);
+
+
+
+
+
+
+
+CREATE UNIQUE INDEX ezcobj_state_identifier ON ezcobj_state USING btree (group_id, identifier);
+
+
+
+
+
+
+
+CREATE INDEX ezcobj_state_lmask ON ezcobj_state USING btree (language_mask);
+
+
+
+
+
+
+
+CREATE INDEX ezcobj_state_priority ON ezcobj_state USING btree (priority);
+
+
+
+
+
+
+
+CREATE UNIQUE INDEX ezcobj_state_group_identifier ON ezcobj_state_group USING btree (identifier);
+
+
+
+
+
+
+
+CREATE INDEX ezcobj_state_group_lmask ON ezcobj_state_group USING btree (language_mask);
 
 
 
@@ -3118,6 +3246,22 @@ CREATE INDEX ezenumvalue_co_cl_attr_id_co_class_att_ver ON ezenumvalue USING btr
 
 
 
+CREATE INDEX ezforgot_password_user ON ezforgot_password USING btree (user_id);
+
+
+
+
+
+
+
+CREATE UNIQUE INDEX ezgeneral_digest_user_settings_address ON ezgeneral_digest_user_settings USING btree (address);
+
+
+
+
+
+
+
 CREATE INDEX ezimagefile_coid ON ezimagefile USING btree (contentobject_attribute_id);
 
 
@@ -3335,6 +3479,14 @@ CREATE INDEX ezorder_status_history_sid ON ezorder_status_history USING btree (s
 
 
 CREATE INDEX ezpending_actions_action ON ezpending_actions USING btree ("action");
+
+
+
+
+
+
+
+CREATE INDEX ezpending_actions_created ON ezpending_actions USING btree (created);
 
 
 
@@ -3710,6 +3862,14 @@ CREATE INDEX ezuser_role_role_id ON ezuser_role USING btree (role_id);
 
 
 
+CREATE INDEX ezuservisit_co_visit_count ON ezuservisit USING btree (current_visit_timestamp, login_count);
+
+
+
+
+
+
+
 CREATE INDEX ezwaituntildateevalue_wf_ev_id_wf_ver ON ezwaituntildatevalue USING btree (workflow_event_id, workflow_event_version);
 
 
@@ -3747,6 +3907,51 @@ ALTER TABLE ONLY ezbasket
 
 ALTER TABLE ONLY ezbinaryfile
     ADD CONSTRAINT ezbinaryfile_pkey PRIMARY KEY (contentobject_attribute_id, "version");
+
+
+
+
+
+
+
+ALTER TABLE ONLY ezcobj_state
+    ADD CONSTRAINT ezcobj_state_pkey PRIMARY KEY (id);
+
+
+
+
+
+
+
+ALTER TABLE ONLY ezcobj_state_group
+    ADD CONSTRAINT ezcobj_state_group_pkey PRIMARY KEY (id);
+
+
+
+
+
+
+
+ALTER TABLE ONLY ezcobj_state_group_language
+    ADD CONSTRAINT ezcobj_state_group_language_pkey PRIMARY KEY (contentobject_state_group_id, language_id);
+
+
+
+
+
+
+
+ALTER TABLE ONLY ezcobj_state_language
+    ADD CONSTRAINT ezcobj_state_language_pkey PRIMARY KEY (contentobject_state_id, language_id);
+
+
+
+
+
+
+
+ALTER TABLE ONLY ezcobj_state_link
+    ADD CONSTRAINT ezcobj_state_link_pkey PRIMARY KEY (contentobject_id, contentobject_state_id);
 
 
 
@@ -4042,26 +4247,8 @@ ALTER TABLE ONLY ezgeneral_digest_user_settings
 
 
 
-ALTER TABLE ONLY ezimage
-    ADD CONSTRAINT ezimage_pkey PRIMARY KEY (contentobject_attribute_id, "version");
-
-
-
-
-
-
-
 ALTER TABLE ONLY ezimagefile
     ADD CONSTRAINT ezimagefile_pkey PRIMARY KEY (id);
-
-
-
-
-
-
-
-ALTER TABLE ONLY ezimagevariation
-    ADD CONSTRAINT ezimagevariation_pkey PRIMARY KEY (contentobject_attribute_id, "version", requested_width, requested_height);
 
 
 
@@ -4494,6 +4681,15 @@ ALTER TABLE ONLY ezurlalias
 
 ALTER TABLE ONLY ezurlalias_ml
     ADD CONSTRAINT ezurlalias_ml_pkey PRIMARY KEY (parent, text_md5);
+
+
+
+
+
+
+
+ALTER TABLE ONLY ezurlalias_ml_incr
+    ADD CONSTRAINT ezurlalias_ml_incr_pkey PRIMARY KEY (id);
 
 
 

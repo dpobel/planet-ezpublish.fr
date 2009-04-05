@@ -5,9 +5,9 @@
 // Created on: <24-Nov-2005 12:34:48 hovik>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -26,7 +26,7 @@
 //
 //
 
-/*! \file ezhttpheader.php
+/*! \file
 */
 
 /*!
@@ -56,7 +56,17 @@ class eZHTTPHeader
         }
         else
         {
-            $GLOBALS['eZHTTPHeaderCustom'] = $ini->variable( 'HTTPHeaderSettings', 'CustomHeader' ) == 'enabled';
+            if ( $ini->variable( 'HTTPHeaderSettings', 'CustomHeader' ) === 'enabled'
+                 && $ini->hasVariable( 'HTTPHeaderSettings', 'OnlyForAnonymous' )
+                 && $ini->variable( 'HTTPHeaderSettings', 'OnlyForAnonymous' ) === 'enabled' )
+            {
+                $user = eZUser::currentUser();
+                $GLOBALS['eZHTTPHeaderCustom'] = !$user->isLoggedIn();
+            }
+            else
+            {
+                $GLOBALS['eZHTTPHeaderCustom'] = $ini->variable( 'HTTPHeaderSettings', 'CustomHeader' ) == 'enabled';
+            }
         }
 
         return $GLOBALS['eZHTTPHeaderCustom'];
@@ -77,7 +87,6 @@ class eZHTTPHeader
 
         $contentView = false;
 
-        //include_once( 'kernel/classes/ezurlaliasml.php' );
         $uriString = eZURLAliasML::cleanURL( $uri->uriString() );
 
         // If content/view used, get url alias for node
@@ -90,7 +99,6 @@ class eZHTTPHeader
                 return $headerArray;
             }
 
-            //include_once( 'kernel/classes/ezcontentobjecttreenode.php' );
             $node = eZContentObjectTreeNode::fetch( $nodeID );
             if ( !$node )
             {

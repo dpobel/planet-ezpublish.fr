@@ -5,9 +5,9 @@
 // Created on: <30-Apr-2002 13:06:21 bf>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -32,11 +32,6 @@
   \ingroup eZDatatype
 
 */
-
-//include_once( "kernel/classes/ezdatatype.php" );
-//include_once( "kernel/classes/datatypes/ezuser/ezuser.php" );
-//include_once( "kernel/classes/datatypes/ezuser/ezusersetting.php" );
-//include_once( "lib/ezutils/classes/ezmail.php" );
 
 class eZUserType extends eZDataType
 {
@@ -73,7 +68,11 @@ class eZUserType extends eZDataType
     */
     function validateObjectAttributeHTTPInput( $http, $base, $contentObjectAttribute )
     {
-        if ( $http->hasPostVariable( $base . "_data_user_login_" . $contentObjectAttribute->attribute( "id" ) ) )
+        if ( $http->hasPostVariable( $base . "_data_user_login_" . $contentObjectAttribute->attribute( "id" ) ) &&
+             $http->hasPostVariable( $base . "_data_user_login_" . $contentObjectAttribute->attribute( "id" ) ) &&
+             $http->hasPostVariable( $base . "_data_user_email_" . $contentObjectAttribute->attribute( "id" ) ) &&
+             $http->hasPostVariable( $base . "_data_user_password_" . $contentObjectAttribute->attribute( "id" ) ) &&
+             $http->hasPostVariable( $base . "_data_user_password_confirm_" . $contentObjectAttribute->attribute( "id" ) ) )
         {
             $classAttribute = $contentObjectAttribute->contentClassAttribute();
             $loginName = $http->postVariable( $base . "_data_user_login_" . $contentObjectAttribute->attribute( "id" ) );
@@ -102,6 +101,7 @@ class eZUserType extends eZDataType
                         return eZInputValidator::STATE_INVALID;
                     }
                 }
+                // validate user email
                 $isValidate = eZMail::validate( $email );
                 if ( !$isValidate )
                 {
@@ -109,7 +109,6 @@ class eZUserType extends eZDataType
                                                                          'The email address is not valid.' ) );
                     return eZInputValidator::STATE_INVALID;
                 }
-
                 $authenticationMatch = eZUser::authenticationMatch();
                 if ( $authenticationMatch & eZUser::AUTHENTICATE_EMAIL )
                 {
@@ -128,6 +127,14 @@ class eZUserType extends eZDataType
                         }
                     }
                 }
+                // validate user name
+                if ( !eZUser::validateLoginName( $loginName, $errorText ) )
+                {
+                    $contentObjectAttribute->setValidationError( ezi18n( 'kernel/classes/datatypes',
+                                                                         $errorText ) );
+                    return eZInputValidator::STATE_INVALID;
+                }
+                // validate user password
                 $ini = eZINI::instance();
                 $generatePasswordIfEmpty = $ini->variable( "UserSettings", "GeneratePasswordIfEmpty" ) == 'true';
                 if ( !$generatePasswordIfEmpty || ( $password != "" ) )
@@ -139,9 +146,7 @@ class eZUserType extends eZDataType
                                                                              'eZUserType' ) );
                         return eZInputValidator::STATE_INVALID;
                     }
-                    $minPasswordLength = $ini->hasVariable( 'UserSettings', 'MinPasswordLength' ) ? $ini->variable( 'UserSettings', 'MinPasswordLength' ) : 3;
-
-                    if ( strlen( $password ) < (int) $minPasswordLength )
+                    if ( !eZUser::validatePassword( $password ) )
                     {
                         $contentObjectAttribute->setValidationError( ezi18n( 'kernel/classes/datatypes',
                                                                              'The password must be at least %1 characters long.',null, array( $minPasswordLength ) ) );
@@ -156,6 +161,11 @@ class eZUserType extends eZDataType
                 }
             }
         }
+        else if ( $contentObjectAttribute->validateIsRequired() )
+        {
+            $contentObjectAttribute->setValidationError( ezi18n( 'kernel/classes/datatypes', 'Input required.' ) );
+            return eZInputValidator::STATE_INVALID;
+        }
         return eZInputValidator::STATE_ACCEPTED;
     }
 
@@ -167,9 +177,9 @@ class eZUserType extends eZDataType
         if ( $http->hasPostVariable( $base . "_data_user_login_" . $contentObjectAttribute->attribute( "id" ) ) )
         {
             $login = $http->postVariable( $base . "_data_user_login_" . $contentObjectAttribute->attribute( "id" ) );
-            $email = $http->postVariable( $base . "_data_user_email_" . $contentObjectAttribute->attribute( "id" ) );
-            $password = $http->postVariable( $base . "_data_user_password_" . $contentObjectAttribute->attribute( "id" ) );
-            $passwordConfirm = $http->postVariable( $base . "_data_user_password_confirm_" . $contentObjectAttribute->attribute( "id" ) );
+            $email = $http->hasPostVariable( $base . "_data_user_email_" . $contentObjectAttribute->attribute( "id" ) ) ? $http->postVariable( $base . "_data_user_email_" . $contentObjectAttribute->attribute( "id" ) ) : '';
+            $password = $http->hasPostVariable( $base . "_data_user_password_" . $contentObjectAttribute->attribute( "id" ) ) ? $http->postVariable( $base . "_data_user_password_" . $contentObjectAttribute->attribute( "id" ) ) : '';
+            $passwordConfirm = $http->hasPostVariable( $base . "_data_user_password_confirm_" . $contentObjectAttribute->attribute( "id" ) ) ? $http->postVariable( $base . "_data_user_password_confirm_" . $contentObjectAttribute->attribute( "id" ) ) : '';
 
             $contentObjectID = $contentObjectAttribute->attribute( "contentobject_id" );
 
@@ -181,7 +191,7 @@ class eZUserType extends eZDataType
 
             $ini = eZINI::instance();
             $generatePasswordIfEmpty = $ini->variable( "UserSettings", "GeneratePasswordIfEmpty" );
-            if (  $password == "" )
+            if ( $password == "" )
             {
                 if ( $generatePasswordIfEmpty == 'true' )
                 {
@@ -269,16 +279,12 @@ class eZUserType extends eZDataType
         return $user;
     }
 
-    /*!
-     \reimp
-    */
     function isIndexable()
     {
         return true;
     }
 
     /*!
-     \reimp
      We can only remove the user attribute if:
      - The current user, anonymous user and administrator user is not using this class
      - There are more classes with the ezuser datatype
@@ -426,7 +432,6 @@ class eZUserType extends eZDataType
     }
 
     /*!
-     \reimp
      \param package
      \param contentobject attribute object
      \param ezdomnode object

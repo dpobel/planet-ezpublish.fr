@@ -5,9 +5,9 @@
 // Created on: <13-Aug-2003 10:42:32 kk>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -26,9 +26,8 @@
 //
 //
 
-/*! \file ezstep_security.php
+/*! \file
 */
-//include_once( 'kernel/setup/steps/ezstep_installer.php');
 require_once( "kernel/common/i18n.php" );
 
 /*!
@@ -48,17 +47,11 @@ class eZStepSecurity extends eZStepInstaller
                                 'security', 'Security' );
     }
 
-    /*!
-     \reimp
-    */
     function processPostData()
     {
         return true; // Always continue
     }
 
-    /*!
-     \reimp
-     */
     function init()
     {
         if ( $this->hasKickstartData() )
@@ -72,13 +65,9 @@ class eZStepSecurity extends eZStepInstaller
         {
             return true;
         }
-        //include_once( 'lib/ezutils/classes/ezsys.php' );
         return eZSys::indexFileName() == '' ; // If in virtual host mode, continue (return true)
     }
 
-    /*!
-     \reimp
-    */
     function display()
     {
         $this->Tpl->setVariable( 'setup_previous_step', 'Security' );

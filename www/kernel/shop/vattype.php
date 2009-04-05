@@ -5,9 +5,9 @@
 // Created on: <25-Nov-2002 15:40:10 wy>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -27,9 +27,6 @@
 //
 
 require_once( "kernel/common/template.php" );
-//include_once( "kernel/classes/ezvattype.php" );
-//include_once( "lib/ezutils/classes/ezhttppersistence.php" );
-
 $module = $Params['Module'];
 $http = eZHTTPTool::instance();
 $tpl = templateInit();
@@ -117,7 +114,6 @@ function generateUniqueVatTypeName( $vatTypes )
 function findDependencies( $vatTypeIDList, &$deps, &$haveDeps, &$canRemove )
 {
     // Find dependencies (products and/or VAT rules).
-    require_once( 'kernel/classes/ezvatrule.php' );
     $deps = array();
     $haveDeps = false;
     $canRemove = true;

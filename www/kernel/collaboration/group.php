@@ -3,9 +3,9 @@
 // Created on: <23-Jan-2003 11:37:30 amos>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -24,7 +24,7 @@
 //
 //
 
-/*! \file group.php
+/*! \file
 */
 
 $Module = $Params['Module'];
@@ -35,13 +35,9 @@ $Offset = $Params['Offset'];
 if ( !is_numeric( $Offset ) )
     $Offset = 0;
 
-//include_once( 'kernel/classes/ezcollaborationgroup.php' );
-
 $collabGroup = eZCollaborationGroup::fetch( $GroupID );
 if ( $collabGroup === null )
     return $Module->handleError( eZError::KERNEL_NOT_AVAILABLE, 'kernel' );
-
-//include_once( 'kernel/classes/ezcollaborationviewhandler.php' );
 
 if ( !eZCollaborationViewHandler::groupExists( $ViewMode ) )
     return $Module->handleError( eZError::KERNEL_NOT_AVAILABLE, 'kernel' );
@@ -51,8 +47,6 @@ $view = eZCollaborationViewHandler::instance( $ViewMode, eZCollaborationViewHand
 $template = $view->template();
 
 $collabGroupTitle = $collabGroup->attribute( 'title' );
-
-//include_once( 'kernel/classes/ezcollaborationitemhandler.php' );
 
 $viewParameters = array( 'offset' => $Offset );
 

@@ -5,9 +5,9 @@
 // Created on: <07-Feb-2003 09:39:55 bf>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -28,8 +28,6 @@
 
 class eZSimpleTagsOperator
 {
-    /*!
-     */
     function eZSimpleTagsOperator( $name = 'simpletags' )
     {
         $this->Operators = array( $name );
@@ -68,7 +66,6 @@ class eZSimpleTagsOperator
         $GLOBALS['eZSimpleTagsInit'] = true;
         $ini = eZINI::instance( 'template.ini' );
         $extensions = $ini->variable( 'SimpleTagsOperator', 'Extensions' );
-        //include_once( 'lib/ezutils/classes/ezextension.php' );
         $pathList = eZExtension::expandedPathList( $extensions, 'simpletags' );
         $includeList = $ini->variable( 'SimpleTagsOperator', 'IncludeList' );
 
@@ -85,9 +82,6 @@ class eZSimpleTagsOperator
         }
     }
 
-    /*!
-     \reimp
-    */
     function modify( $tpl, $operatorName, $operatorParameters, $rootNamespace, $currentNamespace, &$operatorValue, $namedParameters )
     {
         $elements = preg_split( "#(</?[a-zA-Z0-9_-]+>)#",

@@ -3,9 +3,9 @@
 // Created on: <24-Sep-2004 13:20:32 jk>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -24,14 +24,13 @@
 //
 //
 
-/*! \file ezclassfunctions.php
+/*! \file
 */
 
 class eZClassFunctions
 {
     static function addGroup( $classID, $classVersion, $selectedGroup )
     {
-        //include_once( 'kernel/classes/ezcontentclassclassgroup.php' );
         list ( $groupID, $groupName ) = split( '/', $selectedGroup );
         $ingroup = eZContentClassClassGroup::create( $classID, $classVersion, $groupID, $groupName );
         $ingroup->store();
@@ -40,9 +39,6 @@ class eZClassFunctions
 
     static function removeGroup( $classID, $classVersion, $selectedGroup )
     {
-        //include_once( 'kernel/classes/ezcontentclass.php' );
-        //include_once( 'kernel/classes/ezcontentclassclassgroup.php' );
-
         $class = eZContentClass::fetch( $classID, true, eZContentClass::VERSION_STATUS_DEFINED );
         if ( !$class )
             return false;

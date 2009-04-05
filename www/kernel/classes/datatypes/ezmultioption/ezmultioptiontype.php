@@ -5,9 +5,9 @@
 // Created on: <29-Jul-2004 15:52:24 gv>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -46,10 +46,6 @@
   - class serialization
 
 */
-
-//include_once( "kernel/classes/ezdatatype.php" );
-//include_once( "kernel/classes/datatypes/ezmultioption/ezmultioption.php" );
-//include_once( 'lib/ezutils/classes/ezstringutils.php' );
 
 class eZMultiOptionType extends eZDataType
 {
@@ -164,9 +160,6 @@ class eZMultiOptionType extends eZDataType
         return $multioption;
     }
 
-    /*!
-     \reimp
-    */
     function isIndexable()
     {
         return true;
@@ -302,7 +295,6 @@ class eZMultiOptionType extends eZDataType
     }
 
     /*!
-     \reimp
      Finds the option which has the correct ID , if found it returns an option structure.
 
      \param $optionString must contain the multioption ID an underscore (_) and a the option ID.
@@ -326,9 +318,6 @@ class eZMultiOptionType extends eZDataType
         }
     }
 
-    /*!
-     \reimp
-    */
     function title( $contentObjectAttribute, $name = "name" )
     {
         $multioption = $contentObjectAttribute->content();
@@ -336,7 +325,6 @@ class eZMultiOptionType extends eZDataType
     }
 
     /*!
-      \reimp
       \return \c true if there are more than one multioption in the list.
     */
     function hasObjectAttributeContent( $contentObjectAttribute )
@@ -369,9 +357,6 @@ class eZMultiOptionType extends eZDataType
         }
     }
 
-    /*!
-     \reimp
-    */
     function fetchClassAttributeHTTPInput( $http, $base, $classAttribute )
     {
         $defaultValueName = $base . self::DEFAULT_NAME_VARIABLE . $classAttribute->attribute( 'id' );
@@ -454,29 +439,21 @@ class eZMultiOptionType extends eZDataType
 
     }
 
-    /*!
-     \reimp
-    */
     function serializeContentClassAttribute( $classAttribute, $attributeNode, $attributeParametersNode )
     {
         $defaultValue = $classAttribute->attribute( 'data_text1' );
         $dom = $attributeParametersNode->ownerDocument;
-        $defaultValueNode = $dom->createElement( 'default-value', $defaultValue );
+        $defaultValueNode = $dom->createElement( 'default-value' );
+        $defaultValueNode->appendChild( $dom->createTextNode( $defaultValue ) );
         $attributeParametersNode->appendChild( $defaultValueNode );
     }
 
-    /*!
-     \reimp
-    */
     function unserializeContentClassAttribute( $classAttribute, $attributeNode, $attributeParametersNode )
     {
         $defaultValue = $attributeParametersNode->getElementsByTagName( 'default-value' )->item( 0 )->textContent;
         $classAttribute->setAttribute( 'data_text1', $defaultValue );
     }
 
-    /*!
-     \reimp
-    */
     function serializeContentObjectAttribute( $package, $objectAttribute )
     {
         $node = $this->createContentObjectAttributeDOMNode( $objectAttribute );
@@ -490,9 +467,6 @@ class eZMultiOptionType extends eZDataType
         return $node;
     }
 
-    /*!
-     \reimp
-    */
     function unserializeContentObjectAttribute( $package, $objectAttribute, $attributeNode )
     {
         $rootNode = $attributeNode->getElementsByTagName( 'ezmultioption' )->item( 0 );

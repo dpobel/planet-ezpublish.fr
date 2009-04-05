@@ -5,9 +5,9 @@
 // Created on: <12-May-2003 09:58:12 sp>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -26,7 +26,7 @@
 //
 //
 
-/*! \file eznotificationeventtype.php
+/*! \file
 */
 
 /*!
@@ -69,7 +69,7 @@ class eZNotificationEventType
             $className = $types[$notificationEventTypeString];
             $def =& $GLOBALS["eZNotificationEventTypeObjects"][$notificationEventTypeString];
 
-            if ( strtolower( get_class( $def ) ) != $className )
+            if ( !is_object( $def ) || strtolower( get_class( $def ) ) != $className )
             {
                 $def = new $className();
             }
@@ -148,7 +148,6 @@ class eZNotificationEventType
             return false;
         }
 
-        //include_once( 'lib/ezutils/classes/ezextension.php' );
         $baseDirectory = eZExtension::baseDirectory();
         $notificationINI = eZINI::instance( 'notification.ini' );
         $repositoryDirectories = $notificationINI->variable( 'NotificationEventTypeSettings', 'RepositoryDirectories' );

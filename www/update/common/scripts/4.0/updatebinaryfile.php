@@ -2,9 +2,9 @@
 <?php
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -24,7 +24,7 @@
 //
 
 /*!
- \file updatebinaryfile.php
+ \file
 */
 
 require 'autoload.php';
@@ -77,20 +77,15 @@ while ( $binaryFiles = eZPersistentObject::fetchObjectList( eZBinaryFile::defini
 
             $newFilePath = $binaryFile->attribute( 'filepath' );
 
-            $fh = eZClusterFileHandler::instance();
-
-            if ( $fh->fileExists( $oldFilePath ) )
+            $file = eZClusterFileHandler::instance( $oldFilePath );
+            if ( $file->exists() )
             {
                 $text = "renamed $fileName to $newFileName";
-                $fh->fileMove( $oldFilePath, $newFilePath );
-            }
-            else if ( $fh->fileExists( $newFilePath ) )
-            {
-                $text = "$fileName was renamed before, changed path in db to $newFileName";
+                $file->move( $newFilePath );
             }
             else
             {
-                $text = "ERROR, file not found: $oldFilePath";
+                $text = "file not found: $oldFilePath";
                 $script->iterate( $cli, false, $text );
                 $db->rollback();
                 continue;

@@ -5,9 +5,9 @@
 // Created on: <01-Aug-2003 14:06:48 wy>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -26,7 +26,7 @@
 //
 //
 
-/*! \file eztextfileuser.php
+/*! \file
 */
 
 /*!
@@ -43,10 +43,6 @@
   - Creates a new user with the information found in the text file and login with that user.
 
 */
-
-//include_once( "kernel/classes/datatypes/ezuser/ezusersetting.php" );
-//include_once( "kernel/classes/datatypes/ezuser/ezuser.php" );
-//include_once( 'lib/ezutils/classes/ezini.php' );
 
 class eZTextFileUser extends eZUser
 {
@@ -86,9 +82,9 @@ class eZTextFileUser extends eZUser
 
         $ini = eZINI::instance();
         $textFileIni = eZINI::instance( 'textfile.ini' );
-        $databaseImplementation = $ini->variable( 'DatabaseSettings', 'DatabaseImplementation' );
+        $databaseName = $db->databaseName();
         // if mysql
-        if ( $databaseImplementation == "ezmysql" )
+        if ( $databaseName === 'mysql' )
         {
             $query = "SELECT contentobject_id, password_hash, password_hash_type, email, login
                       FROM ezuser, ezcontentobject
@@ -119,7 +115,7 @@ class eZTextFileUser extends eZUser
                                                     $hash );
 
                 // If hash type is MySql
-                if ( $hashType == eZUser::PASSWORD_HASH_MYSQL and $databaseImplementation == "ezmysql" )
+                if ( $hashType == eZUser::PASSWORD_HASH_MYSQL and $databaseName === 'mysql' )
                 {
                     $queryMysqlUser = "SELECT contentobject_id, password_hash, password_hash_type, email, login
                                        FROM ezuser, ezcontentobject
@@ -303,7 +299,6 @@ class eZTextFileUser extends eZUser
                             // Reset number of failed login attempts
                             eZUser::setFailedLoginAttempts( $userID, 0 );
 
-                            //include_once( 'lib/ezutils/classes/ezoperationhandler.php' );
                             $operationResult = eZOperationHandler::execute( 'content', 'publish', array( 'object_id' => $contentObjectID,
                                                                                                          'version' => 1 ) );
                             return $user;
@@ -338,7 +333,6 @@ class eZTextFileUser extends eZUser
                                 $newVersion->assignToNode( $defaultUserPlacement, 1 );
                                 $newVersion->removeAssignment( $parentNodeID );
                                 $newVersionNr = $newVersion->attribute( 'version' );
-                                //include_once( 'lib/ezutils/classes/ezoperationhandler.php' );
                                 $operationResult = eZOperationHandler::execute( 'content', 'publish', array( 'object_id' => $userID,
                                                                                                              'version' => $newVersionNr ) );
                             }

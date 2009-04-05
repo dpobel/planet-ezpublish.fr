@@ -3,9 +3,9 @@
 // Created on: <28-Jan-2004 15:46:30 dr>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -37,7 +37,8 @@ class eZDbSchema
      \static
      Create new instance of eZDBSchemaInterface. placed here for simplicity.
 
-     \param eZDB instance (optional), if none provided, eZDB::instance() will be used.
+     \param param options array, with the following keys:
+                  - instance: the eZDB instance (optional), if none provided, eZDB::instance() will be used.
      \return new Instance of eZDbSchema, false if failed
     */
     static function instance( $params = false )
@@ -50,7 +51,6 @@ class eZDbSchema
 
         if ( !isset( $params['instance'] ) )
         {
-            //include_once( 'lib/ezdb/classes/ezdb.php' );
             $db = eZDB::instance();
             $params['instance'] = $db;
         }
@@ -65,7 +65,6 @@ class eZDbSchema
         $dbname = $params['type'];
 
         /* Load the database schema handler INI stuff */
-        require_once( 'lib/ezutils/classes/ezini.php' );
         $ini = eZINI::instance( 'dbschema.ini' );
         $schemaPaths = $ini->variable( 'SchemaSettings', 'SchemaPaths' );
         $schemaHandlerClasses = $ini->variable( 'SchemaSettings', 'SchemaHandlerClasses' );
@@ -111,8 +110,7 @@ class eZDbSchema
             }
             else if ( preg_match( '#a:[0-9]+:{#', $buf ) )
             {
-                //include_once( 'lib/ezfile/classes/ezfile.php' );
-                return unserialize( eZFile::getContents( $filename ) );
+                return unserialize( file_get_contents( $filename ) );
             }
             else
             {

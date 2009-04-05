@@ -5,9 +5,9 @@
 // Created on: <24-Jan-2003 15:38:57 amos>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -26,7 +26,7 @@
 //
 //
 
-/*! \file ezcollaborationsimplemessage.php
+/*! \file
 */
 
 /*!
@@ -34,8 +34,6 @@
   \brief The class eZCollaborationSimpleMessage does
 
 */
-
-//include_once( 'kernel/classes/ezpersistentobject.php' );
 
 class eZCollaborationSimpleMessage extends eZPersistentObject
 {
@@ -115,12 +113,11 @@ class eZCollaborationSimpleMessage extends eZPersistentObject
                       'name' => 'ezcollab_simple_message' );
     }
 
-    function create( $type, $text = false, $creatorID = false )
+    static function create( $type, $text = false, $creatorID = false )
     {
         $date_time = time();
         if ( $creatorID === false )
         {
-            //include_once( 'kernel/classes/datatypes/ezuser/ezuser.php' );
             $user = eZUser::currentUser();
             $creatorID = $user->attribute( 'contentobject_id' );
         }
@@ -131,7 +128,7 @@ class eZCollaborationSimpleMessage extends eZPersistentObject
                                                         'modified' => $date_time ) );
     }
 
-    function fetch( $id, $asObject = true )
+    static function fetch( $id, $asObject = true )
     {
         return eZPersistentObject::fetchObject( eZCollaborationSimpleMessage::definition(),
                                                 null,

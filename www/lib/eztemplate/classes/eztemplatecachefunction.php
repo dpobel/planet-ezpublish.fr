@@ -5,9 +5,9 @@
 // Created on: <28-Feb-2003 15:06:33 bf>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -32,8 +32,6 @@
   \brief Advanced cache handling
 
 */
-
-//include_once( 'lib/eztemplate/classes/eztemplatecacheblock.php' );
 
 class eZTemplateCacheFunction
 {
@@ -249,12 +247,11 @@ class eZTemplateCacheFunction
         $placementString = eZTemplateCacheBlock::placementString( $functionPlacement );
 
         return eZTemplateCacheFunction::processCached( $tpl, $functionChildren, $rootNamespace, $currentNamespace,
-                                                       $placementString, $keys, $subtreeExpiry, $expiry, $ignoreContentExpiry, $subtreeExpiry
-                       );
+                                                       $placementString, $keys, $subtreeExpiry, $expiry, $ignoreContentExpiry );
     }
 
     function processCached( $tpl, $functionChildren, $rootNamespace, $currentNamespace,
-                            $placementString, $keys, $subtreeExpiry, $expiry, $ignoreContentExpiry, $subtreeExpiry )
+                            $placementString, $keys, $subtreeExpiry, $expiry, $ignoreContentExpiry )
     {
         // Fetch the current siteaccess
         $accessName = false;
@@ -293,7 +290,6 @@ class eZTemplateCacheFunction
                                  $globalExpiryTime );
 
         // Check if we can restore
-        require_once( 'kernel/classes/ezclusterfilehandler.php' );
         $cacheFile = eZClusterFileHandler::instance( $phpPath );
         $args = array( "tpl" => $tpl,
                        "functionChildren" => $functionChildren,
@@ -364,7 +360,6 @@ class eZTemplateCacheFunction
     */
     static function expiryTemplateBlockCacheDir()
     {
-        //include_once( 'lib/ezutils/classes/ezsys.php' );
         $expiryCacheDir = eZSys::cacheDirectory() . '/' . 'template-block-expiry';
         return $expiryCacheDir;
     }

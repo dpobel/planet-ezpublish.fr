@@ -8,6 +8,21 @@
     </message>
 </context>
 <context>
+    <name>design</name>
+    <message>
+        <source>%group_name [Content object state group]</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit</source>
+        <translation type="unfinished">Rediger</translation>
+    </message>
+    <message>
+        <source>%state_name [Content object state]</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>design/admin/class/classlist</name>
     <message>
         <source>%group_name [Class group]</source>
@@ -2026,6 +2041,14 @@
         <source>You cannot manage the versions of this object because there is only one version available (the one that is being edited).</source>
         <translation>Du kan ikke redigere versjonene av dette objektet, fordi det bare er en versjon tilgjengelig (den som redigeres).</translation>
     </message>
+    <message>
+        <source>The following data is invalid according to the custom validation rules</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>States</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>design/admin/content/edit_attribute</name>
@@ -3642,10 +3665,6 @@
         <translation>Nytt URL-alias</translation>
     </message>
     <message>
-        <source>Destination (path to existing funtionality or resource)</source>
-        <translation>Mål (sti til eksisterende funksjonalitet eller ressurs)</translation>
-    </message>
-    <message>
         <source>Enter text in the input box to create a new alias.</source>
         <translation>Legg inn tekst i inputfeltet for å lage et nytt alias.</translation>
     </message>
@@ -3695,6 +3714,10 @@
     </message>
     <message>
         <source>Direct</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Destination (path to existing functionality or resource)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3805,14 +3828,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Enter the URL for the new wildcard. Example: /developer/*</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Enter the destination URL for the new wildcard. Example: /dev/{1\}</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Perform redirecting.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3822,6 +3837,14 @@
     </message>
     <message>
         <source>Create a new wildcard URL alias.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enter the URL for the new wildcard. Example: developer/*</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enter the destination URL for the new wildcard. Example: dev/{1\}</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -5384,6 +5407,58 @@
         <source>The item being displayed has only one location, which is by default the main location.</source>
         <translation>Elementet som blir vist har kun en plassering. Det er ikke nødvendig å velge hovedplassering.</translation>
     </message>
+    <message>
+        <source>Move selected</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Move the selected items from the list above.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You do not have permission to move any of the items from the list above.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Object states</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Content object state group</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Available states</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No content object state is configured. This can be done %urlstart here %urlend.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Set states</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Apply states from the list above.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No state to be applied to this content object. You might need to be assigned a more permissive access policy.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Hide state assignment widget.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show state assignment widget.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Object states for object</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>design/admin/node/view/line</name>
@@ -6417,6 +6492,10 @@ Note: The packages will not be uninstalled.</source>
     </message>
     <message>
         <source>URL wildcards</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>States</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -7798,8 +7877,24 @@ Note: The packages will not be uninstalled.</source>
         <translation>Bruk denne rullegardinmenyen for å velge hvilket felt som skal eksporteres som beskrivelsesfeltet i RSS-nyheten.</translation>
     </message>
     <message>
-        <source>Leave this field emty if you want system automaticaly detect the URL of your site from the URL you access feed with</source>
+        <source>Leave this field empty if you want system automaticaly detect the URL of your site from the URL you access feed with</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Category</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>optional</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use this drop-down to select the attribute that should be exported as the category of the RSS export entry.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Skip</source>
+        <translation type="unfinished">Hopp over</translation>
     </message>
 </context>
 <context>
@@ -8503,6 +8598,10 @@ Note: The packages will not be uninstalled.</source>
         <source>Please select an ini file from the drop-down below</source>
         <translation>Vennligst velg en INI-fil fra rullegardinmenyen under</translation>
     </message>
+    <message>
+        <source>Values for each location setting are shown. The first values have lowest priority; the values toward the end have higher priority than the first ones.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>design/admin/setup</name>
@@ -8743,6 +8842,10 @@ Note: The packages will not be uninstalled.</source>
         <source>Click this button to regenerate the autoload arrays used by the system for extensions.</source>
         <translation>Klikk her for a regenerere autoload-arrays som er brukt for systemet for utvidelser.</translation>
     </message>
+    <message>
+        <source>Problems detected during autoload generation:</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>design/admin/setup/info</name>
@@ -8971,6 +9074,15 @@ Note: The packages will not be uninstalled.</source>
     <message>
         <source>Web server (hardware)</source>
         <translation>Webserver (hardware)</translation>
+    </message>
+    <message>
+        <source>Details</source>
+        <comment>Detailed PHP information</comment>
+        <translation type="unfinished">Detaljer</translation>
+    </message>
+    <message>
+        <source>PHP autoload functions</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -11009,6 +11121,201 @@ Note: The packages will not be uninstalled.</source>
     <message>
         <source>Click this button to store changes if you have modified quantity and/or option values.</source>
         <translation>Klikk på denne knappen for å lagre endringene dersom du har forandret på noen av valgene.</translation>
+    </message>
+</context>
+<context>
+    <name>design/admin/state/edit</name>
+    <message>
+        <source>The content object state was successfully stored.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The content object state could not be stored.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Required data is either missing or is invalid</source>
+        <translation type="unfinished">Påkrevde data mangler eller er ugyldige</translation>
+    </message>
+    <message>
+        <source>Edit content object state &quot;%state_name&quot;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save changes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save changes to this states.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel saving any changes.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>New content object state</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>design/admin/state/group</name>
+    <message>
+        <source>Object states in this group [%state_count]</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Invert selection.</source>
+        <translation type="unfinished">Speilvend utvalg.</translation>
+    </message>
+    <message>
+        <source>ID</source>
+        <translation type="unfinished">ID</translation>
+    </message>
+    <message>
+        <source>Identifier</source>
+        <translation type="unfinished">Identifikator</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation type="unfinished">Navn</translation>
+    </message>
+    <message>
+        <source>Object count</source>
+        <translation type="unfinished">Antall objekter</translation>
+    </message>
+    <message>
+        <source>Order</source>
+        <translation type="unfinished">Ordre</translation>
+    </message>
+    <message>
+        <source>Select content object state group for removal.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove selected</source>
+        <translation type="unfinished">Fjern valgte</translation>
+    </message>
+    <message>
+        <source>Remove selected states.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Update ordering</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Update the order of the content object states in this group.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Create new</source>
+        <translation type="unfinished">Lag ny</translation>
+    </message>
+    <message>
+        <source>Create a new state.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>design/admin/state/group_edit</name>
+    <message>
+        <source>Edit content object state group &quot;%group_name&quot;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save changes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save changes to this state group.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel saving any changes.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>New content object state group</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Create</source>
+        <translation type="unfinished">Lag</translation>
+    </message>
+    <message>
+        <source>Create this state group.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel creating this state group.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>design/admin/state/groups</name>
+    <message>
+        <source>The content object state group was successfully stored.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The content object state group could not be stored.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Required data is either missing or is invalid</source>
+        <translation type="unfinished">Påkrevde data mangler eller er ugyldige</translation>
+    </message>
+    <message>
+        <source>Invert selection.</source>
+        <translation type="unfinished">Speilvend utvalg.</translation>
+    </message>
+    <message>
+        <source>ID</source>
+        <translation type="unfinished">ID</translation>
+    </message>
+    <message>
+        <source>Identifier</source>
+        <translation type="unfinished">Identifikator</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation type="unfinished">Navn</translation>
+    </message>
+    <message>
+        <source>Select content object state group for removal.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove selected</source>
+        <translation type="unfinished">Fjern valgte</translation>
+    </message>
+    <message>
+        <source>Remove selected state groups.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Create new</source>
+        <translation type="unfinished">Lag ny</translation>
+    </message>
+    <message>
+        <source>Create a new state group.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>design/admin/state_groups</name>
+    <message>
+        <source>Content object state groups [%group_count]</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -13594,6 +13901,26 @@ your account.</source>
         <source>Ini File: </source>
         <translation>INI-fil: </translation>
     </message>
+    <message>
+        <source>Use seconds</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Second</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Silverlight</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>seconds(s)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tag preset</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>design/standard/class/datatype </name>
@@ -14986,6 +15313,14 @@ Hvis du vil sende en kommentar til den som skal godkjenne, eller se på status, 
     <message>
         <source>Published</source>
         <translation>Publisert</translation>
+    </message>
+    <message>
+        <source>Second</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Silverlight</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -17586,10 +17921,6 @@ Hvis du er usikker, velg nettstedstilgangen for brukerdelen av nettstedet ditt, 
         <translation>Avbryt</translation>
     </message>
     <message>
-        <source>Please select an extension to be exported.</source>
-        <translation>Vennligst velg en utvidelse som skal eksporteres.</translation>
-    </message>
-    <message>
         <source>Installing package</source>
         <translation>Installerer pakke</translation>
     </message>
@@ -17706,6 +18037,14 @@ You can also remove the package without uninstalling it from the package list.</
     <message>
         <source>Select the file containing the package then click the upload button</source>
         <translation>Velg filen som inneholder pakken og klikk last opp knappen</translation>
+    </message>
+    <message>
+        <source>Please select the extensions to be exported.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use content object modification and publication dates from the package.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -18410,6 +18749,18 @@ menyen på toppen.</translation>
     <message>
         <source>Use this field to enter the base URL of your site. It is used to produce the URLs in the export, composed by the Site URL (e.g. &quot;http://www.example.com/index.php&quot;) and the path to the object (e.g. &quot;/articles/my_article&quot;). The Site URL depends on your Web server and eZ Publish configuration.</source>
         <translation>Bruk dette feltet til å spesifisere grunn-URL til siten din. Denne addressen brukes til å bygge linkene som sendes med i URL-eksporten. Du kan se grunn-URLen til sidene dine ved å se på addressefeltet i nettleseren din.</translation>
+    </message>
+    <message>
+        <source>Category</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>optional</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Skip</source>
+        <translation type="unfinished">Hopp over</translation>
     </message>
 </context>
 <context>
@@ -19499,6 +19850,10 @@ Standardkoden ble laget på grunnlag av parameterne du valgte.</translation>
     <message>
         <source>Click this button to regenerate the autoload arrays used by the system for extensions.</source>
         <translation type="unfinished">Klikk her for a regenerere autoload-arrays som er brukt for systemet for utvidelser.</translation>
+    </message>
+    <message>
+        <source>Problems detected during autoload generation:</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -20782,10 +21137,6 @@ This functionality is also available at a later time from the Administration Int
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>The &apos;digest&apos; procedure is not available in your database, you cannot run eZ Publish without this. Visit the FAQ for more information.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>No packages chosen.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -20857,6 +21208,10 @@ This functionality is also available at a later time from the Administration Int
         <source>eZ Publish</source>
         <comment>eZ Publish link</comment>
         <translation type="unfinished">eZ Publish</translation>
+    </message>
+    <message>
+        <source>The &apos;digest&apos; function is not available in your database, you cannot run eZ Publish without this. See the documentation for more information.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -21033,10 +21388,6 @@ This functionality is also available at a later time from the Administration Int
     </message>
     <message>
         <source>Missing ImageMagick program</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>If you known where the program is installed (the executable is called</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -21536,6 +21887,38 @@ To do this you need to change the %chown commands under Alternative shell comman
     </message>
     <message>
         <source>If you want to keep UTC as your time zone, check &lt;strong&gt;Ignore this test&lt;/strong&gt; below to proceed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Missing cURL extension</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>It is recommended to enable the PHP cURL extension, otherwise some features requiring a proxy or SSL will not work.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>To enable the PHP cURL functions you need to compile PHP with support for it. Configure PHP with</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>More information on this subject is available at</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>If you know where the program is installed (the executable is called</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>PHP does not register environment variables</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>PHP is currently not configured to register enviroment variables in the global variable $_ENV.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>To fix this, edit your php.ini configuration and add E to the variables_order setting.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -22876,6 +23259,14 @@ Følg veiledningen i den e-posten for å aktivere kontoen din.</translation>
         <source>Please note that your browser must use and support cookies to register a new user.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Your browser does not seem to support cookies, to register a new user, cookies need to be supported and enabled!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Try again</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>design/standard/user/</name>
@@ -23761,6 +24152,10 @@ Følg veiledningen i den e-posten for å aktivere kontoen din.</translation>
         <source>Content tree menu (browser cache)</source>
         <translation>Menu for innholdstre (nettleser cache)</translation>
     </message>
+    <message>
+        <source>State limitations cache</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>kernel/class</name>
@@ -23960,6 +24355,22 @@ Følg veiledningen i den e-posten for å aktivere kontoen din.</translation>
     <message>
         <source>Canceled whole workflow</source>
         <translation>Avbrøt hele arbeidsflyten</translation>
+    </message>
+    <message>
+        <source>Replace existing object</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Skip object</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Keep existing and create a new one</source>
+        <translation type="unfinished">Behold eksisterende klasse, og lag en ny</translation>
+    </message>
+    <message>
+        <source>Update existing object</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -24224,7 +24635,7 @@ Følg veiledningen i den e-posten for å aktivere kontoen din.</translation>
     </message>
     <message>
         <source>The username already exists, please choose another one.</source>
-        <translation>Det oppgitte brukernavnet er allerede i brukt, vennligst oppgi et annet brukernavn.</translation>
+        <translation>Det oppgitte brukernavnet er allerede i bruk, vennligst oppgi et annet brukernavn.</translation>
     </message>
     <message>
         <source>The passwords do not match.</source>
@@ -24454,6 +24865,14 @@ Følg veiledningen i den e-posten for å aktivere kontoen din.</translation>
     <message>
         <source>You cannot remove the last class holding user accounts.</source>
         <translation>Du kan ikke fjerne klassen som inneholder brukerkontoene.</translation>
+    </message>
+    <message>
+        <source>Missing email input.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Input required</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -25252,20 +25671,8 @@ Følg veiledningen i den e-posten for å aktivere kontoen din.</translation>
         <translation>Pakkenavnet %packagename er ikke gyldig. Navnet kan kun inneholde bokstavene a-z, A-Z, 0-9 og understrek (_).</translation>
     </message>
     <message>
-        <source>Select an extension to be exported</source>
-        <translation>Velg en utvidelse som skal eksporteres</translation>
-    </message>
-    <message>
         <source>Extension export</source>
         <translation>Eksport av utvidelser</translation>
-    </message>
-    <message>
-        <source>Extension:</source>
-        <translation>Utvidelse:</translation>
-    </message>
-    <message>
-        <source>You must select an extension</source>
-        <translation>Du må velge en utvidelse</translation>
     </message>
     <message>
         <source>%number content objects</source>
@@ -25351,6 +25758,30 @@ Følg veiledningen i den e-posten for å aktivere kontoen din.</translation>
         <source>Remove object and its sub-item(s)</source>
         <translation>Fjern objektet og eventuelle undernoder</translation>
     </message>
+    <message>
+        <source>Extensions to include</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Extension list</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You must select at least one extension</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Advanced options</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Package contains an invalid extension name: %extensionname</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The package name %packagename is invalid, cannot import the package</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>kernel/pdf</name>
@@ -25368,13 +25799,6 @@ Følg veiledningen i den e-posten for å aktivere kontoen din.</translation>
     <message>
         <source>New PDF Export</source>
         <translation>Ny PDF-eksport</translation>
-    </message>
-</context>
-<context>
-    <name>kernel/reference</name>
-    <message>
-        <source>Reference documentation</source>
-        <translation>Referanse dokumentasjon</translation>
     </message>
 </context>
 <context>
@@ -25447,6 +25871,10 @@ Følg veiledningen i den e-posten for å aktivere kontoen din.</translation>
     <message>
         <source>Selected class does not exist</source>
         <translation>Valgt klasse eksisterer ikke</translation>
+    </message>
+    <message>
+        <source>Invalid selection for category class %1 does not have attribute &quot;%2&quot;</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -25825,6 +26253,80 @@ Følg veiledningen i den e-posten for å aktivere kontoen din.</translation>
     <message>
         <source>Wrong VAT percentage (corrected).</source>
         <translation>Feil MVA-prosent (rettet).</translation>
+    </message>
+</context>
+<context>
+    <name>kernel/state</name>
+    <message>
+        <source>State</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit</source>
+        <translation type="unfinished">Rediger</translation>
+    </message>
+    <message>
+        <source>Groups</source>
+        <translation type="unfinished">Grupper</translation>
+    </message>
+    <message>
+        <source>Group edit</source>
+        <translation type="unfinished">Grupperedigering</translation>
+    </message>
+    <message>
+        <source>New</source>
+        <translation type="unfinished">Ny</translation>
+    </message>
+    <message>
+        <source>New group</source>
+        <translation type="unfinished">Ny gruppe</translation>
+    </message>
+    <message>
+        <source>Assign</source>
+        <translation type="unfinished">Tilordne</translation>
+    </message>
+</context>
+<context>
+    <name>kernel/state/edit</name>
+    <message>
+        <source>Identifier: input required</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Identifier: invalid, it can only consist of characters in the range a-z, 0-9 and underscore.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Identifier: invalid, maximum %max characters allowed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Identifier: a content object state group with this identifier already exists, please give another identifier</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%language_name: this language is the default but neither name or description were provided for this language</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Translations: you need to add at least one localization</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Translations: there are multiple localizations but you did not specify which is the default one</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Name in %language_name is too long. Maximum 45 characters allowed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Name in %language_name: input required</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Identifier: identifiers starting with &quot;ez&quot; are reserved.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

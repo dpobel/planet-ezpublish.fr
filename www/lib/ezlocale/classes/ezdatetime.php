@@ -5,9 +5,9 @@
 // Created on: <01-Mar-2002 13:48:12 amos>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -78,10 +78,6 @@ print( $dt1->isEqualTo( $dt3 ) ? 'true' : 'false' ); // Prints 'true'
   \sa eZDate, eZTime, eZLocale
 */
 
-//include_once( 'lib/ezlocale/classes/ezlocale.php' );
-//include_once( 'lib/ezlocale/classes/ezdate.php' );
-//include_once( 'lib/ezlocale/classes/eztime.php' );
-
 class eZDateTime
 {
     /*!
@@ -108,12 +104,7 @@ class eZDateTime
         {
             $datetime = time();
         }
-        else
-        {
-            $arr = getdate( $datetime );
-            $datetime = mktime( $arr['hours'], $arr['minutes'], $arr['seconds'],
-                                $arr['mon'], $arr['mday'], $arr['year'] );
-        }
+
         $this->DateTime = $datetime;
         $this->Locale = eZLocale::instance();
         $this->IsValid = $datetime > 0;
@@ -124,6 +115,7 @@ class eZDateTime
         return array( 'timestamp',
                       'hour',
                       'minute',
+                      'second',
                       'year',
                       'month',
                       'day',
@@ -148,6 +140,10 @@ class eZDateTime
         else if ( $name == 'minute'  )
         {
             return $this->minute();
+        }
+        else if ( $name == 'second' )
+        {
+            return $this->second();
         }
         else if ( $name == 'day'  )
         {
@@ -183,15 +179,15 @@ class eZDateTime
     /*!
      Sets the locale to $locale which is used in text output.
     */
-    function setLocale( &$locale )
+    function setLocale( $locale )
     {
-        $this->Locale =& $locale;
+        $this->Locale = $locale;
     }
 
     /*!
-     Returns a reference to the current locale.
+     Returns the current locale.
     */
-    function &locale()
+    function locale()
     {
         return $this->Locale;
     }
@@ -471,7 +467,7 @@ class eZDateTime
      date values $month, $day and $year and returns a reference to it.
      Any value can be ommitted or set to -1 to use the current date or time value.
     */
-    function create( $hour = -1, $minute = -1, $second = -1, $month = -1, $day = -1, $year = -1 )
+    static function create( $hour = -1, $minute = -1, $second = -1, $month = -1, $day = -1, $year = -1 )
     {
         if ( $year != -1 )
             $datetime = mktime( $hour, $minute, $second, $month, $day, $year );

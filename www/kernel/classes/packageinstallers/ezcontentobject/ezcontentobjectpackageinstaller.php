@@ -5,9 +5,9 @@
 // Created on: <01-Apr-2004 12:39:59 kk>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -26,7 +26,7 @@
 //
 //
 
-/*! \file ezcontentobjectpackageinstaller.php
+/*! \file
 */
 
 /*!
@@ -35,14 +35,9 @@
   \brief A package creator for content objects
 */
 
-//include_once( 'kernel/classes/ezpackageinstallationhandler.php' );
-
 class eZContentObjectPackageInstaller extends eZPackageInstallationHandler
 {
 
-    /*!
-     \reimp
-    */
     function eZContentObjectPackageInstaller( $package, $type, $installItem )
     {
         $steps = array();
@@ -56,6 +51,11 @@ class eZContentObjectPackageInstaller extends eZPackageInstallationHandler
                           'methods' => array( 'initialize' => 'initializeTopNodes',
                                               'validate' => 'validateTopNodes' ),
                           'template' => 'top_nodes.tpl' );
+        $steps[] = array( 'id' => 'advanced_options',
+                          'name' => ezi18n( 'kernel/package', 'Advanced options' ),
+                          'methods' => array( 'initialize' => 'initializeAdvancedOptions',
+                                              'validate' => 'validateAdvancedOptions' ),
+                          'template' => 'advanced_options.tpl' );
         $this->eZPackageInstallationHandler( $package,
                                              $type,
                                              $installItem,
@@ -64,7 +64,6 @@ class eZContentObjectPackageInstaller extends eZPackageInstallationHandler
     }
 
     /*!
-     \reimp
      Returns \c 'stable', content class packages are always stable.
     */
     function packageInitialState( $package, &$persistentData )
@@ -80,12 +79,8 @@ class eZContentObjectPackageInstaller extends eZPackageInstallationHandler
         return 'contentobject';
     }
 
-    /*!
-     \reimp
-    */
-    function initializeSiteAccess( $package, $http, $step, &$persistentData, $tpl )
+    function initializeSiteAccess( $package, $http, $step, &$persistentData, $tpl, $module )
     {
-        //include_once( 'lib/ezutils/classes/ezini.php' );
         $ini = eZINI::instance();
         $availableSiteAccessArray = $ini->variable( 'SiteAccessSettings', 'RelatedSiteAccessList' );
 
@@ -114,9 +109,6 @@ class eZContentObjectPackageInstaller extends eZPackageInstallationHandler
         $tpl->setVariable( 'available_site_access_array', $availableSiteAccessArray );
     }
 
-    /*!
-     \reimp
-    */
     function validateSiteAccess( $package, $http, $currentStepID, &$stepMap, &$persistentData, &$errorList )
     {
         $validate = true;
@@ -132,10 +124,7 @@ class eZContentObjectPackageInstaller extends eZPackageInstallationHandler
         return $validate;
     }
 
-    /*!
-     \reimp
-    */
-    function initializeTopNodes( $package, $http, $step, &$persistentData, $tpl, &$module )
+    function initializeTopNodes( $package, $http, $step, &$persistentData, $tpl, $module )
     {
         if ( !isset( $persistentData['top_nodes_map'] ) )
         {
@@ -160,7 +149,6 @@ class eZContentObjectPackageInstaller extends eZPackageInstallationHandler
         {
             if ( $http->hasPostVariable( 'BrowseNode_' . $topNodeArrayKey ) )
             {
-                //include_once( 'kernel/classes/ezcontentbrowse.php' );
                 eZContentBrowse::browse( array( 'action_name' => 'SelectObjectRelationNode',
                                                 'description_template' => 'design:package/installers/ezcontentobject/browse_topnode.tpl',
                                                 'from_page' => '/package/install',
@@ -185,9 +173,6 @@ class eZContentObjectPackageInstaller extends eZPackageInstallationHandler
         $tpl->setVariable( 'top_nodes_map', $persistentData['top_nodes_map'] );
     }
 
-    /*!
-     \reimp
-    */
     function validateTopNodes( $package, $http, $currentStepID, &$stepMap, &$persistentData, &$errorList )
     {
         $validate = true;
@@ -205,12 +190,25 @@ class eZContentObjectPackageInstaller extends eZPackageInstallationHandler
         return $validate;
     }
 
-    /*!
-     \reimp
-    */
+    function initializeAdvancedOptions( $package, $http, $step, &$persistentData, $tpl, $module )
+    {
+        if ( !isset( $persistentData['use_dates_from_package'] ) )
+        {
+            $persistentData['use_dates_from_package'] = 0;
+        }
+
+        $tpl->setVariable( 'use_dates_from_package', (bool)$persistentData['use_dates_from_package'] );
+    }
+
+    function validateAdvancedOptions( $package, $http, $currentStepId, &$stepMap, &$persistentData, &$errorList )
+    {
+        $persistentData['use_dates_from_package'] = $http->postVariable( 'UseDatesFromPackage', 0 );
+        return true;
+    }
+
     function finalize( $package, $http, &$persistentData )
     {
-        eZDebug::writeDebug( 'finalize is called', 'eZContentObjectPackageInstaller::finalize' );
+        eZDebug::writeDebug( 'finalize is called', __METHOD__ );
         $package->installItem( $this->InstallItem, $persistentData );
     }
 

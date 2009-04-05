@@ -5,9 +5,9 @@
 // Created on: <25-Jun-2002 13:09:57 bf>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -31,16 +31,8 @@
 
 */
 
-//include_once( "lib/ezdb/classes/ezdb.php" );
-//include_once( "kernel/classes/ezcontentobject.php" );
-//include_once( "lib/ezlocale/classes/ezdatetime.php" );
-//include_once( "kernel/classes/ezcontentobject.php" );
-//include_once( 'kernel/classes/ezcontentlanguage.php' );
-
 class eZSearchEngine
 {
-    /*!
-     */
     function eZSearchEngine()
     {
         $generalFilter = array( 'subTreeTable' => '',
@@ -55,10 +47,22 @@ class eZSearchEngine
         $this->GeneralFilter = $generalFilter;
     }
 
+
+    static function needCommit()
+    {
+        //commits are NA
+        return false;
+    }
+
+    static function needRemoveWithUpdate()
+    {
+        return true;
+    }
+
     /*!
      Adds an object to the search database.
     */
-    function addObject( $contentObject, $uri )
+    function addObject( $contentObject, $commit )
     {
         $contentObjectID = $contentObject->attribute( 'id' );
         $currentVersion = $contentObject->currentVersion();
@@ -66,7 +70,6 @@ class eZSearchEngine
         if ( !$currentVersion )
         {
             $errCurrentVersion = $contentObject->attribute( 'current_version');
-            require_once( "lib/ezutils/classes/ezdebug.php" );
             eZDebug::writeError( "Failed to fetch \"current version\" ({$errCurrentVersion})" .
                                  " of content object (ID: {$contentObjectID})", 'eZSearchEngine' );
             return;
@@ -176,7 +179,6 @@ class eZSearchEngine
         $db = eZDB::instance();
 
         // Initialize transformation system
-        //include_once( 'lib/ezi18n/classes/ezchartransform.php' );
         $trans = eZCharTransform::instance();
 
         $wordCount = count( $indexArrayOnlyWords );
@@ -296,7 +298,6 @@ class eZSearchEngine
         */
 
         // Initialize transformation system
-        //include_once( 'lib/ezi18n/classes/ezchartransform.php' );
         $trans = eZCharTransform::instance();
 
         $prevWordID = 0;
@@ -385,7 +386,7 @@ class eZSearchEngine
     /*!
      \static
     */
-    function removeObject( $contentObject )
+    function removeObject( $contentObject, $commit )
     {
         $db = eZDB::instance();
         $objectID = $contentObject->attribute( "id" );
@@ -850,7 +851,6 @@ class eZSearchEngine
             // Loop every word and insert result in temporary table
 
             // Determine whether we should search invisible nodes.
-            //include_once( 'kernel/classes/ezcontentobjecttreenode.php' );
             $showInvisibleNodesCond = eZContentObjectTreeNode::createShowInvisibleSQLString( !$ignoreVisibility );
 
             foreach ( $searchPartsArray as $searchPart )
@@ -943,7 +943,7 @@ class eZSearchEngine
                 }
             }
 
-            if ( $searchPartsArray === null && $this->TempTablesCount == 0 )
+            if ( count( $searchPartsArray ) === 0 && $this->TempTablesCount == 0 )
             {
                  $table = $db->generateUniqueTempTableName( 'ezsearch_tmp_%', 0 );
                  $this->saveCreatedTempTableName( 0, $table );
@@ -1054,24 +1054,6 @@ class eZSearchEngine
                     $showInvisibleNodesCond
                     $sortWhereSQL
                     ORDER BY $orderByFieldsSQL";
-                if ( $tmpTableCount == 0 )
-                {
-                    $searchCountQuery = "SELECT count( DISTINCT ezcontentobject.id ) AS count
-                    FROM
-                       ezcontentobject,
-                       ezcontentclass,
-                       ezcontentobject_tree
-                       $versionNameTables
-                    WHERE
-                    $emptyWhere
-                    ezcontentobject.contentclass_id = ezcontentclass.id and
-                    ezcontentclass.version = '0' and
-                    ezcontentobject.id = ezcontentobject_tree.contentobject_id and
-                    ezcontentobject_tree.node_id = ezcontentobject_tree.main_node_id
-                    $versionNameJoins
-                    $showInvisibleNodesCond
-                    $sortWhereSQL";
-                }
             }
             else
             {
@@ -1092,30 +1074,29 @@ class eZSearchEngine
                     ezcontentobject_tree.node_id = ezcontentobject_tree.main_node_id
                     $versionNameJoins
                      ";
-                if ( $tmpTableCount == 0 )
-                {
-                    $searchCountQuery = "SELECT count( DISTINCT ezcontentobject.id ) AS count
-                    FROM
-                       ezcontentobject,
-                       ezcontentclass,
-                       ezcontentobject_tree
-                       $versionNameTables
-                    WHERE
-                    ezcontentobject.contentclass_id = ezcontentclass.id and
-                    ezcontentclass.version = '0' and
-                    ezcontentobject.id = ezcontentobject_tree.contentobject_id and
-                    ezcontentobject_tree.node_id = ezcontentobject_tree.main_node_id
-                    $versionNameJoins
-                     ";
-                }
             }
             // Count query
-            $where = "WHERE";
-            if ( $tmpTableCount == 1 )
-                $where = "";
-            if ( $tmpTableCount > 0 )
+            $languageCond = eZContentLanguage::languagesSQLFilter( 'ezcontentobject' );
+            if ( $tmpTableCount == 0 )
             {
-                $searchCountQuery = "SELECT count( * ) AS count FROM $tmpTablesFrom $where $tmpTablesWhere ";
+                $searchCountQuery = "SELECT count( DISTINCT ezcontentobject.id ) AS count
+                        FROM
+                           ezcontentobject,
+                           ezcontentobject_tree
+                        WHERE
+                        ezcontentobject.id = ezcontentobject_tree.contentobject_id and
+                        ezcontentobject_tree.node_id = ezcontentobject_tree.main_node_id
+                        AND $languageCond
+                        $showInvisibleNodesCond";
+            }
+            else
+            {
+                $searchCountQuery = "SELECT count( DISTINCT ezcontentobject.id ) AS count
+                        FROM $tmpTablesFrom $tmpTablesSeparator
+                             ezcontentobject
+                        WHERE $tmpTablesWhere $and
+                            $tmpTablesWhereExtra
+                            $languageCond";
             }
 
             $objectRes = array();
@@ -1209,7 +1190,6 @@ class eZSearchEngine
                         } break;
                         case 'class_name':
                         {
-                            //include_once( 'kernel/classes/ezcontentobjectname.php' );
                             $classNameFilter = eZContentClassName::sqlFilter();
                             $sortingFields .= $classNameFilter['nameField'];
                             $attributeFromSQL .= ", $classNameFilter[from]";
@@ -1227,7 +1207,12 @@ class eZSearchEngine
                         {
                             $sortClassID = $sortBy[2];
                             // Look up datatype for sorting
-                            $sortDataType = eZContentObjectTreeNode::sortKeyByClassAttributeID( $sortClassID );
+                            if ( !is_numeric( $sortClassID ) )
+                            {
+                                $sortClassID = eZContentObjectTreeNode::classAttributeIDByIdentifier( $sortClassID );
+                            }
+
+                            $sortDataType = $sortClassID === false ? false : eZContentObjectTreeNode::sortKeyByClassAttributeID( $sortClassID );
 
                             $sortKey = false;
                             if ( $sortDataType == 'string' )
@@ -1368,7 +1353,6 @@ class eZSearchEngine
     */
     function normalizeText( $text, $isMetaData = false )
     {
-        //include_once( 'lib/ezi18n/classes/ezchartransform.php' );
         $trans = eZCharTransform::instance();
         $text = $trans->transformByGroup( $text, 'search' );
 

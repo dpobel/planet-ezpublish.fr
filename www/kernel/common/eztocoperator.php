@@ -5,9 +5,9 @@
 // Created on: <24-Aug-2005 15:11:12 bf>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -26,7 +26,7 @@
 //
 //
 
-/*! \file eztocoperator.php
+/*! \file
 */
 
 /*!
@@ -108,7 +108,10 @@ class eZTOCOperator
     function handleSection( $sectionNode, $level = 0 )
     {
         // Reset next level counter
-        $this->HeaderCounter[$level + 1] = 0;
+        if ( !isset( $this->HeaderCounter[$level + 1] ) )
+        {
+            $this->HeaderCounter[$level + 1] = 0;
+        }
 
         $tocText = '';
         $children = $sectionNode->childNodes;

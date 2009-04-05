@@ -4,9 +4,9 @@
 // <creation-tag>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -25,11 +25,7 @@
 //
 //
 
-//include_once( 'lib/ezutils/classes/ezhttptool.php' );
-//include_once( 'kernel/classes/ezcontentobject.php' );
 require_once( 'kernel/common/template.php' );
-//include_once( 'lib/ezdiff/classes/ezdiff.php' );
-require_once( 'lib/ezutils/classes/ezdebug.php' );
 
 $Module = $Params['Module'];
 $objectID = $Params['ObjectID'];
@@ -57,6 +53,7 @@ $tpl = templateInit();
 
 $res = eZTemplateDesignResource::instance();
 $res->setKeys( array( array( 'object', $contentObject->attribute( 'id' ) ),
+                    array( 'remote_id', $contentObject->attribute( 'remote_id' ) ),
                     array( 'class', $class->attribute( 'id' ) ),
                     array( 'class_identifier', $class->attribute( 'identifier' ) ) ) );
 
@@ -156,6 +153,7 @@ $Result = array();
 $section = eZSection::fetch( $contentObject->attribute( 'section_id' ) );
 if ( $section )
 {
+    $Result['section_id'] = $section->attribute( 'id' );
     $navigationPartIdentifier = $section->attribute( 'navigation_part_identifier' );
     if ( $navigationPartIdentifier )
     {

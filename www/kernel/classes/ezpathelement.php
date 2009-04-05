@@ -5,9 +5,9 @@
 // Created on: <01-Aug-2003 16:44:56 bf>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -26,7 +26,7 @@
 //
 //
 
-/*! \file ezpathelement.php
+/*! \file
 */
 
 /*!
@@ -39,9 +39,6 @@
   The definition() of this class is the same as eZURLAliasML but it is not
   possible to store and remove items of this class.
 */
-
-//include_once( "kernel/classes/ezpersistentobject.php" );
-//include_once( "kernel/classes/ezcontentlanguage.php" );
 
 class eZPathElement extends eZPersistentObject
 {
@@ -59,9 +56,6 @@ class eZPathElement extends eZPersistentObject
         $this->eZPersistentObject( $row );
     }
 
-    /*!
-     \reimp
-    */
     static public function definition()
     {
         return array( "fields" => array( "id" => array( 'name' => 'ID',
@@ -159,7 +153,6 @@ class eZPathElement extends eZPersistentObject
      */
     static public function fetchNamedByParentID( $parentID, $name )
     {
-        //include_once( 'kernel/classes/ezurlaliasquery.php' );
         $filter = new eZURLAliasQuery();
         $filter->paren = $parentID;
         $filter->text  = $name;

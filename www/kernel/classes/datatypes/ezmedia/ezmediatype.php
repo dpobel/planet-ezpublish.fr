@@ -5,9 +5,9 @@
 // Created on: <30-Apr-2002 13:06:21 bf>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -32,13 +32,6 @@
   \brief The class eZMediaType handles storage and playback of media files.
 
 */
-
-//include_once( "kernel/classes/ezdatatype.php" );
-//include_once( "kernel/classes/datatypes/ezmedia/ezmedia.php" );
-//include_once( "lib/ezfile/classes/ezfile.php" );
-//include_once( "lib/ezutils/classes/ezmimetype.php" );
-//include_once( "lib/ezutils/classes/ezhttpfile.php" );
-//include_once( "lib/ezfile/classes/ezdir.php" );
 
 class eZMediaType extends eZDataType
 {
@@ -109,9 +102,6 @@ class eZMediaType extends eZDataType
                 if ( $fileName == '' )
                     continue;
 
-                // VS-DBFILE
-
-                require_once( 'kernel/classes/ezclusterfilehandler.php' );
                 $file = eZClusterFileHandler::instance( $orig_dir . "/" . $fileName );
                 if ( $file->exists() )
                     $file->delete();
@@ -136,9 +126,6 @@ class eZMediaType extends eZDataType
                 }
                 if ( $count == 1 && $currentFileName != '' )
                 {
-                    // VS-DBFILE
-
-                    require_once( 'kernel/classes/ezclusterfilehandler.php' );
                     $file = eZClusterFileHandler::instance( $orig_dir . "/" . $currentFileName );
                     if ( $file->exists() )
                         $file->delete();
@@ -230,6 +217,9 @@ class eZMediaType extends eZDataType
             case 'real_player' :
                 $pluginPage = "http://www.real.com/";
             break;
+            case 'silverlight':
+                $pluginPage = "http://go.microsoft.com/fwlink/?LinkID=108182";
+            break;
             case 'windows_media_player' :
                 $pluginPage = "http://activex.microsoft.com/activex/controls/mplayer/en/nsmp2inf.cab#Version=6,4,7,1112" ;
             break;
@@ -318,10 +308,6 @@ class eZMediaType extends eZDataType
             $media->setAttribute( "original_filename", $mediaFile->attribute( "original_filename" ) );
             $media->setAttribute( "mime_type", $mime );
 
-            // VS-DBFILE
-
-            require_once( 'kernel/classes/ezclusterfilehandler.php' );
-            //$filePath = $media->attribute( 'original_filename' );
             $filePath = $mediaFile->attribute( 'filename' );
             $fileHandler = eZClusterFileHandler::instance();
             $fileHandler->fileStore( $filePath, 'media', true, $mime );
@@ -349,7 +335,6 @@ class eZMediaType extends eZDataType
     }
 
     /*!
-     \reimp
      HTTP file insertion is supported.
     */
     function isHTTPFileInsertionSupported()
@@ -358,7 +343,6 @@ class eZMediaType extends eZDataType
     }
 
     /*!
-     \reimp
      Regular file insertion is supported.
     */
     function isRegularFileInsertionSupported()
@@ -367,7 +351,6 @@ class eZMediaType extends eZDataType
     }
 
     /*!
-     \reimp
      Inserts the file using the eZMedia class.
     */
     function insertHTTPFile( $object, $objectVersion, $objectLanguage,
@@ -424,9 +407,6 @@ class eZMediaType extends eZDataType
         $media->setAttribute( "has_controller", $hasController );
         $media->setAttribute( "is_loop", $isLoop );
 
-        // SP-DBFILE
-
-        require_once( 'kernel/classes/ezclusterfilehandler.php' );
         $filePath = $httpFile->attribute( 'filename' );
         $fileHandler = eZClusterFileHandler::instance();
         $fileHandler->fileStore( $filePath, 'mediafile', true, $mimeData['name'] );
@@ -439,7 +419,6 @@ class eZMediaType extends eZDataType
     }
 
     /*!
-     \reimp
      Inserts the file using the eZMedia class.
     */
     function insertRegularFile( $object, $objectVersion, $objectLanguage,
@@ -462,7 +441,7 @@ class eZMediaType extends eZDataType
 
         if ( !file_exists( $destination ) )
         {
-            if ( !eZDir::mkdir( $destination, eZDir::directoryPermission(), true ) )
+            if ( !eZDir::mkdir( $destination, false, true ) )
             {
                 return false;
             }
@@ -482,8 +461,6 @@ class eZMediaType extends eZDataType
 
         copy( $filePath, $destination );
 
-        // SP-DBFILE
-        require_once( 'kernel/classes/ezclusterfilehandler.php' );
         $fileHandler = eZClusterFileHandler::instance();
         $fileHandler->fileStore( $destination, 'mediafile', true, $mimeData['name'] );
 
@@ -527,7 +504,6 @@ class eZMediaType extends eZDataType
     }
 
     /*!
-      \reimp
       We support file information
     */
     function hasStoredFileInformation( $object, $objectVersion, $objectLanguage,
@@ -537,7 +513,6 @@ class eZMediaType extends eZDataType
     }
 
     /*!
-      \reimp
       Extracts file information for the media entry.
     */
     function storedFileInformation( $object, $objectVersion, $objectLanguage,
@@ -560,24 +535,15 @@ class eZMediaType extends eZDataType
     {
     }
 
-    /*!
-     \reimp
-    */
     function validateClassAttributeHTTPInput( $http, $base, $classAttribute )
     {
         return eZInputValidator::STATE_ACCEPTED;
     }
 
-    /*!
-     \reimp
-    */
     function fixupClassAttributeHTTPInput( $http, $base, $classAttribute )
     {
     }
 
-    /*!
-     \reimp
-    */
     function fetchClassAttributeHTTPInput( $http, $base, $classAttribute )
     {
         $filesizeName = $base . self::MAX_FILESIZE_VARIABLE . $classAttribute->attribute( 'id' );
@@ -669,9 +635,6 @@ class eZMediaType extends eZDataType
 
     }
 
-    /*!
-     \reimp
-    */
     function serializeContentClassAttribute( $classAttribute, $attributeNode, $attributeParametersNode )
     {
         $maxSize = $classAttribute->attribute( self::MAX_FILESIZE_FIELD );
@@ -679,17 +642,16 @@ class eZMediaType extends eZDataType
 
         $dom = $attributeParametersNode->ownerDocument;
 
-        $maxSizeNode = $dom->createElement( 'max-size', $maxSize );
+        $maxSizeNode = $dom->createElement( 'max-size' );
+        $maxSizeNode->appendChild( $dom->createTextNode( $maxSize ) );
         $maxSizeNode->setAttribute( 'unit-size', 'mega' );
         $attributeParametersNode->appendChild( $maxSizeNode );
 
-        $typeNode = $dom->createElement( 'type', $type );
+        $typeNode = $dom->createElement( 'type' );
+        $typeNode->appendChild( $dom->createTextNode( $type ) );
         $attributeParametersNode->appendChild( $typeNode );
     }
 
-    /*!
-     \reimp
-    */
     function unserializeContentClassAttribute( $classAttribute, $attributeNode, $attributeParametersNode )
     {
         $sizeNode = $attributeParametersNode->getElementsByTagName( 'max-size' )->item( 0 );
@@ -700,12 +662,6 @@ class eZMediaType extends eZDataType
         $classAttribute->setAttribute( self::TYPE_FIELD, $type );
     }
 
-    /*!
-     \param package
-     \param content attribute
-
-     \return a DOM representation of the content object attribute
-    */
     function serializeContentObjectAttribute( $package, $objectAttribute )
     {
 
@@ -745,12 +701,6 @@ class eZMediaType extends eZDataType
         return $node;
     }
 
-    /*!
-     \reimp
-     \param package
-     \param contentobject attribute object
-     \param domnode object
-    */
     function unserializeContentObjectAttribute( $package, $objectAttribute, $attributeNode )
     {
         $mediaNode = $attributeNode->getElementsByTagName( 'media-file' )->item( 0 );
@@ -764,14 +714,13 @@ class eZMediaType extends eZDataType
 
         $sourcePath = $package->simpleFilePath( $mediaNode->getAttribute( 'filekey' ) );
 
-        //include_once( 'lib/ezfile/classes/ezdir.php' );
         $ini = eZINI::instance();
         $mimeType = $mediaNode->getAttribute( 'mime-type' );
         list( $mimeTypeCategory, $mimeTypeName ) = explode( '/', $mimeType );
         $destinationPath = eZSys::storageDirectory() . '/original/' . $mimeTypeCategory . '/';
         if ( !file_exists( $destinationPath ) )
         {
-            if ( !eZDir::mkdir( $destinationPath, eZDir::directoryPermission(), true ) )
+            if ( !eZDir::mkdir( $destinationPath, false, true ) )
             {
                 return false;
             }
@@ -783,7 +732,6 @@ class eZMediaType extends eZDataType
             $basename = substr( md5( mt_rand() ), 0, 8 ) . '.' . eZFile::suffix( $mediaNode->getAttribute( 'filename' ) );
         }
 
-        //include_once( 'lib/ezfile/classes/ezfilehandler.php' );
         eZFileHandler::copy( $sourcePath, $destinationPath . $basename );
         eZDebug::writeNotice( 'Copied: ' . $sourcePath . ' to: ' . $destinationPath . $basename,
                               'eZMediaType::unserializeContentObjectAttribute()' );
@@ -802,13 +750,15 @@ class eZMediaType extends eZDataType
         $mediaFile->setAttribute( 'quality', $mediaNode->getAttribute( 'quality' ) );
         $mediaFile->setAttribute( 'is_loop', $mediaNode->getAttribute( 'is-loop' ) );
 
-        // VS-DBFILE
-
-        require_once( 'kernel/classes/ezclusterfilehandler.php' );
         $fileHandler = eZClusterFileHandler::instance();
         $fileHandler->fileStore( $destinationPath . $basename, 'mediafile', true );
 
         $mediaFile->store();
+    }
+
+    function supportsBatchInitializeObjectAttribute()
+    {
+        return true;
     }
 }
 

@@ -5,9 +5,9 @@
 // Created on: <08-Feb-2006 10:23:51 jk>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -25,9 +25,6 @@
 //   MA 02110-1301, USA.
 //
 //
-
-//include_once( 'kernel/classes/ezpersistentobject.php' );
-//include_once( 'lib/ezlocale/classes/ezlocale.php' );
 
 class eZContentLanguage extends eZPersistentObject
 {
@@ -138,7 +135,6 @@ class eZContentLanguage extends eZPersistentObject
         eZContentLanguage::fetchList( true );
 
         // clear the cache
-        //include_once( 'kernel/classes/ezcontentcachemanager.php' );
         eZContentCacheManager::clearAllContentCache();
 
         return $newLanguage;
@@ -178,7 +174,6 @@ class eZContentLanguage extends eZPersistentObject
 
         eZPersistentObject::remove();
 
-        //include_once( 'kernel/classes/ezcontentcachemanager.php' );
         eZContentCacheManager::clearAllContentCache();
 
         eZContentLanguage::fetchList( true );
@@ -432,8 +427,6 @@ class eZContentLanguage extends eZPersistentObject
      */
     function localeObject()
     {
-        //include_once( 'lib/ezlocale/classes/ezlocale.php' );
-
         $locale = eZLocale::instance( $this->Locale );
         return $locale;
     }
@@ -586,6 +579,60 @@ class eZContentLanguage extends eZPersistentObject
         }
 
         return (int) $mask;
+    }
+
+    /**
+     * Decodes $langMask into all languages it comprises and whether or not
+     * the language mask signifies always available or not.
+     *
+     * The constituent languages are returned as an array of language ids. If
+     * the second parameter, $returnLanguageLocale is set to TRUE, locale-codes
+     * are used instead of language ids.
+     *
+     * @param int $langMask
+     * @param boolean $returnLanguageLocale
+     * @return array
+     */
+    public static function decodeLanguageMask( $langMask, $returnLanguageLocale = false )
+    {
+        $maxNumberOfLanguges = eZContentLanguage::MAX_COUNT;
+        $maxInteger = pow( 2, $maxNumberOfLanguges );
+
+        $list = array();
+
+        // Applying this bit-logic on negative numbers, or numbers out of bounds
+        // will have unexpected results.
+        if ( $langMask < 0 or $langMask > $maxInteger or $langMask == 1 )
+        {
+            // We use the default language if the situation above occurs
+            $defaultLanguage = eZContentLanguage::topPriorityLanguage();
+            $langMask = $defaultLanguage->attribute( 'id' );
+        }
+
+        $alwaysAvailable = $langMask % 2;
+        $mask = $langMask & ~1;
+
+        // Calculating which translations are present in the current version
+        for ( $i = 1; $i < $maxNumberOfLanguges; ++$i )
+        {
+            $newMask = 1 << $i;
+            if ( ($newMask & $mask) > 0 )
+            {
+                if ( $returnLanguageLocale )
+                {
+                    $list[] = eZContentLanguage::fetch( $newMask )->attribute( 'locale' );
+                }
+                else
+                {
+                    $list[] = $newMask;
+                }
+            }
+        }
+
+        return array(
+                      'always_available' => $alwaysAvailable,
+                      'language_list'    => $list
+                    );
     }
 
     /**

@@ -5,9 +5,9 @@
 // Created on: <18-Jun-2004 14:56:15 amos>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -26,7 +26,7 @@
 //
 //
 
-/*! \file ezcodemapper.php
+/*! \file
 */
 
 /*!
@@ -84,7 +84,6 @@ class eZCodeMapper
         $str .= $text;
         if ( class_exists( 'ezcli' ) )
         {
-            //include_once( 'lib/ezutils/classes/ezcli.php' );
             $cli = eZCLI::instance();
             $cli->error( $str );
         }
@@ -109,7 +108,6 @@ class eZCodeMapper
         $str .= $text;
         if ( class_exists( 'ezcli' ) )
         {
-            //include_once( 'lib/ezutils/classes/ezcli.php' );
             $cli = eZCLI::instance();
             $cli->warning( $str );
         }
@@ -140,7 +138,6 @@ class eZCodeMapper
         $ini = eZINI::instance( 'transform.ini' );
         $repositoryList = array( $ini->variable( 'Transformation', 'Repository' ) );
         $files = $ini->variable( 'Transformation', 'Files' );
-        //include_once( 'lib/ezutils/classes/ezextension.php' );
         $extensions = $ini->variable( 'Transformation', 'Extensions' );
         $repositoryList = array_merge( $repositoryList,
                                        eZExtension::expandedPathList( $extensions, 'transformations' ) );
@@ -214,8 +211,6 @@ class eZCodeMapper
 
         $this->TransformationFiles[] = $name;
 
-        //include_once( 'lib/ezi18n/classes/eztextcodec.php' );
-        //include_once( 'lib/ezi18n/classes/ezcharsetinfo.php' );
         $this->ISOUnicodeCodec = eZTextCodec::instance( 'iso-8859-1', 'unicode' );
 
         $buffer = '';
@@ -1424,8 +1419,6 @@ class eZCodeMapper
     */
     function generateCharsetMappingTable( $unicodeTable, $charset )
     {
-        //include_once( 'lib/ezi18n/classes/eztextcodec.php' );
-
         $codec = eZTextCodec::instance( 'unicode', $charset );
         if ( !$codec )
         {
@@ -1729,7 +1722,6 @@ class eZCodeMapper
             if ( !in_array( $charsetName, $nonCJKCharsets ) )
             {
                 // 4 Add spaces after chinese / japanese / korean multibyte characters
-                //include_once( 'lib/ezi18n/classes/eztextcodec.php' );
                 $codec = eZTextCodec::instance( false, 'unicode' );
 
                 $unicodeValueArray = $codec->convertString( $text );

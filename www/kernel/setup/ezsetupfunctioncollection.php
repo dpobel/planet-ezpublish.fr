@@ -5,9 +5,9 @@
 // Created on: <02-Nov-2004 13:23:10 dl>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -26,7 +26,7 @@
 //
 //
 
-/*! \file ezsetupfunctioncollection.php
+/*! \file
 */
 
 /*!
@@ -34,9 +34,6 @@
   \brief The class eZSetupFunctionCollection does
 
 */
-
-//include_once( 'kernel/error/errors.php' );
-//include_once( 'lib/version.php' );
 
 class eZSetupFunctionCollection
 {

@@ -3,9 +3,9 @@
 // Created on: <02-Dec-2002 13:15:49 bf>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -33,9 +33,6 @@
   The information collected is handled by the eZInformationCollection class.
 
 */
-
-//include_once( 'kernel/classes/ezinformationcollectionattribute.php' );
-//include_once( 'lib/ezutils/classes/ezsys.php' );
 
 class eZInformationCollection extends eZPersistentObject
 {
@@ -112,7 +109,7 @@ class eZInformationCollection extends eZPersistentObject
 
      Remove infomation collection from specified contentobject_id
 
-     \param contentobject id
+     \param delID contentobject id
      \note Transaction unsafe. If you call several transaction unsafe methods you must enclose
      the calls within a db transaction; thus within db->begin and db->commit.
     */

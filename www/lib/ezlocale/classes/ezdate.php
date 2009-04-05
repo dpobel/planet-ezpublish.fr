@@ -5,9 +5,9 @@
 // Created on: <01-Mar-2002 13:48:04 amos>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -73,8 +73,6 @@ print( $date1->isEqualTo( $date3 ) ? 'true' : 'false' ); // Prints 'true'
 
   \sa eZTime, eZDateTime, eZLocale
 */
-
-//include_once( 'lib/ezlocale/classes/ezlocale.php' );
 
 class eZDate
 {
@@ -146,7 +144,7 @@ class eZDate
     }
 
     /*!
-     Returns a reference to the current locale.
+     Returns the current locale.
     */
     function locale()
     {
@@ -293,7 +291,7 @@ class eZDate
      Creates a new eZDate object with the date values $month, $day and $year and returns a reference to it.
      Any value can be ommitted or set to 0 to use the current date value.
     */
-    function create( $month, $day = 0, $year = 0 )
+    static function create( $month, $day = 0, $year = 0 )
     {
         if ( $year != 0 )
             $date = mktime( 0, 0, 0, $month, $day, $year );

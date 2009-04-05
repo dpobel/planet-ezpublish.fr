@@ -5,9 +5,9 @@
 // Created on: <03-Jan-2006 10:12:37 hovik>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -26,7 +26,7 @@
 //
 //
 
-/*! \file ezsoapcodec.php
+/*! \file
 */
 
 /*!
@@ -54,7 +54,8 @@ class eZSOAPCodec
         {
             case "string" :
             {
-                $node = $doc->createElement( $name, $value );
+                $node = $doc->createElement( $name );
+                $node->appendChild( $doc->createTextNode( $value ) );
                 $node->setAttribute( eZSOAPEnvelope::XSI_PREFIX . ':type',
                                      eZSOAPEnvelope::XSD_PREFIX . ':string' );
                 return $node;
@@ -62,7 +63,8 @@ class eZSOAPCodec
 
             case "boolean" :
             {
-                $node = $doc->createElement( $name, $value ? 'true' : 'false' );
+                $node = $doc->createElement( $name );
+                $node->appendChild( $doc->createTextNode( $value ? 'true' : 'false' ) );
                 $node->setAttribute( eZSOAPEnvelope::XSI_PREFIX . ':type',
                                      eZSOAPEnvelope::XSD_PREFIX . ':boolean' );
                 return $node;
@@ -70,7 +72,8 @@ class eZSOAPCodec
 
             case "integer" :
             {
-                $node = $doc->createElement( $name, $value );
+                $node = $doc->createElement( $name );
+                $node->appendChild( $doc->createTextNode( $value ) );
                 $node->setAttribute( eZSOAPEnvelope::XSI_PREFIX . ':type',
                                      eZSOAPEnvelope::XSD_PREFIX . ':int' );
                 return $node;
@@ -78,7 +81,8 @@ class eZSOAPCodec
 
             case "double" :
             {
-                $node = $doc->createElement( $name, $value );
+                $node = $doc->createElement( $name );
+                $node->appendChild( $doc->createTextNode( $value ) );
                 $node->setAttribute( eZSOAPEnvelope::XSI_PREFIX . ':type',
                                      eZSOAPEnvelope::XSD_PREFIX . ':float' );
                 return $node;

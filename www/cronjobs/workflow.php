@@ -2,12 +2,12 @@
 //
 // Definition of Runcronworflows class
 //
-// Created on: <02-ïËÔ-2002 14:04:21 sp>
+// Created on: <02-ï¿½ï¿½ï¿½-2002 14:04:21 sp>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -26,30 +26,16 @@
 //
 //
 
-/*! \file runcronworflows.php
+/*! \file
 */
 
 $runInBrowser = true;
 if ( isset( $webOutput ) )
     $runInBrowser = $webOutput;
 
-require_once( "lib/ezutils/classes/ezdebug.php" );
-//include_once( "lib/ezutils/classes/ezini.php" );
-
-//include_once( "kernel/classes/ezworkflowprocess.php" );
-//include_once( "kernel/classes/ezcontentobject.php" );
-//include_once( "kernel/classes/datatypes/ezuser/ezuser.php" );
-//include_once( "lib/ezutils/classes/ezoperationmemento.php" );
-//include_once( "lib/ezutils/classes/ezoperationhandler.php" );
-require_once( "lib/ezutils/classes/ezsession.php" );
-
-require_once( "lib/ezutils/classes/ezdebug.php" );
-//include_once( "lib/ezutils/classes/ezini.php" );
-//include_once( "lib/ezutils/classes/ezdebugsetting.php" );
+$db = eZDB::instance();
 
 $workflowProcessList = eZWorkflowProcess::fetchForStatus( eZWorkflow::STATUS_DEFERRED_TO_CRON );
-//var_dump( $workflowProcessList  );
-//$user = eZUser::instance( 14 );
 
 if ( !$isQuiet )
     $cli->output( "Checking for workflow processes"  );
@@ -58,6 +44,8 @@ $processCount = 0;
 $statusMap = array();
 foreach( $workflowProcessList as $process )
 {
+    $db->begin();
+
     $workflow = eZWorkflow::fetch( $process->attribute( "workflow_id" ) );
 
     if ( $process->attribute( "event_id" ) != 0 )
@@ -105,12 +93,16 @@ foreach( $workflowProcessList as $process )
         if ( is_null( $bodyMemento ) )
         {
             eZDebug::writeError( $bodyMemento, "Empty body memento in workflow.php" );
+            $db->commit();
             continue;
         }
         $bodyMementoData = $bodyMemento->data();
         $mainMemento = $bodyMemento->attribute( 'main_memento' );
         if ( !$mainMemento )
+        {
+            $db->commit();
             continue;
+        }
 
         $mementoData = $bodyMemento->data();
         $mainMementoData = $mainMemento->data();
@@ -126,6 +118,7 @@ foreach( $workflowProcessList as $process )
         $process->removeThis();
     }
 
+    $db->commit();
 }
 if ( !$isQuiet )
 {

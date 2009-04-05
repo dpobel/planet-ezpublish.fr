@@ -5,9 +5,9 @@
 // Created on: <28-Nov-2002 08:28:23 amos>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -26,7 +26,7 @@
 //
 //
 
-/*! \file ezphpcreator.php
+/*! \file
 */
 
 /*!
@@ -777,10 +777,7 @@ $php->addInclude( 'lib/ezutils/classes/ezphpcreator.php' );
         {
             if ( !file_exists( $this->PHPDir ) )
             {
-                //include_once( 'lib/ezfile/classes/ezdir.php' );
-                $ini = eZINI::instance();
-                $perm = octdec( $ini->variable( 'FileSettings', 'StorageDirPermissions' ) );
-                eZDir::mkdir( $this->PHPDir, $perm, true );
+                eZDir::mkdir( $this->PHPDir, false, true );
             }
             $path = $this->PHPDir . '/' . $this->PHPFile;
             $oldumask = umask( 0 );
@@ -823,7 +820,6 @@ $php->addInclude( 'lib/ezutils/classes/ezphpcreator.php' );
 
             if ( $this->isAtomic )
             {
-                //include_once( 'lib/ezfile/classes/ezfile.php' );
                 eZFile::rename( $this->tmpFilename, $this->requestedFilename );
             }
             $this->FileResource = false;
@@ -842,7 +838,6 @@ $php->addInclude( 'lib/ezutils/classes/ezphpcreator.php' );
 
         if ( !$this->ClusterHandler )
         {
-            require_once( 'kernel/classes/ezclusterfilehandler.php' );
             $this->ClusterHandler = eZClusterFileHandler::instance();
         }
         return $this->ClusterHandler->fileExists( $path );
@@ -863,7 +858,6 @@ $php->addInclude( 'lib/ezutils/classes/ezphpcreator.php' );
         {
             if ( !$this->ClusterHandler )
             {
-                require_once( 'kernel/classes/ezclusterfilehandler.php' );
                 $this->ClusterHandler = eZClusterFileHandler::instance( $path );
             }
             $canRestore= $this->ClusterHandler->exists();
@@ -918,7 +912,6 @@ print( $values['MyValue'] );
         {
             if ( !$this->ClusterHandler )
             {
-                require_once( 'kernel/classes/ezclusterfilehandler.php' );
                 $this->ClusterHandler = eZClusterFileHandler::instance( $path );
             }
             $returnVariables = $this->ClusterHandler->processFile( array( $this, '_restoreCall' ), null, $variableDefinitions );
@@ -980,8 +973,13 @@ print( $values['MyValue'] );
             $this->flushChunks();
             $this->close();
 
+            if ( !$this->ClusteringEnabled )
+            {
+                $perm = octdec( eZINI::instance()->variable( 'FileSettings', 'StorageFilePermissions' ) );
+                chmod( eZDir::path( array( $this->PHPDir, $this->PHPFile ) ), $perm );
+            }
+
             // Write log message to storage.log
-            //include_once( 'lib/ezfile/classes/ezlog.php' );
             eZLog::writeStorageLog( $this->PHPFile, $this->PHPDir . '/' );
             return true;
         }
@@ -1031,7 +1029,6 @@ print( $values['MyValue'] );
 
             if ( !$this->ClusterHandler )
             {
-                require_once( 'kernel/classes/ezclusterfilehandler.php' );
                 $this->ClusterHandler = eZClusterFileHandler::instance();
             }
             $this->ClusterHandler->fileStoreContents( $filePath, $text, $this->ClusterFileScope, 'php' );
@@ -1179,7 +1176,7 @@ print( $values['MyValue'] );
         $whitespaceHandling = $elementAttributes['whitespace-handling'];
         $eol = $elementAttributes['eol'];
         $newCommentArray = array();
-        $commentArray = explode( "\n", $element[1] );
+        $commentArray = preg_split( "/\r\n|\r|\n/", $element[1] );
         foreach ( $commentArray as $comment )
         {
             $textLine = '// ' . $comment;

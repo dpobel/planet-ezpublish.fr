@@ -3,9 +3,9 @@
 // Created on: <24-Jan-2003 17:35:58 amos>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -32,8 +32,6 @@ if ( $Module->isCurrentAction( 'Custom' ) )
 {
     $typeIdentifier = $Module->actionParameter( 'TypeIdentifer' );
     $itemID = $Module->actionParameter( 'ItemID' );
-    //include_once( 'kernel/classes/ezcollaborationitem.php' );
-    //include_once( 'kernel/classes/ezcollaborationitemhandler.php' );
     $collaborationItem = eZCollaborationItem::fetch( $itemID );
     $handler = eZCollaborationItemHandler::instantiate( $typeIdentifier );
     return $handler->handleCustomAction( $Module, $collaborationItem );

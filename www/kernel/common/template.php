@@ -3,9 +3,9 @@
 // Created on: <16-Apr-2002 12:37:51 amos>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -36,13 +36,8 @@ function templateInit( $name = false )
     {
         return $GLOBALS["eZPublishTemplate_$name"];
     }
-    //include_once( 'lib/eztemplate/classes/eztemplate.php' );
-    //include_once( 'kernel/common/eztemplatedesignresource.php' );
-    //include_once( 'lib/ezutils/classes/ezextension.php' );
-
     $tpl = eZTemplate::instance();
 
-    //include_once( 'lib/ezutils/classes/ezini.php' );
     $ini = eZINI::instance();
     if ( $ini->variable( 'TemplateSettings', 'Debug' ) == 'enabled' )
         eZTemplate::setIsDebugEnabled( true );

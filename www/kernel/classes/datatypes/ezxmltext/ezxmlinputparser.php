@@ -5,9 +5,9 @@
 // Created on: <27-Mar-2006 15:28:39 ks>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -39,8 +39,6 @@
 */
 
 // if ( !class_exists( 'eZXMLSchema' ) ) // AS 21-09-2007: commented out because of include_once being commented out
-    //include_once( 'kernel/classes/datatypes/ezxmltext/ezxmlschema.php' );
-
 class eZXMLInputParser
 {
     /// \deprecated (back-compatibility)
@@ -167,7 +165,6 @@ class eZXMLInputParser
 
         $this->XMLSchema = eZXMLSchema::instance();
 
-        //include_once( 'lib/version.php' );
         $this->eZPublishVersion = eZPublishSDK::majorVersion() + eZPublishSDK::minorVersion() * 0.1;
 
         $ini = eZINI::instance( 'ezxml.ini' );
@@ -738,7 +735,6 @@ class eZXMLInputParser
             return $text;
         }
         // Convert other HTML entities to the current charset characters.
-        //include_once( 'lib/ezi18n/classes/eztextcodec.php' );
         $codec = eZTextCodec::instance( 'unicode', false );
         $pos = 0;
         $domString = "";

@@ -5,9 +5,9 @@
 // Created on: <18-Sep-2003 13:13:56 kk>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -26,7 +26,7 @@
 //
 //
 
-/*! \file ezrssexportitem.php
+/*! \file
 */
 
 /*!
@@ -35,9 +35,6 @@
 
   RSSExportItem is used to create RSS feeds from published content. See kernel/rss for more files.
 */
-
-//include_once( 'kernel/classes/ezpersistentobject.php' );
-//include_once( 'kernel/classes/ezrssexport.php' );
 
 class eZRSSExportItem extends eZPersistentObject
 {
@@ -50,9 +47,6 @@ class eZRSSExportItem extends eZPersistentObject
         $this->eZPersistentObject( $row );
     }
 
-    /*!
-     \reimp
-    */
     static function definition()
     {
         return array( "fields" => array( "id" => array( 'name' => 'ID',
@@ -84,6 +78,10 @@ class eZRSSExportItem extends eZPersistentObject
                                                                  'datatype' => 'string',
                                                                  'default' => '',
                                                                  'required' => true ),
+                                         'category' => array( 'name' => 'Category',
+                                                           'datatype' => 'string',
+                                                           'default' => '',
+                                                           'required' => false ),
                                          'title' => array( 'name' => 'Title',
                                                            'datatype' => 'string',
                                                            'default' => '',
@@ -130,7 +128,6 @@ class eZRSSExportItem extends eZPersistentObject
     {
         if ( isset( $this->ClassID ) and $this->ClassID )
         {
-            //include_once( 'kernel/classes/ezcontentclass.php' );
             $contentClass = eZContentClass::fetch( $this->ClassID );
             if ( $contentClass )
                 $attributes = $contentClass->fetchAttributes();
@@ -147,7 +144,6 @@ class eZRSSExportItem extends eZPersistentObject
         $retValue = null;
         if ( isset( $this->SourceNodeID ) and $this->SourceNodeID )
         {
-            //include_once( "kernel/classes/ezcontentobjecttreenode.php" );
             $objectNode = eZContentObjectTreeNode::fetch( $this->SourceNodeID );
             if ( isset( $objectNode ) )
             {
@@ -177,7 +173,6 @@ class eZRSSExportItem extends eZPersistentObject
     {
         if ( isset( $this->SourceNodeID ) and $this->SourceNodeID )
         {
-            //include_once( "kernel/classes/ezcontentobjecttreenode.php" );
             $sourceNode = eZContentObjectTreeNode::fetch( $this->SourceNodeID );
         }
         else
@@ -280,7 +275,6 @@ class eZRSSExportItem extends eZPersistentObject
                                  'SortBy' => array( 'published', false )
                                 );
 
-            //include_once( "kernel/classes/ezcontentobjecttreenode.php" );
             $nodeList = eZContentObjectTreeNode::subTreeMultiPaths( $nodesParams, $listParams );
         }
         else

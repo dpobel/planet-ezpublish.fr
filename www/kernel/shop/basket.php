@@ -3,9 +3,9 @@
 // Created on: <04-Jul-2002 13:19:43 bf>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -27,18 +27,7 @@
 $http = eZHTTPTool::instance();
 $module = $Params['Module'];
 
-//include_once( "kernel/classes/ezcontentobject.php" );
-//include_once( "kernel/classes/ezbasket.php" );
-//include_once( "kernel/classes/ezvattype.php" );
-//include_once( "kernel/classes/ezorder.php" );
-//include_once( "kernel/classes/datatypes/ezuser/ezuser.php" );
-
-//include_once( "kernel/classes/ezproductcollection.php" );
-//include_once( "kernel/classes/ezproductcollectionitem.php" );
-//include_once( "kernel/classes/ezproductcollectionitemoption.php" );
 require_once( "kernel/common/template.php" );
-//include_once( 'lib/ezutils/classes/ezhttptool.php' );
-
 $basket = eZBasket::currentBasket();
 $basket->updatePrices(); // Update the prices. Transaction not necessary.
 
@@ -46,6 +35,19 @@ $basket->updatePrices(); // Update the prices. Transaction not necessary.
 if ( $http->hasPostVariable( "ActionAddToBasket" ) )
 {
     $objectID = $http->postVariable( "ContentObjectID" );
+
+    if ( $http->hasPostVariable( "Quantity" ) )
+    {
+        $quantity = (int)$http->postVariable( "Quantity" );
+        if ( $quantity <= 0 )
+        {
+            $quantity = 1;
+        }
+    }
+    else
+    {
+        $quantity = 1;
+    }
 
     if ( $http->hasPostVariable( 'eZOption' ) )
         $optionList = $http->postVariable( 'eZOption' );
@@ -55,7 +57,7 @@ if ( $http->hasPostVariable( "ActionAddToBasket" ) )
     $http->setSessionVariable( "FromPage", $_SERVER['HTTP_REFERER'] );
     $http->setSessionVariable( "AddToBasket_OptionList_" . $objectID, $optionList );
 
-    $module->redirectTo( "/shop/add/" . $objectID );
+    $module->redirectTo( "/shop/add/" . $objectID . "/" . $quantity );
     return;
 }
 
@@ -67,7 +69,7 @@ if ( $http->hasPostVariable( "RemoveProductItemButton" ) )
     if ( is_array( $itemCountList ) && is_array( $itemIDList ) && count( $itemCountList ) == count( $itemIDList ) && is_object( $basket ) )
     {
         $productCollectionID = $basket->attribute( 'productcollection_id' );
-        $item = $http->postVariable( "RemoveProductItemButton" );
+        $removeItem = $http->postVariable( "RemoveProductItemButton" );
         if ( $http->hasPostVariable( "RemoveProductItemDeleteList" ) )
             $itemList = $http->postVariable( "RemoveProductItemDeleteList" );
         else
@@ -90,15 +92,15 @@ if ( $http->hasPostVariable( "RemoveProductItemButton" ) )
                 }
                 else
                 {
-                    if ( ( is_numeric( $item ) and $id != $item ) or ( is_array( $itemList ) and !in_array( $id, $itemList ) ) )
+                    if ( ( is_numeric( $removeItem ) and $id != $removeItem ) or ( is_array( $itemList ) and !in_array( $id, $itemList ) ) )
                         $itemCountError = true;
                 }
             }
             $i++;
         }
-        if ( is_numeric( $item )  )
+        if ( is_numeric( $removeItem )  )
         {
-            $basket->removeItem( $item );
+            $basket->removeItem( $removeItem );
         }
         else
         {
@@ -109,7 +111,6 @@ if ( $http->hasPostVariable( "RemoveProductItemButton" ) )
         }
 
         // Update shipping info after removing an item from the basket.
-        require_once( 'kernel/classes/ezshippingmanager.php' );
         eZShippingManager::updateShippingInfo( $basket->attribute( 'productcollection_id' ) );
 
         $db->commit();
@@ -209,6 +210,19 @@ if ( $http->hasPostVariable( "CheckoutButton" ) or ( $doCheckout === true ) )
     if ( $http->hasPostVariable( "ProductItemIDList" ) )
     {
         $itemCountList = $http->postVariable( "ProductItemCountList" );
+
+        $counteditems = 0;
+        foreach ($itemCountList as $itemCount)
+        {
+            $counteditems = $counteditems + $itemCount;
+        }
+        $zeroproduct = false;
+        if ( $counteditems == 0 )
+        {
+            $zeroproduct = true;
+            return $module->redirectTo( $module->functionURI( "basket" ) );
+        }
+
         $itemIDList = $http->postVariable( "ProductItemIDList" );
 
         if ( is_array( $itemCountList ) && is_array( $itemIDList ) && count( $itemCountList ) == count( $itemIDList ) && is_object( $basket ) )
@@ -243,7 +257,6 @@ if ( $http->hasPostVariable( "CheckoutButton" ) or ( $doCheckout === true ) )
     }
 
     // Fetch the shop account handler
-    //include_once( 'kernel/classes/ezshopaccounthandler.php' );
     $accountHandler = eZShopAccountHandler::instance();
 
     // Do we have all the information we need to start the checkout
@@ -309,7 +322,6 @@ $tpl->setVariable( "vat_is_known", $basket->isVATKnown() );
 
 
 // Add shipping cost to the total items price and store the sum to corresponding template vars.
-require_once( 'kernel/classes/ezshippingmanager.php' );
 $shippingInfo = eZShippingManager::getShippingInfo( $basket->attribute( 'productcollection_id' ) );
 if ( $shippingInfo !== null )
 {

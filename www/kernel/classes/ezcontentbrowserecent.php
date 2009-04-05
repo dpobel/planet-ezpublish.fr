@@ -5,9 +5,9 @@
 // Created on: <30-Apr-2003 13:04:11 sp>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -26,7 +26,7 @@
 //
 //
 
-/*! \file ezcontentbrowserecent.php
+/*! \file
 */
 
 /*!
@@ -51,24 +51,13 @@ eZContentBrowseRecent::fetchListForUser( $userID )
 \endcode
 
 */
-
-//include_once( "lib/ezdb/classes/ezdb.php" );
-require_once( "lib/ezutils/classes/ezdebug.php" );
-//include_once( "kernel/classes/ezpersistentobject.php" );
-
 class eZContentBrowseRecent extends eZPersistentObject
 {
-    /*!
-     \reimp
-    */
     function eZContentBrowseRecent( $row )
     {
         $this->eZPersistentObject( $row );
     }
 
-    /*!
-     \reimp
-    */
     static function definition()
     {
         return array( "fields" => array( "id" => array( 'name' => 'ID',
@@ -136,7 +125,6 @@ class eZContentBrowseRecent extends eZPersistentObject
     */
     static function maximumRecentItems( $userID )
     {
-        //include_once( 'lib/ezutils/classes/ezini.php' );
         $ini = eZINI::instance( 'browse.ini' );
         $maximum = $ini->variable( 'BrowseSettings', 'MaximumRecentItems' );
         return $maximum;

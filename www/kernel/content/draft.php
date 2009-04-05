@@ -2,12 +2,12 @@
 //
 // Definition of List class
 //
-// Created on: <29-ïËÔ-2002 16:14:57 sp>
+// Created on: <29-ï¿½ï¿½ï¿½-2002 16:14:57 sp>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -26,12 +26,9 @@
 //
 //
 
-/*! \file list.php
+/*! \file
 */
 require_once( 'kernel/common/template.php' );
-//include_once( 'kernel/classes/ezcontentobjectversion.php' );
-//include_once( "lib/ezdb/classes/ezdb.php" );
-
 $Module = $Params['Module'];
 $http = eZHTTPTool::instance();
 
@@ -53,9 +50,12 @@ if ( $http->hasPostVariable( 'RemoveButton' )  )
         $db->begin();
         foreach ( $deleteIDArray as $deleteID )
         {
-            eZDebug::writeNotice( $deleteID, "deleteID" );
             $version = eZContentObjectVersion::fetch( $deleteID );
-            $version->removeThis();
+            if ( $version instanceof eZContentObjectVersion )
+            {
+                eZDebug::writeNotice( $deleteID, "deleteID" );
+                $version->removeThis();
+            }
         }
         $db->commit();
     }

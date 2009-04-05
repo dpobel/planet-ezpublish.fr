@@ -5,9 +5,9 @@
 // Created on: <08-Aug-2003 16:46:32 kk>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -26,10 +26,8 @@
 //
 //
 
-/*! \file ezstep_system_check.php
+/*! \file
 */
-//include_once( "kernel/setup/ezsetuptests.php" );
-//include_once( 'kernel/setup/steps/ezstep_installer.php' );
 require_once( "kernel/common/i18n.php" );
 
 /*!
@@ -49,8 +47,6 @@ class eZStepSystemCheck extends eZStepInstaller
                                 'system_check', 'System check' );
     }
 
-    /*!
-     */
     function processPostData()
     {
         $return = $this->init();
@@ -61,8 +57,6 @@ class eZStepSystemCheck extends eZStepInstaller
         return $return;
     }
 
-    /*!
-     */
     function init()
     {
         $criticalTests = eZSetupCriticalTests();
@@ -91,8 +85,6 @@ class eZStepSystemCheck extends eZStepInstaller
         return ( $this->Result == EZ_SETUP_TEST_SUCCESS );
     }
 
-    /*!
-    */
     function display()
     {
         $this->Tpl->setVariable( 'test', array( 'result' => $this->Result,
@@ -109,8 +101,6 @@ class eZStepSystemCheck extends eZStepInstaller
         return $result;
     }
 
-    /*!
-    */
     function showMessage()
     {
         return false;

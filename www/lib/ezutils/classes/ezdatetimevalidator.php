@@ -4,9 +4,9 @@
 //
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -25,7 +25,7 @@
 //
 //
 
-/*! \file ezdatetimevalidator.php
+/*! \file
 */
 
 /*!
@@ -33,8 +33,6 @@
   \brief The class eZDateTimeValidator does
 
 */
-
-//include_once( 'lib/ezutils/classes/ezinputvalidator.php' );
 
 class eZDateTimeValidator extends eZInputValidator
 {
@@ -58,22 +56,23 @@ class eZDateTimeValidator extends eZInputValidator
         return eZInputValidator::STATE_ACCEPTED;
     }
 
-    static function validateTime( $hour, $minute )
+    static function validateTime( $hour, $minute, $second = 0 )
     {
-        if( preg_match( '/\d+/', trim( $hour )   ) &&
-            preg_match( '/\d+/', trim( $minute ) ) &&
-            $hour >= 0 && $minute >= 0 &&
-            $hour < 24 && $minute < 60 )
+        if ( preg_match( '/\d+/', trim( $hour )   ) &&
+             preg_match( '/\d+/', trim( $minute ) ) &&
+             preg_match( '/\d+/', trim( $second ) ) &&
+             $hour >= 0 && $minute >= 0 && $second >= 0 &&
+             $hour < 24 && $minute < 60 && $second < 60 )
         {
             return eZInputValidator::STATE_ACCEPTED;
         }
         return eZInputValidator::STATE_INVALID;
     }
 
-    static function validateDateTime( $day, $month, $year, $hour, $minute )
+    static function validateDateTime( $day, $month, $year, $hour, $minute, $second = 0 )
     {
         $check = checkdate( $month, $day, $year );
-        $datetime = mktime( $hour, $minute, 0, $month, $day, $year );
+        $datetime = mktime( $hour, $minute, $second, $month, $day, $year );
         if ( !$check or
              $year < 1970 or
              $datetime === false or

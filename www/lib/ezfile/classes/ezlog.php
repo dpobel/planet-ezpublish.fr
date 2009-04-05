@@ -5,9 +5,9 @@
 // Created on: <17-Mar-2003 11:00:54 wy>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -34,8 +34,6 @@
 */
 
 
-//include_once( "lib/ezutils/classes/ezsys.php" );
-
 class eZLog
 {
     const MAX_LOGROTATE_FILES = 3;
@@ -55,13 +53,7 @@ class eZLog
     */
     static function write( $message, $logName = 'common.log', $dir = 'var/log' )
     {
-        $ini = eZINI::instance();
         $fileName = $dir . '/' . $logName;
-        if ( !file_exists( $dir ) )
-        {
-            //include_once( 'lib/ezfile/classes/ezdir.php' );
-            eZDir::mkdir( $dir, 0775, true );
-        }
         $oldumask = @umask( 0 );
 
         $fileExisted = @file_exists( $fileName );
@@ -70,6 +62,10 @@ class eZLog
         {
             if ( eZLog::rotateLog( $fileName ) )
                 $fileExisted = false;
+        }
+        else if ( !$fileExisted and !file_exists( $dir ) )
+        {
+            eZDir::mkdir( $dir, false, true );
         }
 
         $logFile = @fopen( $fileName, "a" );
@@ -80,8 +76,16 @@ class eZLog
             @fwrite( $logFile, $logMessage );
             @fclose( $logFile );
             if ( !$fileExisted )
-                @chmod( $fileName, 0666 );
+            {
+                $ini = eZINI::instance();
+                $permissions = octdec( $ini->variable( 'FileSettings', 'LogFilePermissions' ) );
+                @chmod( $fileName, $permissions );
+            }
             @umask( $oldumask );
+        }
+        else
+        {
+            eZDebug::writeError( 'Couldn\'t create the log file "' . $fileName . '"', 'eZLog::write()' );
         }
     }
 
@@ -96,11 +100,6 @@ class eZLog
         $logDir = $ini->variable( 'FileSettings', 'LogDir' );
         $logName = 'storage.log';
         $fileName = $varDir . '/' . $logDir . '/' . $logName;
-        if ( !file_exists( $varDir . '/' . $logDir ) )
-        {
-            //include_once( 'lib/ezfile/classes/ezdir.php' );
-            eZDir::mkdir( $varDir . '/' . $logDir, 0775, true );
-        }
         $oldumask = @umask( 0 );
 
         $fileExisted = @file_exists( $fileName );
@@ -109,6 +108,10 @@ class eZLog
         {
             if ( eZLog::rotateLog( $fileName ) )
                 $fileExisted = false;
+        }
+        else if ( !$fileExisted and !file_exists( $varDir . '/' . $logDir ) )
+        {
+            eZDir::mkdir( $varDir . '/' . $logDir, false, true );
         }
 
         if ( $dir !== false )
@@ -129,8 +132,15 @@ class eZLog
             @fwrite( $logFile, $logMessage );
             @fclose( $logFile );
             if ( !$fileExisted )
-                @chmod( $fileName, 0666 );
+            {
+                $permissions = octdec( $ini->variable( 'FileSettings', 'LogFilePermissions' ) );
+                @chmod( $fileName, $permissions );
+            }
             @umask( $oldumask );
+        }
+        else
+        {
+            eZDebug::writeError( 'Couldn\'t create the log file "' . $fileName . '"', 'eZLog::writeStorageLog()' );
         }
     }
 
@@ -176,7 +186,6 @@ class eZLog
     */
     static function rotateLog( $fileName )
     {
-        //include_once( 'lib/ezfile/classes/ezfile.php' );
         $maxLogrotateFiles = eZLog::maxLogrotateFiles();
         for ( $i = $maxLogrotateFiles; $i > 0; --$i )
         {

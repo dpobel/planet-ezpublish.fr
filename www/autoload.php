@@ -2,48 +2,121 @@
 /**
  * Autoloader definition for eZ Publish
  *
- * @copyright Copyright (C) 2005-2008 eZ Systems AS. All rights reserved.
- * @license http://ez.no/licenses/gnu_gpl GNU GPL
- * @version //autogentag//
- * @filesource
+ * @copyright Copyright (C) 1999-2009 eZ Systems AS. All rights reserved.
+ * @license http://ez.no/licenses/gnu_gpl GNU GPLv2
  *
  */
 
 // config.php can set the components path like:
 // ini_set( 'include_path', ini_get( 'include_path' ). ':../ezcomponents/trunk' );
+// It is also possible to push a custom autoload method to the autoload
+// function stack. Remember to check for class prefixes in such a method, if it
+// will not serve classes from eZ Publish and eZ Components
 
-if ( file_exists( "config.php" ) )
+if ( file_exists( 'config.php' ) )
 {
-    require "config.php";
+    require 'config.php';
 }
 
-// require 'Base/src/base.php';
-$baseEnabled = @include( 'ezc/Base/base.php' );
-if ( !$baseEnabled )
+$useBundledComponents = defined( 'EZP_USE_BUNDLED_COMPONENTS' ) ? EZP_USE_BUNDLED_COMPONENTS === true : file_exists( 'lib/ezc' );
+if ( $useBundledComponents )
 {
-    $baseEnabled = @include( 'Base/src/base.php' );
+    set_include_path( './lib/ezc' . PATH_SEPARATOR . get_include_path() );
+    require 'Base/src/base.php';
+    $baseEnabled = true;
+}
+else if ( defined( 'EZC_BASE_PATH' ) )
+{
+    require EZC_BASE_PATH;
+    $baseEnabled = true;
+}
+else
+{
+    $baseEnabled = @include 'ezc/Base/base.php';
+    if ( !$baseEnabled )
+    {
+        $baseEnabled = @include 'Base/src/base.php';
+    }
 }
 
 define( 'EZCBASE_ENABLED', $baseEnabled );
 
-function __autoload( $className )
+/**
+ * Provides the native autoload functionality for eZ Publish
+ *
+ * @package kernel
+ */
+class ezpAutoloader
 {
-    static $ezpClasses = null;
-    if ( is_null( $ezpClasses ) )
+    protected static $ezpClasses = null;
+
+    public static function autoload( $className )
     {
-        $ezpKernelClasses = require 'autoload/ezp_kernel.php';
-        $ezpExtensionClasses = require 'autoload/ezp_extension.php';
-        $ezpClasses = array_merge( $ezpKernelClasses, $ezpExtensionClasses );
+        if ( is_null( self::$ezpClasses ) )
+        {
+            $ezpKernelClasses = require 'autoload/ezp_kernel.php';
+            $ezpExtensionClasses = false;
+            $ezpTestClasses = false;
+
+            if ( file_exists( 'var/autoload/ezp_extension.php' ) )
+            {
+                $ezpExtensionClasses = require 'var/autoload/ezp_extension.php';
+            }
+
+            if ( file_exists( 'var/autoload/ezp_tests.php' ) )
+            {
+                $ezpTestClasses = require 'var/autoload/ezp_tests.php';
+            }
+
+            if ( $ezpExtensionClasses and $ezpTestClasses )
+            {
+                self::$ezpClasses = array_merge( $ezpKernelClasses, $ezpExtensionClasses, $ezpTestClasses );
+            }
+            else if ( $ezpExtensionClasses )
+            {
+                self::$ezpClasses = array_merge( $ezpKernelClasses, $ezpExtensionClasses );
+            }
+            else if ( $ezpTestClasses )
+            {
+                self::$ezpClasses = array_merge( $ezpKernelClasses, $ezpTestClasses );
+            }
+            else
+            {
+                self::$ezpClasses = $ezpKernelClasses;
+            }
+
+            if ( defined( 'EZP_AUTOLOAD_ALLOW_KERNEL_OVERRIDE' ) and EZP_AUTOLOAD_ALLOW_KERNEL_OVERRIDE )
+            {
+                $ezpKernelOverrideClasses = require 'var/autoload/ezp_override.php';
+                self::$ezpClasses = array_merge( $ezpClasses, $ezpKernelOverrideClasses );
+            }
+        }
+
+        if ( array_key_exists( $className, self::$ezpClasses ) )
+        {
+            require( self::$ezpClasses[$className] );
+        }
     }
 
-    if ( array_key_exists( $className, $ezpClasses ) )
+    /**
+     * Resets the local, in-memory autoload cache.
+     * 
+     * If the autoload arrays are extended during a requsts lifetime, this
+     * method must be called, to make them available.
+     *
+     * @return void
+     */
+    public static function reset()
     {
-        require( $ezpClasses[$className] );
+        self::$ezpClasses = null;
     }
-    elseif ( EZCBASE_ENABLED )
-    {
-        ezcBase::autoload( $className );
-    }
+}
+
+spl_autoload_register( array( 'ezpAutoloader', 'autoload' ) );
+
+if ( EZCBASE_ENABLED )
+{
+    spl_autoload_register( array( 'ezcBase', 'autoload' ) );
 }
 
 ?>

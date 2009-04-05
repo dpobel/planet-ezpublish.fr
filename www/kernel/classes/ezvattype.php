@@ -5,9 +5,9 @@
 // Created on: <26-Nov-2002 16:00:45 wy>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -33,12 +33,8 @@
 
 */
 
-//include_once( "kernel/classes/ezpersistentobject.php" );
-
 class eZVatType extends eZPersistentObject
 {
-    /*!
-    */
     function eZVatType( $row )
     {
         $this->eZPersistentObject( $row );
@@ -69,7 +65,6 @@ class eZVatType extends eZPersistentObject
     {
         if ( $this->ID == -1 )
         {
-            require_once( 'kernel/classes/ezvatmanager.php' );
             $percentage = eZVATManager::getVAT( $object, $country );
             if ( $percentage === null )
                 $percentage = -1; // indicate that VAT percentage is unknown
@@ -112,8 +107,6 @@ class eZVatType extends eZPersistentObject
 
     static function fetch( $id, $asObject = true )
     {
-        require_once( 'kernel/classes/ezvatmanager.php' );
-
         if ( $id == -1 && eZVATManager::isDynamicVatChargingEnabled() )
             return eZVatType::dynamicVatType( $asObject );
 
@@ -143,7 +136,6 @@ class eZVatType extends eZPersistentObject
         // Add "fake" VAT type: dynamic.
         if ( !$skipDynamic )
         {
-            require_once( 'kernel/classes/ezvatmanager.php' );
             if ( eZVATManager::isDynamicVatChargingEnabled() )
                 $VATTypes[] = eZVatType::dynamicVatType( $asObject );
         }
@@ -172,7 +164,6 @@ class eZVatType extends eZPersistentObject
                  "data_type_string IN ('ezprice', 'ezmultiprice') " .
                  "AND data_text LIKE '$vatID,%'";
 
-        require_once( 'lib/ezdb/classes/ezdb.php' );
         $db = eZDB::instance();
         $rslt = $db->arrayQuery( $query );
         $nProducts = $rslt[0]['count'];
@@ -274,7 +265,6 @@ class eZVatType extends eZPersistentObject
         $db->begin();
 
         // remove dependent VAT rules
-        require_once( 'kernel/classes/ezvatrule.php' );
         $dependentRules = eZVatRule::fetchByVatType( $vatID );
         foreach ( $dependentRules as $rule )
         {

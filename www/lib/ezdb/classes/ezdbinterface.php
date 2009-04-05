@@ -7,9 +7,9 @@
 // Created on: <12-Feb-2002 15:54:17 bf>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -35,9 +35,6 @@
 
   \sa eZDB
 */
-
-require_once( "lib/ezutils/classes/ezdebug.php" );
-//include_once( "lib/ezutils/classes/ezini.php" );
 
 class eZDBInterface
 {
@@ -126,7 +123,6 @@ class eZDBInterface
         else
 */
         {
-            //include_once( "lib/ezi18n/classes/eztextcodec.php" );
             $tmpOutputTextCodec = eZTextCodec::instance( $charset, false, false );
             $tmpInputTextCodec = eZTextCodec::instance( false, $charset, false );
             unset( $this->OutputTextCodec );
@@ -302,7 +298,6 @@ class eZDBInterface
     {
         $type = $this->databaseName();
 
-        //include_once( 'lib/ezfile/classes/ezdir.php' );
         if ( $usePathType )
             $sqlFileName = eZDir::path( array( $path, $type, $sqlFile ) );
         else
@@ -347,13 +342,16 @@ class eZDBInterface
      \private
      Writes a debug notice with query information.
     */
-    function reportQuery( $class, $sql, $numRows, $timeTaken )
+    function reportQuery( $class, $sql, $numRows, $timeTaken, $asDebug = false )
     {
         $rowText = '';
         if ( $numRows !== false ) $rowText = "$numRows rows, ";
 
-        $backgroundClass = ($this->TransactionCounter > 0  ? "debugtransaction transactionlevel-$this->TransactionCounter" : "");
-        eZDebug::writeNotice( "$sql", "$class::query($rowText" . number_format( $timeTaken, 3 ) . " ms) query number per page:" . $this->NumQueries++, $backgroundClass );
+        $backgroundClass = ($this->TransactionCounter > 0  ? "debugtransaction transactionlevel-$this->TransactionCounter" : '');
+        if ( $asDebug )
+            eZDebug::writeDebug( "$sql", "$class::query($rowText" . number_format( $timeTaken, 3 ) . ' ms) query number per page:' . $this->NumQueries++, $backgroundClass );
+        else
+            eZDebug::writeNotice( "$sql", "$class::query($rowText" . number_format( $timeTaken, 3 ) . ' ms) query number per page:' . $this->NumQueries++, $backgroundClass );
     }
 
     /*!
@@ -982,7 +980,6 @@ class eZDBInterface
             $this->RecordError = $oldRecordError;
 
             // Stop execution immediately while allowing other systems (session etc.) to cleanup
-            require_once( 'lib/ezutils/classes/ezexecution.php' );
             eZExecution::cleanup();
             eZExecution::setCleanExit();
 
@@ -991,8 +988,6 @@ class eZDBInterface
 
             $ini = eZINI::instance();
             $adminEmail = $ini->variable( 'MailSettings', 'AdminEmail' );
-            //include_once( 'lib/ezutils/classes/ezsys.php' );
-
             if ( !eZSys::isShellExecution() )
             {
                 $site = eZSys::serverVariable( 'HTTP_HOST' );
@@ -1207,6 +1202,14 @@ class eZDBInterface
     }
 
     /*!
+      \pure
+      Removes a database
+    */
+    function removeDatabase( $dbName )
+    {
+    }
+
+    /*!
       Create a new temporary table
     */
     function createTempTable( $createTableQuery = '', $server = self::SERVER_SLAVE )
@@ -1344,6 +1347,11 @@ class eZDBInterface
         $result = $statement . ' ( ' . $impString . ' )';
 
         return $result;
+    }
+
+    function supportsDefaultValuesInsertion()
+    {
+        return true;
     }
 
     /// \protectedsection

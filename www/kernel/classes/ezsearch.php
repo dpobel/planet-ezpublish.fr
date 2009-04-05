@@ -5,9 +5,9 @@
 // Created on: <25-Jun-2002 10:56:09 bf>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -33,42 +33,78 @@
 
 */
 
-//include_once( 'lib/ezutils/classes/ezini.php' );
-
 class eZSearch
 {
-    /*!
-    */
     function eZSearch()
     {
 
     }
 
+   /*!
+     \static
+     determine how to pass the commit argument, for deletes and updates
+     maybe this needs to be further splitted
+    */
+
+    static function needCommit()
+    {
+        $searchEngine = eZSearch::getEngine();
+
+        if ( is_object( $searchEngine ) && method_exists( $searchEngine, 'needCommit'))
+        {
+            return $searchEngine->needCommit();
+        }
+        else
+        {
+            return true;
+        }
+    }
     /*!
      \static
-     Will remove the index from the given object from the search engine
+     See if a remove is needed in an update of content objects
     */
-    static function removeObject( $contentObject )
+
+    static function needRemoveWithUpdate()
+    {
+        $searchEngine = eZSearch::getEngine();
+
+        if ( is_object( $searchEngine ) && method_exists( $searchEngine, 'needRemoveWithUpdate'))
+        {
+            return $searchEngine->needRemoveWithUpdate();
+        }
+        else
+        {
+            return true;
+        }
+    }
+
+     /*!
+     \static
+     Will remove the index from the given object from the search engine
+     A commit parameter is added since 4.1 to accomodate requirements of several search plugins
+    */
+    static function removeObject( $contentObject, $commit = true )
     {
         $searchEngine = eZSearch::getEngine();
 
         if ( is_object( $searchEngine ) )
         {
-            $searchEngine->removeObject( $contentObject );
+            $searchEngine->removeObject( $contentObject, $commit );
         }
     }
 
     /*!
      \static
      Will index the content object to the search engine.
+     A commit parameter is added since 4.1 to accomodate requirements of several search plugins
     */
-    static function addObject( $contentObject )
+    static function addObject( $contentObject, $commit = true )
     {
         $searchEngine = eZSearch::getEngine();
 
         if ( is_object( $searchEngine ) )
         {
-            $searchEngine->addObject( $contentObject, '/content/view/' );
+            $searchEngine->addObject( $contentObject, $commit );
         }
     }
 
@@ -419,7 +455,6 @@ class eZSearch
             return $GLOBALS[$instanceName];
         }
 
-        //include_once( 'lib/ezutils/classes/ezini.php' );
         $ini = eZINI::instance();
 
         $searchEngineString = 'ezsearch';
@@ -429,7 +464,6 @@ class eZSearch
         }
 
         $directoryList = array();
-        //include_once( 'lib/ezutils/classes/ezextension.php' );
         if ( $ini->hasVariable( 'SearchSettings', 'ExtensionDirectories' ) )
         {
             $extensionDirectories = $ini->variable( 'SearchSettings', 'ExtensionDirectories' );
@@ -461,6 +495,85 @@ class eZSearch
         return false;
     }
 
+    /*
+     * @since eZ Publish 4.1
+     * @description new methods that search plugins can implement when meta data is updated (outside publish operations)
+     *
+     */
+
+    public static function updateNodeSection( $nodeID, $sectionID )
+    {
+        $searchEngine = eZSearch::getEngine();
+
+        if ( is_object( $searchEngine ) && method_exists( $searchEngine, 'updateNodeSection'))
+        {
+            return $searchEngine->updateNodeSection( $nodeID, $sectionID );
+        }
+
+        return false;
+    }
+
+    public static function updateNodeVisibility( $nodeID, $action )
+    {
+        $searchEngine = eZSearch::getEngine();
+
+        if ( is_object( $searchEngine ) && method_exists( $searchEngine, 'updateNodeVisibility'))
+        {
+            return $searchEngine->updateNodeVisibility( $nodeID, $action );
+        }
+
+        return false;
+    }
+
+    public static function addNodeAssignment( $mainNodeID, $objectID, $nodeAssigmentIDList )
+    {
+        $searchEngine = eZSearch::getEngine();
+
+        if ( is_object( $searchEngine ) && method_exists( $searchEngine, 'addNodeAssignment'))
+        {
+            return $searchEngine->addNodeAssignment( $mainNodeID, $objectID, $nodeAssigmentIDList );
+        }
+
+        return false;
+    }
+
+    public static function removeNodeAssignment( $mainNodeID, $newMainNodeID, $objectID, $nodeAssigmentIDList )
+    {
+        $searchEngine = eZSearch::getEngine();
+
+        if ( is_object( $searchEngine ) && method_exists( $searchEngine, 'removeNodeAssignment'))
+        {
+            return $searchEngine->removeNodeAssignment( $mainNodeID, $newMainNodeID, $objectID, $nodeAssigmentIDList );
+        }
+
+        return false;
+    }
+
+    public static function updateObjectState( $objectID, $objectStateList )
+    {
+        $searchEngine = eZSearch::getEngine();
+
+        if ( is_object( $searchEngine ) && method_exists( $searchEngine, 'updateObjectState'))
+        {
+            return $searchEngine->updateObjectState( $objectID, $objectStateList );
+        }
+
+        return false;
+    }
+    
+    public static function swapNode( $nodeID, $selectedNodeID, $nodeIdList = array() )
+    {
+        $searchEngine = eZSearch::getEngine();
+
+        if ( is_object( $searchEngine ) && method_exists( $searchEngine, 'swapNode'))
+        {
+            return $searchEngine->swapNode( $nodeID, $selectedNodeID, $nodeIdList = array() );
+        }
+
+        return false;
+    }
+
+    
 }
 
 ?>

@@ -3,9 +3,9 @@
 // Created on: <17-Apr-2007 11:08:55 bjorn>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -24,7 +24,7 @@
 //
 //
 
-/*! \file ezisbngrouprange.php
+/*! \file
 */
 
 /*!
@@ -40,8 +40,6 @@
   http://www.isbn-international.org
 
 */
-
-//include_once( 'kernel/classes/ezpersistentobject.php' );
 
 class eZISBNGroupRange extends eZPersistentObject
 {
@@ -128,8 +126,7 @@ class eZISBNGroupRange extends eZPersistentObject
     }
 
     /*!
-     \param $count Will contain the count of objects returned and is sent
-                   back in the reference variable.
+     \param $asObject Whether if the result should be sent back as objects or an array.
      \return the group range list for ISBN groups.
     */
     static function fetchList( $asObject = true )
@@ -145,8 +142,6 @@ class eZISBNGroupRange extends eZPersistentObject
      Will extract the group number based on the different ranges
      which is based on the 5 first digits after the Prefix field.
      \param $isbnNr Should be a stripped down ISBN number with just the digits (ean number).
-     \param $groupLength is the length of the RegistrationGroup in the range that was found.
-                         Is sent back in the reference variable.
      \return the group range object if found and false if not found.
     */
     static function extractGroup( $isbnNr )

@@ -5,9 +5,9 @@
 // Created on: <06-Oct-2002 16:19:31 amos>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -26,7 +26,7 @@
 //
 //
 
-/*! \file ezcontentfunctioncollection.php
+/*! \file
 */
 
 /*!
@@ -34,8 +34,6 @@
   \brief The class eZURLFunctionCollection does
 
 */
-
-//include_once( 'kernel/error/errors.php' );
 
 class eZURLFunctionCollection
 {
@@ -48,7 +46,6 @@ class eZURLFunctionCollection
 
     function fetchList( $isValid, $offset, $limit, $onlyPublished )
     {
-        //include_once( 'kernel/classes/datatypes/ezurl/ezurl.php' );
         $parameters = array( 'is_valid' => $isValid,
                              'offset' => $offset,
                              'limit' => $limit,
@@ -64,7 +61,6 @@ class eZURLFunctionCollection
 
     function fetchListCount( $isValid, $onlyPublished )
     {
-        //include_once( 'kernel/classes/datatypes/ezurl/ezurl.php' );
         $parameters = array( 'is_valid' => $isValid,
                              'only_published' => $onlyPublished );
         $listCount = eZURL::fetchListCount( $parameters );

@@ -5,9 +5,9 @@
 // Created on: <10-Apr-2002 13:47:41 amos>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -77,7 +77,15 @@ class eZURI
         $out = explode( "/", $str ); // Don't encode the slashes
         foreach ( $out as $i => $o )
         {
-            $out[$i] = urlencode( $o ); // Let PHP do the rest
+            if ( preg_match( "#^[\(]([a-zA-Z0-9_]+)[\)]#", $o, $m ) )
+            {
+                // Don't encode '(' and ')' in user parameters
+                $out[$i] = '(' . urlencode( $m[1] ) . ')';
+            }
+            else
+            {
+                $out[$i] = urlencode( $o ); // Let PHP do the rest
+            }
         }
         return join( "/", $out );
     }
@@ -178,7 +186,6 @@ class eZURI
             $this->OriginalURI = $uri;
             $this->UserArray = array();
 
-            //include_once( 'lib/ezutils/classes/ezini.php' );
             $ini = eZINI::instance( 'template.ini' );
 
             if ( $ini->variable( 'ControlSettings', 'OldStyleUserVariables' ) == 'enabled' )
@@ -235,7 +242,6 @@ class eZURI
             // Remake the URI without any user parameters
             $this->URI = implode( '/', $this->URIArray );
 
-            //include_once( 'lib/ezutils/classes/ezini.php' );
             $ini = eZINI::instance( 'template.ini' );
             if ( $ini->variable( 'ControlSettings', 'AllowUserVariables' ) == 'false' )
             {
@@ -324,7 +330,6 @@ class eZURI
                 $char = $this->UserArray[$paramKey];
                 $char = urldecode( $char );
 
-                //include_once( 'lib/ezi18n/classes/eztextcodec.php' );
                 $codec = eZTextCodec::instance( 'utf-8', false );
                 if ( $codec )
                     $char = $codec->convertString( $char );
@@ -495,11 +500,17 @@ class eZURI
     */
     static function instance( $uri = false )
     {
-        if ( !isset( $GLOBALS['eZURIInstance'][$uri] ) )
+        // If $uri is false we assume the caller wants eZSys::requestURI()
+        if ( $uri === false or $uri == eZSys::requestURI() )
         {
-            $GLOBALS['eZURIInstance'][$uri] = new eZURI( $uri );
+            if ( !isset( $GLOBALS['eZURIRequestInstance'] ) )
+            {
+                $GLOBALS['eZURIRequestInstance'] = new eZURI( eZSys::requestURI() );
+            }
+            return $GLOBALS['eZURIRequestInstance'];
         }
-        return $GLOBALS['eZURIInstance'][$uri];
+
+        return new eZURI( $uri );
     }
 
     /*!
@@ -523,7 +534,6 @@ class eZURI
             $href = '/' . $href;
         }
 
-        //include_once( 'lib/ezutils/classes/ezsys.php' );
         $sys = eZSys::instance();
         $dir = !$ignoreIndexDir ? $sys->indexDir() : $sys->wwwDir();
         $serverURL = $serverURL === 'full' ? $sys->serverURL() : '' ;

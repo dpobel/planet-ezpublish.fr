@@ -5,9 +5,9 @@
 // Created on: <13-May-2003 13:22:20 sp>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -26,7 +26,7 @@
 //
 //
 
-/*! \file ezmailnotificationtransport.php
+/*! \file
 */
 
 /*!
@@ -47,8 +47,6 @@ class eZMailNotificationTransport extends eZNotificationTransport
 
     function send( $addressList = array(), $subject, $body, $transportData = null, $parameters = array() )
     {
-        //include_once( 'lib/ezutils/classes/ezmail.php' );
-        //include_once( 'lib/ezutils/classes/ezmailtransport.php' );
         $ini = eZINI::instance();
         $mail = new eZMail();
         $addressList = $this->prepareAddressString( $addressList, $mail );
@@ -82,6 +80,8 @@ class eZMailNotificationTransport extends eZNotificationTransport
             $mail->addExtraHeader( 'In-Reply-To', $parameters['reply_to'] );
         if ( isset( $parameters['from'] ) )
             $mail->setSenderText( $parameters['from'] );
+        if ( isset( $parameters['content_type'] ) )
+            $mail->setContentType( $parameters['content_type'] );
         $mailResult = eZMailTransport::send( $mail );
         return $mailResult;
     }

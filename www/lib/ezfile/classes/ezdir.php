@@ -5,9 +5,9 @@
 // Created on: <02-Jul-2002 15:33:41 sp>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -26,7 +26,7 @@
 //
 //
 
-/*! \file ezdir.php
+/*! \file
 */
 
 /*!
@@ -34,9 +34,6 @@
   \brief The class eZDir does
 
 */
-//include_once( "lib/ezutils/classes/ezini.php" );
-//include_once( "lib/ezutils/classes/ezsys.php" );
-
 class eZDir
 {
     const SEPARATOR_LOCAL = 1;
@@ -91,44 +88,21 @@ class eZDir
     /*!
      \static
      Creates the directory \a $dir with permissions \a $perm.
-     If \a $parents is true it will create any missing parent directories,
+     If \a $recursive is true it will create any missing parent directories,
      just like 'mkdir -p'.
     */
-    static function mkdir( $dir, $perm = false, $parents = false )
+    static function mkdir( $dir, $perm = false, $recursive = false )
     {
         if ( $perm === false )
         {
             $perm = eZDir::directoryPermission();
         }
         $dir = eZDir::cleanPath( $dir, self::SEPARATOR_UNIX );
-        if ( !$parents )
-            return eZDir::doMkdir( $dir, $perm );
-        else
-        {
-            $dirElements = explode( '/', $dir );
-            if ( count( $dirElements ) == 0 )
-                return true;
-            $currentDir = $dirElements[0];
-            $result = true;
-            if ( !file_exists( $currentDir ) and $currentDir != "" )
-                $result = eZDir::doMkdir( $currentDir, $perm );
-            if ( !$result )
-                return false;
 
-            for ( $i = 1; $i < count( $dirElements ); ++$i )
-            {
-                $dirElement = $dirElements[$i];
-                if ( strlen( $dirElement ) == 0 )
-                    continue;
-                $currentDir .= '/' . $dirElement;
-                $result = true;
-                if ( !file_exists( $currentDir ) )
-                    $result = eZDir::doMkdir( $currentDir, $perm );
-                if ( !$result )
-                    return false;
-            }
-            return true;
-        }
+        $oldumask = umask( 0 );
+        $success = @mkdir( $dir, $perm, $recursive );
+        umask( $oldumask );
+        return $success;
     }
 
     /*!
@@ -185,8 +159,7 @@ class eZDir
     */
     static function directoryPermission()
     {
-        $ini = eZINI::instance();
-        return octdec( $ini->variable( 'FileSettings', 'StorageDirPermissions' ) );
+        return octdec( eZINI::instance()->variable( 'FileSettings', 'StorageDirPermissions' ) );
     }
 
     /*!
@@ -194,20 +167,12 @@ class eZDir
      \private
      Creates the directory \a $dir with permission \a $perm.
     */
-    static function doMkdir( $dir, $perm )
+    static function doMkdir( $dir, $perm, $recursive = false )
     {
-        //include_once( "lib/ezutils/classes/ezdebugsetting.php" );
-
         $oldumask = umask( 0 );
-        if ( ! @mkdir( $dir, $perm ) )
-        {
-            umask( $oldumask );
-            // eZDebug::writeError( "Couldn't create the directory \"$dir\".", "eZDir::doMkdir()" );
-            return false;
-        }
+        $success = @mkdir( $dir, $perm, $recursive );
         umask( $oldumask );
-
-        return true;
+        return $success;
     }
 
     /*!
@@ -565,7 +530,7 @@ class eZDir
      \param $sourceDirectory The source directory which should be copied, this location must exist.
      \param $destinationDirectory The location for the copied directory structure, this location must exist.
             This parameter will be modified if \a $asChild is \c true.
-     \param If \c true then it will use last part of the \a $sourceDirectory as a sub-folder to \a $destinationDirectory.
+     \param $asChild If \c true then it will use last part of the \a $sourceDirectory as a sub-folder to \a $destinationDirectory.
             e.g. copying /etc/httpd to /var/ will create /var/httpd and place all folders/files under it.
      \param $recursive If \c true then it will copy folders/files recursively from folders found in \a $sourceDirectory.
      \param $includeHidden If \c true it will include files or folders beginning with a dot (.).
@@ -598,7 +563,6 @@ class eZDir
         }
         $items = eZDir::findSubitems( $sourceDirectory, 'df', false, $includeHidden, $excludeItems );
         $totalItems = $items;
-        //include_once( 'lib/ezfile/classes/ezfilehandler.php' );
         while ( count( $items ) > 0 )
         {
             $currentItems = $items;

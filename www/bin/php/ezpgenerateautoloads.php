@@ -2,9 +2,9 @@
 <?php
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -28,14 +28,31 @@ if ( file_exists( "config.php" ) )
     require "config.php";
 }
 
-//Setup, includes
+// Setup, includes
 //{
-if ( !@include( 'ezc/Base/base.php' ) )
+$useBundledComponents = defined( 'EZP_USE_BUNDLED_COMPONENTS' ) ? EZP_USE_BUNDLED_COMPONENTS === true : file_exists( 'lib/ezc' );
+if ( $useBundledComponents )
 {
-    require "Base/src/base.php";
+    set_include_path( './lib/ezc' . PATH_SEPARATOR . get_include_path() );
+    require 'Base/src/base.php';
+}
+else if ( defined( 'EZC_BASE_PATH' ) )
+{
+    require EZC_BASE_PATH;
+}
+else
+{
+    if ( !@include 'ezc/Base/base.php' )
+    {
+        require 'Base/src/base.php';
+    }
 }
 
-require 'lib/ezutils/classes/ezautoloadgenerator.php';
+require 'kernel/private/classes/ezautoloadgenerator.php';
+require 'kernel/private/interfaces/ezpautoloadoutput.php';
+require 'kernel/private/classes/ezpautoloadclioutput.php';
+require 'kernel/private/options/ezpautoloadgeneratoroptions.php';
+require 'kernel/private/structs/ezpautoloadfilefindcontext.php';
 
 function __autoload( $className )
 {
@@ -54,7 +71,6 @@ $params->registerOption( $helpOption );
 
 $targetOption = new ezcConsoleOption( 't', 'target', ezcConsoleInput::TYPE_STRING );
 $targetOption->mandatory = false;
-$targetOption->default = "autoload";
 $targetOption->shorthelp = "The directory to where the generated autoload file should be written.";
 $params->registerOption( $targetOption );
 
@@ -73,15 +89,38 @@ $kernelFilesOption->mandatory = false;
 $kernelFilesOption->shorthelp = "If an autoload array for the kernel files should be generated.";
 $params->registerOption( $kernelFilesOption );
 
+$kernelOverrideOption = new ezcConsoleOption( 'o', 'kernel-override', ezcConsoleInput::TYPE_NONE );
+$kernelOverrideOption->mandatory = false;
+$kernelOverrideOption->shorthelp = "If an autoload array for the kernel override files should be generated.";
+$params->registerOption( $kernelOverrideOption );
+
 $extensionFilesOption = new ezcConsoleOption( 'e', 'extension', ezcConsoleInput::TYPE_NONE );
 $extensionFilesOption->mandatory = false;
 $extensionFilesOption->shorthelp = "If an autoload array for the extensions should be generated.";
 $params->registerOption( $extensionFilesOption );
 
+$testFilesOption = new ezcConsoleOption( 's', 'tests', ezcConsoleInput::TYPE_NONE );
+$testFilesOption->mandatory = false;
+$testFilesOption->shorthelp = "If an autoload array for the tests should be generated.";
+$params->registerOption( $testFilesOption );
+
 $excludeDirsOption = new ezcConsoleOption( '', 'exclude', ezcConsoleInput::TYPE_STRING );
 $excludeDirsOption->mandatory = false;
 $excludeDirsOption->shorthelp = "Folders to exclude from the class search.";
 $params->registerOption( $excludeDirsOption );
+
+$displayProgressOption = new ezcConsoleOption( 'p', 'progress', ezcConsoleInput::TYPE_NONE );
+$displayProgressOption->mandatory = false;
+$displayProgressOption->shorthelp = "If progress output should be shown on the command-line.";
+$params->registerOption( $displayProgressOption );
+
+// Add an argument for which extension to search
+$params->argumentDefinition = new ezcConsoleArguments();
+
+$params->argumentDefinition[0] = new ezcConsoleArgument( 'extension' );
+$params->argumentDefinition[0]->mandatory = false;
+$params->argumentDefinition[0]->shorthelp = "Extension to generate autoload files for.";
+$params->argumentDefinition[0]->default = getcwd();
 
 // Process console parameters
 try
@@ -108,24 +147,66 @@ if ( $helpOption->value === true )
 
 if ( $excludeDirsOption->value !== false )
 {
-    $excludeDirs = explode( ' ', $excludeDirsOption->value );
+    $excludeDirs = explode( ',', $excludeDirsOption->value );
 }
 else
 {
-    $excludeDirs = false;
+    $excludeDirs = array();
 }
 
+$autoloadOptions = new ezpAutoloadGeneratorOptions();
 
-$autoloadGenerator = new eZAutoloadGenerator( getcwd(),
-                                              $kernelFilesOption->value,
-                                              $extensionFilesOption->value,
-                                              $verboseOption->value,
-                                              !$dryrunOption->value,
-                                              $targetOption->value,
-                                              $excludeDirs );
-try {
+$autoloadOptions->basePath = $params->argumentDefinition['extension']->value;
+$autoloadOptions->searchKernelFiles = $kernelFilesOption->value;
+$autoloadOptions->searchKernelOverride = $kernelOverrideOption->value;
+$autoloadOptions->searchExtensionFiles = $extensionFilesOption->value;
+$autoloadOptions->searchTestFiles = $testFilesOption->value;
+$autoloadOptions->writeFiles = !$dryrunOption->value;
+$autoloadOptions->displayProgress = $displayProgressOption->value;
+
+if ( !empty( $targetOption->value ) )
+{
+    $autoloadOptions->outputDir = $targetOption->value;
+}
+$autoloadOptions->excludeDirs = $excludeDirs;
+
+$autoloadGenerator = new eZAutoloadGenerator( $autoloadOptions );
+
+if ( defined( 'EZP_AUTOLOAD_OUTPUT' ) )
+{
+    $outputClass = EZP_AUTOLOAD_OUTPUT;
+    $autoloadCliOutput = new $outputClass();
+}
+else
+{
+    $autoloadCliOutput = new ezpAutoloadCliOutput();
+}
+
+$autoloadGenerator->setOutputObject( $autoloadCliOutput );
+$autoloadGenerator->setOutputCallback( array( $autoloadCliOutput, 'outputCli') );
+
+try
+{
     $autoloadGenerator->buildAutoloadArrays();
-} catch (Exception $e) {
+
+    // If we are showing progress output, let's print the list of warnings at
+    // the end.
+    if ( $displayProgressOption->value )
+    {
+        $warningMessages = $autoloadGenerator->getWarnings();
+        foreach ( $warningMessages as $msg )
+        {
+            $autoloadCliOutput->outputCli( $msg, "warning" );
+        }
+    }
+
+    if ( $verboseOption->value )
+    {
+        $autoloadGenerator->printAutoloadArray();
+    }
+}
+catch (Exception $e)
+{
     echo $e->getMessage() . "\n";
 }
 

@@ -4,9 +4,9 @@
 // Created on: <30-Mar-2006 06:30:00 vs>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -98,8 +98,6 @@ function copyImagesToDB( $remove )
 
     $cli->output( "Importing images and imagealiases files to database:");
     $rows = $db->arrayQuery('select filepath from ezimagefile' );
-    //include_once( 'lib/ezutils/classes/ezmimetype.php' );
-
     foreach( $rows as $row )
     {
         $filePath = $row['filepath'];
@@ -110,12 +108,12 @@ function copyImagesToDB( $remove )
     }
 }
 
-function copyFilesFromDB( $copyFiles, $copyImages, $remove )
+function copyFilesFromDB( $excludeScopes, $remove )
 {
     global $cli, $dbFileHandler;
 
     $cli->output( "Exporting files from database:");
-    $filePathList = $dbFileHandler->getFileList( !$copyFiles, !$copyImages );
+    $filePathList = $dbFileHandler->getFileList( $excludeScopes, true );
 
     foreach ( $filePathList as $filePath )
     {
@@ -189,7 +187,15 @@ if ( $clusterize )
 }
 else
 {
-    copyFilesFromDB( $copyFiles, $copyImages, $remove );
+    $excludeScopes = array();
+    if ( !$copyFiles )
+        $excludeScopes[] = 'binaryfile';
+    if ( !$copyImages )
+        $excludeScopes[] = 'image';
+    if ( !$copyMedia )
+        $excludeScopes[] = 'mediafile';
+
+    copyFilesFromDB( $excludeScopes, $remove );
 }
 
 $script->shutdown();

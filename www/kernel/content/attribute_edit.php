@@ -3,9 +3,9 @@
 // Created on: <17-Apr-2002 10:34:48 bf>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -25,25 +25,14 @@
 //
 
 /*!
-  \file attribute_edit.php
+  \file
   This file is a shared code file which is used by different parts of the system
   to edit objects. This file only implements editing of attributes and uses
   hooks to allow external code to add functionality.
   \param $Module must be set by the code which includes this file
 */
 
-//include_once( 'kernel/classes/ezcontentclass.php' );
-//include_once( 'kernel/classes/ezcontentclassattribute.php' );
-
-//include_once( 'kernel/classes/ezcontentobject.php' );
-//include_once( 'kernel/classes/ezcontentobjectversion.php' );
-//include_once( 'kernel/classes/ezcontentobjectattribute.php' );
-
-//include_once( 'lib/ezutils/classes/ezhttptool.php' );
-
 require_once( 'kernel/common/template.php' );
-
-//include_once( 'kernel/classes/ezpreferences.php' );
 
 if ( isset( $Module ) )
     $Module = $Params['Module'];
@@ -199,7 +188,6 @@ if ( $http->hasPostVariable( "CustomActionButton" ) )
     }
 }
 
-//include_once( 'kernel/classes/ezcontentobjectedithandler.php' );
 eZContentObjectEditHandler::initialize();
 
 $storeActions = array( 'Preview',
@@ -233,6 +221,13 @@ $hasObjectInput = true;
 if ( $http->hasPostVariable( 'HasObjectInput' ) )
     $hasObjectInput =  $http->postVariable( 'HasObjectInput' );
 
+$contentObjectDataMap = array();
+foreach ( $contentObjectAttributes as $contentObjectAttribute )
+{
+    $contentObjectAttributeIdentifier = $contentObjectAttribute->attribute( 'contentclass_attribute_identifier' );
+    $contentObjectDataMap[$contentObjectAttributeIdentifier] = $contentObjectAttribute;
+}
+
 // These variables will be modified according to validation
 $inputValidated = true;
 $requireFixup = false;
@@ -249,7 +244,6 @@ if ( $storingAllowed && $hasObjectInput)
     }
 
     // Validate input
-    //include_once( 'lib/ezutils/classes/ezinputvalidator.php' );
     $validationResult = $object->validateInput( $contentObjectAttributes, $attributeDataBaseName, false, $validationParameters );
     $unvalidatedAttributes = $validationResult['unvalidated-attributes'];
     $validatedAttributes = $validationResult['validated-attributes'];
@@ -258,6 +252,13 @@ if ( $storingAllowed && $hasObjectInput)
     // Fixup input
     if ( $validationResult['require-fixup'] )
         $object->fixupInput( $contentObjectAttributes, $attributeDataBaseName );
+
+    $validation['custom_rules'] = array();
+    $customValidationResult = eZContentObjectEditHandler::validateInputHandlers( $Module, $class, $object, $version, $contentObjectAttributes, $EditVersion, $EditLanguage, $FromLanguage, $validationParameters );
+    if ( $customValidationResult['warnings'] )
+        $validation['custom_rules'] = $customValidationResult['warnings'];
+
+    $inputValidated = ( $inputValidated && $customValidationResult['validated'] );
 
     // Check extension input handlers
     eZContentObjectEditHandler::executeInputHandlers( $Module, $class, $object, $version, $contentObjectAttributes, $EditVersion, $EditLanguage, $FromLanguage );
@@ -278,6 +279,7 @@ if ( $storingAllowed && $hasObjectInput)
     if ( !$inputValidated && $Module->exitStatus() == eZModule::STATUS_REDIRECT )
         $Module->setExitStatus( eZModule::STATUS_OK );
 
+    $db = eZDB::instance();
     if ( $inputValidated and count( $attributeInputMap ) > 0 )
     {
         if ( $Module->runHooks( 'pre_commit', array( $class, $object, $version, $contentObjectAttributes, $EditVersion, $EditLanguage, $FromLanguage ) ) )
@@ -285,7 +287,6 @@ if ( $storingAllowed && $hasObjectInput)
         $version->setAttribute( 'modified', time() );
         $version->setAttribute( 'status', eZContentObjectVersion::STATUS_DRAFT );
 
-        $db = eZDB::instance();
         $db->begin();
         $version->store();
 //         print( "storing<br/>" );
@@ -400,6 +401,7 @@ foreach ( $assignments as $assignment )
 }
 
 $res->setKeys( array( array( 'object', $object->attribute( 'id' ) ),
+                      array( 'remote_id', $object->attribute( 'remote_id' ) ),
                       array( 'class', $class->attribute( 'id' ) ),
                       array( 'class_identifier', $class->attribute( 'identifier' ) )
                       ) );
@@ -426,15 +428,7 @@ if ( !isset( $OmitSectionSetting ) )
     $OmitSectionSetting = false;
 if ( $OmitSectionSetting !== true )
 {
-    //include_once( 'kernel/classes/ezsection.php' );
     eZSection::setGlobalID( $object->attribute( 'section_id' ) );
-}
-
-$contentObjectDataMap = array();
-foreach ( $contentObjectAttributes as $contentObjectAttribute )
-{
-    $contentObjectAttributeIdentifier = $contentObjectAttribute->attribute( 'contentclass_attribute_identifier' );
-    $contentObjectDataMap[$contentObjectAttributeIdentifier] = $contentObjectAttribute;
 }
 
 $object->setCurrentLanguage( $EditLanguage );
@@ -484,6 +478,7 @@ $tpl->setVariable( 'view_parameters', $viewParameters );
 
 $Result = array();
 $Result['content'] = $tpl->fetch( $templateName );
+$Result['view_parameters'] = $viewParameters;
 // $Result['path'] = array( array( 'text' => ezi18n( 'kernel/content', 'Content' ),
 //                                 'url' => false ),
 //                          array( 'text' => ezi18n( 'kernel/content', 'Edit' ),
@@ -563,9 +558,11 @@ if ( !$hasPath )
 
 $Result['path'] = $path;
 
-//include_once( 'kernel/classes/ezsection.php' );
 $section = eZSection::fetch( $object->attribute( 'section_id' ) );
 if ( $section )
+{
     $Result['navigation_part'] = $section->attribute( 'navigation_part_identifier' );
+    $Result['section_id'] = $section->attribute( 'id' );
+}
 
 ?>

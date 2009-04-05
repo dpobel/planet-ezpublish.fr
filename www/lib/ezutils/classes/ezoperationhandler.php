@@ -5,9 +5,9 @@
 // Created on: <06-Oct-2002 16:25:10 amos>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -26,7 +26,7 @@
 //
 //
 
-/*! \file ezoperationhandler.php
+/*! \file
 */
 
 /*!
@@ -34,8 +34,6 @@
   \brief The class eZOperationHandler does
 
 */
-
-//include_once( 'lib/ezutils/classes/ezmoduleoperationinfo.php' );
 
 class eZOperationHandler
 {
@@ -72,6 +70,34 @@ class eZOperationHandler
         }
         return $moduleOperationInfo->execute( $operationName, $operationParameters, $lastTriggerName, $useTriggers );
     }
+
+    /**
+     * Checks if a trigger is defined in worklow.ini/[OperationSettings]/AvailableOperations
+     *
+     * @param string $name
+     * @return boolean true if the operation is available, false otherwise
+     */
+    static public function operationIsAvailable( $name = false )
+    {
+        if ( $name === false )
+        {
+           return false;
+        }
+
+        // Check if read operations should be used
+        $workflowINI = eZINI::instance( 'workflow.ini' );
+        $operationList = $workflowINI->variableArray( 'OperationSettings', 'AvailableOperations' );
+        $operationList = array_unique( array_merge( $operationList, $workflowINI->variable( 'OperationSettings', 'AvailableOperationList' ) ) );
+        if ( in_array( $name, $operationList ) )
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
 }
 
 ?>

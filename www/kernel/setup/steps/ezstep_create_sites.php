@@ -5,9 +5,9 @@
 // Created on: <13-Aug-2003 19:54:38 kk>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -26,16 +26,9 @@
 //
 //
 
-/*! \file ezstep_create_sites.php
+/*! \file
 */
-//include_once( 'kernel/setup/steps/ezstep_installer.php');
 require_once( "kernel/common/i18n.php" );
-//include_once( 'lib/ezdb/classes/ezdb.php' );
-//include_once( 'kernel/classes/ezcontentobject.php' );
-//include_once( 'kernel/classes/ezpolicy.php' );
-//include_once( 'lib/ezutils/classes/ezini.php' );
-//include_once( 'lib/ezlocale/classes/ezlocale.php' );
-
 /*!
   Error codes:
 
@@ -83,17 +76,11 @@ class eZStepCreateSites extends eZStepInstaller
                                 'create_sites', 'Create sites' );
     }
 
-    /*!
-     \reimp
-    */
     function processPostData()
     {
         return true; // Always proceede
     }
 
-    /*!
-     \reimp
-     */
     function init()
     {
         $this->Error = array( 'errors' => array()  );
@@ -103,13 +90,11 @@ class eZStepCreateSites extends eZStepInstaller
 
         //$ini = eZINI::create();
 
-        //include_once( 'kernel/classes/ezpackage.php' );
         $accessMap = array( 'url' => array(),
                             'hostname' => array(),
                             'port' => array(),
                             'accesses' => array() );
 
-        //include_once( 'lib/ezlocale/classes/ezlocale.php' );
         $primaryLanguage     = null;
         $allLanguages        = array();
         $allLanguageCodes    = array();
@@ -356,9 +341,6 @@ class eZStepCreateSites extends eZStepInstaller
         return true; // Never show, generate sites
     }
 
-    /*!
-     \reimp
-    */
     function display()
     {
         $errors = array();
@@ -470,13 +452,11 @@ class eZStepCreateSites extends eZStepInstaller
         }
         if ( $siteType['existing_database'] == eZStepInstaller::DB_DATA_REMOVE )
         {
-            //include_once( 'lib/ezdb/classes/ezdbtool.php' );
             eZDBTool::cleanup( $db );
         }
 
         if ( $siteType['existing_database'] != eZStepInstaller::DB_DATA_KEEP )
         {
-            //include_once( 'lib/ezdbschema/classes/ezdbschema.php' );
             $result = true;
             $schemaArray = eZDbSchema::read( 'share/db_schema.dba', true );
             if ( !$schemaArray )
@@ -541,7 +521,6 @@ class eZStepCreateSites extends eZStepInstaller
             if ( $result )
             {
                 // Inserting data from the dba-data files of the datatypes
-                //include_once( 'kernel/classes/ezdatatype.php' );
                 eZDataType::loadAndRegisterAllTypes();
                 $registeredDataTypes = eZDataType::registeredDataTypes();
                 foreach ( $registeredDataTypes as $dataType )
@@ -671,8 +650,6 @@ class eZStepCreateSites extends eZStepInstaller
             eZSitePreInstall();
 
 
-        //include_once( "kernel/classes/datatypes/ezuser/ezuser.php" );
-
         // Make sure objects use the selected main language instead of eng-GB
         if ( $primaryLanguageLocaleCode != 'eng-GB' )
         {
@@ -787,6 +764,25 @@ WHERE
 id $inSql";
             $db->query( $updateSql );
 
+            // content object state groups & states
+            $mask = $primaryLanguageID | 1;
+
+            $db->query( "UPDATE ezcobj_state_group
+                         SET language_mask = $mask, default_language_id = $primaryLanguageID
+                         WHERE default_language_id = $engLanguageID" );
+
+            $db->query( "UPDATE ezcobj_state
+                         SET language_mask = $mask, default_language_id = $primaryLanguageID
+                         WHERE default_language_id = $engLanguageID" );
+
+            $db->query( "UPDATE ezcobj_state_group_language
+                         SET language_id = $primaryLanguageID
+                         WHERE language_id = $engLanguageID" );
+
+            $db->query( "UPDATE ezcobj_state_language
+                         SET language_id = $primaryLanguageID
+                         WHERE language_id = $engLanguageID" );
+
             // ezcontentclass_name
             $updateSql = "UPDATE ezcontentclass_name
 SET
@@ -890,7 +886,8 @@ language_locale='eng-GB'";
                     $requiredPackages[] = $package;
                     if ( $package->attribute( 'install_type' ) == 'install' )
                     {
-                        $installParameters = array( 'site_access_map' => array( '*' => $userSiteaccessName ),
+                        $installParameters = array( 'use_dates_from_package' => true,
+                                                    'site_access_map' => array( '*' => $userSiteaccessName ),
                                                     'top_nodes_map' => array( '*' => 2 ),
                                                     'design_map' => array( '*' => $userDesignName ),
                                                     'language_map' => $languageMap,
@@ -1024,40 +1021,33 @@ language_locale='eng-GB'";
                                            'settings' => array( 'RegionalSettings' => array( 'ShowUntranslatedObjects' => 'enabled' ) ) );
         }
 
-        // Enable OE by default
-        $oeEnableSettingAdded = false;
-        foreach ( $extraCommonSettings as $key => $extraCommonSetting )
+        // Enable OE and ODF extensions by default
+        $extensionsToEnable = array();
+        foreach ( array( 'ezoe', 'ezodf' ) as $extension )
         {
-            if ( $extraCommonSetting['name'] == 'site.ini' &&
-                 isset( $extraCommonSettings[$key]['settings']['ExtensionSettings']['ActiveExtensions'] ) )
+            if ( file_exists( "extension/$extension" ) )
             {
-                $oeEnableSettingAdded = true;
-                $extraCommonSettings[$key]['settings']['ExtensionSettings']['ActiveExtensions'][] = 'ezdhtml';
-                break;
+                $extensionsToEnable[] = $extension;
             }
-        }
-        if ( !$oeEnableSettingAdded )
-        {
-            $extraCommonSettings[] = array( 'name' => 'site.ini',
-                                            'settings' => array( 'ExtensionSettings' => array( 'ActiveExtensions' => array( 'ezdhtml' ) ) ) );
         }
 
-        // Enable OO by default
-        $ooEnableSettingAdded = false;
+        $settingAdded = false;
         foreach ( $extraCommonSettings as $key => $extraCommonSetting )
         {
             if ( $extraCommonSetting['name'] == 'site.ini' &&
                  isset( $extraCommonSettings[$key]['settings']['ExtensionSettings']['ActiveExtensions'] ) )
             {
-                $ooEnableSettingAdded = true;
-                $extraCommonSettings[$key]['settings']['ExtensionSettings']['ActiveExtensions'][] = 'ezodf';
+                $settingAdded = true;
+                $extraCommonSettings[$key]['settings']['ExtensionSettings']['ActiveExtensions'] =
+                    array_merge( $extraCommonSettings[$key]['settings']['ExtensionSettings']['ActiveExtensions'], $extensionsToEnable );
                 break;
             }
         }
-        if ( !$ooEnableSettingAdded )
+
+        if ( !$settingAdded )
         {
             $extraCommonSettings[] = array( 'name' => 'site.ini',
-                                            'settings' => array( 'ExtensionSettings' => array( 'ActiveExtensions' => array( 'ezodf' ) ) ) );
+                                            'settings' => array( 'ExtensionSettings' => array( 'ActiveExtensions' => $extensionsToEnable ) ) );
         }
 
         // Enable dynamic tree menu for the admin interface by default
@@ -1221,7 +1211,6 @@ language_locale='eng-GB'";
             return true;
         }
 
-        //include_once( 'kernel/classes/ezrole.php' );
         // Try and remove user/login without limitation from the anonymous user
         $anonRole = eZRole::fetchByName( 'Anonymous' );
         if ( is_object( $anonRole ) )
@@ -1291,8 +1280,6 @@ language_locale='eng-GB'";
         }
 
         // Setup user preferences based on the site chosen and addons
-        //include_once( 'kernel/classes/ezpreferences.php' );
-
         if ( function_exists( 'eZSitePreferences' ) )
         {
             $prefs = eZSitePreferences( $parameters );
@@ -1316,7 +1303,6 @@ language_locale='eng-GB'";
         }
 
         $publishAdmin = false;
-        //include_once( "kernel/classes/datatypes/ezuser/ezuser.php" );
         $userAccount = eZUser::fetch( 14 );
         if ( !is_object( $userAccount ) )
         {
@@ -1376,7 +1362,6 @@ language_locale='eng-GB'";
 
         if ( $publishAdmin )
         {
-            //include_once( 'lib/ezutils/classes/ezoperationhandler.php' );
             $operationResult = eZOperationHandler::execute( 'content', 'publish', array( 'object_id' => $newUserObject->attribute( 'contentobject_id' ),
                                                                                          'version' => $newUserObject->attribute( 'version' ) ) );
             if ( $operationResult['status'] != eZModuleOperationInfo::STATUS_CONTINUE )
@@ -1421,6 +1406,10 @@ language_locale='eng-GB'";
 
             $this->PersistenceList['final_text'][] = $text;
         }
+
+        // ensure that evaluated policy wildcards in the user info cache
+        // will be up to date with the currently activated modules
+        eZCache::clearByID( 'user_info_cache' );
 
         return true;
     }

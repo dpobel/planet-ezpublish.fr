@@ -5,9 +5,9 @@
 // Created on: <21-Nov-2003 12:39:59 amos>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -26,7 +26,7 @@
 //
 //
 
-/*! \file ezcontentclasspackagecreator.php
+/*! \file
 */
 
 /*!
@@ -36,13 +36,8 @@
 
 */
 
-//include_once( 'kernel/classes/ezpackagecreationhandler.php' );
-
 class eZContentClassPackageCreator extends eZPackageCreationHandler
 {
-    /*!
-     \reimp
-    */
     function eZContentClassPackageCreator( $id )
     {
         $steps = array();
@@ -61,7 +56,6 @@ class eZContentClassPackageCreator extends eZPackageCreationHandler
     }
 
     /*!
-     \reimp
      Creates the package and adds the selected content classes.
     */
     function finalize( &$package, $http, &$persistentData )
@@ -79,7 +73,6 @@ class eZContentClassPackageCreator extends eZPackageCreationHandler
     }
 
     /*!
-     \reimp
      Returns \c 'stable', content class packages are always stable.
     */
     function packageInitialState( $package, &$persistentData )
@@ -125,7 +118,6 @@ class eZContentClassPackageCreator extends eZPackageCreationHandler
     }
 
     /*!
-     \reimp
      Fetches the selected content classes and generates a name, summary and description from the selection.
     */
     function generatePackageInformation( &$packageInformation, $package, $http, $step, &$persistentData )

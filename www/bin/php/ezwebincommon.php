@@ -3,9 +3,9 @@
 // Created on: <26-Jun-2007 15:00:00 dl>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -46,10 +46,7 @@ global $script;
 */
 require_once 'autoload.php';
 
-//include_once( 'kernel/classes/ezscript.php' );
 require_once( 'kernel/common/i18n.php' );
-//include_once( 'kernel/classes/ezpackage.php' );
-
 
 /**************************************************************
 * 'cli->output' wrappers                                      *
@@ -171,16 +168,16 @@ function checkDir( $dirName )
         if( strpos( $action, 'n' ) === 0 )
             showError( "Unable to continue. Aborting..." );
 
-        if( !eZDir::mkdir( $dirName, eZDir::directoryPermission(), true ) )
+        if( !eZDir::mkdir( $dirName, false, true ) )
             showError( "Unable to create dir '$dirName'. Aborting..." );
     }
 
     return true;
 }
 
-function installScriptDir( $packageRepository )
+function installScriptDir( $packageRepository, $packageName )
 {
-    return ( eZPackage::repositoryPath() . "/$packageRepository/ezwebin_site" );
+    return ( eZPackage::repositoryPath() . "/$packageRepository/$packageName" );
 }
 
 function defaultVendor()
@@ -284,8 +281,6 @@ function downloadPackages( $packageList, $packageURL, $packageDir, $packageRepos
     {
         // TODO: using 'eZStepSiteTypes' is hack.
         //       need to exclude 'downloadFile' from that class.
-        //include_once( 'kernel/setup/steps/ezstep_site_types.php' );
-
         $tpl = false;
         $http = false;
         $ini = false;
@@ -422,7 +417,6 @@ function siteAccessMap( $siteAccessNameArray )
 
 function checkSiteaccess( $siteAccess, $bailOutOnError = false )
 {
-    //include_once( 'lib/ezutils/classes/ezextension.php' );
     $extensionBaseDir = eZExtension::baseDirectory();
     $extensionNameArray = eZExtension::activeExtensions();
     $siteAccessSettingsDir = '/settings/siteaccess/';

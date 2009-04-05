@@ -5,9 +5,9 @@
 // Created on: <14-Sep-2002 15:37:17 amos>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -26,7 +26,7 @@
 //
 //
 
-/*! \file eztemplatedesignresource.php
+/*! \file
 */
 
 /*!
@@ -34,9 +34,6 @@
   \brief Handles template file loading with override support
 
 */
-
-//include_once( "lib/eztemplate/classes/eztemplatefileresource.php" );
-//include_once( "lib/ezutils/classes/ezini.php" );
 
 class eZTemplateDesignResource extends eZTemplateFileResource
 {
@@ -50,8 +47,6 @@ class eZTemplateDesignResource extends eZTemplateFileResource
         $this->KeyStack = array();
     }
 
-    /*!
-    */
     function templateNodeTransformation( $functionName, &$node,
                                          $tpl, &$resourceData, $parameters, $namespaceValue )
     {
@@ -283,11 +278,18 @@ class eZTemplateDesignResource extends eZTemplateFileResource
 
         eZDebug::accumulatorStart( 'override_cache', 'override', 'Cache load' );
 
-        $overrideCacheFile = $this->createOverrideCache();
-
-        if ( $overrideCacheFile )
+        if( !isset( $GLOBALS['eZOverrideTemplateCacheMap'] ) )
         {
-            include_once( $overrideCacheFile );
+            $overrideCacheFile = $this->createOverrideCache();
+
+            if ( $overrideCacheFile )
+            {
+                include_once( $overrideCacheFile );
+            }
+        }
+
+        if ( isset( $GLOBALS['eZOverrideTemplateCacheMap'] ) )
+        {
             if( isset( $GLOBALS['eZOverrideTemplateCacheMap'][md5( '/' . $path )] ) )
             {
                 $cacheMap = $GLOBALS['eZOverrideTemplateCacheMap'][md5( '/' . $path )];
@@ -444,7 +446,6 @@ class eZTemplateDesignResource extends eZTemplateFileResource
             $matchFileArray = eZTemplateDesignResource::overrideArray( $this->OverrideSiteAccess );
 
             // Generate PHP compiled cache file.
-            //include_once( 'lib/ezutils/classes/ezphpcreator.php' );
             $phpCache = new eZPHPCreator( "$cacheDir/override", "override_$overrideKey.php" );
 
             $phpCode = "\$GLOBALS['eZOverrideTemplateCacheMap'] = array (\n";
@@ -627,7 +628,6 @@ class eZTemplateDesignResource extends eZTemplateFileResource
         $keys = array_merge( $keys, $additionalSiteDesignList );
 
         // Add extension paths
-        //include_once( 'lib/ezutils/classes/ezextension.php' );
         $extensionDirectory = eZExtension::baseDirectory();
 
         $designINI = eZINI::instance( 'design.ini' );

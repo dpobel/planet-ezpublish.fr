@@ -3,9 +3,9 @@
 // Created on: <08-Aug-2003 11:27:10 bf>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -24,13 +24,9 @@
 //
 //
 
-/*! \file urltranslator.php
+/*! \file
 */
 require_once( 'kernel/common/template.php' );
-//include_once( 'kernel/classes/ezcontentobjecttreenode.php' );
-//include_once( 'kernel/classes/ezurlaliasml.php' );
-//include_once( 'kernel/classes/ezpathelement.php' );
-
 $Module = $Params['Module'];
 $http = eZHTTPTool::instance();
 
@@ -38,7 +34,6 @@ $NodeID = $Params['NodeID'];
 $Offset = $Params['Offset'];
 $viewParameters = array( 'offset' => $Offset );
 
-//include_once( 'kernel/classes/ezsslzone.php' );
 eZSSLZone::checkNodeID( 'content', 'urlalias', $NodeID );
 
 $tpl = templateInit();
@@ -56,7 +51,6 @@ $aliasText = false;
 
 if ( $Module->isCurrentAction( 'RemoveAllAliases' ) )
 {
-    //include_once( 'kernel/classes/ezurlaliasquery.php' );
     $filter = new eZURLAliasQuery();
     $filter->actions = array( 'eznode:' . $node->attribute( 'node_id' ) );
     $filter->type = 'alias';
@@ -123,7 +117,6 @@ else if ( $Module->isCurrentAction( 'NewAlias' ) )
     {
         $parentID = 0;
         $linkID   = 0;
-        //include_once( 'kernel/classes/ezurlaliasquery.php' );
         $filter = new eZURLAliasQuery();
         $filter->actions = array( 'eznode:' . $node->attribute( 'node_id' ) );
         $filter->type = 'name';
@@ -184,7 +177,6 @@ else if ( $Module->isCurrentAction( 'NewAlias' ) )
 }
 
 // Fetch generated names of node
-//include_once( 'kernel/classes/ezurlaliasquery.php' );
 $filter = new eZURLAliasQuery();
 $filter->actions = array( 'eznode:' . $node->attribute( 'node_id' ) );
 $filter->type = 'name';

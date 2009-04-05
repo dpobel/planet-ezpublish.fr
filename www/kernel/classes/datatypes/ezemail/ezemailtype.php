@@ -4,9 +4,9 @@
 //
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -31,8 +31,6 @@
   \brief Stores an email address
 
 */
-
-//include_once( "kernel/classes/ezdatatype.php" );
 
 class eZEmailType extends eZDataType
 {
@@ -62,7 +60,6 @@ class eZEmailType extends eZDataType
     */
     function validateEMailHTTPInput( $email, $contentObjectAttribute )
     {
-        //include_once( "lib/ezutils/classes/ezmail.php" );
         if ( !eZMail::validate( $email ) )
         {
             $contentObjectAttribute->setValidationError( ezi18n( 'kernel/classes/datatypes',
@@ -83,9 +80,9 @@ class eZEmailType extends eZDataType
             $email = $http->postVariable( $base . '_data_text_' . $contentObjectAttribute->attribute( 'id' ) );
             $classAttribute = $contentObjectAttribute->contentClassAttribute();
 
-            $trimedEmail = trim( $email );
+            $trimmedEmail = trim( $email );
 
-            if ( $trimedEmail == "" )
+            if ( $trimmedEmail == "" )
             {
                 // we require user to enter an address only if the attribute is not an informationcollector
                 if ( !$classAttribute->attribute( 'is_information_collector' ) and
@@ -99,9 +96,15 @@ class eZEmailType extends eZDataType
             else
             {
                 // if the entered address is not empty then we should validate it in any case
-                return $this->validateEMailHTTPInput( $trimedEmail, $contentObjectAttribute );
+                return $this->validateEMailHTTPInput( $trimmedEmail, $contentObjectAttribute );
             }
         }
+        else if ( !$classAttribute->attribute( 'is_information_collector' ) and $contentObjectAttribute->validateIsRequired() )
+        {
+            $contentObjectAttribute->setValidationError( ezi18n( 'kernel/classes/datatypes', 'Missing email input.' ) );
+            return eZInputValidator::STATE_INVALID;
+        }
+
         return eZInputValidator::STATE_ACCEPTED;
     }
 
@@ -119,9 +122,6 @@ class eZEmailType extends eZDataType
         return false;
     }
 
-    /*!
-     \reimp
-    */
     function validateCollectionAttributeHTTPInput( $http, $base, $contentObjectAttribute )
     {
         if ( $http->hasPostVariable( $base . "_data_text_" . $contentObjectAttribute->attribute( "id" ) ) )
@@ -129,9 +129,9 @@ class eZEmailType extends eZDataType
             $email = $http->postVariable( $base . "_data_text_" . $contentObjectAttribute->attribute( "id" ) );
             $classAttribute = $contentObjectAttribute->contentClassAttribute();
 
-            $trimedEmail = trim( $email );
+            $trimmedEmail = trim( $email );
 
-            if ( $trimedEmail == "" )
+            if ( $trimmedEmail == "" )
             {
                 // if entered email is empty and required then return state invalid
                 if ( $contentObjectAttribute->validateIsRequired() )
@@ -146,7 +146,7 @@ class eZEmailType extends eZDataType
             else
             {
                 // if entered email is not empty then we should validate it in any case
-                return $this->validateEMailHTTPInput( $trimedEmail, $contentObjectAttribute );
+                return $this->validateEMailHTTPInput( $trimmedEmail, $contentObjectAttribute );
             }
         }
         else
@@ -222,28 +222,24 @@ class eZEmailType extends eZDataType
         return trim( $contentObjectAttribute->attribute( "data_text" ) ) != '';
     }
 
-    /*!
-     \reimp
-    */
     function isInformationCollector()
     {
         return true;
     }
 
-    /*!
-     \reimp
-    */
     function sortKey( $contentObjectAttribute )
     {
         return strtolower( $contentObjectAttribute->attribute( 'data_text' ) );
     }
 
-    /*!
-     \reimp
-    */
     function sortKeyType()
     {
         return 'string';
+    }
+
+    function supportsBatchInitializeObjectAttribute()
+    {
+        return true;
     }
 }
 

@@ -5,9 +5,9 @@
 // Created on: <12-Nov-2004 16:24:31 kk>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -26,7 +26,7 @@
 //
 //
 
-/*! \file ezwizardbase.php
+/*! \file
 */
 
 /*!
@@ -43,9 +43,9 @@ class eZWizardBase
     /*!
      Constructor
 
-     \param Template class
-     \param Module
-     \param Storage Name, optional.
+     \param $tpl Template class
+     \param $module Module
+     \param $storageName Storage Name, optional.
     */
     function eZWizardBase( $tpl, &$module, $storageName = false )
     {
@@ -79,9 +79,6 @@ class eZWizardBase
         }
     }
 
-    /*!
-     \reimp
-    */
     function attributes()
     {
         return array( 'error_count',
@@ -93,17 +90,11 @@ class eZWizardBase
                       'url' );
     }
 
-    /*!
-     \reimp
-    */
     function hasAttribute( $attr )
     {
         return in_array( $attr, $this->attributes() );
     }
 
-    /*!
-     \reimp
-    */
     function attribute( $attr )
     {
         switch( $attr )
@@ -311,7 +302,7 @@ class eZWizardBase
     /*!
      Check if wizard variable exists
 
-     \param variable key
+     \param $key key of the variable
 
      \return variable value
     */

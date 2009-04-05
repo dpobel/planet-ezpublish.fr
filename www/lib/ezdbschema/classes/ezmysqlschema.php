@@ -3,9 +3,9 @@
 // Created on: <30-Jan-2004 10:14:58 dr>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -31,13 +31,10 @@
 
 */
 
-//include_once( 'lib/ezdbschema/classes/ezdbschemainterface.php' );
-
 class eZMysqlSchema extends eZDBSchemaInterface
 {
 
     /*!
-     \reimp
      Constructor
 
      \param db instance
@@ -47,9 +44,6 @@ class eZMysqlSchema extends eZDBSchemaInterface
         $this->eZDBSchemaInterface( $params );
     }
 
-    /*!
-     \reimp
-    */
     function schema( $params = array() )
     {
         $params = array_merge( array( 'meta_data' => false,
@@ -449,7 +443,6 @@ class eZMysqlSchema extends eZDBSchemaInterface
     }
 
     /*!
-     \reimp
      \note Calls generateTableSQL() with \a $asArray set to \c false
     */
     function generateTableSchema( $tableName, $table, $params )
@@ -458,7 +451,6 @@ class eZMysqlSchema extends eZDBSchemaInterface
     }
 
     /*!
-     \reimp
      \note Calls generateTableSQL() with \a $asArray set to \c true
     */
     function generateTableSQLList( $tableName, $table, $params, $separateTypes )
@@ -524,7 +516,7 @@ class eZMysqlSchema extends eZDBSchemaInterface
             $typeName = $this->tableStorageTypeName( $params['table_type'] );
             if ( $typeName )
             {
-                $extraOptions[] = "TYPE=" . $typeName;
+                $extraOptions[] = "ENGINE=" . $typeName;
             }
         }
         if ( isset( $params['table_charset'] ) and $params['table_charset'] )
@@ -598,7 +590,6 @@ class eZMysqlSchema extends eZDBSchemaInterface
     */
     function tableCharsetName( $charset )
     {
-        //include_once( 'lib/ezi18n/classes/ezcharsetinfo.php' );
         $charset = eZCharsetInfo::realCharsetCode( $charset );
         // Convert charset names into something MySQL will understand
         $charsetMapping = array( 'iso-8859-1' => 'latin1',
@@ -659,10 +650,9 @@ class eZMysqlSchema extends eZDBSchemaInterface
     }
 
     /*!
-     \reimp
      MySQL 3.22.5 and higher support multi-insert queries so if the current
      database has sufficient version we return \c true.
-     If no database is connected we return \true.
+     If no database is connected we return \c true.
     */
     function isMultiInsertSupported()
     {
@@ -677,9 +667,6 @@ class eZMysqlSchema extends eZDBSchemaInterface
         return true;
     }
 
-    /*!
-     \reimp
-    */
     function escapeSQLString( $value )
     {
         if ( $this->DBInstance instanceof eZDBInterface )
@@ -690,17 +677,11 @@ class eZMysqlSchema extends eZDBSchemaInterface
         return $value;
     }
 
-    /*!
-     \reimp
-    */
     function schemaType()
     {
         return 'mysql';
     }
 
-    /*!
-     \reimp
-    */
     function schemaName()
     {
         return 'MySQL';

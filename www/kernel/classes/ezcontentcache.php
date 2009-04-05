@@ -5,9 +5,9 @@
 // Created on: <12-Dec-2002 16:53:41 amos>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -26,7 +26,7 @@
 //
 //
 
-/*! \file ezcontentcache.php
+/*! \file
 */
 
 /*!
@@ -34,9 +34,6 @@
   \brief The class eZContentCache does
 
 */
-
-//include_once( 'lib/ezutils/classes/ezsys.php' );
-//include_once( "lib/ezfile/classes/ezdir.php" );
 
 class eZContentCache
 {
@@ -84,15 +81,11 @@ class eZContentCache
     {
         $cachePathInfo = eZContentCache::cachePathInfo( $siteDesign, $nodeID, $viewMode, $language, $offset, $roleList, $discountList,
                                                         $layout, false, $parameters );
-        // VS-DBFILE
-
-        require_once( 'kernel/classes/ezclusterfilehandler.php' );
         $cacheFile = eZClusterFileHandler::instance( $cachePathInfo['path'] );
 
         if ( $cacheFile->exists() )
         {
             $timestamp = $cacheFile->mtime();
-            //include_once( 'kernel/classes/ezcontentobject.php' );
             if ( eZContentObject::isCacheExpired( $timestamp ) )
             {
                 eZDebugSetting::writeDebug( 'kernel-content-view-cache', 'cache expired #1' );
@@ -123,15 +116,11 @@ class eZContentCache
         $cachePath = $cachePathInfo['path'];
         $timestamp = false;
 
-        // VS-DBFILE
-
-        require_once( 'kernel/classes/ezclusterfilehandler.php' );
         $cacheFile = eZClusterFileHandler::instance( $cachePath );
 
         if ( $cacheFile->exists() )
         {
             $timestamp = $cacheFile->mtime();
-            //include_once( 'kernel/classes/ezcontentobject.php' );
             if ( eZContentObject::isCacheExpired( $timestamp ) )
             {
                 eZDebugSetting::writeDebug( 'kernel-content-view-cache', 'cache expired #2' );
@@ -154,8 +143,6 @@ class eZContentCache
         eZDebugSetting::writeDebug( 'kernel-content-view-cache', 'cache used #2' );
 
         $fileName = $cacheDir . "/" . $cacheFile;
-
-        // VS-DBFILE : FIXME: We may need to cache PDF files locally.
 
         $cacheFile = eZClusterFileHandler::instance( $fileName );
         $contents = $cacheFile->fetchContents();
@@ -200,7 +187,6 @@ class eZContentCache
         }
 
         // set section id
-        //include_once( 'kernel/classes/ezsection.php' );
         eZSection::setGlobalID( $cachedArray['section_id'] );
         return $result;
     }
@@ -263,20 +249,12 @@ class eZContentCache
 
         if ( !file_exists( $cacheDir ) )
         {
-            //include_once( 'lib/ezfile/classes/ezdir.php' );
-            $ini = eZINI::instance();
-            $perm = octdec( $ini->variable( 'FileSettings', 'StorageDirPermissions' ) );
-            eZDir::mkdir( $cacheDir, $perm, true );
+            eZDir::mkdir( $cacheDir, false, true );
         }
 
         $path = $cacheDir . '/' . $cacheFile;
         $uniqid = md5( uniqid( 'ezpcache'. getmypid(), true ) );
 
-        // VS-DBFILE : FIXME: Use some kind of one-shot atomic storing here.
-        //             FIXME: use permissions provided in FileSettings:StorageFilePermissions.
-
-
-        require_once( 'kernel/classes/ezclusterfilehandler.php' );
         $file = eZClusterFileHandler::instance( "$cacheDir/$uniqid" );
         $file->storeContents( $serializeString, 'viewcache', 'pdf' );
         $file->move( $path );
@@ -296,16 +274,20 @@ class eZContentCache
         return ( $value < $threshold );
     }
 
-    static function cleanup( $nodeList )
+    static function cleanup( $nodeList, $userId = false )
     {
         // The view-cache has a different storage structure than before:
         // var/cache/content/<siteaccess>/<extra-path>/<nodeID>-<hash>.cache
         // Also it uses the cluster file handler to delete files using a wildcard (glob style).
         $ini = eZINI::instance();
+        $extraCacheName = '';
         $cacheBaseDir = eZDir::path( array( eZSys::cacheDirectory(), $ini->variable( 'ContentSettings', 'CacheDir' ) ) );
-
-        require_once( 'kernel/classes/ezclusterfilehandler.php' );
         $fileHandler = eZClusterFileHandler::instance();
+
+        if ( $userId !== false && is_numeric( $userId ) )
+        {
+            $extraCacheName = $userId . '-';
+        }
 
         // Figure out the siteaccess which are related, first using the new
         // INI setting RelatedSiteAccessList then the old existing one
@@ -332,7 +314,7 @@ class eZContentCache
         foreach ( $nodeList as $nodeID )
         {
             $extraPath = eZDir::filenamePath( $nodeID );
-            $fileHandler->fileDeleteByDirList( $siteAccesses, $cacheBaseDir, "$extraPath$nodeID-" );
+            $fileHandler->fileDeleteByDirList( $siteAccesses, $cacheBaseDir, "$extraPath$nodeID-$extraCacheName" );
         }
     }
 }

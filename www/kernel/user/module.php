@@ -3,9 +3,9 @@
 // Created on: <30-Apr-2002 12:36:36 bf>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -64,7 +64,7 @@ $ViewList['password'] = array(
     'default_navigation_part' => 'ezmynavigationpart',
     'params' => array( 'UserID' ) );
 
-/// \deprecated This view is kept for compatability
+/// \deprecated This view is kept for compatibility
 $ViewList['forgetpassword'] = array(
     'functions' => array( 'password' ),
     'script' => 'forgotpassword.php',
@@ -102,7 +102,7 @@ $ViewList['edit'] = array(
 $ViewList['register'] = array(
     'functions' => array( 'register' ),
     'script' => 'register.php',
-    'params' => array( ),
+    'params' => array( 'redirect_number' ),
     'ui_context' => 'edit',
     'default_navigation_part' => 'ezmynavigationpart',
     'single_post_actions' => array( 'PublishButton' => 'Publish',

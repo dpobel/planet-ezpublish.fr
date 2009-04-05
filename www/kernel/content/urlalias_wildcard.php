@@ -3,9 +3,9 @@
 // Created on: <14-Nov-2007 11:27:10 dl>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -24,10 +24,9 @@
 //
 //
 
-/*! \file urlalias_wildcard.php
+/*! \file
 */
-include_once( 'kernel/common/template.php' );
-include_once( 'kernel/classes/ezurlwildcard.php' );
+require_once( 'kernel/common/template.php' );
 
 $Module =& $Params['Module'];
 $http = eZHTTPTool::instance();
@@ -90,14 +89,14 @@ else if ( $Module->isCurrentAction( 'NewWildcard' ) )
             $infoCode = "feedback-wildcard-exists";
 
             $infoData['wildcard_src_url'] = $wildcardSrcText;
-            $infoData['wildcard_dst_url'] = $wildcardDstText;
+            $infoData['wildcard_dst_url'] = $wildcard['destination_url'];
         }
         else
         {
             $row = array(
                 'source_url' => $wildcardSrcText,
                 'destination_url' => $wildcardDstText,
-                'type' => $wildcardType ? eZURLWildcard::EZ_URLWILDCARD_TYPE_FORWARD : eZURLWildcard::EZ_URLWILDCARD_TYPE_DIRECT );
+                'type' => $wildcardType ? eZURLWildcard::TYPE_FORWARD : eZURLWildcard::TYPE_DIRECT );
 
             $wildcard = new eZURLWildcard( $row );
             $wildcard->store();
@@ -125,7 +124,6 @@ $limitList = array( array( 'id'    => 1,
                            'value' => 50 ),
                     array( 'id'    => 4,
                            'value' => 100 ) );
-include_once( 'kernel/classes/ezpreferences.php' );
 $limitID = eZPreferences::value( 'admin_urlwildcard_list_limit' );
 foreach ( $limitList as $limitEntry )
 {

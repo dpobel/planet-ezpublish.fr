@@ -5,9 +5,9 @@
 // Created on: <23-Jul-2003 16:11:42 amos>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -26,7 +26,7 @@
 //
 //
 
-/*! \file ezcontentclasspackagehandler.php
+/*! \file
 */
 
 /*!
@@ -34,9 +34,6 @@
   \brief Handles content classes in the package system
 
 */
-
-//include_once( 'kernel/classes/ezcontentclass.php' );
-//include_once( 'kernel/classes/ezpackagehandler.php' );
 
 class eZContentClassPackageHandler extends eZPackageHandler
 {
@@ -58,7 +55,6 @@ class eZContentClassPackageHandler extends eZPackageHandler
     }
 
     /*!
-     \reimp
      Returns an explanation for the content class install item.
      Use $requestedInfo to request portion of info.
     */
@@ -123,7 +119,6 @@ class eZContentClassPackageHandler extends eZPackageHandler
     }
 
     /*!
-     \reimp
      Uninstalls all previously installed content classes.
     */
     function uninstall( $package, $installType, $parameters,
@@ -170,7 +165,6 @@ class eZContentClassPackageHandler extends eZPackageHandler
 
             eZDebug::writeNotice( sprintf( "Removing class '%s' (%d)", $class->attribute( 'name' ), $class->attribute( 'id' ) ) );
 
-            //include_once( 'kernel/classes/ezcontentclassoperations.php' );
             eZContentClassOperations::remove( $class->attribute( 'id' ) );
         }
 
@@ -178,7 +172,6 @@ class eZContentClassPackageHandler extends eZPackageHandler
     }
 
     /*!
-     \reimp
      Creates a new contentclass as defined in the xml structure.
     */
     function install( $package, $installType, $parameters,
@@ -237,7 +230,6 @@ class eZContentClassPackageHandler extends eZPackageHandler
             {
             case eZPackage::NON_INTERACTIVE:
             case self::ACTION_REPLACE:
-                //include_once( 'kernel/classes/ezcontentclassoperations.php' );
                 if ( eZContentClassOperations::remove( $class->attribute( 'id' ) ) == false )
                 {
                     eZDebug::writeWarning( "Unable to remove class '$className'." );
@@ -299,18 +291,50 @@ class eZContentClassPackageHandler extends eZPackageHandler
 
         $classIdentifier = $currentClassIdentifier;
 
+        $values = array( 'version' => 0,
+                         'serialized_name_list' => $classNameList->serializeNames(),
+                         'create_lang_if_not_exist' => true,
+                         'identifier' => $classIdentifier,
+                         'remote_id' => $classRemoteID,
+                         'contentobject_name' => $classObjectNamePattern,
+                         'url_alias_name' => $classURLAliasPattern,
+                         'is_container' => $classIsContainer,
+                         'created' => $classCreated,
+                         'modified' => $classModified );
+
+        if ( $content->hasAttribute( 'sort-field' ) )
+        {
+            $values['sort_field'] = eZContentObjectTreeNode::sortFieldID( $content->getAttribute( 'sort-field' ) );
+        }
+        else
+        {
+            eZDebug::writeNotice( 'The sort field was not specified in the content class package. ' .
+                                  'This property is exported and imported since eZ Publish 4.0.2', __METHOD__ );
+        }
+
+        if ( $content->hasAttribute( 'sort-order' ) )
+        {
+            $values['sort_order'] = $content->getAttribute( 'sort-order' );
+        }
+        else
+        {
+            eZDebug::writeNotice( 'The sort order was not specified in the content class package. ' .
+                                  'This property is exported and imported since eZ Publish 4.0.2', __METHOD__ );
+        }
+
+        if ( $content->hasAttribute( 'always-available' ) )
+        {
+            $values['always_available'] = ( $content->getAttribute( 'always-available' ) === 'true' ? 1 : 0 );
+        }
+        else
+        {
+            eZDebug::writeNotice( 'The default object availability was not specified in the content class package. ' .
+                                  'This property is exported and imported since eZ Publish 4.0.2', __METHOD__ );
+        }
+
         // create class
         $class = eZContentClass::create( $userID,
-                                         array( 'version' => 0,
-                                                'serialized_name_list' => $classNameList->serializeNames(),
-                                                'create_lang_if_not_exist' => true,
-                                                'identifier' => $classIdentifier,
-                                                'remote_id' => $classRemoteID,
-                                                'contentobject_name' => $classObjectNamePattern,
-                                                'url_alias_name' => $classURLAliasPattern,
-                                                'is_container' => $classIsContainer,
-                                                'created' => $classCreated,
-                                                'modified' => $classModified ) );
+                                         $values );
         $class->store();
 
         $classID = $class->attribute( 'id' );
@@ -383,9 +407,6 @@ class eZContentClassPackageHandler extends eZPackageHandler
         return true;
     }
 
-    /*!
-     \reimp
-    */
     function add( $packageType, $package, $cli, $parameters )
     {
         foreach ( $parameters['class-list'] as $classItem )
@@ -424,9 +445,6 @@ class eZContentClassPackageHandler extends eZPackageHandler
                                  array( 'content' => false ) );
     }
 
-    /*!
-     \reimp
-    */
     function handleAddParameters( $packageType, $package, $cli, $arguments )
     {
         return $this->handleParameters( $packageType, $package, $cli, 'add', $arguments );
@@ -526,18 +544,26 @@ class eZContentClassPackageHandler extends eZPackageHandler
         $dom = new DOMDocument( '1.0', 'utf-8' );
         $classNode = $dom->createElement( 'content-class' );
         $dom->appendChild( $classNode );
-        $serializedNameListNode = $dom->createElement( 'serialized-name-list', $class->attribute( 'serialized_name_list' ) );
+        $serializedNameListNode = $dom->createElement( 'serialized-name-list' );
+        $serializedNameListNode->appendChild( $dom->createTextNode( $class->attribute( 'serialized_name_list' ) ) );
         $classNode->appendChild( $serializedNameListNode );
-        $identifierNode = $dom->createElement( 'identifier', $class->attribute( 'identifier' ) );
+        $identifierNode = $dom->createElement( 'identifier' );
+        $identifierNode->appendChild( $dom->createTextNode( $class->attribute( 'identifier' ) ) );
         $classNode->appendChild( $identifierNode );
-        $remoteIDNode = $dom->createElement( 'remote-id', $class->attribute( 'remote_id' ) );
+        $remoteIDNode = $dom->createElement( 'remote-id' );
+        $remoteIDNode->appendChild( $dom->createTextNode( $class->attribute( 'remote_id' ) ) );
         $classNode->appendChild( $remoteIDNode );
-        $objectNamePatternNode = $dom->createElement( 'object-name-pattern', $class->attribute( 'contentobject_name' ) );
+        $objectNamePatternNode = $dom->createElement( 'object-name-pattern' );
+        $objectNamePatternNode->appendChild( $dom->createTextNode( $class->attribute( 'contentobject_name' ) ) );
         $classNode->appendChild( $objectNamePatternNode );
-        $urlAliasPatternNode = $dom->createElement( 'url-alias-pattern', $class->attribute( 'url_alias_name' ) );
+        $urlAliasPatternNode = $dom->createElement( 'url-alias-pattern' );
+        $urlAliasPatternNode->appendChild( $dom->createTextNode( $class->attribute( 'url_alias_name' ) ) );
         $classNode->appendChild( $urlAliasPatternNode );
         $isContainer = $class->attribute( 'is_container' ) ? 'true' : 'false';
         $classNode->setAttribute( 'is-container', $isContainer );
+        $classNode->setAttribute( 'always-available', $class->attribute( 'always_available' ) ? 'true' : 'false' );
+        $classNode->setAttribute( 'sort-field', eZContentObjectTreeNode::sortFieldName( $class->attribute( 'sort_field' ) ) );
+        $classNode->setAttribute( 'sort-order', $class->attribute( 'sort_order' ) );
 
         // Remote data start
         $remoteNode = $dom->createElement( 'remote' );
@@ -549,8 +575,13 @@ class eZContentClassPackageHandler extends eZPackageHandler
         $classURL = 'http://' . $siteName . '/class/view/' . $class->attribute( 'id' );
         $siteURL = 'http://' . $siteName . '/';
 
-        $remoteNode->appendChild( $dom->createElement( 'site-url', $siteURL ) );
-        $remoteNode->appendChild( $dom->createElement( 'url', $classURL ) );
+        $siteUrlNode = $dom->createElement( 'site-url' );
+        $siteUrlNode->appendChild( $dom->createTextNode( $siteURL ) );
+        $remoteNode->appendChild( $siteUrlNode );
+
+        $urlNode = $dom->createElement( 'url' );
+        $urlNode->appendChild( $dom->createTextNode( $classURL ) );
+        $remoteNode->appendChild( $urlNode );
 
         $classGroupsNode = $dom->createElement( 'groups' );
 
@@ -570,32 +601,39 @@ class eZContentClassPackageHandler extends eZPackageHandler
         }
         $remoteNode->appendChild( $classGroupsNode );
 
-        $idNode = $dom->createElement( 'id', $class->attribute( 'id' ) );
+        $idNode = $dom->createElement( 'id' );
+        $idNode->appendChild( $dom->createTextNode( $class->attribute( 'id' ) ) );
         $remoteNode->appendChild( $idNode );
-        $createdNode = $dom->createElement( 'created', $class->attribute( 'created' ) );
+        $createdNode = $dom->createElement( 'created' );
+        $createdNode->appendChild( $dom->createTextNode( $class->attribute( 'created' ) ) );
         $remoteNode->appendChild( $createdNode );
-        $modifiedNode = $dom->createElement( 'modified', $class->attribute( 'modified' ) );
+        $modifiedNode = $dom->createElement( 'modified' );
+        $modifiedNode->appendChild( $dom->createTextNode( $class->attribute( 'modified' ) ) );
         $remoteNode->appendChild( $modifiedNode );
 
         $creatorNode = $dom->createElement( 'creator' );
         $remoteNode->appendChild( $creatorNode );
-        $creatorIDNode = $dom->createElement( 'user-id', $class->attribute( 'creator_id' ) );
+        $creatorIDNode = $dom->createElement( 'user-id' );
+        $creatorIDNode->appendChild( $dom->createTextNode( $class->attribute( 'creator_id' ) ) );
         $creatorNode->appendChild( $creatorIDNode );
         $creator = $class->attribute( 'creator' );
         if ( $creator )
         {
-            $creatorLoginNode = $dom->createElement( 'user-login', $creator->attribute( 'login' ) );
+            $creatorLoginNode = $dom->createElement( 'user-login' );
+            $creatorLoginNode->appendChild( $dom->createTextNode( $creator->attribute( 'login' ) ) );
             $creatorNode->appendChild( $creatorLoginNode );
         }
 
         $modifierNode = $dom->createElement( 'modifier' );
         $remoteNode->appendChild( $modifierNode );
-        $modifierIDNode = $dom->createElement( 'user-id', $class->attribute( 'modifier_id' ) );
+        $modifierIDNode = $dom->createElement( 'user-id' );
+        $modifierIDNode->appendChild( $dom->createTextNode( $class->attribute( 'modifier_id' ) ) );
         $modifierNode->appendChild( $modifierIDNode );
         $modifier = $class->attribute( 'modifier' );
         if ( $modifier )
         {
-            $modifierLoginNode = $dom->createElement( 'user-login', $modifier->attribute( 'login' ) );
+            $modifierLoginNode = $dom->createElement( 'user-login' );
+            $modifierLoginNode->appendChild( $dom->createTextNode( $modifier->attribute( 'login' ) ) );
             $modifierNode->appendChild( $modifierLoginNode );
         }
         // Remote data end
@@ -620,16 +658,20 @@ class eZContentClassPackageHandler extends eZPackageHandler
             $attributeRemoteNode = $dom->createElement( 'remote' );
             $attributeNode->appendChild( $attributeRemoteNode );
 
-            $attributeIDNode = $dom->createElement( 'id', $attribute->attribute( 'id' ) );
+            $attributeIDNode = $dom->createElement( 'id' );
+            $attributeIDNode->appendChild( $dom->createTextNode( $attribute->attribute( 'id' ) ) );
             $attributeRemoteNode->appendChild( $attributeIDNode );
 
-            $attributeSerializedNameListNode = $dom->createElement( 'serialized-name-list', $attribute->attribute( 'serialized_name_list' ) );
+            $attributeSerializedNameListNode = $dom->createElement( 'serialized-name-list' );
+            $attributeSerializedNameListNode->appendChild( $dom->createTextNode( $attribute->attribute( 'serialized_name_list' ) ) );
             $attributeNode->appendChild( $attributeSerializedNameListNode );
 
-            $attributeIdentifierNode = $dom->createElement( 'identifier', $attribute->attribute( 'identifier' ) );
+            $attributeIdentifierNode = $dom->createElement( 'identifier' );
+            $attributeIdentifierNode->appendChild( $dom->createTextNode( $attribute->attribute( 'identifier' ) ) );
             $attributeNode->appendChild( $attributeIdentifierNode );
 
-            $attributePlacementNode = $dom->createElement( 'placement', $attribute->attribute( 'placement' ) );
+            $attributePlacementNode = $dom->createElement( 'placement' );
+            $attributePlacementNode->appendChild( $dom->createTextNode( $attribute->attribute( 'placement' ) ) );
             $attributeNode->appendChild( $attributePlacementNode );
 
             $attributeParametersNode = $dom->createElement( 'datatype-parameters' );

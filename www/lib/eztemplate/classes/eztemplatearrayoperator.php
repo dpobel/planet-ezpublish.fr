@@ -5,9 +5,9 @@
 // Created on: <05-Mar-2002 12:52:10 amos>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -41,8 +41,6 @@
 \endcode
 
 */
-
-//include_once( "lib/eztemplate/classes/eztemplate.php" );
 
 class eZTemplateArrayOperator
 {
@@ -299,9 +297,6 @@ class eZTemplateArrayOperator
                                                     'element-transformation-func' => 'arrayTrans' ) );
     }
 
-    /*!
-     \reimp
-    */
     function arrayTrans( $operatorName, &$node, $tpl, &$resourceData,
                          $element, $lastElement, $elementList, $elementTree, &$parameters )
     {
@@ -1051,9 +1046,6 @@ class eZTemplateArrayOperator
         }
     }
 
-    /*!
-     \reimp
-    */
     function compareTrans( $operatorName, &$node, $tpl, &$resourceData,
                            $element, $lastElement, $elementList, $elementTree, &$parameters )
     {
@@ -1245,9 +1237,6 @@ class eZTemplateArrayOperator
         }
     }
 
-    /*!
-     \reimp
-    */
     function extractTrans( $operatorName, &$node, $tpl, &$resourceData,
                            $element, $lastElement, $elementList, $elementTree, &$parameters )
     {
@@ -1351,9 +1340,6 @@ class eZTemplateArrayOperator
         return array( eZTemplateNodeTool::createCodePieceElement( $code, $values ) );
     }
 
-    /*!
-     \reimp
-    */
     function mergeTrans( $operatorName, &$node, $tpl, &$resourceData,
                          $element, $lastElement, $elementList, $elementTree, &$parameters )
     {

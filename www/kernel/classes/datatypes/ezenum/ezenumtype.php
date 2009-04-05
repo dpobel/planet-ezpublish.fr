@@ -5,9 +5,9 @@
 // Created on: <24-ßÂ-2002 14:33:53 wy>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -27,7 +27,7 @@
 //
 
 
-/*! \file ezenumtype.php
+/*! \file
 */
 
 /*!
@@ -35,10 +35,6 @@
   \ingroup eZDatatype
 
 */
-
-//include_once( 'kernel/classes/ezdatatype.php' );
-//include_once( 'kernel/classes/datatypes/ezenum/ezenum.php' );
-//include_once( 'kernel/classes/ezcontentobjectattribute.php' );
 
 class eZEnumType extends eZDataType
 {
@@ -89,9 +85,6 @@ class eZEnumType extends eZDataType
         }
     }
 
-    /*!
-     \reimp
-    */
     function cloneClassAttribute( $oldClassAttribute, $newClassAttribute )
     {
         $oldContentClassAttributeID = $oldClassAttribute->attribute( 'id' );
@@ -323,8 +316,6 @@ class eZEnumType extends eZDataType
         return $enum;
     }
 
-    /*!
-    */
     function customClassAttributeHTTPAction( $http, $action, $contentClassAttribute )
     {
         $id = $contentClassAttribute->attribute( 'id' );
@@ -403,7 +394,6 @@ class eZEnumType extends eZDataType
     }
 
     /*!
-     \reimp
      Sets \c grouped_input to \c true when checkboxes or radiobuttons are used.
     */
     function objectDisplayInformation( $objectAttribute, $mergeInfo = false )
@@ -417,16 +407,12 @@ class eZEnumType extends eZDataType
         return eZDataType::objectDisplayInformation( $objectAttribute, $info );
     }
 
-    /*!
-     \reimp
-    */
     function isIndexable()
     {
         return true;
     }
 
     /*!
-     \reimp
      \return a DOM representation of the content object attribute
     */
 
@@ -454,8 +440,7 @@ class eZEnumType extends eZDataType
 
 
     /*!
-     \reimp
-     Unserailize contentobject attribute
+     Unserialize contentobject attribute
 
      \param package
      \param contentobject attribute object
@@ -489,17 +474,11 @@ class eZEnumType extends eZDataType
     }
 
 
-    /*!
-     \reimp
-    */
     function hasObjectAttributeContent( $contentObjectAttribute )
     {
         return true;
     }
 
-    /*!
-     \reimp
-    */
     function serializeContentClassAttribute( $classAttribute, $attributeNode, $attributeParametersNode )
     {
         $isOption = $classAttribute->attribute( self::IS_OPTION_FIELD );
@@ -521,9 +500,6 @@ class eZEnumType extends eZDataType
         }
     }
 
-    /*!
-     \reimp
-    */
     function unserializeContentClassAttribute( $classAttribute, $attributeNode, $attributeParametersNode )
     {
         $isOption = strtolower( $attributeParametersNode->getAttribute( 'is-option' ) ) == 'true';
@@ -551,9 +527,6 @@ class eZEnumType extends eZDataType
         }
     }
 
-    /*!
-      \reimp
-    */
     function diff( $old, $new, $options = false )
     {
         return null;

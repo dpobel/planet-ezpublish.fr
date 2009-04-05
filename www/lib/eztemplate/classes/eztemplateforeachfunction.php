@@ -5,9 +5,9 @@
 // Created on: <24-Feb-2005 15:47:35 vs>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -118,7 +118,6 @@ class eZTemplateForeachFunction
         $nodePlacement       = eZTemplateNodeTool::extractFunctionNodePlacement( $node );
         $uniqid              =  md5( $nodePlacement[2] ) . "_" . $tpl->ForeachCounter;
 
-        require_once( 'lib/eztemplate/classes/eztemplatecompiledloop.php' );
         $loop = new eZTemplateCompiledLoop( eZTemplateForeachFunction::FUNCTION_NAME,
                                             $newNodes, $parameters, $nodePlacement, $uniqid,
                                             $node, $tpl, $privateData );
@@ -266,7 +265,6 @@ class eZTemplateForeachFunction
 
         //eZDebug::writeDebug( $functionParameters, '$functionParameters' );
 
-        require_once( 'lib/eztemplate/classes/eztemplateloop.php' );
         $loop = new eZTemplateLoop( eZTemplateForeachFunction::FUNCTION_NAME,
                                     $functionParameters, $functionChildren, $functionPlacement,
                                     $tpl, $textElements, $rootNamespace, $currentNamespace );

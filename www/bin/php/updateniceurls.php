@@ -6,9 +6,9 @@
 // Created on: <03-Apr-2003 16:05:43 sp>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -27,13 +27,10 @@
 //
 //
 
-/*! \file updateniceurls.php
+/*! \file
 */
 
 set_time_limit ( 0 );
-
-//include_once( 'lib/ezutils/classes/ezcli.php' );
-//include_once( 'kernel/classes/ezscript.php' );
 
 require 'autoload.php';
 $cli = eZCLI::instance();
@@ -112,10 +109,6 @@ function changeSiteAccessSetting( $siteAccess )
     }
 }
 
-//include_once( 'lib/ezdb/classes/ezdb.php' );
-//include_once( 'kernel/classes/ezcontentobjecttreenode.php' );
-//include_once( 'kernel/classes/ezurlwildcard.php' );
-
 $db = eZDb::instance();
 
 if ( $dbHost or $dbName or $dbUser or $dbImpl )
@@ -138,7 +131,6 @@ if ( $dbHost or $dbName or $dbUser or $dbImpl )
 
 $db->setIsSQLOutputEnabled( $showSQL );
 
-//include_once( 'kernel/classes/ezcontentlanguage.php' );
 eZContentLanguage::setCronjobMode( true );
 
 $fetchLimit = 200;
@@ -535,7 +527,7 @@ function createURLListCondition( $rows, $sqlField = 'id', $fieldKey = 'id' )
     {
         if ( $cond != "" )
              $cond .= " OR ";
-        $cond .= "{$sqlField} IN (" . join( ",", $singleIDs ) . ")";
+        $cond .= eZDB::instance()->generateSQLINStatement( $singleIDs, $sqlField );
     }
     return $cond;
 }
@@ -772,14 +764,14 @@ if ( $urlCount > 0 )
                     }
                     $linkID = false;
                 }
-        		else if ( $actionType == 'module' )
-        		{
-        		    $linkID = true;
+                else if ( $actionType == 'module' )
+                {
+                    $linkID = true;
 
-        		    // Links that pointed to modules in the old system does not 
-        		    // redirect. Make sure they won't redirect in the new system either.
+                    // Links that pointed to modules in the old system does not
+                    // redirect. Make sure they won't redirect in the new system either.
                     $aliasRedirects = false;
-        		}
+                }
 
                 $aliases = eZURLAliasML::fetchByPath( $source );
                 if ( $aliases )
@@ -1067,7 +1059,6 @@ if ( $urlCount > 0 )
     if ( $importOldAliasWildcard )
     {
         $cli->output( "Removing old wildcard caches" );
-        //include_once( 'kernel/classes/ezcache.php' );
         eZCache::clearByID( 'urlalias' );
     }
 

@@ -3,9 +3,9 @@
 // Created on: <07-æÅ×-2003 14:21:36 sp>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -24,13 +24,8 @@
 //
 //
 
-/*! \file checkout.php
+/*! \file
 */
-//include_once( 'kernel/classes/ezorder.php' );
-//include_once( 'lib/ezutils/classes/ezoperationhandler.php' );
-
-//include_once( 'kernel/shop/classes/ezpaymentobject.php' );
-
 $http = eZHTTPTool::instance();
 $module = $Params['Module'];
 
@@ -66,7 +61,6 @@ if ( $order instanceof eZOrder )
             $order->setAttribute( 'email', $email );
             $order->store();
 
-            //include_once( "lib/ezutils/classes/ezhttptool.php" );
             $http->setSessionVariable( "UserOrderID", $order->attribute( 'id' ) );
 
             $operationResult = eZOperationHandler::execute( 'shop', 'checkout', array( 'order_id' => $order->attribute( 'id' ) ) );

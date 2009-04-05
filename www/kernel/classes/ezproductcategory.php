@@ -3,9 +3,9 @@
 // Created on: <17-Feb-2006 15:20:15 vs>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -30,12 +30,8 @@
   \ingroup eZKernel
 */
 
-//include_once( "kernel/classes/ezpersistentobject.php" );
-
 class eZProductCategory extends eZPersistentObject
 {
-    /*!
-    */
     function eZProductCategory( $row )
     {
         $this->eZPersistentObject( $row );
@@ -93,7 +89,6 @@ class eZProductCategory extends eZPersistentObject
              !$categoryAttrName = $ini->variable( 'VATSettings', 'ProductCategoryAttribute' ) )
             return 0;
 
-        require_once( 'lib/ezdb/classes/ezdb.php' );
         $db = eZDB::instance();
         $categoryID =(int) $categoryID;
         $categoryAttrName = $db->escapeString( $categoryAttrName );
@@ -132,7 +127,6 @@ class eZProductCategory extends eZPersistentObject
         $db->begin();
 
         // Delete references to the category from VAT charging rules.
-        require_once( 'kernel/classes/ezvatrule.php' );
         eZVatRule::removeReferencesToProductCategory( $id );
 
         // Reset product category attribute for all products

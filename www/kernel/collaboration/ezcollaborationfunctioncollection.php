@@ -5,9 +5,9 @@
 // Created on: <06-Oct-2002 16:19:31 amos>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -26,7 +26,7 @@
 //
 //
 
-/*! \file ezcontentfunctioncollection.php
+/*! \file
 */
 
 /*!
@@ -34,8 +34,6 @@
   \brief The class eZCollaborationFunctionCollection does
 
 */
-
-//include_once( 'kernel/error/errors.php' );
 
 class eZCollaborationFunctionCollection
 {
@@ -48,10 +46,8 @@ class eZCollaborationFunctionCollection
 
     function fetchParticipant( $itemID, $participantID )
     {
-        //include_once( 'kernel/classes/ezcollaborationitemparticipantlink.php' );
         if ( $participantID === false )
         {
-            //include_once( 'kernel/classes/datatypes/ezuser/ezuser.php' );
             $user = eZUser::currentUser();
             $participantID = $user->attribute( 'contentobject_id' );
         }
@@ -70,7 +66,6 @@ class eZCollaborationFunctionCollection
 
     function fetchParticipantList( $itemID, $sortBy, $offset, $limit )
     {
-        //include_once( 'kernel/classes/ezcollaborationitemparticipantlink.php' );
         $itemParameters = array( 'item_id' => $itemID,
                                  'offset' => $offset,
                                  'limit' => $limit,
@@ -90,7 +85,6 @@ class eZCollaborationFunctionCollection
 
     function fetchParticipantMap( $itemID, $sortBy, $offset, $limit, $field )
     {
-        //include_once( 'kernel/classes/ezcollaborationitemparticipantlink.php' );
         $itemParameters = array( 'item_id' => $itemID,
                                  'offset' => $offset,
                                  'limit' => $limit,
@@ -112,7 +106,6 @@ class eZCollaborationFunctionCollection
 
     function fetchMessageList( $itemID, $sortBy, $offset, $limit )
     {
-        //include_once( 'kernel/classes/ezcollaborationitemmessagelink.php' );
         $itemParameters = array( 'item_id' => $itemID,
                                  'offset' => $offset,
                                  'limit' => $limit,
@@ -132,7 +125,6 @@ class eZCollaborationFunctionCollection
 
     function fetchItemList( $sortBy, $offset, $limit, $status, $isRead, $isActive, $parentGroupID )
     {
-        //include_once( 'kernel/classes/ezcollaborationitem.php' );
         $itemParameters = array( 'offset' => $offset,
                                  'limit' => $limit,
                                  'sort_by' => $sortBy,
@@ -150,8 +142,6 @@ class eZCollaborationFunctionCollection
 
     function fetchItemCount( $isRead, $isActive, $parentGroupID, $status )
     {
-        //include_once( 'kernel/classes/ezcollaborationitem.php' );
-
         $itemParameters = array( 'is_read' => $isRead,
                                  'is_active' => $isActive,
                                  'parent_group_id' => $parentGroupID
@@ -164,7 +154,6 @@ class eZCollaborationFunctionCollection
 
     function fetchGroupTree( $parentGroupID, $sortBy, $offset, $limit, $depth )
     {
-        //include_once( 'kernel/classes/ezcollaborationgroup.php' );
         $treeParameters = array( 'parent_group_id' => $parentGroupID,
                                  'offset' => $offset,
                                  'limit' => $limit,
@@ -179,7 +168,6 @@ class eZCollaborationFunctionCollection
 
     function fetchObjectTreeCount( $parentNodeID, $class_filter_type, $class_filter_array, $depth )
     {
-        //include_once( 'kernel/classes/ezcontentobjecttreenode.php' );
         $node = eZContentObjectTreeNode::fetch( $parentNodeID );
         $childrenCount = $node->subTreeCount( array( 'Limitation' => null,
                                                      'ClassFilterType' => $class_filter_type,

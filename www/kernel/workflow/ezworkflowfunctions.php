@@ -3,9 +3,9 @@
 // Created on: <27-Sep-2004 11:41:73 jk>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -24,15 +24,13 @@
 //
 //
 
-/*! \file ezworkflowfunctions.php
+/*! \file
 */
 
 class eZWorkflowFunctions
 {
     static function addGroup( $workflowID, $workflowVersion, $selectedGroup )
     {
-        //include_once( "kernel/classes/ezworkflowgrouplink.php" );
-
         list ( $groupID, $groupName ) = split( "/", $selectedGroup );
         $ingroup = eZWorkflowGroupLink::create( $workflowID, $workflowVersion, $groupID, $groupName );
         $ingroup->store();
@@ -41,9 +39,6 @@ class eZWorkflowFunctions
 
     static function removeGroup( $workflowID, $workflowVersion, $selectedGroup )
     {
-        //include_once( "kernel/classes/ezworkflow.php" );
-        //include_once( "kernel/classes/ezworkflowgrouplink.php" );
-
         $workflow = eZWorkflow::fetch( $workflowID );
         if ( !$workflow )
             return false;

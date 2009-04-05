@@ -5,9 +5,9 @@
 // Created on: <27-Aug-2002 15:55:18 bf>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -32,12 +32,8 @@
 
 */
 
-//include_once( "kernel/classes/ezpersistentobject.php" );
-
 class eZSection extends eZPersistentObject
 {
-    /*!
-    */
     function eZSection( $row )
     {
         if ( !isset( $row['id'] ) )
@@ -153,7 +149,6 @@ class eZSection extends eZPersistentObject
         $sectionID = false;
         if ( $sessionRequired )
         {
-            //include_once( 'lib/ezutils/classes/ezhttptool.php' );
             $http = eZHTTPTool::instance();
             $sectionArray = array();
             if ( $http->hasSessionVariable( 'eZGlobalSection' ) )
@@ -180,7 +175,6 @@ class eZSection extends eZPersistentObject
     */
     static function setGlobalID( $sectionID )
     {
-        //include_once( 'lib/ezutils/classes/ezhttptool.php' );
         $http = eZHTTPTool::instance();
         $sectionArray = array();
         if ( $http->hasSessionVariable( 'eZGlobalSection' ) )
@@ -197,7 +191,6 @@ class eZSection extends eZPersistentObject
     */
     static function globalID()
     {
-        //include_once( 'lib/ezutils/classes/ezhttptool.php' );
         $http = eZHTTPTool::instance();
         if ( $http->hasSessionVariable( 'eZGlobalSection' ) )
         {
@@ -230,9 +223,7 @@ class eZSection extends eZPersistentObject
 
         $objects = eZPersistentObject::fetchObjectList( eZContentObject::definition(), null,
                                                         array( 'section_id' => $sectionID ) );
-        include_once( 'kernel/classes/ezpolicylimitation.php' );
         $limitations = eZPolicyLimitation::findByType( 'Section', $sectionID, true, false );
-        include_once( 'kernel/classes/ezrole.php' );
         $userRoles = eZRole::fetchRolesByLimitation( 'section', $sectionID );
 
         if ( count( $objects ) > 0 or

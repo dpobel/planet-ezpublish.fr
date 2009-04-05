@@ -7,6 +7,21 @@
     </message>
 </context>
 <context>
+    <name>design</name>
+    <message>
+        <source>%group_name [Content object state group]</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit</source>
+        <translation type="unfinished">編輯</translation>
+    </message>
+    <message>
+        <source>%state_name [Content object state]</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>design/admin/class/classlist</name>
     <message>
         <source>%group_name [Class group]</source>
@@ -2025,6 +2040,14 @@
         <source>You do not have permission to view this object</source>
         <translation type="unfinished">你沒權限以檢視此物件</translation>
     </message>
+    <message>
+        <source>States</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The following data is invalid according to the custom validation rules</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>design/admin/content/edit_attribute</name>
@@ -3656,10 +3679,6 @@
         <translation type="unfinished">輸入新別名的 URL。使用向前的斜線(/)建立支項。</translation>
     </message>
     <message>
-        <source>Destination (path to existing funtionality or resource)</source>
-        <translation type="unfinished">目標（指向現有的功能或源檔）</translation>
-    </message>
-    <message>
         <source>Enter the destination URL for the new alias. Use forward slashes (/) to create subentries.</source>
         <translation type="unfinished">輸入新別名的目標 URL。使用向前的斜線(/)建立支項。</translation>
     </message>
@@ -3693,6 +3712,10 @@
     </message>
     <message>
         <source>Direct</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Destination (path to existing functionality or resource)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3803,14 +3826,6 @@
         <translation type="unfinished">新 URL 萬用字元</translation>
     </message>
     <message>
-        <source>Enter the URL for the new wildcard. Example: /developer/*</source>
-        <translation type="unfinished">輸入新萬用字元的 URL。範例： /developer/*</translation>
-    </message>
-    <message>
-        <source>Enter the destination URL for the new wildcard. Example: /dev/{1\}</source>
-        <translation type="unfinished">輸入新萬用字元的目標 URL。範例： /dev/{1\}</translation>
-    </message>
-    <message>
         <source>Perform redirecting.</source>
         <translation type="unfinished">執行重新導向</translation>
     </message>
@@ -3821,6 +3836,14 @@
     <message>
         <source>Create a new wildcard URL alias.</source>
         <translation type="unfinished">建立一個新的萬用字元 URL 別名</translation>
+    </message>
+    <message>
+        <source>Enter the URL for the new wildcard. Example: developer/*</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enter the destination URL for the new wildcard. Example: dev/{1\}</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5382,6 +5405,58 @@
         <source>You do not have permission to change this setting.</source>
         <translation type="unfinished">你沒有權限更改這個設定。</translation>
     </message>
+    <message>
+        <source>Move selected</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Move the selected items from the list above.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You do not have permission to move any of the items from the list above.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Object states for object</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Content object state group</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Available states</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No content object state is configured. This can be done %urlstart here %urlend.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Set states</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Apply states from the list above.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No state to be applied to this content object. You might need to be assigned a more permissive access policy.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Object states</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Hide state assignment widget.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show state assignment widget.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>design/admin/node/view/line</name>
@@ -6418,6 +6493,10 @@ Note: The packages will not be uninstalled.</source>
     <message>
         <source>URL wildcards</source>
         <translation type="unfinished">URL 萬用字元</translation>
+    </message>
+    <message>
+        <source>States</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -7770,6 +7849,10 @@ Note: The packages will not be uninstalled.</source>
         <translation type="unfinished">請使用此欄位以輸入你站台的基準 URL。它是用來在匯出中產生網址，由站台 URL (例如：&quot;http://www.example.com/index.php&quot;) 和物件路徑 (例如：&quot;/articles/my_article&quot;) 所組成。站台 URL 取決於你的網頁伺服器和 eZ publish 配置。</translation>
     </message>
     <message>
+        <source>Leave this field empty if you want system automaticaly detect the URL of your site from the URL you access feed with</source>
+        <translation type="unfinished">如果你想要系統從你存取饋送的 URL 自動偵測你站台的 URL，請留空此欄位</translation>
+    </message>
+    <message>
         <source>Use this drop-down to select the maximum number of objects included in the RSS feed.</source>
         <translation type="unfinished">請使用此下拉式功能選取包含在 RSS 饋送的最大物件數。</translation>
     </message>
@@ -7798,8 +7881,20 @@ Note: The packages will not be uninstalled.</source>
         <translation type="unfinished">請使用此下拉式選單以選取應該匯出的屬性，做為 RSS 匯出項目的描述。</translation>
     </message>
     <message>
-        <source>Leave this field emty if you want system automaticaly detect the URL of your site from the URL you access feed with</source>
+        <source>Category</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>optional</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use this drop-down to select the attribute that should be exported as the category of the RSS export entry.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Skip</source>
+        <translation type="unfinished">跳過</translation>
     </message>
 </context>
 <context>
@@ -8503,6 +8598,10 @@ Note: The packages will not be uninstalled.</source>
         <source>Please select an ini file from the drop-down below</source>
         <translation type="unfinished">請從下拉式功能裏選取一個 ini 檔案。</translation>
     </message>
+    <message>
+        <source>Values for each location setting are shown. The first values have lowest priority; the values toward the end have higher priority than the first ones.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>design/admin/setup</name>
@@ -8743,6 +8842,10 @@ Note: The packages will not be uninstalled.</source>
         <source>Click this button to regenerate the autoload arrays used by the system for extensions.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Problems detected during autoload generation:</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>design/admin/setup/info</name>
@@ -8971,6 +9074,15 @@ Note: The packages will not be uninstalled.</source>
     <message>
         <source>Web server (hardware)</source>
         <translation type="unfinished">網頁伺服器（硬件）</translation>
+    </message>
+    <message>
+        <source>Details</source>
+        <comment>Detailed PHP information</comment>
+        <translation type="unfinished">詳細資料</translation>
+    </message>
+    <message>
+        <source>PHP autoload functions</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -11009,6 +11121,201 @@ Note: The packages will not be uninstalled.</source>
     <message>
         <source>Click this button to store changes if you have modified quantity and/or option values.</source>
         <translation>如果你已修改數量和/或選項值，按一下此按鈕以儲存變更。</translation>
+    </message>
+</context>
+<context>
+    <name>design/admin/state/edit</name>
+    <message>
+        <source>The content object state was successfully stored.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The content object state could not be stored.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Required data is either missing or is invalid</source>
+        <translation type="unfinished">必要資料若非缺少就是無效</translation>
+    </message>
+    <message>
+        <source>Edit content object state &quot;%state_name&quot;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>New content object state</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save changes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save changes to this states.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">取消</translation>
+    </message>
+    <message>
+        <source>Cancel saving any changes.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>design/admin/state/group</name>
+    <message>
+        <source>Object states in this group [%state_count]</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Invert selection.</source>
+        <translation type="unfinished">反向選擇。</translation>
+    </message>
+    <message>
+        <source>ID</source>
+        <translation type="unfinished">ID</translation>
+    </message>
+    <message>
+        <source>Identifier</source>
+        <translation type="unfinished">識別代號</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Object count</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Order</source>
+        <translation type="unfinished">訂貨</translation>
+    </message>
+    <message>
+        <source>Select content object state group for removal.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove selected</source>
+        <translation type="unfinished">刪除所選</translation>
+    </message>
+    <message>
+        <source>Remove selected states.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Create new</source>
+        <translation type="unfinished">建立新的</translation>
+    </message>
+    <message>
+        <source>Create a new state.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Update ordering</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Update the order of the content object states in this group.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>design/admin/state/group_edit</name>
+    <message>
+        <source>Edit content object state group &quot;%group_name&quot;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>New content object state group</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save changes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save changes to this state group.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">取消</translation>
+    </message>
+    <message>
+        <source>Cancel saving any changes.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Create</source>
+        <translation type="unfinished">建立</translation>
+    </message>
+    <message>
+        <source>Create this state group.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel creating this state group.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>design/admin/state/groups</name>
+    <message>
+        <source>The content object state group was successfully stored.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The content object state group could not be stored.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Required data is either missing or is invalid</source>
+        <translation type="unfinished">必要資料若非缺少就是無效</translation>
+    </message>
+    <message>
+        <source>Invert selection.</source>
+        <translation type="unfinished">反向選擇。</translation>
+    </message>
+    <message>
+        <source>ID</source>
+        <translation type="unfinished">ID</translation>
+    </message>
+    <message>
+        <source>Identifier</source>
+        <translation type="unfinished">識別代號</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select content object state group for removal.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove selected</source>
+        <translation type="unfinished">刪除所選</translation>
+    </message>
+    <message>
+        <source>Remove selected state groups.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Create new</source>
+        <translation type="unfinished">建立新的</translation>
+    </message>
+    <message>
+        <source>Create a new state group.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>design/admin/state_groups</name>
+    <message>
+        <source>Content object state groups [%group_count]</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -13596,6 +13903,26 @@ your account.</source>
         <source>Ini File: </source>
         <translation type="unfinished">Ini 檔案：</translation>
     </message>
+    <message>
+        <source>Use seconds</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Second</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Silverlight</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tag preset</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>seconds(s)</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>design/standard/class/datatype </name>
@@ -14990,6 +15317,14 @@ If you want to send comments to the approver or view the status use the URL belo
     <message>
         <source>Option group name</source>
         <translation type="unfinished">選項組別名稱</translation>
+    </message>
+    <message>
+        <source>Second</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Silverlight</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -17624,10 +17959,6 @@ If unsure choose the siteaccess which reflects the user part of your site, i.e. 
         <translation>取消</translation>
     </message>
     <message>
-        <source>Please select an extension to be exported.</source>
-        <translation>請選取要匯出的擴充功能。</translation>
-    </message>
-    <message>
         <source>Installing package</source>
         <translation>正在安裝套件</translation>
     </message>
@@ -17755,6 +18086,14 @@ You can also remove the package without uninstalling it from the package list.</
     <message>
         <source>Regarding eZ Publish package &apos;%packagename&apos;</source>
         <translation type="unfinished">關於 eZ publish 套件 &apos;%packagename&apos;</translation>
+    </message>
+    <message>
+        <source>Use content object modification and publication dates from the package.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please select the extensions to be exported.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -18475,6 +18814,18 @@ menu on the top.</source>
     <message>
         <source>Activate this checkbox if objects from the subnodes of the source should also be fed.</source>
         <translation type="unfinished">如果從來源子節點而來的物件也應該被饋送，就啟用此核取方塊。</translation>
+    </message>
+    <message>
+        <source>Category</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>optional</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Skip</source>
+        <translation type="unfinished">跳過</translation>
     </message>
 </context>
 <context>
@@ -19569,6 +19920,10 @@ The default code was made from the basic parameters you chose.</source>
         <source>Click this button to regenerate the autoload arrays used by the system for extensions.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Problems detected during autoload generation:</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>design/standard/setup/init</name>
@@ -20660,10 +21015,6 @@ It is possible to change these settings at a later time.</source>
         <translation type="unfinished">所選的使用者沒有存取任何資料庫的權限。請改換使用者或為使用者產生一個資料庫。</translation>
     </message>
     <message>
-        <source>The &apos;digest&apos; procedure is not available in your database, you cannot run eZ Publish without this. Visit the FAQ for more information.</source>
-        <translation type="unfinished">你的資料庫中並沒有「摘要」程序，因此你無法執行 eZ publish。造訪 FAQ 以獲得更多資訊。</translation>
-    </message>
-    <message>
         <source>Package language options</source>
         <translation type="unfinished">套件語言選項</translation>
     </message>
@@ -20934,6 +21285,10 @@ This functionality is also available at a later time from the Administration Int
         <comment>eZ Publish link</comment>
         <translation type="unfinished">eZ Publish</translation>
     </message>
+    <message>
+        <source>The &apos;digest&apos; function is not available in your database, you cannot run eZ Publish without this. See the documentation for more information.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>design/standard/setup/operatorcode</name>
@@ -21110,10 +21465,6 @@ This functionality is also available at a later time from the Administration Int
     <message>
         <source>Missing ImageMagick program</source>
         <translation>缺少 ImageMagick 程式</translation>
-    </message>
-    <message>
-        <source>If you known where the program is installed (the executable is called</source>
-        <translation>如果你知道程式安裝地方(可執行程式名為</translation>
     </message>
     <message>
         <source>or</source>
@@ -21619,6 +21970,38 @@ To do this you need to change the %chown commands under Alternative shell comman
     </message>
     <message>
         <source>If you want to keep UTC as your time zone, check &lt;strong&gt;Ignore this test&lt;/strong&gt; below to proceed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>If you know where the program is installed (the executable is called</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>PHP does not register environment variables</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>PHP is currently not configured to register enviroment variables in the global variable $_ENV.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>To fix this, edit your php.ini configuration and add E to the variables_order setting.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Missing cURL extension</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>It is recommended to enable the PHP cURL extension, otherwise some features requiring a proxy or SSL will not work.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>To enable the PHP cURL functions you need to compile PHP with support for it. Configure PHP with</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>More information on this subject is available at</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -22968,6 +23351,14 @@ your account.</source>
         <source>Please note that your browser must use and support cookies to register a new user.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Your browser does not seem to support cookies, to register a new user, cookies need to be supported and enabled!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Try again</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>design/standard/user/</name>
@@ -23853,6 +24244,10 @@ your account.</source>
         <source>Content tree menu (browser cache)</source>
         <translation type="unfinished">內容樹狀選單（瀏覽快取）</translation>
     </message>
+    <message>
+        <source>State limitations cache</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>kernel/class</name>
@@ -24052,6 +24447,22 @@ your account.</source>
     <message>
         <source>Canceled whole workflow</source>
         <translation type="unfinished">取消整個工作流程</translation>
+    </message>
+    <message>
+        <source>Replace existing object</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Skip object</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Keep existing and create a new one</source>
+        <translation type="unfinished">保留現有的並建立一個新的</translation>
+    </message>
+    <message>
+        <source>Update existing object</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -24547,6 +24958,14 @@ your account.</source>
     <message>
         <source>You cannot remove the last class holding user accounts.</source>
         <translation type="unfinished">你無法刪除保有使用者帳號的上一層類別。</translation>
+    </message>
+    <message>
+        <source>Missing email input.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Input required</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -25345,20 +25764,8 @@ your account.</source>
         <translation>套件名稱 %packagename 無效，它只能包含在範圍 a-z、0-9 和底線中的字元。</translation>
     </message>
     <message>
-        <source>Select an extension to be exported</source>
-        <translation>請選取要匯出的擴充功能</translation>
-    </message>
-    <message>
         <source>Extension export</source>
         <translation>擴充功能匯出</translation>
-    </message>
-    <message>
-        <source>Extension:</source>
-        <translation>擴充功能：</translation>
-    </message>
-    <message>
-        <source>You must select an extension</source>
-        <translation>你必須選取擴充功能</translation>
     </message>
     <message>
         <source>%number content objects</source>
@@ -25444,6 +25851,30 @@ your account.</source>
         <source>Remove object and its sub-item(s)</source>
         <translation type="unfinished">刪除物件和它的子項目</translation>
     </message>
+    <message>
+        <source>Advanced options</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Package contains an invalid extension name: %extensionname</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The package name %packagename is invalid, cannot import the package</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Extensions to include</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Extension list</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You must select at least one extension</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>kernel/pdf</name>
@@ -25461,13 +25892,6 @@ your account.</source>
     <message>
         <source>New PDF Export</source>
         <translation>新增 PDF 匯出</translation>
-    </message>
-</context>
-<context>
-    <name>kernel/reference</name>
-    <message>
-        <source>Reference documentation</source>
-        <translation>參考文獻</translation>
     </message>
 </context>
 <context>
@@ -25540,6 +25964,10 @@ your account.</source>
     <message>
         <source>Selected class does not exist</source>
         <translation type="unfinished">選取的級別不存在</translation>
+    </message>
+    <message>
+        <source>Invalid selection for category class %1 does not have attribute &quot;%2&quot;</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -25918,6 +26346,80 @@ your account.</source>
     <message>
         <source>Wrong VAT percentage (corrected).</source>
         <translation>錯誤營業稅百分比 (已修正)。</translation>
+    </message>
+</context>
+<context>
+    <name>kernel/state</name>
+    <message>
+        <source>State</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Assign</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>New</source>
+        <translation type="unfinished">新增</translation>
+    </message>
+    <message>
+        <source>Edit</source>
+        <translation type="unfinished">編輯</translation>
+    </message>
+    <message>
+        <source>Groups</source>
+        <translation type="unfinished">組別</translation>
+    </message>
+    <message>
+        <source>New group</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Group edit</source>
+        <translation type="unfinished">編輯組別</translation>
+    </message>
+</context>
+<context>
+    <name>kernel/state/edit</name>
+    <message>
+        <source>Identifier: input required</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Identifier: invalid, it can only consist of characters in the range a-z, 0-9 and underscore.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Identifier: invalid, maximum %max characters allowed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Identifier: a content object state group with this identifier already exists, please give another identifier</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%language_name: this language is the default but neither name or description were provided for this language</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Translations: you need to add at least one localization</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Translations: there are multiple localizations but you did not specify which is the default one</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Identifier: identifiers starting with &quot;ez&quot; are reserved.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Name in %language_name is too long. Maximum 45 characters allowed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Name in %language_name: input required</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

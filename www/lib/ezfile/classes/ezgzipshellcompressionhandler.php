@@ -5,9 +5,9 @@
 // Created on: <13-Aug-2003 16:20:19 amos>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -26,7 +26,7 @@
 //
 //
 
-/*! \file ezgzipshellcompressionhandler.php
+/*! \file
 */
 
 /*!
@@ -39,12 +39,8 @@
 NOTE: This is not done yet.
 */
 
-//include_once( 'lib/ezfile/classes/ezcompressionhandler.php' );
-
 class eZGZIPShellCompressionHandler extends eZCompressionHandler
 {
-    /*!
-    */
     function eZGZIPShellCompressionHandler()
     {
         $this->File = false;
@@ -84,49 +80,31 @@ class eZGZIPShellCompressionHandler extends eZCompressionHandler
         $command = 'gzip -dc $filename > $';
     }
 
-    /*!
-     \reimp
-    */
     function doOpen( $filename, $mode )
     {
         $this->File = @gzopen( $filename, $mode );
     }
 
-    /*!
-     \reimp
-    */
     function doClose()
     {
         return @gzclose( $this->File );
     }
 
-    /*!
-     \reimp
-    */
     function doRead( $uncompressedLength = false )
     {
         return @gzread( $this->File, $uncompressedLength );
     }
 
-    /*!
-     \reimp
-    */
     function doWrite( $data, $uncompressedLength = false )
     {
         return @gzwrite( $this->File, $uncompressedLength );
     }
 
-    /*!
-     \reimp
-    */
     function doFlush()
     {
         return @fflush( $this->File );
     }
 
-    /*!
-     \reimp
-    */
     function doSeek( $offset, $whence )
     {
         if ( $whence == SEEK_SET )
@@ -140,65 +118,41 @@ class eZGZIPShellCompressionHandler extends eZCompressionHandler
         return @gzseek( $this->File, $offset );
     }
 
-    /*!
-     \reimp
-    */
     function doRewind()
     {
         return @gzrewind( $this->File );
     }
 
-    /*!
-     \reimp
-    */
     function doTell()
     {
         return @gztell( $this->File );
     }
 
-    /*!
-     \reimp
-    */
     function doEOF()
     {
         return @gzeof( $this->File );
     }
 
-    /*!
-     \reimp
-    */
     function doPasstrough( $closeFile = true )
     {
         return @gzpasstru( $this->File );
     }
 
-    /*!
-     \reimp
-    */
     function compress( $source )
     {
         return @gzcompress( $source, $this->Level );
     }
 
-    /*!
-     \reimp
-    */
     function decompress( $source )
     {
         return @gzuncompress( $source );
     }
 
-    /*!
-     \reimp
-    */
     function errorString()
     {
         return false;
     }
 
-    /*!
-     \reimp
-    */
     function errorNumber()
     {
         return false;

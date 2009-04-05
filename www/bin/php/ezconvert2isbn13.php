@@ -4,9 +4,9 @@
 // Created on: <24-Apr-2007 09:53:50 bjorn>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -26,8 +26,7 @@
 //
 
 /*!
-  \file ezconvert2isbn13.php
-  \class eZISBN10To13Converter ezconvert2isbn13.php
+  \file
   \brief Converts ISBN-10 numbers to ISBN-13.
 
   The script should be runned by command line with example:
@@ -54,18 +53,6 @@
 */
 
 set_time_limit( 0 );
-
-//include_once( 'lib/ezutils/classes/ezcli.php' );
-//include_once( 'lib/ezdb/classes/ezdb.php' );
-
-//include_once( 'kernel/classes/ezscript.php' );
-//include_once( 'kernel/classes/ezcontentclass.php' );
-//include_once( 'kernel/classes/ezcontentclassattribute.php' );
-//include_once( 'kernel/classes/ezcontentobject.php' );
-//include_once( 'kernel/classes/ezcontentobjectattribute.php' );
-
-//include_once( 'kernel/classes/datatypes/ezisbn/ezisbntype.php' );
-//include_once( 'kernel/classes/datatypes/ezisbn/ezisbn13.php' );
 
 require 'autoload.php';
 

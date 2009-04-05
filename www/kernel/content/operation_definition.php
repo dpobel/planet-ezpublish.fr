@@ -3,9 +3,9 @@
 // Created on: <01-Nov-2002 13:39:10 amos>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -24,7 +24,7 @@
 //
 //
 
-/*! \file operation_definition.php
+/*! \file
 */
 
 $OperationList = array();
@@ -79,7 +79,7 @@ $OperationList['publish'] = array( 'name' => 'publish',
                                                                                          'required' => true ),
                                                                                   array( 'name' => 'status',
                                                                                          'type' => 'integer',
-                                                                                         'constant' => 1 ) ) ), // eZContentObjectVersion::STATUS_PENDING
+                                                                                         'constant' => eZContentObjectVersion::STATUS_PENDING ) ) ),
                                                     array( 'type' => 'method',
                                                            'name' => 'update-section-id',
                                                            'frequency' => 'once',
@@ -89,11 +89,6 @@ $OperationList['publish'] = array( 'name' => 'publish',
                                                            'name' => 'pre_publish',
                                                            'keys' => array( 'object_id',
                                                                             'version' )
-                                                           ),
-                                                    array( 'type' => 'method',
-                                                           'name' => 'begin-publish',
-                                                           'frequency' => 'once',
-                                                           'method' => 'beginPublish'
                                                            ),
                                                     array( 'type' => 'method',
                                                            'name' => 'copy-translations',
@@ -111,7 +106,7 @@ $OperationList['publish'] = array( 'name' => 'publish',
                                                                                          'constant' => false ), // false means current version
                                                                                   array( 'name' => 'status',
                                                                                          'type' => 'integer',
-                                                                                         'constant' => 2 ) ) ), // eZContentObjectVersion::STATUS_ARCHIVED
+                                                                                         'constant' => eZContentObjectVersion::STATUS_ARCHIVED ) ) ),
                                                     array( 'type' => 'loop',
                                                            'name' => 'loop-nodes',
                                                            'method' => 'loopNodeAssignment',
@@ -145,7 +140,7 @@ $OperationList['publish'] = array( 'name' => 'publish',
                                                                                          'required' => true ),
                                                                                   array( 'name' => 'status',
                                                                                          'type' => 'integer',
-                                                                                         'constant' => 3 ) ) ), // eZContentObjectVersion::STATUS_PUBLISHED
+                                                                                         'constant' => eZContentObjectVersion::STATUS_PUBLISHED ) ) ),
                                                     array( 'type' => 'method',
                                                            'name' => 'set-object-published',
                                                            'frequency' => 'once',
@@ -223,12 +218,6 @@ $OperationList['publish'] = array( 'name' => 'publish',
                                                            ),
 
                                                     array( 'type' => 'method',
-                                                           'name' => 'end-publish',
-                                                           'frequency' => 'once',
-                                                           'method' => 'endPublish',
-                                                           ),
-
-                                                    array( 'type' => 'method',
                                                            'name' => 'remove-temporary-drafts',
                                                            'frequency' => 'once',
                                                            'method' => 'removeTemporaryDrafts'
@@ -239,4 +228,469 @@ $OperationList['publish'] = array( 'name' => 'publish',
                                                            'keys' => array( 'object_id',
                                                                             'version' ) ),
                                                     ) );
+
+$OperationList['move'] = array( 'name' => 'move',
+                                'default_call_method' => array( 'include_file' => 'kernel/content/ezcontentoperationcollection.php',
+                                                                'class' => 'eZContentOperationCollection' ),
+                                'parameter_type' => 'standard',
+                                'parameters' => array( array( 'name' => 'node_id',
+                                                              'type' => 'integer',
+                                                              'required' => true ),
+                                                       array( 'name' => 'object_id',
+                                                              'type' => 'integer',
+                                                              'required' => true ),
+                                                       array( 'name' => 'new_parent_node_id',
+                                                              'type' => 'integer',
+                                                              'required' => true ) ),
+                                'keys' => array( 'node_id', 'object_id', 'new_parent_node_id' ),
+
+                                'body' => array( array( 'type' => 'trigger',
+                                                        'name' => 'pre_move',
+                                                        'keys' => array( 'node_id',
+                                                                         'object_id',
+                                                                         'new_parent_node_id'
+                                                                        ) ),
+                                                  array( 'type' => 'method',
+                                                        'name' => 'move-node',
+                                                        'frequency' => 'once',
+                                                        'method' => 'moveNode',
+                                                        ),
+                                                  array( 'type' => 'trigger',
+                                                         'name' => 'post_move',
+                                                         'keys' => array( 'node_id',
+                                                                          'object_id',
+                                                                          'new_parent_node_id'
+                                                                         ) )
+                                                )
+                              );
+
+$OperationList['addlocation'] = array(  'name' => 'addlocation',
+                                        'default_call_method' => array( 'include_file' => 'kernel/content/ezcontentoperationcollection.php',
+                                                                        'class' => 'eZContentOperationCollection' ),
+                                        'parameter_type' => 'standard',
+                                        'parameters' => array( array( 'name' => 'node_id',
+                                                                      'type' => 'integer',
+                                                                      'required' => true ),
+                                                               array( 'name' => 'object_id',
+                                                                      'type' => 'integer',
+                                                                      'required' => true ),
+                                                               array( 'name' => 'select_node_id_array',
+                                                                      'type' => 'array',
+                                                                      'required' => true ) ),
+                                        'keys' => array( 'node_id', 'object_id', 'select_node_id_array' ),
+
+                                        'body' => array( array( 'type' => 'trigger',
+                                                                'name' => 'pre_addlocation',
+                                                                'keys' => array( 'node_id',
+                                                                                 'object_id',
+                                                                                 'select_node_id_array'
+                                                                                 )
+                                                               ),
+                                                         array( 'type' => 'method',
+                                                                'name' => 'add-location',
+                                                                'frequency' => 'once',
+                                                                'method' => 'addAssignment',
+                                                                ),
+                                                         array( 'type' => 'trigger',
+                                                                'name' => 'post_addlocation',
+                                                                'keys' => array( 'node_id',
+                                                                                 'object_id',
+                                                                                 'select_node_id_array'
+                                                                                 )
+                                                               ),
+                                                         )
+                                     );
+
+$OperationList['removelocation'] = array(   'name' => 'removelocation',
+                                            'default_call_method' => array( 'include_file' => 'kernel/content/ezcontentoperationcollection.php',
+                                                                            'class' => 'eZContentOperationCollection' ),
+                                            'parameter_type' => 'standard',
+                                            'parameters' => array( array( 'name' => 'node_id',
+                                                                          'type' => 'integer',
+                                                                          'required' => true ),
+                                                                   array( 'name' => 'object_id',
+                                                                          'type' => 'integer',
+                                                                          'required' => true ),
+                                                                   array( 'name' => 'node_list',
+                                                                          'type' => 'array',
+                                                                          'required' => true ),
+                                                                   array( 'name' => 'move_to_trash',
+                                                                          'type' => 'array',
+                                                                          'required' => true ), ),
+                                            'keys' => array( 'node_id', 'object_id', 'node_list', 'move_to_trash' ),
+
+                                            'body' => array( array( 'type' => 'trigger',
+                                                                    'name' => 'pre_removelocation',
+                                                                    'keys' => array( 'node_id',
+                                                                                     'object_id',
+                                                                                     'node_list',
+                                                                                     'move_to_trash'
+                                                                                     ) ),
+                                                             array( 'type' => 'method',
+                                                                    'name' => 'remove-location',
+                                                                    'frequency' => 'once',
+                                                                    'method' => 'removeAssignment',
+                                                                    ),
+                                                             array( 'type' => 'trigger',
+                                                                    'name' => 'post_removelocation',
+                                                                    'keys' => array( 'node_id',
+                                                                                     'object_id',
+                                                                                     'node_list',
+                                                                                     'move_to_trash'
+                                                                                    ),
+                                                                             ),
+                                                                         ) );
+
+$OperationList['delete'] = array( 'name' => 'delete',
+                                            'default_call_method' => array( 'include_file' => 'kernel/content/ezcontentoperationcollection.php',
+                                                                            'class' => 'eZContentOperationCollection' ),
+                                            'parameter_type' => 'standard',
+                                            'parameters' => array( array( 'name' => 'node_id_list',
+                                                                          'type' => 'array',
+                                                                          'required' => true ),
+                                                                   array( 'name' => 'move_to_trash',
+                                                                          'type' => 'integer',
+                                                                          'required' => true ) ),
+                                            'keys' => array( 'node_id_list', 'move_to_trash' ),
+
+                                            'body' => array( array( 'type' => 'trigger',
+                                                                    'name' => 'pre_delete',
+                                                                    'keys' => array( 'node_id_list',
+                                                                                     'move_to_trash'
+                                                                                     ) ),
+                                                             array( 'type' => 'method',
+                                                                    'name' => 'delete',
+                                                                    'frequency' => 'once',
+                                                                    'method' => 'deleteObject',
+                                                                    ),
+                                                             array( 'type' => 'trigger',
+                                                                    'name' => 'post_delete',
+                                                                    'keys' => array( 'node_id_list',
+                                                                                     'move_to_trash'
+                                                                                     ) ),
+                                                         ) );
+
+$OperationList['hide'] = array( 'name' => 'hide',
+                                'default_call_method' => array( 'include_file' => 'kernel/content/ezcontentoperationcollection.php',
+                                                                'class' => 'eZContentOperationCollection' ),
+                                'parameter_type' => 'standard',
+                                'parameters' => array( array( 'name' => 'node_id',
+                                                              'type' => 'integer',
+                                                              'required' => true ),
+                                                      ),
+                                'keys' => array( 'node_id' ),
+
+                                'body' => array( array( 'type' => 'trigger',
+                                                        'name' => 'pre_hide',
+                                                        'keys' => array( 'node_id' ),
+                                                       ),
+                                                 array( 'type' => 'method',
+                                                        'name' => 'hide',
+                                                        'frequency' => 'once',
+                                                        'method' => 'changeHideStatus',
+                                                        ),
+                                                 array( 'type' => 'trigger',
+                                                        'name' => 'post_hide',
+                                                        'keys' => array( 'node_id' )
+                                                       )
+                                                 )
+                              );
+
+$OperationList['swap'] = array( 'name' => 'swap',
+                                'default_call_method' => array( 'include_file' => 'kernel/content/ezcontentoperationcollection.php',
+                                                                'class' => 'eZContentOperationCollection' ),
+                                'parameter_type' => 'standard',
+                                'parameters' => array( array( 'name' => 'node_id',
+                                                              'type' => 'integer',
+                                                              'required' => true ),
+                                                       array( 'name' => 'selected_node_id',
+                                                              'type' => 'integer',
+                                                              'required' => true ),
+                                                       array( 'name' => 'node_id_list',
+                                                              'type' => 'array',
+                                                              'required' => true ),
+                                                      ),
+                                'keys' => array( 'node_id', 'selected_node_id', 'node_id_list' ),
+
+                                'body' => array( array( 'type' => 'trigger',
+                                                        'name' => 'pre_swap',
+                                                        'keys' => array( 'node_id_list' ),
+                                                       ),
+                                                 array( 'type' => 'method',
+                                                        'name' => 'swap',
+                                                        'frequency' => 'once',
+                                                        'method' => 'swapNode',
+                                                        ),
+                                                 array( 'type' => 'trigger',
+                                                        'name' => 'post_swap',
+                                                        'keys' => array( 'node_id_list' )
+                                                       )
+                                                 )
+                              );
+
+$OperationList['updatesection'] = array( 'name' => 'updatesection',
+                                         'default_call_method' => array( 'include_file' => 'kernel/content/ezcontentoperationcollection.php',
+                                                                         'class' => 'eZContentOperationCollection' ),
+                                        'parameter_type' => 'standard',
+                                        'parameters' => array( array( 'name' => 'node_id',
+                                                                      'type' => 'integer',
+                                                                      'required' => true ),
+                                                               array( 'name' => 'selected_section_id',
+                                                                      'type' => 'integer',
+                                                                      'required' => true ) ),
+
+                                        'keys' => array( 'node_id', 'selected_section_id', ),
+
+                                        'body' => array( array( 'type' => 'trigger',
+                                                                'name' => 'pre_updatesection',
+                                                                'keys' => array( 'node_id', 'selected_section_id' ),
+                                                            ),
+                                                        array( 'type' => 'method',
+                                                               'name' => 'updatesection',
+                                                               'frequency' => 'once',
+                                                               'method' => 'updateSection',
+                                                                ),
+                                                        array( 'type' => 'trigger',
+                                                                'name' => 'post_updatesection',
+                                                                'keys' => array( 'node_id', 'selected_section_id' )
+                                                            )
+                                                        )
+                              );
+$OperationList['translationavailable'] = array( 'name' => 'translationavailable',
+                                                'default_call_method' => array( 'include_file' => 'kernel/content/ezcontentoperationcollection.php',
+                                                'class' => 'eZContentOperationCollection' ),
+                                                'parameter_type' => 'standard',
+                                                'parameters' => array( array( 'name' => 'object_id',
+                                                                              'type' => 'integer',
+                                                                              'required' => true ),
+                                                                       array( 'name' => 'status',
+                                              'type' => 'integer',
+                                                                              'required' => false ),
+                                                     ),
+                                                'keys' => array( 'object_id', 'status' ),
+                                                'body' => array( array( 'type' => 'trigger',
+                                                                        'name' => 'pre_translationavailable',
+                                                                        'keys' => array( 'object_id', 'status' ),
+                                                                      ),
+                                                                 array( 'type' => 'method',
+                                                                        'name' => 'translationavailable',
+                                                                        'frequency' => 'once',
+                                    'method' => 'changeTranslationAvailableStatus',
+                                                                      ),
+                                                                 array( 'type' => 'trigger',
+                                                                        'name' => 'post_translationavailable',
+                                                                        'keys' => array( 'object_id' )
+                                                                      )
+                                                              )
+                                            );
+
+$OperationList['sort'] = array( 'name' => 'sort',
+                                'default_call_method' => array( 'include_file' => 'kernel/content/ezcontentoperationcollection.php',
+                                                                'class' => 'eZContentOperationCollection' ),
+                                'parameter_type' => 'standard',
+                                'parameters' => array( array( 'name' => 'node_id',
+                                                              'type' => 'integer',
+                                                              'required' => true ),
+                                                       array( 'name' => 'sorting_field',
+                                                              'type' => 'integer',
+                                                              'required' => true ),
+                                                       array( 'name' => 'sorting_order',
+                                                              'type' => 'integer',
+                                                              'required' => true ),
+                                                      ),
+                                'keys' => array( 'node_id', 'sorting_field', 'sorting_order' ),
+                                'body' => array( array( 'type' => 'trigger',
+                                                        'name' => 'pre_sort',
+                                                        'keys' => array( 'node_id' ),
+                                                       ),
+                                                 array( 'type' => 'method',
+                                                        'name' => 'sort',
+                                                        'frequency' => 'once',
+                                                        'method' => 'changeSortOrder',
+                                                        ),
+                                                 array( 'type' => 'trigger',
+                                                        'name' => 'post_sort',
+                                                        'keys' => array( 'node_id' )
+                                                       )
+                                                 )
+                              );
+
+$OperationList['updatepriority'] = array( 'name' => 'updatepriority',
+                                'default_call_method' => array( 'include_file' => 'kernel/content/ezcontentoperationcollection.php',
+                                                                'class' => 'eZContentOperationCollection' ),
+                                'parameter_type' => 'standard',
+                                'parameters' => array( array( 'name' => 'node_id',
+                                                              'type' => 'integer',
+                                                              'required' => true ),
+                                                       array( 'name' => 'priority',
+                                                              'type' => 'array',
+                                                              'required' => true ),
+                                                       array( 'name' => 'priority_id',
+                                                              'type' => 'array',
+                                                              'required' => true ),
+                                                      ),
+                                'keys' => array( 'node_id', 'priority', 'priority_id' ),
+                                'body' => array( array( 'type' => 'trigger',
+                                                        'name' => 'pre_updatepriority',
+                                                        'keys' => array( 'node_id' ),
+                                                       ),
+                                                 array( 'type' => 'method',
+                                                        'name' => 'updatepriority',
+                                                        'frequency' => 'once',
+                                                        'method' => 'updatePriority',
+                                                        ),
+                                                 array( 'type' => 'trigger',
+                                                        'name' => 'post_updatepriority',
+                                                        'keys' => array( 'node_id' )
+                                                       )
+                                                 )
+                              );
+
+$OperationList['updatemainassignment'] = array( 'name' => 'UpdateMainAssignment',
+                                'default_call_method' => array( 'include_file' => 'kernel/content/ezcontentoperationcollection.php',
+                                                                'class' => 'eZContentOperationCollection' ),
+                                'parameter_type' => 'standard',
+                                'parameters' => array( array( 'name' => 'main_assignment_id',
+                                                              'type' => 'integer',
+                                                              'required' => true ),
+                                                       array( 'name' => 'object_id',
+                                                              'type' => 'array',
+                                                              'required' => true ),
+                                                       array( 'name' => 'main_assignment_parent_id',
+                                                              'type' => 'array',
+                                                              'required' => true ),
+                                                      ),
+                                'keys' => array( 'main_assignment_id', 'object_id', 'main_assignment_parent_id' ),
+                                'body' => array( array( 'type' => 'trigger',
+                                                        'name' => 'pre_UpdateMainAssignment',
+                                                        'keys' => array( 'main_assignment_id' ),
+                                                       ),
+                                                 array( 'type' => 'method',
+                                                        'name' => 'updatemainassignment',
+                                                        'frequency' => 'once',
+                                                        'method' => 'UpdateMainAssignment',
+                                                        ),
+                                                 array( 'type' => 'trigger',
+                                                        'name' => 'post_UpdateMainAssignment',
+                                                        'keys' => array( 'main_assignment_id' )
+                                                       )
+                                                 )
+                              );
+
+$OperationList['updateinitiallanguage'] = array( 'name' => 'updateinitiallanguage',
+                                                 'default_call_method' => array( 'include_file' => 'kernel/content/ezcontentoperationcollection.php',
+                                                 'class' => 'eZContentOperationCollection' ),
+                                'parameter_type' => 'standard',
+                                'parameters' => array( array( 'name' => 'object_id',
+                                                              'type' => 'integer',
+                                                              'required' => true ),
+                                                       array( 'name' => 'new_initial_language_id',
+                                                              'type' => 'integer',
+                                                              'required' => true ),
+                                                       array( 'name' => 'node_id',
+                                                              'type' => 'integer',
+                                                              'required' => true ) ),
+                                'keys' => array( 'object_id', 'new_initial_language_id', 'node_id' ),
+                                'body' => array( array( 'type' => 'trigger',
+                                                        'name' => 'pre_updateinitiallanguage',
+                                                        'keys' => array( 'object_id', 'new_initial_language_id', 'node_id' ),
+                                                       ),
+                                                 array( 'type' => 'method',
+                                                        'name' => 'updateinitiallanguage',
+                                                        'frequency' => 'once',
+                                                        'method' => 'updateInitialLanguage',
+                                                        ),
+                                                 array( 'type' => 'trigger',
+                                                        'name' => 'post_updateinitiallanguage',
+                                                        'keys' => array( 'object_id', 'new_initial_language_id', 'node_id' )
+                                                       )
+                                                 )
+                              );
+
+$OperationList['updatealwaysavailable'] = array( 'name' => 'updatealwaysavailable',
+                                                 'default_call_method' => array( 'include_file' => 'kernel/content/ezcontentoperationcollection.php',
+                                                 'class' => 'eZContentOperationCollection' ),
+                                'parameter_type' => 'standard',
+                                'parameters' => array( array( 'name' => 'object_id',
+                                                              'type' => 'integer',
+                                                              'required' => true ),
+                                                       array( 'name' => 'new_always_available',
+                                                              'type' => 'integer',
+                                                              'required' => true ),
+                                                       array( 'name' => 'node_id',
+                                                              'type' => 'integer',
+                                                              'required' => true ) ),
+                                'keys' => array( 'object_id', 'new_always_available', 'node_id' ),
+                                'body' => array( array( 'type' => 'trigger',
+                                                        'name' => 'pre_updatealwaysavailable',
+                                                        'keys' => array( 'object_id', 'new_always_available' ),
+                                                       ),
+                                                 array( 'type' => 'method',
+                                                        'name' => 'updatealwaysavailable',
+                                                        'frequency' => 'once',
+                                                        'method' => 'updateAlwaysAvailable',
+                                                        ),
+                                                 array( 'type' => 'trigger',
+                                                        'name' => 'post_updateAlwaysAvailable',
+                                                        'keys' => array( 'object_id', 'new_always_available', 'node_id' )
+                                                       )
+                                                 )
+                              );
+
+$OperationList['removetranslation'] = array( 'name' => 'removetranslation',
+                                             'default_call_method' => array( 'include_file' => 'kernel/content/ezcontentoperationcollection.php',
+                                             'class' => 'eZContentOperationCollection' ),
+                                'parameter_type' => 'standard',
+                                'parameters' => array(  array( 'name' => 'object_id',
+                                                               'type' => 'integer',
+                                                               'required' => true),
+                                                        array( 'name' => 'language_id_list',
+                                                              'type' => 'array',
+                                                              'required' => true ),
+                                                        array( 'name' => 'node_id',
+                                                              'type' => 'integer',
+                                                              'required' => true ) ),
+                                'keys' => array( 'object_id', 'language_id_list', 'node_id' ),
+                                'body' => array( array( 'type' => 'trigger',
+                                                        'name' => 'pre_removetranslation',
+                                                        'keys' => array( 'object_id', 'language_id_list', 'node_id' ),
+                                                       ),
+                                                 array( 'type' => 'method',
+                                                        'name' => 'removetranslation',
+                                                        'frequency' => 'once',
+                                                        'method' => 'removeTranslation',
+                                                        ),
+                                                 array( 'type' => 'trigger',
+                                                        'name' => 'post_removetranslation',
+                                                        'keys' => array( 'object_id', 'language_id_list', 'node_id' )
+                                                       )
+                                                 )
+                              );
+
+$OperationList['updateobjectstate'] = array( 'name' => 'updateobjectstate',
+                                             'default_call_method' => array( 'include_file' => 'kernel/content/ezcontentoperationcollection.php',
+                                             'class' => 'eZContentOperationCollection' ),
+                                'parameter_type' => 'standard',
+                                'parameters' => array(  array( 'name' => 'object_id',
+                                                               'type' => 'integer',
+                                                               'required' => true),
+                                                        array( 'name' => 'state_id_list',
+                                                              'type' => 'array',
+                                                              'required' => true ) ),
+                                'keys' => array( 'object_id', 'state_id_list' ),
+                                'body' => array( array( 'type' => 'trigger',
+                                                        'name' => 'pre_updateobjectstate',
+                                                        'keys' => array( 'object_id', 'state_id_list' ),
+                                                       ),
+                                                 array( 'type' => 'method',
+                                                        'name' => 'updateobjectstate',
+                                                        'frequency' => 'once',
+                                                        'method' => 'updateObjectState',
+                                                        ),
+                                                 array( 'type' => 'trigger',
+                                                        'name' => 'post_updateobjectstate',
+                                                        'keys' => array( 'object_id', 'state_id_list' )
+                                                       )
+                                                 )
+                              );
 ?>

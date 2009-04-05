@@ -5,9 +5,9 @@
 // Created on: <14-Aug-2002 14:08:46 sp>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -26,7 +26,7 @@
 //
 //
 
-/*! \file ezrole.php
+/*! \file
 */
 
 /*! \defgroup eZRole Role based permission system */
@@ -52,10 +52,6 @@
   Remove roles with remove() and its policies with removePolicies().
 
 */
-//include_once( 'kernel/classes/ezpersistentobject.php' );
-//include_once( 'lib/ezutils/classes/ezini.php' );
-//include_once( "lib/ezdb/classes/ezdb.php" );
-
 class eZRole extends eZPersistentObject
 {
     /*!
@@ -221,7 +217,6 @@ class eZRole extends eZPersistentObject
     */
     function appendPolicy( $module, $function, $limitations = array() )
     {
-        //include_once( 'kernel/classes/ezpolicy.php' );
         $policy = eZPolicy::create( $this->ID, $module, $function );
 
         $db = eZDB::instance();
@@ -627,7 +622,6 @@ class eZRole extends eZPersistentObject
     {
         if ( !isset( $this->Policies ) )
         {
-            //include_once( "kernel/classes/ezpolicy.php" );
             $policies = eZPersistentObject::fetchObjectList( eZPolicy::definition(),
                                                               null, array( 'role_id' => $this->attribute( 'id') ), null, null,
                                                               true );
@@ -686,7 +680,6 @@ class eZRole extends eZPersistentObject
         $object = eZContentObject::fetch( $userID );
         $objectName = $object ? $object->attribute( 'name' ) : 'null';
 
-        //include_once( "kernel/classes/ezaudit.php" );
         eZAudit::writeAudit( 'role-assign', array( 'Role ID' => $this->ID, 'Role name' => $this->attribute( 'name' ),
                                                    'Assign to content object ID' => $userID,
                                                    'Content object name' => $objectName,
@@ -696,8 +689,6 @@ class eZRole extends eZPersistentObject
         {
             case 'subtree':
             {
-                //include_once( 'kernel/classes/ezcontentobjecttreenode.php' );
-
                 $node = eZContentObjectTreeNode::fetch( $limitValue, false, false );
                 if ( $node )
                 {

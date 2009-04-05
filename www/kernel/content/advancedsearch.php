@@ -3,9 +3,9 @@
 // Created on: <23-Jul-2002 17:11:13 bf>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -24,15 +24,7 @@
 //
 //
 
-//include_once( 'lib/ezutils/classes/ezhttptool.php' );
-
 require_once( 'kernel/common/template.php' );
-
-//include_once( 'kernel/classes/ezsearch.php' );
-//include_once( 'kernel/classes/ezcontentclass.php' );
-
-//include_once( 'kernel/classes/ezsearchlog.php' );
-//include_once( 'kernel/classes/ezsection.php' );
 
 /*!
  Get search limit
@@ -209,7 +201,7 @@ $tpl->setVariable( 'phrase_search_text', $phraseSearchText );
 $tpl->setVariable( "view_parameters", $viewParameters );
 $tpl->setVariable( 'use_template_search', !$useSearchCode );
 
-// --- Compatability code start ---
+// --- Compatibility code start ---
 if ( $useSearchCode )
 {
     $tpl->setVariable( 'offset', $Offset );
@@ -234,7 +226,7 @@ else
     $tpl->setVariable( 'search_count', false );
     $tpl->setVariable( 'stop_word_array', false );
 }
-// --- Compatability code end ---
+// --- Compatibility code end ---
 
 $tpl->setVariable( 'content_class_array', $classArray );
 $tpl->setVariable( 'section_array', $sectionArray );
@@ -275,7 +267,6 @@ $tpl->setVariable( 'search_array_by_class_attribute_id', $searchArrayByClassAttr
 
 if ( $searchSectionID != -1 )
 {
-    //include_once( 'kernel/common/eztemplatedesignresource.php' );
     $res = eZTemplateDesignResource::instance();
     $res->setKeys( array( array( 'section', $searchSectionID ) ) );
 }

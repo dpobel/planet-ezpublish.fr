@@ -3,9 +3,9 @@
 // Created on: <16-Сен-2003 16:09:52 sp>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -24,20 +24,16 @@
 //
 //
 
-/*! \file unpublish.php
+/*! \file
 */
-
-//include_once( "kernel/classes/ezcontentobjecttreenode.php" );
 
 
 
 // Check for extension
-//include_once( 'lib/ezutils/classes/ezextension.php' );
 require_once( 'kernel/common/ezincludefunctions.php' );
 eZExtension::activateExtensions();
 // Extension check end
 
-//include_once( "lib/ezutils/classes/ezini.php" );
 $ini = eZINI::instance( 'content.ini' );
 $unpublishClasses = $ini->variable( 'UnpublishSettings','ClassList' );
 
@@ -67,7 +63,6 @@ foreach( $rootNodeIDList as $nodeID )
         if ( $articleRetractDate > 0 && $articleRetractDate < $currrentDate )
         {
             // Clean up content cache
-            //include_once( 'kernel/classes/ezcontentcachemanager.php' );
             eZContentCacheManager::clearContentCacheIfNeeded( $article->attribute( 'id' ) );
 
             $article->removeThis( $articleNode->attribute( 'node_id' ) );

@@ -5,9 +5,9 @@
 // Created on: <20-Sep-2006 00:00:00 rl>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -26,15 +26,13 @@
 //
 //
 
-/*! \file ezcontentobjecttrashnode.php
+/*! \file
 */
 
 /*!
   \class eZContentObjectTrashNode ezcontentobjecttrashnode.php
   \brief The class eZContentObjectTrashNode
 */
-
-//include_once( "kernel/classes/ezcontentobjecttreenode.php" );
 
 //class eZContentObjectTrashNode extends eZPersistentObject
 class eZContentObjectTrashNode extends eZContentObjectTreeNode
@@ -200,21 +198,23 @@ class eZContentObjectTrashNode extends eZContentObjectTreeNode
         $limit            = ( isset( $params['Limit']  ) && is_numeric( $params['Limit']  ) ) ? $params['Limit']              : false;
         $asObject         = ( isset( $params['AsObject']          ) )                         ? $params['AsObject']           : true;
         $objectNameFilter = ( isset( $params['ObjectNameFilter']  ) )                         ? $params['ObjectNameFilter']   : false;
+        $sortBy           = ( isset( $params['SortBy']  ) && is_array( $params['SortBy']  ) ) ? $params['SortBy']              : array( array( 'name' ) );
 
         if ( $asCount )
         {
-            $sqlSorting = '';
+            $sortingInfo = eZContentObjectTreeNode::createSortingSQLStrings( false );
         }
         else
         {
-            // default sorting by the object name, but it probably should be optional in future
-            $params[ 'SortBy' ] = array( array( 'name' ) );
-            $sortingInfo = eZContentObjectTreeNode::createSortingSQLStrings( $params['SortBy'], 'ezcot' );
-            if ( $sortingInfo['sortingFields'] )
-                $sqlSorting = " ORDER BY $sortingInfo[sortingFields]";
-            else
-                $sqlSorting = '';
+            $sortingInfo = eZContentObjectTreeNode::createSortingSQLStrings( $sortBy, 'ezcot' );
         }
+
+        $attributeFilter         = eZContentObjectTreeNode::createAttributeFilterSQLStrings( $params['AttributeFilter'], $sortingInfo );
+        if ( $attributeFilter === false )
+        {
+            return null;
+        }
+
         $useVersionName     = true;
         $versionNameTables  = eZContentObjectTreeNode::createVersionNameTablesSQLString ( $useVersionName );
         $versionNameTargets = eZContentObjectTreeNode::createVersionNameTargetsSQLString( $useVersionName );
@@ -239,24 +239,30 @@ class eZContentObjectTrashNode extends eZContentObjectTreeNode
                         ezcot.*,
                         ezcontentclass.serialized_name_list as class_serialized_name_list,
                         ezcontentclass.identifier as class_identifier
-                        $versionNameTargets \n";
+                        $versionNameTargets
+                        $sortingInfo[attributeTargetSQL] \n";
         }
         $query .= "FROM
                         ezcontentobject_trash ezcot,
                         ezcontentobject,
                         ezcontentclass
                         $versionNameTables
+                        $sortingInfo[attributeFromSQL]
+                        $attributeFilter[from]
                         $sqlPermissionChecking[from]
                    WHERE
                         ezcontentclass.version=0 AND
                         ezcot.contentobject_id = ezcontentobject.id  AND
                         ezcontentclass.id = ezcontentobject.contentclass_id AND
+                        $sortingInfo[attributeWhereSQL]
+                        $attributeFilter[where]
                         $versionNameJoins
                         $sqlPermissionChecking[where]
                         $objectNameFilterSQL
                         $languageFilter
-                        $sqlSorting
                         ";
+        if ( $sortingInfo['sortingFields'] && strlen( $sortingInfo['sortingFields'] ) > 5  )
+            $query .= " ORDER BY $sortingInfo[sortingFields]";
 
         $db = eZDB::instance();
         if ( !$offset && !$limit )

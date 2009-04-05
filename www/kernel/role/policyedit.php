@@ -5,9 +5,9 @@
 // Created on: <25-Apr-2003 11:31:32 wy>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -26,19 +26,11 @@
 //
 //
 
-/*! \file policyedit.php
+/*! \file
 */
 
 
-//include_once( "kernel/classes/ezrole.php" );
-//include_once( "lib/ezutils/classes/ezhttptool.php" );
-//include_once( "lib/ezutils/classes/ezmodule.php" );
 require_once( "kernel/common/template.php" );
-//include_once( "kernel/classes/ezpolicylimitation.php" );
-//include_once( "kernel/classes/ezpolicylimitationvalue.php" );
-//include_once( "kernel/classes/ezpolicy.php" );
-//include_once( "kernel/classes/ezcontentbrowse.php" );
-
 $Module = $Params['Module'];
 $policyID = $Params["PolicyID"];
 
@@ -112,7 +104,6 @@ if ( $http->hasPostVariable( "DeleteNodeButton" ) )
     }
 
     /* Clean up policy cache */
-    //include_once( 'kernel/classes/datatypes/ezuser/ezuser.php' );
     eZUser::cleanupCache();
 }
 
@@ -134,7 +125,6 @@ if ( $http->hasPostVariable( "DeleteSubtreeButton" ) )
     }
 
     /* Clean up policy cache */
-    //include_once( 'kernel/classes/datatypes/ezuser/ezuser.php' );
     eZUser::cleanupCache();
 }
 
@@ -246,7 +236,6 @@ if ( $http->hasPostVariable( "UpdatePolicy" ) )
     $db->commit();
 
     /* Clean up policy cache */
-    //include_once( 'kernel/classes/datatypes/ezuser/ezuser.php' );
     eZUser::cleanupCache();
 
     $Module->redirectTo( $Module->functionURI( "edit" ) . "/" . $roleID . '/');

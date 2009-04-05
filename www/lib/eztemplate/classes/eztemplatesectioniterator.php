@@ -5,9 +5,9 @@
 // Created on: <26-Feb-2004 11:33:05 >
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -26,7 +26,7 @@
 //
 //
 
-/*! \file eztemplatesectioniterator.php
+/*! \file
 */
 
 /*!
@@ -37,7 +37,7 @@
   The iterator provides transparent access to iterator items. It will
   redirect all attribute calls to the iterator item with the exception
   of a few internal values. The internal values are
-  - item - The actual item, provides backwards compatability
+  - item - The actual item, provides backwards compatibility
   - key - The current key
   - index - The current index value (starts at 0 and increases with 1 for each element)
   - number - The current index value + 1 (starts at 1 and increases with 1 for each element)

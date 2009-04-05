@@ -5,9 +5,9 @@
 // Created on: <17-Nov-2004 19:58:43 sp>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -26,7 +26,7 @@
 //
 //
 
-/*! \file ezrolefunctioncollection.php
+/*! \file
 */
 
 /*!
@@ -46,7 +46,6 @@ class eZRoleFunctionCollection
 
     function fetchRole( $roleID )
     {
-        //include_once( 'kernel/classes/ezrole.php' );
         $role = eZRole::fetch( $roleID );
         return array( 'result' => $role );
     }

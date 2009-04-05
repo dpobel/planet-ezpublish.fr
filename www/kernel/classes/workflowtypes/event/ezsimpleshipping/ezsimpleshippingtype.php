@@ -5,9 +5,9 @@
 // Created on: <09-äÅË-2002 14:42:23 sp>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -26,7 +26,7 @@
 //
 //
 
-/*! \file ezsimpleshippingtype.php
+/*! \file
 */
 
 /*!
@@ -34,8 +34,6 @@
   \brief The class eZSimpleShippingType handles adding shipping cost to an order
 
 */
-//include_once( 'kernel/classes/ezorder.php' );
-
 class eZSimpleShippingType extends eZWorkflowEventType
 {
     const WORKFLOW_TYPE_STRING = 'ezsimpleshipping';
@@ -78,7 +76,6 @@ class eZSimpleShippingType extends eZWorkflowEventType
                 $productCollection = $order->attribute( 'productcollection' );
                 $orderCurrency = $productCollection->attribute( 'currency_code' );
 
-                //include_once( 'kernel/shop/classes/ezshopfunctions.php' );
                 $cost = eZShopFunctions::convertAdditionalPrice( $orderCurrency, $cost );
 
                 $orderItem = new eZOrderItem( array( 'order_id' => $orderID,

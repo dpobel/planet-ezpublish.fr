@@ -5,9 +5,9 @@
 // Created on: <08-Oct-2002 19:12:43 bf>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -33,12 +33,7 @@
 
 */
 
-//include_once( 'kernel/classes/ezdatatype.php' );
-//include_once( 'lib/ezutils/classes/ezintegervalidator.php' );
 require_once( 'kernel/common/i18n.php' );
-//include_once( 'kernel/classes/datatypes/ezurl/ezurl.php' );
-//include_once( 'kernel/classes/datatypes/ezurl/ezurlobjectlink.php' );
-
 class eZURLType extends eZDataType
 {
     const DATA_TYPE_STRING = 'ezurl';
@@ -71,10 +66,10 @@ class eZURLType extends eZDataType
         else
         {
             $contentClassAttribute = $contentObjectAttribute->contentClassAttribute();
-            $default = $contentClassAttribute->attribute( "data_text1" );
-            if ( $default !== "" )
+            $default = $contentClassAttribute->attribute( 'data_text1' );
+            if ( $default !== '' && $default !== NULL )
             {
-                $contentObjectAttribute->setAttribute( "data_text", $default );
+                $contentObjectAttribute->setAttribute( 'data_text', $default );
             }
         }
     }
@@ -101,12 +96,14 @@ class eZURLType extends eZDataType
             // Remove all url-object links to this attribute.
             eZURLObjectLink::removeURLlinkList( $contentObjectAttribute->attribute( "id" ), $contentObjectAttribute->attribute('version') );
         }
+        else if ( $contentObjectAttribute->validateIsRequired() )
+        {
+            $contentObjectAttribute->setValidationError( ezi18n( 'kernel/classes/datatypes', 'Input required.' ) );
+            return eZInputValidator::STATE_INVALID;
+        }
         return eZInputValidator::STATE_ACCEPTED;
     }
 
-    /*!
-     \reimp
-    */
     function deleteStoredObjectAttribute( $contentObjectAttribute, $version = null )
     {
         $contentObjectAttributeID = $contentObjectAttribute->attribute( 'id' );
@@ -210,9 +207,6 @@ class eZURLType extends eZDataType
     {
     }
 
-    /*!
-     \reimp
-    */
     function validateClassAttributeHTTPInput( $http, $base, $classAttribute )
     {
         return eZInputValidator::STATE_ACCEPTED;
@@ -332,7 +326,8 @@ class eZURLType extends eZDataType
         if ( is_object( $url ) and
              trim( $url->attribute( 'url' ) ) != '' )
         {
-            $urlNode = $dom->createElement( 'url', $url->attribute( 'url' ) );
+            $urlNode = $dom->createElement( 'url' );
+            $urlNode->appendChild( $dom->createTextNode( urlencode( $url->attribute( 'url' ) ) ) );
             $urlNode->setAttribute( 'original-url-md5', $url->attribute( 'original_url_md5' ) );
             $urlNode->setAttribute( 'is-valid', $url->attribute( 'is_valid' ) );
             $urlNode->setAttribute( 'last-checked', $url->attribute( 'last_checked' ) );
@@ -343,7 +338,8 @@ class eZURLType extends eZDataType
 
         if ( $objectAttribute->attribute( 'data_text' ) )
         {
-            $textNode = $dom->createElement( 'text', $objectAttribute->attribute( 'data_text' ) );
+            $textNode = $dom->createElement( 'text' );
+            $textNode->appendChild( $dom->createTextNode( $objectAttribute->attribute( 'data_text' ) ) );
             $node->appendChild( $textNode );
         }
 
@@ -351,7 +347,6 @@ class eZURLType extends eZDataType
     }
 
     /*!
-     \reimp
      \param package
      \param contentobject attribute object
      \param domnode object
@@ -363,7 +358,7 @@ class eZURLType extends eZDataType
         if ( is_object( $urlNode ) )
         {
             unset( $url );
-            $url = $urlNode->textContent;
+            $url = urldecode( $urlNode->textContent );
 
             $urlID = eZURL::registerURL( $url );
             if ( $urlID )
@@ -384,6 +379,11 @@ class eZURLType extends eZDataType
         $textNode = $attributeNode->getElementsByTagName( 'text' )->item( 0 );
         if ( $textNode )
             $objectAttribute->setAttribute( 'data_text', $textNode->textContent );
+    }
+
+    function supportsBatchInitializeObjectAttribute()
+    {
+        return true;
     }
 }
 

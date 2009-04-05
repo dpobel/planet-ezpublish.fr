@@ -5,9 +5,9 @@
 // Created on: <28-Jul-2003 15:12:08 wy>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -26,14 +26,8 @@
 //
 //
 
-/*! \file ldapusermanage.php
+/*! \file
 */
-
-//include_once( "lib/ezdb/classes/ezdb.php" );
-//include_once( 'lib/ezutils/classes/ezini.php' );
-//include_once( 'kernel/classes/datatypes/ezuser/ezuser.php' );
-//include_once( 'kernel/classes/datatypes/ezuser/ezusersetting.php' );
-//include_once( 'kernel/classes/ezcontentobject.php' );
 
 if ( !$isQuiet )
     $cli->output( "Checking LDAP users ..."  );
@@ -532,7 +526,6 @@ foreach ( $LDAPUsers as $LDAPUser )
                         $newVersion->assignToNode( $defaultUserPlacement, 1 );
                     }
                 }
-                //include_once( 'lib/ezutils/classes/ezoperationhandler.php' );
                 $adminUser = eZUser::fetchByName( 'admin' );
                 $adminUserContentObjectID = $adminUser->attribute( 'contentobject_id' );
                 eZUser::setCurrentlyLoggedInUser( $adminUser, $adminUserContentObjectID );

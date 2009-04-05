@@ -3,9 +3,9 @@
 // Created on: <04-Dec-2002 16:15:49 bf>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -27,11 +27,7 @@
 $http = eZHTTPTool::instance();
 $module = $Params['Module'];
 
-//include_once( "kernel/classes/ezbasket.php" );
 require_once( 'kernel/common/template.php' );
-//include_once( 'kernel/classes/ezorder.php' );
-//include_once( 'lib/ezutils/classes/ezhttptool.php' );
-
 $tpl = templateInit();
 $tpl->setVariable( "module_name", 'shop' );
 
@@ -41,8 +37,6 @@ $order = eZOrder::fetch( $orderID );
 if ( !is_object( $order ) )
     return $Module->handleError( EZ_ERROR_KERNEL_NOT_AVAILABLE, 'kernel' );
 
-//include_once( 'lib/ezutils/classes/ezoperationhandler.php' );
-
 if ( $order instanceof eZOrder )
 {
     if ( $http->hasPostVariable( "ConfirmOrderButton" ) )
@@ -51,7 +45,6 @@ if ( $order instanceof eZOrder )
         $ini = eZINI::instance();
         if ( $ini->variable( 'ShopSettings', 'ClearBasketOnCheckout' ) == 'enabled' )
         {
-            //include_once( "kernel/classes/ezbasket.php" );
             $basket = eZBasket::currentBasket();
             $basket->remove();
         }

@@ -5,9 +5,9 @@
 // Created on: <12-Feb-2002 11:00:54 bf>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -45,7 +45,6 @@
   PHP error messages can also be shown using setHandleType().
 
   \code
-  require_once( "lib/ezutils/classes/ezdebug.php" );
 
   // write a temporary debug message
   eZDebug::writeDebug( "Test" );
@@ -71,8 +70,6 @@
 
   \endcode
 */
-
-//include_once( "lib/ezutils/classes/ezsys.php" );
 
 class eZDebug
 {
@@ -281,7 +278,7 @@ class eZDebug
         {
             case self::HANDLE_FROM_PHP:
             {
-                set_error_handler( "eZDebugErrorHandler" );
+                set_error_handler( array( $instance, 'recursionProtectErrorHandler' ) );
             } break;
 
             case self::HANDLE_TO_PHP:
@@ -316,6 +313,22 @@ class eZDebug
         $old_types = $instance->ShowTypes;
         $instance->ShowTypes = $types;
         return $old_types;
+    }
+
+    public function recursionProtectErrorHandler( $errno, $errstr, $errfile, $errline )
+    {
+        if ( $this->recursionFlag )
+        {
+            print( "Fatal debug error: A recursion in debug error handler was detected, aborting debug message.<br/>" );
+            $this->recursionFlag = false;
+            return;
+        }
+
+        $this->recursionFlag = true;
+
+        $result = $this->errorHandler( $errno, $errstr, $errfile, $errline );
+        $this->recursionFlag = false;
+        return $result;
     }
 
     /*!
@@ -644,8 +657,6 @@ class eZDebug
         $this->MessageOutput = $output;
     }
 
-    /*!
-    */
     function setStoreLog( $store )
     {
         $this->StoreLog = $store;
@@ -828,7 +839,6 @@ class eZDebug
                 else
                 {
                     $newLogRotateName = $fileName . '.' . ($i + 1);
-                    //include_once( 'lib/ezfile/classes/ezfile.php' );
                     eZFile::rename( $logRotateName, $newLogRotateName );
 //                     print( "@rename( $logRotateName, $newLogRotateName )<br/>" );
                 }
@@ -837,7 +847,6 @@ class eZDebug
         if ( @file_exists( $fileName ) )
         {
             $newLogRotateName = $fileName . '.' . 1;
-            //include_once( 'lib/ezfile/classes/ezfile.php' );
             eZFile::rename( $fileName, $newLogRotateName );
 //             print( "@rename( $fileName, $newLogRotateName )<br/>" );
             return true;
@@ -862,8 +871,7 @@ class eZDebug
         $fileName = $logDir . $logName;
         if ( !file_exists( $logDir ) )
         {
-            //include_once( 'lib/ezfile/classes/ezdir.php' );
-            eZDir::mkdir( $logDir, 0775, true );
+            eZDir::mkdir( $logDir, false, true );
         }
         $oldumask = @umask( 0 );
         $fileExisted = @file_exists( $fileName );
@@ -884,7 +892,11 @@ class eZDebug
             @fwrite( $logFile, $notice );
             @fclose( $logFile );
             if ( !$fileExisted )
-                @chmod( $fileName, 0664 );
+            {
+                $ini = eZINI::instance();
+                $permissions = octdec( $ini->variable( 'FileSettings', 'LogFilePermissions' ) );
+                @chmod( $fileName, $permissions );
+            }
             @umask( $oldumask );
         }
         else
@@ -1073,61 +1085,19 @@ class eZDebug
             $GLOBALS['eZDebugLogOnly'] = ( $settings['log-only'] == 'enabled' );
         }
 
-        $notDebugByIP = true;
-        $debugEnabled = $settings['debug-enabled'];
-        if ( $settings['debug-enabled'] and
-             $settings['debug-by-ip'] )
+        $GLOBALS['eZDebugAllowedByIP'] = $settings['debug-by-ip'] ? self::isAllowedByCurrentIP( $settings['debug-ip-list'] ) : true;
+
+        // updateSettings is meant to be called before the user session is started
+        // so we do not take debug-by-user into account yet, but store the debug-user-list in $GLOBALS
+        // so it can be used in the final check, done by checkDebugByUser()
+        if ( isset( $settings['debug-by-user'] ) && $settings['debug-by-user'] )
         {
-            $ipAddress = eZSys::serverVariable( 'REMOTE_ADDR', true );
-            if ( $ipAddress )
-            {
-                $debugEnabled = false;
-                foreach( $settings['debug-ip-list'] as $itemToMatch )
-                {
-                    if ( preg_match("/^(([0-9]+)\.([0-9]+)\.([0-9]+)\.([0-9]+))(\/([0-9]+)$|$)/", $itemToMatch, $matches ) )
-                    {
-                        if ( $matches[6] )
-                        {
-                            if ( eZDebug::isIPInNet( $ipAddress, $matches[1], $matches[7]))
-                            {
-                                $debugEnabled = true;
-                                $notDebugByIP = false;
-                                break;
-                            }
-                        }
-                        else
-                        {
-                            if ( $matches[1] == $ipAddress )
-                            {
-                                $debugEnabled = true;
-                                $notDebugByIP = false;
-                                break;
-                            }
-                        }
-                    }
-                }
-            }
-            else
-            {
-                $debugEnabled = (
-                    in_array( 'commandline', $settings['debug-ip-list'] ) &&
-                    ( php_sapi_name() == 'cli' )
-                );
-            }
-        }
-        if ( $settings['debug-enabled'] and
-             isset( $settings['debug-by-user'] ) and
-             $settings['debug-by-user'] and
-             $notDebugByIP )
-        {
-            $debugUserIDList = $settings['debug-user-list'] ? $settings['debug-user-list'] : array();
-            $GLOBALS['eZDebugUserIDList'] = $debugUserIDList;
-            // We enable the debug temporarily.
-            // In checkDebugByUser() will be last(final) check for debug by user id.
-            $debugEnabled = true;
+            $GLOBALS['eZDebugUserIDList'] = $settings['debug-user-list'] ? $settings['debug-user-list'] : array();
         }
 
-        $GLOBALS['eZDebugEnabled'] = $debugEnabled;
+        $GLOBALS['eZDebugAllowed'] = $GLOBALS['eZDebugAllowedByIP'];
+        $GLOBALS['eZDebugEnabled'] = $settings['debug-enabled'] && $GLOBALS['eZDebugAllowedByIP'];
+
         eZDebug::setHandleType( $oldHandleType );
     }
 
@@ -1135,28 +1105,44 @@ class eZDebug
       \static
       Final checking for debug by user id.
       Checks if we should enable debug.
+
+      Returns false if debug-by-user is not active, was already checked before
+      or if there is no current user. Returns true otherwise.
     */
     static function checkDebugByUser()
     {
-        $debugUserIDList = isset( $GLOBALS['eZDebugUserIDList'] ) ? $GLOBALS['eZDebugUserIDList'] : false;
-
-        if ( $debugUserIDList === false )
-            return false;
-
-        if ( count( $debugUserIDList ) == 0 )
+        if ( !isset( $GLOBALS['eZDebugUserIDList'] ) ||
+             !is_array( $GLOBALS['eZDebugUserIDList'] ) )
         {
-            // We should set previous value.
-            return $GLOBALS['eZDebugEnabled'] = false;
+            return false;
         }
+        else
+        {
+            $currentUserID = eZUser::currentUserID();
 
-        // if ( //include_once( "kernel/classes/datatypes/ezuser/ezuser.php" ) )
-        $currentUserID = eZUser::currentUserID();
+            if ( !$currentUserID )
+            {
+                return false;
+            }
+            else
+            {
+                $GLOBALS['eZDebugAllowedByUser'] = in_array( $currentUserID, $GLOBALS['eZDebugUserIDList'] );
 
-        $GLOBALS['eZDebugEnabled'] = $currentUserID ?
-            in_array( $currentUserID, $debugUserIDList ) :
-            $GLOBALS['eZDebugEnabled'];
+                if ( $GLOBALS['eZDebugAllowed'] )
+                {
+                    $GLOBALS['eZDebugAllowed'] = $GLOBALS['eZDebugAllowedByUser'];
+                }
 
-        unset( $GLOBALS['eZDebugUserIDList'] );
+                if ( $GLOBALS['eZDebugEnabled'] )
+                {
+                    $GLOBALS['eZDebugEnabled'] = $GLOBALS['eZDebugAllowedByUser'];
+                }
+
+                unset( $GLOBALS['eZDebugUserIDList'] );
+
+                return true;
+            }
+        }
     }
 
     /*!
@@ -1318,7 +1304,7 @@ showDebug();
 
         if ( $recursive )
         {
-            if ( isset( $this->TimeAccumulatorList[$key]['recursive_counter'] ) )
+            if ( isset( $debug->TimeAccumulatorList[$key]['recursive_counter'] ) )
             {
                 $debug->TimeAccumulatorList[$key]['recursive_counter']++;
                 return;
@@ -1841,6 +1827,51 @@ td.timingpoint2
         }
     }
 
+    /*!
+     If debugging is allowed, given the limitations of the DebugByIP and DebugByUser settings.
+    */
+    function isDebugAllowed()
+    {
+
+    }
+
+    /*!
+     If debugging is allowed for the current IP address.
+    */
+    private static function isAllowedByCurrentIP( $allowedIpList )
+    {
+        $ipAddress = eZSys::serverVariable( 'REMOTE_ADDR', true );
+        if ( $ipAddress )
+        {
+            foreach( $allowedIpList as $itemToMatch )
+            {
+                if ( preg_match("/^(([0-9]+)\.([0-9]+)\.([0-9]+)\.([0-9]+))(\/([0-9]+)$|$)/", $itemToMatch, $matches ) )
+                {
+                    if ( $matches[6] )
+                    {
+                        if ( self::isIPInNet( $ipAddress, $matches[1], $matches[7] ) )
+                        {
+                            return true;
+                        }
+                    }
+                    else
+                    {
+                        if ( $matches[1] == $ipAddress )
+                        {
+                            return true;
+                        }
+                    }
+                }
+            }
+
+            return false;
+        }
+        else
+        {
+            return eZSys::isShellExecution() && in_array( 'commandline', $allowedIpList );
+        }
+    }
+
     /// \privatesection
     /// String array containing the debug information
     public $DebugStrings = array();
@@ -1866,10 +1897,10 @@ td.timingpoint2
     /// An array of logfiles used by the debug class with each key being the debug level
     public $LogFiles;
 
-    /// How many places behing . should be displayed when showing times
+    /// How many places behind . should be displayed when showing times
     public $TimingAccuracy = 4;
 
-    /// How many places behing . should be displayed when showing percentages
+    /// How many places behind . should be displayed when showing percentages
     public $PercentAccuracy = 4;
 
     /// Whether to use external CSS or output own CSS. True if external is to be used.
@@ -1898,28 +1929,8 @@ td.timingpoint2
 
     /// A list of debug reports that appears at the top of debug output
     public $topReportsList;
+
+    private $recursionFlag = false;
 }
-
-/*!
-  Helper function for eZDebug, called whenever a PHP error occurs.
-  The error is then handled by the eZDebug class.
-*/
-
-function eZDebugErrorHandler( $errno, $errstr, $errfile, $errline )
-{
-    if ( $GLOBALS['eZDebugRecursionFlag'] )
-    {
-        print( "Fatal debug error: A recursion in debug error handler was detected, aborting debug message.<br/>" );
-        $GLOBALS['eZDebugRecursionFlag'] = false;
-        return;
-    }
-
-    $GLOBALS['eZDebugRecursionFlag'] = true;
-    $debug = eZDebug::instance();
-    $result = $debug->errorHandler( $errno, $errstr, $errfile, $errline );
-    $GLOBALS['eZDebugRecursionFlag'] = false;
-    return $result;
-}
-$GLOBALS['eZDebugRecursionFlag'] = false;
 
 ?>

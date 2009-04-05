@@ -5,9 +5,9 @@
 // Created on: <07-Jun-2002 12:40:42 amos>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -26,7 +26,7 @@
 //
 //
 
-/*! \file eztstranslator.php
+/*! \file
 */
 
 /*!
@@ -35,10 +35,6 @@
   \brief This provides internationalization using XML (.ts) files
 
 */
-
-//include_once( "lib/ezi18n/classes/eztranslatorhandler.php" );
-//include_once( "lib/ezi18n/classes/eztextcodec.php" );
-//include_once( "lib/ezi18n/classes/eztranslationcache.php" );
 
 class eZTSTranslator extends eZTranslatorHandler
 {
@@ -117,22 +113,21 @@ class eZTSTranslator extends eZTranslatorHandler
     */
     function loadTranslationFile( $locale, $filename, $requestedContext )
     {
-        //include_once( 'lib/ezfile/classes/ezdir.php' );
-
         // First try for current charset
         $charset = eZTextCodec::internalCharset();
         $tsTimeStamp = false;
+        $ini = eZINI::instance();
+        $checkMTime = $ini->variable( 'RegionalSettings', 'TranslationCheckMTime' ) === 'enabled';
 
         if ( !$this->RootCache )
         {
-            $ini = eZINI::instance();
             $roots = array( $ini->variable( 'RegionalSettings', 'TranslationRepository' ) );
             $extensionBase = eZExtension::baseDirectory();
             $translationExtensions = $ini->variable( 'RegionalSettings', 'TranslationExtensions' );
             foreach ( $translationExtensions as $translationExtension )
             {
                 $extensionPath = $extensionBase . '/' . $translationExtension . '/translations';
-                if ( file_exists( $extensionPath ) )
+                if ( !$checkMTime || file_exists( $extensionPath ) )
                 {
                     $roots[] = $extensionPath;
                 }
@@ -150,7 +145,7 @@ class eZTSTranslator extends eZTranslatorHandler
         // Load cached translations if possible
         if ( $this->UseCache == true )
         {
-            if ( !$tsTimeStamp )
+            if ( !$tsTimeStamp && $checkMTime )
             {
                 foreach ( $roots as $root )
                 {
@@ -229,68 +224,102 @@ class eZTSTranslator extends eZTranslatorHandler
         }
 
         $status = false;
-        foreach ( $roots as $root )
+
+        // first process country translation files
+        // then process country variation translation files
+        $localeParts = explode( '@', $locale );
+
+        $triedPaths = array();
+        $loadedPaths = array();
+
+        $ini = eZINI::instance( "i18n.ini" );
+        $fallbacks = $ini->variable( 'TranslationSettings', 'FallbackLanguages' );
+
+        foreach ( $localeParts as $localePart )
         {
-            $path = eZDir::path( array( $root, $locale, $charset, $filename ) );
-            if ( !file_exists( $path ) )
+            $localeCodeToProcess = isset( $localeCodeToProcess ) ? $localeCodeToProcess . '@' . $localePart: $localePart;
+
+            // array with alternative subdirs to check
+            $alternatives = array(
+                array( $localeCodeToProcess, $charset, $filename ),
+                array( $localeCodeToProcess, $filename ),
+            );
+
+            if ( array_key_exists( $localeCodeToProcess,  $fallbacks ) and $fallbacks[$localeCodeToProcess] )
             {
-                $path = eZDir::path( array( $root, $locale, $filename ) );
+                $alternatives[] = array( $fallbacks[$localeCodeToProcess], $charset, $filename );
+                $alternatives[] = array( $fallbacks[$localeCodeToProcess], $filename );
+            }
 
-                $ini = eZINI::instance( "i18n.ini" );
-                $fallbacks = $ini->variable( 'TranslationSettings', 'FallbackLanguages' );
-
-                if ( array_key_exists( $locale,  $fallbacks ) and $fallbacks[$locale] )
+            foreach ( $roots as $root )
+            {
+                if ( !file_exists( $root ) )
                 {
-                    $fallbackpath = eZDir::path( array( $root, $fallbacks[$locale], $filename ) );
-                    if ( !file_exists( $path ) and file_exists( $fallbackpath ) )
-                        $path = $fallbackpath;
-                }
-
-                if ( !file_exists( $path ) )
-                {
-                    eZDebug::writeError( "Could not load translation file: $path", "eZTSTranslator::loadTranslationFile" );
                     continue;
                 }
-            }
 
-            eZDebug::accumulatorStart( 'tstranslator_load', 'tstranslator', 'TS load' );
+                unset( $path );
 
-            $doc = new DOMDocument( '1.0', 'utf-8' );
-            $success = $doc->load( $path );
-
-            if ( !$success )
-            {
-                eZDebug::writeWarning( "Unable to load XML from file $path", 'eZTSTranslator::loadTranslationFile' );
-                continue;
-            }
-
-            if ( !$this->validateDOMTree( $doc ) )
-            {
-                eZDebug::writeWarning( "XML text for file $path did not validate", 'eZTSTranslator::loadTranslationFile' );
-                continue;
-            }
-
-            $status = true;
-
-            $treeRoot = $doc->documentElement;
-            $children = $treeRoot->childNodes;
-            for ($i = 0; $i < $children->length; $i++ )
-            {
-                $child = $children->item( $i );
-
-                if ( $child->nodeType == XML_ELEMENT_NODE )
+                foreach ( $alternatives as $alternative )
                 {
-                    if ( $child->tagName == "context" )
+                    $pathParts = $alternative;
+                    array_unshift( $pathParts, $root );
+                    $pathToTry = eZDir::path( $pathParts );
+                    $triedPaths[] = $pathToTry;
+
+                    if ( file_exists( $pathToTry ) )
                     {
-                        $this->handleContextNode( $child );
+                        $path = $pathToTry;
+                        break;
                     }
-                    else
-                        eZDebug::writeError( "Unknown element name: " . $child->tagName,
-                                             "eZTSTranslator::loadTranslationFile" );
                 }
+
+                if ( !isset( $path ) )
+                {
+                    continue;
+                }
+
+                eZDebug::accumulatorStart( 'tstranslator_load', 'tstranslator', 'TS load' );
+
+                $doc = new DOMDocument( '1.0', 'utf-8' );
+                $success = $doc->load( $path );
+
+                if ( !$success )
+                {
+                    eZDebug::writeWarning( "Unable to load XML from file $path", 'eZTSTranslator::loadTranslationFile' );
+                    continue;
+                }
+
+                if ( !$this->validateDOMTree( $doc ) )
+                {
+                    eZDebug::writeWarning( "XML text for file $path did not validate", 'eZTSTranslator::loadTranslationFile' );
+                    continue;
+                }
+
+                $loadedPaths[] = $path;
+
+                $status = true;
+
+                $treeRoot = $doc->documentElement;
+                $children = $treeRoot->childNodes;
+                for ($i = 0; $i < $children->length; $i++ )
+                {
+                    $child = $children->item( $i );
+
+                    if ( $child->nodeType == XML_ELEMENT_NODE )
+                    {
+                        if ( $child->tagName == "context" )
+                        {
+                            $this->handleContextNode( $child );
+                        }
+                    }
+                }
+                eZDebug::accumulatorStop( 'tstranslator_load' );
             }
-            eZDebug::accumulatorStop( 'tstranslator_load' );
         }
+
+        eZDebug::writeDebug( implode( PHP_EOL, $triedPaths ), __METHOD__ . ': tried paths' );
+        eZDebug::writeDebug( implode( PHP_EOL, $loadedPaths ), __METHOD__ . ': loaded paths' );
 
         // Save translation cache
         if ( $this->UseCache == true && $this->BuildCache == true )
@@ -406,15 +435,38 @@ class eZTSTranslator extends eZTranslatorHandler
                 $childName = $message_child->tagName;
                 if ( $childName  == "source" )
                 {
-                    $source_el = $message_child->firstChild;
-                    $source = $source_el->nodeValue;
+                    if ( $message_child->childNodes->length > 0 )
+                    {
+                        $source = '';
+                        foreach ( $message_child->childNodes as $textEl )
+                        {
+                            if ( $textEl instanceof DOMText )
+                            {
+                                $source .= $textEl->nodeValue;
+                            }
+                            else if ( $textEl instanceof DOMElement && $textEl->tagName == 'byte' )
+                            {
+                                $source .= chr( intval( '0' . $textEl->getAttribute( 'value' ) ) );
+                            }
+                        }
+                    }
                 }
                 else if ( $childName == "translation" )
                 {
-                    $translation_el = $message_child->firstChild;
-                    if ( $translation_el )
+                    if ( $message_child->childNodes->length > 0 )
                     {
-                        $translation = $translation_el->nodeValue;
+                        $translation = '';
+                        foreach ( $message_child->childNodes as $textEl )
+                        {
+                            if ( $textEl instanceof DOMText )
+                            {
+                                $translation .= $textEl->nodeValue;
+                            }
+                            else if ( $textEl instanceof DOMElement && $textEl->tagName == 'byte' )
+                            {
+                                $translation .= chr( intval( '0' . $textEl->getAttribute( 'value' ) ) );
+                            }
+                        }
                     }
                 }
                 else if ( $childName == "comment" )
@@ -455,9 +507,6 @@ class eZTSTranslator extends eZTranslatorHandler
         return true;
     }
 
-    /*!
-     \reimp
-    */
     function findKey( $key )
     {
         $msg = null;
@@ -468,9 +517,6 @@ class eZTSTranslator extends eZTranslatorHandler
         return $msg;
     }
 
-    /*!
-     \reimp
-    */
     function findMessage( $context, $source, $comment = null )
     {
         // First try with comment,
@@ -486,9 +532,6 @@ class eZTSTranslator extends eZTranslatorHandler
         return $this->findKey( $key );
     }
 
-    /*!
-     \reimp
-    */
     function keyTranslate( $key )
     {
         $msg = $this->findKey( $key );
@@ -500,9 +543,6 @@ class eZTSTranslator extends eZTranslatorHandler
         }
     }
 
-    /*!
-     \reimp
-    */
     function translate( $context, $source, $comment = null )
     {
         $msg = $this->findMessage( $context, $source, $comment );
@@ -575,7 +615,6 @@ class eZTSTranslator extends eZTranslatorHandler
     */
     static function fetchList( $localeList = array() )
     {
-        //include_once( 'lib/ezutils/classes/ezini.php' );
         $ini = eZINI::instance();
 
         $dir = $ini->variable( 'RegionalSettings', 'TranslationRepository' );
@@ -583,8 +622,6 @@ class eZTSTranslator extends eZTranslatorHandler
         $fileInfoList = array();
         $translationList = array();
         $locale = '';
-
-        //include_once( 'lib/ezfile/classes/ezfile.php' );
 
         if ( count( $localeList ) == 0 )
         {

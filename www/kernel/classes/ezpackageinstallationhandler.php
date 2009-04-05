@@ -5,9 +5,9 @@
 // Created on: <31-Mar-2004 10:15:36 kk>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -26,7 +26,7 @@
 //
 //
 
-/*! \file ezpackageinstallationhandler.php
+/*! \file
 */
 
 /*!
@@ -156,9 +156,6 @@ class eZPackageInstallationHandler
         return $this->StepMap;
     }
 
-    /*!
-     \virtual
-    */
     function stepTemplate( $package, $installItem, $step )
     {
         $stepTemplatePath = 'design:package/';
@@ -173,7 +170,6 @@ class eZPackageInstallationHandler
     }
 
     /*!
-     \virtual
      This is called the first time the step is entered (ie. not on validations)
      and can be used to fill in values in the \a $persistentData variable
      for use in the template or later retrieval.
@@ -219,9 +215,6 @@ class eZPackageInstallationHandler
         return $nextStep;
     }
 
-    /*!
-     \virtual
-    */
     function validateAndAdvanceStep( $package, $http, $currentStepID, &$stepMap, &$persistentData, &$errorList )
     {
         $methodMap = $this->validateStepMethodMap();
@@ -237,7 +230,6 @@ class eZPackageInstallationHandler
     }
 
     /*!
-     \virtual
      This is called after a step has validated it's information. It can
      be used to put values in the \a $persistentData variable for later retrieval.
     */
@@ -255,7 +247,14 @@ class eZPackageInstallationHandler
     }
 
     /*!
-     \virtual
+     Used to reset the instalation handler if needed
+    */
+    function reset( )
+    {
+    }
+
+
+    /*!
      Finalizes the creation process with the gathered information.
      This is usually the function that creates the package and
      adds the proper elements.
@@ -285,38 +284,27 @@ class eZPackageInstallationHandler
         if ( !isset( $handlers ) )
             $handlers = array();
         $handler = false;
-        //include_once( 'lib/ezutils/classes/ezextension.php' );
-        if ( eZExtension::findExtensionType( array( 'ini-name' => 'package.ini',
-                                                    'repository-group' => 'PackageSettings',
-                                                    'repository-variable' => 'RepositoryDirectories',
-                                                    'extension-group' => 'PackageSettings',
-                                                    'extension-variable' => 'ExtensionDirectories',
-                                                    'subdir' => 'packageinstallers',
-                                                    'extension-subdir' => 'packageinstallers',
-                                                    'suffix-name' => 'packageinstaller.php',
-                                                    'type-directory' => true,
-                                                    'type' => $handlerName,
-                                                    'alias-group' => 'InstallerSettings',
-                                                    'alias-variable' => 'HandlerAlias' ),
-                                             $result ) )
+
+        if( isset( $handlers[$handlerName] ) )
         {
-            $handlerFile = $result['found-file-path'];
-            if ( file_exists( $handlerFile ) )
+            $handler =& $handlers[$handlerName];
+            $handler->reset();
+        }
+        else
+        {
+            $optionArray = array( 'iniFile'       => 'package.ini',
+                                  'iniSection'    => 'InstallerSettings',
+                                  'iniVariable'   => 'HandlerAlias',
+                                  'handlerIndex'  => $handlerName,
+                                  'handlerParams' => array( $package, $handlerName, $installItem ) );
+
+            $options = new ezpExtensionOptions( $optionArray );
+
+            $handler = eZExtension::getHandlerClass( $options );
+
+            if( $handler !== null and $handler !== false )
             {
-                include_once( $handlerFile );
-                $handlerClassName = $result['type'] . 'PackageInstaller';
-
-                if ( isset( $handlers[$result['type']] ) )
-                {
-                    $handler =& $handlers[$result['type']];
-                    $handler->reset();
-                }
-                else
-                {
-                    $handler = new $handlerClassName( $package, $handlerName, $installItem );
-                    $handlers[$result['type']] =& $handler;
-                }
-
+                $handlers[$handlerName] =& $handler;
                 // if custom install handler is available in the package, we use it
                 $customInstallHandler = $handler->customInstallHandlerInfo( $package, $installItem );
                 if ( $customInstallHandler )
@@ -325,16 +313,16 @@ class eZPackageInstallationHandler
                     $handlerClassName = $customInstallHandler['classname'];
                     $handlerFile = $customInstallHandler['file-path'];
 
-                    include_once( $handlerFile );
+                    // include_once( $handlerFile );
                     $handler = new $handlerClassName( $package, $handlerName, $installItem );
                 }
             }
         }
+
         return $handler;
     }
 
     /*!
-     \virtual
      \return The package type taken from \a $package if the package exists,
              otherwise \c false.
      If the creator should have a specific package type this function should be reimplemented.

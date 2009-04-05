@@ -5,9 +5,9 @@
 // Created on: <21-Feb-2007 17:27:57 dl>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -26,13 +26,9 @@
 //
 //
 
-/*! \file ezstep_language_options.php
+/*! \file
 */
-//include_once( 'kernel/setup/steps/ezstep_installer.php' );
-//include_once( 'kernel/setup/ezsetupcommon.php' );
 require_once( 'kernel/common/i18n.php' );
-//include_once( 'kernel/classes/ezpackage.php' );
-
 /*!
   \class eZStepPackageLanguageOptions ezstep_package_language_options.php
   \brief The class eZStepPackageLanguageOptions does
@@ -43,7 +39,6 @@ class eZStepPackageLanguageOptions extends eZStepInstaller
 {
     /*!
      Constructor
-     \reimp
     */
     function eZStepPackageLanguageOptions( $tpl, $http, $ini, &$persistenceList )
     {
@@ -51,9 +46,6 @@ class eZStepPackageLanguageOptions extends eZStepInstaller
                                 'package_language_options', 'Package language options' );
     }
 
-    /*!
-     \reimp
-     */
     function processPostData()
     {
         $languageMap = array();
@@ -72,9 +64,6 @@ class eZStepPackageLanguageOptions extends eZStepInstaller
         return true;
     }
 
-    /*!
-      \reimp
-     */
     function init()
     {
         /*
@@ -162,9 +151,6 @@ class eZStepPackageLanguageOptions extends eZStepInstaller
         return true;
     }
 
-    /*!
-     \reimp
-     */
     function display()
     {
         $packageLanguageList = $this->MissedPackageLanguageList;

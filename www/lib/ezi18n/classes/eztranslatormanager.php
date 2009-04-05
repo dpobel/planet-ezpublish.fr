@@ -5,9 +5,9 @@
 // Created on: <10-Jun-2002 11:16:48 amos>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -26,7 +26,7 @@
 //
 //
 
-/*! \file eztranslatormanager.php
+/*! \file
 */
 
 /*! \defgroup eZTranslation Translation
@@ -48,14 +48,10 @@
 
 */
 
-//include_once( "lib/ezi18n/classes/eztranslatorhandler.php" );
-
 class eZTranslatorManager
 {
     const DYNAMIC_TRANSLATIONS_ENABLED = 'eZTMDynamicTranslationsEnabled';
 
-    /*!
-    */
     function eZTranslatorManager()
     {
         $this->Handlers = array();
@@ -205,7 +201,6 @@ class eZTranslatorManager
     */
     static function resetTranslations()
     {
-        //include_once( 'lib/ezi18n/classes/eztstranslator.php' );
         eZTranslatorManager::resetGlobals();
         eZTSTranslator::resetGlobals();
         eZLocale::resetGlobals();

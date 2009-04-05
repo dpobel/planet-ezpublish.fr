@@ -5,9 +5,9 @@
 // Created on: <23-May-2003 16:46:17 amos>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -26,7 +26,7 @@
 //
 //
 
-/*! \file ezsectionfunctioncollection.php
+/*! \file
 */
 
 /*!
@@ -34,8 +34,6 @@
   \brief The class eZSectionFunctionCollection does
 
 */
-
-//include_once( 'kernel/error/errors.php' );
 
 class eZSectionFunctionCollection
 {
@@ -48,7 +46,6 @@ class eZSectionFunctionCollection
 
     function fetchSectionObject( $sectionID )
     {
-        //include_once( 'kernel/classes/ezsection.php' );
         $sectionObject = eZSection::fetch( $sectionID );
         if ( $sectionObject === null )
             return array( 'error' => array( 'error_type' => 'kernel',
@@ -58,15 +55,12 @@ class eZSectionFunctionCollection
 
     function fetchSectionList()
     {
-        //include_once( 'kernel/classes/ezsection.php' );
         $sectionObjects = eZSection::fetchList( );
         return array( 'result' => $sectionObjects );
     }
 
     function fetchObjectList( $sectionID, $offset = false, $limit = false, $sortOrder = false, $status = false )
     {
-        //include_once( "kernel/classes/ezcontentobject.php" );
-
         if ( $sortOrder === false )
         {
             $sortOrder = array( 'id' => 'desc' );
@@ -86,8 +80,6 @@ class eZSectionFunctionCollection
 
     function fetchObjectListCount( $sectionID, $status = false )
     {
-        //include_once( "kernel/classes/ezcontentobject.php" );
-
         if ( $status == 'archived' )
             $status = eZContentObject::STATUS_ARCHIVED;
         else
@@ -107,9 +99,6 @@ class eZSectionFunctionCollection
 
     function fetchRoles( $sectionID )
     {
-        //include_once( 'kernel/classes/ezpolicylimitation.php' );
-        //include_once( 'kernel/classes/ezrole.php' );
-
         $policies = $roleIDs = $usedRoleIDs = $roles = $roleLimitations = array();
 
         $limitations = eZPolicyLimitation::findByType( 'Section', $sectionID, true, false );
@@ -142,8 +131,6 @@ class eZSectionFunctionCollection
 
     function fetchUserRoles( $sectionID )
     {
-        //include_once( 'kernel/classes/ezrole.php' );
-
         $userRoles = eZRole::fetchRolesByLimitation( 'section', $sectionID );
         return array( 'result' => $userRoles );
     }

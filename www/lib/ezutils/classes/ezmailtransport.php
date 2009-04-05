@@ -5,9 +5,9 @@
 // Created on: <10-Dec-2002 14:31:35 amos>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -26,7 +26,7 @@
 //
 //
 
-/*! \file ezmailtransport.php
+/*! \file
 */
 
 /*!
@@ -45,7 +45,6 @@ class eZMailTransport
     }
 
     /*!
-     \virtual
      Tries to send the contents of the email object \a $mail and
      returns \c true if succesful.
     */

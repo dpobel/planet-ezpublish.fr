@@ -7,9 +7,9 @@
 // Created on: <12-Feb-2002 15:54:17 bf>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -36,11 +36,6 @@
   eZMySQLDB is the MySQL implementation of eZDB.
   \sa eZDB
 */
-
-require_once( "lib/ezutils/classes/ezdebug.php" );
-//include_once( "lib/ezutils/classes/ezini.php" );
-//include_once( "lib/ezdb/classes/ezdbinterface.php" );
-
 class eZMySQLDB extends eZDBInterface
 {
     /*!
@@ -164,6 +159,7 @@ class eZMySQLDB extends eZDBInterface
         {
             eZDebug::writeError( "Connection error: Couldn't connect to database. Please try again later or inform the system administrator.\n$dbErrorText", "eZMySQLDB" );
             $this->IsConnected = false;
+            throw new eZDBNoConnectionException( $server );
         }
 
         if ( $this->IsConnected && $db != null )
@@ -180,7 +176,6 @@ class eZMySQLDB extends eZDBInterface
         if ( $charset !== null )
         {
             $originalCharset = $charset;
-            //include_once( 'lib/ezi18n/classes/ezcharsetinfo.php' );
             $charset = eZCharsetInfo::realCharsetCode( $charset );
             // Convert charset names into something MySQL will understand
             if ( isset( $this->CharsetMapping[ $charset ] ) )
@@ -198,7 +193,7 @@ class eZMySQLDB extends eZDBInterface
             {
                 $query = "SET NAMES '" . $charset . "'";
                 $status = mysql_query( $query, $connection );
-                $this->reportQuery( 'eZMySQLDB', $query, false, false );
+                $this->reportQuery( 'eZMySQLDB', $query, false, false, true );
                 if ( !$status )
                 {
                     $this->setError();
@@ -210,25 +205,16 @@ class eZMySQLDB extends eZDBInterface
         return $connection;
     }
 
-    /*!
-     \reimp
-    */
     function databaseName()
     {
         return 'mysql';
     }
 
-    /*!
-      \reimp
-    */
     function bindingType( )
     {
         return eZDBInterface::BINDING_NO;
     }
 
-    /*!
-      \reimp
-    */
     function bindVariable( $value, $fieldDef = false )
     {
         return $value;
@@ -259,8 +245,6 @@ class eZMySQLDB extends eZDBInterface
         // Older version should not check character sets
         if ( version_compare( $versionInfo['string'], '4.1.1' ) < 0 )
             return true;
-
-        //include_once( 'lib/ezi18n/classes/ezcharsetinfo.php' );
 
         if ( is_array( $charset ) )
         {
@@ -301,7 +285,6 @@ class eZMySQLDB extends eZDBInterface
                 if ( preg_match( '#DEFAULT CHARACTER SET ([a-zA-Z0-9_-]+)#', $createText, $matches ) )
                 {
                     $currentCharset = $matches[1];
-                    //include_once( 'lib/ezi18n/classes/ezcharsetinfo.php' );
                     $currentCharset = eZCharsetInfo::realCharsetCode( $currentCharset );
                     // Convert charset names into something MySQL will understand
 
@@ -327,9 +310,6 @@ class eZMySQLDB extends eZDBInterface
         return true;
     }
 
-    /*!
-     \reimp
-    */
     function query( $sql, $server = false )
     {
         if ( $this->IsConnected )
@@ -493,9 +473,6 @@ class eZMySQLDB extends eZDBInterface
 
     }
 
-    /*!
-     \reimp
-    */
     function arrayQuery( $sql, $params = array(), $server = false )
     {
         $retArray = array();
@@ -613,25 +590,16 @@ class eZMySQLDB extends eZDBInterface
         return 'cast( ' . $arg1 . ' | ' . $arg2 . ' AS SIGNED ) ';
     }
 
-    /*!
-     \reimp
-    */
     function supportedRelationTypeMask()
     {
         return eZDBInterface::RELATION_TABLE_BIT;
     }
 
-    /*!
-     \reimp
-    */
     function supportedRelationTypes()
     {
         return array( eZDBInterface::RELATION_TABLE );
     }
 
-    /*!
-     \reimp
-    */
     function relationCounts( $relationMask )
     {
         if ( $relationMask & eZDBInterface::RELATION_TABLE_BIT )
@@ -640,9 +608,6 @@ class eZMySQLDB extends eZDBInterface
             return 0;
     }
 
-    /*!
-      \reimp
-    */
     function relationCount( $relationType = eZDBInterface::RELATION_TABLE )
     {
         if ( $relationType != eZDBInterface::RELATION_TABLE )
@@ -662,9 +627,6 @@ class eZMySQLDB extends eZDBInterface
         return $count;
     }
 
-    /*!
-      \reimp
-    */
     function relationList( $relationType = eZDBInterface::RELATION_TABLE )
     {
         if ( $relationType != eZDBInterface::RELATION_TABLE )
@@ -689,9 +651,6 @@ class eZMySQLDB extends eZDBInterface
         return $tables;
     }
 
-    /*!
-     \reimp
-    */
     function eZTableList( $server = eZDBInterface::SERVER_MASTER )
     {
         $tables = array();
@@ -726,17 +685,11 @@ class eZMySQLDB extends eZDBInterface
         return $tables;
     }
 
-    /*!
-     \reimp
-    */
     function relationMatchRegexp( $relationType )
     {
         return "#^ez#";
     }
 
-    /*!
-      \reimp
-    */
     function removeRelation( $relationName, $relationType )
     {
         $relationTypeName = $this->relationName( $relationType );
@@ -754,9 +707,6 @@ class eZMySQLDB extends eZDBInterface
         return false;
     }
 
-    /*!
-     \reimp
-    */
     function lock( $table )
     {
         if ( $this->IsConnected )
@@ -782,9 +732,6 @@ class eZMySQLDB extends eZDBInterface
         }
     }
 
-    /*!
-     \reimp
-    */
     function unlock()
     {
         if ( $this->IsConnected )
@@ -794,7 +741,6 @@ class eZMySQLDB extends eZDBInterface
     }
 
     /*!
-     \reimp
      The query to start the transaction.
     */
     function beginQuery()
@@ -803,7 +749,6 @@ class eZMySQLDB extends eZDBInterface
     }
 
     /*!
-     \reimp
      The query to commit the transaction.
     */
     function commitQuery()
@@ -812,7 +757,6 @@ class eZMySQLDB extends eZDBInterface
     }
 
     /*!
-     \reimp
      The query to cancel the transaction.
     */
     function rollbackQuery()
@@ -820,9 +764,6 @@ class eZMySQLDB extends eZDBInterface
         return $this->query( "ROLLBACK" );
     }
 
-    /*!
-     \reimp
-    */
     function lastSerialID( $table = false, $column = false )
     {
         if ( $this->IsConnected )
@@ -834,9 +775,6 @@ class eZMySQLDB extends eZDBInterface
             return false;
     }
 
-    /*!
-     \reimp
-    */
     function escapeString( $str )
     {
         if ( $this->IsConnected )
@@ -849,9 +787,6 @@ class eZMySQLDB extends eZDBInterface
         }
     }
 
-    /*!
-     \reimp
-    */
     function close()
     {
         if ( $this->IsConnected )
@@ -861,21 +796,24 @@ class eZMySQLDB extends eZDBInterface
         }
     }
 
-    /*!
-     \reimp
-    */
     function createDatabase( $dbName )
     {
         if ( $this->DBConnection != false )
         {
-            mysql_create_db( $dbName, $this->DBConnection );
+            $this->query( "CREATE DATABASE $dbName" );
             $this->setError();
         }
     }
 
-    /*!
-     \reimp
-    */
+    function removeDatabase( $dbName )
+    {
+        if ( $this->DBConnection != false )
+        {
+            $this->query( "DROP DATABASE $dbName" );
+            $this->setError();
+        }
+    }
+
     function setError()
     {
         if ( $this->DBConnection )
@@ -890,9 +828,6 @@ class eZMySQLDB extends eZDBInterface
         }
     }
 
-    /*!
-     \reimp
-    */
     function availableDatabases()
     {
         $databaseArray = mysql_list_dbs( $this->DBConnection );
@@ -926,9 +861,6 @@ class eZMySQLDB extends eZDBInterface
         return $databases;
     }
 
-    /*!
-     \reimp
-    */
     function databaseServerVersion()
     {
         $versionInfo = mysql_get_server_info();
@@ -939,9 +871,6 @@ class eZMySQLDB extends eZDBInterface
                       'values' => $versionArray );
     }
 
-    /*!
-     \reimp
-    */
     function databaseClientVersion()
     {
         $versionInfo = mysql_get_client_info();
@@ -952,9 +881,6 @@ class eZMySQLDB extends eZDBInterface
                       'values' => $versionArray );
     }
 
-    /*!
-     \reimp
-    */
     function isCharsetSupported( $charset )
     {
         if ( $charset == 'utf-8' )
@@ -970,6 +896,17 @@ class eZMySQLDB extends eZDBInterface
         {
             return true;
         }
+    }
+
+    function supportsDefaultValuesInsertion()
+    {
+        return false;
+    }
+
+    function dropTempTable( $dropTableQuery = '', $server = self::SERVER_SLAVE )
+    {
+        $dropTableQuery = str_ireplace( 'DROP TABLE', 'DROP TEMPORARY TABLE', $dropTableQuery );
+        parent::dropTempTable( $dropTableQuery, $server );
     }
 
     public $CharsetMapping;

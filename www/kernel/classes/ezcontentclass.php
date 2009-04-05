@@ -5,9 +5,9 @@
 // Created on: <16-Apr-2002 11:08:14 amos>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -34,12 +34,6 @@
   \sa eZContentObject
 */
 
-//include_once( "lib/ezdb/classes/ezdb.php" );
-//include_once( "kernel/classes/ezpersistentobject.php" );
-//include_once( "kernel/classes/ezcontentobject.php" );
-//include_once( "kernel/classes/ezcontentclassattribute.php" );
-//include_once( "kernel/classes/ezcontentclassclassgroup.php" );
-//include_once( "kernel/classes/ezcontentclassnamelist.php" );
 require_once( "kernel/common/i18n.php" );
 
 class eZContentClass extends eZPersistentObject
@@ -184,6 +178,7 @@ class eZContentClass extends eZPersistentObject
         unset( $this->CanInstantiateLanguages );
         unset( $this->VersionCount );
         $this->ID = null;
+        $this->RemoteID = md5( (string)mt_rand() . (string)time() );
     }
 
     /*!
@@ -262,9 +257,9 @@ class eZContentClass extends eZPersistentObject
     /*!
      Creates a new content object instance and stores it.
 
-     \param user ID (optional), current user if not set
-     \param section ID (optional), 0 if not set
-     \param version number, create initial version if not set
+     \param userID user ID (optional), current user if not set
+     \param sectionID section ID (optional), 0 if not set
+     \param versionNumber version number, create initial version if not set
      \note Transaction unsafe. If you call several transaction unsafe methods you must enclose
      the calls within a db transaction; thus within db->begin and db->commit.
     */
@@ -299,6 +294,7 @@ class eZContentClass extends eZPersistentObject
         $db->begin();
 
         $object->store();
+        $object->assignDefaultStates();
         $object->setName( ezi18n( "kernel/contentclass", "New %1", null, array( $this->name( $languageCode ) ) ), false, $languageCode );
 
         if ( !$versionNumber )
@@ -323,7 +319,6 @@ class eZContentClass extends eZPersistentObject
 
         if ( $user->isAnonymous() )
         {
-            //include_once( 'kernel/classes/ezpreferences.php' );
             $createdObjectIDList = eZPreferences::value( 'ObjectCreationIDList' );
             if ( !$createdObjectIDList )
             {
@@ -406,8 +401,8 @@ class eZContentClass extends eZPersistentObject
                            \a $groupList, if not it will exclude those groups.
      \param $groupList An array with class group IDs that should be used in filtering, use
                        \c false if you do not wish to filter at all.
-     \param $id A unique name for the current fetch, this must be supplied when filtering is
-                used if you want caching to work.
+     \param $fetchID A unique name for the current fetch, this must be supplied when filtering is
+                     used if you want caching to work.
     */
     static function canInstantiateClassList( $asObject = false, $includeFilter = true, $groupList = false, $fetchID = false )
     {
@@ -526,20 +521,23 @@ class eZContentClass extends eZPersistentObject
             }
         }
 
+        $db = eZDB::instance();
+
         $filterTableSQL = '';
         $filterSQL = '';
         // Create extra SQL statements for the class group filters.
         if ( is_array( $groupList ) )
         {
+            if ( count( $groupList ) == 0 )
+            {
+                return $classList;
+            }
+
             $filterTableSQL = ', ezcontentclass_classgroup ccg';
             $filterSQL = ( " AND\n" .
                            "      cc.id = ccg.contentclass_id AND\n" .
-                           "      ccg.group_id " );
-            $groupText = implode( ', ', $groupList );
-            if ( $includeFilter )
-                $filterSQL .= "IN ( $groupText )";
-            else
-                $filterSQL .= "NOT IN ( $groupText )";
+                           "      " );
+            $filterSQL .= $db->generateSQLINStatement( $groupList, 'ccg.group_id', !$includeFilter, true, 'int' );
         }
 
         $classNameFilter = eZContentClassName::sqlFilter( 'cc' );
@@ -547,8 +545,6 @@ class eZContentClass extends eZPersistentObject
 
         if ( $fetchAll )
         {
-            $classList = array();
-            $db = eZDB::instance();
             // If $asObject is true we fetch all fields in class
             $fields = $asObject ? "cc.*, $classNameFilter[nameField]" : "cc.id, $classNameFilter[nameField]";
             $rows = $db->arrayQuery( "SELECT DISTINCT $fields\n" .
@@ -562,18 +558,15 @@ class eZContentClass extends eZPersistentObject
             // If the constrained class list is empty we are not allowed to create any class
             if ( count( $classIDArray ) == 0 )
             {
-                $classList = array();
                 return $classList;
             }
 
-            $classList = array();
-            $db = eZDB::instance();
-            $classString = implode( ',', $classIDArray );
+            $classIDCondition = $db->generateSQLInStatement( $classIDArray, 'cc.id' );
             // If $asObject is true we fetch all fields in class
             $fields = $asObject ? "cc.*, $classNameFilter[nameField]" : "cc.id, $classNameFilter[nameField]";
             $rows = $db->arrayQuery( "SELECT DISTINCT $fields\n" .
                                      "FROM ezcontentclass cc$filterTableSQL, $classNameFilter[from]\n" .
-                                     "WHERE cc.id IN ( $classString  ) AND\n" .
+                                     "WHERE $classIDCondition AND\n" .
                                      "      cc.version = " . eZContentClass::VERSION_STATUS_DEFINED . " $filterSQL\n" .
                                      "ORDER BY $classNameFilter[nameField] ASC" );
             $classList = eZPersistentObject::handleRows( $rows, 'eZContentClass', $asObject );
@@ -618,14 +611,11 @@ class eZContentClass extends eZPersistentObject
 
     /*!
      \return The creator of the class as an eZUser object by using the $CreatorID as user ID.
-     \note The reference for the return value is required to workaround
-           a bug with PHP references.
     */
     function creator()
     {
         if ( isset( $this->CreatorID ) and $this->CreatorID )
         {
-            //include_once( "kernel/classes/datatypes/ezuser/ezuser.php" );
             return eZUser::fetch( $this->CreatorID );
         }
         return null;
@@ -633,14 +623,11 @@ class eZContentClass extends eZPersistentObject
 
     /*!
      \return The modifier of the class as an eZUser object by using the $ModifierID as user ID.
-     \note The reference for the return value is required to workaround
-           a bug with PHP references.
     */
     function modifier()
     {
         if ( isset( $this->ModifierID ) and $this->ModifierID )
         {
-            //include_once( "kernel/classes/datatypes/ezuser/ezuser.php" );
             return eZUser::fetch( $this->ModifierID );
         }
         return null;
@@ -650,8 +637,6 @@ class eZContentClass extends eZPersistentObject
      Find all groups the current class is placed in and returns a list of group objects.
      \return An array with eZContentClassGroup objects.
      \sa fetchGroupIDList()
-     \note The reference for the return value is required to workaround
-           a bug with PHP references.
     */
     function fetchGroupList()
     {
@@ -665,8 +650,6 @@ class eZContentClass extends eZPersistentObject
      Find all groups the current class is placed in and returns a list of group IDs.
      \return An array with integers (ids).
      \sa fetchGroupList()
-     \note The reference for the return value is required to workaround
-           a bug with PHP references.
     */
     function fetchGroupIDList()
     {
@@ -687,12 +670,9 @@ class eZContentClass extends eZPersistentObject
      \return An array with eZContentClassGroup objects or \c false if disabled.
      \note \c EnableClassGroupOverride in group \c ContentOverrideSettings from INI file content.ini
            controls this behaviour.
-     \note The reference for the return value is required to workaround
-           a bug with PHP references.
     */
     function fetchMatchGroupIDList()
     {
-        //include_once( 'lib/ezutils/classes/ezini.php' );
         $contentINI = eZINI::instance( 'content.ini' );
         if( $contentINI->variable( 'ContentOverrideSettings', 'EnableClassGroupOverride' ) == 'true' )
         {
@@ -705,8 +685,6 @@ class eZContentClass extends eZPersistentObject
     /*!
      Finds all Classes in the system and returns them.
      \return An array with eZContentClass objects.
-     \note The reference for the return value is required to workaround
-           a bug with PHP references.
     */
     static function fetchAllClasses( $asObject = true, $includeFilter = true, $groupList = false )
     {
@@ -744,8 +722,6 @@ class eZContentClass extends eZPersistentObject
      Finds all Class groups in the system and returns them.
      \return An array with eZContentClassGroup objects.
      \sa fetchGroupList(), fetchGroupIDList()
-     \note The reference for the return value is required to workaround
-           a bug with PHP references.
     */
     function fetchAllGroups()
     {
@@ -879,8 +855,8 @@ You will need to change the class of the node by using the swap functionality.' 
     /*!
      \note Removes class attributes
 
-     \param Array of attributes to remove
-     \param Version to remove( optional )
+     \param removeAtttributes Array of attributes to remove
+     \param version Version to remove( optional )
     */
     function removeAttributes( $removeAttributes = false, $version = false )
     {
@@ -935,9 +911,6 @@ You will need to change the class of the node by using the swap functionality.' 
         }
     }
 
-    /*!
-     \reimp
-    */
     function store( $store_childs = false, $fieldFilters = null )
     {
 
@@ -984,9 +957,6 @@ You will need to change the class of the node by using the swap functionality.' 
         $db->commit();
     }
 
-    /*!
-     \reimp
-    */
     function sync( $fieldFilters = null )
     {
         if ( $this->hasDirtyData() )
@@ -1017,7 +987,6 @@ You will need to change the class of the node by using the swap functionality.' 
         $this->setName( $name );
         $this->setAttribute( 'identifier', $identifier );
         $this->setAttribute( 'created', time() );
-        //include_once( "kernel/classes/datatypes/ezuser/ezuser.php" );
         $user = eZUser::currentUser();
         $userID = $user->attribute( "contentobject_id" );
         $this->setAttribute( 'creator_id', $userID );
@@ -1077,7 +1046,6 @@ You will need to change the class of the node by using the swap functionality.' 
         $handler->setTimestamp( 'sort-key-cache', $time );
         $handler->store();
 
-        //include_once( 'kernel/classes/ezcontentcachemanager.php' );
         eZContentCacheManager::clearAllContentCache();
 
         $this->setAttribute( 'serialized_name_list', $this->NameList->serializeNames() );
@@ -1166,8 +1134,8 @@ You will need to change the class of the node by using the swap functionality.' 
                 return $contentClass;
             }
 
-        $row = $rows[0];
-        $row["version_count"] = count( $rows );
+            $row = $rows[0];
+            $row["version_count"] = count( $rows );
 
             if ( $asObject )
             {
@@ -1384,10 +1352,6 @@ You will need to change the class of the node by using the swap functionality.' 
                                                                   "version" => $version ), $asObject );
     }
 
-    /*!
-     \note The reference for the return value is required to workaround
-           a bug with PHP references.
-    */
     function versionStatus()
     {
 
@@ -1405,8 +1369,6 @@ You will need to change the class of the node by using the swap functionality.' 
     /*!
      \deprecated
      \return The version count for the class if has been determined.
-     \note The reference for the return value is required to workaround
-           a bug with PHP references.
     */
     function versionCount()
     {
@@ -1536,9 +1498,9 @@ You will need to change the class of the node by using the swap functionality.' 
 
      \return string with contentclass name.
     */
-    static function nameFromSerializedString( $serailizedNameList )
+    static function nameFromSerializedString( $serializedNameList )
     {
-        return eZContentClassNameList::nameFromSerializedString( $serailizedNameList );
+        return eZContentClassNameList::nameFromSerializedString( $serializedNameList );
     }
 
     function hasNameInLanguage( $languageLocale )
@@ -1748,6 +1710,120 @@ You will need to change the class of the node by using the swap functionality.' 
         $db->commit();
 
         return true;
+    }
+
+    /**
+     * Resolves the string class identifier $identifier to its numeric value
+     * Use {@link eZContentObjectTreeNode::classIDByIdentifier()} for < 4.1.
+     * If multiple classes have the same identifier, the first found is returned.
+     *
+     * @static
+     * @since Version 4.1
+     * @return int|false Returns classid or false
+     */
+    public static function classIDByIdentifier( $identifier )
+    {
+        $identifierHash = self::classIdentifiersHash();
+
+        if ( isset( $identifierHash[$identifier] ) )
+            return $identifierHash[$identifier];
+        else
+            return false;
+    }
+
+    /**
+     * Resolves the numeric class identifier $id to its string value
+     *
+     * @static
+     * @since Version 4.1
+     * @return string|false Returns classidentifier or false
+     */
+    public static function classIdentifierByID( $id )
+    {
+        $identifierHash = array_flip( self::classIdentifiersHash() );
+
+        if ( isset( $identifierHash[$id] ) )
+            return $identifierHash[$id];
+        else
+            return false;
+    }
+
+    /**
+     * Returns the class identifier hash for the current database.
+     * If it is outdated or non-existent, the method updates/generates the file
+     *
+     * @static
+     * @since Version 4.1
+     * @access protected
+     * @return array Returns hash of classidentifier => classid
+     */
+    protected static function classIdentifiersHash()
+    {
+        static $identifierHash = null;
+
+        if ( $identifierHash === null )
+        {
+            $db = eZDB::instance();
+            $dbName = md5( $db->DB );
+
+            $cacheDir = eZSys::cacheDirectory();
+            $phpCache = new eZPHPCreator( $cacheDir,
+                                          'classidentifiers_' . $dbName . '.php',
+                                          '',
+                                          array( 'clustering' => 'classidentifiers' ) );
+
+            eZExpiryHandler::registerShutdownFunction();
+            $handler = eZExpiryHandler::instance();
+            $expiryTime = 0;
+            if ( $handler->hasTimestamp( 'class-identifier-cache' ) )
+            {
+                $expiryTime = $handler->timestamp( 'class-identifier-cache' );
+            }
+
+            if ( $phpCache->canRestore( $expiryTime ) )
+            {
+                $var = $phpCache->restore( array( 'identifierHash' => 'identifier_hash' ) );
+                $identifierHash = $var['identifierHash'];
+            }
+            else
+            {
+                // Fetch identifier/id pair from db
+                $query = "SELECT id, identifier FROM ezcontentclass where version=0";
+                $identifierArray = $db->arrayQuery( $query );
+
+                $identifierHash = array();
+                foreach ( $identifierArray as $identifierRow )
+                {
+                    $identifierHash[$identifierRow['identifier']] = $identifierRow['id'];
+                }
+
+                // Store identifier list to cache file
+                $phpCache->addVariable( 'identifier_hash', $identifierHash );
+                $phpCache->store();
+            }
+        }
+        return $identifierHash;
+    }
+
+    /*!
+     Returns an array of IDs of classes containing a specified datatype
+
+     \param $dataTypeString a datatype identification string
+    */
+    static function fetchIDListContainingDatatype( $dataTypeString )
+    {
+        $db = eZDB::instance();
+
+        $version = self::VERSION_STATUS_DEFINED;
+        $escapedDataTypeString = $db->escapeString( $dataTypeString );
+
+        $sql = "SELECT DISTINCT contentclass_id
+                FROM ezcontentclass_attribute
+                WHERE version=$version
+                AND data_type_string='$escapedDataTypeString'";
+
+        $classIDArray = $db->arrayQuery( $sql, array( 'column' => 'contentclass_id' ) );
+        return $classIDArray;
     }
 
     /// \privatesection

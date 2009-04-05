@@ -3,9 +3,9 @@
 // Created on: <27-Aug-2002 15:42:43 bf>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -24,10 +24,7 @@
 //
 //
 
-//include_once( 'kernel/classes/ezsection.php' );
 require_once( 'kernel/common/template.php' );
-//include_once( 'kernel/classes/ezpreferences.php' );
-
 $http = eZHTTPTool::instance();
 $Module = $Params['Module'];
 $tpl = templateInit();
@@ -57,7 +54,6 @@ if ( $http->hasPostVariable( 'CreateSectionButton' ) )
 
 if ( $http->hasPostVariable( 'RemoveSectionButton' ) )
 {
-    //include_once( 'kernel/classes/datatypes/ezuser/ezuser.php' );
     $currentUser = eZUser::currentUser();
     $accessResult = $currentUser->hasAccessTo( 'section', 'edit' );
     if ( $accessResult['accessWord'] == 'yes' )
@@ -110,7 +106,6 @@ if ( $http->hasPostVariable( 'RemoveSectionButton' ) )
 
 if ( $http->hasPostVariable( 'ConfirmRemoveSectionButton' ) )
 {
-    //include_once( 'kernel/classes/datatypes/ezuser/ezuser.php' );
     $currentUser = eZUser::currentUser();
     $accessResult = $currentUser->hasAccessTo( 'section', 'edit' );
     if ( $accessResult['accessWord'] == 'yes' )
@@ -121,7 +116,6 @@ if ( $http->hasPostVariable( 'ConfirmRemoveSectionButton' ) )
 
             $db = eZDB::instance();
             $db->begin();
-            //include_once( 'kernel/classes/ezcontentcachemanager.php' );
             foreach ( $sectionIDArray as $sectionID )
             {
                 $section = eZSection::fetch( $sectionID );
@@ -146,7 +140,6 @@ $viewParameters = array( 'offset' => $offset );
 $sectionArray = eZSection::fetchByOffset( $offset, $limit );
 $sectionCount = eZSection::sectionCount();
 
-//include_once( 'kernel/classes/datatypes/ezuser/ezuser.php' );
 $currentUser = eZUser::currentUser();
 $allowedAssignSectionList = $currentUser->canAssignSectionList();
 

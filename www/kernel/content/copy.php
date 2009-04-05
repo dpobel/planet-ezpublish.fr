@@ -3,9 +3,9 @@
 // Created on: <17-Jan-2003 12:47:11 amos>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -26,9 +26,6 @@
 
 $Module = $Params['Module'];
 $ObjectID = $Params['ObjectID'];
-
-//include_once( 'kernel/classes/ezcontentobject.php' );
-//include_once( "lib/ezdb/classes/ezdb.php" );
 
 $http = eZHTTPTool::instance();
 
@@ -89,7 +86,7 @@ function copyObject( $Module, $object, $allVersions, $newParentNodeID )
     $db->begin();
     $newObject = $object->copy( $allVersions );
     // We should reset section that will be updated in updateSectionID().
-    // If sectionID is 0 than the object has been newly created
+    // If sectionID is 0 then the object has been newly created
     $newObject->setAttribute( 'section_id', 0 );
     $newObject->store();
 
@@ -114,7 +111,6 @@ function copyObject( $Module, $object, $allVersions, $newParentNodeID )
     $nodeAssignment->store();
 
     // publish the newly created object
-    //include_once( 'lib/ezutils/classes/ezoperationhandler.php' );
     eZOperationHandler::execute( 'content', 'publish', array( 'object_id' => $newObject->attribute( 'id' ),
                                                               'version'   => $curVersion ) );
     // Update "is_invisible" attribute for the newly created node.
@@ -156,7 +152,6 @@ function browse( $Module, $object )
         $viewMode = $module->actionParameter( 'ViewMode' );
 
 
-    //include_once( 'kernel/classes/ezcontentbrowse.php' );
     $sourceParentNodeID = $node->attribute( 'parent_node_id' );
     eZContentBrowse::browse( array( 'action_name' => 'CopyNode',
                                     'description_template' => 'design:content/browse_copy_node.tpl',
@@ -184,7 +179,6 @@ either all version or the current one.
 */
 function chooseObjectVersionsToCopy( $Module, &$Result, $object )
 {
-        //include_once( 'kernel/classes/ezcontentbrowse.php' );
         $selectedNodeIDArray = eZContentBrowse::result( $Module->currentAction() );
         require_once( 'kernel/common/template.php' );
         $tpl = templateInit();
@@ -238,7 +232,6 @@ else if ( $Module->isCurrentAction( 'CopyNode' ) )
     else
     {
         // actually do copying of the pre-configured object version(s)
-        //include_once( 'kernel/classes/ezcontentbrowse.php' );
         $selectedNodeIDArray = eZContentBrowse::result( $Module->currentAction() );
         $newParentNodeID = $selectedNodeIDArray[0];
         return copyObject( $Module, $object, $allVersions, $newParentNodeID );

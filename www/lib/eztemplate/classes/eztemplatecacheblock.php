@@ -5,9 +5,9 @@
 // Created on: <27-Mar-2007 11:20:14 amos>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -85,7 +85,6 @@ class eZTemplateCacheBlock
             $globalExpiryTime = eZExpiryHandler::getTimestamp( 'template-block-cache', -1 );
         }
 
-        require_once( 'kernel/classes/ezclusterfilehandler.php' );
         $cacheHandler = eZClusterFileHandler::instance( $cachePath );
 
         $subtreeExpiry = -1;
@@ -117,7 +116,6 @@ class eZTemplateCacheBlock
             return -1;
         $nodeID = (int)$nodeID;
         $sql = "SELECT modified_subnode FROM ezcontentobject_tree WHERE node_id=$nodeID";
-        //include_once( 'lib/ezdb/classes/ezdb.php' );
         $db = eZDB::instance();
         $rows = $db->arrayQuery( $sql );
         if ( count( $rows ) > 0 )
@@ -161,7 +159,6 @@ class eZTemplateCacheBlock
      */
     static function cachePath( $keyString, $nodeID = false )
     {
-        //include_once( 'lib/ezutils/classes/ezsys.php' );
         $filename = eZSys::ezcrc32( $keyString ) . ".cache";
 
         $phpDir = eZTemplateCacheBlock::templateBlockCacheDir();

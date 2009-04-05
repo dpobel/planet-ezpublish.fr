@@ -5,9 +5,9 @@
 // Created on: <05-Nov-2004 14:03:27 jb>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -55,8 +55,6 @@
 
 */
 
-//include_once( 'lib/ezdbschema/classes/ezdbschemainterface.php' );
-
 class eZLintSchema extends eZDBSchemaInterface
 {
     /*!
@@ -95,7 +93,6 @@ class eZLintSchema extends eZDBSchemaInterface
     }
 
     /*!
-     \reimp
      Runs lint checker on all tables, indexes and fields.
     */
     function validate()
@@ -413,7 +410,6 @@ class eZLintSchema extends eZDBSchemaInterface
     }
 
     /*!
-     \reimp
      Forwards request to data() on the otherSchema() object.
     */
     function data( $schema = false, $tableNameList = false, $params = array() )
@@ -422,7 +418,6 @@ class eZLintSchema extends eZDBSchemaInterface
     }
 
     /*!
-     \reimp
      Forwards request to generateSchemaFile() on the otherSchema() object.
     */
     function generateSchemaFile( $schema, $params = array() )
@@ -431,7 +426,6 @@ class eZLintSchema extends eZDBSchemaInterface
     }
 
     /*!
-     \reimp
      Forwards request to generateUpgradeFile() on the otherSchema() object.
     */
     function generateUpgradeFile( $differences, $params = array() )
@@ -440,7 +434,6 @@ class eZLintSchema extends eZDBSchemaInterface
     }
 
     /*!
-     \reimp
      Forwards request to generateDataFile() on the otherSchema() object.
     */
     function generateDataFile( $schema, $data, $params )
@@ -449,7 +442,6 @@ class eZLintSchema extends eZDBSchemaInterface
     }
 
     /*!
-     \reimp
      Forwards request to generateTableSchema() on the otherSchema() object.
     */
     function generateTableSchema( $table, $tableDef, $params )
@@ -458,7 +450,6 @@ class eZLintSchema extends eZDBSchemaInterface
     }
 
     /*!
-     \reimp
      Forwards request to generateTableInsert() on the otherSchema() object.
     */
     function generateTableInsert( $tableName, $tableDef, $dataEntries, $params )
@@ -467,7 +458,6 @@ class eZLintSchema extends eZDBSchemaInterface
     }
 
     /*!
-     \reimp
      Forwards request to generateDropTable() on the otherSchema() object.
     */
     function generateDropTable( $table, $params )
@@ -476,7 +466,6 @@ class eZLintSchema extends eZDBSchemaInterface
     }
 
     /*!
-     \reimp
      Forwards request to generateAddFieldSql() on the otherSchema() object.
     */
     function generateAddFieldSql( $table, $field_name, $added_field, $params )
@@ -485,7 +474,6 @@ class eZLintSchema extends eZDBSchemaInterface
     }
 
     /*!
-     \reimp
      Forwards request to generateAlterFieldSql() on the otherSchema() object.
     */
     function generateAlterFieldSql( $table, $field_name, $changed_field, $params )
@@ -494,7 +482,6 @@ class eZLintSchema extends eZDBSchemaInterface
     }
 
     /*!
-     \reimp
      Forwards request to generateDropFieldSql() on the otherSchema() object.
     */
     function generateDropFieldSql( $table, $field_name, $params )
@@ -503,7 +490,6 @@ class eZLintSchema extends eZDBSchemaInterface
     }
 
     /*!
-     \reimp
      Forwards request to generateAddIndexSql() on the otherSchema() object.
     */
     function generateAddIndexSql( $table, $index_name, $added_index, $params )
@@ -512,7 +498,6 @@ class eZLintSchema extends eZDBSchemaInterface
     }
 
     /*!
-     \reimp
      Forwards request to generateDropIndexSql() on the otherSchema() object.
     */
     function generateDropIndexSql( $table, $index_name, $removed_index, $params )
@@ -521,7 +506,6 @@ class eZLintSchema extends eZDBSchemaInterface
     }
 
     /*!
-     \reimp
      Forwards request to isMultiInsertSupported() on the otherSchema() object.
     */
     function isMultiInsertSupported()
@@ -530,7 +514,6 @@ class eZLintSchema extends eZDBSchemaInterface
     }
 
     /*!
-     \reimp
      Forwards request to generateDataValueTextSQL() on the otherSchema() object.
     */
     function generateDataValueTextSQL( $fieldDef, $value )
@@ -539,7 +522,6 @@ class eZLintSchema extends eZDBSchemaInterface
     }
 
     /*!
-     \reimp
      Forwards request to schemaType() on the otherSchema() object.
     */
     function schemaType()
@@ -548,7 +530,6 @@ class eZLintSchema extends eZDBSchemaInterface
     }
 
     /*!
-     \reimp
      Forwards request to schemaName() on the otherSchema() object.
     */
     function schemaName()

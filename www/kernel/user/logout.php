@@ -3,9 +3,9 @@
 // Created on: <30-Apr-2002 12:41:17 bf>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -24,15 +24,11 @@
 //
 //
 
-//include_once( "lib/ezutils/classes/ezhttptool.php" );
-//include_once( "kernel/classes/datatypes/ezuser/ezuser.php" );
-
 $http = eZHTTPTool::instance();
 
 $user = eZUser::instance();
 
 // Remove all temporary drafts
-//include_once( 'kernel/classes/ezcontentobject.php' );
 eZContentObject::cleanupAllInternalDrafts( $user->attribute( 'contentobject_id' ) );
 
 $user->logoutCurrent();
@@ -40,7 +36,14 @@ $user->logoutCurrent();
 $http->setSessionVariable( 'force_logout', 1 );
 
 $ini = eZINI::instance();
-$redirectURL = $ini->variable( 'UserSettings', 'LogoutRedirect' );
+if ( $ini->variable( 'UserSettings', 'RedirectOnLogoutWithLastAccessURI' ) == 'enabled' && $http->hasSessionVariable( 'LastAccessesURI'))
+{
+    $redirectURL = $http->sessionVariable( "LastAccessesURI" );
+}
+else
+{
+    $redirectURL = $ini->variable( 'UserSettings', 'LogoutRedirect' );
+}
 
 return $Module->redirectTo( $redirectURL );
 

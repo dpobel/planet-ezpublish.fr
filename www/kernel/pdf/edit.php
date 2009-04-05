@@ -5,9 +5,9 @@
 // Created on: <29-Oct-2003 14:49:54 kk>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -27,10 +27,6 @@
 //
 
 require_once( 'kernel/common/template.php' );
-//include_once( 'kernel/classes/ezcontentobjecttreenode.php' );
-//include_once( 'kernel/classes/ezpdfexport.php' );
-//include_once( 'lib/eztemplate/classes/eztemplateincludefunction.php' );
-
 $Module = $Params['Module'];
 $http = eZHTTPTool::instance();
 
@@ -39,7 +35,6 @@ if ( isset( $Params['PDFGenerate'] ) && $Params['PDFGenerate'] == 'generate' )
     $pdfExport = eZPDFExport::fetch( $Params['PDFExportID'] );
     if ( $pdfExport && $pdfExport->attribute( 'status' ) == eZPDFExport::CREATE_ONFLY ) // only generate OnTheFly if status set correctly
     {
-        require_once( 'lib/ezutils/classes/ezexecution.php' );
         generatePDF( $pdfExport );
         eZExecution::cleanExit();
     }
@@ -52,8 +47,6 @@ if ( isset( $Params['PDFExportID'] ) )
 
     if ( $pdfExport )
     {
-        //include_once( 'lib/ezlocale/classes/ezdatetime.php' );
-
         $user = eZUser::currentUser();
         $contentIni = eZINI::instance( 'content.ini' );
         $timeOut = $contentIni->variable( 'PDFExportSettings', 'DraftTimeout' );
@@ -88,8 +81,6 @@ if ( isset( $Params['PDFExportID'] ) )
 }
 else
 {
-    //include_once( 'kernel/classes/ezpdfexport.php' );
-    //include_once( "kernel/classes/datatypes/ezuser/ezuser.php" );
     $user = eZUser::currentUser();
 
     $pdfExport = eZPDFExport::create( $user->attribute( 'contentobject_id' ) );
@@ -143,7 +134,6 @@ $setWarning = false; // used to set missing options during export
 
 if ( $Module->isCurrentAction( 'BrowseSource' ) )
 {
-    //include_once( 'kernel/classes/ezcontentbrowse.php' );
     eZContentBrowse::browse( array( 'action_name' => 'ExportSourceBrowse',
                                     'description_template' => 'design:content/browse_export.tpl',
                                     'from_page' => '/pdf/edit/'. $pdfExport->attribute( 'id' ) ),

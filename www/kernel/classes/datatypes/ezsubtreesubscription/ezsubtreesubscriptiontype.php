@@ -5,9 +5,9 @@
 // Created on: <20-May-2003 11:35:43 sp>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -26,7 +26,7 @@
 //
 //
 
-/*! \file ezsubtreesubscriptiontype.php
+/*! \file
 */
 
 /*!
@@ -35,8 +35,6 @@
   \brief The class eZSubtreeSubscriptionType does
 
 */
-//include_once( "kernel/classes/ezdatatype.php" );
-
 class eZSubtreeSubscriptionType extends eZDataType
 {
     const DATA_TYPE_STRING = "ezsubtreesubscription";
@@ -57,7 +55,6 @@ class eZSubtreeSubscriptionType extends eZDataType
     */
     function onPublish( $attribute, $contentObject, $publishedNodes )
     {
-        //include_once( 'kernel/classes/notification/handler/ezsubtree/ezsubtreenotificationrule.php' );
         $user = eZUser::currentUser();
         $address = $user->attribute( 'email' );
         $userID = $user->attribute( 'contentobject_id' );
@@ -136,22 +133,19 @@ class eZSubtreeSubscriptionType extends eZDataType
         return true;
     }
 
-    /*!
-     \reimp
-    */
     function serializeContentObjectAttribute( $package, $objectAttribute )
     {
         $node = $this->createContentObjectAttributeDOMNode( $objectAttribute );
+        $dom = $node->ownerDocument;
+
         $value = $objectAttribute->attribute( 'data_int' );
-        $valueNode = $node->ownerDocument->createElement( 'value', $value );
+        $valueNode = $dom->createElement( 'value' );
+        $valueNode->appendChild( $dom->createTextNode( $value ) );
         $node->appendChild( $valueNode );
 
         return $node;
     }
 
-    /*!
-     \reimp
-    */
     function unserializeContentObjectAttribute( $package, $objectAttribute, $attributeNode )
     {
         $valueNode = $attributeNode->getElementsByTagName( 'value' )->item( 0 );
@@ -159,9 +153,6 @@ class eZSubtreeSubscriptionType extends eZDataType
         $objectAttribute->setAttribute( 'data_int', $value );
     }
 
-    /*!
-      \reimp
-    */
     function diff( $old, $new, $options = false )
     {
         return null;

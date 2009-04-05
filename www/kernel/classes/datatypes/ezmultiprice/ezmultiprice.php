@@ -5,9 +5,9 @@
 // Created on: <04-Nov-2005 12:26:52 dl>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -26,7 +26,7 @@
 //
 //
 
-/*! \file ezmultiprice.php
+/*! \file
 */
 
 /*!
@@ -48,9 +48,6 @@
   - has_discount
   - price
 */
-
-//include_once( "kernel/shop/classes/ezsimpleprice.php" );
-//include_once( 'kernel/shop/classes/ezmultipricedata.php' );
 
 class eZMultiPrice extends eZSimplePrice
 {
@@ -206,7 +203,6 @@ class eZMultiPrice extends eZSimplePrice
 
     function preferredCurrencyCode()
     {
-        //include_once( 'kernel/shop/classes/ezshopfunctions.php' );
         return eZShopFunctions::preferredCurrencyCode();
     }
 
@@ -214,7 +210,6 @@ class eZMultiPrice extends eZSimplePrice
     {
         if ( !isset( $this->CurrencyList ) )
         {
-            //include_once( 'kernel/shop/classes/ezcurrencydata.php' );
             $this->CurrencyList = eZCurrencyData::fetchList();
         }
 
@@ -315,7 +310,8 @@ class eZMultiPrice extends eZSimplePrice
     {
         $priceList = $this->priceList( $priceType );
 
-        foreach ( $priceList as $price )
+        $calculatedPriceList = array();
+        foreach ( $priceList as $key => $price )
         {
             switch ( $calculationType )
             {
@@ -345,10 +341,12 @@ class eZMultiPrice extends eZSimplePrice
                 } break;
             }
 
-            $price->setAttribute( 'value', $value );
+            $calculatedPrice = clone $price;
+            $calculatedPrice->setAttribute( 'value', $value );
+            $calculatedPriceList[$key] = $calculatedPrice;
         }
 
-        return $priceList;
+        return $calculatedPriceList;
     }
 
     static function removeByID( $objectAttributeID, $objectAttributeVersion = null )
@@ -395,7 +393,6 @@ class eZMultiPrice extends eZSimplePrice
 
     function updateAutoPriceList()
     {
-        //include_once( 'kernel/shop/classes/ezcurrencyconverter.php' );
         $converter = eZCurrencyConverter::instance();
 
         $basePrice = $this->basePrice();
@@ -470,8 +467,6 @@ class eZMultiPrice extends eZSimplePrice
         return $this->priceByCurrency( $currencyCode, eZMultiPriceData::VALUE_TYPE_AUTO );
     }
 
-    /*!
-    */
     function priceByCurrency( $currencyCode, $type = false )
     {
         $price = false;

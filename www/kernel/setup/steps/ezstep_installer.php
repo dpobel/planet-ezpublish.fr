@@ -5,9 +5,9 @@
 // Created on: <08-Aug-2003 14:46:44 kk>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -26,7 +26,7 @@
 //
 //
 
-/*! \file ezstep_class_definition.php
+/*! \file
 */
 
 /*!
@@ -126,7 +126,6 @@ class eZStepInstaller
 
     function findAppropriateCharset( $primaryLanguage, $allLanguages, $canUseUnicode )
     {
-        //include_once( 'lib/ezi18n/classes/ezcharsetinfo.php' );
         $commonCharsets = array();
 
         if ( is_array( $allLanguages ) and count( $allLanguages ) > 0 )
@@ -179,7 +178,6 @@ class eZStepInstaller
 
     function findAppropriateCharsetsList( $primaryLanguage, $allLanguages, $canUseUnicode )
     {
-        //include_once( 'lib/ezi18n/classes/ezcharsetinfo.php' );
         $commonCharsets = array();
 
         if ( is_array( $allLanguages ) and count( $allLanguages ) > 0 )
@@ -229,7 +227,6 @@ class eZStepInstaller
 
     function availableSitePackages()
     {
-        //include_once( 'kernel/classes/ezpackage.php' );
         $packageList = eZPackage::fetchPackages( array(), array( 'type' => 'site' ) );
 
         return $packageList;
@@ -273,8 +270,6 @@ class eZStepInstaller
 
     function selectSiteType( $sitePackageName )
     {
-        //include_once( 'kernel/classes/ezpackage.php' );
-
         $package = eZPackage::fetch( $sitePackageName );
         if ( !$package )
             return false;
@@ -303,7 +298,6 @@ class eZStepInstaller
 
     function storePersistenceData()
     {
-        //include_once( 'kernel/setup/ezsetupcommon.php' );
         foreach ( $this->PersistenceList as $key => $value )
         {
             eZSetupSetPersistencePostVariable( $key, $value );
@@ -362,10 +356,14 @@ class eZStepInstaller
         if( $dbParameters['database'] == '' and $this->PersistenceList['database_info']['type'] == 'pgsql' )
             $dbParameters['database'] = 'template1';
 
-        $db = eZDB::instance( $dbDriver, $dbParameters, true );
-        $result['db_instance'] = $db;
-        $result['connected'] = $db->isConnected();
-        if ( $db->isConnected() == false )
+        try
+        {
+            $db = eZDB::instance( $dbDriver, $dbParameters, true );
+            $result['db_instance'] = $db;
+            $result['connected'] = $db->isConnected();
+        }
+
+        catch( eZDBNoConnectionException $e )
         {
             $result['error_code'] = self::DB_ERROR_CONNECTION_FAILED;
             return $result;
@@ -416,7 +414,6 @@ class eZStepInstaller
             else
             {
                 // Figure out charset automatically if it is not set yet
-                //include_once( 'lib/ezlocale/classes/ezlocale.php' );
                 $primaryLanguage     = null;
                 $allLanguages        = array();
                 $allLanguageCodes    = array();
@@ -550,8 +547,8 @@ class eZStepInstaller
             case self::DB_ERROR_NO_DIGEST_PROC:
             {
                 $dbError = array( 'text' => ezi18n( 'design/standard/setup/init',
-                                                    "The 'digest' procedure is not available in your database, you cannot run eZ Publish without this. Visit the FAQ for more information." ),
-                                  'url' => array( 'href' => 'http://ez.no/ez_publish/documentation/faq/database/what_is_the_reason_i_get_error_function_digest_character_varying_does_not_exist_on_postgresql',
+                                                    "The 'digest' function is not available in your database, you cannot run eZ Publish without this. See the documentation for more information." ),
+                                  'url' => array( 'href' => 'http://ez.no/doc/ez_publish/technical_manual/current/installation/normal_installation/requirements_for_doing_a_normal_installation#digest_function',
                                                   'text' => 'PostgreSQL digest FAQ' ),
                                   'number' => self::DB_ERROR_NO_DATABASES );
                 break;

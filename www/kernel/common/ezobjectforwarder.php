@@ -5,9 +5,9 @@
 // Created on: <14-Sep-2002 15:38:26 amos>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -26,7 +26,7 @@
 //
 //
 
-/*! \file ezobjectforwarder.php
+/*! \file
 */
 
 /*!
@@ -183,24 +183,35 @@ class eZObjectForwarder
                 {
                     $rootMatchValue = $rootMatch[0];
                     $templateRoot = $rootMatch[1];
-                    $rootMatchValueText = eZPHPCreator::variableText( $rootMatchValue, 0, 0, false );
-                    $code = '';
-                    if ( $rootMatchCounter > 0 )
-                        $code .= "else " . ( $resourceData['use-comments'] ? ( "/*OF:" . __LINE__ . "*/" ) : "" ) . "";
-                    $code .= "if " . ( $resourceData['use-comments'] ? ( "/*OF:" . __LINE__ . "*/" ) : "" ) . "( \$templateRootMatch == $rootMatchValueText )\n{";
-                    $newNodes[] = eZTemplateNodeTool::createCodePieceNode( $code );
 
                     $resourceNodes = $this->resourceAcquisitionTransformation( $functionName, $node, $rule, $inputData,
                                                                                $outputName, $namespaceValue,
                                                                                $templateRoot, $viewDir, $viewValue,
                                                                                $matchFileArray, 4, $resourceData );
-                    // If the transformation failed we return false to invoke interpreted mode
+
+                    // If this transformation failed we continue to the next root match
                     if ( $resourceNodes === false )
-                        return false;
+                        continue;
+
+                    $rootMatchValueText = eZPHPCreator::variableText( $rootMatchValue, 0, 0, false );
+                    $code = '';
+                    if ( $rootMatchCounter > 0 )
+                    {
+                        $code .= "else " . ( $resourceData['use-comments'] ? ( "/*OF:" . __LINE__ . "*/" ) : "" ) . "";
+                    }
+                    $code .= "if " . ( $resourceData['use-comments'] ? ( "/*OF:" . __LINE__ . "*/" ) : "" ) . "( \$templateRootMatch == $rootMatchValueText )\n{";
+                    $newNodes[] = eZTemplateNodeTool::createCodePieceNode( $code );
                     $newNodes = array_merge( $newNodes, $resourceNodes );
                     $newNodes[] = eZTemplateNodeTool::createCodePieceNode( "}" );
                     ++$rootMatchCounter;
                 }
+
+                // If the transformation failed we invoke interpreted mode
+                if ( $rootMatchCounter == 0 )
+                {
+                    return false;
+                }
+
                 $newNodes[] = eZTemplateNodeTool::createVariableUnsetNode( 'templateRootMatch' );
             }
         }
@@ -621,7 +632,7 @@ class eZObjectForwarder
         $input_var = $tpl->elementValue( $params[$input_name], $rootNamespace, $currentNamespace, $functionPlacement );
         if ( !is_object( $input_var ) )
         {
-            $tpl->warning( $functionName, "Parameter $input_name is not an object" );
+            $tpl->warning( $functionName, "Parameter $input_name is not an object", $functionPlacement );
             return;
         }
 

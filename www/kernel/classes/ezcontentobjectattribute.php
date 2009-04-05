@@ -5,9 +5,9 @@
 // Created on: <22-Apr-2002 09:31:57 bf>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -34,17 +34,8 @@
   \sa eZContentObject eZContentClass eZContentClassAttribute
 */
 
-//include_once( "lib/ezdb/classes/ezdb.php" );
-//include_once( "kernel/classes/ezpersistentobject.php" );
-//include_once( "kernel/classes/ezcontentobject.php" );
-//include_once( "kernel/classes/ezcontentclassattribute.php" );
-//include_once( 'kernel/classes/ezdatatype.php' );
-//include_once( 'kernel/classes/ezcontentlanguage.php' );
-
 class eZContentObjectAttribute extends eZPersistentObject
 {
-    /*!
-    */
     function eZContentObjectAttribute( $row )
     {
         $this->Content = null;
@@ -254,9 +245,6 @@ class eZContentObjectAttribute extends eZPersistentObject
 
     static function create( $contentclassAttributeID, $contentobjectID, $version = 1, $languageCode = false )
     {
-        //include_once( 'kernel/classes/ezcontentlanguage.php' );
-        //include_once( 'lib/ezlocale/classes/ezlocale.php' );
-
         if ( $languageCode == false )
         {
             $languageCode = eZContentObject::defaultLanguage();
@@ -278,14 +266,11 @@ class eZContentObjectAttribute extends eZPersistentObject
     }
 
     /*!
-     \reimp
      \note Transaction unsafe. If you call several transaction unsafe methods you must enclose
      the calls within a db transaction; thus within db->begin and db->commit.
     */
     function store( $fieldFilters = null )
     {
-        require_once( 'kernel/classes/ezcontentlanguage.php' );
-
         // Unset the cache
         global $eZContentObjectContentObjectCache;
         unset( $eZContentObjectContentObjectCache[$this->ContentObjectID] );
@@ -322,8 +307,6 @@ class eZContentObjectAttribute extends eZPersistentObject
     */
     function storeData()
     {
-        require_once( 'kernel/classes/ezcontentlanguage.php' );
-
         // Unset the cache
         global $eZContentObjectContentObjectCache;
         unset( $eZContentObjectContentObjectCache[$this->ContentObjectID] );
@@ -389,7 +372,7 @@ class eZContentObjectAttribute extends eZPersistentObject
         return eZPersistentObject::store();
     }
 
-    /**
+    /*!
      * Fetch a node by identifier (unique data_text )
 
      \param identifier
@@ -424,8 +407,6 @@ class eZContentObjectAttribute extends eZPersistentObject
                                                 $asObject );
     }
 
-    /*!
-    */
     function object()
     {
         if( isset( $this->ContentObjectID ) and $this->ContentObjectID )
@@ -477,8 +458,6 @@ class eZContentObjectAttribute extends eZPersistentObject
 
     /*!
      \returns the cached value of the IsRequired value
-     \note The reference for the return value is required to workaround
-           a bug with PHP references.
     */
     function contentClassAttributeIsRequired()
     {
@@ -496,8 +475,6 @@ class eZContentObjectAttribute extends eZPersistentObject
 
     /*!
      \returns the cached value of the is_informationcollector value
-     \note The reference for the return value is required to workaround
-           a bug with PHP references.
     */
     function contentClassAttributeIsInformationCollector()
     {
@@ -515,8 +492,6 @@ class eZContentObjectAttribute extends eZPersistentObject
 
     /*!
      \returns the cached value of the class attribute name
-     \note The reference for the return value is required to workaround
-           a bug with PHP references.
     */
     function contentClassAttributeName()
     {
@@ -534,8 +509,6 @@ class eZContentObjectAttribute extends eZPersistentObject
 
     /*!
      \returns the cached value if the attribute can be translated or not
-     \note The reference for the return value is required to workaround
-           a bug with PHP references.
     */
     function contentClassAttributeCanTranslate()
     {
@@ -561,18 +534,12 @@ class eZContentObjectAttribute extends eZPersistentObject
 
     /*!
      \return the idenfifier for the content class attribute
-     \note The reference for the return value is required to workaround
-           a bug with PHP references.
     */
     function contentClassAttributeIdentifier()
     {
         if ( $this->ContentClassAttributeIdentifier === null )
         {
-            eZDebug::accumulatorStart( 'class_a_id', 'Sytem overhead', 'Fetch class attribute identifier' );
-
-            $classAttribute = eZContentClassAttribute::fetch( $this->ContentClassAttributeID );
-            $this->ContentClassAttributeIdentifier = $classAttribute->attribute( 'identifier' );
-            eZDebug::accumulatorStop( 'class_a_id' );
+            $this->ContentClassAttributeIdentifier = eZContentClassAttribute::classAttributeIdentifierByID( $this->ContentClassAttributeID );
         }
 
         return $this->ContentClassAttributeIdentifier;
@@ -1088,8 +1055,6 @@ class eZContentObjectAttribute extends eZPersistentObject
 
     /*!
      \return the content for the contentclass attribute which defines this contentobject attribute.
-     \note The reference for the return value is required to workaround
-           a bug with PHP references.
     */
     function classContent()
     {
@@ -1118,8 +1083,6 @@ class eZContentObjectAttribute extends eZPersistentObject
 
     /*!
      \return \c true if the attribute has relavant value(s) submitted in HTTP form.
-     \note The reference for the return value is required to workaround
-           a bug with PHP references.
     */
     function hasHTTPValue()
     {
@@ -1148,8 +1111,6 @@ class eZContentObjectAttribute extends eZPersistentObject
      \return \c true if the attribute is considered to have any content at all (ie. non-empty).
 
      It will call the hasObjectAttributeContent() for the current datatype to figure this out.
-     \note The reference for the return value is required to workaround
-           a bug with PHP references.
     */
     function hasContent()
     {
@@ -1304,10 +1265,6 @@ class eZContentObjectAttribute extends eZPersistentObject
         $this->HasValidationError = $hasError;
     }
 
-    /*!
-     \note The reference for the return value is required to workaround
-           a bug with PHP references.
-    */
     function hasValidationError()
     {
         return $this->HasValidationError;
@@ -1342,26 +1299,16 @@ class eZContentObjectAttribute extends eZPersistentObject
         }
     }
 
-    /*!
-     \note The reference for the return value is required to workaround
-           a bug with PHP references.
-    */
     function validationError()
     {
         return $this->ValidationError;
     }
 
-    /*!
-     \note The reference for the return value is required to workaround
-           a bug with PHP references.
-    */
     function validationLog()
     {
         return $this->ValidationLog;
     }
 
-    /*!
-    */
     function serialize( $package )
     {
         $result = false;
@@ -1392,8 +1339,6 @@ class eZContentObjectAttribute extends eZPersistentObject
         }
     }
 
-    /*!
-    */
     function isA()
     {
         $dataType = $this->dataType();

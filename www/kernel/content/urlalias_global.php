@@ -3,9 +3,9 @@
 // Created on: <08-Aug-2003 11:27:10 bf>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -24,13 +24,9 @@
 //
 //
 
-/*! \file urltranslator.php
+/*! \file
 */
 require_once( 'kernel/common/template.php' );
-//include_once( 'kernel/classes/ezcontentobjecttreenode.php' );
-//include_once( 'kernel/classes/ezurlaliasml.php' );
-//include_once( 'kernel/classes/ezpathelement.php' );
-
 $Module = $Params['Module'];
 $http = eZHTTPTool::instance();
 
@@ -51,7 +47,6 @@ $aliasOutputDestinationText = false;
 
 if ( $Module->isCurrentAction( 'RemoveAllAliases' ) )
 {
-    //include_once( 'kernel/classes/ezurlaliasquery.php' );
     $filter = new eZURLAliasQuery();
     $filter->actionTypesEx = array( 'eznode', 'nop' );
     $filter->offset = 0;
@@ -198,7 +193,6 @@ $limitList = array( array( 'id'    => 1,
                            'value' => 50 ),
                     array( 'id'    => 4,
                            'value' => 100 ) );
-//include_once( 'kernel/classes/ezpreferences.php' );
 $limitID = eZPreferences::value( 'admin_urlalias_list_limit' );
 foreach ( $limitList as $limitEntry )
 {
@@ -211,7 +205,6 @@ if ( !in_array( $limitID, $limitIDs ) )
 }
 
 // Fetch global custom aliases (excluding eznode)
-//include_once( 'kernel/classes/ezurlaliasquery.php' );
 $filter = new eZURLAliasQuery();
 $filter->actionTypesEx = array( 'eznode', 'nop' );
 $filter->offset = $Offset;

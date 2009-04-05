@@ -5,9 +5,9 @@
 // Created on: <30-May-2003 14:18:35 sp>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -26,7 +26,7 @@
 //
 //
 
-/*! \file ezmatrixtype.php
+/*! \file
 */
 
 /*!
@@ -35,11 +35,6 @@
   \brief The class eZMatrixType does
 
 */
-
-//include_once( 'kernel/classes/ezdatatype.php' );
-//include_once( 'kernel/classes/datatypes/ezmatrix/ezmatrix.php' );
-//include_once( 'kernel/classes/datatypes/ezmatrix/ezmatrixdefinition.php' );
-//include_once( 'lib/ezutils/classes/ezstringutils.php' );
 
 class eZMatrixType extends eZDataType
 {
@@ -172,8 +167,6 @@ class eZMatrixType extends eZDataType
         return true;
     }
 
-    /*!
-    */
     function customObjectAttributeHTTPAction( $http, $action, $contentObjectAttribute, $parameters )
     {
         switch ( $action )
@@ -271,9 +264,6 @@ class eZMatrixType extends eZDataType
 
     }
 
-    /*!
-     \reimp
-    */
     function fetchClassAttributeHTTPInput( $http, $base, $classAttribute )
     {
         // 'default name' is never used => just a stub
@@ -338,7 +328,6 @@ class eZMatrixType extends eZDataType
                     {
                         $columnID = $name;
                         // Initialize transformation system
-                        //include_once( 'lib/ezi18n/classes/ezchartransform.php' );
                         $trans = eZCharTransform::instance();
                         $columnID = $trans->transformByGroup( $columnID, 'identifier' );
                     }
@@ -381,8 +370,6 @@ class eZMatrixType extends eZDataType
         return $matrixDefinition;
     }
 
-    /*!
-    */
     function customClassAttributeHTTPAction( $http, $action, $contentClassAttribute )
     {
         $id = $contentClassAttribute->attribute( 'id' );
@@ -414,9 +401,6 @@ class eZMatrixType extends eZDataType
         }
     }
 
-    /*!
-     \reimp
-    */
     function isIndexable()
     {
         return true;
@@ -470,9 +454,6 @@ class eZMatrixType extends eZDataType
         return true;
     }
 
-    /*!
-     \reimp
-    */
     function serializeContentClassAttribute( $classAttribute, $attributeNode, $attributeParametersNode )
     {
         $content = $classAttribute->content();
@@ -483,9 +464,11 @@ class eZMatrixType extends eZDataType
             $columns = $content->attribute( 'columns' );
 
             $dom = $attributeParametersNode->ownerDocument;
-            $defaultNameNode = $dom->createElement( 'default-name', $defaultName );
+            $defaultNameNode = $dom->createElement( 'default-name' );
+            $defaultNameNode->appendChild( $dom->createTextNode( $defaultName ) );
             $attributeParametersNode->appendChild( $defaultNameNode );
-            $defaultRowCountNode = $dom->createElement( 'default-row-count', $defaultRowCount );
+            $defaultRowCountNode = $dom->createElement( 'default-row-count' );
+            $defaultRowCountNode->appendChild( $dom->createTextNode( $defaultRowCount ) );
             $attributeParametersNode->appendChild( $defaultRowCountNode );
             $columnsNode = $dom->createElement( 'columns' );
             $attributeParametersNode->appendChild( $columnsNode );
@@ -501,9 +484,6 @@ class eZMatrixType extends eZDataType
         }
     }
 
-    /*!
-     \reimp
-    */
     function unserializeContentClassAttribute( $classAttribute, $attributeNode, $attributeParametersNode )
     {
         $defaultName = $attributeParametersNode->getElementsByTagName( 'default-name' )->item( 0 )->textContent;
@@ -520,12 +500,9 @@ class eZMatrixType extends eZDataType
             $columnIdentifier = $columnNode->getAttribute( 'identifier' );
             $matrixDefinition->addColumn( $columnName, $columnIdentifier );
         }
-        $classAttribute->setAttribute( 'data_text5', $matrixDefinition->xmlString() );
+        $classAttribute->setContent( $matrixDefinition );
     }
 
-    /*!
-     \reimp
-    */
     function serializeContentObjectAttribute( $package, $objectAttribute )
     {
         $node = $this->createContentObjectAttributeDOMNode( $objectAttribute );
@@ -539,14 +516,24 @@ class eZMatrixType extends eZDataType
         return $node;
     }
 
-    /*!
-     \reimp
-    */
     function unserializeContentObjectAttribute( $package, $objectAttribute, $attributeNode )
     {
         $rootNode = $attributeNode->getElementsByTagName( 'ezmatrix' )->item( 0 );
         $xmlString = $rootNode ? $rootNode->ownerDocument->saveXML( $rootNode ) : '';
         $objectAttribute->setAttribute( 'data_text', $xmlString );
+    }
+
+    function supportsBatchInitializeObjectAttribute()
+    {
+        return true;
+    }
+
+    function batchInitializeObjectAttributeData( $classAttribute )
+    {
+        $numRows = $classAttribute->attribute( 'data_int1' );
+        $matrix = new eZMatrix( '', $numRows, $classAttribute->attribute( 'content' ) );
+        $db = eZDB::instance();
+        return array( 'data_text' => "'" . $db->escapeString( $matrix->xmlString() ) . "'" );
     }
 }
 

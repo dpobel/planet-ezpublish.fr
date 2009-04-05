@@ -5,9 +5,9 @@
 // Created on: <03-Jul-2003 10:14:14 jhe>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -30,9 +30,6 @@ $http = eZHTTPTool::instance();
 $module = $Params['Module'];
 
 require_once( "kernel/common/template.php" );
-//include_once( 'lib/ezutils/classes/ezhttptool.php' );
-//include_once( 'lib/ezfile/classes/ezdir.php' );
-
 $tpl = templateInit();
 
 $extensionDir = eZExtension::baseDirectory();
@@ -41,6 +38,9 @@ sort( $availableExtensionArray );
 
 if ( $module->isCurrentAction( 'ActivateExtensions' ) )
 {
+    $ini = eZINI::instance( 'module.ini' );
+    $oldModules = $ini->variable( 'ModuleSettings', 'ModuleList' );
+
     if ( $http->hasPostVariable( "ActiveExtensionList" ) )
     {
         $selectedExtensionArray = $http->postVariable( "ActiveExtensionList" );
@@ -52,38 +52,28 @@ if ( $module->isCurrentAction( 'ActivateExtensions' ) )
         $selectedExtensionArray = array();
     }
 
-    $inactiveExtensions = array_diff( $availableExtensionArray, $selectedExtensionArray );
-    $excludeArray = array();
-    foreach ( $inactiveExtensions as $ext )
-    {
-        $excludeArray[] = $extensionDir . '/' . $ext;
-    }
-
     // open settings/override/site.ini.append[.php] for writing
     $writeSiteINI = eZINI::instance( 'site.ini.append', 'settings/override', null, null, false, true );
     $writeSiteINI->setVariable( "ExtensionSettings", "ActiveExtensions", $selectedExtensionArray );
     $writeSiteINI->save( 'site.ini.append', '.php', false, false );
-    //include_once( 'kernel/classes/ezcache.php' );
     eZCache::clearByTag( 'ini' );
 
-    $autoloadGenerator = new eZAutoloadGenerator( getcwd(),
-                                                  false,
-                                                  true,
-                                                  false,
-                                                  true,
-                                                  false,
-                                                  $excludeArray );
-    try {
-        $autoloadGenerator->buildAutoloadArrays();
-    } catch (Exception $e) {
-        eZDebug::writeError( $e->getMessage() );
+    eZSiteAccess::reInitialise();
+
+    $ini = eZINI::instance( 'module.ini' );
+    $currentModules = $ini->variable( 'ModuleSettings', 'ModuleList' );
+    if ( $currentModules != $oldModules )
+    {
+        // ensure that evaluated policy wildcards in the user info cache
+        // will be up to date with the currently activated modules
+        eZCache::clearByID( 'user_info_cache' );
     }
 
+    updateAutoload( $tpl );
 }
 
 // open site.ini for reading
 $siteINI = eZINI::instance();
-$siteINI->loadCache();
 $selectedExtensionArray       = $siteINI->variable( 'ExtensionSettings', "ActiveExtensions" );
 $selectedAccessExtensionArray = $siteINI->variable( 'ExtensionSettings', "ActiveAccessExtensions" );
 $selectedExtensions           = array_merge( $selectedExtensionArray, $selectedAccessExtensionArray );
@@ -91,26 +81,7 @@ $selectedExtensions           = array_unique( $selectedExtensions );
 
 if ( $module->isCurrentAction( 'GenerateAutoloadArrays' ) )
 {
-    $inactiveExtensions = array_diff( $availableExtensionArray, $selectedExtensions );
-    $excludeArray = array();
-    foreach ( $inactiveExtensions as $ext )
-    {
-        $excludeArray[] = $extensionDir . DIRECTORY_SEPARATOR . $ext;
-    }
-
-    $autoloadGenerator = new eZAutoloadGenerator( getcwd(),
-                                                  false,
-                                                  true,
-                                                  false,
-                                                  true,
-                                                  false,
-                                                  $excludeArray );
-    try {
-        $autoloadGenerator->buildAutoloadArrays();
-    } catch (Exception $e) {
-        eZDebug::writeError( $e->getMessage() );
-    }
-
+    updateAutoload( $tpl );
 }
 
 $tpl->setVariable( "available_extension_array", $availableExtensionArray );
@@ -120,5 +91,44 @@ $Result = array();
 $Result['content'] = $tpl->fetch( "design:setup/extensions.tpl" );
 $Result['path'] = array( array( 'url' => false,
                                 'text' => ezi18n( 'kernel/setup', 'Extension configuration' ) ) );
+
+function updateAutoload( $tpl = null )
+{
+    $autoloadGenerator = new eZAutoloadGenerator();
+    try
+    {
+        $autoloadGenerator->buildAutoloadArrays();
+
+        $messages = $autoloadGenerator->getMessages();
+        foreach( $messages as $message )
+        {
+            eZDebug::writeNotice( $message, 'eZAutoloadGenerator' );
+        }
+
+        $warnings = $autoloadGenerator->getWarnings();
+        foreach ( $warnings as &$warning )
+        {
+            eZDebug::writeWarning( $warning, "eZAutoloadGenerator" );
+
+            // For web output we want to mark some of the important parts of
+            // the message
+            $pattern = '@^Class\s+(\w+)\s+.* file\s(.+\.php).*\n(.+\.php)\s@';
+            preg_match( $pattern, $warning, $m );
+
+            $warning = str_replace( $m[1], '<strong>'.$m[1].'</strong>', $warning );
+            $warning = str_replace( $m[2], '<em>'.$m[2].'</em>', $warning );
+            $warning = str_replace( $m[3], '<em>'.$m[3].'</em>', $warning );
+        }
+
+        if ( $tpl !== null )
+        {
+            $tpl->setVariable( 'warning_messages', $warnings );
+        }
+    }
+    catch ( Exception $e )
+    {
+        eZDebug::writeError( $e->getMessage() );
+    }
+}
 
 ?>

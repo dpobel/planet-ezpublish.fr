@@ -3,9 +3,9 @@
 // Definition of eZIntegerType class
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -35,9 +35,6 @@
   It uses the spare field data_int in a content object attribute for storing
   the attribute data.
 */
-
-//include_once( "kernel/classes/ezdatatype.php" );
-//include_once( "lib/ezutils/classes/ezintegervalidator.php" );
 
 class eZIntegerType extends eZDataType
 {
@@ -128,11 +125,12 @@ class eZIntegerType extends eZDataType
     */
     function validateObjectAttributeHTTPInput( $http, $base, $contentObjectAttribute )
     {
+        $classAttribute = $contentObjectAttribute->contentClassAttribute();
+
         if ( $http->hasPostVariable( $base . "_data_integer_" . $contentObjectAttribute->attribute( "id" ) ) )
         {
             $data = $http->postVariable( $base . "_data_integer_" . $contentObjectAttribute->attribute( "id" ) );
             $data = str_replace(" ", "", $data );
-            $classAttribute = $contentObjectAttribute->contentClassAttribute();
 
             if ( $data == "" )
             {
@@ -150,6 +148,11 @@ class eZIntegerType extends eZDataType
             {
                 return $this->validateIntegerHTTPInput( $data, $contentObjectAttribute, $classAttribute );
             }
+        }
+        else if ( !$classAttribute->attribute( 'is_information_collector' ) and $contentObjectAttribute->validateIsRequired() )
+        {
+            $contentObjectAttribute->setValidationError( ezi18n( 'kernel/classes/datatypes', 'Input required.' ) );
+            return eZInputValidator::STATE_INVALID;
         }
         else
             return eZInputValidator::STATE_ACCEPTED;
@@ -199,9 +202,6 @@ class eZIntegerType extends eZDataType
         return false;
     }
 
-    /*!
-     \reimp
-    */
     function validateCollectionAttributeHTTPInput( $http, $base, $contentObjectAttribute )
     {
         if ( $http->hasPostVariable( $base . "_data_integer_" . $contentObjectAttribute->attribute( "id" ) ) )
@@ -257,9 +257,6 @@ class eZIntegerType extends eZDataType
     {
     }
 
-    /*!
-     \reimp
-    */
     function validateClassAttributeHTTPInput( $http, $base, $classAttribute )
     {
         $minValueName = $base . self::MIN_VALUE_VARIABLE . $classAttribute->attribute( "id" );
@@ -318,9 +315,6 @@ class eZIntegerType extends eZDataType
         return eZInputValidator::STATE_INVALID;
     }
 
-    /*!
-     \reimp
-    */
     function fixupClassAttributeHTTPInput( $http, $base, $classAttribute )
     {
         $minValueName = $base . self::MIN_VALUE_VARIABLE . $classAttribute->attribute( "id" );
@@ -344,9 +338,6 @@ class eZIntegerType extends eZDataType
         }
     }
 
-    /*!
-     \reimp
-    */
     function fetchClassAttributeHTTPInput( $http, $base, $classAttribute )
     {
         $minValueName = $base . self::MIN_VALUE_VARIABLE . $classAttribute->attribute( "id" );
@@ -435,9 +426,6 @@ class eZIntegerType extends eZDataType
         return true;
     }
 
-    /*!
-     \reimp
-    */
     function isInformationCollector()
     {
         return true;
@@ -451,25 +439,16 @@ class eZIntegerType extends eZDataType
         return true;
     }
 
-    /*!
-     \reimp
-    */
     function sortKey( $contentObjectAttribute )
     {
         return $contentObjectAttribute->attribute( 'data_int' );
     }
 
-    /*!
-     \reimp
-    */
     function sortKeyType()
     {
         return 'int';
     }
 
-    /*!
-     \reimp
-    */
     function serializeContentClassAttribute( $classAttribute, $attributeNode, $attributeParametersNode )
     {
         $defaultValue = $classAttribute->attribute( self::DEFAULT_VALUE_FIELD );
@@ -478,23 +457,23 @@ class eZIntegerType extends eZDataType
         $minMaxState = $classAttribute->attribute( self::INPUT_STATE_FIELD );
 
         $dom = $attributeParametersNode->ownerDocument;
-        $defaultValueNode = $dom->createElement( 'default-value', $defaultValue );
+        $defaultValueNode = $dom->createElement( 'default-value' );
+        $defaultValueNode->appendChild( $dom->createTextNode( $defaultValue ) );
         $attributeParametersNode->appendChild( $defaultValueNode );
         if ( $minMaxState == self::HAS_MIN_VALUE or $minMaxState == self::HAS_MIN_MAX_VALUE )
         {
-            $minValueNode = $dom->createElement( 'min-value', $minValue );
+            $minValueNode = $dom->createElement( 'min-value' );
+            $minValueNode->appendChild( $dom->createTextNode( $minValue ) );
             $attributeParametersNode->appendChild( $minValueNode );
         }
         if ( $minMaxState == self::HAS_MAX_VALUE or $minMaxState == self::HAS_MIN_MAX_VALUE )
         {
-            $maxValueNode = $dom->createElement( 'max-value', $maxValue );
+            $maxValueNode = $dom->createElement( 'max-value' );
+            $maxValueNode->appendChild( $dom->createTextNode( $maxValue ) );
             $attributeParametersNode->appendChild( $maxValueNode );
         }
     }
 
-    /*!
-     \reimp
-    */
     function unserializeContentClassAttribute( $classAttribute, $attributeNode, $attributeParametersNode )
     {
         $defaultValue = $attributeParametersNode->getElementsByTagName( 'default-value' )->item( 0 )->textContent;
@@ -514,6 +493,25 @@ class eZIntegerType extends eZDataType
         $classAttribute->setAttribute( self::MIN_VALUE_FIELD, $minValue );
         $classAttribute->setAttribute( self::MAX_VALUE_FIELD, $maxValue );
         $classAttribute->setAttribute( self::INPUT_STATE_FIELD, $minMaxState );
+    }
+
+    function batchInitializeObjectAttributeData( $classAttribute )
+    {
+        $default = $classAttribute->attribute( "data_int3" );
+        if ( $default === 0 )
+        {
+            return array();
+        }
+        else
+        {
+            return array( 'data_int'     => $default,
+                          'sort_key_int' => $default );
+        }
+    }
+
+    function supportsBatchInitializeObjectAttribute()
+    {
+        return true;
     }
 
     /// \privatesection

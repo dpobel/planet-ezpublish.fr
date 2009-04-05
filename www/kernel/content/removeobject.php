@@ -4,9 +4,9 @@
 // Created on: <08-Nov-2002 16:02:26 wy>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -25,9 +25,6 @@
 //
 //
 
-//include_once( "kernel/classes/ezcontentobject.php" );
-//include_once( "kernel/classes/ezcontentobjecttreenode.php" );
-//include_once( "lib/ezutils/classes/ezhttptool.php" );
 require_once( "kernel/common/template.php" );
 
 $Module = $Params['Module'];
@@ -67,6 +64,7 @@ if ( $http->hasPostVariable( "CancelButton" ) )
     $http->removeSessionVariable( 'ContentObjectID' );
     $http->removeSessionVariable( 'ContentNodeID' );
     $http->removeSessionVariable( 'userRedirectURIReverseRelatedList' );
+    $http->removeSessionVariable( 'HideRemoveConfirmation' );
     return $Module->redirectToView( 'view', array( $viewMode, $contentNodeID, $contentLanguage ) );
 }
 
@@ -88,13 +86,25 @@ if ( $http->hasPostVariable( 'SupportsMoveToTrash' ) )
 
 $hideRemoveConfirm = $contentINI->hasVariable( 'RemoveSettings', 'HideRemoveConfirmation' ) ?
                      (( $contentINI->variable( 'RemoveSettings', 'HideRemoveConfirmation' ) == 'true' ) ? true : false ) : false;
-if ( $http->hasPostVariable( 'HideRemoveConfirmation' ) )
-    $hideRemoveConfirm = $http->postVariable( 'HideRemoveConfirmation' ) ? true : false;
+if ( $http->hasSessionVariable( 'HideRemoveConfirmation' ) )
+    $hideRemoveConfirm = $http->sessionVariable( 'HideRemoveConfirmation' );
 
 if ( $http->hasPostVariable( "ConfirmButton" ) or
      $hideRemoveConfirm )
 {
-    eZContentObjectTreeNode::removeSubtrees( $deleteIDArray, $moveToTrash );
+    if ( eZOperationHandler::operationIsAvailable( 'content_delete' ) )
+    {
+        $operationResult = eZOperationHandler::execute( 'content',
+                                                        'delete',
+                                                         array( 'node_id_list' => $deleteIDArray,
+                                                                'move_to_trash' => $moveToTrash ),
+                                                          null, true );
+    }
+    else
+    {
+        eZContentOperationCollection::deleteObject( $deleteIDArray, $moveToTrash );
+    }
+
     return $Module->redirectToView( 'view', array( $viewMode, $contentNodeID, $contentLanguage ) );
 }
 
@@ -106,6 +116,7 @@ $deleteResult       = $info['delete_list'];
 $moveToTrashAllowed = $info['move_to_trash'];
 $totalChildCount    = $info['total_child_count'];
 $exceededLimit      = false;
+$deleteNodeArray    = array();
 
 // Check if number of nodes being removed not more then MaxNodesRemoveSubtree setting.
 $maxNodesRemoveSubtree = $contentINI->hasVariable( 'RemoveSettings', 'MaxNodesRemoveSubtree' ) ?
@@ -116,6 +127,7 @@ $deleteItemsExist = true; // If false, we should disable 'OK' button if count of
 foreach ( array_keys( $deleteResult ) as $removeItemKey )
 {
     $removeItem =& $deleteResult[$removeItemKey];
+    $deleteNodeArray[] = $removeItem['node'];
     if ( $removeItem['child_count'] > $maxNodesRemoveSubtree )
     {
         $removeItem['exceeded_limit_of_subitems'] = true;
@@ -153,7 +165,20 @@ if ( $totalChildCount == 0 )
     }
     if ( $canRemove )
     {
-        eZContentObjectTreeNode::removeSubtrees( $deleteIDArray, $moveToTrash );
+        if ( eZOperationHandler::operationIsAvailable( 'content_removelocation' ) )
+        {
+            $operationResult = eZOperationHandler::execute( 'content',
+                                                            'removelocation',
+                                                             array( 'node_id' => $contentNodeID,
+                                                                    'object_id' => $contentObjectID,
+                                                                    'node_list' => $deleteNodeArray,
+                                                                    'move_to_trash' => $moveToTrash ),
+                                                              null, true );
+        }
+        else
+        {
+            eZContentOperationCollection::removeAssignment( $contentNodeID, $contentObjectID, $deleteNodeArray, $moveToTrash );
+        }
         return $Module->redirectToView( 'view', array( $viewMode, $contentNodeID, $contentLanguage ) );
     }
 }
@@ -162,9 +187,9 @@ $tpl = templateInit();
 
 $tpl->setVariable( 'reverse_related'        , $info['reverse_related_count'] );
 $tpl->setVariable( 'module'                 , $Module );
-$tpl->setVariable( 'moveToTrashAllowed'     , $moveToTrashAllowed ); // Backwards compatability
-$tpl->setVariable( 'ChildObjectsCount'      , $totalChildCount ); // Backwards compatability
-$tpl->setVariable( 'DeleteResult'           , $deleteResult ); // Backwards compatability
+$tpl->setVariable( 'moveToTrashAllowed'     , $moveToTrashAllowed ); // Backwards compatibility
+$tpl->setVariable( 'ChildObjectsCount'      , $totalChildCount ); // Backwards compatibility
+$tpl->setVariable( 'DeleteResult'           , $deleteResult ); // Backwards compatibility
 $tpl->setVariable( 'move_to_trash_allowed'  , ( $moveToTrashAllowed and $showCheck ) );
 $tpl->setVariable( 'remove_list'            , $deleteResult );
 $tpl->setVariable( 'total_child_count'      , $totalChildCount );

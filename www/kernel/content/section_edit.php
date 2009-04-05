@@ -3,9 +3,9 @@
 // Created on: <18-Aug-2006 12:46:05 vd>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -23,10 +23,6 @@
 //   MA 02110-1301, USA.
 //
 //
-
-require_once('lib/ezutils/classes/ezdebug.php');
-//include_once('lib/ezutils/classes/ezhttptool.php');
-//include_once('lib/ezdb/classes/ezdb.php');
 
 function sectionEditPostFetch( $module, $class, $object, $version, $contentObjectAttributes, $editVersion, $editLanguage, $fromLanguage, &$validation )
 {
@@ -47,7 +43,6 @@ function sectionEditActionCheck( $module, $class, $object, $version, $contentObj
             $selectedSection = eZSection::fetch( $selectedSectionID );
             if ( is_object( $selectedSection ) )
             {
-                //include_once( 'kernel/classes/datatypes/ezuser/ezuser.php' );
                 $currentUser = eZUser::currentUser();
                 if ( $currentUser->canAssignSectionToObject( $selectedSectionID, $object ) )
                 {
@@ -58,9 +53,21 @@ function sectionEditActionCheck( $module, $class, $object, $version, $contentObj
                     {
                         foreach ( $assignedNodes as $node )
                         {
-                            eZContentObjectTreeNode::assignSectionToSubTree( $node->attribute( 'node_id' ), $selectedSectionID );
+                            if ( eZOperationHandler::operationIsAvailable( 'content_updatesection' ) )
+                            {
+                                $operationResult = eZOperationHandler::execute( 'content',
+                                                                                'updatesection',
+                                                                                array( 'node_id'             => $node->attribute( 'node_id' ),
+                                                                                       'selected_section_id' => $selectedSectionID ),
+                                                                                null,
+                                                                                true );
+
+                            }
+                            else
+                            {
+                                eZContentOperationCollection::updateSection( $node->attribute( 'node_id' ), $selectedSectionID );
+                            }
                         }
-                        //include_once( 'kernel/classes/ezcontentcachemanager.php' );
                     }
                     else
                     {

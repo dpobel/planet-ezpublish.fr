@@ -5,9 +5,9 @@
 // Created on: <30-Apr-2002 16:47:08 bf>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -32,11 +32,6 @@
   \brief The class eZBinaryFile handles registered binaryfiles
 
 */
-
-//include_once( 'lib/ezdb/classes/ezdb.php' );
-//include_once( 'kernel/classes/ezpersistentobject.php' );
-//include_once( 'kernel/classes/ezcontentclassattribute.php' );
-//include_once( 'kernel/classes/ezbinaryfilehandler.php' );
 
 class eZBinaryFile extends eZPersistentObject
 {
@@ -90,9 +85,6 @@ class eZBinaryFile extends eZPersistentObject
     {
         $fileInfo = $this->storedFileInfo();
 
-        // VS-DBFILE
-
-        require_once( 'kernel/classes/ezclusterfilehandler.php' );
         $file = eZClusterFileHandler::instance( $fileInfo['filepath'] );
         if ( $file->exists() )
         {
@@ -223,9 +215,6 @@ class eZBinaryFile extends eZPersistentObject
                 $parserObject = new $class( );
                 $fileInfo = $this->storedFileInfo();
 
-                // VS-DBFILE
-
-                require_once( 'kernel/classes/ezclusterfilehandler.php' );
                 $file = eZClusterFileHandler::instance( $fileInfo['filepath'] );
                 if ( $file->exists() )
                 {

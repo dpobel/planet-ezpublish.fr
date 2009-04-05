@@ -31,8 +31,8 @@ ShowUsedTemplates=enabled
 TemplateCompile=enabled
 TemplateCache=enabled
 
-#[DebugSettings]
-#DebugOutput=enabled
+[DebugSettings]
+DebugOutput=enabled
 
 [InformationCollectionSettings]
 EmailReceiver=dpobel@free.fr

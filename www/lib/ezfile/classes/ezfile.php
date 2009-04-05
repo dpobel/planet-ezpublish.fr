@@ -5,9 +5,9 @@
 // Created on: <03-Jun-2002 17:19:12 amos>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -26,7 +26,7 @@
 //
 //
 
-/*! \file ezfile.php
+/*! \file
 */
 
 /*!
@@ -35,10 +35,6 @@
  \brief Tool class which has convencience functions for files and directories
 
 */
-
-require_once( "lib/ezutils/classes/ezdebug.php" );
-//include_once( 'lib/ezfile/classes/ezdir.php' );
-
 class eZFile
 {
     /*!
@@ -75,7 +71,7 @@ class eZFile
         {
             if ( !file_exists( $directory ) )
             {
-                eZDir::mkdir( $directory, eZDir::directoryPermission(), true );
+                eZDir::mkdir( $directory, false, true );
 //                 eZDebugSetting::writeNotice( 'ezfile-create', "Created directory $directory", 'eZFile::create' );
             }
             $filepath = $directory . '/' . $filename;
@@ -116,9 +112,13 @@ class eZFile
      \param filename
 
      \return file contents, false if error
+
+     \deprecated since eZ Publish 4.1, use file_get_contents() instead
     */
     static function getContents( $filename )
     {
+        eZDebug::writeWarning( __METHOD__ . ' is deprecated, use file_get_contents() instead' );
+
         if ( function_exists( 'file_get_contents' ) )
         {
             return file_get_contents( $filename );
@@ -157,8 +157,6 @@ class eZFile
     */
     static function isWriteable( $filename )
     {
-        //include_once( 'lib/ezutils/classes/ezsys.php' );
-
         if ( eZSys::osType() != 'win32' )
             return is_writable( $filename );
 
@@ -178,8 +176,8 @@ class eZFile
     \static
     Renames a file atomically on Unix, and provides a workaround for Windows
 
-    \param from filename
-    \param to filename
+    \param $srcFile from filename
+    \param $destFile to filename
 
     \return rename status. ( true if successful, false if not )
     */
@@ -198,7 +196,7 @@ class eZFile
      Prepares a file for Download and terminates the execution.
 
      \param $file Filename
-     \param $isAttached Download Determines weather to download the file as an attachment ( download popup box ) or not.
+     \param $isAttachedDownload Determines weather to download the file as an attachment ( download popup box ) or not.
 
      \return false if error
     */
@@ -206,7 +204,6 @@ class eZFile
     {
         if ( file_exists( $file ) )
         {
-            //include_once( 'lib/ezutils/classes/ezmimetype.php' );
             $mimeinfo = eZMimeType::findByURL( $file );
 
             ob_clean();
@@ -216,8 +213,11 @@ class eZFile
             header( 'Content-Type: ' . $mimeinfo['name'] );
 
             // Fixes problems with IE when opening a file directly
-            header( 'Cache-Control: no-store, no-cache, must-revalidate' ); // HTTP/1.1
-            header( 'Cache-Control: pre-check=0, post-check=0, max-age=0' ); // HTTP/1.1
+            header( "Pragma: " );
+            header( "Cache-Control: " );
+            /* Set cache time out to 10 minutes, this should be good enough to work
+            around an IE bug */
+            header( "Expires: ". gmdate('D, d M Y H:i:s', time() + 600) . ' GMT' );
             if( $overrideFilename )
             {
                 $mimeinfo['filename'] = $overrideFilename;
@@ -237,7 +237,6 @@ class eZFile
 
             @readfile( $file );
 
-            require_once( 'lib/ezutils/classes/ezexecution.php' );
             eZExecution::cleanExit();
         }
         else

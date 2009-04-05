@@ -5,9 +5,9 @@
 // Created on: <10-Jun-2002 17:03:15 bf>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -32,11 +32,6 @@
   \ingroup eZDatatype
 
 */
-
-//include_once( 'kernel/classes/ezpersistentobject.php' );
-//include_once( 'lib/ezutils/classes/ezhttptool.php' );
-//include_once( 'lib/ezfile/classes/ezdir.php' );
-//include_once( 'lib/ezutils/classes/ezsys.php' );
 
 class eZUser extends eZPersistentObject
 {
@@ -108,6 +103,7 @@ class eZUser extends eZPersistentObject
                                                       'is_enabled' => 'isEnabled',
                                                       'is_locked' => 'isLocked',
                                                       'last_visit' => 'lastVisit',
+                                                      'login_count' => 'loginCount',
                                                       'has_manage_locations' => 'hasManageLocations' ),
                       'relations' => array( 'contentobject_id' => array( 'class' => 'ezcontentobject',
                                                                          'field' => 'id' ) ),
@@ -539,12 +535,6 @@ WHERE user_id = '" . $userID . "' AND
     */
     static function removeUser( $userID )
     {
-        //include_once( 'kernel/classes/notification/handler/ezsubtree/ezsubtreenotificationrule.php' );
-        //include_once( 'kernel/classes/datatypes/ezuser/ezusersetting.php' );
-        //include_once( 'kernel/classes/datatypes/ezuser/ezuseraccountkey.php' );
-        //include_once( 'kernel/classes/datatypes/ezuser/ezforgotpassword.php' );
-        //include_once( 'kernel/classes/ezwishlist.php' );
-
         $user = eZUser::fetch( $userID );
         if ( !$user )
         {
@@ -560,6 +550,14 @@ WHERE user_id = '" . $userID . "' AND
         eZUserAccountKey::removeByUserID( $userID );
         eZForgotPassword::removeByUserID( $userID );
         eZWishList::removeByUserID( $userID );
+
+        // only remove general digest setting if there are no other users with the same e-mail
+        $email = $user->attribute( 'email' );
+        $usersWithEmailCount = eZPersistentObject::count( eZUser::definition(), array( 'email' => $email ) );
+        if ( $usersWithEmailCount == 1 )
+        {
+            eZGeneralDigestUserSettings::removeByAddress( $email );
+        }
 
         eZPersistentObject::removeObject( eZUser::definition(),
                                           array( 'contentobject_id' => $userID ) );
@@ -590,7 +588,6 @@ WHERE user_id = '" . $userID . "' AND
     */
     static function hashType()
     {
-        //include_once( 'lib/ezutils/classes/ezini.php' );
         $ini = eZINI::instance();
         $type = strtolower( $ini->variable( 'UserSettings', 'HashType' ) );
         if ( $type == 'md5_site' )
@@ -611,7 +608,6 @@ WHERE user_id = '" . $userID . "' AND
     */
     static function site()
     {
-        //include_once( 'lib/ezutils/classes/ezini.php' );
         $ini = eZINI::instance();
         return $ini->variable( 'UserSettings', 'SiteName' );
     }
@@ -626,7 +622,6 @@ WHERE user_id = '" . $userID . "' AND
             $id = self::anonymousId();
         if ( empty( $GLOBALS["eZUserBuilitinInstance-$id"] ) )
         {
-            //include_once( 'lib/ezutils/classes/ezini.php' );
             $GLOBALS["eZUserBuilitinInstance-$id"] = eZUser::fetch( self::anonymousId() );
         }
         return $GLOBALS["eZUserBuilitinInstance-$id"];
@@ -646,7 +641,6 @@ WHERE user_id = '" . $userID . "' AND
     */
     static function authenticationMatch()
     {
-        //include_once( 'lib/ezutils/classes/ezini.php' );
         $ini = eZINI::instance();
         $matchArray = $ini->variableArray( 'UserSettings', 'AuthenticateMatch' );
         $match = 0;
@@ -676,15 +670,83 @@ WHERE user_id = '" . $userID . "' AND
         return $ini->variable( 'UserSettings', 'RequireUniqueEmail' ) == 'true';
     }
 
-    /*!
-    \static
-     Logs in the user if applied username and password is valid.
-     \return The user object (eZContentObject) of the logged in user or \c false if it failed.
-    */
-    static function loginUser( $login, $password, $authenticationMatch = false )
+    /**
+     * Logs in the user if applied username and password is valid.
+     *
+     * @param string $login
+     * @param string $password
+     * @param bool $authenticationMatch
+     * @return mixed eZUser on success, bool false on failure
+     */
+    public static function loginUser( $login, $password, $authenticationMatch = false )
     {
-        //include_once( 'kernel/classes/ezcontentobject.php' );
+        $user = self::_loginUser( $login, $password, $authenticationMatch );
 
+        if ( is_object( $user ) )
+        {
+            self::loginSucceeded( $user );
+            return $user;
+        }
+        else
+        {
+            self::loginFailed( $user, $login );
+            return false;
+        }
+    }
+
+    /**
+     * Does some house keeping work once a log in has succeeded.
+     *
+     * @param eZUser $user
+     */
+    protected static function loginSucceeded( $user )
+    {
+        $userID = $user->attribute( 'contentobject_id' );
+
+        // if audit is enabled logins should be logged
+        eZAudit::writeAudit( 'user-login', array( 'User id' => $userID, 'User login' => $user->attribute( 'login' ) ) );
+
+        eZUser::updateLastVisit( $userID, true );
+        eZUser::setCurrentlyLoggedInUser( $user, $userID );
+
+        // Reset number of failed login attempts
+        eZUser::setFailedLoginAttempts( $userID, 0 );
+    }
+
+    /**
+     * Does some house keeping work when a log in has failed.
+     *
+     * @param mixed $userID
+     * @param string $login
+     */
+     protected static function loginFailed( $userID = false, $login )
+    {
+        $loginEscaped = eZDB::instance()->escapeString( $login );
+
+        // Failed login attempts should be logged
+        eZAudit::writeAudit( 'user-failed-login', array( 'User login' => $loginEscaped,
+                                                         'Comment' => 'Failed login attempt: eZUser::loginUser()' ) );
+
+        // Increase number of failed login attempts.
+        if ( $userID )
+            eZUser::setFailedLoginAttempts( $userID );
+    }
+
+    /**
+     * Logs in an user if applied login and password is valid.
+     *
+     * This method does not do any house keeping work anymore (writing audits, etc).
+     * When you call this method make sure to call loginSucceeded() or loginFailed()
+     * depending on the success of the login.
+     *
+     * @param string $login
+     * @param string $password
+     * @param bool $authenticationMatch
+     * @return mixed eZUser object on log in success, int userID if the username
+     *         exists but log in failed, or false if the username doesn't exists.
+     */
+    protected static function _loginUser( $login, $password, $authenticationMatch = false )
+    {
         $http = eZHTTPTool::instance();
         $db = eZDB::instance();
 
@@ -699,7 +761,6 @@ WHERE user_id = '" . $userID . "' AND
             $loginArray[] = "login='$loginEscaped'";
         if ( $authenticationMatch & self::AUTHENTICATE_EMAIL )
         {
-            //include_once( 'lib/ezutils/classes/ezmail.php' );
             if ( eZMail::validate( $login ) )
             {
                 $loginArray[] = "email='$loginEscaped'";
@@ -712,9 +773,9 @@ WHERE user_id = '" . $userID . "' AND
         $contentObjectStatus = eZContentObject::STATUS_PUBLISHED;
 
         $ini = eZINI::instance();
-        $databaseImplementation = $ini->variable( 'DatabaseSettings', 'DatabaseImplementation' );
+        $databaseName = $db->databaseName();
         // if mysql
-        if ( $databaseImplementation == "ezmysql" )
+        if ( $databaseName === 'mysql' )
         {
             $query = "SELECT contentobject_id, password_hash, password_hash_type, email, login
                       FROM ezuser, ezcontentobject
@@ -722,22 +783,24 @@ WHERE user_id = '" . $userID . "' AND
                         ezcontentobject.status='$contentObjectStatus' AND
                         ezcontentobject.id=contentobject_id AND
                         ( ( password_hash_type!=4 ) OR
-                          ( password_hash_type=4 AND ( $loginText ) AND password_hash=PASSWORD('$passwordEscaped') ) )";
+                          ( password_hash_type=4 AND
+                              ( $loginText ) AND
+                          password_hash=PASSWORD('$passwordEscaped') ) )";
         }
         else
         {
-            $query = "SELECT contentobject_id, password_hash, password_hash_type, email, login
-                      FROM ezuser, ezcontentobject
-                      WHERE ( $loginText ) AND
-                            ezcontentobject.status='$contentObjectStatus' AND
-                            ezcontentobject.id=contentobject_id";
+            $query = "SELECT contentobject_id, password_hash,
+                             password_hash_type, email, login
+                      FROM   ezuser, ezcontentobject
+                      WHERE  ( $loginText )
+                      AND    ezcontentobject.status='$contentObjectStatus'
+                      AND    ezcontentobject.id=contentobject_id";
         }
 
         $users = $db->arrayQuery( $query );
         $exists = false;
         if ( $users !== false and count( $users ) >= 1 )
         {
-            //include_once( 'lib/ezutils/classes/ezini.php' );
             $ini = eZINI::instance();
             foreach ( $users as $userRow )
             {
@@ -749,7 +812,7 @@ WHERE user_id = '" . $userID . "' AND
                                                     $hash );
 
                 // If hash type is MySql
-                if ( $hashType == self::PASSWORD_HASH_MYSQL and $databaseImplementation == "ezmysql" )
+                if ( $hashType == self::PASSWORD_HASH_MYSQL and $databaseName === 'mysql' )
                 {
                     $queryMysqlUser = "SELECT contentobject_id, password_hash, password_hash_type, email, login
                               FROM ezuser, ezcontentobject
@@ -762,7 +825,7 @@ WHERE user_id = '" . $userID . "' AND
                 }
 
                 eZDebugSetting::writeDebug( 'kernel-user', eZUser::createHash( $userRow['login'], $password, eZUser::site(),
-                                                                               $hashType ), "check hash" );
+                                                                               $hashType, $hash ), "check hash" );
                 eZDebugSetting::writeDebug( 'kernel-user', $hash, "stored hash" );
                  // If current user has been disabled after a few failed login attempts.
                 $canLogin = eZUser::isEnabledAfterFailedLogin( $userID );
@@ -772,7 +835,6 @@ WHERE user_id = '" . $userID . "' AND
                     // We should store userID for warning message.
                     $GLOBALS['eZFailedLoginAttemptUserID'] = $userID;
 
-                    //include_once( "kernel/classes/datatypes/ezuser/ezusersetting.php" );
                     $userSetting = eZUserSetting::fetch( $userID );
                     $isEnabled = $userSetting->attribute( "is_enabled" );
                     if ( $hashType != eZUser::hashType() and
@@ -787,39 +849,14 @@ WHERE user_id = '" . $userID . "' AND
                 }
             }
         }
-        //include_once( "kernel/classes/ezaudit.php" );
+
         if ( $exists and $isEnabled and $canLogin )
         {
-            $oldUserID = $contentObjectID = $http->sessionVariable( "eZUserLoggedInID" );
-            eZDebugSetting::writeDebug( 'kernel-user', $userRow, 'user row' );
-            $user = new eZUser( $userRow );
-            eZDebugSetting::writeDebug( 'kernel-user', $user, 'user' );
-            $userID = $user->attribute( 'contentobject_id' );
-
-            // if audit is enabled logins should be logged
-            eZAudit::writeAudit( 'user-login', array( 'User id' => $userID, 'User login' => $user->attribute( 'login' ) ) );
-
-            eZUser::updateLastVisit( $userID );
-            eZUser::setCurrentlyLoggedInUser( $user, $userID );
-
-            // Reset number of failed login attempts
-            eZUser::setFailedLoginAttempts( $userID, 0 );
-
-            return $user;
+            return new eZUser( $userRow );
         }
         else
         {
-            // Failed login attempts should be looged
-            $userIDAudit = isset( $userID ) ? $userID : 'null';
-            eZAudit::writeAudit( 'user-failed-login', array( 'User id' => $userIDAudit, 'User login' => $loginEscaped,
-                                                             'Comment' => 'Failed login attempt: eZUser::loginUser()' ) );
-
-            // Increase number of failed login attempts.
-            if ( isset( $userID ) )
-                eZUser::setFailedLoginAttempts( $userID );
-
-            $user = false;
-            return $user;
+            return isset( $userID ) ? $userID : false;
         }
     }
 
@@ -947,9 +984,9 @@ WHERE user_id = '" . $userID . "' AND
         // instance() when there is no ID passed to the function.
         $GLOBALS["eZUserGlobalInstance_"] = $user;
         $http->setSessionVariable( 'eZUserLoggedInID', $userID );
-        eZSessionRegenerate();
+        eZSession::setUserID( $userID );
+        eZSession::regenerate();
         $user->cleanup();
-        eZSessionSetUserID( $userID );
     }
 
     /*!
@@ -986,7 +1023,6 @@ WHERE user_id = '" . $userID . "' AND
 
         // Note: This must be done more generic with an internal
         //       callback system.
-        //include_once( 'kernel/classes/ezpreferences.php' );
         eZPreferences::sessionCleanup();
     }
 
@@ -1007,19 +1043,24 @@ WHERE user_id = '" . $userID . "' AND
         $http = eZHTTPTool::instance();
         $id = false;
         $GLOBALS["eZUserGlobalInstance_$id"] = false;
-        $contentObjectID = $http->sessionVariable( "eZUserLoggedInID" );
+        $contentObjectID = $http->sessionVariable( 'eZUserLoggedInID' );
+
+        // reset session data
         $newUserID = self::anonymousId();
+        eZSession::setUserID( $newUserID );
         $http->setSessionVariable( 'eZUserLoggedInID', $newUserID );
-        eZSessionSetUserID( $newUserID );
+        
         // Clear current basket if necessary
         $db = eZDB::instance();
         $db->begin();
-        //include_once( 'kernel/classes/ezbasket.php' );
         eZBasket::cleanupCurrentBasket();
         $db->commit();
 
         if ( $contentObjectID )
             eZUser::cleanup();
+
+        // give user new session id
+        eZSession::regenerate();
     }
 
     /*!
@@ -1048,7 +1089,7 @@ WHERE user_id = '" . $userID . "' AND
             {
                 $id = self::anonymousId();
                 $http->setSessionVariable( 'eZUserLoggedInID', $id );
-                eZSessionSetUserID( $id );
+                eZSession::setUserID( $id );
             }
         }
 
@@ -1121,7 +1162,6 @@ WHERE user_id = '" . $userID . "' AND
                     }
                     else // check in extensions
                     {
-                        //include_once( 'lib/ezutils/classes/ezextension.php' );
                         $ini = eZINI::instance();
                         $extensionDirectories = $ini->variable( 'UserSettings', 'ExtensionDirectory' );
                         $directoryList = eZExtension::expandedPathList( $extensionDirectories, 'sso_handler' );
@@ -1153,7 +1193,7 @@ WHERE user_id = '" . $userID . "' AND
                     $http->setSessionVariable( 'eZUserInfoCache', $userInfo );
                     $http->setSessionVariable( 'eZUserInfoCache_Timestamp', time() );
                     $http->setSessionVariable( 'eZUserLoggedInID', $id );
-                    eZSessionSetUserID( $currentUser->attribute( 'contentobject_id' ) );
+                    eZSession::setUserID( $currentUser->attribute( 'contentobject_id' ) );
 
                     eZUser::updateLastVisit( $currentUser->attribute( 'contentobject_id' ) );
                     eZUser::setCurrentlyLoggedInUser( $currentUser, $currentUser->attribute( 'contentobject_id' ) );
@@ -1200,8 +1240,9 @@ WHERE user_id = '" . $userID . "' AND
 
     /*!
        Updates the user's last visit timestamp
+       Optionally updates user login count by setting $updateLoginCount to true
     */
-    static function updateLastVisit( $userID )
+    static function updateLastVisit( $userID, $updateLoginCount = false )
     {
         if ( isset( $GLOBALS['eZUserUpdatedLastVisit'] ) )
             return;
@@ -1212,11 +1253,13 @@ WHERE user_id = '" . $userID . "' AND
 
         if ( count( $userVisitArray ) == 1 )
         {
-            $db->query( "UPDATE ezuservisit SET last_visit_timestamp=current_visit_timestamp, current_visit_timestamp=$time WHERE user_id=$userID" );
+            $loginCountSQL = $updateLoginCount ? ', login_count=login_count+1' : '';
+            $db->query( "UPDATE ezuservisit SET last_visit_timestamp=current_visit_timestamp, current_visit_timestamp=$time$loginCountSQL WHERE user_id=$userID" );
         }
         else
         {
-            $db->query( "INSERT INTO ezuservisit ( current_visit_timestamp, last_visit_timestamp, user_id ) VALUES ( $time, $time, $userID )" );
+            $intialLoginCount = $updateLoginCount ? 1 : 0;
+            $db->query( "INSERT INTO ezuservisit ( current_visit_timestamp, last_visit_timestamp, user_id, login_count ) VALUES ( $time, $time, $userID, $intialLoginCount )" );
         }
         $GLOBALS['eZUserUpdatedLastVisit'] = true;
     }
@@ -1236,6 +1279,26 @@ WHERE user_id = '" . $userID . "' AND
         else
         {
             return time();
+        }
+    }
+
+    /**
+     * Returns the login count for the current user.
+     *
+     * @since Version 4.1
+     * @return int Login count for current user.
+     */
+    function loginCount()
+    {
+        $db = eZDB::instance();
+        $userVisitArray = $db->arrayQuery( "SELECT login_count FROM ezuservisit WHERE user_id=$this->ContentObjectID" );
+        if ( count( $userVisitArray ) == 1 )
+        {
+            return $userVisitArray[0]['login_count'];
+        }
+        else
+        {
+            return 0;
         }
     }
 
@@ -1296,7 +1359,6 @@ WHERE user_id = '" . $userID . "' AND
         }
         $db->commit();
 
-        //include_once( 'kernel/classes/ezcontentcachemanager.php' );
         eZContentCacheManager::clearContentCacheIfNeeded( $userID );
         eZContentCacheManager::generateObjectViewCache( $userID );
     }
@@ -1343,7 +1405,6 @@ WHERE user_id = '" . $userID . "' AND
             return true;
         }
 
-        //include_once( "kernel/classes/datatypes/ezuser/ezusersetting.php" );
         $setting = eZUserSetting::fetch( $this->attribute( 'contentobject_id' ) );
         if ( $setting and !$setting->attribute( 'is_enabled' ) )
         {
@@ -1626,7 +1687,6 @@ WHERE user_id = '" . $userID . "' AND
                     $cacheFilePath = eZUser::getCacheFilename( $userID );
                     if ( $cacheFilePath )
                     {
-                        require_once( 'kernel/classes/ezclusterfilehandler.php' );
                         $cacheFile = eZClusterFileHandler::instance( $cacheFilePath );
                         $accessArray = $cacheFile->processCache( array( $this, 'retrieveAccessArrayFromCache' ),
                                                                  array( $this, 'generateAccessArrayForCache' ),
@@ -1666,11 +1726,114 @@ WHERE user_id = '" . $userID . "' AND
     */
     function generateAccessArray()
     {
-        //include_once( 'kernel/classes/ezrole.php' );
         $idList = $this->groups();
         $idList[] = $this->attribute( 'contentobject_id' );
 
-        return eZRole::accessArrayByUserID( $idList );
+        $accessArray = eZRole::accessArrayByUserID( $idList );
+
+        $ini = eZINI::instance( 'module.ini' );
+        $modules = $ini->variable( 'ModuleSettings', 'ModuleList' );
+
+        // evaluate module and function wildcards in the access array
+
+        foreach ( $accessArray as $moduleName => $assignedFunctions )
+        {
+            if ( $moduleName != '*' && array_key_exists( '*', $assignedFunctions ) )
+            {
+                $limitations = $assignedFunctions['*'];
+
+                $mod = eZModule::exists( $moduleName );
+
+                if ( !$mod )
+                {
+                    continue;
+                }
+
+                $functions = $mod->attribute( 'available_functions' );
+
+                if ( count( $functions ) > 0 )
+                {
+                    // remove wildcard
+                    unset( $accessArray[$moduleName]['*'] );
+
+                    // and add evaluated wildcard instead
+                    $functionNames = array_keys( $functions );
+
+                    foreach ( $functionNames as $functionName )
+                    {
+                        $accessArray = array_merge_recursive( $accessArray, array( $moduleName => array( $functionName => $limitations ) ) );
+                    }
+                }
+            }
+        }
+
+        if ( array_key_exists( '*', $accessArray ) )
+        {
+            $limitations = $accessArray['*']['*'];
+
+            // remove wildcard
+            unset( $accessArray['*'] );
+
+            // add evaluated wildcard instead
+            foreach ( $modules as $moduleName )
+            {
+                $mod = eZModule::exists( $moduleName );
+
+                if ( !$mod )
+                {
+                    continue;
+                }
+
+                $functions = $mod->attribute( 'available_functions' );
+
+                if ( count( $functions ) == 0 )
+                {
+                    $functions = array( '*' => array() );
+                }
+
+                $functionNames = array_keys( $functions );
+
+                foreach ( $functionNames as $functionName )
+                {
+                    $accessArray = array_merge_recursive( $accessArray, array( $moduleName => array( $functionName => $limitations ) ) );
+                }
+            }
+        }
+
+        // add implicit system policy limitations
+        $lockGroup = eZContentObjectStateGroup::fetchByIdentifier( 'ez_lock' );
+
+        if ( $lockGroup )
+        {
+            $lockStates = $lockGroup->states();
+            if ( count( $lockStates ) > 0 )
+            {
+                $defaultLockState = $lockStates[0];
+
+                $implicitLimitations = array( 'StateGroup_ez_lock' => array( $defaultLockState->attribute( 'id' ) ) );
+                foreach ( array( 'content' => array( 'edit', 'remove' ) ) as $moduleName => $functions )
+                {
+                    if ( !isset( $accessArray[$moduleName] ) )
+                    {
+                        continue;
+                    }
+
+                    foreach ( $functions as $functionName )
+                    {
+                         if ( isset( $accessArray[$moduleName][$functionName] ) )
+                         {
+                            foreach( $accessArray[$moduleName][$functionName] as $key => $limitations )
+                            {
+                                $accessArray[$moduleName][$functionName][$key] = is_array( $limitations ) ?
+                                    array_merge( $limitations, $implicitLimitations ) : $implicitLimitations;
+                            }
+                         }
+                    }
+                }
+            }
+        }
+
+        return $accessArray;
     }
 
     /*!
@@ -1924,18 +2087,44 @@ WHERE user_id = '" . $userID . "' AND
     */
     function hasAccessToView( $module, $viewName, &$params )
     {
+        $validView = false;
         $accessAllowed = false;
-        $views = $module->attribute( 'views' );
-        if ( isset( $views[$viewName] ) )
+        if ( $module->singleFunction() )
         {
-            $view = $views[$viewName];
-            if ( isset( $view['functions'] ) && !empty( $view['functions'] ) )
+            $info = $module->attribute( 'info' );
+            if ( isset( $info['function'] ) )
             {
-                if ( is_array( $view['functions'] ) )
+                $validView = true;
+                if ( isset( $info['function']['functions'] ) && !empty( $info['function']['functions'] ) )
+                {
+                    $functions = $info['function']['functions'];
+                }
+            }
+        }
+        else
+        {
+            $views = $module->attribute( 'views' );
+            if ( isset( $views[$viewName] ) )
+            {
+                $view = $views[$viewName];
+                $validView = true;
+                if ( isset( $view['functions'] ) && !empty( $view['functions'] ) )
+                {
+                    $functions = $view['functions'];
+                }
+            }
+        }
+
+
+        if ( $validView )
+        {
+            if ( isset( $functions ) )
+            {
+                if ( is_array( $functions ) )
                 {
                     $funcExpression = false;
                     $accessAllowed = true;
-                    foreach ( $view['functions'] as $function )
+                    foreach ( $functions as $function )
                     {
                         if ( empty( $function ) )
                         {
@@ -1953,9 +2142,9 @@ WHERE user_id = '" . $userID . "' AND
                         }
                     }
                 }
-                else if ( is_string( $view['functions'] ) )
+                else if ( is_string( $functions ) )
                 {
-                    $funcExpression = $view['functions'];
+                    $funcExpression = $functions;
                 }
                 else
                 {
@@ -2079,7 +2268,6 @@ WHERE user_id = '" . $userID . "' AND
     */
     function roles()
     {
-        //include_once( 'kernel/classes/ezrole.php' );
         $groups = $this->attribute( 'groups' );
         $groups[] = $this->attribute( 'contentobject_id' );
         return eZRole::fetchByUser( $groups );
@@ -2113,7 +2301,6 @@ WHERE user_id = '" . $userID . "' AND
             }
         }
 
-        //include_once( 'kernel/classes/ezrole.php' );
         $groups = $this->attribute( 'groups' );
         $groups[] = $this->attribute( 'contentobject_id' );
         $roleList = eZRole::fetchIDListByUser( $groups );
@@ -2193,7 +2380,6 @@ WHERE user_id = '" . $userID . "' AND
     {
         if ( isset( $this->ContentObjectID ) and $this->ContentObjectID )
         {
-            //include_once( 'kernel/classes/ezcontentobject.php' );
             return eZContentObject::fetch( $this->ContentObjectID );
         }
         return null;
@@ -2226,8 +2412,6 @@ WHERE user_id = '" . $userID . "' AND
             $this->Groups = array();
             if ( !isset( $this->GroupsAsObjects ) )
             {
-                //include_once( 'kernel/classes/ezcontentobject.php' );
-
                 $contentobjectID = $this->attribute( 'contentobject_id' );
                 $userGroups = $db->arrayQuery( "SELECT d.*, c.path_string
                                                 FROM ezcontentobject_tree  b,
@@ -2366,7 +2550,6 @@ WHERE user_id = '" . $userID . "' AND
              $http->sessionVariable( "eZUserLoggedInID" ) != '' and
              $http->sessionVariable( "eZUserLoggedInID" ) != $ini->variable( 'UserSettings', 'AnonymousUserID' ) )
         {
-            //include_once( "kernel/classes/datatypes/ezuser/ezuser.php" );
             $currentUser = eZUser::currentUser();
             if ( !$currentUser->isEnabled() )
             {
@@ -2595,6 +2778,40 @@ WHERE user_id = '" . $userID . "' AND
         return false;
     }
 
+    /**
+     * Validates user login name using site.ini[UserSettings]UserNameValidationRegex[]
+     *
+     * @static
+     * @since Version 4.1
+     * @param string $loginName that we want to validate.
+     * @param string $errorText by reference for details if validation fails.
+     * @return bool Indicates if validation failed (false) or not (true).
+     */
+    static function validateLoginName( $loginName, &$errorText )
+    {
+        $ini = eZINI::instance();
+        $regexList = $ini->variable( 'UserSettings', 'UserNameValidationRegex' );
+        $errorTextList = $ini->variable( 'UserSettings', 'UserNameValidationErrorText' );
+        foreach ( $regexList as $key => $regex )
+        {
+            if( preg_match( $regex, $loginName) )
+            {
+                if ( isset( $errorTextList[$key] ) )
+                    $errorText = $errorTextList[$key];
+                else
+                    $errorText = $ini->variable( 'UserSettings', 'DefaultUserNameValidationErrorText' );
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * Gets the id of the anonymous user.
+     *
+     * @static
+     * @return int User id of anonymous user.
+     */
     public static function anonymousId()
     {
         if ( is_null( self::$anonymousId ) )
@@ -2604,6 +2821,60 @@ WHERE user_id = '" . $userID . "' AND
             $GLOBALS['eZUserBuiltins'] = array( self::$anonymousId );
         }
         return self::$anonymousId;
+    }
+
+    /*!
+      Returns the IDs of content classes that contain user accounts
+    */
+    public static function contentClassIDs()
+    {
+        $userContentClassIDs = array();
+
+        $ini = eZINI::instance( 'content.ini' );
+        $userDatatypes = $ini->variable( "DataTypeSettings", "UserDataTypes" );
+
+        $userContentClassIDs = array();
+        foreach ( $userDatatypes as $datatypeIdentifier )
+        {
+            $userContentClassIDs = array_merge( $userContentClassIDs, eZContentClass::fetchIDListContainingDatatype( $datatypeIdentifier ) );
+        }
+
+        return $userContentClassIDs;
+    }
+
+    public function canLoginToSiteAccess( $access )
+    {
+        $siteAccessResult = $this->hasAccessTo( 'user', 'login' );
+        $hasAccessToSite = false;
+
+        if ( $siteAccessResult[ 'accessWord' ] == 'limited' )
+        {
+            $siteNameCRC = eZSys::ezcrc32( $access[ 'name' ] );
+            $policyChecked = false;
+            foreach ( $siteAccessResult['policies'] as $policy )
+            {
+                if ( isset( $policy['SiteAccess'] ) )
+                {
+                    $policyChecked = true;
+                    if ( in_array( $siteNameCRC, $policy['SiteAccess'] ) )
+                    {
+                        $hasAccessToSite = true;
+                        break;
+                    }
+                }
+            }
+
+            if ( !$policyChecked )
+            {
+                $hasAccessToSite = true;
+            }
+        }
+        else if ( $siteAccessResult[ 'accessWord' ] == 'yes' )
+        {
+            $hasAccessToSite = true;
+        }
+
+        return $hasAccessToSite;
     }
 
     /// \privatesection

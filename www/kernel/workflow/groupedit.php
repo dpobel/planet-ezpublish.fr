@@ -3,9 +3,9 @@
 // Created on: <16-Apr-2002 11:00:12 amos>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -24,11 +24,6 @@
 //
 //
 
-//include_once( "kernel/classes/ezworkflowgroup.php" );
-//include_once( "kernel/classes/ezworkflowgrouplink.php" );
-//include_once( "lib/ezutils/classes/ezhttptool.php" );
-//include_once( "lib/ezutils/classes/ezhttppersistence.php" );
-
 $Module = $Params['Module'];
 if ( isset( $Params["WorkflowGroupID"] ) )
     $WorkflowGroupID = $Params["WorkflowGroupID"];
@@ -46,7 +41,6 @@ if ( is_numeric( $WorkflowGroupID ) )
 }
 else
 {
-    //include_once( "kernel/classes/datatypes/ezuser/ezuser.php" );
     $user = eZUser::currentUser();
     $user_id = $user->attribute( "contentobject_id" );
     $workflowGroup = eZWorkflowGroup::create( $user_id );
@@ -65,7 +59,6 @@ if ( $http->hasPostVariable( "DiscardButton" ) )
 }
 
 // Validate input
-//include_once( "lib/ezutils/classes/ezinputvalidator.php" );
 $requireFixup = false;
 // Apply HTTP POST variables
 eZHTTPPersistence::fetch( "WorkflowGroup", eZWorkflowGroup::definition(),
@@ -74,7 +67,6 @@ eZHTTPPersistence::fetch( "WorkflowGroup", eZWorkflowGroup::definition(),
 // Set new modification date
 $date_time = time();
 $workflowGroup->setAttribute( "modified", $date_time );
-//include_once( "kernel/classes/datatypes/ezuser/ezuser.php" );
 $user = eZUser::currentUser();
 $user_id = $user->attribute( "contentobject_id" );
 $workflowGroup->setAttribute( "modifier_id", $user_id );
@@ -88,10 +80,8 @@ if ( $http->hasPostVariable( "StoreButton" ) )
     }
     $workflowGroup->setAttribute( "name", $name );
     // Set new modification date
-    //include_once( "lib/ezlocale/classes/ezdatetime.php" );
     $date_time = time();
     $workflowGroup->setAttribute( "modified", $date_time );
-    //include_once( "kernel/classes/datatypes/ezuser/ezuser.php" );
     $user = eZUser::currentUser();
     $user_id = $user->attribute( "contentobject_id" );
     $workflowGroup->setAttribute( "modifier_id", $user_id );

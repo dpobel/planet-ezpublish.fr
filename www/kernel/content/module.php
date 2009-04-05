@@ -3,9 +3,9 @@
 // Created on: <17-Apr-2002 11:05:08 amos>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -51,7 +51,8 @@ $ViewList['edit'] = array(
                                     'MoveNodeID' => 'MoveNode',
                                     'RemoveNodeID' => 'DeleteNode',
                                     'ConfirmButton' => 'ConfirmAssignmentDelete',
-                                    'SectionEditButton' => 'SectionEdit'
+                                    'SectionEditButton' => 'SectionEdit',
+                                    'StateEditButton' => 'StateEdit',
                                     ),
     'post_action_parameters' => array( 'EditLanguage' => array( 'SelectedLanguage' => 'EditSelectedLanguage' ),
                                        'FromLanguage' => array( 'FromLanguage' => 'FromLanguage' ),
@@ -592,8 +593,25 @@ $AssignedEdit = array(
         array( 'Name' => 'Self or anonymous users per HTTP session',
                'value' => '2' ) ) );
 
+$ParentAssignedEdit = array(
+    'name'=> 'ParentOwner',
+    'single_select' => true,
+    'values'=> array(
+        array( 'Name' => 'Self',
+               'value' => '1'),
+        array( 'Name' => 'Self or anonymous users per HTTP session',
+               'value' => '2' ) ) );
+
+
 $AssignedGroup = array(
     'name'=> 'Group',
+    'single_select' => true,
+    'values'=> array(
+        array( 'Name' => 'Self',
+               'value' => '1') ) );
+
+$ParentAssignedGroup = array(
+    'name'=> 'ParentGroup',
     'single_select' => true,
     'values'=> array(
         array( 'Name' => 'Self',
@@ -619,6 +637,7 @@ $Subtree = array(
     'values'=> array()
     );
 
+$stateLimitations = eZContentObjectStateGroup::limitations();
 
 $FunctionList = array();
 $FunctionList['bookmark'] = array();
@@ -631,6 +650,7 @@ $FunctionList['read'] = array( 'Class' => $ClassID,
                                'Group' => $AssignedGroup,
                                'Node' => $Node,
                                'Subtree' => $Subtree);
+$FunctionList['read'] = array_merge( $FunctionList['read'], $stateLimitations );
 $FunctionList['diff'] = array( 'Class' => $ClassID,
                                'Section' => $SectionID,
                                'Owner' => $Assigned,
@@ -643,6 +663,8 @@ $FunctionList['view_embed'] = array( 'Class' => $ClassID,
                                      'Subtree' => $Subtree);
 $FunctionList['create'] = array( 'Class' => $ClassID,
                                  'Section' => $SectionID,
+                                 'ParentOwner' => $ParentAssignedEdit,
+                                 'ParentGroup' => $ParentAssignedGroup,
                                  'ParentClass' => $ParentClassID,
                                  'ParentDepth' => $ParentDepth,
                                  'Node' => array_merge(  $Node, array( 'DropList' => array( 'ParentClass', 'Section' ) ) ),
@@ -656,6 +678,7 @@ $FunctionList['edit'] = array( 'Class' => $ClassID,
                                'Node' => $Node,
                                'Subtree' => $Subtree,
                                'Language' => $Language);
+$FunctionList['edit'] = array_merge( $FunctionList['edit'], $stateLimitations );
 
 $FunctionList['manage_locations'] = array( 'Class' => $ClassID,
                                            'Section' => $SectionID,

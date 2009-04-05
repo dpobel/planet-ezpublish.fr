@@ -3,9 +3,9 @@
 // Created on: <19-Sep-2002 16:45:08 kk>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -32,8 +32,6 @@ if ( !isset ( $Params['RSSFeed'] ) )
     return $Module->handleError( eZError::KERNEL_NOT_AVAILABLE, 'kernel' );
 }
 
-//include_once( 'kernel/classes/ezrssexport.php' );
-
 $feedName = $Params['RSSFeed'];
 $RSSExport = eZRSSExport::fetchByName( $feedName );
 
@@ -43,8 +41,6 @@ if ( !$RSSExport )
     eZDebug::writeError( 'Could not find RSSExport : ' . $Params['RSSFeed'] );
     return $Module->handleError( eZError::KERNEL_NOT_AVAILABLE, 'kernel' );
 }
-
-//include_once( 'kernel/classes/ezrssexportitem.php' );
 
 $config = eZINI::instance( 'site.ini' );
 $cacheTime = intval( $config->variable( 'RSSSettings', 'CacheTime' ) );
@@ -60,29 +56,17 @@ else
     $currentSiteAccessName = $GLOBALS['eZCurrentAccess']['name'];
     $cacheFilePath = $cacheDir . '/rss/' . md5( $currentSiteAccessName . $feedName ) . '.xml';
 
-    // If cache directory does not exist, create it. Get permissions settings from site.ini
-    if ( !is_dir( $cacheDir.'/rss' ) )
+    if ( !is_dir( dirname( $cacheFilePath ) ) )
     {
-        $mode = $config->variable( 'FileSettings', 'TemporaryPermissions' );
-        if ( !is_dir( $cacheDir ) )
-        {
-            mkdir( $cacheDir );
-            chmod( $cacheDir, octdec( $mode ) );
-        }
-        mkdir( $cacheDir.'/rss' );
-        chmod( $cacheDir.'/rss', octdec( $mode ) );
+        eZDir::mkdir( dirname( $cacheFilePath ), false, true );
     }
 
-    // VS-DBFILE
-
-    require_once( 'kernel/classes/ezclusterfilehandler.php' );
     $cacheFile = eZClusterFileHandler::instance( $cacheFilePath );
 
     if ( !$cacheFile->exists() or ( time() - $cacheFile->mtime() > $cacheTime ) )
     {
         $xmlDoc = $RSSExport->attribute( 'rss-xml' );
         // Get current charset
-        //include_once( 'lib/ezi18n/classes/eztextcodec.php' );
         $charset = eZTextCodec::internalCharset();
         $rssContent = $xmlDoc->saveXML();
         $cacheFile->storeContents( $rssContent, 'rsscache', 'xml' );

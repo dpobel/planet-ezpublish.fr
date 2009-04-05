@@ -3,9 +3,9 @@
 // Created on: <24-Apr-2002 16:06:53 bf>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -24,12 +24,7 @@
 //
 //
 
-//include_once( "lib/ezutils/classes/ezhttptool.php" );
-
 require_once( "kernel/common/template.php" );
-
-//include_once( "kernel/classes/ezsearch.php" );
-//include_once( "kernel/classes/ezsearchlog.php" );
 
 /*!
  Get search limit
@@ -136,7 +131,6 @@ if ( $useSearchCode )
 
 if ( $searchSectionID != -1 )
 {
-    //include_once( 'kernel/common/eztemplatedesignresource.php' );
     $res = eZTemplateDesignResource::instance();
     $res->setKeys( array( array( 'section', $searchSectionID ) ) );
 }
@@ -173,7 +167,7 @@ if ( $http->hasVariable( 'Mode' ) && $http->variable( 'Mode' ) == 'browse' )
                                                  "Offset" => $Offset ) );
 }
 
-// --- Compatability code start ---
+// --- Compatibility code start ---
 if ( $useSearchCode )
 {
     $tpl->setVariable( "offset", $Offset );
@@ -196,7 +190,7 @@ else
     $tpl->setVariable( "search_count", false );
     $tpl->setVariable( "stop_word_array", false );
 }
-// --- Compatability code end ---
+// --- Compatibility code end ---
 
 $Result = array();
 $Result['content'] = $tpl->fetch( "design:content/search.tpl" );

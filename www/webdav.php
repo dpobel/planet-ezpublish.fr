@@ -5,9 +5,9 @@
 // Created on: <15-Aug-2003 15:15:15 bh>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -45,11 +45,6 @@ error_reporting ( E_ALL );
 // Turn off session stuff, isn't needed for WebDAV operations.
 $GLOBALS['eZSiteBasics']['session-required'] = false;
 
-require_once( "lib/ezutils/classes/ezdebug.php" );
-//include_once( "lib/ezutils/classes/ezsys.php" );
-//include_once( "lib/ezutils/classes/ezini.php" );
-//include_once( "kernel/classes/webdav/ezwebdavcontentserver.php" );
-
 /*! Reads settings from site.ini and passes them to eZDebug.
  */
 function eZUpdateDebugSettings()
@@ -72,7 +67,6 @@ function eZUpdateTextCodecSettings()
     list( $i18nSettings['internal-charset'], $i18nSettings['http-charset'], $i18nSettings['mbstring-extension'] ) =
         $ini->variableMulti( 'CharacterSettings', array( 'Charset', 'HTTPCharset', 'MBStringExtension' ), array( false, false, 'enabled' ) );
 
-    //include_once( 'lib/ezi18n/classes/eztextcodec.php' );
     eZTextCodec::updateSettings( $i18nSettings );
 }
 
@@ -80,7 +74,6 @@ function eZUpdateTextCodecSettings()
 eZUpdateTextCodecSettings();
 
 // Check for extension
-//include_once( 'lib/ezutils/classes/ezextension.php' );
 require_once( 'kernel/common/ezincludefunctions.php' );
 eZExtension::activateExtensions( 'default' );
 // Extension check end
@@ -109,18 +102,17 @@ function eZDBCleanup()
 function eZFatalError()
 {
     eZDebug::setHandleType( eZDebug::HANDLE_NONE );
-    eZWebDAVServer::appendLogEntry( "****************************************" );
-    eZWebDAVServer::appendLogEntry( "Fatal error: eZ Publish did not finish its request" );
-    eZWebDAVServer::appendLogEntry( "The execution of eZ Publish was abruptly ended, the debug output is present below." );
-    eZWebDAVServer::appendLogEntry( "****************************************" );
-//     $templateResult = null;
-//            eZDisplayResult( $templateResult, eZDisplayDebug() );
+    eZWebDAVContentBackend::appendLogEntry( "****************************************" );
+    eZWebDAVContentBackend::appendLogEntry( "Fatal error: eZ Publish did not finish its request" );
+    eZWebDAVContentBackend::appendLogEntry( "The execution of eZ Publish was abruptly ended, the debug output is present below." );
+    eZWebDAVContentBackend::appendLogEntry( "****************************************" );
+    // $templateResult = null;
+    // eZDisplayResult( $templateResult, eZDisplayDebug() );
 }
 
 // Check and proceed only if WebDAV functionality is enabled:
 if ( $enable === 'true' )
 {
-    require_once( 'lib/ezutils/classes/ezexecution.php' );
     eZExecution::addCleanupHandler( 'eZDBCleanup' );
     eZExecution::addFatalErrorHandler( 'eZFatalError' );
     eZDebug::setHandleType( eZDebug::HANDLE_FROM_PHP );
@@ -132,18 +124,24 @@ if ( $enable === 'true' )
         // e.g. if run from the shell
         eZExecution::cleanExit();
     }
-    //include_once( "lib/ezutils/classes/ezmodule.php" );
-    require_once( 'lib/ezutils/classes/ezexecution.php' );
-    require_once( "lib/ezutils/classes/ezsession.php" );
     require_once( "access.php" );
     require_once( "kernel/common/i18n.php" );
 
     eZModule::setGlobalPathList( array( "kernel" ) );
-    eZWebDAVServer::appendLogEntry( "========================================" );
-    eZWebDAVServer::appendLogEntry( "Requested URI is: " . $_SERVER['REQUEST_URI'], 'webdav.php' );
+    eZWebDAVContentBackend::appendLogEntry( "========================================" );
+    eZWebDAVContentBackend::appendLogEntry( "Requested URI is: " . $_SERVER['REQUEST_URI'], 'webdav.php' );
 
     // Initialize/set the index file.
     eZSys::init( 'webdav.php' );
+
+    // @as 2009-03-04 - added cleaning up of the REQUEST_URI and HTTP_DESTINATION
+    $_SERVER['REQUEST_URI'] = urldecode( $_SERVER['REQUEST_URI'] );
+
+    if ( isset( $_SERVER['HTTP_DESTINATION'] ) )
+    {
+        $_SERVER['HTTP_DESTINATION'] = urldecode( $_SERVER['HTTP_DESTINATION'] );
+    }
+    eZWebDAVContentBackend::appendLogEntry( "Used (cleaned) URI is: " . $_SERVER['REQUEST_URI'], 'webdav.php' );
 
     // The top/root folder is publicly available (without auth):
     if ( $_SERVER['REQUEST_URI'] == ''  or
@@ -151,83 +149,42 @@ if ( $enable === 'true' )
          $_SERVER['REQUEST_URI'] == '/webdav.php/' or
          $_SERVER['REQUEST_URI'] == '/webdav.php' )
     {
-        $testServer = new eZWebDAVContentServer();
-        $testServer->processClientRequest();
+        // $requestUri = $_SERVER['REQUEST_URI'];
+        // if ( $requestUri == '' )
+        // {
+        //     $requestUri = '/';
+        // }
+        // if ( $requestUri == '/webdav.php' )
+        // {
+        //     $requestUri = '/webdav.php/';
+        // }
+
+        $server = ezcWebdavServer::getInstance();
+
+        $backend = new eZWebDAVContentBackend();
+        $server->handle( $backend );
     }
     // Else: need to login with username/password:
     else
     {
         // Create & initialize a new instance of the content server.
-        $server = new eZWebDAVContentServer();
+        $server = ezcWebdavServer::getInstance();
+        $server->pluginRegistry->registerPlugin(
+            new ezcWebdavLockPluginConfiguration()
+        );
+        $backend = new eZWebDAVContentBackend();
+        $server->auth = new eZWebDAVContentBackendAuth();
 
         // Get the name of the site that is being browsed.
-        $currentSite = $server->currentSiteFromPath( $_SERVER['REQUEST_URI'] );
+        $currentSite = $backend->currentSiteFromPath( $_SERVER['REQUEST_URI'] );
 
         // Proceed only if the current site is valid:
         if ( $currentSite )
         {
-            $server->setCurrentSite( $currentSite );
+            $backend->setCurrentSite( $currentSite );
 
-            $loginUsername = "";
-            // Get the username and the password.
-            if ( eZHTTPTool::username() )
-                $loginUsername = eZHTTPTool::username();
-            if ( eZHTTPTool::password() )
-                $loginPassword = eZHTTPTool::password();
-
-            // Strip away "domainname\" from a possible "domainname\password" string.
-            if ( preg_match( "#(.*)\\\\(.*)$#", $loginUsername, $matches ) )
-            {
-                $loginUsername = $matches[2];
-            }
-
-            $user = false;
-            if ( isset( $loginUsername ) && isset( $loginPassword ) )
-            {
-                //include_once( 'kernel/classes/datatypes/ezuser/ezuserloginhandler.php' );
-
-                if ( $ini->hasVariable( 'UserSettings', 'LoginHandler' ) )
-                {
-                    $loginHandlers = $ini->variable( 'UserSettings', 'LoginHandler' );
-                }
-                else
-                {
-                    $loginHandlers = array( 'standard' );
-                }
-
-                foreach ( array_keys ( $loginHandlers ) as $key )
-                {
-                    $loginHandler = $loginHandlers[$key];
-                    $userClass = eZUserLoginHandler::instance( $loginHandler );
-                    if ( !is_object( $userClass ) )
-                    {
-                        continue;
-                    }
-
-                    $user = $userClass->loginUser( $loginUsername, $loginPassword );
-                    if ( $user instanceof eZUser )
-                        break;
-                }
-            }
-
-            // Check if username & password contain someting, attempt to login.
-            if ( !( $user instanceof eZUser ) )
-            {
-                header( 'HTTP/1.0 401 Unauthorized' );
-                header( 'WWW-Authenticate: Basic realm="' . eZWebDAVContentServer::WEBDAV_AUTH_REALM . '"' );
-
-               // Read XML body and discard it
-               file_get_contents( "php://input" );
-            }
-            // Else: non-empty & valid values were supplied: login successful!
-            else
-            {
-                $userName = $user->attribute( 'login' );
-                eZWebDAVServer::appendLogEntry( "Logged in: '$userName'", 'webdav.php' );
-
-                // Process the request.
-                $server->processClientRequest();
-            }
+            // Process the request.
+            $server->handle( $backend );
         }
         // Else: site-name is invalid (was not among available sites).
         else

@@ -5,9 +5,9 @@
 // Created on: <07-Mar-2006 16:14:02 vs>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -26,7 +26,7 @@
 //
 //
 
-/*! \file ezclusterfilehandler.php
+/*! \file
 */
 
 class eZClusterFileHandler
@@ -38,52 +38,32 @@ class eZClusterFileHandler
      */
     static function instance( $filename = false )
     {
-        // Determine handler to use and cache its name in a global variable.
-        if ( !isset( $GLOBALS['eZClusterFileHandler_chosen_handler_class'] ) )
+        if( $filename !== false )
         {
-            require_once( 'lib/ezutils/classes/ezini.php' );
-            $fileINI = eZINI::instance( 'file.ini' );
-            $handlerName = 'ezfs';
-            if ( $fileINI->hasVariable( 'ClusteringSettings', 'FileHandler' ) )
-                $handlerName = $fileINI->variable( 'ClusteringSettings', 'FileHandler' );
+            $optionArray = array( 'iniFile'      => 'file.ini',
+                                  'iniSection'   => 'ClusteringSettings',
+                                  'iniVariable'  => 'FileHandler',
+                                  'handlerParams'=> array( $filename ) );
 
-            // Create list of directories used to search cluster file handlers for.
-            $searchPathArray = eZClusterFileHandler::searchPathArray();
+            $options = new ezpExtensionOptions( $optionArray );
 
-            // Find chosen handler.
-            $handlerClass = $handlerName . 'filehandler';
-            foreach ( $searchPathArray as $searchPath )
-            {
-                $includeFileName = $searchPath . '/' . $handlerClass . '.php';
-                if ( is_readable( $includeFileName ) )
-                {
-                    include_once( $includeFileName );
-                    $GLOBALS['eZClusterFileHandler_chosen_handler_class'] = $handlerClass;
-                    break;
-                }
-            }
+            $handler = eZExtension::getHandlerClass( $options );
 
-            if ( !isset( $GLOBALS['eZClusterFileHandler_chosen_handler_class'] ) )
-            {
-                eZDebug::writeError( "Cannot find cluster file handler '$handlerName'." );
-                return null;
-            }
-        }
-
-        // Instantiate the handler.
-        if ( $filename !== false )
-        {
-            // return new FileHandler based on INI setting.
-            $handlerClass = $GLOBALS['eZClusterFileHandler_chosen_handler_class'];
-            return new $handlerClass( $filename );
+            return $handler;
         }
         else
         {
             // return Filehandler from GLOBALS based on ini setting.
             if ( !isset( $GLOBALS['eZClusterFileHandler_chosen_handler'] ) )
             {
-                $handlerClass = $GLOBALS['eZClusterFileHandler_chosen_handler_class'];
-                $handler = new $handlerClass;
+                $optionArray = array( 'iniFile'      => 'file.ini',
+                                      'iniSection'   => 'ClusteringSettings',
+                                      'iniVariable'  => 'FileHandler' );
+
+                $options = new ezpExtensionOptions( $optionArray );
+
+                $handler = eZExtension::getHandlerClass( $options );
+
                 $GLOBALS['eZClusterFileHandler_chosen_handler'] = $handler;
             }
             else
@@ -103,11 +83,11 @@ class eZClusterFileHandler
         if ( !isset( $GLOBALS['eZClusterFileHandler_search_path_array'] ) )
         {
             $fileINI = eZINI::instance( 'file.ini' );
-            $searchPathArray = array( 'kernel/classes/clusterfilehandlers' );
+            $searchPathArray = array( 'kernel/classes/clusterfilehandlers',
+                                      'kernel/private/classes/clusterfilehandlers' );
             if ( $fileINI->hasVariable( 'ClusteringSettings', 'ExtensionDirectories' ) )
             {
                 $extensionDirectories = $fileINI->variable( 'ClusteringSettings', 'ExtensionDirectories' );
-                require_once( 'lib/ezutils/classes/ezextension.php' );
                 $baseDirectory = eZExtension::baseDirectory();
                 foreach ( $extensionDirectories as $extensionDirectory )
                 {

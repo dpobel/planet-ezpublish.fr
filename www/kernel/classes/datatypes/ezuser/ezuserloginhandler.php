@@ -5,9 +5,9 @@
 // Created on: <24-Jul-2003 15:11:57 wy>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -26,7 +26,7 @@
 //
 //
 
-/*! \file ezuserloginhandler.php
+/*! \file
 */
 
 /*!
@@ -109,7 +109,6 @@ class eZUserLoginHandler
         $triedFiles = array();
         if ( $protocol == "standard" )
         {
-            //include_once( 'kernel/classes/datatypes/ezuser/ezuser.php' );
             $impl = new eZUser( 0 );
             return $impl;
         }
@@ -126,7 +125,6 @@ class eZUserLoginHandler
             }
             else // check in extensions
             {
-                //include_once( 'lib/ezutils/classes/ezextension.php' );
                 $ini = eZINI::instance();
                 $extensionDirectories = $ini->variable( 'UserSettings', 'ExtensionDirectory' );
                 $directoryList = eZExtension::expandedPathList( $extensionDirectories, 'login_handler' );

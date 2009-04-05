@@ -5,9 +5,9 @@
 // Created on: <18-Sep-2003 11:13:56 kk>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -26,7 +26,7 @@
 //
 //
 
-/*! \file ezrssexport.php
+/*! \file
 */
 
 /*!
@@ -35,10 +35,6 @@
 
   RSSExport is used to create RSS feeds from published content. See kernel/rss for more files.
 */
-
-//include_once( 'kernel/classes/ezpersistentobject.php' );
-//include_once( 'kernel/classes/ezrssexportitem.php' );
-//include_once( "lib/ezdb/classes/ezdb.php" );
 
 class eZRSSExport extends eZPersistentObject
 {
@@ -53,15 +49,16 @@ class eZRSSExport extends eZPersistentObject
         $this->eZPersistentObject( $row );
     }
 
-    /*!
-     \reimp
-    */
     static function definition()
     {
         return array( "fields" => array( "id" => array( 'name' => 'ID',
                                                         'datatype' => 'integer',
                                                         'default' => 0,
                                                         'required' => true ),
+                                         'node_id' => array( 'name' => 'NodeID',
+                                                             'datatype' => 'integer',
+                                                             'default' => 0,
+                                                             'required' => false ),
                                          'title' => array( 'name' => 'Title',
                                                            'datatype' => 'string',
                                                            'default' => ezi18n( 'kernel/rss', 'New RSS Export' ),
@@ -153,6 +150,7 @@ class eZRSSExport extends eZPersistentObject
         $config = eZINI::instance( 'site.ini' );
         $dateTime = time();
         $row = array( 'id' => null,
+                      'node_id', '',
                       'title' => ezi18n( 'kernel/classes', 'New RSS Export' ),
                       'site_access' => '',
                       'modifier_id' => $user_id,
@@ -175,7 +173,6 @@ class eZRSSExport extends eZPersistentObject
     */
     function store( $storeAsValid = false )
     {
-        //include_once( "kernel/classes/datatypes/ezuser/ezuser.php" );
         $dateTime = time();
         $user = eZUser::currentUser();
         if (  $this->ID == null )
@@ -271,7 +268,6 @@ class eZRSSExport extends eZPersistentObject
     {
         if ( isset( $this->ImageID ) and $this->ImageID )
         {
-            //include_once( "kernel/classes/ezcontentobjecttreenode.php" );
             return eZContentObjectTreeNode::fetch( $this->ImageID );
         }
         return null;
@@ -281,18 +277,21 @@ class eZRSSExport extends eZPersistentObject
     {
         if ( isset( $this->ImageID ) and $this->ImageID )
         {
-            //include_once( "kernel/classes/ezcontentobjecttreenode.php" );
             $objectNode = eZContentObjectTreeNode::fetch( $this->ImageID );
             if ( isset( $objectNode ) )
             {
+                $retValue = '';
                 $path_array = $objectNode->attribute( 'path_array' );
                 for ( $i = 0; $i < count( $path_array ); $i++ )
                 {
                     $treenode = eZContentObjectTreeNode::fetch( $path_array[$i], false, false );
-                    if( $i == 0 )
-                        $retValue = $treenode['name'];
-                    else
-                        $retValue .= '/' . $treenode['name'];
+
+                    if( $i != 0 )
+                    {
+                        $retValue .= '/';
+                    }
+
+                    $retValue .= array_key_exists( 'name', $treenode ) ? $treenode['name'] : '';
                 }
                 return $retValue;
             }
@@ -305,7 +304,6 @@ class eZRSSExport extends eZPersistentObject
     {
         if ( isset( $this->ModifierID ) and $this->ModifierID )
         {
-            //include_once( "kernel/classes/datatypes/ezuser/ezuser.php" );
             return eZUser::fetch( $this->ModifierID );
         }
         return null;
@@ -382,18 +380,10 @@ class eZRSSExport extends eZPersistentObject
     /*!
      Get a RSS xml document based on the RSS 2.0 standard based on the RSS Export settings defined by this object
 
-     \param
-
      \return RSS 2.0 XML document
     */
-    function fetchRSS2_0( $id = null )
+    function fetchRSS2_0()
     {
-        if ( $id != null )
-        {
-            $rssExport = eZRSSExport::fetch( $id );
-            return $rssExport->fetchRSS2_0();
-        }
-
         $locale = eZLocale::instance();
 
         // Get URL Translation settings.
@@ -409,7 +399,6 @@ class eZRSSExport extends eZPersistentObject
 
         if ( $this->attribute( 'url' ) == '' )
         {
-            include_once( 'lib/ezutils/classes/ezuri.php' );
             $baseItemURL = '';
             eZURI::transformURI( $baseItemURL, false, 'full' );
             $baseItemURL .= '/';
@@ -420,23 +409,35 @@ class eZRSSExport extends eZPersistentObject
         }
 
         $doc = new DOMDocument( '1.0', 'utf-8' );
+        $doc->formatOutput = true;
         $root = $doc->createElement( 'rss' );
         $root->setAttribute( 'version', '2.0' );
+        $root->setAttribute( 'xmlns:atom', 'http://www.w3.org/2005/Atom' );
         $doc->appendChild( $root );
 
         $channel = $doc->createElement( 'channel' );
         $root->appendChild( $channel );
 
-        $channelTitle = $doc->createElement( 'title', $this->attribute( 'title' ) );
+        $atomLink = $doc->createElement( 'atom:link' );
+        $atomLink->setAttribute( 'href', $baseItemURL . "rss/feed/" . $this->attribute( 'access_url' ) );
+        $atomLink->setAttribute( 'rel', 'self' );
+        $atomLink->setAttribute( 'type', 'application/rss+xml' );
+        $channel->appendChild( $atomLink );
+
+        $channelTitle = $doc->createElement( 'title' );
+        $channelTitle->appendChild( $doc->createTextNode( $this->attribute( 'title' ) ) );
         $channel->appendChild( $channelTitle );
 
-        $channelLink = $doc->createElement( 'link', $this->attribute( 'url' ) );
+        $channelLink = $doc->createElement( 'link' );
+        $channelLink->appendChild( $doc->createTextNode( $this->attribute( 'url' ) ) );
         $channel->appendChild( $channelLink );
 
-        $channelDescription = $doc->createElement( 'description', $this->attribute( 'description' ) );
+        $channelDescription = $doc->createElement( 'description' );
+        $channelDescription->appendChild( $doc->createTextNode( $this->attribute( 'description' ) ) );
         $channel->appendChild( $channelDescription );
 
-        $channelLanguage = $doc->createElement( 'language', $locale->httpLocaleCode() );
+        $channelLanguage = $doc->createElement( 'language' );
+        $channelLanguage->appendChild( $doc->createTextNode( $locale->httpLocaleCode() ) );
         $channel->appendChild( $channelLanguage );
 
         $imageURL = $this->fetchImageURL();
@@ -444,13 +445,16 @@ class eZRSSExport extends eZPersistentObject
         {
             $image = $doc->createElement( 'image' );
 
-            $imageUrlNode = $doc->createElement( 'url', $imageURL );
+            $imageUrlNode = $doc->createElement( 'url' );
+            $imageUrlNode->appendChild( $doc->createTextNode( $imageURL ) );
             $image->appendChild( $imageUrlNode );
 
-            $imageTitle = $doc->createElement( 'title', $this->attribute( 'title' ) );
+            $imageTitle = $doc->createElement( 'title' );
+            $imageTitle->appendChild( $doc->createTextNode( $this->attribute( 'title' ) ) );
             $image->appendChild( $imageTitle );
 
-            $imageLink = $doc->createElement( 'link', $this->attribute( 'url' ) );
+            $imageLink = $doc->createElement( 'link' );
+            $imageLink->appendChild( $doc->createTextNode( $this->attribute( 'url' ) ) );
             $image->appendChild( $imageLink );
 
             $channel->appendChild( $image );
@@ -467,94 +471,121 @@ class eZRSSExport extends eZPersistentObject
         if ( is_array( $nodeArray ) && count( $nodeArray ) )
         {
             $attributeMappings = eZRSSExportItem::getAttributeMappings( $rssSources );
-        }
 
-        foreach ( $nodeArray as $node )
-        {
-            $object = $node->attribute( 'object' );
-            $dataMap = $object->dataMap();
-            if ( $useURLAlias === true )
+            foreach ( $nodeArray as $node )
             {
-                $nodeURL = $this->urlEncodePath( $baseItemURL . $node->urlAlias() );
-            }
-            else
-            {
-                $nodeURL = $baseItemURL . 'content/view/full/'.$object->attribute( 'id' );
-            }
-
-            // keep track if there's any match
-            $doesMatch = false;
-            // start mapping the class attribute to the respective RSS field
-            foreach ( $attributeMappings as $attributeMapping )
-            {
-                // search for correct mapping by path
-                if ( $attributeMapping[0]->attribute( 'class_id' ) == $object->attribute( 'contentclass_id' ) and
-                     in_array( $attributeMapping[0]->attribute( 'source_node_id' ), $node->attribute( 'path_array' ) ) )
+                $object = $node->attribute( 'object' );
+                $dataMap = $object->dataMap();
+                if ( $useURLAlias === true )
                 {
-                    // found it
-                    $doesMatch = true;
-                    // now fetch the attributes
-                    $title =  $dataMap[$attributeMapping[0]->attribute( 'title' )];
-                    $description =  $dataMap[$attributeMapping[0]->attribute( 'description' )];
-                    break;
+                    $nodeURL = $this->urlEncodePath( $baseItemURL . $node->urlAlias() );
                 }
+                else
+                {
+                    $nodeURL = $baseItemURL . 'content/view/full/' . $node->attribute( 'node_id' );
+                }
+
+                // keep track if there's any match
+                $doesMatch = false;
+                // start mapping the class attribute to the respective RSS field
+                foreach ( $attributeMappings as $attributeMapping )
+                {
+                    // search for correct mapping by path
+                    if ( $attributeMapping[0]->attribute( 'class_id' ) == $object->attribute( 'contentclass_id' ) and
+                         in_array( $attributeMapping[0]->attribute( 'source_node_id' ), $node->attribute( 'path_array' ) ) )
+                    {
+                        // found it
+                        $doesMatch = true;
+                        // now fetch the attributes
+                        $title =  $dataMap[$attributeMapping[0]->attribute( 'title' )];
+                        $description =  $dataMap[$attributeMapping[0]->attribute( 'description' )];
+                        // category is optional
+                        $catAttributeIdentifier = $attributeMapping[0]->attribute( 'category' );
+                        $category = $catAttributeIdentifier ? $dataMap[$catAttributeIdentifier] : false;
+                        break;
+                    }
+                }
+
+                if( !$doesMatch )
+                {
+                    // no match
+                    eZDebug::writeWarning( __METHOD__ . ': Cannot find matching RSS source node for content object in '.__FILE__.', Line '.__LINE__ );
+                    $retValue = null;
+                    return $retValue;
+                }
+
+                $item = $doc->createElement( 'item' );
+
+                // title RSS element with respective class attribute content
+                $titleContent =  $title->attribute( 'content' );
+                if ( $titleContent instanceof eZXMLText )
+                {
+                    $outputHandler = $titleContent->attribute( 'output' );
+                    $itemTitleText = $outputHandler->attribute( 'output_text' );
+                }
+                else
+                {
+                    $itemTitleText = $titleContent;
+                }
+
+                $itemTitle = $doc->createElement( 'title' );
+                $itemTitle->appendChild( $doc->createTextNode( $itemTitleText ) );
+                $item->appendChild( $itemTitle );
+
+                $itemLink = $doc->createElement( 'link' );
+                $itemLink->appendChild( $doc->createTextNode( $nodeURL ) );
+                $item->appendChild( $itemLink );
+
+                $itemGuid = $doc->createElement( 'guid' );
+                $itemGuid->appendChild( $doc->createTextNode( $nodeURL ) );
+                $item->appendChild( $itemGuid );
+
+                // description RSS element with respective class attribute content
+                $descriptionContent =  $description->attribute( 'content' );
+                if ( $descriptionContent instanceof eZXMLText )
+                {
+                    $outputHandler =  $descriptionContent->attribute( 'output' );
+                    $itemDescriptionText = $outputHandler->attribute( 'output_text' );
+                }
+                else
+                {
+                    $itemDescriptionText = $descriptionContent;
+                }
+
+                $itemDescription = $doc->createElement( 'description' );
+                $itemDescription->appendChild( $doc->createTextNode( $itemDescriptionText ) );
+                $item->appendChild( $itemDescription );
+
+                // category RSS element with respective class attribute content
+                if ( $category )
+                {
+                    $categoryContent =  $category->attribute( 'content' );
+                    if ( $categoryContent instanceof eZXMLText )
+                    {
+                        $outputHandler = $categoryContent->attribute( 'output' );
+                        $itemCategoryText = $outputHandler->attribute( 'output_text' );
+                    }
+                    elseif ( $categoryContent instanceof eZKeyword )
+                    {
+                        $itemCategoryText = $categoryContent->keywordString();
+                    }
+                    else
+                    {
+                        $itemCategoryText = $categoryContent;
+                    }
+
+                    $itemCategory = $doc->createElement( 'category' );
+                    $itemCategory->appendChild( $doc->createTextNode( $itemCategoryText ) );
+                    $item->appendChild( $itemCategory );
+                }
+
+                $itemPubDate = $doc->createElement( 'pubDate' );
+                $itemPubDate->appendChild( $doc->createTextNode( gmdate( 'D, d M Y H:i:s', $object->attribute( 'published' ) ) .' GMT' ) );
+
+                $item->appendChild( $itemPubDate );
+
+                $channel->appendChild( $item );
             }
-
-            if( !$doesMatch )
-            {
-                // no match
-                eZDebug::writeWarning( __CLASS__.'::'.__FUNCTION__.': Cannot find matching RSS source node for content object in '.__FILE__.', Line '.__LINE__ );
-                $retValue = null;
-                return $retValue;
-            }
-
-            // title RSS element with respective class attribute content
-            unset( $itemTitle );
-
-            $titleContent =  $title->attribute( 'content' );
-            if ( $titleContent instanceof eZXMLText )
-            {
-                $outputHandler = $titleContent->attribute( 'output' );
-                $itemTitleText = $outputHandler->attribute( 'output_text' );
-            }
-            else
-            {
-                $itemTitleText = $titleContent;
-            }
-
-            $itemTitle = $doc->createElement( 'title', $itemTitleText );
-
-            // title RSS element with respective class attribute content
-            unset( $itemDescription );
-
-            $descriptionContent =  $description->attribute( 'content' );
-            if ( $descriptionContent instanceof eZXMLText )
-            {
-                $outputHandler =  $descriptionContent->attribute( 'output' );
-                $itemDescriptionText = $outputHandler->attribute( 'output_text' );
-            }
-            else
-            {
-                $itemDescriptionText = $descriptionContent;
-            }
-
-            $itemDescription = $doc->createElement( 'description', $itemDescriptionText );
-
-            unset( $itemLink );
-            $itemLink = $doc->createElement( 'link', $nodeURL );
-
-            unset( $item );
-            $item = $doc->createElement( 'item' );
-
-            unset( $itemPubDate );
-            $itemPubDate = $doc->createElement( 'pubDate', gmdate( 'D, d M Y H:i:s', $object->attribute( 'published' ) ) .' GMT' );
-
-            $item->appendChild( $itemPubDate );
-            $item->appendChild( $itemTitle );
-            $item->appendChild( $itemLink );
-            $item->appendChild( $itemDescription );
-
-            $channel->appendChild( $item );
         }
 
         return $doc;
@@ -563,18 +594,10 @@ class eZRSSExport extends eZPersistentObject
     /*!
      Get a RSS xml document based on the RSS 1.0 standard based on the RSS Export settings defined by this object
 
-     \param object ID
-
      \return RSS 1.0 XML document
     */
-    function fetchRSS1_0( $id = null )
+    function fetchRSS1_0()
     {
-        if ( $id != null )
-        {
-            $rssExport = eZRSSExport::fetch( $id );
-            return $rssExport->fetchRSS1_0();
-        }
-
         $imageURL = $this->fetchImageURL();
 
         // Get URL Translation settings.
@@ -590,7 +613,6 @@ class eZRSSExport extends eZPersistentObject
 
         if ( $this->attribute( 'url' ) == '' )
         {
-            include_once( 'lib/ezutils/classes/ezuri.php' );
             $baseItemURL = '';
             eZURI::transformURI( $baseItemURL, false, 'full' );
             $baseItemURL .= '/';
@@ -608,31 +630,37 @@ class eZRSSExport extends eZPersistentObject
         $channel->setAttributeNS( 'http://www.w3.org/1999/02/22-rdf-syntax-ns#', 'rdf:about', $this->attribute( 'url' ) );
         $root->appendChild( $channel );
 
-        $channelTitle = $doc->createElement( 'title', $this->attribute( 'title' ) );
+        $channelTitle = $doc->createElement( 'title' );
+        $channelTitle->appendChild( $doc->createTextNode( $this->attribute( 'title' ) ) );
         $channel->appendChild( $channelTitle );
 
-        $channelUrl = $doc->createElement( 'link', $this->attribute( 'url' ) );
+        $channelUrl = $doc->createElement( 'link' );
+        $channelUrl->appendChild( $doc->createTextNode( $this->attribute( 'url' ) ) );
         $channel->appendChild( $channelUrl );
 
-        $channelDescription = $doc->createElement( 'description', $this->attribute( 'description' ) );
+        $channelDescription = $doc->createElement( 'description' );
+        $channelDescription->appendChild( $doc->createTextNode( $this->attribute( 'description' ) ) );
         $channel->appendChild( $channelDescription );
 
         if ( $imageURL !== false )
         {
-            $channelImage = $doc->createElemen( 'image' );
+            $channelImage = $doc->createElement( 'image' );
             $channelImage->setAttributeNS( 'http://www.w3.org/1999/02/22-rdf-syntax-ns#', 'rdf:resource', $imageURL );
             $channel->appendChild( $channelImage );
 
             $image = $doc->createElement( 'image' );
-            $image->setAttribute( 'http://www.w3.org/1999/02/22-rdf-syntax-ns#', 'rdf:about', $imageURL );
+            $image->setAttributeNS( 'http://www.w3.org/1999/02/22-rdf-syntax-ns#', 'rdf:about', $imageURL );
 
-            $imageTitle = $doc->createElement( 'title', $this->attribute( 'title' ) );
+            $imageTitle = $doc->createElement( 'title' );
+            $imageTitle->appendChild( $doc->createTextNode( $this->attribute( 'title' ) ) );
             $image->appendChild( $imageTitle );
 
-            $imageLink = $doc->createElement( 'link', $this->attribute( 'url' ) );
+            $imageLink = $doc->createElement( 'link' );
+            $imageLink->appendChild( $doc->createTextNode( $this->attribute( 'url' ) ) );
             $image->appendChild( $imageLink );
 
-            $imageUrlNode = $doc->createElement( 'url', $imageURL );
+            $imageUrlNode = $doc->createElement( 'url' );
+            $imageUrlNode->appendChild( $doc->createTextNode( $imageURL ) );
             $image->appendChild( $imageUrlNode );
 
             $root->appendChild( $image );
@@ -652,99 +680,95 @@ class eZRSSExport extends eZPersistentObject
 
         $nodeArray = eZRSSExportItem::fetchNodeList( $rssSources, $this->getObjectListFilter() );
 
-        if( is_array( $nodeArray ) && count( $nodeArray ) )
+        if ( is_array( $nodeArray ) && count( $nodeArray ) )
         {
             $attributeMappings = eZRSSExportItem::getAttributeMappings( $rssSources );
-        }
 
-        foreach ( $nodeArray as $node )
-        {
-            $object =  $node->attribute( 'object' );
-            $dataMap =  $object->dataMap();
-            if ( $useURLAlias === true )
+            foreach ( $nodeArray as $node )
             {
-                $nodeURL = $this->urlEncodePath( $baseItemURL . $node->urlAlias() );
-            }
-            else
-            {
-                $nodeURL = $baseItemURL.'content/view/full/'.$object->attribute( 'id' );
-            }
-
-            unset( $rdfSeqLi );
-            $rdfSeqLi = $doc->createElementNS( 'http://www.w3.org/1999/02/22-rdf-syntax-ns#', 'rdf:li' );
-            $rdfSeqLi->setAttributeNS( 'http://www.w3.org/1999/02/22-rdf-syntax-ns#', 'rdf:resource', $nodeURL );
-            $rdfSeq->appendChild( $rdfSeqLi );
-
-            // keep track if there's any match
-            $doesMatch = false;
-            // start mapping the class attribute to the respective RSS field
-            foreach ( $attributeMappings as $attributeMapping )
-            {
-                // search for correct mapping by path
-                if ( $attributeMapping[0]->attribute( 'class_id' ) == $object->attribute( 'contentclass_id' ) and
-                     in_array( $attributeMapping[0]->attribute( 'source_node_id' ), $node->attribute( 'path_array' ) ) )
+                $object = $node->attribute( 'object' );
+                $dataMap = $object->dataMap();
+                if ( $useURLAlias === true )
                 {
-                    // found it
-                    $doesMatch = true;
-                    // now fetch the attributes
-                    $title =  $dataMap[$attributeMapping[0]->attribute( 'title' )];
-                    $description =  $dataMap[$attributeMapping[0]->attribute( 'description' )];
-                    break;
+                    $nodeURL = $this->urlEncodePath( $baseItemURL . $node->urlAlias() );
                 }
+                else
+                {
+                    $nodeURL = $baseItemURL . 'content/view/full/' . $node->attribute( 'node_id' );
+                }
+
+                $rdfSeqLi = $doc->createElementNS( 'http://www.w3.org/1999/02/22-rdf-syntax-ns#', 'rdf:li' );
+                $rdfSeqLi->setAttributeNS( 'http://www.w3.org/1999/02/22-rdf-syntax-ns#', 'rdf:resource', $nodeURL );
+                $rdfSeq->appendChild( $rdfSeqLi );
+
+                // keep track if there's any match
+                $doesMatch = false;
+                // start mapping the class attribute to the respective RSS field
+                foreach ( $attributeMappings as $attributeMapping )
+                {
+                    // search for correct mapping by path
+                    if ( $attributeMapping[0]->attribute( 'class_id' ) == $object->attribute( 'contentclass_id' ) and
+                         in_array( $attributeMapping[0]->attribute( 'source_node_id' ), $node->attribute( 'path_array' ) ) )
+                    {
+                        // found it
+                        $doesMatch = true;
+                        // now fetch the attributes
+                        $title =  $dataMap[$attributeMapping[0]->attribute( 'title' )];
+                        $description =  $dataMap[$attributeMapping[0]->attribute( 'description' )];
+                        break;
+                    }
+                }
+
+                if( !$doesMatch )
+                {
+                    // no match
+                    eZDebug::writeWarning( __METHOD__ . ': Cannot find matching RSS source node for content object in '.__FILE__.', Line '.__LINE__ );
+                    $retValue = null;
+                    return $retValue;
+                }
+
+                // title RSS element with respective class attribute content
+                $titleContent =  $title->attribute( 'content' );
+                if ( $titleContent instanceof eZXMLText )
+                {
+                    $outputHandler =  $titleContent->attribute( 'output' );
+                    $itemTitleText = $outputHandler->attribute( 'output_text' );
+                }
+                else
+                {
+                    $itemTitleText = $titleContent;
+                }
+
+                $itemTitle = $doc->createElement( 'title' );
+                $itemTitle->appendChild( $doc->createTextNode( $itemTitleText ) );
+
+                // description RSS element with respective class attribute content
+                $descriptionContent =  $description->attribute( 'content' );
+                if ( $descriptionContent instanceof eZXMLText )
+                {
+                    $outputHandler =  $descriptionContent->attribute( 'output' );
+                    $itemDescriptionText = $outputHandler->attribute( 'output_text' );
+                }
+                else
+                {
+                    $itemDescriptionText = $descriptionContent;
+                }
+
+                $itemDescription = $doc->createElement( 'description' );
+                $itemDescription->appendChild( $doc->createTextNode( $itemDescriptionText ) );
+
+                $itemLink = $doc->createElement( 'link' );
+                $itemLink->appendChild( $doc->createTextNode( $nodeURL ) );
+
+                $item = $doc->createElementNS( 'http://purl.org/rss/1.0/', 'item' );
+                $item->setAttributeNS( 'http://www.w3.org/1999/02/22-rdf-syntax-ns#', 'rdf:about', $nodeURL );
+
+                $item->appendChild( $itemTitle );
+                $item->appendChild( $itemLink );
+                $item->appendChild( $itemDescription );
+
+                $root->appendChild( $item );
             }
-
-            if( !$doesMatch )
-            {
-                // no match
-                eZDebug::writeWarning( __CLASS__.'::'.__FUNCTION__.': Cannot find matching RSS source node for content object in '.__FILE__.', Line '.__LINE__ );
-                $retValue = null;
-                return $retValue;
-            }
-
-            // title RSS element with respective class attribute content
-            unset( $itemTitle );
-
-            $titleContent =  $title->attribute( 'content' );
-            if ( $titleContent instanceof eZXMLText )
-            {
-                $outputHandler =  $titleContent->attribute( 'output' );
-                $itemTitleText = $outputHandler->attribute( 'output_text' );
-            }
-            else
-            {
-                $itemTitleText = $titleContent;
-            }
-
-            $itemTitle = $doc->createElement( 'title', $itemTitleText );
-
-            // description RSS element with respective class attribute content
-            unset( $itemDescription );
-
-            $descriptionContent =  $description->attribute( 'content' );
-            if ( $descriptionContent instanceof eZXMLText )
-            {
-                $outputHandler =  $descriptionContent->attribute( 'output' );
-                $itemDescriptionText = $outputHandler->attribute( 'output_text' );
-            }
-            else
-            {
-                $itemDescriptionText = $descriptionContent;
-            }
-
-            $itemDescription = $doc->createElement( 'description', $itemDescriptionText );
-
-            unset( $itemLink );
-            $itemLink = $doc->createElement( 'link', $nodeURL );
-
-            unset( $item );
-            $item = $doc->createElementNS( 'http://purl.org/rss/1.0/', 'item' );
-            $item->setAttributeNS( 'http://www.w3.org/1999/02/22-rdf-syntax-ns#', 'rdf:about', $nodeURL );
-
-            $item->appendChild( $itemTitle );
-            $item->appendChild( $itemLink );
-            $item->appendChild( $itemDescription );
-
-            $root->appendChild( $item );
         }
 
         return $doc;

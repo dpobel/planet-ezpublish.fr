@@ -3,9 +3,9 @@
 // Created on: <18-Jul-2002 10:55:01 bf>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -23,13 +23,6 @@
 //   MA 02110-1301, USA.
 //
 //
-
-//include_once( 'kernel/classes/ezcontentobject.php' );
-//include_once( 'kernel/classes/ezcontentobjecttreenode.php' );
-
-//include_once( 'kernel/classes/ezcontentbrowse.php' );
-
-//include_once( 'lib/ezutils/classes/ezhttptool.php' );
 
 require_once( 'kernel/common/template.php' );
 
@@ -154,12 +147,13 @@ if (isset( $GLOBALS['eZDesignKeys']['section'] ))
 $res = eZTemplateDesignResource::instance();
 
 $Result = array();
+$Result['view_parameters'] = $viewParameters;
 
 // Fetch the navigation part from the section information
 $Result['navigation_part'] = 'ezcontentnavigationpart';
 if ( !isset( $nodeList ) )
 {
-    //include_once( 'kernel/classes/ezsection.php' );
+    $globalSectionID = $object->attribute( 'section_id' );
     $section = eZSection::fetch( $object->attribute( 'section_id' ) );
     if ( $section )
     {
@@ -172,9 +166,14 @@ if ( !isset( $nodeList ) )
                           array( 'parent_node', $node->attribute( 'parent_node_id' ) ), // Parent Node ID
                           array( 'class', $object->attribute( 'contentclass_id' ) ), // Class ID
                           array( 'depth', $node->attribute( 'depth' ) ),
+                          array( 'remote_id', $object->attribute( 'remote_id' ) ),
+                          array( 'node_remote_id', $node->attribute( 'remote_id' ) ),
                           array( 'url_alias', $node->attribute( 'url_alias' ) ),
                           array( 'class_identifier', $node->attribute( 'class_identifier' ) ),
-                          array( 'section', $object->attribute('section_id') )
+                          array( 'section', $object->attribute('section_id') ),
+                          array( 'class_group', $object->attribute( 'match_ingroup_id_list' ) ),
+                          array( 'state', $object->attribute( 'state_id_array' ) ),
+                          array( 'state_identifier', $object->attribute( 'state_identifier_array' ) )
                           ) );
 
 }
@@ -207,11 +206,12 @@ else
     foreach ( $parents as $parent )
     {
         $path[] = array( 'text' => $parent->attribute( 'name' ),
-                         'url' => '/content/browse/' . $parent->attribute( 'node_id' ) . '/'
-                         );
+                         'url' => '/content/browse/' . $parent->attribute( 'node_id' ) . '/',
+                         'node_id' => $parent->attribute( 'node_id' ) );
     }
     $path[] = array( 'text' => $object->attribute( 'name' ),
-                     'url' => false );
+                     'url' => false,
+                     'node_id' => $node->attribute( 'node_id' ) );
     $Result['path'] = $path;
 }
 

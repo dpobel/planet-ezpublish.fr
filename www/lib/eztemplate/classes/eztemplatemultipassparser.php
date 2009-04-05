@@ -5,9 +5,9 @@
 // Created on: <26-Nov-2002 17:25:44 amos>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -26,7 +26,7 @@
 //
 //
 
-/*! \file eztemplatemultipassparser.php
+/*! \file
 */
 
 /*!
@@ -34,10 +34,6 @@
   \brief The class eZTemplateMultiPassParser does
 
 */
-
-//include_once( 'lib/eztemplate/classes/eztemplateparser.php' );
-//include_once( 'lib/eztemplate/classes/eztemplateelementparser.php' );
-//include_once( 'lib/eztemplate/classes/eztemplate.php' );
 
 class eZTemplateMultiPassParser extends eZTemplateParser
 {
@@ -85,11 +81,12 @@ class eZTemplateMultiPassParser extends eZTemplateParser
     function gotoEndPosition( $text, $line, $column, &$endLine, &$endColumn )
     {
         $lines = preg_split( "#\r\n|\r|\n#", $text );
-        if ( count( $lines ) > 0 )
+        $c = count( $lines );
+        if ( $c > 0 )
         {
-            $endLine = $line + count( $lines ) - 1;
-            $lastLine = $lines[count( $lines ) - 1];
-            if ( count( $lines ) > 1 )
+            $endLine = $line + $c - 1;
+            $lastLine = $lines[$c - 1];
+            if ( $c > 1 )
                 $endColumn = strlen( $lastLine );
             else
                 $endColumn = $column + strlen( $lastLine );
@@ -774,7 +771,6 @@ class eZTemplateMultiPassParser extends eZTemplateParser
                         {
                             unset( $oldTag );
                             unset( $oldTagName );
-                            //include_once( "lib/ezutils/classes/ezphpcreator.php" );
                             $oldTag = array_pop( $tagStack );
                             $oldTagName = $oldTag["Tag"];
                             unset( $currentRoot );

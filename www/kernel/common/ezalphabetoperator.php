@@ -5,9 +5,9 @@
 // Created on: <15-Aug-2006 12:15:07 vd>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -35,8 +35,6 @@
 
 class eZAlphabetOperator
 {
-    /*!
-    */
     function eZAlphabetOperator( $alphabet = 'alphabet' )
     {
         $this->Operators = array( $alphabet );
@@ -59,9 +57,6 @@ class eZAlphabetOperator
         return true;
     }
 
-    /*!
-     \reimp
-    */
     function modify( $tpl, $operatorName, $operatorParameters, $rootNamespace, $currentNamespace, &$value, $namedParameters )
     {
         switch ( $operatorName )
@@ -80,7 +75,6 @@ class eZAlphabetOperator
     */
     static function fetchAlphabet()
     {
-        //include_once( "lib/ezutils/classes/ezini.php" );
         $contentINI = eZINI::instance( 'content.ini' );
 
         $alphabetRangeList = $contentINI->hasVariable( 'AlphabeticalFilterSettings', 'AlphabetList' )
@@ -125,10 +119,8 @@ class eZAlphabetOperator
         $i18nINI = eZINI::instance( 'i18n.ini' );
         $charset = $i18nINI->variable( 'CharacterSettings', 'Charset' );
 
-        //include_once( 'lib/ezi18n/classes/eztextcodec.php' );
         $codec = eZTextCodec::instance( 'utf-8', $charset );
 
-        //include_once( "lib/ezi18n/classes/ezutf8codec.php" );
         $utf8_codec = eZUTF8Codec::instance();
         // Convert all letters of alphabet from unicode to utf-8 and from utf-8 to current locale
         foreach ( $alphabet as $item )

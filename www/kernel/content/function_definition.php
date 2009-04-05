@@ -3,9 +3,9 @@
 // Created on: <06-Oct-2002 16:01:10 amos>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -24,7 +24,7 @@
 //
 //
 
-/*! \file function_definition.php
+/*! \file
 */
 
 $FunctionList = array();
@@ -36,7 +36,12 @@ $FunctionList['object'] = array( 'name' => 'object',
                                  'parameter_type' => 'standard',
                                  'parameters' => array( array( 'name' => 'object_id',
                                                                'type' => 'integer',
-                                                               'required' => true ) ) );
+                                                               'default' => false,
+                                                               'required' => false ),
+                                                        array( 'name' => 'remote_id',
+                                                               'type' => 'integer',
+                                                               'default' => false,
+                                                               'required' => false ) ) );
 $FunctionList['version'] = array( 'name' => 'version',
                                   'operation_types' => array( 'read' ),
                                   'call_method' => array( 'class' => 'eZContentFunctionCollection',
@@ -61,7 +66,15 @@ $FunctionList['node'] = array( 'name' => 'node',
                                                       array( 'name' => 'node_path',
                                                              'type' => 'string',
                                                              'required' => false,
-                                                             'default' => false ) ) );
+                                                             'default' => false ),
+                                                      array( 'name' => 'language_code',
+                                                             'type' => 'string',
+                                                             'required' => false,
+                                                             'default' => false ),
+                                                      array( 'name' => 'remote_id',
+                                                             'type' => 'integer',
+                                                             'default' => false,
+                                                             'required' => false )  ) );
 $FunctionList['locale_list'] = array( 'name' => 'locale_list',
                                       'operation_types' => array( 'read' ),
                                       'call_method' => array( 'class' => 'eZContentFunctionCollection',
@@ -286,7 +299,7 @@ $FunctionList['list'] = array( 'name' => 'list',
                                                       array( 'name' => 'load_data_map',
                                                              'type' => 'bool',
                                                              'required' => false,
-                                                             'default' => true ) ) );
+                                                             'default' => null ) ) );
 $FunctionList['list_count'] = array( 'name' => 'list_count',
                                      'operation_types' => array( 'read' ),
                                      'call_method' => array( 'class' => 'eZContentFunctionCollection',
@@ -427,7 +440,7 @@ $FunctionList['tree'] = array( 'name' => 'tree',
                                                       array( 'name' => 'load_data_map',
                                                              'type' => 'bool',
                                                              'required' => false,
-                                                             'default' => true ) ) );
+                                                             'default' => null ) ) );
 
 $FunctionList['tree_count'] = array( 'name' => 'tree_count',
                                      'operation_types' => array( 'read' ),
@@ -547,7 +560,11 @@ $FunctionList['trash_count'] = array( 'name' => 'trash_count',
                                       'parameters' => array( array( 'name' => 'objectname_filter',
                                                                     'type' => 'string',
                                                                     'required' => false,
-                                                                    'default' => null ) ) );
+                                                                    'default' => null ),
+                                                            array( 'name' => 'attribute_filter',
+                                                                    'type' => 'mixed',
+                                                                    'required' => false,
+                                                                    'default' => false ) ) );
 
 $FunctionList['trash_object_list'] = array( 'name' => 'trash_object_list',
                                             'operation_types' => array( 'read' ),
@@ -565,7 +582,19 @@ $FunctionList['trash_object_list'] = array( 'name' => 'trash_object_list',
                                                                    array( 'name' => 'objectname_filter',
                                                                           'type' => 'string',
                                                                           'required' => false,
-                                                                           'default' => null ) ) );
+                                                                          'default' => null ),
+                                                                   array( 'name' => 'attribute_filter',
+                                                                          'type' => 'mixed',
+                                                                          'required' => false,
+                                                                          'default' => false ),
+                                                                   array( 'name' => 'sort_by',
+                                                                          'type' => 'mixed',
+                                                                          'required' => false,
+                                                                          'default' => false ),
+                                                                   array( 'name' => 'as_object',
+                                                                          'type' => 'bool',
+                                                                          'required' => false,
+                                                                          'default' => true ) ) );
 
 $FunctionList['draft_count'] = array( 'name' => 'draft_count',
                                       'operation_types' => array( 'read' ),
@@ -633,7 +662,11 @@ $FunctionList['version_list'] = array( 'name' => 'version_list',
                                                                     array( 'name' => 'limit',
                                                                            'type' => 'integer',
                                                                            'required' => false,
-                                                                           'default' => false ) ) );
+                                                                           'default' => false ),
+                                                                    array( 'name' => 'sorts',
+                                                                           'type' => 'array',
+                                                                           'required' => false,
+                                                                           'default' => null ) ) );
 
 
 
@@ -1027,7 +1060,27 @@ $FunctionList['related_objects'] = array( 'name' => 'object',
                                                         array( 'name' => 'sort_by',
                                                                'type' => 'array',
                                                                'required' => false,
-                                                               'default' => array() ) ) );
+                                                               'default' => array() ),
+                                                        array( 'name' => 'limit',
+                                                               'type' => 'integer',
+                                                               'required' => false,
+                                                               'default' => false ),
+                                                        array( 'name' => 'offset',
+                                                               'type' => 'integer',
+                                                               'required' => false,
+                                                               'default' => false ),
+                                                        array( 'name' => 'as_object',
+                                                               'type' => 'boolean',
+                                                               'required' => false,
+                                                               'default' => true ),
+                                                        array( 'name' => 'load_data_map',
+                                                               'type' => 'boolean',
+                                                               'required' => false,
+                                                               'default' => false ),
+                                                        array( 'name' => 'ignore_visibility',
+                                                               'type' => 'boolean',
+                                                               'required' => false,
+                                                               'default' => null ) ) );
 
 $FunctionList['related_objects_count'] = array( 'name' => 'object',
                                  'operation_types' => array( 'read' ),
@@ -1072,7 +1125,23 @@ $FunctionList['reverse_related_objects'] = array( 'name' => 'object',
                                                         array( 'name' => 'ignore_visibility',
                                                                'type' => 'boolean',
                                                                'required' => false,
-                                                               'default' => null ) ) );
+                                                               'default' => null ),
+                                                        array( 'name' => 'limit',
+                                                               'type' => 'integer',
+                                                               'required' => false,
+                                                               'default' => false ),
+                                                        array( 'name' => 'offset',
+                                                               'type' => 'integer',
+                                                               'required' => false,
+                                                               'default' => false ),
+                                                       array( 'name' => 'as_object',
+                                                               'type' => 'boolean',
+                                                               'required' => false,
+                                                               'default' => true ),
+                                                        array( 'name' => 'load_data_map',
+                                                               'type' => 'boolean',
+                                                               'required' => false,
+                                                               'default' => false ) ) );
 
 $FunctionList['reverse_related_objects_count'] = array( 'name' => 'object',
                                  'operation_types' => array( 'read' ),

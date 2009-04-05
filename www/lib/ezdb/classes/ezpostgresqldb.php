@@ -7,9 +7,9 @@
 // Created on: <25-Feb-2002 14:08:32 bf>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -37,11 +37,6 @@
 
   \sa eZDB
 */
-
-require_once( "lib/ezutils/classes/ezdebug.php" );
-//include_once( "lib/ezutils/classes/ezini.php" );
-//include_once( "lib/ezdb/classes/ezdbinterface.php" );
-
 class eZPostgreSQLDB extends eZDBInterface
 {
     /*!
@@ -119,6 +114,8 @@ class eZPostgreSQLDB extends eZDBInterface
             }
             if ( $this->DBConnection )
                 $this->IsConnected = true;
+            else
+                throw new eZDBNoConnectionException( $server );
         }
         else
         {
@@ -128,33 +125,41 @@ class eZPostgreSQLDB extends eZDBInterface
         }
     }
 
-    /*!
-     \reimp
-    */
+    function availableDatabases()
+    {
+        $query = "SELECT datname FROM pg_database";
+        $result = $this->query( $query );
+
+        $databases = array();
+        $counter = pg_num_rows( $result ) - 1;
+
+        while ( $counter > 0 )
+        {
+            $row = pg_fetch_result( $result, $counter, "datname" );
+            $databases[] = $row;
+            $counter--;
+        }
+
+        pg_free_result( $result );
+
+        return $databases;
+    }
+
     function databaseName()
     {
         return 'postgresql';
     }
 
-    /*!
-      \reimp
-    */
     function bindingType( )
     {
         return eZDBInterface::BINDING_NO;
     }
 
-    /*!
-      \reimp
-    */
     function bindVariable( $value, $fieldDef = false )
     {
         return $value;
     }
 
-    /*!
-     \reimp
-    */
     function query( $sql, $server = false )
     {
         if ( $this->isConnected() )
@@ -192,9 +197,6 @@ class eZPostgreSQLDB extends eZDBInterface
     }
 
 
-    /*!
-     \reimp
-    */
     function arrayQuery( $sql, $params = array(), $server = false )
     {
         $retArray = array();
@@ -290,9 +292,6 @@ class eZPostgreSQLDB extends eZDBInterface
         return " encode(digest( $str, 'md5' ), 'hex' ) ";
     }
 
-    /*!
-     \reimp
-    */
     function supportedRelationTypeMask()
     {
         return ( eZDBInterface::RELATION_TABLE_BIT |
@@ -302,9 +301,6 @@ class eZPostgreSQLDB extends eZDBInterface
                  eZDBInterface::RELATION_INDEX_BIT );
     }
 
-    /*!
-     \reimp
-    */
     function supportedRelationTypes()
     {
         return array( eZDBInterface::RELATION_TABLE,
@@ -329,9 +325,6 @@ class eZPostgreSQLDB extends eZDBInterface
         return $kind[$relationType];
     }
 
-    /*!
-     \reimp
-    */
     function relationCounts( $relationMask )
     {
         $relationTypes = $this->supportedRelationTypes();
@@ -360,16 +353,18 @@ class eZPostgreSQLDB extends eZDBInterface
         }
         if ( $this->isConnected() )
         {
-            $sql = "SELECT COUNT( relname ) as count FROM pg_class WHERE ( $relkindText ) AND NOT relname~'pg_.*'";
+            $sql = "SELECT COUNT( relname ) as count
+                    FROM pg_catalog.pg_class c
+                    LEFT JOIN pg_catalog.pg_namespace n ON n.oid = c.relnamespace
+                    WHERE ( $relkindText )
+                          AND c.relname !~ '^pg_'
+                          AND pg_catalog.pg_table_is_visible(c.oid)";
             $array = $this->arrayQuery( $sql, array( 'column' => 'count' ) );
             $count = $array[0];
         }
         return $count;
     }
 
-    /*!
-      \reimp
-    */
     function relationCount( $relationType = eZDBInterface::RELATION_TABLE )
     {
         $count = false;
@@ -382,16 +377,18 @@ class eZPostgreSQLDB extends eZDBInterface
 
         if ( $this->isConnected() )
         {
-            $sql = "SELECT COUNT( relname ) as count FROM pg_class WHERE relkind='$relationKind' AND NOT relname~'pg_.*'";
+            $sql = "SELECT COUNT( relname ) as count
+                    FROM pg_catalog.pg_class c
+                    LEFT JOIN pg_catalog.pg_namespace n ON n.oid = c.relnamespace
+                    WHERE c.relkind = '$relationKind'
+                          AND c.relname !~ '^pg_'
+                          AND pg_catalog.pg_table_is_visible(c.oid)";
             $array = $this->arrayQuery( $sql, array( 'column' => 'count' ) );
             $count = $array[0];
         }
         return $count;
     }
 
-    /*!
-      \reimp
-    */
     function relationList( $relationType = eZDBInterface::RELATION_TABLE )
     {
         $count = false;
@@ -405,15 +402,17 @@ class eZPostgreSQLDB extends eZDBInterface
         $array = array();
         if ( $this->isConnected() )
         {
-            $sql = "SELECT relname FROM pg_class WHERE relkind='$relationKind' AND NOT relname~'pg_.*'";
+            $sql = "SELECT relname
+                    FROM pg_catalog.pg_class c
+                    LEFT JOIN pg_catalog.pg_namespace n ON n.oid = c.relnamespace
+                    WHERE c.relkind = '$relationKind'
+                          AND c.relname !~ '^pg_'
+                          AND pg_catalog.pg_table_is_visible( c.oid )";
             $array = $this->arrayQuery( $sql, array( 'column' => 'relname' ) );
         }
         return $array;
     }
 
-    /*!
-     \reimp
-    */
     function eZTableList( $server = eZDBInterface::SERVER_MASTER )
     {
         $array = array();
@@ -431,17 +430,11 @@ class eZPostgreSQLDB extends eZDBInterface
         return $array;
     }
 
-    /*!
-     \reimp
-    */
     function relationMatchRegexp( $relationType )
     {
         return "#^(ez|tmp_notification_rule_s)#";
     }
 
-    /*!
-      \reimp
-    */
     function removeRelation( $relationName, $relationType )
     {
         $relationTypeName = $this->relationName( $relationType );
@@ -459,9 +452,6 @@ class eZPostgreSQLDB extends eZDBInterface
         return false;
     }
 
-    /*!
-     \reimp
-    */
     function lock( $table )
     {
         $this->begin();
@@ -488,16 +478,12 @@ class eZPostgreSQLDB extends eZDBInterface
         }
     }
 
-    /*!
-     \reimp
-    */
     function unlock()
     {
         $this->commit();
     }
 
     /*!
-     \reimp
      The query to start the transaction.
     */
     function beginQuery()
@@ -506,7 +492,6 @@ class eZPostgreSQLDB extends eZDBInterface
     }
 
     /*!
-     \reimp
      The query to commit the transaction.
     */
     function commitQuery()
@@ -515,7 +500,6 @@ class eZPostgreSQLDB extends eZDBInterface
     }
 
     /*!
-     \reimp
      The query to cancel the transaction.
     */
     function rollbackQuery()
@@ -523,9 +507,6 @@ class eZPostgreSQLDB extends eZDBInterface
         return $this->query( "ROLLBACK WORK" );
     }
 
-    /*!
-     \reimp
-    */
     function lastSerialID( $table = false, $column = 'id' )
     {
         if ( $this->isConnected() )
@@ -546,9 +527,6 @@ class eZPostgreSQLDB extends eZDBInterface
         return $id;
     }
 
-    /*!
-     \reimp
-    */
     function setError( )
     {
         if ( $this->DBConnection )
@@ -567,9 +545,6 @@ class eZPostgreSQLDB extends eZDBInterface
         }
     }
 
-    /*!
-     \reimp
-    */
     function escapeString( $str )
     {
         $str = str_replace("\0", '', $str);
@@ -577,25 +552,34 @@ class eZPostgreSQLDB extends eZDBInterface
         return $str;
     }
 
-    /*!
-     \reimp
-    */
     function close()
     {
         pg_close( $this->DBConnection );
     }
 
-    /*!
-     \reimp
-    */
+    function createDatabase( $dbName )
+    {
+        if ( $this->DBConnection != false )
+        {
+            $this->query( "CREATE DATABASE $dbName" );
+            $this->setError();
+        }
+    }
+
+    function removeDatabase( $dbName )
+    {
+        if ( $this->DBConnection != false )
+        {
+            $this->query( "DROP DATABASE $dbName" );
+            $this->setError();
+        }
+    }
+
     function isCharsetSupported( $charset )
     {
         return true;
     }
 
-     /*!
-     \reimp
-    */
     function databaseServerVersion()
     {
         if ( $this->isConnected() )

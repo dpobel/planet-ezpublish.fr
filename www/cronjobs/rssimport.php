@@ -3,9 +3,9 @@
 // Created on: <24-Sep-2003 16:09:21 sp>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -24,18 +24,8 @@
 //
 //
 
-/*! \file rssimport.php
+/*! \file
 */
-
-//include_once( 'kernel/classes/ezrssimport.php' );
-//include_once( 'kernel/classes/ezcontentclass.php' );
-//include_once( 'kernel/classes/ezcontentobject.php' );
-//include_once( 'kernel/classes/ezpersistentobject.php' );
-//include_once( 'kernel/classes/ezcontentobjecttreenode.php' );
-//include_once( 'kernel/classes/ezcontentobjectversion.php' );
-//include_once( 'lib/ezutils/classes/ezoperationhandler.php' );
-//include_once( "lib/ezdb/classes/ezdb.php" );
-//include_once( "lib/ezutils/classes/ezhttptool.php" );
 
 //For ezUser, we would make this the ezUser class id but otherwise just pick and choose.
 
@@ -123,7 +113,6 @@ foreach ( $rssImportArray as $rssImport )
 
 }
 
-//include_once( 'kernel/classes/ezstaticcache.php' );
 eZStaticCache::executeActions();
 
 /*!
@@ -320,9 +309,11 @@ function importRSSItem( $item, $rssImport, $cli, $channel )
     $contentObject->store();
     $db->commit();
 
-    //publish new object
+    // Publish new object. The user id is sent to make sure any workflow
+    // requiring the user id has access to it.
     $operationResult = eZOperationHandler::execute( 'content', 'publish', array( 'object_id' => $contentObject->attribute( 'id' ),
-                                                                                 'version' => 1 ) );
+                                                                                 'version' => 1,
+                                                                                 'user_id' => $rssOwnerID ) );
 
     if ( !isset( $operationResult['status'] ) || $operationResult['status'] != eZModuleOperationInfo::STATUS_CONTINUE )
     {
@@ -462,10 +453,21 @@ function setObjectAttributeValue( $objectAttribute, $value )
 
         case 'ezkeyword':
         {
-            //include_once( 'kernel/classes/datatypes/ezkeyword/ezkeyword.php' );
             $keyword = new eZKeyword();
             $keyword->initializeKeyword( $value );
             $objectAttribute->setContent( $keyword );
+        } break;
+
+        case 'ezdate':
+        {
+            $timestamp = strtotime( $value );
+            if ( $timestamp )
+                $objectAttribute->setAttribute( 'data_int', $timestamp );
+        } break;
+
+        case 'ezdatetime':
+        {
+            $objectAttribute->setAttribute( 'data_int', strtotime($value) );
         } break;
 
         default:
@@ -479,7 +481,6 @@ function setObjectAttributeValue( $objectAttribute, $value )
 
 function setEZXMLAttribute( $attribute, $attributeValue, $link = false )
 {
-    //include_once( 'kernel/classes/datatypes/ezxmltext/handlers/input/ezsimplifiedxmlinputparser.php' );
     $contentObjectID = $attribute->attribute( "contentobject_id" );
     $parser = new eZSimplifiedXMLInputParser( $contentObjectID, false, 0, false );
 

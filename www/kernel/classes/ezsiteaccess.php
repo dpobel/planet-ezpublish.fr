@@ -5,9 +5,9 @@
 // Created on: <22-���-2003 16:23:14 sp>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -26,7 +26,7 @@
 //
 //
 
-/*! \file ezsiteaccess.php
+/*! \file
 */
 
 /*!
@@ -34,8 +34,6 @@
   \brief The class eZSiteAccess does
 
 */
-
-//include_once( 'lib/ezutils/classes/ezsys.php' );
 
 class eZSiteAccess
 {
@@ -48,7 +46,6 @@ class eZSiteAccess
 
     static function siteAccessList()
     {
-        //include_once( 'lib/ezutils/classes/ezsys.php' );
         $siteAccessList = array();
         $ini = eZINI::instance();
         $availableSiteAccessList = $ini->variable( 'SiteAccessSettings', 'AvailableSiteAccessList' );
@@ -75,7 +72,6 @@ class eZSiteAccess
     */
     static function findPathToSiteAccess( $siteAccess )
     {
-        //include_once( 'lib/ezutils/classes/ezini.php' );
         $ini = eZINI::instance();
         $siteAccessList = $ini->variable( 'SiteAccessSettings', 'AvailableSiteAccessList' );
         if ( !in_array( $siteAccess, $siteAccessList )  )
@@ -85,7 +81,6 @@ class eZSiteAccess
         if ( file_exists( $currentPath ) )
             return $currentPath;
 
-        //include_once( 'lib/ezutils/classes/ezextension.php' );
         $activeExtensions = eZExtension::activeExtensions();
         $baseDir = eZExtension::baseDirectory();
         foreach ( $activeExtensions as $extension )
@@ -98,6 +93,39 @@ class eZSiteAccess
         return 'settings/siteaccess/' . $siteAccess;
     }
 
+    /**
+     * Re-initialises the current site access
+     *
+     * - clears all in-memory caches used by the INI system
+     * - re-builds the list of paths where INI files are searched for
+     * - re-searches module paths
+     */
+    static function reInitialise()
+    {
+        if ( isset( $GLOBALS['eZCurrentAccess'] ) )
+        {
+            eZINI::resetAllGlobals();
+
+            eZExtension::activateExtensions( 'default' );
+            $accessName = $GLOBALS['eZCurrentAccess']['name'];
+            if ( file_exists( "settings/siteaccess/$accessName" ) )
+            {
+                $ini = eZINI::instance();
+                $ini->prependOverrideDir( "siteaccess/$accessName", false, 'siteaccess' );
+            }
+            eZExtension::prependExtensionSiteAccesses( $accessName );
+            eZExtension::activateExtensions( 'access' );
+
+            $moduleRepositories = eZModule::activeModuleRepositories();
+            eZModule::setGlobalPathList( $moduleRepositories );
+
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
 }
 
 ?>

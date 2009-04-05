@@ -5,9 +5,9 @@
 // Created on: <17-Feb-2003 16:24:57 sp>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -26,7 +26,7 @@
 //
 //
 
-/*! \file ezrangeoptiontype.php
+/*! \file
 */
 
 /*!
@@ -35,9 +35,6 @@
   \brief The class eZRangeOptionType does
 
 */
-//include_once( "kernel/classes/ezdatatype.php" );
-//include_once( "kernel/classes/datatypes/ezrangeoption/ezrangeoption.php" );
-
 class eZRangeOptionType extends eZDataType
 {
     const DEFAULT_NAME_VARIABLE = "_ezrangeoption_default_name_";
@@ -55,17 +52,18 @@ class eZRangeOptionType extends eZDataType
 
     function validateObjectAttributeHTTPInput( $http, $base, $contentObjectAttribute )
     {
+        $classAttribute = $contentObjectAttribute->contentClassAttribute();
+
         if ( $http->hasPostVariable( $base . "_data_rangeoption_name_" . $contentObjectAttribute->attribute( "id" ) ) and
              $http->hasPostVariable( $base . '_data_rangeoption_start_value_' . $contentObjectAttribute->attribute( 'id' ) ) and
              $http->hasPostVariable( $base . '_data_rangeoption_stop_value_' . $contentObjectAttribute->attribute( 'id' ) ) and
              $http->hasPostVariable( $base . '_data_rangeoption_step_value_' . $contentObjectAttribute->attribute( 'id' ) ) )
         {
-
             $name = $http->postVariable( $base . "_data_rangeoption_name_" . $contentObjectAttribute->attribute( "id" ) );
             $startValue = $http->postVariable( $base . '_data_rangeoption_start_value_' . $contentObjectAttribute->attribute( 'id' ) );
             $stopValue = $http->postVariable( $base . '_data_rangeoption_stop_value_' . $contentObjectAttribute->attribute( 'id' ) );
             $stepValue = $http->postVariable( $base . '_data_rangeoption_step_value_' . $contentObjectAttribute->attribute( 'id' ) );
-            $classAttribute = $contentObjectAttribute->contentClassAttribute();
+
             if ( $name == '' or
                  $startValue == '' or
                  $stopValue == '' or
@@ -81,6 +79,11 @@ class eZRangeOptionType extends eZDataType
                 else
                     return eZInputValidator::STATE_ACCEPTED;
             }
+        }
+        else if ( !$classAttribute->attribute( 'is_information_collector' ) and $contentObjectAttribute->validateIsRequired() )
+        {
+            $contentObjectAttribute->setValidationError( ezi18n( 'kernel/classes/datatypes', 'Missing range option input.' ) );
+            return eZInputValidator::STATE_INVALID;
         }
         else
         {
@@ -226,9 +229,6 @@ class eZRangeOptionType extends eZDataType
         }
     }
 
-    /*!
-     \reimp
-    */
     function fetchClassAttributeHTTPInput( $http, $base, $classAttribute )
     {
         $defaultValueName = $base . self::DEFAULT_NAME_VARIABLE . $classAttribute->attribute( 'id' );
@@ -245,28 +245,21 @@ class eZRangeOptionType extends eZDataType
         return false;
     }
 
-    /*!
-     \reimp
-    */
     function serializeContentClassAttribute( $classAttribute, $attributeNode, $attributeParametersNode )
     {
         $defaultName = $classAttribute->attribute( 'data_text1' );
-        $defaultNameNode = $attributeParametersNode->ownerDocument->createElement( 'default-name', $defaultName );
+        $dom = $attributeParametersNode->ownerDocument;
+        $defaultNameNode = $dom->createElement( 'default-name' );
+        $defaultNameNode->appendChild( $dom->createTextNode( $defaultName ) );
         $attributeParametersNode->appendChild( $defaultNameNode );
     }
 
-    /*!
-     \reimp
-    */
     function unserializeContentClassAttribute( $classAttribute, $attributeNode, $attributeParametersNode )
     {
         $defaultName = $attributeParametersNode->getElementsByTagName( 'default-name' )->item( 0 )->textContent;
         $classAttribute->setAttribute( 'data_text1', $defaultName );
     }
 
-    /*!
-     \reimp
-    */
     function serializeContentObjectAttribute( $package, $objectAttribute )
     {
         $node = $this->createContentObjectAttributeDOMNode( $objectAttribute );
@@ -280,14 +273,22 @@ class eZRangeOptionType extends eZDataType
         return $node;
     }
 
-    /*!
-     \reimp
-    */
     function unserializeContentObjectAttribute( $package, $objectAttribute, $attributeNode )
     {
         $rootNode = $attributeNode->getElementsByTagName( 'ezrangeoption' )->item( 0 );
         $xmlString = $rootNode ? $rootNode->ownerDocument->saveXML( $rootNode ) : '';
         $objectAttribute->setAttribute( 'data_text', $xmlString );
+    }
+
+    function supportsBatchInitializeObjectAttribute()
+    {
+        return true;
+    }
+
+    function batchInitializeObjectAttributeData( $classAttribute )
+    {
+        $option = new eZRangeOption( $classAttribute->attribute( 'data_text1' ) );
+        return array( 'data_text' => "'" . $option->xmlString() . "'");
     }
 }
 

@@ -5,9 +5,9 @@
 // Created on: <30-Apr-2002 16:47:08 bf>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -32,9 +32,6 @@
   \brief Handles file downloading by passing the file through PHP
 
 */
-//include_once( "kernel/classes/datatypes/ezbinaryfile/ezbinaryfile.php" );
-//include_once( "kernel/classes/ezbinaryfilehandler.php" );
-
 class eZFilePassthroughHandler extends eZBinaryFileHandler
 {
     const HANDLER_ID = 'ezfilepassthrough';
@@ -49,9 +46,6 @@ class eZFilePassthroughHandler extends eZBinaryFileHandler
     {
         $fileName = $fileInfo['filepath'];
 
-        // VS-DBFILE
-
-        require_once( 'kernel/classes/ezclusterfilehandler.php' );
         $file = eZClusterFileHandler::instance( $fileName );
 
         if ( $fileName != "" and $file->exists() )
@@ -81,12 +75,15 @@ class eZFilePassthroughHandler extends eZBinaryFileHandler
             header( "Pragma: " );
             header( "Cache-Control: " );
             /* Set cache time out to 10 minutes, this should be good enough to work around an IE bug */
-            header( "Expires: ". gmdate('D, d M Y H:i:s T', time() + 600) . ' GMT' );
-            header( "Last-Modified: ". gmdate( 'D, d M Y H:i:s T', $fileModificationTime ) . ' GMT' );
+            header( "Expires: ". gmdate('D, d M Y H:i:s', time() + 600) . ' GMT' );
+            header( "Last-Modified: ". gmdate( 'D, d M Y H:i:s', $fileModificationTime ) . ' GMT' );
             header( "Content-Length: $contentLength" );
             header( "Content-Type: $mimeType" );
             header( "X-Powered-By: eZ Publish" );
-            header( "Content-disposition: attachment; filename=\"$originalFileName\"" );
+
+            $dispositionType = self::dispositionType( $mimeType );
+            header( "Content-disposition: $dispositionType; filename=\"$originalFileName\"" );
+
             header( "Content-Transfer-Encoding: binary" );
             header( "Accept-Ranges: bytes" );
 
@@ -103,6 +100,28 @@ class eZFilePassthroughHandler extends eZBinaryFileHandler
             eZExecution::cleanExit();
         }
         return eZBinaryFileHandler::RESULT_UNAVAILABLE;
+    }
+
+    /**
+     * Checks if a file should be downloaded to disk or displayed inline in
+     * the browser.
+     *
+     * This method returns "attachment" if no setting for the mime type is found.
+     *
+     * @param string $mimetype
+     * @return string "attachment" or "inline"
+     */
+    protected static function dispositionType( $mimeType )
+    {
+        $ini = eZINI::instance( 'file.ini' );
+
+        $mimeTypes = $ini->variable( 'PassThroughSettings', 'ContentDisposition', array() );
+        if ( isset( $mimeTypes[$mimeType] ) )
+        {
+            return $mimeTypes[$mimeType];
+        }
+
+        return "attachment";
     }
 }
 

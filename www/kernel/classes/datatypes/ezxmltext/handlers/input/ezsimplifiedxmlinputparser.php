@@ -5,9 +5,9 @@
 // Created on: <27-Mar-2006 15:28:39 ks>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -27,8 +27,6 @@
 //
 
 // if ( !class_exists( 'eZXMLInputParser' ) )
-    //include_once( 'kernel/classes/datatypes/ezxmltext/ezxmlinputparser.php' );
-
 class eZSimplifiedXMLInputParser extends eZXMLInputParser
 {
     public $InputTags = array(
@@ -42,6 +40,12 @@ class eZSimplifiedXMLInputParser extends eZXMLInputParser
         'br'      => array( 'name' => 'br',
                             'noChildren' => true ),
         'a'       => array( 'name' => 'link' ),
+        'h1'     => array( 'nameHandler' => 'tagNameHeader' ),
+        'h2'     => array( 'nameHandler' => 'tagNameHeader' ),
+        'h3'     => array( 'nameHandler' => 'tagNameHeader' ),
+        'h4'     => array( 'nameHandler' => 'tagNameHeader' ),
+        'h5'     => array( 'nameHandler' => 'tagNameHeader' ),
+        'h6'     => array( 'nameHandler' => 'tagNameHeader' ),
         );
 
     public $OutputTags = array(
@@ -126,6 +130,45 @@ class eZSimplifiedXMLInputParser extends eZXMLInputParser
     {
         $this->contentObjectID = $contentObjectID;
         $this->eZXMLInputParser( $validateErrorLevel, $detectErrorLevel, $parseLineBreaks, $removeDefaultAttrs );
+    }
+
+    /*
+        Tag Name handlers (init handlers)
+    */
+    function tagNameHeader( $tagName, &$attributes )
+    {
+        switch ( $tagName )
+        {
+            case 'h1':
+            {
+                $attributes['level'] = '1';
+            } break;
+            case 'h2':
+            {
+                $attributes['level'] = '2';
+            } break;
+            case 'h3':
+            {
+                $attributes['level'] = '3';
+            } break;
+            case 'h4':
+            {
+                $attributes['level'] = '4';
+            } break;
+            case 'h5':
+            {
+                $attributes['level'] = '5';
+            } break;
+            case 'h6':
+            {
+                $attributes['level'] = '6';
+            } break;
+            default :
+            {
+                return '';
+            } break;
+        }
+        return 'header';
     }
 
     /*
@@ -766,7 +809,6 @@ class eZSimplifiedXMLInputParser extends eZXMLInputParser
 
                     }
                     // Check mail address validity
-                    //include_once( 'lib/ezutils/classes/ezmail.php' );
                     if ( preg_match( "/^mailto:(.*)/i" , $url, $mailAddr ) &&
                          !eZMail::validate( $mailAddr[1] ) )
                     {

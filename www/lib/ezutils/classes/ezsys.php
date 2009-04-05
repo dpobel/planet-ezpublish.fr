@@ -5,9 +5,9 @@
 // Created on: <01-Mar-2002 13:48:53 amos>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -185,9 +185,6 @@ class eZSys
     /*!
      \static
      \return the PHP version as an array with the version elements.
-     \example
-     array( 4, 3, 4 )
-     \endexample
     */
     static function phpVersion()
     {
@@ -251,7 +248,14 @@ class eZSys
     {
         $escapeChar = eZSys::instance()->ShellEscapeCharacter;
         $argument = str_replace( "\\", "\\\\", $argument );
-        $argument = str_replace( $escapeChar, "\\" . $escapeChar, $argument );
+        if ( $escapeChar == "'" )
+        {
+            $argument = str_replace( $escapeChar, $escapeChar . "\\" . $escapeChar . $escapeChar, $argument );
+        }
+        else
+        {
+            $argument = str_replace( $escapeChar, "\\" . $escapeChar, $argument );
+        }
         $argument = $escapeChar . $argument . $escapeChar;
         return $argument;
     }
@@ -425,9 +429,7 @@ class eZSys
     */
     static function varDirectory()
     {
-        //include_once( 'lib/ezutils/classes/ezini.php' );
         $ini = eZINI::instance();
-        //include_once( 'lib/ezfile/classes/ezdir.php' );
         return eZDir::path( array( $ini->variable( 'FileSettings', 'VarDir' ) ) );
     }
 
@@ -438,8 +440,6 @@ class eZSys
     */
     static function storageDirectory()
     {
-        //include_once( 'lib/ezutils/classes/ezini.php' );
-        //include_once( 'lib/ezfile/classes/ezdir.php' );
         $ini = eZINI::instance();
         $varDir = eZSys::varDirectory();
         $storageDir = $ini->variable( 'FileSettings', 'StorageDir' );
@@ -453,11 +453,9 @@ class eZSys
     */
     static function cacheDirectory()
     {
-        //include_once( 'lib/ezutils/classes/ezini.php' );
         $ini = eZINI::instance();
         $cacheDir = $ini->variable( 'FileSettings', 'CacheDir' );
 
-        //include_once( 'lib/ezfile/classes/ezdir.php' );
         if ( $cacheDir[0] == "/" )
         {
             return eZDir::path( array( $cacheDir ) );
@@ -541,7 +539,7 @@ class eZSys
                 $accessPath = implode( '/', $accessPathArray );
                 $text .= '/' . $accessPath;
 
-                // Make sure we never return just a single '/'. 
+                // Make sure we never return just a single '/'.
                 if ( $text == "/" )
                     $text = "";
 
@@ -844,7 +842,7 @@ class eZSys
      stated in the parameter list.
      \static
     */
-    static function init( $def_index = "index.php", $force_VirtualHost = false )
+    static function init( $index = "index.php", $force_VirtualHost = false )
     {
         $isCGI = ( substr( php_sapi_name(), 0, 3 ) == 'cgi' );
 
@@ -863,22 +861,22 @@ class eZSys
         $phpSelf = eZSys::serverVariable( 'PHP_SELF' );
 
         // Find out, where our files are.
-        if ( ereg( "(.*/)([^\/]+\.php)$", eZSys::serverVariable( 'SCRIPT_FILENAME' ), $regs ) )
+        if ( preg_match( "!(.*/)$index$!", eZSys::serverVariable( 'SCRIPT_FILENAME' ), $regs ) )
         {
             $siteDir = $regs[1];
-            $index = "/" . $regs[2];
+            $index = "/$index";
         }
-        elseif ( ereg( "(.*/)([^\/]+\.php)/?", $phpSelf, $regs ) )
+        elseif ( preg_match( "!(.*/)$index/?!", $phpSelf, $regs ) )
         {
             // Some people using CGI have their $_SERVER['SCRIPT_FILENAME'] not right... so we are trying this.
             $siteDir = eZSys::serverVariable( 'DOCUMENT_ROOT' ) . $regs[1];
-            $index = "/" . $regs[2];
+            $index = "/$index";
         }
         else
         {
             // Fallback... doesn't work with virtual-hosts, but better than nothing
             $siteDir = "./";
-            $index = "/$def_index";
+            $index = "/$index";
         }
         if ( $isCGI and !$force_VirtualHost )
         {
@@ -908,9 +906,9 @@ class eZSys
         }
         else
         {
-            if ( ereg( "(.*)/([^\/]+\.php)$", $scriptName, $regs ) )
+            if ( preg_match( "!(.*)$index$!", $scriptName, $regs ) )
                 $wwwDir = $regs[1];
-            else if ( ereg( "(.*)/([^\/]+\.php)$", $phpSelf, $regs ) )
+            if ( preg_match( "!(.*)$index$!", $phpSelf, $regs ) )
                 $wwwDir = $regs[1];
         }
 
@@ -935,9 +933,9 @@ class eZSys
 
         if ( ! $isCGI )
         {
-            $def_index_reg = str_replace( ".", "\\.", $def_index );
+            $index_reg = str_replace( ".", "\\.", $index );
             // Trick: Rewrite setup doesn't have index.php in $_SERVER['PHP_SELF'], so we don't want an $index
-            if ( ! ereg( ".*$def_index_reg.*", $phpSelf ) || $force_VirtualHost )
+            if ( !preg_match( "!.*$index_reg.*!", $phpSelf ) || $force_VirtualHost )
             {
                 $index = "";
             }
@@ -948,17 +946,17 @@ class eZSys
                     eZDebug::writeNotice( "$wwwDir$index", '$wwwDir$index' );
                 }
                 // Get the right $_SERVER['REQUEST_URI'], when using nVH setup.
-                if ( ereg( "^$wwwDir$index(.*)", $phpSelf, $req ) )
+                if ( preg_match( "!^$wwwDir$index(.*)!", $phpSelf, $req ) )
                 {
-                    if (! $req[1] )
+                    if ( !$req[1] )
                     {
-                        if ( $phpSelf != "$wwwDir$index" and ereg( "^$wwwDir(.*)", $requestURI, $req ) )
+                        if ( $phpSelf != "$wwwDir$index" and preg_match( "!^$wwwDir(.*)!", $requestURI, $req ) )
                         {
                             $requestURI = $req[1];
                             $index = '';
                         }
-                        elseif ( $phpSelf == "$wwwDir$index" and ereg( "^$wwwDir$index(.*)", $requestURI, $req ) or
-                                 ereg( "^$wwwDir(.*)", $requestURI, $req ) )
+                        elseif ( $phpSelf == "$wwwDir$index" and
+                               ( preg_match( "!^$wwwDir$index(.*)!", $requestURI, $req ) or preg_match( "!^$wwwDir(.*)!", $requestURI, $req ) ) )
                         {
                             $requestURI = $req[1];
                         }
@@ -975,19 +973,19 @@ class eZSys
         // Remove url parameters
         if ( $isCGI and !$force_VirtualHost )
         {
-            $pattern = "(\/[^&]+)";
+            $pattern = "!(\/[^&]+)!";
         }
         else
         {
-            $pattern = "([^?]+)";
+            $pattern = "!([^?]+)!";
         }
-        if ( ereg( $pattern, $requestURI, $regs ) )
+        if ( preg_match( $pattern, $requestURI, $regs ) )
         {
             $requestURI = $regs[1];
         }
 
         // Remove internal links
-        if ( ereg( "([^#]+)", $requestURI, $regs ) )
+        if ( preg_match( "!([^#]+)!", $requestURI, $regs ) )
         {
             $requestURI = $regs[1];
         }
@@ -1050,7 +1048,6 @@ class eZSys
     */
     static function ezcrc32( $string )
     {
-        //include_once( 'lib/ezutils/classes/ezini.php' );
         $ini = eZINI::instance();
 
         if ( $ini->variable( 'SiteSettings', '64bitCompatibilityMode' ) === 'enabled' )
@@ -1078,7 +1075,7 @@ class eZSys
     /*!
      Wraps around the built-in glob() function to provide same functionality
      for systems (e.g Solaris) that does not support GLOB_BRACE.
-     
+
      \static
     */
     static function globBrace( $pattern, $flags = 0 )
@@ -1100,12 +1097,12 @@ class eZSys
         }
     }
 
-    /*! 
+    /*!
      Expands a list of filenames like GLOB_BRACE does.
-     
+
      GLOB_BRACE is non POSIX and only available in GNU glibc. This is needed to
-     support operating systems like Solars. 
-     
+     support operating systems like Solars.
+
      \static
      \protected
      */

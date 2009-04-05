@@ -3,9 +3,9 @@
 // Created on: <08-Jan-2003 16:36:23 amos>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -23,10 +23,6 @@
 //   MA 02110-1301, USA.
 //
 //
-
-//include_once( "kernel/classes/ezcontentclass.php" );
-//include_once( "kernel/classes/ezcontentclassattribute.php" );
-//include_once( "kernel/classes/ezcontentclassclassgroup.php" );
 
 $Module = $Params['Module'];
 $ClassID = null;

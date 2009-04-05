@@ -3,9 +3,9 @@
 // Created on: <17-Apr-2002 10:34:48 bf>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -24,9 +24,6 @@
 //
 //
 
-//include_once( 'kernel/classes/eztrigger.php' );
-//include_once( "lib/ezdb/classes/ezdb.php" );
-//include_once( "lib/ezutils/classes/ezini.php" );
 $Module = $Params['Module'];
 require 'kernel/content/node_edit.php';
 initializeNodeEdit( $Module );
@@ -34,6 +31,8 @@ require 'kernel/content/relation_edit.php';
 initializeRelationEdit( $Module );
 require 'kernel/content/section_edit.php';
 initializeSectionEdit( $Module );
+require 'kernel/content/state_edit.php';
+initializeStateEdit( $Module );
 $obj = eZContentObject::fetch( $ObjectID );
 
 if ( !$obj )
@@ -47,7 +46,6 @@ if ( $obj->attribute( 'status' ) == eZContentObject::STATUS_ARCHIVED )
 }
 
 // Check if we should switch access mode (http/https) for this object.
-//include_once( 'kernel/classes/ezsslzone.php' );
 eZSSLZone::checkObject( 'content', 'edit', $obj );
 
 // This controls if the final access check is done.
@@ -93,6 +91,10 @@ if ( $http->hasPostVariable( 'RedirectURIAfterPublish' ) )
 {
     $http->setSessionVariable( 'RedirectURIAfterPublish', $http->postVariable( 'RedirectURIAfterPublish' ) );
 }
+if ( $http->hasPostVariable( 'RedirectIfDiscarded' ) )
+{
+    $http->setSessionVariable( 'RedirectIfDiscarded', $http->postVariable( 'RedirectIfDiscarded' ) );
+}
 
 // Action for edit_draft.tpl page,
 // EditButton is the button for editing the selected version.
@@ -102,7 +104,7 @@ if ( $http->hasPostVariable( 'EditButton' ) )
     if ( $http->hasPostVariable( 'SelectedVersion' ) )
     {
         $selectedVersion = $http->postVariable( 'SelectedVersion' );
-        // Kept for backwards compatability, EditLanguage may also be set in URL
+        // Kept for backwards compatibility, EditLanguage may also be set in URL
         if ( $http->hasPostVariable( 'ContentObjectLanguageCode' ) )
         {
             $EditLanguage = $http->postVariable( 'ContentObjectLanguageCode' );
@@ -138,7 +140,7 @@ if ( $http->hasPostVariable( 'NewDraftButton' ) )
 
     $contentINI = eZINI::instance( 'content.ini' );
     $versionlimit = $contentINI->variable( 'VersionManagement', 'DefaultVersionHistoryLimit' );
-    // Kept for backwards compatability
+    // Kept for backwards compatibility
     if ( $http->hasPostVariable( 'ContentObjectLanguageCode' ) )
     {
         $EditLanguage = $http->postVariable( 'ContentObjectLanguageCode' );
@@ -313,7 +315,6 @@ if ( $EditLanguage == false )
         $obj->cleanupInternalDrafts();
 
         // Check number of languages
-        //include_once( 'kernel/classes/ezcontentlanguage.php' );
         $languages = eZContentLanguage::fetchList();
         // If there is only one language we choose it for the user and goes to version choice screen.
         if ( count( $languages ) == 1 )
@@ -336,7 +337,9 @@ if ( $EditLanguage == false )
         $tpl = templateInit();
 
         $res = eZTemplateDesignResource::instance();
-        $res->setKeys( array( array( 'object', $obj->attribute( 'id' ) ) ) );
+        $res->setKeys( array( array( 'object', $obj->attribute( 'id' ) ),
+                              array( 'remote_id', $obj->attribute( 'remote_id' ) )
+         ) );
 
         $tpl->setVariable( 'object', $obj );
         $tpl->setVariable( 'show_existing_languages', ( $EditVersion == 'a' )? false: true );
@@ -347,7 +350,12 @@ if ( $EditLanguage == false )
                                  'url' => false ),
                           array( 'text' => ezi18n( 'kernel/content', 'Edit' ),
                                  'url' => false ) );
-
+        $section = eZSection::fetch( $obj->attribute( 'section_id' ) );
+        if ( $section )
+        {
+            $Result['navigation_part'] = $section->attribute( 'navigation_part_identifier' );
+            $Result['section_id'] = $section->attribute( 'id' );
+        }
         return $Result;
     }
 }
@@ -397,6 +405,7 @@ if ( !is_numeric( $EditVersion ) )
 
             $res = eZTemplateDesignResource::instance();
             $res->setKeys( array( array( 'object', $obj->attribute( 'id' ) ),
+                                array( 'remote_id', $obj->attribute( 'remote_id' ) ),
                                 array( 'class', $class->attribute( 'id' ) ),
                                 array( 'class_identifier', $class->attribute( 'identifier' ) ),
                                 array( 'class_group', $class->attribute( 'match_ingroup_id_list' ) ) ) );
@@ -410,6 +419,12 @@ if ( !is_numeric( $EditVersion ) )
 
             $Result = array();
             $Result['content'] = $tpl->fetch( 'design:content/edit_draft.tpl' );
+            $section = eZSection::fetch( $obj->attribute( 'section_id' ) );
+            if ( $section )
+            {
+                $Result['navigation_part'] = $section->attribute( 'navigation_part_identifier' );
+                $Result['section_id'] = $section->attribute( 'id' );
+            }
             return $Result;
         }
         elseif ( count( $draftVersions ) == 1 )
@@ -434,6 +449,7 @@ if ( !is_numeric( $EditVersion ) )
 
                 $res = eZTemplateDesignResource::instance();
             $res->setKeys( array( array( 'object', $obj->attribute( 'id' ) ),
+                                array( 'remote_id', $obj->attribute( 'remote_id' ) ),
                                 array( 'class', $class->attribute( 'id' ) ),
                                 array( 'class_identifier', $class->attribute( 'identifier' ) ),
                                 array( 'class_group', $class->attribute( 'match_ingroup_id_list' ) ) ) );
@@ -447,6 +463,12 @@ if ( !is_numeric( $EditVersion ) )
 
             $Result = array();
             $Result['content'] = $tpl->fetch( 'design:content/edit_draft.tpl' );
+            $section = eZSection::fetch( $obj->attribute( 'section_id' ) );
+            if ( $section )
+            {
+                $Result['navigation_part'] = $section->attribute( 'navigation_part_identifier' );
+                $Result['section_id'] = $section->attribute( 'id' );
+            }
             return $Result;
         }
         else
@@ -560,8 +582,6 @@ if ( !function_exists( 'checkContentActions' ) )
             $discardConfirm = true;
             if ( $http->hasPostVariable( 'DiscardConfirm' ) )
                 $discardConfirm = $http->postVariable( 'DiscardConfirm' );
-            if ( $http->hasPostVariable( 'RedirectIfDiscarded' ) )
-                $http->setSessionVariable( 'RedirectIfDiscarded', $http->postVariable( 'RedirectIfDiscarded' ) );
             $http->setSessionVariable( 'DiscardObjectID', $objectID );
             $http->setSessionVariable( 'DiscardObjectVersion', $EditVersion );
             $http->setSessionVariable( 'DiscardObjectLanguage', $EditLanguage );
@@ -577,6 +597,11 @@ if ( !function_exists( 'checkContentActions' ) )
             $http = eZHTTPTool::instance();
 
             $node = $object->mainNode();
+
+            if ( $http->hasSessionVariable( 'RedirectIfDiscarded' ) )
+            {
+                $http->removeSessionVariable( 'RedirectIfDiscarded' );
+            }
 
             $hasRedirected = false;
             if ( $http->hasSessionVariable( 'ParentObject' ) && $http->sessionVariable( 'NewObjectID' ) == $object->attribute( 'id' ) )
@@ -606,7 +631,7 @@ if ( !function_exists( 'checkContentActions' ) )
                 $module->redirectTo( $uri );
                 $hasRedirected = true;
             }
-            if ( $http->hasPostVariable( "BackToEdit") && $http->postVariable( "BackToEdit") )
+            if ( $http->hasPostVariable( "BackToEdit" ) && $http->postVariable( "BackToEdit" ) )
             {
                 $uri = $module->redirectionURI( 'content', 'edit', array( $object->attribute( 'id'), 'f', $EditLanguage ) );
                 $module->redirectTo( $uri );
@@ -658,6 +683,7 @@ if ( !function_exists( 'checkContentActions' ) )
 
                     $res = eZTemplateDesignResource::instance();
                     $res->setKeys( array( array( 'object', $object->attribute( 'id' ) ),
+                                        array( 'remote_id', $object->attribute( 'remote_id' ) ),
                                         array( 'class', $class->attribute( 'id' ) ),
                                         array( 'class_identifier', $class->attribute( 'identifier' ) ),
                                         array( 'class_group', $class->attribute( 'match_ingroup_id_list' ) ) ) );
@@ -673,7 +699,6 @@ if ( !function_exists( 'checkContentActions' ) )
                 }
             }
 
-            //include_once( 'lib/ezutils/classes/ezoperationhandler.php' );
             eZDebug::accumulatorStart( 'publish', '', 'publish' );
             $oldObjectName = $object->name();
             $operationResult = eZOperationHandler::execute( 'content', 'publish', array( 'object_id' => $object->attribute( 'id' ),

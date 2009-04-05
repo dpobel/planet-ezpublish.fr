@@ -5,9 +5,9 @@
 // Created on: <06-Oct-2002 16:19:31 amos>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -26,7 +26,7 @@
 //
 //
 
-/*! \file ezcontentfunctioncollection.php
+/*! \file
 */
 
 /*!
@@ -34,8 +34,6 @@
   \brief The class eZContentFunctionCollection does
 
 */
-
-//include_once( 'kernel/error/errors.php' );
 
 class eZContentFunctionCollection
 {
@@ -46,10 +44,17 @@ class eZContentFunctionCollection
     {
     }
 
-    function fetchContentObject( $objectID )
+    function fetchContentObject( $objectID, $remoteID = false )
     {
-        //include_once( 'kernel/classes/ezcontentobject.php' );
-        $contentObject = eZContentObject::fetch( $objectID );
+        if ( $objectID ===false && $remoteID !== false )
+        {
+            $contentObject = eZContentObject::fetchByRemoteID( $remoteID );
+        }
+        else
+        {
+            $contentObject = eZContentObject::fetch( $objectID );
+        }
+        
         if ( $contentObject === null )
         {
             $result = array( 'error' => array( 'error_type' => 'kernel',
@@ -65,7 +70,6 @@ class eZContentFunctionCollection
 
     function fetchContentVersion( $objectID, $versionID )
     {
-        //include_once( 'kernel/classes/ezcontentobjectversion.php' );
         $contentVersion = eZContentObjectVersion::fetchVersion( $versionID, $objectID );
         if ( !$contentVersion )
         {
@@ -80,18 +84,24 @@ class eZContentFunctionCollection
         return $result;
     }
 
-    function fetchContentNode( $nodeID, $nodePath )
+    function fetchContentNode( $nodeID, $nodePath, $languageCode, $remoteID = false )
     {
-        //include_once( 'kernel/classes/ezcontentobjecttreenode.php' );
         $contentNode = null;
         if ( $nodeID )
         {
-            $contentNode = eZContentObjectTreeNode::fetch( $nodeID );
+            if ( !isset( $languageCode ) )
+                $languageCode = false;
+
+            $contentNode = eZContentObjectTreeNode::fetch( $nodeID, $languageCode );
         }
         else if ( $nodePath )
         {
             $nodeID = eZURLAliasML::fetchNodeIDByPath( $nodePath );
             $contentNode = eZContentObjectTreeNode::fetch( $nodeID );
+        }
+        else if ( $remoteID )
+        {
+            $contentNode = eZContentObjectTreeNode::fetchByRemoteID( $remoteID );
         }
         if ( $contentNode === null )
         {
@@ -108,8 +118,6 @@ class eZContentFunctionCollection
 
     function fetchNonTranslationList( $objectID, $version )
     {
-        //include_once( 'kernel/classes/ezcontentobject.php' );
-        //include_once( 'kernel/classes/ezcontentobjectversion.php' );
         $version = eZContentObjectVersion::fetchVersion( $version, $objectID );
         if ( !$version )
             return array( 'error' => array( 'error_type' => 'kernel',
@@ -124,7 +132,6 @@ class eZContentFunctionCollection
 
     function fetchTranslationList()
     {
-        //include_once( 'kernel/classes/ezcontentobject.php' );
         $translationList = eZContentObject::translationList();
         if ( $translationList === null )
         {
@@ -141,7 +148,6 @@ class eZContentFunctionCollection
 
     function fetchPrioritizedLanguages()
     {
-        //include_once( 'kernel/classes/ezcontentlanguage.php' );
         $languages = eZContentLanguage::prioritizedLanguages();
         if ( $languages === null )
         {
@@ -158,7 +164,6 @@ class eZContentFunctionCollection
 
     function fetchPrioritizedLanguageCodes()
     {
-        //include_once( 'kernel/classes/ezcontentlanguage.php' );
         $languageCodes = eZContentLanguage::prioritizedLanguageCodes();
         if ( $languageCodes === null )
         {
@@ -175,7 +180,6 @@ class eZContentFunctionCollection
 
     function fetchLocaleList( $withVariations )
     {
-        //include_once( 'lib/ezlocale/classes/ezlocale.php' );
         $localeList = eZLocale::localeList( true, $withVariations );
         if ( $localeList === null )
         {
@@ -192,7 +196,6 @@ class eZContentFunctionCollection
 
     function fetchLocale( $localeCode )
     {
-        //include_once( 'lib/ezlocale/classes/ezlocale.php' );
         // Fetch locale list
         $localeList = eZLocale::localeList( false, true );
         $localeObj = eZLocale::instance( $localeCode );
@@ -212,7 +215,6 @@ class eZContentFunctionCollection
 
     function fetchObject( $objectID )
     {
-        //include_once( 'kernel/classes/ezcontentobject.php' );
         $object = eZContentObject::fetch( $objectID );
         if ( $object === null )
         {
@@ -229,7 +231,6 @@ class eZContentFunctionCollection
 
     function fetchClass( $classID )
     {
-        //include_once( 'kernel/classes/ezcontentclass.php' );
         if ( !is_numeric( $classID ) )
             $object = eZContentClass::fetchByIdentifier( $classID );
         else
@@ -249,7 +250,6 @@ class eZContentFunctionCollection
 
     function fetchClassAttributeList( $classID, $versionID )
     {
-        //include_once( 'kernel/classes/ezcontentclass.php' );
         $objectList = eZContentClass::fetch( $classID )->fetchAttributes( false, true, $versionID );
         if ( $objectList === null )
         {
@@ -266,7 +266,6 @@ class eZContentFunctionCollection
 
     function fetchClassAttribute( $attributeID, $versionID )
     {
-        //include_once( 'kernel/classes/ezcontentclass.php' );
         $attribute = eZContentClassAttribute::fetch( $attributeID, true, $versionID );
         if ( $attribute === null )
         {
@@ -285,7 +284,6 @@ class eZContentFunctionCollection
                                $classID, $attribute_filter, $extended_attribute_filter, $class_filter_type, $class_filter_array,
                                $groupBy, $mainNodeOnly, $ignoreVisibility, $limitation )
     {
-        //include_once( 'kernel/classes/ezcontentobjecttreenode.php' );
         $treeParameters = array( 'Offset' => $offset,
                                  'Limit' => $limit,
                                  'Limitation' => $limitation,
@@ -332,9 +330,8 @@ class eZContentFunctionCollection
 
     function fetchObjectTree( $parentNodeID, $sortBy, $onlyTranslated, $language, $offset, $limit, $depth, $depthOperator,
                               $classID, $attribute_filter, $extended_attribute_filter, $class_filter_type, $class_filter_array,
-                              $groupBy, $mainNodeOnly, $ignoreVisibility, $limitation, $asObject, $objectNameFilter, $loadDataMap = true )
+                              $groupBy, $mainNodeOnly, $ignoreVisibility, $limitation, $asObject, $objectNameFilter, $loadDataMap = null )
     {
-        //include_once( 'kernel/classes/ezcontentobjecttreenode.php' );
         $treeParameters = array( 'Offset' => $offset,
                                  'OnlyTranslated' => $onlyTranslated,
                                  'Language' => $language,
@@ -361,6 +358,8 @@ class eZContentFunctionCollection
             $treeParameters['AsObject'] = $asObject;
         if ( $loadDataMap )
             $treeParameters['LoadDataMap'] = true;
+        else if ( $loadDataMap === null )
+            $treeParameters['LoadDataMap'] = 15;
         if ( $depth !== false )
         {
             $treeParameters['Depth'] = $depth;
@@ -389,8 +388,6 @@ class eZContentFunctionCollection
                                    $attributeFilter, $depth, $depthOperator,
                                    $ignoreVisibility, $limitation, $mainNodeOnly, $extendedAttributeFilter, $objectNameFilter )
     {
-        //include_once( 'kernel/classes/ezcontentobjecttreenode.php' );
-
         $childrenCount = null;
 
         if ( is_numeric( $parentNodeID ) or is_array( $parentNodeID ) )
@@ -425,7 +422,6 @@ class eZContentFunctionCollection
     function fetchContentSearch( $searchText, $subTreeArray, $offset, $limit, $searchTimestamp, $publishDate, $sectionID,
                                  $classID, $classAttributeID, $ignoreVisibility, $limitation, $sortArray )
     {
-        //include_once( "kernel/classes/ezsearch.php" );
         $searchArray = eZSearch::buildSearchArray();
         $parameters = array();
         if ( $classID !== false )
@@ -453,24 +449,22 @@ class eZContentFunctionCollection
         return array( 'result' => $searchResult );
     }
 
-    function fetchTrashObjectCount( $objectNameFilter )
+    function fetchTrashObjectCount( $objectNameFilter, $attributeFilter = false )
     {
-        //include_once( 'kernel/classes/ezcontentobjecttrashnode.php' );
+        $params = array();
         if ( $objectNameFilter !== false )
         {
-            $params = array();
             $params['ObjectNameFilter'] = $objectNameFilter;
         }
-        else
-            $params = false;
+
+        $params[ 'AttributeFilter' ] = $attributeFilter;
 
         $trashCount = eZContentObjectTrashNode::trashListCount( $params );
         return array( 'result' => $trashCount );
     }
 
-    function fetchTrashObjectList( $offset, $limit, $objectNameFilter )
+    function fetchTrashObjectList( $offset, $limit, $objectNameFilter, $attributeFilter = false, $sortBy = false, $asObject = true )
     {
-        //include_once( 'kernel/classes/ezcontentobjecttrashnode.php' );
         $params = array();
         if ( $objectNameFilter !== false )
         {
@@ -478,6 +472,9 @@ class eZContentFunctionCollection
         }
         $params[ 'Limit' ] = $limit;
         $params[ 'Offset' ] = $offset;
+        $params[ 'AttributeFilter' ] = $attributeFilter;
+        $params[ 'SortBy' ] = $sortBy;
+        $params[ 'AsObject' ] = $asObject;
 
         $trashNodesList = eZContentObjectTrashNode::trashList( $params, false );
         return array( 'result' => $trashNodesList );
@@ -541,13 +538,13 @@ class eZContentFunctionCollection
     }
 
 
-    function fetchVersionList( $contentObject, $offset, $limit )
+    function fetchVersionList( $contentObject, $offset, $limit, $sorts = null )
     {
         if ( !is_object( $contentObject ) )
             return array( 'result' => null );
         $versionList =  eZPersistentObject::fetchObjectList( eZContentObjectVersion::definition(),
                                                               null, array(  'contentobject_id' => $contentObject->attribute("id") ),
-                                                                   null, array( 'length' => $limit, 'offset' => $offset ),
+                                                                   $sorts, array( 'length' => $limit, 'offset' => $offset ),
                                                                    true );
         return array( 'result' => $versionList );
 
@@ -591,7 +588,6 @@ class eZContentFunctionCollection
         }
         else
         {
-            //include_once( 'kernel/classes/ezcontentclass.php' );
             $classList = eZContentClass::canInstantiateClassList( $asObject, $filterType == 'include', $ClassGroupIDs, $fetchID );
         }
 
@@ -605,7 +601,6 @@ class eZContentFunctionCollection
             $contentObject = $parentNode->attribute( 'object' );
             return array( 'result' => $contentObject->attribute( 'can_create' ) );
         }
-        //include_once( 'kernel/classes/ezcontentclass.php' );
         return array( 'result' => eZContentClass::canInstantiateClasses() );
     }
 
@@ -623,29 +618,23 @@ class eZContentFunctionCollection
 
     function fetchBookmarks( $offset, $limit )
     {
-        //include_once( 'kernel/classes/datatypes/ezuser/ezuser.php' );
         $user = eZUser::currentUser();
-        //include_once( 'kernel/classes/ezcontentbrowsebookmark.php' );
         return array( 'result' => eZContentBrowseBookmark::fetchListForUser( $user->id(), $offset, $limit ) );
     }
 
     function fetchRecent()
     {
         $user = eZUser::currentUser();
-        //include_once( 'kernel/classes/ezcontentbrowserecent.php' );
         return array( 'result' => eZContentBrowseRecent::fetchListForUser( $user->id() ) );
     }
 
     function fetchSectionList()
     {
-        //include_once( 'kernel/classes/ezsection.php' );
         return array( 'result' => eZSection::fetchList() );
     }
 
     function fetchTipafriendTopList( $offset, $limit, $start_time, $end_time, $duration, $ascending, $extended )
     {
-        //include_once( 'kernel/classes/eztipafriendcounter.php' );
-
         $currentTime = time();
         $conds = array();
 
@@ -685,7 +674,6 @@ class eZContentFunctionCollection
                                                         array( 'node_id' ),
                                                         array( array( 'operation' => 'count( * )',
                                                                       'name' => 'count' ) ) );
-        //include_once( 'kernel/classes/ezcontentobjecttreenode.php' );
         if ( $extended )
         {
             foreach ( array_keys( $topList ) as $key )
@@ -716,9 +704,6 @@ class eZContentFunctionCollection
 
     function fetchMostViewedTopList( $classID, $sectionID, $offset, $limit )
     {
-        //include_once( 'kernel/classes/ezviewcounter.php' );
-        //include_once( 'kernel/classes/ezcontentobjecttreenode.php' );
-
         $topList = eZViewCounter::fetchTopList( $classID, $sectionID, $offset, $limit );
         $contentNodeList = array();
         foreach ( array_keys ( $topList ) as $key )
@@ -735,25 +720,21 @@ class eZContentFunctionCollection
 
     function fetchCollectedInfoCount( $objectAttributeID, $objectID, $value, $creatorID = false, $userIdentifier = false )
     {
-        //include_once( 'kernel/infocollector/ezinfocollectorfunctioncollection.php' );
         return eZInfocollectorFunctionCollection::fetchCollectedInfoCount( $objectAttributeID, $objectID, $value, $creatorID, $userIdentifier );
     }
 
     function fetchCollectedInfoCountList( $objectAttributeID )
     {
-        //include_once( 'kernel/infocollector/ezinfocollectorfunctioncollection.php' );
         return eZInfocollectorFunctionCollection::fetchCollectedInfoCountList( $objectAttributeID );
     }
 
     function fetchCollectedInfoCollection( $collectionID, $contentObjectID )
     {
-        //include_once( 'kernel/infocollector/ezinfocollectorfunctioncollection.php' );
         return eZInfocollectorFunctionCollection::fetchCollectedInfoCollection( $collectionID, $contentObjectID );
     }
 
     function fetchCollectionsList( $objectID = false, $creatorID = false, $userIdentifier = false, $limit = false, $offset = false, $sortBy = false )
     {
-        //include_once( 'kernel/infocollector/ezinfocollectorfunctioncollection.php' );
         return eZInfocollectorFunctionCollection::fetchCollectionsList( $objectID,
                                                                         $creatorID,
                                                                         $userIdentifier,
@@ -764,7 +745,6 @@ class eZContentFunctionCollection
 
     function fetchObjectByAttribute( $identifier )
     {
-        //include_once( 'kernel/classes/ezcontentobjectattribute.php' );
         $contentObjectAttribute = eZContentObjectAttribute::fetchByIdentifier( $identifier );
         if ( $contentObjectAttribute === null )
         {
@@ -780,7 +760,6 @@ class eZContentFunctionCollection
 
     function fetchObjectCountByUserID( $classID, $userID )
     {
-        //include_once( 'kernel/classes/ezcontentobject.php' );
         $objectCount = eZContentObject::fetchObjectCountByUserID( $classID, $userID );
         return array( 'result' => $objectCount );
     }
@@ -802,13 +781,11 @@ class eZContentFunctionCollection
             $classIDArray = $classid;
         }
 
-        //include_once( 'kernel/classes/ezcontentobjecttreenode.php' );
         $showInvisibleNodesCond = eZContentObjectTreeNode::createShowInvisibleSQLString( true, false );
         $limitation = false;
         $limitationList = eZContentObjectTreeNode::getLimitationList( $limitation );
         $sqlPermissionChecking = eZContentObjectTreeNode::createPermissionCheckingSQL( $limitationList );
 
-        //include_once( 'lib/ezdb/classes/ezdb.php' );
         $db = eZDB::instance();
 
         $alphabet = $db->escapeString( $alphabet );
@@ -893,7 +870,6 @@ class eZContentFunctionCollection
             $classIDArray = $classid;
         }
 
-        //include_once( 'kernel/classes/ezcontentobjecttreenode.php' );
         $showInvisibleNodesCond = eZContentObjectTreeNode::createShowInvisibleSQLString( true, false );
         $limitation = false;
         $limitationList = eZContentObjectTreeNode::getLimitationList( $limitation );
@@ -906,6 +882,8 @@ class eZContentFunctionCollection
         $keywordNodeArray = array();
         $lastKeyword = '';
 
+        $db = eZDB::instance();
+
         //in SELECT clause below we will use a full keyword value
         //or just a part of ezkeyword.keyword matched to $alphabet respective to $includeDuplicates parameter.
         //In the case $includeDuplicates = ture we need only a part
@@ -913,12 +891,8 @@ class eZContentFunctionCollection
         $sqlKeyword = 'ezkeyword.keyword';
         if ( !$includeDuplicates )
         {
-            //SUBSTRING( str FROM pos FOR len ) is a SQL92 compliant syntax.
-            $sqlKeyword = 'SUBSTRING(ezkeyword.keyword FROM 1 FOR '.strlen( $alphabet ).') AS keyword ';
+            $sqlKeyword = $db->subString('ezkeyword.keyword', 1, strlen( $alphabet ) ) . ' AS keyword ';
         }
-
-        //include_once( 'lib/ezdb/classes/ezdb.php' );
-        $db = eZDB::instance();
 
         $alphabet = $db->escapeString( $alphabet );
 
@@ -1016,7 +990,6 @@ class eZContentFunctionCollection
 
         $keyWords = $db->arrayQuery( $query, $db_params );
 
-        //include_once( 'lib/ezi18n/classes/ezchartransform.php' );
         $trans = eZCharTransform::instance();
 
         foreach ( $keyWords as $keywordArray )
@@ -1056,7 +1029,6 @@ class eZContentFunctionCollection
             eZDebug::writeError( "DatatypeString not supported in fetch same_classattribute_node, use int, float or text" );
             return false;
         }
-        //include_once( 'lib/ezdb/classes/ezdb.php' );
         $db = eZDB::instance();
         $contentclassattributeID =(int) $contentclassattributeID;
         $value = $db->escapeString( $value );
@@ -1090,7 +1062,6 @@ class eZContentFunctionCollection
         }
         if (  $contentClassID !== false and !is_numeric( $contentClassID ) )
         {
-            //include_once( 'kernel/classes/ezcontentclass.php' );
             $class = eZContentClass::fetchByIdentifier( $contentClassID );
             if ( !$class )
                 return array( 'error' => array( 'error_type' => 'kernel',
@@ -1107,14 +1078,12 @@ class eZContentFunctionCollection
     // Fetches all navigation parts as an array
     function fetchNavigationParts()
     {
-        //include_once( 'kernel/classes/eznavigationpart.php' );
         return array( 'result' => eZNavigationPart::fetchList() );
     }
 
     // Fetches one navigation parts by identifier
     function fetchNavigationPart( $identifier )
     {
-        //include_once( 'kernel/classes/eznavigationpart.php' );
         return array( 'result' => eZNavigationPart::fetchPartByIdentifier( $identifier ) );
     }
 
@@ -1217,7 +1186,7 @@ class eZContentFunctionCollection
     }
 
     // Fetches reverse related objects
-    function fetchRelatedObjects( $objectID, $attributeID, $allRelations, $groupByAttribute, $sortBy )
+    function fetchRelatedObjects( $objectID, $attributeID, $allRelations, $groupByAttribute, $sortBy, $limit = false, $offset = false, $asObject = true, $loadDataMap = false, $ignoreVisibility = null )
     {
         if ( !$objectID )
         {
@@ -1225,6 +1194,11 @@ class eZContentFunctionCollection
             return false;
         }
         $params = array();
+        $params['Limit'] = $limit;
+        $params['Offset'] = $offset;
+        $params['AsObject'] = $asObject;
+        $params['LoadDataMap'] = $loadDataMap;
+
         if ( $sortBy )
         {
             if ( is_array( $sortBy ) )
@@ -1236,6 +1210,12 @@ class eZContentFunctionCollection
                 eZDebug::writeError( "Function parameter 'SortBy' should be an array.", 'content/fetchRelatedObjects' );
             }
         }
+
+        if ( $ignoreVisibility !== null )
+        {
+            $params['IgnoreVisibility'] = $ignoreVisibility;
+        }
+
         if ( !$attributeID )
         {
             $attributeID = 0;
@@ -1259,7 +1239,6 @@ class eZContentFunctionCollection
 
         if ( $attributeID && !is_numeric( $attributeID ) && !is_bool( $attributeID ) )
         {
-            //include_once( 'kernel/classes/ezcontentobjecttreenode.php' );
             $attributeID = eZContentObjectTreeNode::classAttributeIDByIdentifier( $attributeID );
             if ( !$attributeID )
             {
@@ -1271,7 +1250,6 @@ class eZContentFunctionCollection
         $object = eZContentObject::fetch( $objectID );
         if ( $object === null )
             return false;
-        //include_once( 'kernel/classes/ezcontentobject.php' );
         return array( 'result' => $object->relatedContentObjectList( false, $objectID, $attributeID, $groupByAttribute, $params ) );
     }
 
@@ -1308,7 +1286,6 @@ class eZContentFunctionCollection
 
         if ( $attributeID && !is_numeric( $attributeID ) && !is_bool( $attributeID ) )
         {
-            //include_once( 'kernel/classes/ezcontentobjecttreenode.php' );
             $attributeID = eZContentObjectTreeNode::classAttributeIDByIdentifier( $attributeID );
             if ( !$attributeID )
             {
@@ -1320,13 +1297,17 @@ class eZContentFunctionCollection
         $object = eZContentObject::fetch( $objectID );
         if ( $object === null )
             return false;
-        //include_once( 'kernel/classes/ezcontentobject.php' );
         return array( 'result' => $object->relatedContentObjectCount( false, $attributeID, $params ) );
     }
 
-    function fetchReverseRelatedObjects( $objectID, $attributeID, $allRelations, $groupByAttribute, $sortBy, $ignoreVisibility )
+    function fetchReverseRelatedObjects( $objectID, $attributeID, $allRelations, $groupByAttribute, $sortBy, $ignoreVisibility,  $limit = false, $offset = false, $asObject = true, $loadDataMap = false  )
     {
         $params = array();
+        $params['Limit'] = $limit;
+        $params['Offset'] = $offset;
+        $params['AsObject'] = $asObject;
+        $params['LoadDataMap'] = $loadDataMap;
+
         if ( $sortBy )
         {
             if ( is_array( $sortBy ) )
@@ -1365,7 +1346,6 @@ class eZContentFunctionCollection
 
         if ( $attributeID && !is_numeric( $attributeID ) && !is_bool( $attributeID ) )
         {
-            //include_once( 'kernel/classes/ezcontentobjecttreenode.php' );
             $attributeID = eZContentObjectTreeNode::classAttributeIDByIdentifier( $attributeID );
             if ( !$attributeID )
             {
@@ -1373,7 +1353,6 @@ class eZContentFunctionCollection
                 return false;
             }
         }
-        //include_once( 'kernel/classes/ezcontentobject.php' );
         return array( 'result' => eZContentObject::fetch( $objectID )->reverseRelatedObjectList( false, $attributeID, $groupByAttribute, $params ) );
     }
 
@@ -1409,7 +1388,6 @@ class eZContentFunctionCollection
 
         if ( $attributeID && !is_numeric( $attributeID ) && !is_bool( $attributeID ) )
         {
-            //include_once( 'kernel/classes/ezcontentobjecttreenode.php' );
             $attributeID = eZContentObjectTreeNode::classAttributeIDByIdentifier( $attributeID );
             if ( !$attributeID )
             {
@@ -1417,7 +1395,6 @@ class eZContentFunctionCollection
                 return false;
             }
         }
-        //include_once( 'kernel/classes/ezcontentobject.php' );
         return array( 'result' => eZContentObject::fetch( $objectID )->reverseRelatedObjectCount( false, $attributeID, $params ) );
     }
 
@@ -1436,7 +1413,6 @@ class eZContentFunctionCollection
 
     function fetchCountryList( $filter, $value )
     {
-        //include_once( 'kernel/classes/datatypes/ezcountry/ezcountrytype.php' );
         // Fetch country list
         if ( !$filter and !$value )
         {

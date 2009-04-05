@@ -5,9 +5,9 @@
 // Created on: <16-Aug-2002 16:34:41 sp>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -26,7 +26,7 @@
 //
 //
 
-/*! \file ezpolicy.php
+/*! \file
 */
 
 /*!
@@ -35,9 +35,6 @@
   \brief Defines a policy in the permission system
 
 */
-
-//include_once( 'kernel/classes/ezpolicylimitation.php' );
-//include_once( 'kernel/classes/ezrole.php' );
 
 class eZPolicy extends eZPersistentObject
 {
@@ -98,9 +95,6 @@ class eZPolicy extends eZPersistentObject
         return $this->UserRoleID;
     }
 
-    /*!
-     \reimp
-    */
     function setAttribute( $attr, $val )
     {
         switch( $attr )
@@ -188,8 +182,6 @@ class eZPolicy extends eZPersistentObject
     */
     function appendLimitation( $identifier, $values )
     {
-        //include_once( 'kernel/classes/ezpolicylimitation.php' );
-        //include_once( 'kernel/classes/ezpolicylimitationvalue.php' );
         $limitation = eZPolicyLimitation::create( $this->ID, $identifier );
 
         $db = eZDB::instance();
@@ -254,7 +246,6 @@ class eZPolicy extends eZPersistentObject
      */
     function removeThis( $id = false )
     {
-        //include_once( 'lib/ezdb/classes/ezdb.php' );
         $db = eZDB::instance();
         $db->begin();
         foreach ( $this->attribute( 'limitations' ) as $limitation )

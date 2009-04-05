@@ -5,9 +5,9 @@
 // Created on: <12-May-2003 16:35:47 sp>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -26,7 +26,7 @@
 //
 //
 
-/*! \file ezsubtreehandler.php
+/*! \file
 */
 
 /*!
@@ -34,13 +34,6 @@
   \brief The class eZSubTreeHandler does
 
 */
-
-//include_once( 'kernel/classes/notification/eznotificationeventhandler.php' );
-//include_once( 'kernel/classes/datatypes/ezuser/ezuser.php' );
-//include_once( 'kernel/classes/notification/eznotificationcollection.php' );
-//include_once( 'kernel/classes/notification/eznotificationschedule.php' );
-//include_once( 'kernel/classes/notification/handler/ezsubtree/ezsubtreenotificationrule.php' );
-//include_once( 'kernel/classes/notification/handler/ezgeneraldigest/ezgeneraldigestusersettings.php' );
 
 class eZSubTreeHandler extends eZNotificationEventHandler
 {
@@ -161,6 +154,8 @@ class eZSubTreeHandler extends eZNotificationEventHandler
             $parameters['reply_to'] = $tpl->variable( 'reply_to' );
         if ( $tpl->hasVariable( 'from' ) )
             $parameters['from'] = $tpl->variable( 'from' );
+        if ( $tpl->hasVariable( 'content_type' ) )
+            $parameters['content_type'] = $tpl->variable( 'content_type' );
 
         $collection = eZNotificationCollection::create( $event->attribute( 'id' ),
                                                         self::NOTIFICATION_HANDLER_ID,
@@ -298,7 +293,6 @@ class eZSubTreeHandler extends eZNotificationEventHandler
     {
         if ( $http->hasPostVariable( 'NewRule_' . self::NOTIFICATION_HANDLER_ID  ) )
         {
-            //include_once( "kernel/classes/ezcontentbrowse.php" );
             eZContentBrowse::browse( array( 'action_name' => 'AddSubtreeSubscribingNode',
                                             'from_page' => '/notification/settings/' ),
                                      $module );
@@ -342,9 +336,6 @@ class eZSubTreeHandler extends eZNotificationEventHandler
 
     }
 
-    /*!
-     \reimp
-    */
     function cleanup()
     {
         eZSubtreeNotificationRule::cleanup();

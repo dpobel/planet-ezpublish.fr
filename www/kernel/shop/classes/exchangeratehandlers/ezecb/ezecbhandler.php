@@ -5,9 +5,9 @@
 // Created on: <12-Mar-2006 13:06:15 dl>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -26,10 +26,8 @@
 //
 //
 
-/*! \file ezecbhandler.php
+/*! \file
 */
-
-//include_once( 'kernel/shop/classes/exchangeratehandlers/ezexchangeratesupdatehandler.php' );
 
 class eZECBHandler extends eZExchangeRatesUpdateHandler
 {
@@ -91,7 +89,6 @@ class eZECBHandler extends eZExchangeRatesUpdateHandler
 
         $ratesList = array();
 
-        //include_once( 'lib/ezutils/classes/ezhttptool.php' );
         $buf = eZHTTPTool::sendHTTPRequest( "{$serverName}/{$ratesURI}", $serverPort,  false, 'eZ Publish', false );
         if ( $buf )
         {

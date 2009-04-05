@@ -5,9 +5,9 @@
 // Created on: <04-Nov-2005 16:54:35 dl>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -32,10 +32,6 @@
   \brief Stores a price in multicurrency.
 
 */
-
-//include_once( 'kernel/classes/ezdatatype.php' );
-//include_once( 'kernel/classes/datatypes/ezmultiprice/ezmultiprice.php' );
-//include_once( 'lib/ezutils/classes/ezstringutils.php' );
 
 class eZMultiPriceType extends eZDataType
 {
@@ -92,6 +88,11 @@ class eZMultiPriceType extends eZDataType
                 }
             }
         }
+        else if ( $contentObjectAttribute->validateIsRequired() )
+        {
+            $contentObjectAttribute->setValidationError( ezi18n( 'kernel/classes/datatypes', 'Input required' ) );
+            return eZInputValidator::STATE_INVALID;
+        }
 
         return eZInputValidator::STATE_ACCEPTED;
     }
@@ -110,6 +111,18 @@ class eZMultiPriceType extends eZDataType
         if ( $classAttribute->attribute( self::INCLUDE_VAT_FIELD ) == 0 )
             $classAttribute->setAttribute( self::INCLUDE_VAT_FIELD, self::INCLUDED_VAT );
         $classAttribute->store();
+    }
+
+    /*!
+     Sets the default value.
+    */
+    function initializeObjectAttribute( $contentObjectAttribute, $currentVersion, $originalContentObjectAttribute )
+    {
+        if ( $currentVersion != false )
+        {
+            $dataText = $originalContentObjectAttribute->attribute( 'data_text' );
+            $contentObjectAttribute->setAttribute( "data_text", $dataText );
+        }
     }
 
     /*!
@@ -362,9 +375,6 @@ class eZMultiPriceType extends eZDataType
 
     }
 
-    /*!
-     \reimp
-    */
     function serializeContentClassAttribute( $classAttribute, $attributeNode, $attributeParametersNode )
     {
         $price = $classAttribute->content();
@@ -401,9 +411,6 @@ class eZMultiPriceType extends eZDataType
         }
     }
 
-    /*!
-     \reimp
-    */
     function unserializeContentClassAttribute( $classAttribute, $attributeNode, $attributeParametersNode )
     {
         $vatNode = $attributeParametersNode->getElementsByTagName( 'vat-included' )->item( 0 );
@@ -444,9 +451,6 @@ class eZMultiPriceType extends eZDataType
     }
 
 
-    /*!
-     \reimp
-    */
     function serializeContentObjectAttribute( $package, $objectAttribute )
     {
         $node = $this->createContentObjectAttributeDOMNode( $objectAttribute );
@@ -460,9 +464,6 @@ class eZMultiPriceType extends eZDataType
         return $node;
     }
 
-    /*!
-     \reimp
-    */
     function unserializeContentObjectAttribute( $package, $objectAttribute, $attributeNode )
     {
         $rootNode = $attributeNode->getElementsByTagName( 'ezmultiprice' )->item( 0 );
@@ -506,7 +507,6 @@ class eZMultiPriceType extends eZDataType
 
         if ( !isset( $params['currency_code'] ) )
         {
-            //include_once( 'kernel/shop/classes/ezshopfunctions.php' );
             $params['currency_code'] = eZShopFunctions::preferredCurrencyCode();
         }
 
@@ -522,12 +522,14 @@ class eZMultiPriceType extends eZDataType
         return $sql;
     }
 
-    /*!
-      \reimp
-    */
     function diff( $old, $new, $options = false )
     {
         return null;
+    }
+
+    function supportsBatchInitializeObjectAttribute()
+    {
+        return true;
     }
 }
 

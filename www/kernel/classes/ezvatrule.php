@@ -5,9 +5,9 @@
 // Created on: <17-Feb-2006 17:00:26 vs>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -32,9 +32,6 @@
   \ingroup eZKernel
 */
 
-require_once( 'kernel/classes/ezpersistentobject.php' );
-require_once( 'lib/ezdb/classes/ezdb.php' );
-
 class eZVatRule extends eZPersistentObject
 {
     function eZVatRule( $row )
@@ -43,9 +40,6 @@ class eZVatRule extends eZPersistentObject
         $this->eZPersistentObject( $row );
     }
 
-    /**
-     * \reimp
-     */
     static function definition()
     {
         return array( "fields" => array( "id" => array( 'name' => 'ID',
@@ -73,9 +67,6 @@ class eZVatRule extends eZPersistentObject
                       "name" => "ezvatrule" );
     }
 
-    /**
-     * \reimp
-     */
     function setAttribute( $attr, $val )
     {
         switch( $attr )
@@ -196,9 +187,6 @@ class eZVatRule extends eZPersistentObject
         $db->commit();
     }
 
-    /**
-     * \reimp
-     */
     function store( $fieldFilters = null )
     {
         $db = eZDB::instance();
@@ -286,7 +274,7 @@ class eZVatRule extends eZPersistentObject
     /**
      * Return names of product categories associated with the rule.
      *
-     * \prrivate
+     * \private
      */
     function productCategoriesNames()
     {
@@ -308,7 +296,6 @@ class eZVatRule extends eZPersistentObject
      */
     function vatTypeName()
     {
-        require_once( 'kernel/classes/ezvattype.php' );
         $vatType = eZVatType::fetch( $this->attribute( 'vat_type' ) );
         return $vatType->attribute( 'name' );
     }
@@ -318,7 +305,6 @@ class eZVatRule extends eZPersistentObject
      */
     function vatTypeObject()
     {
-        require_once( 'kernel/classes/ezvattype.php' );
         return eZVatType::fetch( $this->attribute( 'vat_type' ) );
     }
 

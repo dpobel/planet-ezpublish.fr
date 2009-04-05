@@ -5,9 +5,9 @@
 // Created on: <06-Nov-2002 15:10:02 wy>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -26,7 +26,7 @@
 //
 //
 
-/*! \file ezxmlinputhandler.php
+/*! \file
 */
 
 /*!
@@ -35,8 +35,6 @@
   \brief The class eZXMLInputHandler does
 
 */
-
-//include_once( 'kernel/classes/datatypes/ezurl/ezurl.php' );
 
 class eZXMLInputHandler
 {
@@ -47,8 +45,9 @@ class eZXMLInputHandler
     {
         $this->XMLData = $xmlData;
         $this->ContentObjectAttribute = $contentObjectAttribute;
-        $this->AliasedType = $aliasedType;
         $this->AliasedHandler = null;
+        // use of $aliasedType is deprecated as of 4.1 and setting is ignored  in aliased_handler
+        $this->AliasedType = $aliasedType;
     }
 
     /*!
@@ -92,12 +91,12 @@ class eZXMLInputHandler
             }break;
             case 'aliased_type':
             {
+                eZDebug::writeWarning( "'aliased_type' is deprecated as of 4.1 and not in use anymore, meaning it will always return false.", __METHOD__ );
                 return $this->AliasedType;
             }break;
             case 'aliased_handler':
             {
-                if ( $this->AliasedType !== false and
-                     $this->AliasedHandler === null )
+                if ( $this->AliasedHandler === null )
                 {
                     $this->AliasedHandler = eZXMLText::inputHandler( $this->XMLData,
                                                                      $this->AliasedType,

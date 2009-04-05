@@ -5,9 +5,9 @@
 // Created on: <16-Apr-2004 09:56:02 amos>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -26,7 +26,6 @@
 //
 //
 
-//include_once( 'kernel/setup/steps/ezstep_installer.php');
 require_once( "kernel/common/i18n.php" );
 
 /*!
@@ -43,7 +42,17 @@ class eZStepSiteTypes extends eZStepInstaller
     function eZStepSiteTypes( $tpl, $http, $ini, &$persistenceList )
     {
         $ini = eZINI::instance( 'package.ini' );
-        $this->IndexURL = $ini->variable( 'RepositorySettings', 'RemotePackagesIndexURL' );
+        $indexURL = trim( $ini->variable( 'RepositorySettings', 'RemotePackagesIndexURL' ) );
+        if ( $indexURL === '' )
+        {
+            $indexURL = trim( $ini->variable( 'RepositorySettings', 'RemotePackagesIndexURLBase' ) );
+            if ( substr( $indexURL, -1, 1 ) !== '/' )
+            {
+                $indexURL .= '/';
+            }
+            $indexURL .= eZPublishSDK::version( false, false, false ) . '/' . eZPublishSDK::version() . '/';
+        }
+        $this->IndexURL = $indexURL;
 
         if ( substr( $this->IndexURL, -1, 1 ) == '/' )
             $this->XMLIndexURL = $this->IndexURL . 'index.xml';
@@ -73,7 +82,7 @@ class eZStepSiteTypes extends eZStepInstaller
 
         // Create the out directory if not exists.
         if ( !file_exists( $outDir ) )
-            eZDir::mkdir( $outDir, eZDir::directoryPermission(), true );
+            eZDir::mkdir( $outDir, false, true );
 
         // First try CURL
         if ( extension_loaded( 'curl' ) )
@@ -127,9 +136,6 @@ class eZStepSiteTypes extends eZStepInstaller
             // Note: Could be blocked by not allowing remote calls.
             if ( !copy( $url, $fileName ) )
             {
-                //include_once( 'lib/ezutils/classes/ezhttptool.php' );
-                //include_once( 'lib/ezfile/classes/ezfile.php' );
-
                 $buf = eZHTTPTool::sendHTTPRequest( $url, 80, false, 'eZ Publish', false );
 
                 $header = false;
@@ -162,7 +168,6 @@ class eZStepSiteTypes extends eZStepInstaller
      */
     function downloadAndImportPackage( $packageName, $packageUrl, $forceDownload = false )
     {
-        //include_once( 'kernel/classes/ezpackage.php' );
         $package = eZPackage::fetch( $packageName, false, false, false );
 
         if ( is_object( $package ) )
@@ -192,12 +197,19 @@ class eZStepSiteTypes extends eZStepInstaller
         $package = eZPackage::import( $archiveName, $packageName, false );
 
         // Remove downloaded ezpkg file
-        //include_once( 'lib/ezfile/classes/ezfilehandler.php' );
         eZFileHandler::unlink( $archiveName );
 
-        if ( !is_object( $package ) )
+        if ( !$package instanceof eZPackage )
         {
-            eZDebug::writeNotice( "Invalid package" );
+            if ( $package == eZPackage::STATUS_INVALID_NAME )
+            {
+                eZDebug::writeNotice( "The package name $packageName is invalid" );
+            }
+            else
+            {
+                eZDebug::writeNotice( "Invalid package" );
+            }
+
             $this->ErrorMsg = ezi18n( 'design/standard/setup/init', 'Invalid package' );
             return false;
         }
@@ -292,9 +304,6 @@ class eZStepSiteTypes extends eZStepInstaller
      */
     function uploadPackage()
     {
-        //include_once( "lib/ezutils/classes/ezhttpfile.php" );
-        //include_once( "kernel/classes/ezpackage.php" );
-
 
         if ( !eZHTTPFile::canFetch( 'PackageBinaryFile' ) )
         {
@@ -321,7 +330,7 @@ class eZStepSiteTypes extends eZStepInstaller
                                      array( '_',
                                             '_',
                                             '' ), $packageName );
-        $package = eZPackage::import( $packageFilename, $packageName );
+        $package = eZPackage::import( $packageFilename, $packageName, false );
 
         if ( is_object( $package ) )
         {
@@ -381,7 +390,6 @@ class eZStepSiteTypes extends eZStepInstaller
             // local (already imported) site package chosen: just fetch it.
             $sitePackageName = $sitePackageInfo;
 
-            //include_once( 'kernel/classes/ezpackage.php' );
             $package = eZPackage::fetch( $sitePackageName, false, false, false );
             $this->ErrorMsg = ezi18n( 'design/standard/setup/init', 'Invalid package' ) . '.';
         }
@@ -395,21 +403,68 @@ class eZStepSiteTypes extends eZStepInstaller
         return $downloadDependandPackagesResult == false ? false : !$downloaded;
     }
 
-    /*!
-     \reimp
-     */
     function init()
     {
         if ( $this->hasKickstartData() )
         {
             $data = $this->kickstartData();
+            $remoteSitePackages = $this->retrieveRemoteSitePackagesList();
+            $importedSitePackages = $this->fetchAvailableSitePackages();
+            $dependenciesStatus = array();
 
+            // check site package dependencies to show their status in the template
+            foreach ( $importedSitePackages as $sitePackage )
+            {
+                $sitePackageName = $sitePackage->attribute( 'name' );
+                $dependencies = $sitePackage->attribute( 'dependencies' );
+                $requirements = $dependencies['requires'];
+
+                foreach ( $requirements as $req )
+                {
+                    $requiredPackageName    = $req['name'];
+                    $requiredPackageVersion = $req['min-version'];
+                    $packageOK = false;
+
+                    $package = eZPackage::fetch( $requiredPackageName, false, false, false );
+                    if ( is_object( $package ) )
+                    {
+                        $currentPackageVersion = $package->getVersion();
+                        if ( version_compare( $currentPackageVersion, $requiredPackageVersion ) >= 0 )
+                            $packageOK = true;
+                    }
+
+                    $dependenciesStatus[$sitePackageName][$requiredPackageName] = array( 'version' => $requiredPackageVersion,
+                                                                                     'status'  => $packageOK );
+                }
+            }
+
+            $sitePackages = $this->createSitePackagesList( $remoteSitePackages, $importedSitePackages, $dependenciesStatus );
             $chosenSitePackage = $data['Site_package'];
+            $downloaded = false;
+            foreach( $sitePackages as $sitePackagesInfo )
+            {
+                if( $sitePackagesInfo['name'] == $chosenSitePackage )
+                {
+                    $sitePackagesInfoChoosen = $sitePackagesInfo;
+                }
+            }
+            if ( isset( $sitePackagesInfoChoosen ) and array_key_exists( 'url', $sitePackagesInfoChoosen ) )
+            {
+                // we already know that we should download the package anyway as it has newer version
+                // so use force download mode
+                $package = $this->downloadAndImportPackage( $chosenSitePackage, $sitePackagesInfoChoosen['url'], true );
+                if ( is_object( $package ) )
+                {
 
-            // TODO: Download site package and it's related packages
-            //       in case of remote package has been choosen.
+                    $downloadDependandPackagesResult = $this->downloadDependantPackages( $package );
+                    if ( $downloadDependandPackagesResult != false )
+                    {
+                        $downloaded = true;
+                    }
+                }
+            }
 
-            if ( $this->selectSiteType( $chosenSitePackage ) )
+            if ( $downloaded and $this->selectSiteType( $chosenSitePackage ) )
             {
                 return $this->kickstartContinueNextStep();
             }
@@ -489,9 +544,6 @@ class eZStepSiteTypes extends eZStepInstaller
         return $sitePackages;
     }
 
-    /*!
-     \reimp
-    */
     function display()
     {
         $remoteSitePackages = $this->retrieveRemoteSitePackagesList();
@@ -552,7 +604,6 @@ class eZStepSiteTypes extends eZStepInstaller
      */
     function fetchAvailableSitePackages()
     {
-        //include_once( 'kernel/classes/ezpackage.php' );
         $packageList = eZPackage::fetchPackages( array( 'db_available' => false ), array( 'type' => 'site' ) );
 
         return $packageList;
@@ -569,7 +620,6 @@ class eZStepSiteTypes extends eZStepInstaller
         if ( $type )
             $typeArray['type'] = $type;
 
-        //include_once( 'kernel/classes/ezpackage.php' );
         $packageList = eZPackage::fetchPackages( array( 'db_available' => false ), $typeArray );
 
         return $packageList;
@@ -604,17 +654,15 @@ class eZStepSiteTypes extends eZStepInstaller
         }
 
         // Parse it.
-        //include_once( 'lib/ezfile/classes/ezfile.php' );
-
-        $xmlString = eZFile::getContents( $idxFileName );
-        @unlink( $idxFileName );
         $dom = new DOMDocument( '1.0', 'utf-8' );
         $dom->preserveWhiteSpace = false;
-        $success = $dom->loadXML( $xmlString );
+        $success = $dom->load( realpath( $idxFileName ) );
+
+        @unlink( $idxFileName );
 
         if ( !$success )
         {
-            eZDebug::writeError( "Malformed index file." );
+            eZDebug::writeError( "Unable to open index file." );
             return false;
         }
 

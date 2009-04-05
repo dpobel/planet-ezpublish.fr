@@ -2,7 +2,7 @@
 /**
  * File containing the eZNamePatternResolver class
  *
- * @copyright Copyright (C) 2005-2008 eZ Systems AS. All rights reserved.
+ * @copyright Copyright (C) 1999-2009 eZ Systems AS. All rights reserved.
  * @license http://ez.no/licenses/gnu_gpl GNU GPL v2
  * @version //autogentag//
  * @package kernel
@@ -145,7 +145,7 @@ class eZNamePatternResolver
 
         $identifierArray = $this->getIdentifiers( $this->origNamePattern );
 
-        $attributes = $this->contentObject->fetchAttributesByIdentifier( $identifierArray, $this->version, $this->translation );
+        $attributes = $this->contentObject->fetchAttributesByIdentifier( $identifierArray, $this->version, array( $this->translation ) );
 
         if ( is_array( $attributes ) )
         {
@@ -232,7 +232,7 @@ class eZNamePatternResolver
             }
             else
             {
-                if ( array_key_exists( $tokenPart, $this->attributeArray ) and $this->attributeArray[$tokenPart] !== "" )
+                if ( array_key_exists( $tokenPart, $this->attributeArray ) and $this->attributeArray[$tokenPart] !== '' and $this->attributeArray[$tokenPart] !== NULL )
                 {
                     $replaceString = $this->attributeArray[$tokenPart];
                     // We want to stop after the first matching token part / identifier is found

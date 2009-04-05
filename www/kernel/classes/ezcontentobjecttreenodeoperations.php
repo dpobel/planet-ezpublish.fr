@@ -5,9 +5,9 @@
 // Created on: <12-Sep-2005 12:02:22 dl>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -26,7 +26,7 @@
 //
 //
 
-/*! \file ezcontentobjecttreenodeoperations.php
+/*! \file
 */
 
 /*!
@@ -70,8 +70,6 @@ class eZContentObjectTreeNodeOperations
         if ( !is_numeric( $nodeID ) || !is_numeric( $newParentNodeID ) )
             return false;
 
-        //include_once( 'kernel/classes/ezcontentobjecttreenode.php' );
-
         $node = eZContentObjectTreeNode::fetch( $nodeID );
         if ( !$node )
             return false;
@@ -84,21 +82,15 @@ class eZContentObjectTreeNodeOperations
         $oldParentNode = $node->fetchParent();
         $oldParentObject = $oldParentNode->object();
 
-        // clear user policy cache if this was a user object
-        //include_once( "lib/ezutils/classes/ezini.php" );
-        $ini = eZINI::instance();
-        $userClassID = $ini->variable( "UserSettings", "UserClassID" );
-        if ( $object->attribute( 'contentclass_id' ) == $userClassID )
+        // clear user policy cache if this is a user object
+        if ( in_array( $object->attribute( 'contentclass_id' ), eZUser::contentClassIDs() ) )
         {
-            //include_once( 'kernel/classes/datatypes/ezuser/ezuser.php' );
             eZUser::cleanupCache();
         }
 
         // clear cache for old placement.
-        //include_once( 'kernel/classes/ezcontentcachemanager.php' );
         eZContentCacheManager::clearContentCacheIfNeeded( $objectID );
 
-        //include_once( "lib/ezdb/classes/ezdb.php" );
         $db = eZDB::instance();
         $db->begin();
 
@@ -124,7 +116,6 @@ class eZContentObjectTreeNodeOperations
             }
 
             // modify assignment
-            //include_once( "kernel/classes/eznodeassignment.php" );
             $curVersion     = $object->attribute( 'current_version' );
             $nodeAssignment = eZNodeAssignment::fetch( $objectID, $curVersion, $oldParentNode->attribute( 'node_id' ) );
 

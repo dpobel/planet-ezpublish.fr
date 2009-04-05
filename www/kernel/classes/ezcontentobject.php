@@ -5,9 +5,9 @@
 // Created on: <17-Apr-2002 09:15:27 bf>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -37,16 +37,6 @@
   \sa eZContentClass
 */
 
-//include_once( "lib/ezdb/classes/ezdb.php" );
-//include_once( 'lib/ezlocale/classes/ezlocale.php' );
-//include_once( "kernel/classes/ezpersistentobject.php" );
-//include_once( "kernel/classes/ezcontentobjectversion.php" );
-//include_once( "kernel/classes/ezcontentobjectattribute.php" );
-//include_once( "kernel/classes/ezcontentclass.php" );
-//include_once( "kernel/classes/ezcontentobjecttreenode.php" );
-//include_once( 'kernel/classes/ezcontentlanguage.php' );
-//include_once( "kernel/classes/datatypes/ezuser/ezuser.php" );
-
 class eZContentObject extends eZPersistentObject
 {
     const STATUS_DRAFT = 0;
@@ -62,6 +52,8 @@ class eZContentObject extends eZPersistentObject
     const PACKAGE_REPLACE = 1;
     const PACKAGE_SKIP = 2;
     const PACKAGE_NEW = 3;
+    const PACKAGE_UPDATE = 6;
+
     const PACKAGE_DELETE = 4;
     const PACKAGE_KEEP = 5;
 
@@ -223,7 +215,11 @@ class eZContentObject extends eZPersistentObject
                                                       'can_edit_languages' => 'canEditLanguages',
                                                       'can_create_languages' => 'canCreateLanguages',
                                                       'always_available' => 'isAlwaysAvailable',
-                                                      'allowed_assign_section_list' => 'allowedAssignSectionList' ),
+                                                      'allowed_assign_section_list' => 'allowedAssignSectionList',
+                                                      'allowed_assign_state_id_list' => 'allowedAssignStateIDList',
+                                                      'allowed_assign_state_list' => 'allowedAssignStateList',
+                                                      'state_id_array' => 'stateIDArray',
+                                                      'state_identifier_array' => 'stateIdentifierArray' ),
                       "increment_key" => "id",
                       "class_name" => "eZContentObject",
                       "sort" => array( "id" => "asc" ),
@@ -234,12 +230,9 @@ class eZContentObject extends eZPersistentObject
      Get class groups this object's class belongs to if match for class groups is enabled.
 
      \return array of class group ids. False if match is disabled.
-     \note The reference for the return value is required to workaround
-           a bug with PHP references.
     */
     function matchIngroupIDList()
     {
-        //include_once( 'lib/ezutils/classes/ezini.php' );
         $contentINI = eZINI::instance( 'content.ini' );
         $inList = false;
         if( $contentINI->variable( 'ContentOverrideSettings', 'EnableClassGroupOverride' ) == 'true' )
@@ -449,7 +442,6 @@ class eZContentObject extends eZPersistentObject
     */
     function setName( $objectName, $versionNum = false, $languageCode = false )
     {
-        $backtrace = debug_backtrace();
         $initialLanguageCode = false;
         if ( $initialLanguage = $this->initialLanguage() )
         {
@@ -577,6 +569,7 @@ class eZContentObject extends eZPersistentObject
     function resetDataMap()
     {
         $this->ContentObjectAttributeArray = array();
+        $this->ContentObjectAttributes = array();
         $this->DataMap = array();
         return $this->DataMap;
     }
@@ -584,12 +577,14 @@ class eZContentObject extends eZPersistentObject
     /*!
       Fetch a set of content object attributes by their class identifiers.
     */
-    function fetchAttributesByIdentifier( $identifierArray, $version = false, $language = false, $asObject = true )
+    function fetchAttributesByIdentifier( $identifierArray, $version = false, $languageArray = false, $asObject = true )
     {
         if ( count( $identifierArray ) === 0 )
         {
             return null;
         }
+
+        $db  = eZDB::instance();
 
         $identifierQuotedString = array();
         foreach ( $identifierArray as $identifier )
@@ -597,18 +592,28 @@ class eZContentObject extends eZPersistentObject
             $identifierQuotedString[] = "'$identifier'";
         }
 
-        $identifierSqlString = implode( ", ", $identifierQuotedString );
-
         if ( !$version or !is_numeric( $version ) )
         {
             $version = $this->CurrentVersion;
         }
 
-        if ( $language !== false )
+        if ( is_array( $languageArray ) )
         {
-            $languageText = "AND\n\t\t\t ezcontentobject_attribute.language_code = '$language'";
+            $langCodeQuotedString = array();
+            foreach ( $languageArray as $langCode )
+            {
+                if ( is_string( $langCode ) )
+                    $langCodeQuotedString[] = "'$langCode'";
+            }
+
+            if ( !empty( $langCodeQuotedString ) )
+            {
+                $languageText = "AND\n\t\t";
+                $languageText .= $db->generateSQLINStatement( $langCodeQuotedString, 'ezcontentobject_attribute.language_code' );
+            }
         }
-        else
+
+        if ( !isset( $languageText ) )
         {
             $languageText = "AND\n\t\t\t" . eZContentLanguage::sqlFilter( 'ezcontentobject_attribute', 'ezcontentobject_version' );
         }
@@ -629,10 +634,10 @@ class eZContentObject extends eZPersistentObject
                 {$versionText}
 
                 AND
-                identifier in ( {$identifierSqlString} )
                 ";
 
-        $db  = eZDB::instance();
+        $query .= $db->generateSQLINStatement( $identifierQuotedString, 'identifier' );
+
         $rows = $db->arrayQuery( $query );
 
         if ( count( $rows ) > 0 )
@@ -691,14 +696,8 @@ class eZContentObject extends eZPersistentObject
         if ( $this->ClassIdentifier !== false )
             return $this->ClassIdentifier;
 
-        $db = eZDB::instance();
-        $id = (int)$this->ClassID;
-        $sql = "SELECT identifier FROM ezcontentclass WHERE id=$id and version=0";
-        $rows = $db->arrayQuery( $sql );
-        if ( count( $rows ) > 0 )
-        {
-            $this->ClassIdentifier = $rows[0]['identifier'];
-        }
+        $this->ClassIdentifier = eZContentClass::classIdentifierByID( $this->ClassID );
+
         return $this->ClassIdentifier;
     }
 
@@ -717,7 +716,7 @@ class eZContentObject extends eZPersistentObject
     }
 
     /*!
-     Get remote id of content node
+     Get remote id of content object
     */
     function remoteID()
     {
@@ -748,7 +747,8 @@ class eZContentObject extends eZPersistentObject
 
     function mainParentNodeID()
     {
-        return eZContentObjectTreeNode::getParentNodeId( $this->attribute( 'main_node_id' ) );
+        $list = eZContentObjectTreeNode::getParentNodeIdListByContentObjectID( $this->ID, false, true );
+        return isset( $list[0] ) ? $list[0] : null;
     }
 
     /*!
@@ -861,6 +861,23 @@ class eZContentObject extends eZPersistentObject
                                ezcontentclass.version=0";
 
         return $fetchSQLString;
+    }
+
+    /**
+     * Creates the SQL for filtering objects by visibility, used by IgnoreVisibility on some fetches.
+     * The object is visible if 1 or more assigned nodes are visible.
+     *
+     * @static
+     * @since Version 4.1
+     * @param bool $IgnoreVisibility ignores visibility if true
+     * @param string $ezcontentobjectTable name of ezcontentobject table used in sql
+     * @return string with sql condition for node filtering by visibility
+     */
+    static function createFilterByVisibilitySQLString( $IgnoreVisibility = false, $ezcontentobjectTable = 'ezcontentobject' )
+    {
+        if ( $IgnoreVisibility )
+            return '';
+        return " AND ( SELECT MIN( ezct.is_invisible ) FROM ezcontentobject_tree ezct WHERE ezct.contentobject_id = $ezcontentobjectTable.id ) = 0 ";
     }
 
     /*!
@@ -1085,8 +1102,6 @@ class eZContentObject extends eZPersistentObject
 
     /*!
       \return an array of versions for the current object.
-     \note The reference for the return value is required to workaround
-           a bug with PHP references.
     */
     function versions( $asObject = true, $parameters = array() )
     {
@@ -1415,6 +1430,7 @@ class eZContentObject extends eZPersistentObject
         $this->setAttribute( 'id', null );
         $this->setAttribute( 'published', time() );
         $this->setAttribute( 'modified', time() );
+        $this->resetDataMap();
     }
 
     /*!
@@ -1424,7 +1440,7 @@ class eZContentObject extends eZPersistentObject
     */
     function copy( $allVersions = true )
     {
-        eZDebugSetting::writeDebug( 'kernel-content-object-copy', 'Copy start, all versions=' . $allVersions ? 'true' : 'false', 'copy' );
+        eZDebugSetting::writeDebug( 'kernel-content-object-copy', 'Copy start, all versions=' . ( $allVersions ? 'true' : 'false' ), 'copy' );
         $user = eZUser::currentUser();
         $userID = $user->attribute( 'contentobject_id' );
 
@@ -1439,6 +1455,12 @@ class eZContentObject extends eZPersistentObject
         $db = eZDB::instance();
         $db->begin();
         $contentObject->store();
+
+        $originalObjectID = $this->attribute( 'id' );
+        $contentObjectID = $contentObject->attribute( 'id' );
+
+        $db->query( "INSERT INTO ezcobj_state_link (contentobject_state_id, contentobject_id)
+                     SELECT contentobject_state_id, $contentObjectID FROM ezcobj_state_link WHERE contentobject_id = $originalObjectID" );
 
         $contentObject->setName( $this->attribute('name') );
         eZDebugSetting::writeDebug( 'kernel-content-object-copy', $contentObject, 'contentObject' );
@@ -1475,7 +1497,7 @@ class eZContentObject extends eZPersistentObject
             {
                 $parentMap = array();
                 $copiedNodeAssignmentList = $contentObjectVersion->attribute( 'node_assignments' );
-                foreach ( $copiedNodeAssignmentList as $$copiedNodeAssignment )
+                foreach ( $copiedNodeAssignmentList as $copiedNodeAssignment )
                 {
                     $parentMap[$copiedNodeAssignment->attribute( 'parent_node' )] = $copiedNodeAssignment;
                 }
@@ -1580,7 +1602,6 @@ class eZContentObject extends eZPersistentObject
                                           link.to_contentobject_id=$objectID" );
         if ( count( $result ) > 0 )
         {
-            include_once( "kernel/classes/ezcontentcachemanager.php" );
             foreach( $result as $row )
             {
                 $attr = new eZContentObjectAttribute( $row );
@@ -1611,7 +1632,6 @@ class eZContentObject extends eZPersistentObject
         // Remove references from XML.
         if ( count( $result ) > 0 )
         {
-            //include_once( "kernel/classes/ezcontentcachemanager.php" );
             foreach( $result as $row )
             {
                 $attr = new eZContentObjectAttribute( $row );
@@ -1639,7 +1659,6 @@ class eZContentObject extends eZPersistentObject
     {
         $delID = $this->ID;
         // Who deletes which content should be logged.
-        //include_once( "kernel/classes/ezaudit.php" );
         eZAudit::writeAudit( 'content-delete', array( 'Object ID' => $delID, 'Content Name' => $this->attribute( 'name' ),
                                                       'Comment' => 'Purged the current object: eZContentObject::purge()' ) );
 
@@ -1657,10 +1676,8 @@ class eZContentObject extends eZPersistentObject
             $dataType->deleteStoredObjectAttribute( $contentobjectAttribute );
         }
 
-        //include_once( 'kernel/classes/ezinformationcollection.php' );
         eZInformationCollection::removeContentObject( $delID );
 
-        //include_once( 'kernel/classes/ezcontentobjecttrashnode.php' );
         eZContentObjectTrashNode::purgeForObject( $delID );
 
         $db->query( "DELETE FROM ezcontentobject_tree
@@ -1674,6 +1691,8 @@ class eZContentObject extends eZPersistentObject
 
         $db->query( "DELETE FROM ezcontentobject_name
              WHERE contentobject_id='$delID'" );
+
+        $db->query( "DELETE FROM ezcobj_state_link WHERE contentobject_id=$delID" );
 
         $db->query( "DELETE FROM ezcontentobject
              WHERE id='$delID'" );
@@ -1689,7 +1708,6 @@ class eZContentObject extends eZPersistentObject
 
         eZContentObject::fixReverseRelations( $delID, 'remove' );
 
-        //include_once( "kernel/classes/ezsearch.php" );
         eZSearch::removeObject( $this );
 
         // Check if deleted object is in basket/wishlist
@@ -1710,8 +1728,6 @@ class eZContentObject extends eZPersistentObject
             }
             // Split $deletedArray into several arrays with $countElements values
             $splitted = array_chunk( $deletedArray, $countElements );
-            //include_once( "kernel/classes/ezproductcollectionitem.php" );
-            //include_once( "kernel/classes/ezwishlist.php" );
             // Remove eZProductCollectionItem and eZWishList
             foreach ( $splitted as $value )
             {
@@ -1723,8 +1739,12 @@ class eZContentObject extends eZPersistentObject
                      SET contentobject_id = 0
                      WHERE  contentobject_id = ' . $delID );
 
+        // Cleanup relations in two steps to avoid locking table for to long
         $db->query( "DELETE FROM ezcontentobject_link
-             WHERE from_contentobject_id = '$delID' OR to_contentobject_id = '$delID'" );
+                     WHERE from_contentobject_id = '$delID'" );
+
+        $db->query( "DELETE FROM ezcontentobject_link  
+                     WHERE to_contentobject_id = '$delID'" );
 
         // Cleanup properties: LastVisit, Creator, Owner
         $db->query( "DELETE FROM ezuservisit
@@ -1738,7 +1758,6 @@ class eZContentObject extends eZPersistentObject
              SET owner_id = 0
              WHERE owner_id = '$delID'" );
 
-        //include_once( "kernel/classes/ezworkflowtype.php" );
         if ( isset( $GLOBALS["eZWorkflowTypeObjects"] ) and is_array( $GLOBALS["eZWorkflowTypeObjects"] ) )
         {
             $registeredTypes =& $GLOBALS["eZWorkflowTypeObjects"];
@@ -1767,13 +1786,11 @@ class eZContentObject extends eZPersistentObject
         $delID = $this->ID;
 
         // Who deletes which content should be logged.
-        //include_once( "kernel/classes/ezaudit.php" );
         eZAudit::writeAudit( 'content-delete', array( 'Object ID' => $delID, 'Content Name' => $this->attribute( 'name' ),
                                                       'Comment' => 'Setted archived status for the current object: eZContentObject::remove()' ) );
 
         $nodes = $this->attribute( 'assigned_nodes' );
 
-        //include_once( "kernel/classes/ezsearch.php" );
         if ( $nodeID === null or count( $nodes ) <= 1 )
         {
             $db = eZDB::instance();
@@ -2023,31 +2040,35 @@ class eZContentObject extends eZPersistentObject
 
     /*!
       \static
-      Fetches the attributes for an array of objects. The objectList parameter
-      contains an array of object id's , versions and language to fetch attributes from.
+      Fetches the attributes for an array of objects. The objList parameter
+      contains an array of objects ( instanceOf eZContentObject or a object that is or
+      extends eZContentObjectTreeNode ) to fetch attributes from.
     */
-    static function fillNodeListAttributes( $nodeList, $asObject = true )
+    static function fillNodeListAttributes( $objList, $asObject = true )
     {
         $db = eZDB::instance();
 
-        if ( count( $nodeList ) > 0 )
+        if ( count( $objList ) > 0 )
         {
             $objectArray = array();
             $tmpLanguageObjectList = array();
             $whereSQL = '';
-            $count = count( $nodeList );
+            $count = count( $objList );
             $i = 0;
-            foreach ( $nodeList as $node )
+            foreach ( $objList as $obj )
             {
-                $object = $node->attribute( 'object' );
+                if ( $obj instanceOf eZContentObject )
+                    $object = $obj;
+                else
+                    $object = $obj->attribute( 'object' );
 
                 $language = $object->currentLanguage();
                 $tmpLanguageObjectList[$object->attribute( 'id' )] = $language;
                 $objectArray = array( 'id' => $object->attribute( 'id' ),
                                       'language' => $language,
-                                      'version' => $node->attribute( 'contentobject_version' ) );
+                                      'version' => $object->attribute( 'current_version' ) );
 
-                $whereSQL .= "( ezcontentobject_attribute.version = '" . $node->attribute( 'contentobject_version' ) . "' AND
+                $whereSQL .= "( ezcontentobject_attribute.version = '" . $object->attribute( 'current_version' ) . "' AND
                     ezcontentobject_attribute.contentobject_id = '" . $object->attribute( 'id' ) . "' AND
                     ezcontentobject_attribute.language_code = '" . $language . "' ) ";
 
@@ -2077,13 +2098,22 @@ class eZContentObject extends eZPersistentObject
                 $tmpAttributeObjectList[$attr->attribute( 'contentobject_id' )][] = $attr;
             }
 
-            foreach ( $nodeList as $node )
+            foreach ( $objList as $obj )
             {
-                $object = $node->attribute( 'object' );
-                $object->setContentObjectAttributes( $tmpAttributeObjectList[$object->attribute( 'id' )],
-                                                     $node->attribute( 'contentobject_version' ),
-                                                     $tmpLanguageObjectList[$object->attribute( 'id' )] );
-                $node->setContentObject( $object );
+                if ( $obj instanceOf eZContentObject )
+                {
+                    $obj->setContentObjectAttributes( $tmpAttributeObjectList[$obj->attribute( 'id' )],
+                                         $obj->attribute( 'current_version' ),
+                                         $tmpLanguageObjectList[$obj->attribute( 'id' )] );
+                }
+                else
+                {
+                    $object = $obj->attribute( 'object' );
+                    $object->setContentObjectAttributes( $tmpAttributeObjectList[$object->attribute( 'id' )],
+                                                         $object->attribute( 'current_version' ),
+                                                         $tmpLanguageObjectList[$object->attribute( 'id' )] );
+                    $obj->setContentObject( $object );
+                }
             }
         }
     }
@@ -2576,7 +2606,7 @@ class eZContentObject extends eZPersistentObject
                          contentclassattribute_id=$attributeID AND
                          op_code='0'";
         $count = $db->arrayQuery( $query );
-        // if current relation does not exists
+        // if current relation does not exist
         if ( !isset( $count[0]['count'] ) ||  $count[0]['count'] == '0'  )
         {
             $db->begin();
@@ -2802,13 +2832,18 @@ class eZContentObject extends eZPersistentObject
             $objectID = $this->ID;
         $objectID =(int) $objectID;
 
+        $limit            = ( isset( $params['Limit']  ) && is_numeric( $params['Limit']  ) ) ? $params['Limit']              : false;
+        $offset           = ( isset( $params['Offset'] ) && is_numeric( $params['Offset'] ) ) ? $params['Offset']             : false;
+        $asObject         = ( isset( $params['AsObject']          ) )                         ? $params['AsObject']           : true;
+        $loadDataMap      = ( isset( $params['LoadDataMap'] ) )                               ? $params['LoadDataMap']        : false;
+
+
         $db = eZDB::instance();
         $sortingString = '';
         $sortingInfo = array( 'attributeFromSQL' => '',
                               'attributeWhereSQL' => '' );
 
         $showInvisibleNodesCond = '';
-        $showInvisibleNodesTable = '';
         // process params (only SortBy and IgnoreVisibility currently supported):
         // Supported sort_by modes:
         //   class_identifier, class_name, modified, name, published, section
@@ -2821,13 +2856,7 @@ class eZContentObject extends eZPersistentObject
             }
             if ( isset( $params['IgnoreVisibility'] ) )
             {
-                $ignoreVisibility = $params['IgnoreVisibility'];
-                if ( !$ignoreVisibility )
-                {
-                    $showInvisibleNodesCond = ' AND ezcontentobject_tree.contentobject_id = ezcontentobject.id
-                                               AND ezcontentobject_tree.is_invisible = 0 ';
-                    $showInvisibleNodesTable = ', ezcontentobject_tree';
-                }
+                $showInvisibleNodesCond = self::createFilterByVisibilitySQLString( $params['IgnoreVisibility'] );
             }
         }
 
@@ -2883,7 +2912,6 @@ class eZContentObject extends eZPersistentObject
                         ezcontentobject,
                         ezcontentobject_link
                         $versionNameTables
-                        $showInvisibleNodesTable
                         $sortingInfo[attributeFromSQL]
                      WHERE
                         ezcontentclass.id=ezcontentobject.contentclass_id AND
@@ -2896,13 +2924,31 @@ class eZContentObject extends eZPersistentObject
                         $showInvisibleNodesCond
                         $versionNameJoins
                         $sortingString";
-        $relatedObjects = $db->arrayQuery( $query );
+        if ( !$offset && !$limit )
+        {
+            $relatedObjects = $db->arrayQuery( $query );
+        }
+        else
+        {
+            $relatedObjects = $db->arrayQuery( $query, array( 'offset' => $offset,
+                                                             'limit'  => $limit ) );
+        }
 
         $ret = array();
+        $tmp = array();
         foreach ( $relatedObjects as $object )
         {
-            $obj = new eZContentObject( $object );
-            $obj->ClassName = eZContentClass::nameFromSerializedString( $object['class_serialized_name_list'] );
+            if ( $asObject )
+            {
+                $obj = new eZContentObject( $object );
+                $obj->ClassName = eZContentClass::nameFromSerializedString( $object['class_serialized_name_list'] );
+            }
+            else
+            {
+                $obj = $object;
+            }
+
+            $tmp[] = $obj;
 
             if ( !$groupByAttribute )
             {
@@ -2918,6 +2964,8 @@ class eZContentObject extends eZPersistentObject
                 $ret[$classAttrID][] = $obj;
             }
         }
+        if ( $loadDataMap && $asObject )
+            eZContentObject::fillNodeListAttributes( $tmp );
         return $ret;
     }
 
@@ -3142,20 +3190,13 @@ class eZContentObject extends eZPersistentObject
 
         $db = eZDB::instance();
         $showInvisibleNodesCond = '';
-        $showInvisibleNodesTable = '';
 
         // process params (only IgnoreVisibility currently supported):
         if ( is_array( $params ) )
         {
             if ( isset( $params['IgnoreVisibility'] ) )
             {
-                $ignoreVisibility = $params['IgnoreVisibility'];
-                if ( !$ignoreVisibility )
-                {
-                    $showInvisibleNodesCond = 'AND ezcontentobject_tree.contentobject_id = ezcontentobject.id
-                                               AND ezcontentobject_tree.is_invisible = 0';
-                    $showInvisibleNodesTable = ', ezcontentobject_tree';
-                }
+                $showInvisibleNodesCond = self::createFilterByVisibilitySQLString( $params['IgnoreVisibility'] );
             }
         }
 
@@ -3204,7 +3245,7 @@ class eZContentObject extends eZPersistentObject
         }
         $query = "SELECT $select
                   FROM
-                    ezcontentobject, ezcontentobject_link $showInvisibleNodesTable
+                    ezcontentobject, ezcontentobject_link
                   WHERE
                     ezcontentobject.id=ezcontentobject_link.from_contentobject_id AND
                     ezcontentobject.status=" . eZContentObject::STATUS_PUBLISHED . " AND
@@ -3338,21 +3379,22 @@ class eZContentObject extends eZPersistentObject
         // the 'published' tree structure.
         $retNodes = array();
 
-        $nodes =  $this->assignedNodes();
+        $parentNodeIDs = eZContentObjectTreeNode::getParentNodeIdListByContentObjectID( $this->ID );
+        if ( !$parentNodeIDs )
+        {
+          return $retNodes;
+        }
         if ( $asObject )
         {
-            foreach ( $nodes as $node )
+            $retNodes = eZContentObjectTreeNode::fetch( $parentNodeIDs );
+            if ( !is_array( $retNodes ) )
             {
-                $retNodes[] = $node->fetchParent();
+                $retNodes = array( $retNodes );
             }
         }
         else
         {
-            foreach ( $nodes as $node )
-            {
-                $parentNode = $node->fetchParent();
-                $retNodes[] = $parentNode->attribute( 'node_id' );
-            }
+            $retNodes = $parentNodeIDs;
         }
 
         return $retNodes;
@@ -3364,11 +3406,13 @@ class eZContentObject extends eZPersistentObject
      \param $parentNodeID The node ID of the parent node
      \param $isMain \c true if the created node is the main node of the object
      \param $remoteID A string denoting the unique remote ID of the assignment or \c false for no remote id.
-     \note The return assignment will already be stored in the database
+     \param $sortField
+     \param $sortOrder
+     \note The returned assignment will already be stored in the database
      \note Transaction unsafe. If you call several transaction unsafe methods you must enclose
      the calls within a db transaction; thus within db->begin and db->commit.
     */
-    function createNodeAssignment( $parentNodeID, $isMain, $remoteID = false, $sortField = 2 /* published */, $sortOrder = 0 /* desc */ )
+    function createNodeAssignment( $parentNodeID, $isMain, $remoteID = false, $sortField = eZContentObjectTreeNode::SORT_FIELD_PUBLISHED, $sortOrder = eZContentObjectTreeNode::SORT_ORDER_DESC )
     {
         $nodeAssignment = eZNodeAssignment::create( array( 'contentobject_id' => $this->attribute( 'id' ),
                                                            'contentobject_version' => $this->attribute( 'current_version' ),
@@ -3399,7 +3443,6 @@ class eZContentObject extends eZPersistentObject
             // Set section of the newly created object to the section's value of it's parent object
             $sectionID = $parentObject->attribute( 'section_id' );
 
-            include_once( "kernel/classes/datatypes/ezuser/ezuser.php" );
             $userID = eZUser::currentUserID();
 
             $db = eZDB::instance();
@@ -3429,7 +3472,9 @@ class eZContentObject extends eZPersistentObject
         }
         $query = "SELECT ezcontentobject.*,
              ezcontentobject_tree.*,
-             ezcontentclass.serialized_name_list as class_serialized_name_list
+             ezcontentclass.serialized_name_list as class_serialized_name_list,
+             ezcontentclass.identifier as class_identifier,
+             ezcontentclass.is_container as is_container
           FROM   ezcontentobject_tree,
              ezcontentobject,
              ezcontentclass
@@ -3518,8 +3563,6 @@ class eZContentObject extends eZPersistentObject
         return $languages;
     }
 
-    /*!
-    */
     function checkGroupLimitationAccess( $limitationValueList, $userID, $contentObjectID = false )
     {
         $access = 'denied';
@@ -3548,19 +3591,11 @@ class eZContentObject extends eZPersistentObject
                     }
                     else
                     {
-                        // get contentobjects for 'user' and 'owner'
-                        $userList = eZContentObject::fetchIDArray( array( $userID, $ownerID ) );
-
-                        // get parents for each location for 'user' and 'owner'.
-                        $groupList = array();
-                        foreach ( array_keys( $userList ) as $key )
-                        {
-                            $groupList[] = $userList[$key]->attribute( 'parent_nodes' );
-                        }
+                        // get parent node ids for 'user' and 'owner'
+                        $groupList = eZContentObjectTreeNode::getParentNodeIdListByContentObjectID( array( $userID, $ownerID ), true );
 
                         // find group(s) which is common for 'user' and 'owner'
-                        // note: $groupList should contain 2 items only: parents for 'user' and parents for 'owner'.
-                        $commonGroup = array_intersect( $groupList[0], $groupList[1] );
+                        $commonGroup = array_intersect( $groupList[$userID], $groupList[$ownerID] );
 
                         if ( count( $commonGroup ) > 0 )
                         {
@@ -3593,7 +3628,6 @@ class eZContentObject extends eZPersistentObject
         $userID = $user->attribute( 'contentobject_id' );
         $origFunctionName = $functionName;
 
-        //include_once( 'kernel/classes/ezcontentlanguage.php' );
         // Fetch the ID of the language if we get a string with a language code
         // e.g. 'eng-GB'
         $originalLanguage = $language;
@@ -3867,12 +3901,12 @@ class eZContentObject extends eZPersistentObject
                         } break;
 
                         case 'Owner':
+                        case 'ParentOwner':
                         {
                             // if limitation value == 2, anonymous limited to current session.
                             if ( in_array( 2, $limitationArray[$key] ) &&
                                  $user->isAnonymous() )
                             {
-                                //include_once( 'kernel/classes/ezpreferences.php' );
                                 $createdObjectIDList = eZPreferences::value( 'ObjectCreationIDList' );
                                 if ( $createdObjectIDList &&
                                      in_array( $this->ID, unserialize( $createdObjectIDList ) ) )
@@ -3892,6 +3926,7 @@ class eZContentObject extends eZPersistentObject
                         } break;
 
                         case 'Group':
+                        case 'ParentGroup':
                         {
                             $access = $this->checkGroupLimitationAccess( $limitationArray[$key], $userID );
 
@@ -3900,6 +3935,20 @@ class eZContentObject extends eZPersistentObject
                                 $access = 'denied';
                                 $limitationList = array ( 'Limitation' => $key,
                                                           'Required' => $limitationArray[$key] );
+                            }
+                        } break;
+
+                        case 'State':
+                        {
+                            if ( count( array_intersect( $limitationArray[$key], $this->attribute( 'state_id_array' ) ) ) == 0 )
+                            {
+                                $access = 'denied';
+                                $limitationList = array ( 'Limitation' => $key,
+                                                          'Required' => $limitationArray[$key] );
+                            }
+                            else
+                            {
+                                $access = 'allowed';
                             }
                         } break;
 
@@ -4052,6 +4101,24 @@ class eZContentObject extends eZPersistentObject
                                                          'Required' => $limitationArray[$key] );
                             }
                         } break;
+
+                        default:
+                        {
+                            if ( strncmp( $key, 'StateGroup_', 11 ) === 0 )
+                            {
+                                if ( count( array_intersect( $limitationArray[$key],
+                                                             $this->attribute( 'state_id_array' ) ) ) == 0 )
+                                {
+                                    $access = 'denied';
+                                    $limitationList = array ( 'Limitation' => $key,
+                                                              'Required' => $limitationArray[$key] );
+                                }
+                                else
+                                {
+                                    $access = 'allowed';
+                                }
+                            }
+                        }
                     }
                     if ( $access == 'denied' )
                     {
@@ -4114,6 +4181,37 @@ class eZContentObject extends eZPersistentObject
     {
         $canCreateClassIDListPart = array();
         $hasClassIDLimitation = false;
+        $user = eZUser::currentUser();
+        $userID = $user->attribute( 'contentobject_id' );
+
+        if ( isset( $policy['ParentOwner'] ) )
+        {
+            // if limitation value == 2, anonymous limited to current session.
+            if ( in_array( 2, $policy['ParentOwner'] ) && $user->isAnonymous() )
+            {
+                $createdObjectIDList = eZPreferences::value( 'ObjectCreationIDList' );
+                if ( !$createdObjectIDList ||
+                     !in_array( $this->ID, unserialize( $createdObjectIDList ) ) )
+                {
+                    return array();
+                }
+            }
+            else if ( $object->attribute( 'owner_id' ) != $userID &&
+                      $this->ID != $userID )
+            {
+                return array();
+            }
+        }
+
+        if ( isset( $policy['ParentGroup'] ) )
+        {
+            $access = $this->checkGroupLimitationAccess( $policy['ParentGroup'], $userID );
+            if ( $access !== 'allowed' )
+            {
+                return array();
+            }
+        }
+
         if ( isset( $policy['Class'] ) )
         {
             $canCreateClassIDListPart = $policy['Class'];
@@ -4168,7 +4266,7 @@ class eZContentObject extends eZPersistentObject
 
         if ( isset( $policy['Assigned'] ) )
         {
-            if ( $this->attribute( 'owner_id' ) != $user->attribute( 'contentobject_id' )  )
+            if ( $this->attribute( 'owner_id' ) != $userID )
             {
                 return array();
             }
@@ -4254,8 +4352,8 @@ class eZContentObject extends eZPersistentObject
                            \a $groupList, if not it will exclude those groups.
      \param $groupList An array with class group IDs that should be used in filtering, use
                        \c false if you do not wish to filter at all.
-     \param $id A unique name for the current fetch, this must be supplied when filtering is
-                used if you want caching to work.
+     \param $fetchID A unique name for the current fetch, this must be supplied when filtering is
+                     used if you want caching to work.
     */
     function canCreateClassList( $asObject = false, $includeFilter = true, $groupList = false, $fetchID = false )
     {
@@ -4316,28 +4414,29 @@ class eZContentObject extends eZPersistentObject
             }
         }
 
+        $db = eZDB::instance();
+
         $filterTableSQL = '';
         $filterSQL = '';
         // Create extra SQL statements for the class group filters.
         if ( is_array( $groupList ) )
         {
+            if ( count( $groupList ) == 0 )
+            {
+                return $classList;
+            }
+
             $filterTableSQL = ', ezcontentclass_classgroup ccg';
             $filterSQL = ( " AND\n" .
                            "      cc.id = ccg.contentclass_id AND\n" .
-                           "      ccg.group_id " );
-            $groupText = implode( ', ', $groupList );
-            if ( $includeFilter )
-                $filterSQL .= "IN ( $groupText )";
-            else
-                $filterSQL .= "NOT IN ( $groupText )";
+                           "      " );
+            $filterSQL .= $db->generateSQLINStatement( $groupList, 'ccg.group_id', !$includeFilter, true, 'int' );
         }
 
         $classNameFilter = eZContentClassName::sqlFilter( 'cc' );
 
         if ( $fetchAll )
         {
-            $classList = array();
-            $db = eZDB::instance();
             // If $asObject is true we fetch all fields in class
             $fields = $asObject ? "cc.*, $classNameFilter[nameField]" : "cc.id, $classNameFilter[nameField]";
             $rows = $db->arrayQuery( "SELECT DISTINCT $fields\n" .
@@ -4351,18 +4450,15 @@ class eZContentObject extends eZPersistentObject
             // If the constrained class list is empty we are not allowed to create any class
             if ( count( $classIDArray ) == 0 )
             {
-                $classList = array();
                 return $classList;
             }
 
-            $classList = array();
-            $db = eZDB::instance();
-            $classString = implode( ',', $classIDArray );
+            $classIDCondition = $db->generateSQLInStatement( $classIDArray, 'cc.id' );
             // If $asObject is true we fetch all fields in class
             $fields = $asObject ? "cc.*, $classNameFilter[nameField]" : "cc.id, $classNameFilter[nameField]";
             $rows = $db->arrayQuery( "SELECT DISTINCT $fields\n" .
                                      "FROM ezcontentclass cc$filterTableSQL, $classNameFilter[from]\n" .
-                                     "WHERE cc.id IN ( $classString  ) AND\n" .
+                                     "WHERE $classIDCondition AND\n" .
                                      "      cc.version = " . eZContentClass::VERSION_STATUS_DEFINED . " $filterSQL AND $classNameFilter[where]\n" .
                                      "ORDER BY $classNameFilter[nameField] ASC" );
             $classList = eZPersistentObject::handleRows( $rows, 'eZContentClass', $asObject );
@@ -4418,8 +4514,6 @@ class eZContentObject extends eZPersistentObject
 
     /*!
      \return \c true if the current user can read this content object.
-     \note The reference for the return value is required to workaround
-           a bug with PHP references.
     */
     function canRead( )
     {
@@ -4432,8 +4526,6 @@ class eZContentObject extends eZPersistentObject
 
     /*!
      \return \c true if the current user can create a pdf of this content object.
-     \note The reference for the return value is required to workaround
-           a bug with PHP references.
     */
     function canPdf( )
     {
@@ -4447,8 +4539,6 @@ class eZContentObject extends eZPersistentObject
     /*!
      \return \c true if the node can be viewed as embeded object by the current user.
      \sa checkAccess().
-     \note The reference for the return value is required to workaround
-           a bug with PHP references.
     */
     function canViewEmbed( )
     {
@@ -4461,8 +4551,6 @@ class eZContentObject extends eZPersistentObject
 
     /*!
      \return \c true if the current user can diff this content object.
-     \note The reference for the return value is required to workaround
-           a bug with PHP references.
     */
     function canDiff( )
     {
@@ -4473,10 +4561,6 @@ class eZContentObject extends eZPersistentObject
         return ( $this->Permissions["can_diff"] == 1 );
     }
 
-    /*!
-     \note The reference for the return value is required to workaround
-           a bug with PHP references.
-    */
     function canCreate( )
     {
         if ( !isset( $this->Permissions["can_create"] ) )
@@ -4486,10 +4570,6 @@ class eZContentObject extends eZPersistentObject
         return ( $this->Permissions["can_create"] == 1 );
     }
 
-    /*!
-     \note The reference for the return value is required to workaround
-           a bug with PHP references.
-    */
     function canEdit( $originalClassID = false, $parentClassID = false, $returnAccessList = false, $language = false )
     {
         $isCalledClean = ( func_num_args() == 0 );
@@ -4521,10 +4601,6 @@ class eZContentObject extends eZPersistentObject
         return ( $canEdit == 1 );
     }
 
-    /*!
-     \note The reference for the return value is required to workaround
-           a bug with PHP references.
-    */
     function canTranslate( )
     {
         if ( !isset( $this->Permissions["can_translate"] ) )
@@ -4546,10 +4622,6 @@ class eZContentObject extends eZPersistentObject
         return ( $this->Permissions["can_translate"] == 1 );
     }
 
-    /*!
-     \note The reference for the return value is required to workaround
-           a bug with PHP references.
-    */
     function canRemove( )
     {
 
@@ -4564,8 +4636,6 @@ class eZContentObject extends eZPersistentObject
      Check if the object can be moved. (actually checks 'edit' and 'remove' permissions)
      \return \c true if the object can be moved by the current user.
      \sa checkAccess().
-     \note The reference for the return value is required to workaround
-           a bug with PHP references.
      \deprecated The function canMove() is preferred since its naming is clearer.
     */
     function canMove( )
@@ -4577,8 +4647,6 @@ class eZContentObject extends eZPersistentObject
      Check if the object can be moved. (actually checks 'edit' and 'remove' permissions)
      \return \c true if the object can be moved by the current user.
      \sa checkAccess().
-     \note The reference for the return value is required to workaround
-           a bug with PHP references.
     */
     function canMoveFrom( )
     {
@@ -4871,7 +4939,7 @@ class eZContentObject extends eZPersistentObject
 
         if ( !$contentClass )
         {
-            $options['error'] = array( 'error_code' => eZContentObject::PACKAGE_ERROR_NO_CLASS,
+            $options['error'] = array( 'error_code' => self::PACKAGE_ERROR_NO_CLASS,
                                        'element_id' => $remoteID,
                                        'description' => "Can't install object '$name': Unable to fetch class with remoteID: $classRemoteID." );
             $retValue = false;
@@ -4919,7 +4987,7 @@ class eZContentObject extends eZPersistentObject
         }
 
         // If object exists we return a error.
-        // Minimum instal element is an object now.
+        // Minimum install element is an object now.
 
         $contentObject = eZContentObject::fetchByRemoteID( $remoteID );
         // Figure out initial language
@@ -4947,19 +5015,19 @@ class eZContentObject extends eZPersistentObject
             $description = "Object '$name' already exists.";
 
             // include_once( 'kernel/classes/ezpackagehandler.php' );
-            $choosenAction = eZPackageHandler::errorChoosenAction( eZContentObject::PACKAGE_ERROR_EXISTS,
+            $choosenAction = eZPackageHandler::errorChoosenAction( self::PACKAGE_ERROR_EXISTS,
                                                                    $options, $description, $handlerType, false );
 
             switch( $choosenAction )
             {
                 case eZPackage::NON_INTERACTIVE:
+                case self::PACKAGE_UPDATE:
                 {
                     // Keep existing contentobject.
                 } break;
 
-                case eZContentObject::PACKAGE_REPLACE:
+                case self::PACKAGE_REPLACE:
                 {
-                    //include_once( 'kernel/classes/ezcontentobjectoperations.php' );
                     eZContentObjectOperations::remove( $contentObject->attribute( 'id' ) );
 
                     unset( $contentObject );
@@ -4967,13 +5035,13 @@ class eZContentObject extends eZPersistentObject
                     $firstVersion = true;
                 } break;
 
-                case eZContentObject::PACKAGE_SKIP:
+                case self::PACKAGE_SKIP:
                 {
                     $retValue = true;
                     return $retValue;
                 } break;
 
-                case eZContentObject::PACKAGE_NEW:
+                case self::PACKAGE_NEW:
                 {
                     $contentObject->setAttribute( 'remote_id', md5( (string)mt_rand() . (string)time() ) );
                     $contentObject->store();
@@ -4984,12 +5052,13 @@ class eZContentObject extends eZPersistentObject
 
                 default:
                 {
-                    $options['error'] = array( 'error_code' => eZContentObject::PACKAGE_ERROR_EXISTS,
+                    $options['error'] = array( 'error_code' => self::PACKAGE_ERROR_EXISTS,
                                                'element_id' => $remoteID,
                                                'description' => $description,
-                                               'actions' => array( eZContentObject::PACKAGE_REPLACE => 'Replace existing object',
-                                                                   eZContentObject::PACKAGE_SKIP => 'Skip object',
-                                                                   eZContentObject::PACKAGE_NEW => 'Keep existing and create a new one' ) );
+                                               'actions' => array( self::PACKAGE_REPLACE => ezi18n( 'kernel/classes', 'Replace existing object' ),
+                                                                   self::PACKAGE_SKIP    => ezi18n( 'kernel/classes', 'Skip object' ),
+                                                                   self::PACKAGE_NEW     => ezi18n( 'kernel/classes', 'Keep existing and create a new one' ),
+                                                                   self::PACKAGE_UPDATE  => ezi18n( 'kernel/classes', 'Update existing object' ) ) );
                     $retValue = false;
                     return $retValue;
                 } break;
@@ -5004,6 +5073,8 @@ class eZContentObject extends eZPersistentObject
             // Make sure always available bit is set.
             $contentObject->setAttribute( 'language_mask', (int)$contentObject->attribute( 'language_mask' ) | 1 );
         }
+
+        $contentObject->setAttribute( 'section_id', $sectionID );
         $contentObject->store();
         $activeVersion = false;
         $lastVersion = false;
@@ -5050,7 +5121,6 @@ class eZContentObject extends eZPersistentObject
             }
             eZNodeAssignment::setNewMainAssignment( $contentObject->attribute( 'id' ), $lastVersion );
 
-            //include_once( 'lib/ezutils/classes/ezoperationhandler.php' );
             eZOperationHandler::execute( 'content', 'publish', array( 'object_id' => $contentObject->attribute( 'id' ),
                                                                       'version' => $lastVersion ) );
 
@@ -5068,10 +5138,12 @@ class eZContentObject extends eZPersistentObject
                 $existingMainNode = eZContentObjectTreeNode::fetchByRemoteID( $mainNodeInfo['parent_remote_id'], false );
                 if ( $existingMainNode )
                 {
+                    $updateSection = false;
                     eZContentObjectTreeNode::updateMainNodeID( $existingMainNode['node_id'],
                                                                $mainNodeInfo['contentobject_id'],
                                                                $mainNodeInfo['contentobject_version'],
-                                                               $mainNodeInfo['parent_node'] );
+                                                               $mainNodeInfo['parent_node'],
+                                                               $updateSection );
                 }
             }
             unset( $mainNodeInfo );
@@ -5087,6 +5159,11 @@ class eZContentObject extends eZPersistentObject
         $contentObject->setAttribute( 'current_version', $activeVersion );
         */
         $contentObject->setAttribute( 'name', $name );
+        if ( isset( $options['use_dates_from_package'] ) && $options['use_dates_from_package'] )
+        {
+            $contentObject->setAttribute( 'published', eZDateUtils::textToDate( $domNode->getAttributeNS( 'http://ez.no/ezobject', 'published' ) ) );
+            $contentObject->setAttribute( 'modified', eZDateUtils::textToDate( $domNode->getAttributeNS( 'http://ez.no/ezobject', 'modified' ) ) );
+        }
         $contentObject->store();
 
         $versions   = $contentObject->versions();
@@ -5171,8 +5248,6 @@ class eZContentObject extends eZPersistentObject
                 return false;
             }
         }
-
-        //include_once( 'lib/ezlocale/classes/ezdateutils.php' );
 
         $dom = new DomDocument();
         $objectNode = $dom->createElementNS( 'http://ez.no/ezobject', 'ezremote:object' );
@@ -5266,8 +5341,6 @@ class eZContentObject extends eZPersistentObject
         $contentCacheInfo =& $GLOBALS['eZContentCacheInfo'];
         if ( !isset( $contentCacheInfo ) )
         {
-            //include_once( 'kernel/classes/datatypes/ezuser/ezuser.php' );
-            //include_once( 'kernel/classes/ezuserdiscountrule.php' );
             $user = eZUser::currentUser();
             $language = false;
             if ( isset( $Params['Language'] ) )
@@ -5519,7 +5592,6 @@ class eZContentObject extends eZPersistentObject
             ++$pos;
         }
 
-        //include_once( 'lib/ezutils/classes/ezoperationhandler.php' );
         $operationResult = eZOperationHandler::execute( 'content', 'publish', array( 'object_id' => $this->attribute( 'id' ),
                                                                                      'version' => $contentObjectVersion->attribute( 'version') ) );
         return ($operationResult != null ? true : false);
@@ -5725,6 +5797,264 @@ class eZContentObject extends eZPersistentObject
         return $sectionList;
     }
 
+    /**
+     * Gets a list of states a user is allowed to put the content object in.
+     *
+     * @return array the IDs of all states we are allowed to set
+     * @param eZUser $user the user to check the policies of, when omitted the currently logged in user will be used
+     */
+    function allowedAssignStateIDList( eZUser $user = null )
+    {
+        if ( !$user instanceof eZUser )
+        {
+            $user = eZUser::currentUser();
+        }
+
+        $access = $user->hasAccessTo( 'state', 'assign' );
+
+        $db = eZDB::instance();
+        if ( $access['accessWord'] == 'yes' )
+        {
+            $sql = 'SELECT ezcobj_state.id
+                    FROM   ezcobj_state, ezcobj_state_group
+                    WHERE  ezcobj_state.group_id = ezcobj_state_group.id
+                       AND ezcobj_state_group.identifier NOT LIKE "ez%"';
+
+            $allowedStateIDList = $db->arrayQuery( $sql, array( 'column' => 'id' ) );
+        }
+        else if ( $access['accessWord'] == 'limited' )
+        {
+            $userID = $user->attribute( 'contentobject_id' );
+            $classID = $this->attribute( 'contentclass_id' );
+            $ownerID = $this->attribute( 'owner_id' );
+            $sectionID = $this->attribute( 'section_id' );
+            $stateIDArray = $this->attribute( 'state_id_array' );
+
+            $allowedStateIDList = array();
+            foreach ( $access['policies'] as $policy )
+            {
+                foreach ( $policy as $ident => $values )
+                {
+                    $allowed = true;
+
+                    switch ( $ident )
+                    {
+                        case 'Class':
+                        {
+                            $allowed = in_array( $classID, $values );
+                        } break;
+
+                        case 'Owner':
+                        {
+                            $allowed = in_array( 1, $values ) and $userID != $ownerID;
+                        } break;
+
+                        case 'Group':
+                        {
+                            $allowed = $this->checkGroupLimitationAccess( $values, $userID ) === 'allowed';
+                        } break;
+
+                        case 'Section':
+                        case 'User_Section':
+                        {
+                            $allowed = in_array( $sectionID, $values );
+                        } break;
+
+                        default:
+                        {
+                            if ( strncmp( $ident, 'StateGroup_', 11 ) === 0 )
+                            {
+                                $allowed = count( array_intersect( $values, $stateIDArray ) ) > 0;
+                            }
+                        }
+                    }
+
+                    if ( !$allowed )
+                    {
+                        continue 2;
+                    }
+                }
+
+                if ( isset( $policy['NewState'] ) and count( $policy['NewState'] ) > 0 )
+                {
+                    $allowedStateIDList = array_merge( $allowedStateIDList, $policy['NewState'] );
+                }
+                else
+                {
+                    $allowedStateIDList = $db->arrayQuery( $sql, array( 'column' => 'id' ) );
+                    break;
+                }
+            }
+
+            $allowedStateIDList = array_merge( $allowedStateIDList, $stateIDArray );
+        }
+        else
+        {
+            $stateIDArray = $this->attribute( 'state_id_array' );
+            $allowedStateIDList = $stateIDArray;
+        }
+
+        $allowedStateIDList = array_unique( $allowedStateIDList );
+
+        return $allowedStateIDList;
+    }
+
+    function allowedAssignStateList( eZUser $user = null )
+    {
+        $allowedStateIDList = $this->allowedAssignStateIDList( $user );
+
+        // retrieve state groups, and for each state group the allowed states (including the current state)
+        $groups = eZContentObjectStateGroup::fetchByOffset( false, false );
+
+        $allowedAssignList = array();
+        foreach ( $groups as $group )
+        {
+            // we do not return any internal state
+            // all internal states are prepended with the string : "ez_"
+            if( strpos( $group->attribute( 'identifier' ), 'ez' ) === 0 )
+                continue;
+
+            $states = array();
+            $groupStates = $group->attribute( 'states' );
+
+            $currentStateIDArray = $this->attribute( 'state_id_array' );
+
+            $current = false;
+            foreach ( $groupStates as $groupState )
+            {
+                $stateID = $groupState->attribute( 'id' );
+                if ( in_array( $stateID, $allowedStateIDList ) )
+                {
+                    $states[] = $groupState;
+                }
+
+                if ( in_array( $stateID, $currentStateIDArray ) )
+                {
+                    $current = $groupState;
+                }
+            }
+
+            $allowedAssignList[] = array( 'group' => $group, 'states' => $states, 'current' => $current );
+        }
+        return $allowedAssignList;
+    }
+
+    /**
+     * Gets the current states of the content object.
+     *
+     * Uses a member variable that caches the result.
+     *
+     * @return array an associative array with state group id => state id pairs
+     * @param boolean $refreshCache if the cache in the member variable needs to be refreshed
+     */
+    function stateIDArray( $refreshCache = false )
+    {
+        if ( !$this->ID )
+            return array();
+
+        if ( $refreshCache || !is_array( $this->StateIDArray ) )
+        {
+            $this->StateIDArray = array();
+            $contentObjectID = $this->ID;
+            eZDebug::accumulatorStart( 'state_id_array', 'states' );
+            $sql = "SELECT contentobject_state_id, group_id FROM ezcobj_state_link, ezcobj_state
+                    WHERE ezcobj_state.id=ezcobj_state_link.contentobject_state_id AND
+                          contentobject_id=$contentObjectID";
+            $db = eZDB::instance();
+            $rows = $db->arrayQuery( $sql );
+            foreach ( $rows as $row )
+            {
+                $this->StateIDArray[$row['group_id']] = $row['contentobject_state_id'];
+            }
+            eZDebug::accumulatorStop( 'state_id_array' );
+        }
+
+        return $this->StateIDArray;
+    }
+
+    function stateIdentifierArray()
+    {
+        if ( !$this->ID )
+            return array();
+
+        eZDebug::accumulatorStart( 'state_identifier_array', 'states' );
+        $return = array();
+        $sql = "SELECT l.contentobject_state_id, s.identifier AS state_identifier, g.identifier AS state_group_identifier
+                FROM ezcobj_state_link l, ezcobj_state s, ezcobj_state_group g
+                WHERE l.contentobject_id={$this->ID} AND
+                      s.id=l.contentobject_state_id AND
+                      g.id=s.group_id";
+        $db = eZDB::instance();
+        $rows = $db->arrayQuery( $sql );
+        foreach ( $rows as $row )
+        {
+            $return[] = $row['state_group_identifier'] . '/' . $row['state_identifier'];
+        }
+        eZDebug::accumulatorStop( 'state_identifier_array' );
+        return $return;
+    }
+
+    /**
+     * Sets the state of a content object.
+     *
+     * Changes are stored immediately in the database, does not require a store() of the content object.
+     * Should only be called on instances of eZContentObject that have a ID (that were stored already before).
+     *
+     * @param eZContentObjectState $state
+     * @return boolean true when the state was set, false if the state equals the current state
+     */
+    function assignState( eZContentObjectState $state )
+    {
+        $groupID = $state->attribute( 'group_id' );
+        $stateID = $state->attribute( 'id' );
+        $contentObjectID = $this->ID;
+
+        $db = eZDB::instance();
+        $db->begin();
+
+        $currentStateIDArray = $this->stateIDArray( true );
+        $currentStateID = $currentStateIDArray[$groupID];
+
+        if ( $currentStateID == $stateID )
+        {
+            $db->rollback();
+            return false;
+        }
+
+        $sql = "UPDATE ezcobj_state_link
+                SET contentobject_state_id=$stateID
+                WHERE contentobject_state_id=$currentStateID AND
+                      contentobject_id=$contentObjectID";
+        $db->query( $sql );
+
+        $db->commit();
+
+        $this->StateIDArray[$groupID] = $stateID;
+
+        return true;
+    }
+
+    /**
+     * Sets the default states of a content object.
+     *
+     * This function is called upon instantiating a content object with {@link eZContentClass::instantiate()}, so
+     * should normally not be called by any other code.
+     */
+    function assignDefaultStates()
+    {
+        $db = eZDB::instance();
+        $db->begin();
+        $defaultStates = eZContentObjectState::defaults();
+        $contentObjectID = $this->ID;
+        foreach ( $defaultStates as $state )
+        {
+            $stateID = $state->attribute( 'id' );
+            $db->query( "INSERT INTO ezcobj_state_link (contentobject_state_id, contentobject_id)
+                         VALUES($stateID, $contentObjectID)" );
+        }
+        $db->commit();
+    }
+
     public $ID;
     public $Name;
 
@@ -5751,6 +6081,14 @@ class eZContentObject extends eZPersistentObject
 
     /// Contains the arrays of relatedobject id by fetching input for this object
     public $InputRelationList = array();
+
+    /**
+     * Cache for the state ID array
+     *
+     * @var array
+     * @see eZContentObject::stateIDArray()
+     */
+    private $StateIDArray = false;
 }
 
 ?>

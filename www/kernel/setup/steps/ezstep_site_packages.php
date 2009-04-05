@@ -5,9 +5,9 @@
 // Created on: <16-Apr-2004 10:53:35 amos>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -26,7 +26,6 @@
 //
 //
 
-//include_once( 'kernel/setup/steps/ezstep_installer.php');
 require_once( "kernel/common/i18n.php" );
 
 /*!
@@ -46,9 +45,6 @@ class eZStepSitePackages extends eZStepInstaller
                                 'site_packages', 'Site packages' );
     }
 
-    /*!
-     \reimp
-     */
     function processPostData()
     {
         if ( $this->Http->hasPostVariable( 'eZSetup_site_packages' ) )
@@ -74,9 +70,6 @@ class eZStepSitePackages extends eZStepInstaller
         return true;
     }
 
-    /*!
-     \reimp
-     */
     function init()
     {
         if ( $this->hasKickstartData() )
@@ -112,9 +105,6 @@ class eZStepSitePackages extends eZStepInstaller
         return false; // Always show site package selection
     }
 
-    /*!
-     \reimp
-    */
     function display()
     {
         $siteTypes = $this->chosenSiteTypes();
@@ -128,7 +118,6 @@ class eZStepSitePackages extends eZStepInstaller
             $requiredPackages[] = strtolower( $requiredPackage );
         }
 
-        //include_once( 'kernel/classes/ezpackage.php' );
         $packageArray = eZPackage::fetchPackages( array( 'repository_id' => 'addons' ) );
 
         $requiredPackageInfoArray = array();

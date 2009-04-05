@@ -5,9 +5,9 @@
 // Created on: <27-Nov-2002 13:05:59 wy>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -26,7 +26,7 @@
 //
 //
 
-/*! \file ezdiscountrule.php
+/*! \file
 */
 
 /*!
@@ -34,8 +34,6 @@
   \brief The class eZDiscountSubRule does
 
 */
-
-//include_once( "kernel/classes/ezpersistentobject.php" );
 
 class eZDiscountSubRule extends eZPersistentObject
 {
@@ -78,16 +76,12 @@ class eZDiscountSubRule extends eZPersistentObject
                       "name" => "ezdiscountsubrule" );
     }
 
-    /*!
-     \reimp
-    */
     function setAttribute( $attr, $val )
     {
         switch( $attr )
         {
             case 'discount_percent':
             {
-                //include_once( 'lib/ezlocale/classes/ezlocale.php' );
                 $locale = eZLocale::instance();
 
                 $val = $locale->internalNumber( $val );

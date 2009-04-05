@@ -5,9 +5,9 @@
 // Created on: <07-Jul-2007 15:52:24 sp>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -31,8 +31,6 @@
   \ingroup eZDatatype
   \brief Encapsulates multiple options in one datatype.
 */
-//include_once( "lib/ezxml/classes/ezxml.php" );
-
 class eZMultiOption2
 {
     /*!
@@ -426,7 +424,7 @@ class eZMultiOption2
       Remove Options from the multioption.
       This function first remove selected options and then reset the key value if all options for that multioption.
       \param $arrayRemove is a list of all array elements which is selected to remove from the multioptions.
-      \param $optionid is the key value if multioption from which it is required to remove the options.
+      \param $optionId is the key value if multioption from which it is required to remove the options.
       \sa removeMultiOptions()
     */
     function removeOptions( $arrayRemove, $optionId )
@@ -609,7 +607,7 @@ class eZMultiOption2
     Will decode an xml string and initialize the eZ Multi option object.
     If $xmlString is on empty then it will call addMultiOption() and addOption() functions
     to create new multioption else it will decode the xml string.
-    \param $smlString contain the complete data structure for multioptions.
+    \param $xmlString contain the complete data structure for multioptions.
     \sa xmlString()
     */
     function decodeXML( $xmlString )

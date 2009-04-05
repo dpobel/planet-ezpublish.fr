@@ -5,9 +5,9 @@
 // Created on: <12-Aug-2003 10:39:13 kk>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -26,10 +26,9 @@
 //
 //
 
-/*! \file ezstep_email_settings.php
+/*! \file
 */
 
-//include_once( 'kernel/setup/steps/ezstep_installer.php');
 require_once( 'kernel/common/i18n.php' );
 
 /*!
@@ -42,7 +41,6 @@ class eZStepEmailSettings extends eZStepInstaller
 {
     /*!
      Constructor
-     \reimp
     */
     function eZStepEmailSettings( $tpl, $http, $ini, &$persistenceList )
     {
@@ -50,9 +48,6 @@ class eZStepEmailSettings extends eZStepInstaller
                                 'email_settings', 'Email settings' );
     }
 
-    /*!
-     \reimp
-     */
     function processPostData()
     {
         if ( $this->Http->hasPostVariable( 'eZSetupEmailTransport' ) )
@@ -70,9 +65,6 @@ class eZStepEmailSettings extends eZStepInstaller
         return true;
     }
 
-    /*!
-     \reimp
-     */
     function init()
     {
         if ( $this->hasKickstartData() )
@@ -97,9 +89,6 @@ class eZStepEmailSettings extends eZStepInstaller
         return false; // Always display email settings
     }
 
-    /*!
-     \reimp
-     */
     function display()
     {
         $emailInfo = array( 'type' => 1,

@@ -5,9 +5,9 @@
 // Created on: <08-Aug-2002 10:27:21 bf>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -32,8 +32,6 @@
 
 */
 
-//include_once( 'lib/ezdb/classes/ezdb.php' );
-
 class eZSearchLog
 {
     /*!
@@ -44,7 +42,6 @@ class eZSearchLog
         $db = eZDB::instance();
         $db->begin();
 
-        //include_once( 'lib/ezi18n/classes/ezchartransform.php' );
         $trans = eZCharTransform::instance();
         $phrase = $trans->transformByGroup( trim( $phrase ), 'lowercase' );
 

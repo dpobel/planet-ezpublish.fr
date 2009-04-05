@@ -5,9 +5,9 @@
 // Created on: <29-Nov-2002 11:24:42 amos>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -26,7 +26,7 @@
 //
 //
 
-/*! \file ezexecution.php
+/*! \file
 */
 
 /*!
@@ -48,7 +48,7 @@ class eZExecution
     */
     static function setCleanExit()
     {
-        $GLOBALS['eZExecutionCleanExit'] = true;
+        self::$hasCleanExit = true;
     }
 
     /*!
@@ -59,8 +59,10 @@ class eZExecution
         $handlers = eZExecution::cleanupHandlers();
         foreach ( $handlers as $handler )
         {
-            if ( function_exists( $handler ) )
-                $handler();
+            if ( is_callable( $handler ) )
+                call_user_func( $handler );
+            else
+                eZDebug::writeError('Could not call cleanup handler, is it a static public function?', 'eZExecution::cleanup');
         }
     }
 
@@ -72,19 +74,16 @@ class eZExecution
     */
     static function addCleanupHandler( $handler )
     {
-        $handlers =& eZExecution::cleanupHandlers();
-        $handlers[] = $handler;
+        self::registerShutdownHandler();
+        self::$cleanupHandlers[] = $handler;
     }
 
     /*!
      \return An array with cleanup handlers.
     */
-    static function &cleanupHandlers()
+    static function cleanupHandlers()
     {
-        $handlers =& $GLOBALS['eZExecutionCleanupHandlers'];
-        if ( !isset( $handlers ) )
-            $handlers = array();
-        return $handlers;
+        return self::$cleanupHandlers;
     }
 
     /*!
@@ -95,19 +94,16 @@ class eZExecution
     */
     static function addFatalErrorHandler( $handler )
     {
-        $handlers =& eZExecution::fatalErrorHandlers();
-        $handlers[] = $handler;
+        self::registerShutdownHandler();
+        self::$fatalErrorHandlers[] = $handler;
     }
 
     /*!
      \return An array with fatal error handlers.
     */
-    static function &fatalErrorHandlers()
+    static function fatalErrorHandlers()
     {
-        $handlers =& $GLOBALS['eZExecutionFatalErrorHandlers'];
-        if ( !isset( $handlers ) )
-            $handlers = array();
-        return $handlers;
+        return self::$fatalErrorHandlers;
     }
 
     /*!
@@ -115,7 +111,7 @@ class eZExecution
     */
     static function isCleanExit()
     {
-        return $GLOBALS['eZExecutionCleanExit'];
+        return self::$hasCleanExit;
     }
 
     /*!
@@ -129,37 +125,111 @@ class eZExecution
         exit;
     }
 
-}
-
-
-/*!
- Exit handler which called after the script is done, if it detects
- that eZ Publish did not exit cleanly it will issue an error message
- and display the debug.
-*/
-function eZExecutionUncleanShutdownHandler()
-{
-    // Need to change the current directory, since this information is lost
-    // when the callbackfunction is called. eZDocumentRoot is set in index.php.
-    if ( isset( $GLOBALS['eZDocumentRoot'] ) )
+    /*!
+     Exit handler which called after the script is done, if it detects
+     that eZ Publish did not exit cleanly it will issue an error message
+     and display the debug.
+    */
+    static function uncleanShutdownHandler()
     {
-        $documentRoot = $GLOBALS['eZDocumentRoot'];
-        chdir( $documentRoot );
+        // Need to change the current directory, since this information is lost
+        // when the callbackfunction is called. eZDocumentRoot is set in ::registerShutdownHandler
+        if ( self::$eZDocumentRoot !== null )
+        {
+            chdir( self::$eZDocumentRoot );
+        }
+
+        if ( eZExecution::isCleanExit() )
+            return;
+        eZExecution::cleanup();
+        $handlers = eZExecution::fatalErrorHandlers();
+        foreach ( $handlers as $handler )
+        {
+            if ( is_callable( $handler ) )
+                call_user_func( $handler );
+            else
+
+                eZDebug::writeError('Could not call fatal error handler, is it a static public function?', 'eZExecution::uncleanShutdownHandler');
+        }
     }
 
-    if ( eZExecution::isCleanExit() )
-        return;
-    eZExecution::cleanup();
-    $handlers =& eZExecution::fatalErrorHandlers();
-    foreach ( $handlers as $handler )
+    /*!
+     Register ::uncleanShutdownHandler as shutdown function
+    */
+    static public function registerShutdownHandler( $documentRoot = false )
     {
-        if ( function_exists( $handler ) )
-            $handler();
+        if ( !self::$shutdownHandle )
+        {
+            register_shutdown_function( array('eZExecution', 'uncleanShutdownHandler') );
+            /*
+                see:
+                - http://www.php.net/manual/en/function.session-set-save-handler.php
+                - http://bugs.php.net/bug.php?id=33635
+                - http://bugs.php.net/bug.php?id=33772
+            */
+            register_shutdown_function( 'session_write_close' );
+            set_exception_handler( array( 'eZExecution', 'defaultExceptionHandler' ) );
+            self::$shutdownHandle = true;
+        }
+
+        // Needed by the error handler, since the current directory is lost when
+        // the callback function eZExecution::uncleanShutdownHandler is called.
+        if ( $documentRoot )
+        {
+            self::$eZDocumentRoot = $documentRoot;
+        }
+        else if ( self::$eZDocumentRoot === null )
+        {
+            self::$eZDocumentRoot = str_replace( 
+                DIRECTORY_SEPARATOR . 'lib' . 
+                DIRECTORY_SEPARATOR . 'ezutils'. 
+                DIRECTORY_SEPARATOR . 'classes',
+                '',
+                dirname( __FILE__ )
+            );
+        }
     }
+
+    /**
+     * Installs the default Exception handler
+     *
+     * @params Exception the exception
+     * @return void
+     */
+    static public function defaultExceptionHandler( Exception $e )
+    {
+        if( PHP_SAPI != 'cli' )
+        {
+            header( 'HTTP/1.x 500 Internal Server Error' );
+            header( 'Content-Type: text/html' );
+
+            echo "An unexpected error has occurred. Please contact the webmaster.<br/>";
+
+            $ini = eZINI::instance( 'site.ini' );
+            if( $ini->variable( 'DebugSettings', 'DebugOutput' ) == 'enabled' )
+            {
+                echo $e->getMessage() , ' in ', $e->getFile(), ' on line ', $e->getLine();
+            }
+        }
+        else
+        {
+            $cli = eZCLI::instance();
+            $cli->error( "An unexpected error has occurred. Please contact the webmaster.");
+        }
+
+        eZLog::write( 'Unexpected error, the message was : ' . $e->getMessage(), 'error.log' );
+
+        eZExecution::cleanup();
+        eZExecution::setCleanExit();
+        exit( 1 );
+    }
+
+    static private $eZDocumentRoot = null;
+    static private $hasCleanExit = false;
+    static private $shutdownHandle = false;
+    static private $fatalErrorHandlers = array();
+    static private $cleanupHandlers = array();
 }
 
-register_shutdown_function( 'eZExecutionUncleanShutdownHandler' );
-
-$GLOBALS['eZExecutionCleanExit'] = false;
 
 ?>

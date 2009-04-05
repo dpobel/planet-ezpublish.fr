@@ -4,9 +4,9 @@
 // Created on: <01-Sep-2003 13:23:32 kk>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -25,10 +25,8 @@
 //
 //
 
-/*! \file ezpdftable.php
+/*! \file
 */
-
-//include_once( 'lib/ezpdf/classes/class.ezpdf.php' );
 
 /*!
   \class eZPDFTable class.ezpdftable.php
@@ -173,8 +171,6 @@ class eZPDFTable extends Cezpdf
      */
     function ezTable(&$data,$cols='',$title='',$options='')
     {
-        //include_once( 'lib/ezutils/classes/ezmath.php' );
-
         if (!is_array($data)){
             return;
         }
@@ -1160,7 +1156,6 @@ class eZPDFTable extends Cezpdf
 
         $filename = rawurldecode( $params['src'] );
 
-        //include_once( 'lib/ezutils/classes/ezmimetype.php' );
         $mimetype = eZMimeType::findByFileContents( $filename );
 
         $this->transaction( 'start' );
@@ -1177,8 +1172,6 @@ class eZPDFTable extends Cezpdf
 
         if ( isset( $params['dpi'] ) )
         {
-            require_once( 'kernel/common/image.php' );
-
             $newWidth = (int)( $params['width'] * ( (int)$params['dpi'] / 72 ) );
             $newHeight = (int)( $params['height'] * ( (int)$params['dpi'] / 72 ) );
             $newFilename = eZSys::cacheDirectory() . '/' . md5( mt_rand() ) . '.jpg';
@@ -1186,6 +1179,8 @@ class eZPDFTable extends Cezpdf
             {
                 $newFilename = eZSys::cacheDirectory() . '/' . md5( mt_rand() ) . '.jpg';
             }
+
+            require_once( 'kernel/common/image.php' );
             $img = imageInit();
             $newImg = $img->convert( $filename,
                                      $newFilename,
@@ -1277,6 +1272,7 @@ class eZPDFTable extends Cezpdf
                 }
                 $newMimetype = eZMimeType::findByURL( $newFilename );
 
+                require_once( 'kernel/common/image.php' );
                 $img = imageInit();
                 $newImg = $img->convert( $mimetype,
                                          $newMimetype,
@@ -2738,7 +2734,6 @@ class eZPDFTable extends Cezpdf
     */
     function pushStack( $continous = true)
     {
-        //include_once( 'lib/ezutils/classes/ezmath.php' );
         $docSpecArray = array( 'DocSpec' => $this->DocSpecification,
                                'PreStack' => $this->PreStack,
                                'LeftMarginArray' => $this->LeftMarginArray,
@@ -2954,7 +2949,6 @@ class eZPDFTable extends Cezpdf
     }
 
     /*!
-     \reimp
 
      \param real page number
      \param pagecounter identifier

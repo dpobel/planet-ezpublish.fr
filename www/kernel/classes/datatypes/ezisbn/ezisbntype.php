@@ -4,9 +4,9 @@
 //
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -32,8 +32,6 @@
 
 */
 
-//include_once( "kernel/classes/ezdatatype.php" );
-
 class eZISBNType extends eZDataType
 {
     const DATA_TYPE_STRING = "ezisbn";
@@ -57,7 +55,6 @@ class eZISBNType extends eZDataType
         $classContent = $classAttribute->content();
         if ( isset( $classContent['ISBN13'] ) and $classContent['ISBN13'] )
         {
-            //include_once( 'kernel/classes/datatypes/ezisbn/ezisbn13.php' );
             $number13 = $http->hasPostVariable( $base . "_isbn_13_" . $contentObjectAttribute->attribute( "id" ) )
                         ? $http->postVariable( $base . "_isbn_13_" . $contentObjectAttribute->attribute( "id" ) )
                         : false;
@@ -285,9 +282,6 @@ class eZISBNType extends eZDataType
         return true;
     }
 
-    /*!
-     \reimp
-    */
     function customClassAttributeHTTPAction( $http, $action, $classAttribute )
     {
         switch ( $action )
@@ -299,9 +293,6 @@ class eZISBNType extends eZDataType
         }
     }
 
-    /*!
-     \reimp
-    */
     function fetchClassAttributeHTTPInput( $http, $base, $classAttribute )
     {
         $classAttributeID = $classAttribute->attribute( 'id' );
@@ -324,9 +315,6 @@ class eZISBNType extends eZDataType
     {
     }
 
-    /*!
-     \reimp
-    */
     function preStoreClassAttribute( $classAttribute, $version )
     {
         return eZISBNType::storeClassAttributeContent( $classAttribute, $classAttribute->content() );
@@ -374,13 +362,8 @@ class eZISBNType extends eZDataType
         return $isbn;
     }
 
-    /*!
-     \reimp
-    */
     function classAttributeContent( $classAttribute )
     {
-        //include_once( 'kernel/classes/datatypes/ezisbn/ezisbn13.php' );
-
         $ISBN_13 = $classAttribute->attribute( self::CLASS_IS_ISBN13 );
         $isbn13Info = new eZISBN13();
         $content = array( 'ISBN13' => $ISBN_13,
@@ -390,7 +373,6 @@ class eZISBNType extends eZDataType
 
 
     /*!
-     \reimp
      ISBN numbers are indexable, returns \c true.
     */
     function isIndexable()
@@ -449,17 +431,18 @@ class eZISBNType extends eZDataType
     }
 
     /*!
-      \reimp
       See also eZDataType:cleanDBDataBeforeImport().
     */
     function cleanDBDataBeforeImport()
     {
-        //include_once( 'kernel/classes/datatypes/ezisbn/ezisbngroup.php' );
-        //include_once( 'kernel/classes/datatypes/ezisbn/ezisbngrouprange.php' );
-        //include_once( 'kernel/classes/datatypes/ezisbn/ezisbnregistrantrange.php' );
         eZISBNGroup::cleanAll();
         eZISBNGroupRange::cleanAll();
         eZISBNRegistrantRange::cleanAll();
+        return true;
+    }
+
+    function supportsBatchInitializeObjectAttribute()
+    {
         return true;
     }
 }

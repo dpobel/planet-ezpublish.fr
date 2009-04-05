@@ -3,9 +3,9 @@
 // Created on: <17-Apr-2002 10:34:48 bf>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -23,18 +23,6 @@
 //   MA 02110-1301, USA.
 //
 //
-
-//include_once( 'kernel/classes/ezcontentclass.php' );
-//include_once( 'kernel/classes/ezcontentclassattribute.php' );
-
-//include_once( 'kernel/classes/ezcontentobject.php' );
-//include_once( 'kernel/classes/ezcontentobjectversion.php' );
-//include_once( 'kernel/classes/ezcontentobjectattribute.php' );
-//include_once( 'kernel/classes/ezcontentobjecttreenode.php' );
-//include_once( 'kernel/classes/ezcontentbrowse.php' );
-
-//include_once( "lib/ezdb/classes/ezdb.php" );
-//include_once( 'lib/ezutils/classes/ezhttptool.php' );
 
 require_once( 'kernel/common/template.php' );
 
@@ -70,7 +58,6 @@ function checkRelationAssignments( $module, $class, $object, $version, $contentO
     }
     if ( $module->isCurrentAction( 'UploadedFileRelation' ) )
     {
-        //include_once( 'kernel/classes/ezcontentupload.php' );
         $relatedObjectID = eZContentUpload::result( 'RelatedObjectUpload' );
         if ( $relatedObjectID )
         {
@@ -124,20 +111,17 @@ function checkRelationActions( $module, $class, $object, $version, $contentObjec
     {
         $objectID = $object->attribute( 'id' );
 
-        //include_once( 'kernel/classes/ezsection.php' );
         $section = eZSection::fetch( $object->attribute( 'section_id' ) );
         $navigationPart = false;
         if ( $section )
             $navigationPart = $section->attribute( 'navigation_part_identifier' );
 
-        //include_once( 'kernel/classes/ezcontentupload.php' );
         $location = false;
         if ( $module->hasActionParameter( 'UploadRelationLocation' ) )
         {
             $location = $module->actionParameter( 'UploadRelationLocation' );
         }
 
-        //include_once( 'lib/ezutils/classes/ezhttpfile.php' );
         // We only do direct uploading if we have the uploaded HTTP file
         // if not we need to go to the content/upload page.
         if ( eZHTTPFile::canFetch( 'UploadRelationFile' ) )
@@ -200,7 +184,6 @@ function checkRelationActions( $module, $class, $object, $version, $contentObjec
     {
         if ( $http->hasPostVariable( 'ClassID' ) )
         {
-            //include_once( 'kernel/classes/ezcontentobjectassignmenthandler.php' );
             $user = eZUser::currentUser();
             $userID = $user->attribute( 'contentobject_id' );
             if ( $http->hasPostVariable( 'SectionID' ) )

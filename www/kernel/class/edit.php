@@ -3,9 +3,9 @@
 // Created on: <16-Apr-2002 11:00:12 amos>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -23,12 +23,6 @@
 //   MA 02110-1301, USA.
 //
 //
-
-//include_once( 'kernel/classes/ezcontentclass.php' );
-//include_once( 'kernel/classes/ezcontentclassattribute.php' );
-//include_once( 'kernel/classes/ezcontentclassclassgroup.php' );
-//include_once( 'lib/ezutils/classes/ezhttptool.php' );
-//include_once( 'lib/ezutils/classes/ezhttppersistence.php' );
 
 
 $Module = $Params['Module'];
@@ -87,7 +81,6 @@ if ( is_numeric( $ClassID ) )
     }
     else
     {
-        //include_once( 'lib/ezlocale/classes/ezdatetime.php' );
         $user = eZUser::currentUser();
         $contentIni = eZINI::instance( 'content.ini' );
         $timeOut = $contentIni->variable( 'ClassSettings', 'DraftTimeout' );
@@ -113,8 +106,6 @@ if ( is_numeric( $ClassID ) )
 }
 else
 {
-    //include_once( 'kernel/classes/datatypes/ezuser/ezuser.php' );
-
     if ( !$EditLanguage )
     {
         $language = eZContentLanguage::topPriorityLanguage();
@@ -181,8 +172,7 @@ $unvalidatedAttributes = array();
 
 if ( $http->hasPostVariable( 'DiscardButton' ) )
 {
-    eZSessionDestroy( $http->sessionVariable( 'CanStoreTicket' ) );
-    $http->removeSessionVariable( 'CanStoreTicket' );
+    $http->removeSessionVariable( 'ClassCanStoreTicket' );
     $class->setVersion( eZContentClass::VERSION_STATUS_TEMPORARY );
     $class->remove( true, eZContentClass::VERSION_STATUS_TEMPORARY );
     eZContentClassClassGroup::removeClassMembers( $ClassID, eZContentClass::VERSION_STATUS_TEMPORARY );
@@ -198,12 +188,10 @@ if ( $http->hasPostVariable( 'DiscardButton' ) )
 }
 if ( $http->hasPostVariable( 'AddGroupButton' ) && $http->hasPostVariable( 'ContentClass_group' ) )
 {
-    //include_once( "kernel/class/ezclassfunctions.php" );
     eZClassFunctions::addGroup( $ClassID, $ClassVersion, $http->postVariable( 'ContentClass_group' ) );
 }
 if ( $http->hasPostVariable( 'RemoveGroupButton' ) && $http->hasPostVariable( 'group_id_checked' ) )
 {
-    //include_once( "kernel/class/ezclassfunctions.php" );
     if ( !eZClassFunctions::removeGroup( $ClassID, $ClassVersion, $http->postVariable( 'group_id_checked' ) ) )
     {
         $validation['groups'][] = array( 'text' => ezi18n( 'kernel/class', 'You have to have at least one group that the class belongs to!' ) );
@@ -246,7 +234,6 @@ if ( $http->hasPostVariable( 'SelectLanguageButton' ) && $http->hasPostVariable(
 if ( !$EditLanguage )
 {
     // Check number of languages
-    //include_once( 'kernel/classes/ezcontentlanguage.php' );
     $languages = eZContentLanguage::fetchList();
     // If there is only one language we choose it for the user.
     if ( count( $languages ) == 1 )
@@ -282,7 +269,6 @@ if ( !$EditLanguage )
     }
 }
 
-//include_once( 'kernel/classes/ezdatatype.php' );
 eZDataType::loadAndRegisterAllTypes();
 $datatypes = eZDataType::registeredDataTypes();
 
@@ -318,7 +304,6 @@ foreach( $storeActions as $storeAction )
     }
 }
 
-//include_once( 'lib/ezutils/classes/ezinputvalidator.php' );
 $canStore = true;
 $requireFixup = false;
 if ( $contentClassHasInput )
@@ -457,7 +442,6 @@ if ( $contentClassHasInput )
 $class->setAttribute( 'version', eZContentClass::VERSION_STATUS_TEMPORARY );
 $class->NameList->setHasDirtyData();
 
-//include_once( 'lib/ezi18n/classes/ezchartransform.php' );
 $trans = eZCharTransform::instance();
 
 // Fixed identifiers to only contain a-z0-9_
@@ -497,7 +481,6 @@ if ( $customAction )
 // Set new modification date
 $date_time = time();
 $class->setAttribute( 'modified', $date_time );
-//include_once( 'kernel/classes/datatypes/ezuser/ezuser.php' );
 $user = eZUser::currentUser();
 $user_id = $user->attribute( 'contentobject_id' );
 $class->setAttribute( 'modifier_id', $user_id );
@@ -642,16 +625,12 @@ if ( $http->hasPostVariable( 'StoreButton' ) && $canStore )
     }
     else
     {
-        $firstStoreAttempt = eZSessionRead( $http->sessionVariable( 'CanStoreTicket' ) );
-        if ( !$firstStoreAttempt )
+        if ( !$http->hasSessionVariable( 'ClassCanStoreTicket' ) )
         {
             return $Module->redirectToView( 'view', array( $ClassID ), array( 'Language' => $EditLanguage ) );
         }
-        eZSessionDestroy( $http->sessionVariable( 'CanStoreTicket' ) );
 
         // Class cleanup, update existing class objects according to new changes
-        //include_once( 'kernel/classes/ezcontentobject.php' );
-
         $db = eZDB::instance();
         $db->begin();
 
@@ -683,7 +662,7 @@ if ( $http->hasPostVariable( 'StoreButton' ) && $canStore )
             $class->storeDefined( $attributes );
 
             // Add object attributes which have been added.
-            foreach ( $newClassAttributes as $newClassAttribute )
+            foreach ( $attributes as $newClassAttribute )
             {
                 $attributeExist = false;
                 $newClassAttributeID = $newClassAttribute->attribute( 'id' );
@@ -691,32 +670,14 @@ if ( $http->hasPostVariable( 'StoreButton' ) && $canStore )
                 {
                     $oldClassAttributeID = $oldClassAttribute->attribute( 'id' );
                     if ( $oldClassAttributeID == $newClassAttributeID )
+                    {
                         $attributeExist = true;
+                        break;
+                    }
                 }
                 if ( !$attributeExist )
                 {
-                    if ( $objects == null )
-                    {
-                        $objects = eZContentObject::fetchSameClassList( $ClassID );
-                    }
-                    foreach ( $objects as $object )
-                    {
-                        $contentobjectID = $object->attribute( 'id' );
-                        $objectVersions = $object->versions();
-                        foreach ( $objectVersions as $objectVersion )
-                        {
-                            $translations = $objectVersion->translations( false );
-                            $version = $objectVersion->attribute( 'version' );
-                            foreach ( $translations as $translation )
-                            {
-                                $objectAttribute = eZContentObjectAttribute::create( $newClassAttributeID, $contentobjectID, $version, $translation );
-                                $objectAttribute->setAttribute( 'language_code', $translation );
-                                $objectAttribute->initialize();
-                                $objectAttribute->store();
-                                $objectAttribute->postInitialize();
-                            }
-                        }
-                    }
+                    $newClassAttribute->initializeObjectAttributes( $objects );
                 }
             }
         }
@@ -727,7 +688,7 @@ if ( $http->hasPostVariable( 'StoreButton' ) && $canStore )
 
         $db->commit();
 
-        $http->removeSessionVariable( 'CanStoreTicket' );
+        $http->removeSessionVariable( 'ClassCanStoreTicket' );
         return $Module->redirectToView( 'view', array( $ClassID ), array( 'Language' => $EditLanguage ) );
     }
 }
@@ -764,10 +725,11 @@ else if ( $http->hasPostVariable( 'MoveDown' ) )
 }
 
 $Module->setTitle( 'Edit class ' . $class->attribute( 'name' ) );
-if ( !$http->hasSessionVariable( 'CanStoreTicket' ) )
+
+// set session to allow current user to store class (to avoid direct post edit actions to this view)
+if ( !$http->hasSessionVariable( 'ClassCanStoreTicket' ) )
 {
-    $http->setSessionVariable( 'CanStoreTicket', md5( (string)rand() ) );
-    eZSessionWrite( $http->sessionVariable( 'CanStoreTicket' ), 1 );
+    $http->setSessionVariable( 'ClassCanStoreTicket', 1 );
 }
 
 // Fetch updated attributes

@@ -5,9 +5,9 @@
 // Created on: <08-Nov-2002 11:00:54 kd>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -27,8 +27,6 @@
 //
 
 // This file holds shared functions for the ezsetup files
-
-//include_once( 'lib/ezutils/classes/ezini.php' );
 
 /*!
  \return an array with tests that need to be run
@@ -54,13 +52,13 @@ function eZSetupDatabaseMap()
     return array( 'mysql' => array( 'type' => 'mysql',
                                     'driver' => 'ezmysql',
                                     'name' => 'MySQL',
-                                    'required_version' => '3.23',
+                                    'required_version' => '4.1.1',
                                     'has_demo_data' => true,
                                     'supports_unicode' => false ),
                   'pgsql' => array( 'type' => 'pgsql',
                                     'driver' => 'ezpostgresql',
                                     'name' => 'PostgreSQL',
-                                    'required_version' => '7.3',
+                                    'required_version' => '8.0',
                                     'has_demo_data' => false,
                                     'supports_unicode' => true ),
                   'mysqli' => array( 'type' => 'mysqli',
@@ -75,7 +73,6 @@ function eZSetupDatabaseMap()
 function eZSetupFetchPersistenceList()
 {
     $persistenceList = array();
-    //include_once( 'lib/ezutils/classes/ezhttptool.php' );
     $http = eZHTTPTool::instance();
     $postVariables = $http->attribute( 'post' );
 
@@ -94,7 +91,6 @@ function eZSetupFetchPersistenceList()
 
 function eZSetupSetPersistencePostVariable( $var, $value )
 {
-    //include_once( 'lib/ezutils/classes/ezhttptool.php' );
     $http = eZHTTPTool::instance();
     if ( is_array( $value ) )
     {

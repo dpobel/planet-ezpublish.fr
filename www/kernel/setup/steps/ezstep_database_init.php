@@ -5,9 +5,9 @@
 // Created on: <12-Aug-2003 11:45:59 kk>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -26,13 +26,9 @@
 //
 //
 
-/*! \file ezstep_database_init.php
+/*! \file
 */
-//include_once( 'kernel/setup/steps/ezstep_installer.php');
-//include_once( 'lib/ezdb/classes/ezdbtool.php' );
 require_once( 'kernel/common/i18n.php' );
-//include_once( "kernel/setup/ezsetuptests.php" );
-
 /*!
   \class eZStepDatabaseInit ezstep_database_init.php
   \brief The class eZStepDatabaseInit does
@@ -43,7 +39,6 @@ class eZStepDatabaseInit extends eZStepInstaller
 {
     /*!
      Constructor
-     \reimp
     */
     function eZStepDatabaseInit( $tpl, $http, $ini, &$persistenceList )
     {
@@ -51,9 +46,6 @@ class eZStepDatabaseInit extends eZStepInstaller
                                 'database_init', 'Database init' );
     }
 
-    /*!
-     \reimp
-     */
     function processPostData()
     {
         $databaseMap = eZSetupDatabaseMap();
@@ -141,9 +133,6 @@ class eZStepDatabaseInit extends eZStepInstaller
         return false;
     }
 
-    /*!
-     \reimp
-     */
     function init()
     {
         if ( $this->hasKickstartData() )
@@ -163,7 +152,10 @@ class eZStepDatabaseInit extends eZStepInstaller
             $result = $this->checkDatabaseRequirements( false );
 
             $this->PersistenceList['database_info']['version'] = $result['db_version'];
-            $this->PersistenceList['database_info']['required_version'] = $result['db_required_version'];
+            if ( isset( $result['db_required_version'] ) )
+            {
+                $this->PersistenceList['database_info']['required_version'] = $result['db_required_version'];
+            }
             if ( !$result['status'] )
             {
                 $this->Error = $result['error_code'];
@@ -211,9 +203,6 @@ class eZStepDatabaseInit extends eZStepInstaller
         return false; // Always show database initialization
     }
 
-    /*!
-     \reimp
-     */
     function display()
     {
         $databaseMap = eZSetupDatabaseMap();

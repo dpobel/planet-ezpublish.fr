@@ -5,9 +5,9 @@
 // Created on: <30-Apr-2003 13:46:01 sp>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -26,14 +26,9 @@
 //
 //
 
-/*! \file bookmark.php
+/*! \file
 */
 require_once( 'kernel/common/template.php' );
-//include_once( 'kernel/classes/ezcontentobjecttreenode.php' );
-//include_once( 'kernel/classes/ezcontentbrowse.php' );
-//include_once( 'kernel/classes/ezcontentbrowsebookmark.php' );
-//include_once( "lib/ezdb/classes/ezdb.php" );
-
 $Module = $Params['Module'];
 $http = eZHTTPTool::instance();
 
@@ -54,7 +49,8 @@ if ( $Module->isCurrentAction( 'Remove' )  )
             $bookmark = eZContentBrowseBookmark::fetch( $deleteID );
             if ( $bookmark === null )
                 continue;
-            $bookmark->remove();
+            if ( $bookmark->attribute( 'user_id' ) == $userID )
+                $bookmark->remove();
         }
     }
     if ( $http->hasPostVariable( 'NeedRedirectBack' ) and $http->hasSessionVariable( "LastAccessesURI" ) )

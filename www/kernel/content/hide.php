@@ -3,9 +3,9 @@
 // Created on: <22-Sen-2004 13:19:58 vs>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -34,13 +34,19 @@ if ( !$curNode )
 if ( !$curNode->attribute( 'can_hide' ) )
     return $Module->handleError( eZError::KERNEL_ACCESS_DENIED, 'kernel' );
 
-if ( $curNode->attribute( 'is_hidden' ) )
-    eZContentObjectTreeNode::unhideSubTree( $curNode );
+if ( eZOperationHandler::operationIsAvailable( 'content_hide' ) )
+{
+    $operationResult = eZOperationHandler::execute( 'content',
+                                                    'hide',
+                                                     array( 'node_id' => $NodeID ),
+                                                     null, true );
+}
 else
-    eZContentObjectTreeNode::hideSubTree( $curNode );
+{
+    eZContentOperationCollection::changeHideStatus( $NodeID );
+}
 
 
-//include_once( 'kernel/classes/ezredirectmanager.php' );
 $hasRedirect = eZRedirectManager::redirectTo( $Module, false );
 if ( !$hasRedirect )
 {

@@ -5,9 +5,9 @@
 // Created on: <12-Aug-2003 18:30:57 kk>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -26,9 +26,8 @@
 //
 //
 
-/*! \file ezstep_site_details.php
+/*! \file
 */
-//include_once( 'kernel/setup/steps/ezstep_installer.php');
 require_once( "kernel/common/i18n.php" );
 
 /*!
@@ -54,12 +53,8 @@ class eZStepSiteDetails extends eZStepInstaller
                                 'site_details', 'Site details' );
     }
 
-    /*!
-     \reimp
-    */
     function processPostData()
     {
-        //include_once( 'lib/ezdb/classes/ezdbtool.php' );
         $databaseMap = eZSetupDatabaseMap();
 
         $databaseInfo = $this->PersistenceList['database_info'];
@@ -203,9 +198,6 @@ class eZStepSiteDetails extends eZStepInstaller
         return ( count( $this->Error ) == 0 );
     }
 
-    /*!
-     \reimp
-    */
     function init()
     {
         if ( $this->hasKickstartData() )
@@ -308,8 +300,6 @@ class eZStepSiteDetails extends eZStepInstaller
             return $this->kickstartContinueNextStep();
         }
 
-        //include_once( 'lib/ezdb/classes/ezdbtool.php' );
-
         // Get available databases
         $databaseMap = eZSetupDatabaseMap();
         $databaseInfo = $this->PersistenceList['database_info'];
@@ -321,6 +311,7 @@ class eZStepSiteDetails extends eZStepInstaller
         $dbStatus = array();
         $dbDriver = $databaseInfo['info']['driver'];
         $dbServer = $databaseInfo['server'];
+        $dbPort = $databaseInfo['port'];
         $dbName = isset( $databaseInfo['dbname'] ) ? $databaseInfo['dbname'] : '';
         $dbUser = $databaseInfo['user'];
         $dbSocket = $databaseInfo['socket'];
@@ -329,6 +320,7 @@ class eZStepSiteDetails extends eZStepInstaller
         $dbPwd = $databaseInfo['password'];
         $dbCharset = 'iso-8859-1';
         $dbParameters = array( 'server' => $dbServer,
+                               'port' => $dbPort,
                                'user' => $dbUser,
                                'password' => $dbPwd,
                                'socket' => $dbSocket,
@@ -351,9 +343,6 @@ class eZStepSiteDetails extends eZStepInstaller
         return false; // Always show site details
     }
 
-    /*!
-     \reimp
-    */
     function display()
     {
         $config = eZINI::instance( 'setup.ini' );

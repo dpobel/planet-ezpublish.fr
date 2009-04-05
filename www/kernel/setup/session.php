@@ -3,9 +3,9 @@
 // Created on: <15-Apr-2004 11:25:31 bh>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -24,8 +24,6 @@
 //
 //
 require_once( 'kernel/common/template.php' );
-//include_once( 'lib/ezutils/classes/ezhttptool.php' );
-require_once( 'lib/ezutils/classes/ezsession.php' );
 
 $tpl = templateInit();
 $sessionsRemoved = false;
@@ -69,12 +67,12 @@ else if ( $module->isCurrentAction( 'ChangeFilter' ) )
 }
 else if ( $module->isCurrentAction( 'RemoveAllSessions' ) )
 {
-    eZSessionEmpty();
+    eZSession::cleanup();
     $sessionsRemoved = true;
 }
 else if ( $module->isCurrentAction( 'RemoveTimedOutSessions' ) )
 {
-    eZSessionGarbageCollector();
+    eZSession::garbageCollector();
     $sessionsRemoved = true;
 }
 else if ( $module->isCurrentAction( 'RemoveSelectedSessions' ) )
@@ -86,7 +84,7 @@ else if ( $module->isCurrentAction( 'RemoveSelectedSessions' ) )
             $sessionKeyArray = $http->postVariable( 'SessionKeyArray' );
             foreach ( $sessionKeyArray as $sessionKeyItem )
             {
-                eZSessionDestroy( $sessionKeyItem );
+                eZSession::destroy( $sessionKeyItem );
             }
         }
     }
@@ -97,13 +95,12 @@ else if ( $module->isCurrentAction( 'RemoveSelectedSessions' ) )
             $userIDArray = $http->postVariable( 'UserIDArray' );
             if ( count( $userIDArray ) > 0 )
             {
-                //include_once( 'lib/ezdb/classes/ezdb.php' );
                 $db = eZDB::instance();
                 $userIDArrayString = $db->implodeWithTypeCast( ',', $userIDArray, 'int' );
                 $rows = $db->arrayQuery( "SELECT session_key FROM ezsession WHERE user_id IN ( " . $userIDArrayString . " )" );
                 foreach ( $rows as $row )
                 {
-                    eZSessionDestroy( $row['session_key'] );
+                    eZSession::destroy( $row['session_key'] );
                 }
             }
         }
@@ -216,7 +213,6 @@ function eZFetchActiveSessions( $params = array() )
         $expirationSQL = 'max( ezsession.expiration_time ) as expiration_time';
     }
 
-    //include_once( 'lib/ezdb/classes/ezdb.php' );
     $db = eZDB::instance();
     $query = "SELECT ezsession.user_id, $expirationSQL, max(session_key) as session_key  $countField
 FROM ezsession, ezuser, ezcontentobject
@@ -326,7 +322,6 @@ function eZFetchActiveSessionCount( $params = array() )
     if ( ( strlen( $filterSQL ) + strlen( $expirationFilterSQL ) ) > 0 )
         $whereSQL = 'WHERE';
 
-    //include_once( 'lib/ezdb/classes/ezdb.php' );
     $db = eZDB::instance();
     $query = "SELECT count( DISTINCT ezsession.user_id ) AS count
               FROM ezsession
@@ -345,7 +340,7 @@ $param['expiration_filter'] = $expirationFilterType;
 $param['user_id'] = $userID;
 if ( isset( $viewParameters['sortby'] ) )
     $param['sortby'] = $viewParameters['sortby'];
-$sessionsActive = eZSessionCountActive( $param );
+$sessionsActive = eZSession::countActive( $param );
 $sessionsCount = eZFetchActiveSessionCount( $param );
 $sessionsList = eZFetchActiveSessions( $param );
 

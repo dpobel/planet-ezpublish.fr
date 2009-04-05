@@ -3,9 +3,9 @@
 // Created on: <11-Oct-2004 15:41:12 kk>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -37,11 +37,6 @@ ob_start();
 
 ini_set( "display_errors" , "0" );
 
-//require_once( "lib/ezutils/classes/ezdebug.php" );
-//include_once( "lib/ezutils/classes/ezini.php" );
-//include_once( 'lib/ezutils/classes/ezsys.php' );
-//require_once( 'lib/ezutils/classes/ezexecution.php' );
-
 // Set a default time zone if none is given. The time zone can be overriden
 // in config.php or php.ini.
 if ( !ini_get( "date.timezone" ) )
@@ -67,27 +62,38 @@ $ini = eZINI::instance();
 
 // Initialize/set the index file.
 eZSys::init( 'soap.php', $ini->variable( 'SiteAccessSettings', 'ForceVirtualHost' ) == 'true' );
-
-
-// include ezsession override implementation
-require_once( "lib/ezutils/classes/ezsession.php" );
+$uri = eZURI::instance( eZSys::requestURI() );
+$GLOBALS['eZRequestedURI'] = $uri;
 
 // Check for extension
-//include_once( 'lib/ezutils/classes/ezextension.php' );
 require_once( 'kernel/common/ezincludefunctions.php' );
 eZExtension::activateExtensions( 'default' );
 // Extension check end
 
-
 // Activate correct siteaccess
-require_once( "access.php" );
-$access = array( 'name' => $ini->variable( 'SiteSettings', 'DefaultAccess' ),
-                 'type' => EZ_ACCESS_TYPE_DEFAULT );
+require_once( 'access.php' );
+$soapINI = eZINI::instance( 'soap.ini' );
+if ( $soapINI->variable( 'GeneralSettings', 'UseDefaultAccess' ) === 'enabled' )
+{
+    $access = array( 'name' => $ini->variable( 'SiteSettings', 'DefaultAccess' ),
+                     'type' => EZ_ACCESS_TYPE_DEFAULT );
+}
+else
+{
+    $access = accessType( $uri,
+                          eZSys::hostname(),
+                          eZSys::serverPort(),
+                          eZSys::indexFile() );
+}
 $access = changeAccess( $access );
 // Siteaccess activation end
 
 // Check for activating Debug by user ID (Final checking. The first was in eZDebug::updateSettings())
 eZDebug::checkDebugByUser();
+
+// Check for siteaccess extension
+eZExtension::activateExtensions( 'access' );
+// Siteaccess extension check end
 
 /*!
  Reads settings from i18n.ini and passes them to eZTextCodec.
@@ -99,36 +105,28 @@ function eZUpdateTextCodecSettings()
     list( $i18nSettings['internal-charset'], $i18nSettings['http-charset'], $i18nSettings['mbstring-extension'] ) =
         $ini->variableMulti( 'CharacterSettings', array( 'Charset', 'HTTPCharset', 'MBStringExtension' ), array( false, false, 'enabled' ) );
 
-    //include_once( 'lib/ezi18n/classes/eztextcodec.php' );
     eZTextCodec::updateSettings( $i18nSettings );
 }
 
 // Initialize text codec settings
 eZUpdateTextCodecSettings();
 
-//include_once( 'lib/ezdb/classes/ezdb.php' );
 $db = eZDB::instance();
 
 // Initialize module loading
-//include_once( "lib/ezutils/classes/ezmodule.php" );
 $moduleRepositories = eZModule::activeModuleRepositories();
 eZModule::setGlobalPathList( $moduleRepositories );
 
 // Load soap extensions
-$soapINI = eZINI::instance( 'soap.ini' );
 $enableSOAP = $soapINI->variable( 'GeneralSettings', 'EnableSOAP' );
 
 if ( $enableSOAP == 'true' )
 {
     eZSys::init( 'soap.php' );
 
-    //include_once( 'kernel/classes/datatypes/ezuser/ezuser.php' );
-
     // Login if we have username and password.
     if ( eZHTTPTool::username() and eZHTTPTool::password() )
         eZUser::loginUser( eZHTTPTool::username(), eZHTTPTool::password() );
-
-    //include_once( 'lib/ezsoap/classes/ezsoapserver.php' );
 
     $server = new eZSOAPServer();
 

@@ -5,9 +5,9 @@
 // Created on: <19-Aug-2002 10:51:10 bf>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -32,11 +32,6 @@
   \brief eZAuthorType handles multiple authors
 
 */
-
-//include_once( "kernel/classes/ezdatatype.php" );
-//include_once( "kernel/classes/datatypes/ezauthor/ezauthor.php" );
-//include_once( "lib/ezutils/classes/ezmail.php" );
-//include_once( 'lib/ezutils/classes/ezstringutils.php' );
 
 class eZAuthorType extends eZDataType
 {
@@ -240,8 +235,6 @@ class eZAuthorType extends eZDataType
         return true;
     }
 
-    /*!
-    */
     function customObjectAttributeHTTPAction( $http, $action, $contentObjectAttribute, $parameters )
     {
         switch ( $action )
@@ -297,21 +290,11 @@ class eZAuthorType extends eZDataType
         return $name;
     }
 
-    /*!
-     \reimp
-    */
     function isIndexable()
     {
         return true;
     }
 
-    /*!
-     \reimp
-     \param package
-     \param content attribute
-
-     \return a DOM representation of the content object attribute
-    */
     function serializeContentObjectAttribute( $package, $objectAttribute )
     {
         $node = $this->createContentObjectAttributeDOMNode( $objectAttribute );
@@ -326,13 +309,6 @@ class eZAuthorType extends eZDataType
         return $node;
     }
 
-    /*!
-     \reimp
-
-     \param package
-     \param contentobject attribute object
-     \param domnode object
-    */
     function unserializeContentObjectAttribute( $package, $objectAttribute, $attributeNode )
     {
         $rootNode = $attributeNode->getElementsByTagName( 'ezauthor' )->item( 0 );
@@ -340,6 +316,10 @@ class eZAuthorType extends eZDataType
         $objectAttribute->setAttribute( 'data_text', $xmlString );
     }
 
+    function supportsBatchInitializeObjectAttribute()
+    {
+        return true;
+    }
 }
 
 eZDataType::register( eZAuthorType::DATA_TYPE_STRING, "eZAuthorType" );

@@ -5,9 +5,9 @@
 // Created on: <12-Jul-2005 13:01:07 vs>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -42,9 +42,6 @@
  For more details pleaase see doc/feautures/3.8/ssl_zones.txt
 */
 
-//include_once( 'lib/ezutils/classes/ezini.php' );
-//include_once( 'lib/ezutils/classes/ezsys.php' );
-
 class eZSSLZone
 {
     const DEFAULT_SSL_PORT = 443;
@@ -74,8 +71,6 @@ class eZSSLZone
      */
     static function cacheFileName()
     {
-        //include_once( 'lib/ezutils/classes/ezsys.php' );
-        //include_once( 'lib/ezfile/classes/ezdir.php' );
         return eZDir::path( array( eZSys::cacheDirectory(), 'ssl_zones_cache.php' ) );
     }
 
@@ -133,7 +128,6 @@ class eZSSLZone
                 $pathStringsArray = array();
                 foreach ( $sslSubtrees as $uri )
                 {
-                    //include_once( 'kernel/classes/ezurlaliasml.php' );
                     $elements = eZURLAliasML::fetchByPath( $uri );
                     if ( count( $elements ) == 0 )
                     {
@@ -162,11 +156,15 @@ class eZSSLZone
                 {
                     eZDir::mkdir( $cacheDirName, false, true );
                 }
+
                 $fh = fopen( $cacheFileName, 'w' );
                 if ( $fh )
                 {
                     fwrite( $fh, "<?php\n\$pathStringsArray = " . var_export( $pathStringsArray, true ) . ";\n?>" );
                     fclose( $fh );
+
+                    $perm = eZINI::instance()->variable( 'FileSettings', 'StorageFilePermissions' );
+                    chmod( $cacheFileName, octdec( $perm ) );
                 }
 
                 return $GLOBALS['eZSSLZonesCachedPathStrings'] = $pathStringsArray;
@@ -335,7 +333,6 @@ class eZSSLZone
         if ( !$redirect && !eZSSLZone::isKeepModeView( $module, $view ) )
             return;
 
-        //include_once( 'kernel/classes/ezcontentobjecttreenode.php' );
         $pathString = $node->attribute( 'path_string' );
 
         return eZSSLZone::checkNodePath( $module, $view, $pathString, $redirect );

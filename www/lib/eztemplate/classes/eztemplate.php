@@ -5,9 +5,9 @@
 // Created on: <01-Mar-2002 13:49:57 amos>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -26,7 +26,7 @@
 //
 //
 
-/*! \file eztemplate.php
+/*! \file
  Template system manager.
 */
 
@@ -216,16 +216,6 @@ Denne koster {1.4|l10n(currency)}<br>
 
 \endcode
 */
-
-require_once( "lib/ezutils/classes/ezdebug.php" );
-
-//include_once( "lib/eztemplate/classes/eztemplatefileresource.php" );
-
-//include_once( "lib/eztemplate/classes/eztemplateroot.php" );
-//include_once( "lib/eztemplate/classes/eztemplatetextelement.php" );
-//include_once( "lib/eztemplate/classes/eztemplatevariableelement.php" );
-//include_once( "lib/eztemplate/classes/eztemplateoperatorelement.php" );
-//include_once( "lib/eztemplate/classes/eztemplatefunctionelement.php" );
 
 class eZTemplate
 {
@@ -720,7 +710,6 @@ class eZTemplate
 
     function parse( $sourceText, &$rootElement, $rootNamespace, &$resourceData )
     {
-        //include_once( 'lib/eztemplate/classes/eztemplatemultipassparser.php' );
         $parser = eZTemplateMultiPassParser::instance();
         $parser->parse( $this, $sourceText, $rootElement, $rootNamespace, $resourceData );
     }
@@ -1534,7 +1523,7 @@ class eZTemplate
     }
 
     /*!
-     Removes the template variable $var. If the variable does not exists an error is output.
+     Removes the template variable $var. If the variable does not exist an error is output.
     */
     function unsetVariable( $var, $namespace = "" )
     {
@@ -1680,16 +1669,12 @@ class eZTemplate
         return null;
     }
 
-    /*!
-    */
     function appendElement( &$text, $item, $nspace, $name )
     {
         $this->appendElementText( $textElements, $item, $nspace, $name );
         $text .= implode( '', $textElements );
     }
 
-    /*!
-    */
     function appendElementText( &$textElements, $item, $nspace, $name )
     {
         if ( !is_array( $textElements ) )
@@ -1716,7 +1701,6 @@ class eZTemplate
                         $templateURI =& $templateData['uri'];
                         $templateVariableName =& $templateData['template_variable_name'];
                         $templateText = '';
-                        //include_once( 'lib/eztemplate/classes/eztemplateincludefunction.php' );
                         $this->setVariableRef( $templateVariableName, $item, $name );
                         eZTemplateIncludeFunction::handleInclude( $textElements, $templateURI, $this, $nspace, $name );
                         $hasTemplateData = true;
@@ -1745,7 +1729,6 @@ class eZTemplate
         if ( eZTemplate::isXHTMLCodeIncluded() )
             $preText .= "<p class=\"small\">$path</p><br/>\n";
         $postText = "\n<!-- STOP: including template: $path ($uri) -->\n";
-        //include_once( 'lib/eztemplate/classes/eztemplatenodetool.php' );
         $root[1] = array_merge( array( eZTemplateNodeTool::createTextNode( $preText ) ), $root[1] );
         $root[1][] = eZTemplateNodeTool::createTextNode( $postText );
     }
@@ -1765,8 +1748,6 @@ class eZTemplate
         $this->registerFunctionsInternal( $functionObject );
     }
 
-    /*!
-    */
     function registerAutoloadFunctions( $functionDefinition )
     {
         if ( ( ( isset( $functionDefinition['function'] ) or
@@ -1783,7 +1764,7 @@ class eZTemplate
                     $this->error( 'registerFunctions', "Cannot register function definition, missing function names function '$functionNamesFunction'" );
                     return;
                 }
-                $functionNames = $operatorNamesFunction();
+                $functionNames = $functionNamesFunction();
             }
             else
                 $functionNames = $functionDefinition['function_names'];
@@ -1893,8 +1874,6 @@ class eZTemplate
         unset( $this->Literals[$func_name] );
     }
 
-    /*!
-    */
     function registerAutoloadOperators( $operatorDefinition )
     {
         if ( ( ( isset( $operatorDefinition['function'] ) or
@@ -1965,8 +1944,6 @@ class eZTemplate
         $this->registerOperatorsInternal( $operatorObject );
     }
 
-    /*!
-    */
     function registerOperatorsInternal( $operatorObject, $debug = false )
     {
         if ( !is_object( $operatorObject ) or
@@ -2360,7 +2337,6 @@ class eZTemplate
     */
     function ini()
     {
-        //include_once( "lib/ezutils/classes/ezini.php" );
         return eZINI::instance( "template.ini" );
     }
 

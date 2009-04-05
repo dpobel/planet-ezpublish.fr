@@ -3,9 +3,9 @@
 // Created on: <30-Jul-2003 14:46:19 bf>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -25,10 +25,6 @@
 //
 
 require_once( "kernel/common/template.php" );
-//include_once( "lib/ezutils/classes/ezhttptool.php" );
-//include_once( "lib/ezutils/classes/ezmail.php" );
-//include_once( 'lib/ezutils/classes/ezmailtransport.php' );
-
 $Module = $Params['Module'];
 
 $ini = eZINI::instance();

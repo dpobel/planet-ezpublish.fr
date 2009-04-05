@@ -5,9 +5,9 @@
 // Created on: <10-Dec-2002 14:41:22 amos>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -26,7 +26,7 @@
 //
 //
 
-/*! \file ezsendmailtransport.php
+/*! \file
 */
 
 /*!
@@ -37,8 +37,6 @@
 
 */
 
-//include_once( 'lib/ezutils/classes/ezmailtransport.php' );
-
 class eZSendmailTransport extends eZMailTransport
 {
     /*!
@@ -48,9 +46,6 @@ class eZSendmailTransport extends eZMailTransport
     {
     }
 
-    /*!
-     \reimp
-    */
     function sendMail( eZMail $mail )
     {
         $ini = eZINI::instance();

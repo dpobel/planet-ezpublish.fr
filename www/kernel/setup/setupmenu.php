@@ -3,9 +3,9 @@
 // Created on: <07-Oct-2003 11:15:12 kk>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -24,8 +24,6 @@
 //
 //
 
-//include_once( 'lib/ezutils/classes/ezhttppersistence.php' );
-//include_once( 'kernel/classes/ezcontentobjecttreenode.php' );
 require_once( 'kernel/common/template.php' );
 
 $Module = $Params['Module'];

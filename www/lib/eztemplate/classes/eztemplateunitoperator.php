@@ -5,9 +5,9 @@
 // Created on: <09-Apr-2002 11:14:30 amos>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -53,8 +53,6 @@
 \endcode
 */
 
-//include_once( "lib/ezutils/classes/ezini.php" );
-
 class eZTemplateUnitOperator
 {
     /*!
@@ -85,9 +83,6 @@ class eZTemplateUnitOperator
                                               'element-transformation-func' => 'operatorTransform' ) );
     }
 
-    /*!
-      \reimp
-    */
     function operatorTransform( $operatorName, &$node, $tpl, &$resourceData,
                                 $element, $lastElement, $elementList, $elementTree, &$parameters )
     {
@@ -108,7 +103,6 @@ class eZTemplateUnitOperator
              !eZTemplateNodeTool::isStaticElement( $parameters[5] ) )
             return false;
 
-        //include_once( 'lib/ezlocale/classes/ezlocale.php' );
         $locale = eZLocale::instance();
         $decimalCount = $locale->decimalCount();
         $decimalSymbol = $locale->decimalSymbol();
@@ -389,7 +383,6 @@ class eZTemplateUnitOperator
         $unit = $namedParameters["unit"];
         $prefix = $namedParameters["prefix"];
 
-        //include_once( 'lib/ezlocale/classes/ezlocale.php' );
         $locale = eZLocale::instance();
         $decimalCount = $locale->decimalCount();
         $decimalSymbol = $locale->decimalSymbol();

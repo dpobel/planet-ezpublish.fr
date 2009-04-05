@@ -5,9 +5,9 @@
 // Created on: <22-Jan-2003 16:24:33 amos>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -26,7 +26,7 @@
 //
 //
 
-/*! \file ezcollaborationitemhandler.php
+/*! \file
 */
 
 /*!
@@ -34,9 +34,6 @@
   \brief The class eZCollaborationItemHandler does
 
 */
-
-//include_once( 'lib/ezutils/classes/ezini.php' );
-//include_once( "lib/ezfile/classes/ezdir.php" );
 
 class eZCollaborationItemHandler
 {
@@ -121,8 +118,6 @@ class eZCollaborationItemHandler
         return $this->NotificationCollectionHandling;
     }
 
-    /*!
-    */
     function notificationParticipantTemplate( $participantRole )
     {
         return 'participant.tpl';
@@ -137,7 +132,6 @@ class eZCollaborationItemHandler
     */
     static function handleCollaborationEvent( $event, $item, &$parameters )
     {
-        //include_once( 'kernel/classes/ezcollaborationitemparticipantlink.php' );
         $participantList = eZCollaborationItemParticipantLink::fetchParticipantList( array( 'item_id' => $item->attribute( 'id' ),
                                                                                              'participant_type' => eZCollaborationItemParticipantLink::TYPE_USER,
                                                                                              'as_object' => false ) );
@@ -176,7 +170,6 @@ class eZCollaborationItemHandler
         $db->begin();
         if ( $collectionHandling == self::NOTIFICATION_COLLECTION_ONE_FOR_ALL )
         {
-            //include_once( 'kernel/classes/notification/eznotificationcollection.php' );
             require_once( 'kernel/common/template.php' );
             $tpl = templateInit();
             $tpl->resetVariables();
@@ -191,6 +184,8 @@ class eZCollaborationItemHandler
                 $parameters['reply_to'] = $tpl->variable( 'reply_to' );
             if ( $tpl->hasVariable( 'from' ) )
                 $parameters['from'] = $tpl->variable( 'from' );
+            if ( $tpl->hasVariable( 'content_type' ) )
+                $parameters['content_type'] = $tpl->variable( 'content_type' );
 
             $collection = eZNotificationCollection::create( $event->attribute( 'id' ),
                                                             eZCollaborationNotificationHandler::NOTIFICATION_HANDLER_ID,
@@ -231,7 +226,6 @@ class eZCollaborationItemHandler
 
                 $itemInfo = $itemHandler->attribute( 'info' );
                 $typeIdentifier = $itemInfo['type-identifier'];
-                //include_once( 'kernel/classes/notification/eznotificationcollection.php' );
                 $tpl->setVariable( 'collaboration_item', $item );
                 $tpl->setVariable( 'collaboration_participant_role', $participantRole );
                 $result = $tpl->fetch( 'design:notification/handler/ezcollaboration/view/' . $typeIdentifier . '/' . $templateName );
@@ -244,6 +238,8 @@ class eZCollaborationItemHandler
                     $parameters['reply_to'] = $tpl->variable( 'reply_to' );
                 if ( $tpl->hasVariable( 'from' ) )
                     $parameters['from'] = $tpl->variable( 'from' );
+                if ( $tpl->hasVariable( 'content_type' ) )
+                    $parameters['content_type'] = $tpl->variable( 'content_type' );
 
                 $collection = eZNotificationCollection::create( $event->attribute( 'id' ),
                                                                 eZCollaborationNotificationHandler::NOTIFICATION_HANDLER_ID,

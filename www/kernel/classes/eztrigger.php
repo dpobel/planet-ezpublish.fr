@@ -5,9 +5,9 @@
 // Created on: <11-аущ-2002 13:11:15 sp>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -26,7 +26,7 @@
 //
 //
 
-/*! \file eztrigger.php
+/*! \file
 */
 
 /*!
@@ -34,9 +34,6 @@
   \brief The class eZTrigger does
 
 */
-//include_once( 'kernel/classes/ezworkflowprocess.php' );
-//include_once( 'kernel/classes/ezworkflow.php' );
-
 class eZTrigger extends eZPersistentObject
 {
     const STATUS_CRON_JOB = 0;

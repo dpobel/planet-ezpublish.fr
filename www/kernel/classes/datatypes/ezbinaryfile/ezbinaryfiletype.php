@@ -5,9 +5,9 @@
 // Created on: <30-Apr-2002 13:06:21 bf>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -33,14 +33,6 @@
 
 */
 
-//include_once( "kernel/classes/ezdatatype.php" );
-//include_once( "kernel/classes/datatypes/ezbinaryfile/ezbinaryfile.php" );
-//include_once( "kernel/classes/ezbinaryfilehandler.php" );
-//include_once( "lib/ezfile/classes/ezfile.php" );
-//include_once( "lib/ezutils/classes/ezsys.php" );
-//include_once( "lib/ezutils/classes/ezmimetype.php" );
-//include_once( "lib/ezutils/classes/ezhttpfile.php" );
-
 class eZBinaryFileType extends eZDataType
 {
     const MAX_FILESIZE_FIELD = 'data_int1';
@@ -64,7 +56,6 @@ class eZBinaryFileType extends eZDataType
     }
 
     /*!
-     \reimp
      \return the template name which the handler decides upon.
     */
     function viewTemplate( $contentobjectAttribute )
@@ -141,7 +132,6 @@ class eZBinaryFileType extends eZDataType
         $sys = eZSys::instance();
         $storage_dir = $sys->storageDirectory();
 
-        require_once( 'kernel/classes/ezclusterfilehandler.php' );
         if ( $version == null )
         {
             $binaryFiles = eZBinaryFile::fetch( $contentObjectAttributeID );
@@ -309,9 +299,6 @@ class eZBinaryFileType extends eZDataType
 
             $binary->store();
 
-            // VS-DBFILE
-
-            require_once( 'kernel/classes/ezclusterfilehandler.php' );
             $filePath = $binaryFile->attribute( 'filename' );
             $fileHandler = eZClusterFileHandler::instance();
             $fileHandler->fileStore( $filePath, 'binaryfile', true, $mime );
@@ -340,7 +327,6 @@ class eZBinaryFileType extends eZDataType
     }
 
     /*!
-     \reimp
      HTTP file insertion is supported.
     */
     function isHTTPFileInsertionSupported()
@@ -349,7 +335,6 @@ class eZBinaryFileType extends eZDataType
     }
 
     /*!
-     \reimp
      HTTP file insertion is supported.
     */
     function isRegularFileInsertionSupported()
@@ -358,7 +343,6 @@ class eZBinaryFileType extends eZDataType
     }
 
     /*!
-     \reimp
      Inserts the file using the eZBinaryFile class.
     */
     function insertHTTPFile( $object, $objectVersion, $objectLanguage,
@@ -397,9 +381,6 @@ class eZBinaryFileType extends eZDataType
 
         $binary->store();
 
-        // SP-DBFILE
-
-        require_once( 'kernel/classes/ezclusterfilehandler.php' );
         $filePath = $httpFile->attribute( 'filename' );
         $fileHandler = eZClusterFileHandler::instance();
         $fileHandler->fileStore( $filePath, 'binaryfile', true, $mimeData['name'] );
@@ -413,7 +394,6 @@ class eZBinaryFileType extends eZDataType
     }
 
     /*!
-     \reimp
      Inserts the file using the eZBinaryFile class.
     */
     function insertRegularFile( $object, $objectVersion, $objectLanguage,
@@ -436,7 +416,7 @@ class eZBinaryFileType extends eZDataType
 
         if ( !file_exists( $destination ) )
         {
-            if ( !eZDir::mkdir( $destination, eZDir::directoryPermission(), true ) )
+            if ( !eZDir::mkdir( $destination, false, true ) )
             {
                 return false;
             }
@@ -456,8 +436,6 @@ class eZBinaryFileType extends eZDataType
 
         copy( $filePath, $destination );
 
-        // SP-DBFILE
-        require_once( 'kernel/classes/ezclusterfilehandler.php' );
         $fileHandler = eZClusterFileHandler::instance();
         $fileHandler->fileStore( $destination, 'binaryfile', true, $mimeData['name'] );
 
@@ -475,7 +453,6 @@ class eZBinaryFileType extends eZDataType
     }
 
     /*!
-      \reimp
       We support file information
     */
     function hasStoredFileInformation( $object, $objectVersion, $objectLanguage,
@@ -485,7 +462,6 @@ class eZBinaryFileType extends eZDataType
     }
 
     /*!
-      \reimp
       Extracts file information for the binaryfile entry.
     */
     function storedFileInformation( $object, $objectVersion, $objectLanguage,
@@ -500,7 +476,6 @@ class eZBinaryFileType extends eZDataType
         return false;
     }
     /*!
-      \reimp
       Updates download count for binary file.
     */
     function handleDownload( $object, $objectVersion, $objectLanguage,
@@ -567,9 +542,6 @@ class eZBinaryFileType extends eZDataType
         return $binaryFile;
     }
 
-    /*!
-     \reimp
-    */
     function isIndexable()
     {
         return true;
@@ -587,21 +559,16 @@ class eZBinaryFileType extends eZDataType
         return $metaData;
     }
 
-    /*!
-     \reimp
-    */
     function serializeContentClassAttribute( $classAttribute, $attributeNode, $attributeParametersNode )
     {
         $dom = $attributeParametersNode->ownerDocument;
         $maxSize = $classAttribute->attribute( self::MAX_FILESIZE_FIELD );
-        $maxSizeNode = $dom->createElement( 'max-size', $maxSize );
+        $maxSizeNode = $dom->createElement( 'max-size' );
+        $maxSizeNode->appendChild( $dom->createTextNode( $maxSize ) );
         $maxSizeNode->setAttribute( 'unit-size', 'mega' );
         $attributeParametersNode->appendChild( $maxSizeNode );
     }
 
-    /*!
-     \reimp
-    */
     function unserializeContentClassAttribute( $classAttribute, $attributeNode, $attributeParametersNode )
     {
         $sizeNode = $attributeParametersNode->getElementsByTagName( 'max-size' )->item( 0 );
@@ -642,12 +609,6 @@ class eZBinaryFileType extends eZDataType
                                          $result );
     }
 
-    /*!
-     \param package
-     \param content attribute
-
-     \return a DOM representation of the content object attribute
-    */
     function serializeContentObjectAttribute( $package, $objectAttribute )
     {
         $node = $this->createContentObjectAttributeDOMNode( $objectAttribute );
@@ -671,15 +632,8 @@ class eZBinaryFileType extends eZDataType
         return $node;
     }
 
-    /*!
-     \reimp
-     \param package
-     \param contentobject attribute object
-     \param domnode object
-    */
     function unserializeContentObjectAttribute( $package, $objectAttribute, $attributeNode )
     {
-
         $fileNode = $attributeNode->getElementsByTagName( 'binary-file' )->item( 0 );
         if ( !is_object( $fileNode ) or !$fileNode->hasAttributes() )
         {
@@ -697,7 +651,6 @@ class eZBinaryFileType extends eZDataType
             return false;
         }
 
-        //include_once( 'lib/ezfile/classes/ezdir.php' );
         $ini = eZINI::instance();
         $mimeType = $fileNode->getAttribute( 'mime-type' );
         list( $mimeTypeCategory, $mimeTypeName ) = explode( '/', $mimeType );
@@ -705,7 +658,7 @@ class eZBinaryFileType extends eZDataType
         if ( !file_exists( $destinationPath ) )
         {
             $oldumask = umask( 0 );
-            if ( !eZDir::mkdir( $destinationPath, eZDir::directoryPermission(), true ) )
+            if ( !eZDir::mkdir( $destinationPath, false, true ) )
             {
                 umask( $oldumask );
                 return false;
@@ -719,7 +672,6 @@ class eZBinaryFileType extends eZDataType
             $basename = substr( md5( mt_rand() ), 0, 8 ) . '.' . eZFile::suffix( $fileNode->getAttribute( 'filename' ) );
         }
 
-        //include_once( 'lib/ezfile/classes/ezfilehandler.php' );
         eZFileHandler::copy( $sourcePath, $destinationPath . $basename );
         eZDebug::writeNotice( 'Copied: ' . $sourcePath . ' to: ' . $destinationPath . $basename,
                               'eZBinaryFileType::unserializeContentObjectAttribute()' );
@@ -731,13 +683,14 @@ class eZBinaryFileType extends eZDataType
 
         $binaryFile->store();
 
-        // VS-DBFILE + SP DBFile fix
-
-        require_once( 'kernel/classes/ezclusterfilehandler.php' );
         $fileHandler = eZClusterFileHandler::instance();
         $fileHandler->fileStore( $destinationPath . $basename, 'binaryfile', true );
     }
 
+    function supportsBatchInitializeObjectAttribute()
+    {
+        return true;
+    }
 }
 
 eZDataType::register( eZBinaryFileType::DATA_TYPE_STRING, "eZBinaryFileType" );

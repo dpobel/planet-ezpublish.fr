@@ -5,9 +5,9 @@
 // Created on: <19-Apr-2006 16:15:17 vs>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -26,7 +26,7 @@
 //
 //
 
-/*! \file ezdbfilehandlermysqlbackend.php
+/*! \file
 */
 
 define( 'TABLE_METADATA',     'ezdbfile' );
@@ -34,31 +34,30 @@ define( 'TABLE_DATA',         'ezdbfile_data' );
 
 /*
 CREATE TABLE ezdbfile (
-  datatype  VARCHAR(60)   NOT NULL DEFAULT 'application/octet-stream',
-  name      VARCHAR(255)  NOT NULL DEFAULT '',
-  name_hash VARCHAR(34)   NOT NULL DEFAULT '',
-  scope     VARCHAR(20)   NOT NULL DEFAULT '',
-  size      BIGINT(20)    UNSIGNED NOT NULL,
-  mtime     INT(11)       NOT NULL DEFAULT '0',
-  expired   BOOL          NOT NULL DEFAULT '0',
+  datatype      VARCHAR(60)   NOT NULL DEFAULT 'application/octet-stream',
+  name          TEXT          NOT NULL,
+  name_trunk    TEXT          NOT NULL,
+  name_hash     VARCHAR(34)   NOT NULL DEFAULT '',
+  scope         VARCHAR(20)   NOT NULL DEFAULT '',
+  size          BIGINT(20)    UNSIGNED NOT NULL,
+  mtime         INT(11)       NOT NULL DEFAULT '0',
+  expired       BOOL          NOT NULL DEFAULT '0',
   PRIMARY KEY (name_hash),
-  UNIQUE INDEX ezdbfile_name (name),
+  INDEX ezdbfile_name (name(250)),
+  INDEX ezdbfile_name_trunk (name_trunk(250)),
   INDEX ezdbfile_mtime (mtime),
-  UNIQUE INDEX ezdbfile_expired_name (expired, name)
+  INDEX ezdbfile_expired_name (expired, name(250))
 ) ENGINE=InnoDB;
 
 
 CREATE TABLE ezdbfile_data (
   name_hash VARCHAR(34)   NOT NULL DEFAULT '',
-  offset    MEDIUMINT(11) UNSIGNED NOT NULL,
+  offset    INT(11) UNSIGNED NOT NULL,
   filedata  BLOB          NOT NULL,
   PRIMARY KEY (name_hash, offset),
   CONSTRAINT ezdbfile_fk1 FOREIGN KEY (name_hash) REFERENCES ezdbfile (name_hash) ON DELETE CASCADE
 ) ENGINE=InnoDB;
  */
-
-require_once( 'lib/ezutils/classes/ezdebugsetting.php' );
-require_once( 'lib/ezutils/classes/ezdebug.php' );
 
 class eZDBFileHandlerMysqlBackend
 {
@@ -81,6 +80,8 @@ class eZDBFileHandlerMysqlBackend
             $params['max_execute_tries'] = $fileINI->variable( 'ClusteringSettings', 'DBExecuteRetries' );
 
             $params['sql_output'] = $siteINI->variable( "DatabaseSettings", "SQLOutput" ) == "enabled";
+
+            $params['cache_generation_timeout'] = $siteINI->variable( "ContentSettings", "CacheGenerationTimeout" );
 
             $GLOBALS['eZDBFileHandlerMysqlBackend_dbparams'] = $params;
         }
@@ -133,11 +134,13 @@ class eZDBFileHandlerMysqlBackend
         $scope           = $metaData['scope'];
         $contentLength   = $metaData['size'];
         $fileMTime       = $metaData['mtime'];
+        $nameTrunk       = self::nameTrunk( $dstFilePath, $scope );
 
         // Copy file metadata.
         if ( $this->_insertUpdate( TABLE_METADATA,
                                    array( 'datatype'=> $datatype,
                                           'name' => $dstFilePath,
+                                          'name_trunk' => $nameTrunk,
                                           'name_hash' => $filePathHash,
                                           'scope' => $scope,
                                           'size' => $contentLength,
@@ -146,7 +149,7 @@ class eZDBFileHandlerMysqlBackend
                                    "datatype=VALUES(datatype), scope=VALUES(scope), size=VALUES(size), mtime=VALUES(mtime), expired=VALUES(expired)",
                                    $fname ) === false )
         {
-            return $this->_fail( $srcFilPath, "Failed to insert file metadata on copying." );
+            return $this->_fail( $srcFilePath, "Failed to insert file metadata on copying." );
         }
 
         // Copy file data.
@@ -154,7 +157,8 @@ class eZDBFileHandlerMysqlBackend
         $sql = "SELECT filedata, offset FROM " . TABLE_DATA . " WHERE name_hash=" . $this->_md5( $srcFilePath ) . " ORDER BY offset";
         if ( !$res = $this->_query( $sql, $fname ) )
         {
-            return $this->_fail( $srcFilePath, "Failed to fetch source file data on copying." );
+            eZDebug::writeError( "Failed to fetch source file '$srcFilePath' data on copying.", __METHOD__ );
+            return false;
         }
 
         $offset = 0;
@@ -165,7 +169,8 @@ class eZDBFileHandlerMysqlBackend
             $expectedOffset = $row[1];
             if ( $expectedOffset != $offset )
             {
-                $this->_error( "The fetched offset value '$expectedOffset' does not match the computed one for the file '$srcFilePath', aborting copy." );
+                eZDebug::writeError( "The fetched offset value '$expectedOffset' does not match the computed one for the file '$srcFilePath', aborting copy.",
+                                     __METHOD__ );
                 return false;
             }
 
@@ -176,14 +181,14 @@ class eZDBFileHandlerMysqlBackend
                                        "filedata=VALUES(filedata)",
                                        $fname ) === false )
             {
-                $this->_fail( "Failed to insert data row while copying file." );
-                return false;
+                return $this->_fail( "Failed to insert data row while copying file." );
             }
             $offset += strlen( $binarydata );
         }
         if ( $offset != $contentLength )
         {
-            $this->_error( "The size of the fetched data '$offset' does not match the expected size '$contentLength' for the file '$srcFilePath', aborting copy." );
+            eZDebug::writeError( "The size of the fetched data '$offset' does not match the expected size '$contentLength' for the file '$srcFilePath', aborting copy.",
+                                 __METHOD__ );
             return false;
         }
 
@@ -347,17 +352,25 @@ class eZDBFileHandlerMysqlBackend
     {
         foreach ( $dirList as $dirItem )
         {
-            $sql = "UPDATE " . TABLE_METADATA . " SET mtime=-ABS(mtime), expired=1\nWHERE name LIKE '$commonPath/$dirItem/$commonSuffix%'";
+            if ( strstr( $commonPath, '/cache/content' ) !== false or strstr( $commonPath, '/cache/template-block' ) !== false )
+            {
+                $where = "WHERE name_trunk = '$commonPath/$dirItem/$commonSuffix'";
+            }
+            else
+            {
+                $where = "WHERE name LIKE '$commonPath/$dirItem/$commonSuffix%'";
+            }
+            $sql = "UPDATE " . TABLE_METADATA . " SET mtime=-ABS(mtime), expired=1\n$where";
             if ( !$res = $this->_query( $sql, $fname ) )
             {
-                return $this->_fail( "Failed to delete files in dir: '$commonPath/$dirItem/$commonSuffix%'" );
+                eZDebug::writeError( "Failed to delete files in dir: '$commonPath/$dirItem/$commonSuffix%'", __METHOD__ );
             }
         }
         return true;
     }
 
 
-    function _exists( $filePath, $fname = false )
+    function _exists( $filePath, $fname = false, $ignoreExpiredFiles = true )
     {
         if ( $fname )
             $fname .= "::_exists($filePath)";
@@ -367,7 +380,12 @@ class eZDBFileHandlerMysqlBackend
                                      $fname, "Failed to check file '$filePath' existance: ", true );
         if ( $row === false )
             return false;
-        $rc = $row[0][1] >= 0;
+
+        if ( $ignoreExpiredFiles )
+            $rc = $row[1] >= 0;
+        else
+            $rc = true;
+
         return $rc;
     }
 
@@ -381,7 +399,7 @@ class eZDBFileHandlerMysqlBackend
         $result = true;
         $currentDir = $dirElements[0];
 
-        if ( $currentDir != '' && !file_exists( $currentDir ) && !mkdir( $currentDir, '0777' ))
+        if ( $currentDir != '' && !file_exists( $currentDir ) && !eZDir::mkdir( $currentDir, false ))
             return false;
 
         for ( $i = 1; $i < count( $dirElements ); ++$i )
@@ -392,7 +410,7 @@ class eZDBFileHandlerMysqlBackend
 
             $currentDir .= '/' . $dirElement;
 
-            if ( !file_exists( $currentDir ) && !mkdir( $currentDir, 0777 ) )
+            if ( !file_exists( $currentDir ) && !eZDir::mkdir( $currentDir, false ) )
                 return false;
 
             $result = true;
@@ -401,12 +419,20 @@ class eZDBFileHandlerMysqlBackend
         return $result;
     }
 
+    /**
+    * Fetches the file $filePath from the database, saving it locally with its
+    * original name, or $uniqueName if given
+    *
+    * @param string $filePath
+    * @param string $uniqueName
+    * @return the file physical path, or false if fetch failed
+    **/
     function _fetch( $filePath, $uniqueName = false )
     {
         $metaData = $this->_fetchMetadata( $filePath );
         if ( !$metaData )
         {
-            eZDebug::writeError( "File '$filePath' does not exists while trying to fetch." );
+            eZDebug::writeError( "File '$filePath' does not exist while trying to fetch.", __METHOD__ );
             return false;
         }
         $contentLength = $metaData['size'];
@@ -414,13 +440,13 @@ class eZDBFileHandlerMysqlBackend
         $sql = "SELECT filedata, offset FROM " . TABLE_DATA . " WHERE name_hash=" . $this->_md5( $filePath ) . " ORDER BY offset";
         if ( !$res = $this->_query( $sql, "_fetch($filePath)" ) )
         {
-            eZDebug::writeError( $filePath, "Failed to fetch file data." );
+            eZDebug::writeError( "Failed to fetch file data for file '$filePath'.", __METHOD__ );
             return false;
         }
 
         if( !mysql_num_rows( $res ) )
         {
-            eZDebug::writeError( "No rows in file '$filePath' being fetched." );
+            eZDebug::writeError( "No rows in file '$filePath' being fetched.", __METHOD__ );
             mysql_free_result( $res );
             return false;
         }
@@ -430,12 +456,11 @@ class eZDBFileHandlerMysqlBackend
             $tmpFilePath = substr_replace( $filePath, getmypid().'tmp', strrpos( $filePath, '.' ), 0  );
         else
             $tmpFilePath = $filePath . '.' . getmypid().'tmp';
-//        $tmpFilePath = $filePath.getmypid().'tmp';
         $this->__mkdir_p( dirname( $tmpFilePath ) );
 
         if ( !( $fp = fopen( $tmpFilePath, 'wb' ) ) )
         {
-            eZDebug::writeError( "Cannot write to '$tmpFilePath' while fetching file." );
+            eZDebug::writeError( "Cannot write to '$tmpFilePath' while fetching file.", __METHOD__ );
             return false;
         }
 
@@ -445,7 +470,7 @@ class eZDBFileHandlerMysqlBackend
             $expectedOffset = $row[1];
             if ( $expectedOffset != $offset )
             {
-                $this->_error( "The fetched offset value '$expectedOffset' does not match the computed one for the file '$filePath', aborting fetch." );
+                eZDebug::writeError( "The fetched offset value '$expectedOffset' does not match the computed one for the file '$filePath', aborting fetch.", __METHOD__ );
                 fclose( $fp );
                 @unlink( $filePath );
                 return false;
@@ -455,7 +480,7 @@ class eZDBFileHandlerMysqlBackend
         }
         if ( $offset != $contentLength )
         {
-            $this->_error( "The size of the fetched data '$offset' does not match the expected size '$contentLength' for the file '$filePath', aborting fetch." );
+            eZDebug::writeError( "The size of the fetched data '$offset' does not match the expected size '$contentLength' for the file '$filePath', aborting fetch.", __METHOD__ );
             fclose( $fp );
             @unlink( $filePath );
             return false;
@@ -465,15 +490,15 @@ class eZDBFileHandlerMysqlBackend
 
         // Make sure all data is written correctly
         clearstatcache();
-        if ( filesize( $tmpFilePath ) != $metaData['size'] )
+        $tmpSize = filesize( $tmpFilePath );
+        if ( $tmpSize != $metaData['size'] )
         {
-            eZDebug::writeError( "Size (" . filesize( $tmpFilePath ) . ") of written data for file '$tmpFilePath' does not match expected size " . $metaData['size'] );
+            eZDebug::writeError( "Size ($tmpSize) of written data for file '$tmpFilePath' does not match expected size " . $metaData['size'], __METHOD__ );
             return false;
         }
 
         if ( ! $uniqueName === true )
         {
-            //include_once( 'lib/ezfile/classes/ezfile.php' );
             eZFile::rename( $tmpFilePath, $filePath );
         }
         else
@@ -494,7 +519,7 @@ class eZDBFileHandlerMysqlBackend
         $metaData = $this->_fetchMetadata( $filePath, $fname );
         if ( !$metaData )
         {
-            $this->_error( "File '$filePath' does not exists while trying to fetch its contents." );
+            eZDebug::writeError( "File '$filePath' does not exist while trying to fetch its contents.", __METHOD__ );
             return false;
         }
         $contentLength = $metaData['size'];
@@ -503,7 +528,7 @@ class eZDBFileHandlerMysqlBackend
         $sql = "SELECT filedata, offset FROM " . TABLE_DATA . " WHERE name_hash=" . $this->_md5( $filePath ) . " ORDER BY offset";
         if ( !$res = $this->_query( $sql, $fname ) )
         {
-            $this->_error( $filePath, "Failed to fetch file data." );
+            eZDebug::writeError( "Failed to fetch file data for the file '$filePath'.", __METHOD__ );
             return false;
         }
 
@@ -514,7 +539,7 @@ class eZDBFileHandlerMysqlBackend
             $expectedOffset = $row[1];
             if ( $expectedOffset != $offset )
             {
-                $this->_error( "The fetched offset value '$expectedOffset' does not match the computed one for the file '$filePath', aborting fetchContents." );
+                eZDebug::writeError( "The fetched offset value '$expectedOffset' does not match the computed one for the file '$filePath', aborting.", __METHOD__ );
                 return false;
             }
             $contents .= $row[0];
@@ -522,7 +547,7 @@ class eZDBFileHandlerMysqlBackend
         }
         if ( $offset != $contentLength )
         {
-            $this->_error( "The size of the fetched data '$offset' does not match the expected size '$contentLength' for the file '$filePath', aborting fetchContent." );
+            eZDebug::writeError( "The size of the fetched data '$offset' does not match the expected size '$contentLength' for the file '$filePath', aborting.", __METHOD__ );
             return false;
         }
 
@@ -540,10 +565,9 @@ class eZDBFileHandlerMysqlBackend
         else
             $fname = "_fetchMetadata($filePath)";
         $sql = "SELECT * FROM " . TABLE_METADATA . " WHERE name_hash=" . $this->_md5( $filePath );
-        $row = $this->_selectOneAssoc( $sql, $fname,
+        return $this->_selectOneAssoc( $sql, $fname,
                                        "Failed to retrieve file metadata: $filePath",
                                        true );
-        return $row;
     }
 
     function _linkCopy( $srcPath, $dstPath, $fname = false )
@@ -573,7 +597,7 @@ class eZDBFileHandlerMysqlBackend
         $sql = "SELECT filedata FROM " . TABLE_DATA . " WHERE name_hash=" . $this->md5( $filePath ) . " ORDER BY offset";
         if ( !$res = $this->_query( $sql, $fname ) )
         {
-            $this->_error( $filePath, "Failed to fetch file data." );
+            eZDebug::writeError( "Failed to fetch file data for file '$filePath'.", __METHOD__ );
             return false;
         }
 
@@ -593,10 +617,11 @@ class eZDBFileHandlerMysqlBackend
         if ( !$metaData ) // if source file does not exist then do nothing.
             return false;
 
-        $this->_query( 'BEGIN');
+        $this->_begin( __METHOD__ );
 
-        $srcFilePathStr = mysql_real_escape_string( $srcFilePath );
-        $dstFilePathStr = mysql_real_escape_string( $dstFilePath );
+        $srcFilePathStr  = mysql_real_escape_string( $srcFilePath );
+        $dstFilePathStr  = mysql_real_escape_string( $dstFilePath );
+        $dstNameTrunkStr = mysql_real_escape_string( self::nameTrunk( $dstFilePath, $metaData['scope'] ) );
 
 //        $srcFilePathHash = mysql_real_escape_string( $metaData['name_hash'] );
 //        $dstFilePathHash = mysql_real_escape_string( md5( $dstFilePath ) );
@@ -605,20 +630,20 @@ class eZDBFileHandlerMysqlBackend
         $sql = "SELECT * FROM " . TABLE_METADATA . " WHERE name_hash=MD5('$srcFilePathStr') FOR UPDATE";
         if ( !$this->_query( $sql, "_rename($srcFilePath, $dstFilePath)" ) )
         {
-            eZDebug::writeError( "Failed locking file '$srcFilePath'" );
-            $this->_query( 'ROLLBACK');
+            eZDebug::writeError( "Failed locking file '$srcFilePath'", __METHOD__ );
+            $this->_rollback( __METHOD__ );
             return false;
         }
 
-        if ( $this->_exists( $dstFilePath ) )
-            $this->_delete( $dstFilePath, true );
+        if ( $this->_exists( $dstFilePath, false, false ) )
+            $this->_purge( $dstFilePath, false );
 
         // Create a new meta-data entry for the new file to make foreign keys happy.
-        $sql = "INSERT INTO " . TABLE_METADATA . " (name, name_hash, datatype, scope, size, mtime, expired) SELECT '$dstFilePathStr' AS name, MD5('$dstFilePathStr') AS name_hash, datatype, scope, size, mtime, expired FROM " . TABLE_METADATA . " WHERE name_hash=MD5('$srcFilePathStr')";
+        $sql = "INSERT INTO " . TABLE_METADATA . " (name, name_trunk, name_hash, datatype, scope, size, mtime, expired) SELECT '$dstFilePathStr' AS name, '$dstNameTrunkStr' as name_trunk, MD5('$dstFilePathStr') AS name_hash, datatype, scope, size, mtime, expired FROM " . TABLE_METADATA . " WHERE name_hash=MD5('$srcFilePathStr')";
         if ( !$this->_query( $sql, "_rename($srcFilePath, $dstFilePath)" ) )
         {
-            eZDebug::writeError( "Failed making new file entry '$dstFilePath'" );
-            $this->_query( 'ROLLBACK');
+            eZDebug::writeError( "Failed making new file entry '$dstFilePath'", __METHOD__ );
+            $this->_rollback( __METHOD__ );
             return false;
         }
 
@@ -626,8 +651,8 @@ class eZDBFileHandlerMysqlBackend
         $sql = "UPDATE " . TABLE_DATA . " SET name_hash=MD5('$dstFilePathStr') WHERE name_hash=MD5('$srcFilePathStr')";
         if ( !$this->_query( $sql, "_rename($srcFilePath, $dstFilePath)" ) )
         {
-            eZDebug::writeError( "Failed renaming file '$srcFilePath' to '$dstFilePath'" );
-            $this->_query( 'ROLLBACK');
+            eZDebug::writeError( "Failed renaming file '$srcFilePath' to '$dstFilePath'", __METHOD__ );
+            $this->_rollback( __METHOD__ );
             return false;
         }
 
@@ -635,12 +660,12 @@ class eZDBFileHandlerMysqlBackend
         $sql = "DELETE FROM " . TABLE_METADATA . " WHERE name_hash=MD5('$srcFilePathStr')";
         if ( !$this->_query( $sql, "_rename($srcFilePath, $dstFilePath)" ) )
         {
-            eZDebug::writeError( "Failed removing old file '$srcFilePath'" );
-            $this->_query( 'ROLLBACK');
+            eZDebug::writeError( "Failed removing old file '$srcFilePath'", __METHOD__ );
+            $this->_rollback( __METHOD__ );
             return false;
         }
 
-        $this->_query( 'COMMIT');
+        $this->_commit( __METHOD__ );
 
         return true;
     }
@@ -649,7 +674,7 @@ class eZDBFileHandlerMysqlBackend
     {
         if ( !is_readable( $filePath ) )
         {
-            eZDebug::writeError( "Unable to store file '$filePath' since it is not readable.", 'eZDBFileHandlerMysqlBackend' );
+            eZDebug::writeError( "Unable to store file '$filePath' since it is not readable.", __METHOD__ );
             return;
         }
         if ( $fname )
@@ -668,9 +693,12 @@ class eZDBFileHandlerMysqlBackend
         $fileMTime = filemtime( $filePath );
         $contentLength = filesize( $filePath );
         $filePathHash = md5( $filePath );
+        $nameTrunk = self::nameTrunk( $filePath, $scope );
+
         if ( $this->_insertUpdate( TABLE_METADATA,
                                    array( 'datatype' => $datatype,
                                           'name' => $filePath,
+                                          'name_trunk' => $nameTrunk,
                                           'name_hash' => $filePathHash,
                                           'scope' => $scope,
                                           'size' => $contentLength,
@@ -685,7 +713,7 @@ class eZDBFileHandlerMysqlBackend
         // Insert file contents.
         if ( !$fp = @fopen( $filePath, 'rb' ) )
         {
-            return $this->_fail( "Cannot read '$filePath'.", 'eZDBFileHandlerMysqlBackend' );
+            return $this->_fail( "Cannot read '$filePath'.", __METHOD__ );
         }
 
         $chunkSize = $this->dbparams['chunk_size'];
@@ -702,7 +730,7 @@ class eZDBFileHandlerMysqlBackend
                                        "filedata=VALUES(filedata)",
                                        $fname ) === false )
             {
-                return $this->_fail( "Failed to insert file data row while storing. Possible race condition" );
+                return $this->_fail( "Failed to insert file data row while storing. Possible race condition", __METHOD__ );
             }
             $offset += strlen( $binarydata );
         }
@@ -732,18 +760,20 @@ class eZDBFileHandlerMysqlBackend
         // Insert file metadata.
         $contentLength = strlen( $contents );
         $filePathHash = md5( $filePath );
+        $nameTrunk = self::nameTrunk( $filePath, $scope );
         if ( $curTime === false )
             $curTime = time();
 
         if ( $this->_insertUpdate( TABLE_METADATA,
                                     array( 'datatype' => $datatype,
                                            'name' => $filePath,
+                                           'name_trunk' => $nameTrunk,
                                            'name_hash' => $filePathHash,
                                            'scope' => $scope,
                                            'size' => $contentLength,
                                            'mtime' => $curTime,
                                            'expired' => ($curTime < 0) ? 1 : 0 ),
-                                    "datatype=VALUES(datatype), scope=VALUES(scope), size=VALUES(size), mtime=VALUES(mtime), expired=VALUES(expired)",
+                                    "datatype=VALUES(datatype), name_trunk='$nameTrunk', scope=VALUES(scope), size=VALUES(size), mtime=VALUES(mtime), expired=VALUES(expired)",
                                    $fname ) === false )
         {
             return $this->_fail( "Failed to insert file metadata while storing contents. Possible race condition" );
@@ -774,23 +804,22 @@ class eZDBFileHandlerMysqlBackend
         return true;
     }
 
-    function _getFileList( $skipBinaryFiles, $skipImages )
+    function _getFileList( $scopes = false, $excludeScopes = false )
     {
         $query = 'SELECT name FROM ' . TABLE_METADATA;
 
-        // omit some file types if needed
-        $filters = array();
-        if ( $skipBinaryFiles )
-            $filters[] = "'binaryfile'";
-        if ( $skipImages )
-            $filters[] = "'image'";
-        if ( $filters )
-            $query .= ' WHERE scope NOT IN (' . join( ', ', $filters ) . ')';
+        if ( is_array( $scopes ) && count( $scopes ) > 0 )
+        {
+            $query .= ' WHERE scope ';
+            if ( $excludeScopes )
+                $query .= 'NOT ';
+            $query .= "IN ('" . implode( "', '", $scopes ) . "')";
+        }
 
-        $rslt = $this->_query( $query, "_getFileList($skipBinaryFiles, $skipImages)" );
+        $rslt = $this->_query( $query, "_getFileList( array( " . implode( ', ', $scopes ) . " ), $excludeScopes )" );
         if ( !$rslt )
         {
-            $this->_error( mysql_error( $this->db ) );
+            eZDebug::writeDebug( 'Unable to get file list', __METHOD__ );
             return false;
         }
 
@@ -824,14 +853,13 @@ class eZDBFileHandlerMysqlBackend
     \param $array Associative array with data to insert, the keys are the field names and the values will be quoted according to type.
     \param $fname Name of caller.
      */
-     function _insert( $table, $array, $fname )
+    function _insert( $table, $array, $fname )
     {
         $keys = array_keys( $array );
         $query = "INSERT INTO $table (" . join( ", ", $keys ) . ") VALUES (" . $this->_sqlList( $array ) . ")";
         $res = $this->_query( $query, $fname );
         if ( !$res )
         {
-            $this->_error( $query, $fname, false );
             return false;
         }
         return mysql_insert_id( $this->db );
@@ -853,7 +881,6 @@ class eZDBFileHandlerMysqlBackend
         $res = $this->_query( $query, $fname, $reportError );
         if ( !$res )
         {
-            $this->_error( $query, $fname, false );
             return false;
         }
         return mysql_insert_id( $this->db );
@@ -932,7 +959,7 @@ class eZDBFileHandlerMysqlBackend
         $nRows = mysql_num_rows( $res );
         if ( $nRows > 1 )
         {
-            $this->_error( $query, $fname, "Duplicate entries found." );
+            eZDebug::writeError( 'Duplicate entries found', $fname );
             eZDebug::accumulatorStop( 'mysql_cluster_query' );
             // For PHP 5 throw an exception.
         }
@@ -975,7 +1002,7 @@ class eZDBFileHandlerMysqlBackend
         else
             $fname = "_commit";
         $this->transactionCount--;
-        if ( $this->transactionCount <= 0 )
+        if ( $this->transactionCount == 0 )
             $this->_query( "COMMIT", $fname );
     }
 
@@ -990,7 +1017,7 @@ class eZDBFileHandlerMysqlBackend
         else
             $fname = "_rollback";
         $this->transactionCount--;
-        if ( $this->transactionCount <= 0 )
+        if ( $this->transactionCount == 0 )
             $this->_query( "ROLLBACK", $fname );
     }
 
@@ -1006,9 +1033,7 @@ class eZDBFileHandlerMysqlBackend
             $fname .= "::_freeSharedLock";
         else
             $fname = "_freeSharedLock";
-        if ( $this->transactionCount <= 1 )
-            $this->_query( "ROLLBACK", $fname );
-        $this->transactionCount--;
+        $this->_rollback( $fname );
     }
 
     /*!
@@ -1023,9 +1048,7 @@ class eZDBFileHandlerMysqlBackend
             $fname .= "::_freeExclusiveLock";
         else
             $fname = "_freeExclusiveLock";
-        if ( $this->transactionCount <= 1 )
-            $this->_query( "COMMIT", $fname );
-        $this->transactionCount--;
+        $this->_commit( $fname );
     }
 
     /*!
@@ -1044,8 +1067,7 @@ class eZDBFileHandlerMysqlBackend
             $fname .= "::_exclusiveLock($filePath)";
         else
             $fname = "_exclusiveLock($filePath)";
-        if ( $this->transactionCount == 0 )
-            $this->_begin( $fname );
+        $this->_begin( $fname );
         $data = array( 'name' => $filePath,
                        'name_hash' => md5( $filePath ),
                        'expired' => 1,
@@ -1073,6 +1095,41 @@ class eZDBFileHandlerMysqlBackend
             break;
         }
         return $this->_fail( "Failed to perform exclusive lock on file $filePath" );
+    }
+
+    /**
+    * Uses a secondary database connection to check outside the transaction scope
+    * if a file has been generated during the current process execution
+    * @param string $filePath
+    * @param int $expiry
+    * @param int $curtime
+    * @param int $ttl
+    * @param string $fname
+    * @return bool false if the file exists and is not expired, true otherwise
+    **/
+    function _verifyExclusiveLock( $filePath, $expiry, $curtime, $ttl, $fname = false )
+    {
+        // we need to create a new backend connection in order to be outside the
+        // current transaction scope
+        if ( $this->backendVerify === null )
+        {
+            $backendclass = get_class( $this );
+            $this->backendVerify = new $backendclass( $filePath );
+            $this->backendVerify->_connect( true );
+        }
+
+        // we then check the file metadata in this scope to see if it was created
+        // in between
+        $metaData = $this->backendVerify->_fetchMetadata( $filePath );
+        if ( $metaData !== false )
+        {
+            if ( !eZDBFileHandler::isFileExpired( $filePath, $metaData['mtime'], max( $curtime, $expiry ), $curtime, $ttl ) )
+            {
+                eZDebugSetting::writeDebug( 'kernel-clustering', "DBFile '$filePath' is valid and not expired", __METHOD__ );
+                return false;
+            }
+        }
+        return true;
     }
 
     function _sharedLock( $filePath, $fname = false )
@@ -1104,7 +1161,7 @@ class eZDBFileHandlerMysqlBackend
 
     /*!
      Protects a custom function with SQL queries in a database transaction,
-     if the function reports an error the transaciton is ROLLBACKed.
+     if the function reports an error the transaction is ROLLBACKed.
 
      The first argument to the _protect() is the callback and the second is the name of the function (for query reporting). The remainder of arguments are sent to the callback.
 
@@ -1120,9 +1177,7 @@ class eZDBFileHandlerMysqlBackend
         $tries = 0;
         while ( $tries < $maxTries )
         {
-            if ( $this->transactionCount == 0 )
-                $this->_query( "BEGIN", $fname );
-            $this->transactionCount++;
+            $this->_begin( $fname );
 
             $result = call_user_func_array( $callback, $args );
 
@@ -1131,33 +1186,26 @@ class eZDBFileHandlerMysqlBackend
                  $errno == 1213 )  // Error: 1213 SQLSTATE: 40001 (ER_LOCK_DEADLOCK)
             {
                 $tries++;
-                if ( $this->transactionCount - 1 == 0 )
-                    $this->_query( 'ROLLBACK', $fname );
+                $this->_rollback( $fname );
                 continue;
             }
 
             if ( $result === false )
             {
-                $this->transactionCount--;
-                if ( $this->transactionCount == 0 )
-                    $this->_query( 'ROLLBACK', $fname );
+                $this->_rollback( $fname );
                 return false;
             }
             elseif ( $result instanceof eZMySQLBackendError )
             {
                 eZDebug::writeError( $result->errorValue, $result->errorText );
-                $this->transactionCount--;
-                if ( $this->transactionCount == 0 )
-                    $this->_query( 'ROLLBACK', $fname );
+                $this->_rollback( $fname );
                 return false;
             }
 
             break; // All is good, so break out of loop
         }
 
-        $this->transactionCount--;
-        if ( $this->transactionCount == 0 )
-            $this->_query( "COMMIT", $fname );
+        $this->_commit( $fname );
         return $result;
     }
 
@@ -1217,7 +1265,6 @@ class eZDBFileHandlerMysqlBackend
     function _fail( $value, $text = false )
     {
         $value .= "\n" . mysql_errno( $this->db ) . ": " . mysql_error( $this->db );
-        //include_once( 'kernel/classes/clusterfilehandlers/dbbackends/mysqlbackenderror.php' );
         return new eZMySQLBackendError( $value, $text );
     }
 
@@ -1235,7 +1282,7 @@ class eZDBFileHandlerMysqlBackend
         $res = mysql_query( $query, $this->db );
         if ( !$res && $reportError )
         {
-            $this->_error( $query, $fname, mysql_errno( $this->db ) . ": " . mysql_error( $this->db ) );
+            $this->_error( $query, $fname );
         }
 
         $numRows = mysql_affected_rows( $this->db );
@@ -1277,29 +1324,28 @@ class eZDBFileHandlerMysqlBackend
      \param $fname The function name that started the query, should contain relevant arguments in the text.
      \param $error The error message, if this is an array the first element is the value to dump and the second the error header (for eZDebug::writeNotice). If this is \c false a generic message is shown.
      */
-    function _error( $query, $fname, $error )
+    function _error( $query, $fname, $error = "Failed to execute SQL for function:" )
     {
         if ( $error === false )
         {
-            eZDebug::writeError( "Failed to execute SQL for function:\n $query\n" . mysql_error( $this->db ), "$fname" );
+            $error = "Failed to execute SQL for function:";
         }
         else if ( is_array( $error ) )
         {
-            eZDebug::writeError( $error[0] . "\n" . mysql_error( $this->db ), $error[1] );
+            $fname = $error[1];
+            $error = $error[0];
         }
-        else
-        {
-            eZDebug::writeError( $error . "\n" . mysql_error( $this->db ), "$fname" );
-        }
+
+        eZDebug::writeError( "$error\n" . mysql_errno( $this->db ) . ': ' . mysql_error( $this->db ), $fname );
     }
 
-    /*!
-     Report SQL $query to debug system.
-
-     \param $fname The function name that started the query, should contain relevant arguments in the text.
-     \param $timeTaken Number of seconds the query + related operations took (as float).
-     \param $numRows Number of affected rows.
-     */
+    /**
+    * Report SQL $query to debug system.
+    *
+    * @param string $fname The function name that started the query, should contain relevant arguments in the text.
+    * @param int    $timeTaken Number of seconds the query + related operations took (as float).
+    * @param int $numRows Number of affected rows.
+    **/
     function _report( $query, $fname, $timeTaken, $numRows = false )
     {
         if ( !$this->dbparams['sql_output'] )
@@ -1315,9 +1361,296 @@ class eZDBFileHandlerMysqlBackend
         eZDebug::writeNotice( "$query", "cluster::mysql::{$fname}[{$rowText}" . number_format( $timeTaken, 3 ) . " ms] query number per page:" . $numQueries++, $backgroundClass );
     }
 
+    /**
+    * Attempts to begin cache generation by creating a new file named as the
+    * given filepath, suffixed with .generating. If the file already exists,
+    * insertion is not performed and false is returned (means that the file
+    * is already being generated)
+    * @param string $filePath
+    * @return array array with 2 indexes: 'result', containing either ok or ko,
+    *         and another index that depends on the result:
+    *         - if result == 'ok', the 'mtime' index contains the generating
+    *           file's mtime
+    *         - if result == 'ko', the 'remaining' index contains the remaining
+    *           generation time (time until timeout) in seconds
+    **/
+    function _startCacheGeneration( $filePath, $generatingFilePath )
+    {
+        $fname = "_startCacheGeneration( {$filePath} )";
+
+        $nameHash = $this->_md5( $generatingFilePath );
+        $mtime = time();
+
+        $insertData = array( 'name' => "'" . mysql_real_escape_string( $generatingFilePath ) . "'",
+                             'name_trunk' => "'" . mysql_real_escape_string( $generatingFilePath ) . "'",
+                             'name_hash' => $nameHash,
+                             'scope' => "''",
+                             'datatype' => "''",
+                             'mtime' => $mtime,
+                             'expired' => 0 );
+        $query = 'INSERT INTO ' . TABLE_METADATA . ' ( '. implode(', ', array_keys( $insertData ) ) . ' ) ' .
+                 "VALUES(" . implode( ', ', $insertData ) . ")";
+
+        if ( !$this->_query( $query, "_startCacheGeneration( $filePath )", false ) )
+        {
+            $errno = mysql_errno();
+            if ( $errno != 1062 )
+            {
+                eZDebug::writeError( "Unexpected error #$errno when trying to start cache generation on $filePath (".mysql_error().")", __METHOD__ );
+                eZDebug::writeDebug( $query, '$query' );
+
+                // @todo Make this an actual error, maybe an exception
+                return array( 'res' => 'ko' );
+            }
+            // error 1062 is expected, since it means duplicate key (file is being generated)
+            else
+            {
+                // generation timout check
+                $query = "SELECT mtime FROM " . TABLE_METADATA . " WHERE name_hash = {$nameHash}";
+                $row = $this->_selectOneRow( $query, $fname, false, false );
+
+                // file has been renamed, i.e it is no longer a .generating file
+                if( $row and !isset( $row[0] ) )
+                    return array( 'result' => 'ok', 'mtime' => $mtime );
+
+                $remainingGenerationTime = $this->remainingCacheGenerationTime( $row );
+                if ( $remainingGenerationTime < 0 )
+                {
+                    $previousMTime = $row[0];
+
+                    eZDebugSetting::writeDebug( 'kernel-clustering', "$filePath generation has timedout (timeout={$this->dbparams['cache_generation_timeout']}), taking over", __METHOD__ );
+                    $updateQuery = "UPDATE " . TABLE_METADATA . " SET mtime = {$mtime} WHERE name_hash = {$nameHash} AND mtime = {$previousMTime}";
+                    eZDebug::writeDebug( $updateQuery, '$updateQuery' );
+
+                    // we run the query manually since the default _query won't
+                    // report affected rows
+                    $res = mysql_query( $updateQuery, $this->db );
+                    if ( ( $res !== false ) and mysql_affected_rows( $this->db ) == 1 )
+                    {
+                        return array( 'result' => 'ok', 'mtime' => $mtime );
+                    }
+                    else
+                    {
+                        // @todo This would require an actual error handling
+                        eZDebug::writeError( "An error occured taking over timedout generating cache file $generatingFilePath (".mysql_error().")", __METHOD__ );
+                        return array( 'result' => 'error' );
+                    }
+                }
+                else
+                {
+                    return array( 'result' => 'ko', 'remaining' => $remainingGenerationTime );
+                }
+            }
+        }
+        else
+        {
+            return array( 'result' => 'ok', 'mtime' => $mtime );
+        }
+    }
+
+    /**
+    * Ends the cache generation for the current file: moves the (meta)data for
+    * the .generating file to the actual file, and removed the .generating
+    * @param string $filePath
+    * @return bool
+    **/
+    function _endCacheGeneration( $filePath, $generatingFilePath )
+    {
+        $fname = "_endCacheGeneration( $filePath )";
+
+        eZDebugSetting::writeDebug( 'kernel-clustering', $filePath, __METHOD__ );
+
+        $this->_begin( $fname );
+
+        // both files are locked for update
+        if ( !$res = $this->_query( "SELECT * FROM " . TABLE_METADATA . " WHERE name_hash=MD5('$generatingFilePath') FOR UPDATE", $fname, true ) )
+        {
+            $this->_rollback( $fname );
+            return false;
+        }
+        $generatingMetaData = mysql_fetch_assoc( $res );
+
+        $res = $this->_query( "SELECT * FROM " . TABLE_METADATA . " WHERE name_hash=MD5('$filePath') FOR UPDATE", $fname, false );
+        // the original file does not exist: we move the generating file
+        if ( mysql_num_rows( $res ) == 0 )
+        {
+            $metaData = $generatingMetaData;
+            $metaData['name'] = $filePath;
+            $metaData['name_hash'] = md5( $filePath );
+            $metaData['name_trunk'] = $this->nameTrunk( $filePath, $metaData['scope'] );
+            $insertSQL = "INSERT INTO " . TABLE_METADATA . " ( " . implode( ', ', array_keys( $metaData ) ) . " ) " .
+                         "VALUES( " . $this->_sqlList( $metaData ) . ")";
+            if ( !$this->_query( $insertSQL, $fname, true ) )
+            {
+                $this->_rollback( $fname );
+                return false;
+            }
+            if ( !$this->_query( "UPDATE " . TABLE_DATA . " SET name_hash=MD5('$filePath') WHERE name_hash=MD5('$generatingFilePath')", $fname, true ) )
+            {
+                $this->_rollback( $fname );
+                return false;
+            }
+            $this->_query( "DELETE FROM " . TABLE_METADATA . " WHERE name_hash=MD5('$generatingFilePath')", $fname, true );
+        }
+        // the original file exists: we move the generating data to this file
+        // and update it
+        else
+        {
+            $this->_query( "DELETE FROM " . TABLE_DATA . " WHERE name_hash=MD5('$filePath')", $fname, false );
+            if ( !$this->_query( "UPDATE " . TABLE_DATA . " SET name_hash=MD5('$filePath') WHERE name_hash=MD5('$generatingFilePath')", $fname, true ) )
+            {
+                $this->_rollback( $fname );
+                return false;
+            }
+
+            $mtime = $generatingMetaData['mtime'];
+            $filesize = $generatingMetaData['size'];
+            if ( !$this->_query( "UPDATE " . TABLE_METADATA . " SET mtime = '{$mtime}', expired = 0, size = '{$filesize}' WHERE name_hash=MD5('$filePath')", $fname, true ) )
+            {
+                $this->_rollback( $fname );
+                return false;
+            }
+            $this->_query( "DELETE FROM " . TABLE_METADATA . " WHERE name_hash=MD5('$generatingFilePath')", $fname, true );
+        }
+
+        $this->_commit( $fname );
+
+        return true;
+    }
+
+    /**
+    * Checks if generation has timed out by looking for the .generating file
+    * and comparing its timestamp to the one assigned when the file was created
+    *
+    * @param string $generatingFilePath
+    * @param int    $generatingFileMtime
+    *
+    * @return bool true if the file didn't timeout, false otherwise
+    **/
+    function _checkCacheGenerationTimeout( $generatingFilePath, $generatingFileMtime )
+    {
+        $fname = "_checkCacheGenerationTimeout( $generatingFilePath, $generatingFileMtime )";
+        eZDebugSetting::writeDebug( 'kernel-clustering', "Checking for timeout of '$generatingFilePath' with mtime $generatingFileMtime", $fname );
+
+        // reporting
+        eZDebug::accumulatorStart( 'mysql_cluster_query', 'mysql_cluster_total', 'Mysql_cluster_queries' );
+        $time = microtime( true );
+
+        $nameHash = $this->_md5( $generatingFilePath );
+        $newMtime = time();
+
+        // The update query will only succeed if the mtime wasn't changed in between
+        $query = "UPDATE " . TABLE_METADATA . " SET mtime = $newMtime WHERE name_hash = {$nameHash} AND mtime = $generatingFileMtime";
+        $res = mysql_query( $query, $this->db );
+        if ( !$res )
+        {
+            $this->_error( $query, $fname );
+            return false;
+        }
+        $numRows = mysql_affected_rows( $this->db );
+
+        // reporting. Manual here since we don't use _query
+        $time = microtime( true ) - $time;
+        $this->_report( $query, $fname, $time, $numRows );
+
+        // no rows affected or row updated with the same value
+        // f.e a cache-block which takes less than 1 sec to get generated
+        // if a line has been updated by the same  values, mysql_affected_rows
+        // returns 0, and updates nothing, we need to extra check this,
+        if( $numRows == 0 )
+        {
+            $query = "SELECT mtime FROM " . TABLE_METADATA . " WHERE name_hash = {$nameHash}";
+            $res = mysql_query( $query, $this->db );
+            mysql_fetch_row( $res );
+            if( $res and isset( $row[0] ) and $row[0] == $generatingFileMtime );
+                return true;
+
+            return false;
+        }
+        // rows affected: mtime has changed, or row has been removed
+        if ( $numRows == 1 )
+        {
+            return true;
+        }
+        else
+        {
+            eZDebugSetting::writeDebug( 'kernel-clustering', "No rows affected by query '$query', record has been modified", __METHOD__ );
+            return false;
+        }
+    }
+
+    /**
+    * Aborts the cache generation process by removing the .generating file
+    * @param string $filePath Real cache file path
+    * @param string $generatingFilePath .generating cache file path
+    * @return void
+    **/
+    function _abortCacheGeneration( $generatingFilePath )
+    {
+        $sql = "DELETE FROM " . TABLE_METADATA . " WHERE name_hash = " . $this->_md5( $generatingFilePath );
+        $this->_query( $sql, "_abortCacheGeneration( '$generatingFilePath' )" );
+    }
+
+    /**
+    * Returns the name_trunk for a file path
+    * @param string $filePath
+    * @param string $scope
+    * @return string
+    **/
+    static function nameTrunk( $filePath, $scope )
+    {
+        switch ( $scope )
+        {
+            case 'viewcache':
+            {
+                $nameTrunk = substr( $filePath, 0, strrpos( $filePath, '-' ) + 1 );
+            } break;
+
+            case 'template-block':
+            {
+                $templateBlockCacheDir = eZTemplateCacheBlock::templateBlockCacheDir();
+                $templateBlockPath = str_replace( $templateBlockCacheDir, '', $filePath );
+                if ( strstr( $templateBlockPath, 'subtree/' ) !== false )
+                {
+                    // 6 = strlen( 'cache/' );
+                    $len = strlen( $templateBlockCacheDir ) + strpos( $templateBlockPath, 'cache/' ) + 6;
+                    $nameTrunk = substr( $filePath, 0, $len  );
+                }
+                else
+                {
+                    $nameTrunk = $filePath;
+                }
+            } break;
+
+            default:
+            {
+                $nameTrunk = $filePath;
+            }
+        }
+        return $nameTrunk;
+    }
+
+    /**
+    * Returns the remaining time, in seconds, before the generating file times
+    * out
+    *
+    * @param resource $fileRow
+    *
+    * @return int Remaining generation seconds. A negative value indicates a timeout.
+    **/
+    private function remainingCacheGenerationTime( $row )
+    {
+        if( !isset( $row[0] ) )
+            return -1;
+
+        return ( $row[0] + $this->dbparams['cache_generation_timeout'] ) - time();
+    }
+
     public $db   = null;
     public $numQueries = 0;
     public $transactionCount = 0;
+    public $dbparams;
+    private $backendVerify = null;
 }
 
 ?>

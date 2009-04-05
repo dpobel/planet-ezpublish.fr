@@ -7,9 +7,9 @@
 // Created on: <12-Feb-2002 15:41:03 bf>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -28,7 +28,7 @@
 //
 //
 
-/*! \file ezdb.php
+/*! \file
  Database abstraction layer.
 */
 
@@ -102,8 +102,6 @@
   \sa eZLocale eZINI
 */
 
-require_once( 'lib/ezutils/classes/ezdebug.php' );
-
 class eZDB
 {
     /*!
@@ -159,7 +157,6 @@ class eZDB
 
         if ( $fetchInstance )
         {
-            //include_once( 'lib/ezutils/classes/ezini.php' );
             $ini = eZINI::instance();
             if ( $databaseImplementation === false and $useDefaults )
                 $databaseImplementation = $ini->variable( 'DatabaseSettings', 'DatabaseImplementation' );
@@ -218,9 +215,6 @@ class eZDB
             }
             $builtinEncoding = ( $ini->variable( 'DatabaseSettings', 'UseBuiltinEncoding' ) == 'true' );
 
-            $extraPluginPathArray = $ini->variableArray( 'DatabaseSettings', 'DatabasePluginPath' );
-            $pluginPathArray = array_merge( array( 'lib/ezdb/classes/' ),
-                                            $extraPluginPathArray );
             $impl = null;
 
             $useSlaveServer = false;
@@ -285,41 +279,18 @@ class eZDB
             if ( isset( $b['show_errors'] ) )
                 $databaseParameters['show_errors'] = $b['show_errors'];
 
-            // Search for the db interface implementations in active extensions directories.
-            //include_once( 'lib/ezutils/classes/ezextension.php' );
-            $baseDirectory         = eZExtension::baseDirectory();
-            $extensionDirectories  = eZExtension::activeExtensions();
-            $extensionDirectories  = array_unique( $extensionDirectories );
-            $repositoryDirectories = array();
-            foreach ( $extensionDirectories as $extDir )
-            {
-                $newRepositoryDir = "$baseDirectory/$extDir/ezdb/dbms-drivers/";
-                if ( file_exists( $newRepositoryDir ) )
-                    $repositoryDirectories[] = $newRepositoryDir;
-            }
-            $repositoryDirectories = array_merge( $repositoryDirectories, $pluginPathArray );
+            $optionArray = array( 'iniFile'       => 'site.ini',
+                                  'iniSection'    => 'DatabaseSettings',
+                                  'iniVariable'   => 'ImplementationAlias',
+                                  'handlerIndex'  => $databaseImplementation,
+                                  'handlerParams' => array( $databaseParameters ) );
 
-            foreach( $repositoryDirectories as $repositoryDir )
-            {
-                // If we have an alias get the real name
-                $aliasList = $ini->variable( 'DatabaseSettings', 'ImplementationAlias' );
-                if ( isset( $aliasList[$databaseImplementation] ) )
-                {
-                    $databaseImplementation = $aliasList[$databaseImplementation];
-                }
+            $options = new ezpExtensionOptions( $optionArray );
 
-                $dbFile = $repositoryDir . $databaseImplementation . 'db.php';
-                if ( file_exists( $dbFile ) )
-                {
-                    include_once( $dbFile );
-                    $className = $databaseImplementation . 'db';
-                    $impl = new $className( $databaseParameters );
-                    break;
-                }
-            }
-            if ( $impl === null )
+            $impl = eZExtension::getHandlerClass( $options );
+
+            if ( !$impl )
             {
-                //include_once( 'lib/ezdb/classes/eznulldb.php' );
                 $impl = new eZNullDB( $databaseParameters );
                 $impl->ErrorMessage = "No database handler was found for '$databaseImplementation'";
                 $impl->ErrorNumber = -1;
@@ -343,7 +314,6 @@ class eZDB
     static function checkTransactionCounter()
     {
         $result = true;
-        //include_once( 'lib/ezutils/classes/ezini.php' );
         $ini = eZINI::instance();
         $checkValidity = ( $ini->variable( "SiteAccessSettings", "CheckValidity" ) == "true" );
         if ( $checkValidity )
@@ -361,7 +331,6 @@ class eZDB
             {
                 eZDebug::writeError( $stack, 'Transaction stack' );
             }
-            //include_once( 'lib/ezutils/classes/ezini.php' );
             $ini = eZINI::instance();
             // In debug mode the transaction will be invalidated causing the top-level commit
             // to issue an error.

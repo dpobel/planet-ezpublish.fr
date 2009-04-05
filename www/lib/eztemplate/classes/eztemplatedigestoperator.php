@@ -5,9 +5,9 @@
 // Created on: <18-Jul-2003 13:00:18 bh>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -161,7 +161,6 @@ class eZTemplateDigestOperator
             // Calculate and return crc32 polynomial.
             case $this->Crc32Name:
             {
-                //include_once( 'lib/ezutils/classes/ezsys.php' );
                 $operatorValue = eZSys::ezcrc32( $digestData );
             }break;
 

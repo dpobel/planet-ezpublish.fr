@@ -5,9 +5,9 @@
 // Created on: <18-Apr-2002 12:15:07 amos>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -32,13 +32,8 @@
 
 */
 
-//include_once( 'lib/ezi18n/classes/eztranslatormanager.php' );
-//include_once( 'lib/ezi18n/classes/eztstranslator.php' );
-
 class eZi18nOperator
 {
-    /*!
-    */
     function eZi18nOperator( $name = 'i18n', $extensionName = 'x18n' )
     {
         $this->Operators = array( $name, $extensionName );
@@ -165,9 +160,6 @@ class eZi18nOperator
         return array( eZTemplateNodeTool::createCodePieceElement( $code, $values, false, 3 ) );
     }
 
-    /*!
-     \reimp
-    */
     function modify( $tpl, $operatorName, $operatorParameters, $rootNamespace, $currentNamespace, &$value, $namedParameters )
     {
         require_once( 'kernel/common/i18n.php' );

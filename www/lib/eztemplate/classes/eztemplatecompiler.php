@@ -5,9 +5,9 @@
 // Created on: <06-Dec-2002 14:17:10 amos>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -26,7 +26,7 @@
 //
 //
 
-/*! \file eztemplatecompiler.php
+/*! \file
 */
 
 /*!
@@ -65,8 +65,6 @@
       for caching of variables in the script.
 */
 
-require_once( 'lib/ezutils/classes/ezdebug.php' );
-
 class eZTemplateCompiler
 {
     const CODE_DATE = 1074699607;
@@ -78,7 +76,6 @@ class eZTemplateCompiler
     static function TemplatePrefix()
     {
         $templatePrefix = '';
-        //include_once( 'lib/ezutils/classes/ezini.php' );
         $ini = eZINI::instance();
         if ( $ini->variable( 'TemplateSettings', 'TemplateCompression' ) == 'enabled' )
         {
@@ -136,7 +133,6 @@ class eZTemplateCompiler
             return $GLOBALS['eZTemplateCompilerSettings']['compile'];
         }
 
-        //include_once( 'lib/ezutils/classes/ezini.php' );
         $ini = eZINI::instance();
         $compilationEnabled = $ini->variable( 'TemplateSettings', 'TemplateCompile' ) == 'enabled';
         return $compilationEnabled;
@@ -154,7 +150,6 @@ class eZTemplateCompiler
             return $GLOBALS['eZTemplateCompilerSettings']['comments'];
         }
 
-        //include_once( 'lib/ezutils/classes/ezini.php' );
         $ini = eZINI::instance();
         $commentsEnabled = $ini->variable( 'TemplateSettings', 'CompileComments' ) == 'enabled';
         return $commentsEnabled;
@@ -178,7 +173,6 @@ class eZTemplateCompiler
             return $GLOBALS['eZTemplateCompilerSettings']['development_mode'];
         }
 
-        //include_once( 'lib/ezutils/classes/ezini.php' );
         $ini = eZINI::instance();
         $developmentModeEnabled = $ini->variable( 'TemplateSettings', 'DevelopmentMode' ) == 'enabled';
         return $developmentModeEnabled;
@@ -196,7 +190,6 @@ class eZTemplateCompiler
             return $GLOBALS['eZTemplateCompilerSettings']['accumulators'];
         }
 
-        //include_once( 'lib/ezutils/classes/ezini.php' );
         $ini = eZINI::instance();
         $enabled = $ini->variable( 'TemplateSettings', 'CompileAccumulators' ) == 'enabled';
         return $enabled;
@@ -214,7 +207,6 @@ class eZTemplateCompiler
             return $GLOBALS['eZTemplateCompilerSettings']['timingpoints'];
         }
 
-        //include_once( 'lib/ezutils/classes/ezini.php' );
         $ini = eZINI::instance();
         $enabled = $ini->variable( 'TemplateSettings', 'CompileTimingPoints' ) == 'enabled';
         return $enabled;
@@ -232,7 +224,6 @@ class eZTemplateCompiler
             return $GLOBALS['eZTemplateCompilerSettings']['fallbackresource'];
         }
 
-        //include_once( 'lib/ezutils/classes/ezini.php' );
         $ini = eZINI::instance();
         $enabled = $ini->variable( 'TemplateSettings', 'CompileResourceFallback' ) == 'enabled';
         return $enabled;
@@ -250,7 +241,6 @@ class eZTemplateCompiler
             return $GLOBALS['eZTemplateCompilerSettings']['nodeplacement'];
         }
 
-        //include_once( 'lib/ezutils/classes/ezini.php' );
         $ini = eZINI::instance();
         $nodePlacementEnabled = $ini->variable( 'TemplateSettings', 'CompileNodePlacements' ) == 'enabled';
         return $nodePlacementEnabled;
@@ -268,7 +258,6 @@ class eZTemplateCompiler
             return $GLOBALS['eZTemplateCompilerSettings']['execution'];
         }
 
-        //include_once( 'lib/ezutils/classes/ezini.php' );
         $ini = eZINI::instance();
         $execution = $ini->variable( 'TemplateSettings', 'CompileExecution' ) == 'enabled';
         return $execution;
@@ -286,7 +275,6 @@ class eZTemplateCompiler
             return $GLOBALS['eZTemplateCompilerSettings']['generate'];
         }
 
-        //include_once( 'lib/ezutils/classes/ezini.php' );
         $ini = eZINI::instance();
         $alwaysGenerate = $ini->variable( 'TemplateSettings', 'CompileAlwaysGenerate' ) == 'enabled';
         return $alwaysGenerate;
@@ -298,7 +286,6 @@ class eZTemplateCompiler
     */
     static function isTreeEnabled( $treeName )
     {
-        //include_once( 'lib/ezutils/classes/ezini.php' );
         $ini = eZINI::instance();
         $treeList = $ini->variable( 'TemplateSettings', 'CompileIncludeNodeTree' );
         return in_array( $treeName, $treeList );
@@ -319,9 +306,20 @@ class eZTemplateCompiler
         $compilationDirectory =& $GLOBALS['eZTemplateCompilerDirectory'];
         if ( !isset( $compilationDirectory ) )
         {
-            //include_once( 'lib/ezfile/classes/ezdir.php' );
-            //include_once( 'lib/ezutils/classes/ezsys.php' );
-            $compilationDirectory = eZDir::path( array( eZSys::cacheDirectory(), 'template/compiled' ) );
+            $ini = eZINI::instance();
+            $shareTemplates = $ini->hasVariable( 'TemplateSettings', 'ShareCompiledTemplates' ) ?
+                                $ini->variable( 'TemplateSettings', 'ShareCompiledTemplates' ) == 'enabled' :
+                                false;
+            if ( $shareTemplates &&
+                 $ini->hasVariable( 'TemplateSettings', 'SharedCompiledTemplatesDir' ) &&
+                 trim( $ini->variable( 'TemplateSettings', 'SharedCompiledTemplatesDir' ) ) != '' )
+            {
+                $compilationDirectory = eZDir::path( array( $ini->variable( 'TemplateSettings', 'SharedCompiledTemplatesDir' ) ) );
+            }
+            else
+            {
+                $compilationDirectory = eZDir::path( array( eZSys::cacheDirectory(), 'template/compiled' ) );
+            }
         }
         return $compilationDirectory;
     }
@@ -342,17 +340,26 @@ class eZTemplateCompiler
         $accessText = false;
         if ( isset( $GLOBALS['eZCurrentAccess']['name'] ) )
             $accessText = '-' . $GLOBALS['eZCurrentAccess']['name'];
-        //include_once( 'lib/ezlocale/classes/ezlocale.php' );
         $locale = eZLocale::instance();
-        $language = $locale->translationCode();
-        //include_once( 'lib/ezutils/classes/ezhttptool.php' );
+        $language = $locale->localeFullCode();
         $http = eZHTTPTool::instance();
         $useFullUrlText = $http->UseFullUrl ? 'full' : 'relative';
 
         $pageLayoutVariable = "";
         if ( isset( $GLOBALS['eZCustomPageLayout'] ) )
             $pageLayoutVariable = $GLOBALS['eZCustomPageLayout'];
-        $cacheFileKey = $key . '-' . $internalCharset . '-' . $language . '-' . $useFullUrlText . $accessText . "-" . $pageLayoutVariable . '-' . eZSys::indexFile();
+
+        $ini = eZINI::instance();
+
+        $shareTemplates = $ini->hasVariable( 'TemplateSettings', 'ShareCompiledTemplates' ) ?
+                            $ini->variable( 'TemplateSettings', 'ShareCompiledTemplates' ) == 'enabled' :
+                            false;
+
+        if ( $shareTemplates )
+            $cacheFileKey = $key . '-' . $language;
+        else
+            $cacheFileKey = $key . '-' . $internalCharset . '-' . $language . '-' . $useFullUrlText . $accessText . "-" . $pageLayoutVariable . '-' . eZSys::indexFile();
+
         $cacheFileName = $extraName . md5( $cacheFileKey ) . '.php';
         return $cacheFileName;
     }
@@ -371,8 +378,6 @@ class eZTemplateCompiler
             return false;
 
         $cacheFileName = eZTemplateCompiler::compilationFilename( $key, $resourceData );
-
-        //include_once( 'lib/ezutils/classes/ezphpcreator.php' );
 
         $php = new eZPHPCreator( eZTemplateCompiler::compilationDirectory(), $cacheFileName, eZTemplateCompiler::TemplatePrefix() );
         $canRestore = $php->canRestore( $timestamp );
@@ -481,9 +486,6 @@ class eZTemplateCompiler
         if ( !$rootNode )
             return false;
 
-        //include_once( 'lib/eztemplate/classes/eztemplatenodetool.php' );
-        //include_once( 'lib/ezutils/classes/ezphpcreator.php' );
-
         $GLOBALS['eZTemplateCompilerResourceCache'][$resourceData['template-filename']] =& $resourceData;
 
         $useComments = eZTemplateCompiler::isCommentsEnabled();
@@ -575,7 +577,6 @@ class eZTemplateCompiler
 
         if ( $ini->variable( 'TemplateSettings', 'TemplateOptimization' ) == 'enabled' )
         {
-            require_once ('lib/eztemplate/classes/eztemplateoptimizer.php');
             /* Retrieve class information for the attribute lookup table */
             if ( isset( $resourceData['handler']->Keys ) and isset( $resourceData['handler']->Keys['class'] ) ) {
                 $resourceData['class-info'] = eZTemplateOptimizer::fetchClassDeclaration( $resourceData['handler']->Keys['class'] );
@@ -650,8 +651,6 @@ class eZTemplateCompiler
         }
     }
 
-    /*!
-    */
     static function calculateVariableStatistics( $tpl, &$node, &$resourceData, &$stats )
     {
         $nodeType = $node[0];
@@ -2686,7 +2685,7 @@ END;
                         if ( isset( $variableParameters['local-variable'] ) )
                         {
                             $php->addCodePiece( "if ( \$tpl->hasVariable( $variableNameText, $namespaceText ) )\n{\n" ); // if the variable already exists
-                            $php->addCodePiece( "    \$tpl->warning( '" . eZTemplateDefFunction::DEF_FUNCTION_NAME . "', \"Variable $variableNameText is already defined.\" );\n" );
+                            $php->addCodePiece( "    \$tpl->warning( '" . eZTemplateDefFunction::DEF_FUNCTION_NAME . "', \"Variable $variableNameText is already defined.\", " . $php->thisVariableText( $variablePlacement ) . " );\n" );
                             $php->addCodePiece( "    \$tpl->setVariable( $variableNameText, $variableText, $namespaceText );\n}\nelse\n{\n" );
                             $php->addCodePiece( "    \$tpl->setLocalVariable( $variableNameText, $variableText, $namespaceText );\n}\n" ,
                                                 array( 'spacing' => $spacing ) );

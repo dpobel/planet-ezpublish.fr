@@ -5,9 +5,9 @@
 // Created on: <12-Aug-2003 18:30:57 kk>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -26,13 +26,9 @@
 //
 //
 
-/*! \file ezstep_site_details.php
+/*! \file
 */
-//include_once( 'kernel/setup/steps/ezstep_installer.php');
 require_once( "kernel/common/i18n.php" );
-//include_once( "lib/ezutils/classes/ezmail.php" );
-//include_once( "kernel/classes/datatypes/ezuser/ezuser.php" );
-
 /*!
   \class eZStepSiteAdmin ezstep_site_admin.php
   \brief The class eZStepSiteAdmin does
@@ -58,9 +54,6 @@ class eZStepSiteAdmin extends eZStepInstaller
                                 'site_admin', 'Site admin' );
     }
 
-    /*!
-     \reimp
-    */
     function processPostData()
     {
         $user = array();
@@ -107,9 +100,6 @@ class eZStepSiteAdmin extends eZStepInstaller
         return ( count( $this->Error ) == 0 );
     }
 
-    /*!
-     \reimp
-    */
     function init()
     {
         $siteType = $this->chosenSiteType();
@@ -154,9 +144,6 @@ class eZStepSiteAdmin extends eZStepInstaller
         return false;
     }
 
-    /*!
-     \reimp
-    */
     function display()
     {
         $this->Tpl->setVariable( 'first_name_missing', 0 );

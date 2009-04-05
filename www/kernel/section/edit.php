@@ -3,9 +3,9 @@
 // Created on: <27-Aug-2002 16:31:33 bf>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -24,8 +24,6 @@
 //
 //
 
-//include_once( "lib/ezutils/classes/ezhttptool.php" );
-//include_once( "kernel/classes/ezsection.php" );
 require_once( "kernel/common/template.php" );
 
 $http = eZHTTPTool::instance();
@@ -58,7 +56,6 @@ if ( $http->hasPostVariable( "StoreButton" ) )
     if ( $http->hasPostVariable( 'Locale' ) )
         $section->setAttribute( 'locale', $http->postVariable( 'Locale' ) );
     $section->store();
-    //include_once( 'kernel/classes/ezcontentcachemanager.php' );
     eZContentCacheManager::clearContentCacheIfNeededBySectionID( $section->attribute( 'id' ) );
     $Module->redirectTo( $Module->functionURI( 'list' ) );
     return;

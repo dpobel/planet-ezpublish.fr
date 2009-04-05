@@ -5,9 +5,9 @@
 // Created on: <06-æÅ×-2003 10:34:21 sp>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -26,7 +26,7 @@
 //
 //
 
-/*! \file ezshopfunctioncollection.php
+/*! \file
 */
 
 /*!
@@ -46,7 +46,6 @@ class eZShopFunctionCollection
 
     function fetchBasket( )
     {
-        //include_once( 'kernel/classes/ezbasket.php' );
         $http = eZHTTPTool::instance();
         $sessionID = $http->sessionID();
 
@@ -87,8 +86,6 @@ class eZShopFunctionCollection
 
     function fetchBestSellList( $topParentNodeID, $limit, $offset, $start_time, $end_time, $duration, $ascending, $extended )
     {
-        //include_once( 'kernel/classes/ezcontentobjecttreenode.php' );
-
         $node = eZContentObjectTreeNode::fetch( $topParentNodeID , false, false);
         if ( !is_array( $node ) )
             return array( 'result' => null );
@@ -144,8 +141,6 @@ class eZShopFunctionCollection
         $db = eZDB::instance();
         $topList = $db->arrayQuery( $query, array( 'limit' => $limit, 'offset' => $offset ) );
 
-        //include_once( 'kernel/classes/ezcontentobject.php' );
-
         if ( $extended )
         {
             foreach ( array_keys ( $topList ) as $key )
@@ -176,9 +171,6 @@ class eZShopFunctionCollection
 
     function fetchRelatedPurchaseList( $contentObjectID, $limit )
     {
-        //include_once( 'kernel/classes/ezcontentobject.php' );
-        //include_once( 'kernel/classes/ezcontentobjecttreenode.php' );
-
         $contentObjectID = (int)$contentObjectID;
         $db = eZDB::instance();
         $tmpTableName = $db->generateUniqueTempTableName( 'ezproductcoll_tmp_%' );
@@ -213,8 +205,6 @@ class eZShopFunctionCollection
 
     function fetchWishList( $production_id, $offset = false, $limit = false )
     {
-        //include_once( 'kernel/classes/ezwishlist.php' );
-
         $wishList = new eZWishList();
         $wishListItems = $wishList->items( true, $production_id, $offset, $limit );
         return array ( 'result' => $wishListItems );
@@ -222,8 +212,6 @@ class eZShopFunctionCollection
 
     function fetchWishListCount( $production_id )
     {
-        //include_once( 'kernel/classes/ezwishlist.php' );
-
         $wishList = new eZWishList();
         $count = $wishList->itemCount( $production_id );
         return array ( 'result' => $count );
@@ -234,8 +222,6 @@ class eZShopFunctionCollection
     */
     function fetchOrderStatusHistoryCount( $orderID )
     {
-        //include_once( 'kernel/classes/ezorderstatushistory.php' );
-
         $count = eZOrderStatusHistory::fetchCount( $orderID );
         return array( 'result' => $count );
     }
@@ -245,8 +231,6 @@ class eZShopFunctionCollection
     */
     function fetchOrderStatusHistory( $orderID )
     {
-        //include_once( 'kernel/classes/ezorderstatushistory.php' );
-
         $list = eZOrderStatusHistory::fetchListByOrder( $orderID );
         return array( 'result' => $list );
     }
@@ -256,8 +240,6 @@ class eZShopFunctionCollection
     */
     function fetchCurrencyList( $status = false )
     {
-        //include_once( 'kernel/shop/classes/ezcurrencydata.php' );
-
         $conditions = null;
         $status = eZCurrencyData::statusStringToNumeric( $status );
         if ( $status !== false )
@@ -277,8 +259,6 @@ class eZShopFunctionCollection
     */
     function fetchCurrency( $code )
     {
-        //include_once( 'kernel/shop/classes/ezcurrencydata.php' );
-
         $currency = eZCurrencyData::fetch( $code );
         if ( is_object( $currency ) )
             $result = array( 'result' => $currency );
@@ -290,8 +270,6 @@ class eZShopFunctionCollection
 
     function fetchPreferredCurrencyCode()
     {
-        //include_once( 'kernel/shop/classes/ezshopfunctions.php' );
-
         $currency = eZShopFunctions::preferredCurrencyCode();
         $result = array( 'result' => $currency );
 
@@ -300,8 +278,6 @@ class eZShopFunctionCollection
 
     function fetchUserCountry()
     {
-        //include_once( 'kernel/shop/classes/ezshopfunctions.php' );
-
         // Get country saved in user preferences.
         $country = eZShopFunctions::getPreferredUserCountry();
         if ( !$country )
@@ -318,14 +294,12 @@ class eZShopFunctionCollection
 
     function fetchProductCategory( $categoryID )
     {
-        require_once( 'kernel/classes/ezproductcategory.php' );
         return array( 'result' => eZProductCategory::fetch( $categoryID ) );
     }
 
 
     function fetchProductCategoryList()
     {
-        require_once( 'kernel/classes/ezproductcategory.php' );
         return array( 'result' => eZProductCategory::fetchList() );
     }
 }

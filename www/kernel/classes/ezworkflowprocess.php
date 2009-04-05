@@ -5,9 +5,9 @@
 // Created on: <16-Apr-2002 11:08:14 amos>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -31,10 +31,6 @@
   \brief
 
 */
-
-//include_once( 'lib/ezdb/classes/ezdb.php' );
-//include_once( 'kernel/classes/ezpersistentobject.php' );
-//include_once( 'kernel/classes/ezworkflowevent.php' );
 
 class eZWorkflowProcess extends eZPersistentObject
 {
@@ -464,23 +460,6 @@ class eZWorkflowProcess extends eZPersistentObject
                                                     $asObject );
     }
 
-    /*!
-     \return The number of workflow processes in the database. Optionally \a $conditions can be used to limit the list count.
-     \sa fetchList
-    */
-    static function fetchListCount( $conditions = null )
-    {
-        $rows =  eZPersistentObject::fetchObjectList( eZWorkflowProcess::definition(),
-                                                      array(),
-                                                      $conditions,
-                                                      false,
-                                                      null,
-                                                      false, false,
-                                                      array( array( 'operation' => 'count( * )',
-                                                                    'name' => 'count' ) ) );
-        return $rows[0]['count'];
-    }
-
     static function createKey( $parameters, $keys = null )
     {
         $string = '';
@@ -581,7 +560,6 @@ class eZWorkflowProcess extends eZPersistentObject
     {
         if ( isset( $this->UserID ) and $this->UserID )
         {
-            //include_once( 'kernel/classes/datatypes/ezuser/ezuser.php' );
             return eZUser::instance( $this->UserID );
         }
         return null;
@@ -591,7 +569,6 @@ class eZWorkflowProcess extends eZPersistentObject
     {
         if ( isset( $this->ContentID ) and $this->ContentID )
         {
-            //include_once( 'kernel/classes/ezcontentobject.php' );
             return eZContentObject::fetch( $this->ContentID );
         }
         return null;
@@ -601,7 +578,6 @@ class eZWorkflowProcess extends eZPersistentObject
     {
         if ( isset( $this->NodeID ) and $this->NodeID )
         {
-            //include_once( 'kernel/classes/ezcontentobjecttreenode.php' );
             return eZContentObjectTreeNode::fetch( $this->NodeID );
         }
         return null;
@@ -611,7 +587,6 @@ class eZWorkflowProcess extends eZPersistentObject
     {
         if ( isset( $this->WorkflowID ) and $this->WorkflowID )
         {
-            //include_once( 'kernel/classes/ezworkflow.php' );
             return eZWorkflow::fetch( $this->WorkflowID );
         }
         return null;
@@ -621,7 +596,6 @@ class eZWorkflowProcess extends eZPersistentObject
     {
         if ( isset( $this->EventID ) and $this->EventID )
         {
-            //include_once( 'kernel/classes/ezworkflowevent.php' );
             return eZWorkflowEvent::fetch( $this->EventID );
         }
         return null;
@@ -631,7 +605,6 @@ class eZWorkflowProcess extends eZPersistentObject
     {
         if ( isset( $this->LastEventID ) and $this->LastEventID )
         {
-            //include_once( 'kernel/classes/ezworkflowevent.php' );
             return eZWorkflowEvent::fetch( $this->LastEventID );
         }
         return null;

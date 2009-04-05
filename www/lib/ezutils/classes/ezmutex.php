@@ -5,9 +5,9 @@
 // Created on: <24-Apr-2007 18:59:49 hovik>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -26,7 +26,7 @@
 //
 //
 
-/*! \file ezmutex.php
+/*! \file
 */
 
 /*!
@@ -34,9 +34,6 @@
   \brief The class eZMutex provides a file based mutex. The mutex works across processes.
 
 */
-
-//include_once( 'lib/ezutils/classes/ezsys.php' );
-//include_once( 'lib/ezfile/classes/ezfile.php' );
 
 class eZMutex
 {
@@ -51,7 +48,6 @@ class eZMutex
     */
     function eZMutex( $name )
     {
-        //include_once( 'lib/ezutils/classes/ezdir.php' );
         $this->Name = md5( $name );
         $mutexPath = eZDir::path( array( eZSys::cacheDirectory(),
                                          'ezmutex' ) );
@@ -130,7 +126,7 @@ class eZMutex
         $content = array();
         if ( file_exists( $this->MetaFileName ) )
         {
-            $content = unserialize( eZFile::getContents( $this->MetaFileName ) );
+            $content = unserialize( file_get_contents( $this->MetaFileName ) );
         }
         $content[$key] = $value;
         eZFile::create( $tmpFile, false, serialize( $content) );
@@ -149,7 +145,7 @@ class eZMutex
         $content = array();
         if ( file_exists( $this->MetaFileName ) )
         {
-            $content = unserialize( eZFile::getContents( $this->MetaFileName ) );
+            $content = unserialize( file_get_contents( $this->MetaFileName ) );
         }
         return isset( $content[$key] ) ? $content[$key] : null;
     }
@@ -174,6 +170,7 @@ class eZMutex
     {
         if ( $fp = $this->fp() )
         {
+            fclose( $fp );
             @unlink( $this->MetaFileName );
             @unlink( $this->FileName );
             $GLOBALS['eZMutex_FP_' . $this->FileName] = false;

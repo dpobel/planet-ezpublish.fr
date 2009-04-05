@@ -3,9 +3,9 @@
 // Created on: <08-May-2003 11:16:19 bf>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -29,9 +29,6 @@ $module = $Params['Module'];
 $parameters = $Params["Parameters"];
 
 require_once( "kernel/common/template.php" );
-//include_once( "kernel/common/eztemplatedesignresource.php" );
-//include_once( 'lib/ezutils/classes/ezhttptool.php' );
-
 $ini = eZINI::instance();
 $tpl = templateInit();
 
@@ -145,7 +142,6 @@ if ( $module->isCurrentAction( 'RemoveOverride' ) )
         }
 
         // Expire content view cache
-        //include_once( 'kernel/classes/ezcontentcachemanager.php' );
         eZContentCacheManager::clearAllContentCache();
 
         // Clear override cache

@@ -5,9 +5,9 @@
 // Created on: <07-Jul-2007 15:52:24 sp>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -46,10 +46,6 @@
   - class serialization
 
 */
-
-//include_once( "kernel/classes/ezdatatype.php" );
-//include_once( "kernel/classes/datatypes/ezmultioption2/ezmultioption2.php" );
-//include_once( 'lib/ezutils/classes/ezstringutils.php' );
 
 class eZMultiOption2Type extends eZDataType
 {
@@ -94,9 +90,6 @@ class eZMultiOption2Type extends eZDataType
         return $optiongroup;
     }
 
-    /*!
-     \reimp
-    */
     function isIndexable()
     {
         return true;
@@ -452,8 +445,6 @@ class eZMultiOption2Type extends eZDataType
             $redirectionURI = $parameters['current-redirection-uri'];
             $ini = eZINI::instance( 'content.ini' );
 
-            //include_once( 'kernel/classes/ezcontentbrowse.php' );
-
             $browseType = 'AddRelatedObjectToDataType';
             $browseTypeINIVariable = $ini->variable( 'ObjectRelationDataTypeSettings', 'ClassAttributeStartNode' );
             foreach( $browseTypeINIVariable as $value )
@@ -498,10 +489,7 @@ class eZMultiOption2Type extends eZDataType
     }
 
     /*!
-     \reimp
      Finds the option which has the correct ID , if found it returns an option structure.
-
-     \param $optionString must contain the multioption ID an underscore (_) and a the option ID.
     */
     function productOptionInformation( $objectAttribute, $optionID, $productItem )
     {
@@ -520,7 +508,6 @@ class eZMultiOption2Type extends eZDataType
 
 
     /*!
-      \reimp
       \return \c true if there are more than one multioption in the list.
     */
     function hasObjectAttributeContent( $contentObjectAttribute )
@@ -553,9 +540,6 @@ class eZMultiOption2Type extends eZDataType
         }
     }
 
-    /*!
-     \reimp
-    */
     function fetchClassAttributeHTTPInput( $http, $base, $classAttribute )
     {
         return false;
@@ -563,7 +547,6 @@ class eZMultiOption2Type extends eZDataType
 
 
     /*!
-     \reimp
      Validates the input for an object attribute during add to basket process
      and returns a validation state as defined in eZInputValidator.
     */
@@ -630,7 +613,6 @@ class eZMultiOption2Type extends eZDataType
     }
 
     /*!
-     \reimp
      \return true if the datatype requires validation during add to basket procedure
     */
     function isAddToBasketValidationRequired()
@@ -638,28 +620,21 @@ class eZMultiOption2Type extends eZDataType
         return true;
     }
 
-    /*!
-     \reimp
-    */
     function serializeContentClassAttribute( $classAttribute, $attributeNode, $attributeParametersNode )
     {
         $defaultValue = $classAttribute->attribute( 'data_text1' );
-        $defaultValueNode = $attributeParametersNode->ownerDocument->createElement( 'default-value', $defaultValue );
+        $dom = $attributeParametersNode->ownerDocument;
+        $defaultValueNode = $dom->createElement( 'default-value' );
+        $defaultValueNode->appendChild( $dom->createTextNode( $defaultValue ) );
         $attributeParametersNode->appendChild( $defaultValueNode );
     }
 
-    /*!
-     \reimp
-    */
     function unserializeContentClassAttribute( $classAttribute, $attributeNode, $attributeParametersNode )
     {
         $defaultValue = $attributeParametersNode->getElementsByTagName( 'default-value' )->item( 0 )->textContent;
         $classAttribute->setAttribute( 'data_text1', $defaultValue );
     }
 
-    /*!
-     \reimp
-    */
     function serializeContentObjectAttribute( $package, $objectAttribute )
     {
         $node = $this->createContentObjectAttributeDOMNode( $objectAttribute );
@@ -673,9 +648,6 @@ class eZMultiOption2Type extends eZDataType
         return $node;
     }
 
-    /*!
-     \reimp
-    */
     function unserializeContentObjectAttribute( $package, $objectAttribute, $attributeNode )
     {
         $rootNode = $attributeNode->getElementsByTagName( 'ezmultioption2' )->item( 0 );
@@ -702,6 +674,17 @@ class eZMultiOption2Type extends eZDataType
         return $this->DataTypeString;
     }
 
+    function supportsBatchInitializeObjectAttribute()
+    {
+        return true;
+    }
+
+    function batchInitializeObjectAttributeData( $classAttribute )
+    {
+        $optionGroup = new eZMultiOption2( $classAttribute->attribute( 'data_text1' ) );
+        $db = eZDB::instance();
+        return array( 'data_text' => "'" . $db->escapeString( $optionGroup->xmlString() ) . "'" );
+    }
 }
 
 eZDataType::register( eZMultiOption2Type::DATA_TYPE_STRING, "eZMultiOption2Type" );

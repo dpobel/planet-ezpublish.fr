@@ -3,9 +3,9 @@
 // Created on: <19-Aug-2002 16:38:41 sp>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -24,18 +24,8 @@
 //
 //
 
-/*! \file edit.php
+/*! \file
 */
-
-//include_once( 'kernel/classes/ezmodulemanager.php' );
-//include_once( 'kernel/classes/ezrole.php' );
-//include_once( 'kernel/classes/ezpolicy.php' );
-
-//include_once( 'kernel/classes/ezsearch.php' );
-
-//include_once( 'lib/ezutils/classes/ezhttptool.php' );
-//include_once( 'lib/ezutils/classes/ezhttppersistence.php' );
-//include_once( 'lib/ezutils/classes/ezmodule.php' );
 
 require_once( 'kernel/common/template.php' );
 
@@ -43,7 +33,8 @@ $tpl = templateInit();
 $Module = $Params['Module'];
 $roleID = $Params['RoleID'];
 
-$modules = eZModuleManager::availableModules();
+$ini = eZINI::instance( 'module.ini' );
+$modules = $ini->variable( 'ModuleSettings', 'ModuleList' );
 sort( $modules );
 
 $role = eZRole::fetch( 0, $roleID );
@@ -98,20 +89,17 @@ if ( $http->hasPostVariable( 'Apply' ) )
     if ( $http->hasSessionVariable( 'RoleWasChanged' ) and
          $http->sessionVariable( 'RoleWasChanged' ) === true )
     {
-        //include_once( "kernel/classes/ezaudit.php" );
         eZAudit::writeAudit( 'role-change', array( 'Role ID' => $originalRoleID, 'Role name' => $originalRoleName,
                                                    'Comment' => 'Changed the current role: kernel/role/edit.php' ) );
         $http->removeSessionVariable( 'RoleWasChanged' );
     }
 
     $originalRole->revertFromTemporaryVersion();
-    //include_once( 'kernel/classes/ezcontentcachemanager.php' );
     eZContentCacheManager::clearAllContentCache();
 
     $Module->redirectTo( $Module->functionURI( 'view' ) . '/' . $originalRoleID . '/');
 
     /* Clean up policy cache */
-    //include_once( 'kernel/classes/datatypes/ezuser/ezuser.php' );
     eZUser::cleanupCache();
 }
 
@@ -534,14 +522,12 @@ if ( $http->hasPostVariable( 'SelectButton' ) or
         if ( $http->hasPostVariable( 'BrowseLimitationSubtreeButton' ) )
         {
 
-            //include_once( 'kernel/classes/ezcontentbrowse.php' );
             eZContentBrowse::browse( array( 'action_name' => 'FindLimitationSubtree',
                                             'from_page' => '/role/edit/' . $roleID . '/' ),
                                      $Module );
         }
         elseif ( $http->hasPostVariable( 'BrowseLimitationNodeButton' ) )
         {
-            //include_once( 'kernel/classes/ezcontentbrowse.php' );
             eZContentBrowse::browse( array( 'action_name' => 'FindLimitationNode',
                                             'from_page' => '/role/edit/' . $roleID . '/' ),
                                      $Module );

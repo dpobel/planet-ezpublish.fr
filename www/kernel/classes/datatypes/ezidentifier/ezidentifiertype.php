@@ -5,9 +5,9 @@
 // Created on: <28-Aug-2003 11:43:09 br>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -26,7 +26,7 @@
 //
 //
 
-/*! \file ezidentifiertype.php
+/*! \file
 */
 
 /*!
@@ -35,9 +35,6 @@
   \brief The class eZIdentifierType does
 
 */
-
-//include_once( "kernel/classes/ezdatatype.php" );
-//include_once( "lib/ezutils/classes/ezintegervalidator.php" );
 
 class eZIdentifierType extends eZDataType
 {
@@ -164,9 +161,6 @@ class eZIdentifierType extends eZDataType
         return eZInputValidator::STATE_INVALID;
     }
 
-    /*!
-     \reimp
-    */
     function fetchClassAttributeHTTPInput( $http, $base, $classAttribute )
     {
         $startValueName = $base . self::START_VALUE_VARIABLE . $classAttribute->attribute( "id" );
@@ -235,18 +229,12 @@ class eZIdentifierType extends eZDataType
         return  $contentObjectAttribute->attribute( "data_text" );
     }
 
-    /*!
-     \reimp
-    */
     function isIndexable()
     {
         return true;
     }
 
 
-    /*!
-     \reimp
-    */
     function initializeObjectAttribute( $contentObjectAttribute, $currentVersion, $originalContentObjectAttribute )
     {
         $contentObjectAttributeID = $originalContentObjectAttribute->attribute( "id" );
@@ -325,7 +313,6 @@ class eZIdentifierType extends eZDataType
                 $dataText = $db->escapeString( $contentObjectAttribute->attribute( 'data_text' ) );
                 $dataInt = (int)$contentObjectAttribute->attribute( 'data_int' );
 
-                //include_once( 'lib/ezi18n/classes/ezchartransform.php' );
                 $trans = eZCharTransform::instance();
                 $sortText = $db->escapeString( $trans->transformByGroup( $contentObjectAttribute->attribute( 'data_text' ),
                                                                          'lowercase' ) );
@@ -351,19 +338,12 @@ class eZIdentifierType extends eZDataType
         return $retValue;
     }
 
-    /*!
-     \reimp
-    */
     function sortKey( $contentObjectAttribute )
     {
-        //include_once( 'lib/ezi18n/classes/ezchartransform.php' );
         $trans = eZCharTransform::instance();
         return $trans->transformByGroup( $contentObjectAttribute->attribute( 'data_text' ), 'lowercase' );
     }
 
-    /*!
-    \reimp
-    */
     function sortKeyType()
     {
         return 'string';
@@ -408,9 +388,6 @@ class eZIdentifierType extends eZDataType
     {
     }
 
-    /*!
-     \reimp
-    */
     function serializeContentClassAttribute( $classAttribute, $attributeNode, $attributeParametersNode )
     {
         $digits     = $classAttribute->attribute( self::DIGITS_FIELD );
@@ -421,21 +398,23 @@ class eZIdentifierType extends eZDataType
 
         $dom = $attributeParametersNode->ownerDocument;
 
-        $digitsNode = $dom->createElement( 'digits', $digits );
+        $digitsNode = $dom->createElement( 'digits' );
+        $digitsNode->appendChild( $dom->createTextNode( $digits ) );
         $attributeParametersNode->appendChild( $digitsNode );
-        $preTextNode = $dom->createElement( 'pre-text', $preText );
+        $preTextNode = $dom->createElement( 'pre-text' );
+        $preTextNode->appendChild( $dom->createTextNode( $preText ) );
         $attributeParametersNode->appendChild( $preTextNode );
-        $postTextNode = $dom->createElement( 'post-text', $postText );
+        $postTextNode = $dom->createElement( 'post-text' );
+        $postTextNode->appendChild( $dom->createTextNode( $postText ) );
         $attributeParametersNode->appendChild( $postTextNode );
-        $startValueNode = $dom->createElement( 'start-value', $startValue );
+        $startValueNode = $dom->createElement( 'start-value' );
+        $startValueNode->appendChild( $dom->createTextNode( $startValue ) );
         $attributeParametersNode->appendChild( $startValueNode );
-        $identifierNode = $dom->createElement( 'identifier', $identifier );
+        $identifierNode = $dom->createElement( 'identifier' );
+        $identifierNode->appendChild( $dom->createTextNode( $identifier ) );
         $attributeParametersNode->appendChild( $identifierNode );
     }
 
-    /*!
-     \reimp
-    */
     function unserializeContentClassAttribute( $classAttribute, $attributeNode, $attributeParametersNode )
     {
         $digits     = $attributeParametersNode->getElementsByTagName( 'digits' )->item( 0 )->textContent;

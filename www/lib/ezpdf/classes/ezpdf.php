@@ -3,9 +3,9 @@
 // Created on: <26-Aug-2003 15:15:32 kk>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -24,13 +24,8 @@
 //
 //
 
-/*! \file eztemplateautoload.php
+/*! \file
 */
-
-//include_once( 'lib/ezpdf/classes/class.ezpdftable.php' );
-//include_once( 'lib/ezpdf/classes/class.pdf.php' );
-
-////include_once( 'lib/ezutils/classes/eztexttool.php' );
 
 /*!
   \defgroup eZPDF PDF generator library
@@ -167,7 +162,6 @@ class eZPDF
                 $rows = str_replace( array( ' ', "\t", "\r\n", "\n" ),
                                                           '',
                                                           $rows );
-                //include_once( 'lib/ezi18n/classes/eztextcodec.php' );
                 $httpCharset = eZTextCodec::internalCharset();
                 $outputCharset = $config->hasVariable( 'PDFGeneral', 'OutputCharset' )
                                  ? $config->variable( 'PDFGeneral', 'OutputCharset' )
@@ -298,14 +292,10 @@ class eZPDF
 
             case 'close':
             {
-                //include_once( 'lib/ezfile/classes/ezdir.php' );
                 $filename = $tpl->elementValue( $operatorParameters[1], $rootNamespace, $currentNamespace );
 
                 eZDir::mkdir( eZDir::dirpath( $filename ), false, true );
 
-                // VS-DBFILE
-
-                require_once( 'kernel/classes/ezclusterfilehandler.php' );
                 $file = eZClusterFileHandler::instance( $filename );
                 $file->storeContents( $this->PDF->ezOutput(), 'viewcache', 'pdf' );
 
@@ -339,7 +329,6 @@ class eZPDF
                 }
 
                 $text = str_replace( array( ' ', "\n", "\t" ), '', $text );
-                //include_once( 'lib/ezi18n/classes/eztextcodec.php' );
                 $httpCharset = eZTextCodec::internalCharset();
                 $outputCharset = $config->hasVariable( 'PDFGeneral', 'OutputCharset' )
                                  ? $config->variable( 'PDFGeneral', 'OutputCharset' )
@@ -419,7 +408,6 @@ class eZPDF
 
                 if ( isset( $frameDesc['block_code'] ) )
                 {
-                    //include_once( 'lib/ezi18n/classes/eztextcodec.php' );
                     $httpCharset = eZTextCodec::internalCharset();
                     $outputCharset = $config->hasVariable( 'PDFGeneral', 'OutputCharset' )
                                  ? $config->variable( 'PDFGeneral', 'OutputCharset' )
@@ -495,7 +483,6 @@ class eZPDF
 
                 if ( isset( $frameDesc['text'] ) )
                 {
-                    //include_once( 'lib/ezi18n/classes/eztextcodec.php' );
                     $httpCharset = eZTextCodec::internalCharset();
                     $outputCharset = $config->hasVariable( 'PDFGeneral', 'OutputCharset' )
                                  ? $config->variable( 'PDFGeneral', 'OutputCharset' )
@@ -644,7 +631,6 @@ class eZPDF
                 $text = str_replace( array( ' ', "\t", "\r\n", "\n" ),
                                      '',
                                      $text );
-                //include_once( 'lib/ezi18n/classes/eztextcodec.php' );
                 $httpCharset = eZTextCodec::internalCharset();
                 $outputCharset = $config->hasVariable( 'PDFGeneral', 'OutputCharset' )
                              ? $config->variable( 'PDFGeneral', 'OutputCharset' )
@@ -665,7 +651,6 @@ class eZPDF
             */
             case 'set_margin':
             {
-                //include_once( 'lib/ezutils/classes/ezmath.php' );
                 $operatorValue = '<C:callSetMargin';
                 $options = $tpl->elementValue( $operatorParameters[1], $rootNamespace, $currentNamespace );
 
@@ -687,7 +672,6 @@ class eZPDF
                 $text = $tpl->elementValue( $operatorParameters[1], $rootNamespace, $currentNamespace );
 
                 $text = str_replace( array( ' ', "\n", "\t" ), '', $text );
-                //include_once( 'lib/ezi18n/classes/eztextcodec.php' );
                 $httpCharset = eZTextCodec::internalCharset();
                 $outputCharset = $config->hasVariable( 'PDFGeneral', 'OutputCharset' )
                              ? $config->variable( 'PDFGeneral', 'OutputCharset' )
@@ -773,7 +757,6 @@ class eZPDF
 
             case 'filled_circle':
             {
-                //include_once( 'lib/ezutils/classes/ezmath.php' );
                 $operatorValue = '';
                 $options = $tpl->elementValue( $operatorParameters[1], $rootNamespace, $currentNamespace );
 
@@ -820,7 +803,6 @@ class eZPDF
 
             case 'rectangle':
             {
-                //include_once( 'lib/ezutils/classes/ezmath.php' );
                 $operatorValue = '';
                 $options = $tpl->elementValue( $operatorParameters[1], $rootNamespace, $currentNamespace );
 
@@ -873,7 +855,6 @@ class eZPDF
                                                     'cmykBottom', array( <c>, <m>, <y>, <k> ) ) ) */
             case 'filled_rectangle':
             {
-                //include_once( 'lib/ezutils/classes/ezmath.php' );
                 $operatorValue = '';
                 $options = $tpl->elementValue( $operatorParameters[1], $rootNamespace, $currentNamespace );
 
@@ -1014,7 +995,6 @@ class eZPDF
                     }
                 }
 
-                //include_once( 'lib/ezi18n/classes/eztextcodec.php' );
                 $httpCharset = eZTextCodec::internalCharset();
                 $outputCharset = $config->hasVariable( 'PDFGeneral', 'OutputCharset' )
                              ? $config->variable( 'PDFGeneral', 'OutputCharset' )
@@ -1074,7 +1054,6 @@ class eZPDF
                             }
                         }
 
-                        //include_once( 'lib/ezi18n/classes/eztextcodec.php' );
                         $httpCharset = eZTextCodec::internalCharset();
                         $outputCharset = $config->hasVariable( 'PDFGeneral', 'OutputCharset' )
                                      ? $config->variable( 'PDFGeneral', 'OutputCharset' )

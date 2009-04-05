@@ -5,9 +5,9 @@
 // Created on: <09-Jan-2003 15:01:18 sp>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -26,7 +26,7 @@
 //
 //
 
-/*! \file ezwaituntildatetype.php
+/*! \file
 */
 
 /*!
@@ -34,8 +34,6 @@
   \brief The class eZWaitUntilDateType does
 
 */
-//include_once( 'kernel/classes/workflowtypes/event/ezwaituntildate/ezwaituntildate.php' );
-
 class eZWaitUntilDateType  extends eZWorkflowEventType
 {
     const WORKFLOW_TYPE_STRING = "ezwaituntildate";
@@ -152,7 +150,7 @@ class eZWaitUntilDateType  extends eZWorkflowEventType
             }break;
             case 'has_class_attributes' :
             {
-                // for the backward compatability:
+                // for the backward compatibility:
                 return 1;
             }break;
             default:

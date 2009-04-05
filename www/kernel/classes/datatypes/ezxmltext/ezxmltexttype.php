@@ -5,9 +5,9 @@
 // Created on: <06-May-2002 20:02:55 bf>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -97,18 +97,16 @@ This is a <emphasize>block</emphasize> of text.
 
 */
 
-//include_once( "kernel/classes/ezdatatype.php" );
 require_once( "kernel/common/template.php" );
-//include_once( 'lib/eztemplate/classes/eztemplateincludefunction.php' );
-//include_once( 'kernel/classes/datatypes/ezurl/ezurl.php' );
-//include_once( 'kernel/classes/datatypes/ezurl/ezurlobjectlink.php' );
-//include_once( "lib/ezutils/classes/ezini.php" );
-
 class eZXMLTextType extends eZDataType
 {
     const DATA_TYPE_STRING = "ezxmltext";
     const COLS_FIELD = 'data_int1';
     const COLS_VARIABLE = '_ezxmltext_cols_';
+
+    // Tag support preset
+    const TAG_PRESET_FIELD = 'data_text2';
+    const TAG_PRESET_VARIABLE = '_ezxmltext_tagpreset_';
 
     // The timestamp of the format for eZ Publish 3.0.
     const VERSION_30_TIMESTAMP = 1045487555;
@@ -144,11 +142,73 @@ class eZXMLTextType extends eZDataType
         }
         else
         {
-            //include_once( 'kernel/classes/datatypes/ezxmltext/ezxmlinputparser.php' );
             $parser = new eZXMLInputParser();
             $doc = $parser->createRootNode();
             $xmlText = eZXMLTextType::domString( $doc );
             $contentObjectAttribute->setAttribute( "data_text", $xmlText );
+        }
+    }
+
+    /**
+     * Method triggered on publish for xml text datatype
+     *
+     * This method makes sure that links from all translations of an xml text
+     * are registered in the ezurl_object_link table, and thus retained, if
+     * previous versions of an object are removed.
+     *
+     * @param eZContentObjectAttribute $contentObjectAttribute
+     * @param eZContentObject $object
+     * @param array $publishedNodes
+     * @return boolean
+     */
+    function onPublish( $contentObjectAttribute, $object, $publishedNodes )
+    {
+        $currentVersion = $object->currentVersion();
+        $langMask = $currentVersion->attribute( 'language_mask' );
+
+        // We find all translations present in the current version. We calculate
+        // this from the language mask already present in the fetched version,
+        // so no further round-trip to the DB is required.
+        $languageList = eZContentLanguage::decodeLanguageMask( $langMask, true );
+        $languageList = $languageList['language_list'];
+
+        // We want to have the class attribute identifier of the attribute
+        // containing the current ezxmltext, as we then can use the more efficient
+        // eZContentObject->fetchAttributesByIdentifier() to get the data
+        $identifier = $contentObjectAttribute->attribute( 'contentclass_attribute_identifier' );
+
+        $attributeArray = $object->fetchAttributesByIdentifier( array( $identifier ),
+                                                                $currentVersion->attribute( 'version' ),
+                                                                $languageList );
+
+        foreach ( $attributeArray as $attr )
+        {
+            $xmlText = eZXMLTextType::rawXMLText( $attr );
+            $dom = new DOMDocument( '1.0', 'utf-8' );
+            $success = $dom->loadXML( $xmlText );
+
+            if ( !$success )
+            {
+                continue;
+            }
+
+            $linkNodes = $dom->getElementsByTagName( 'link' );
+            $urlIdArray = array();
+
+            foreach ( $linkNodes as $link )
+            {
+                // We are looking for external 'http://'-style links, not the internal
+                // object or node links.
+                if ( $link->hasAttribute( 'url_id' ) )
+                {
+                    $urlIdArray[] = $link->getAttribute( 'url_id' );
+                }
+            }
+
+            if ( count( $urlIdArray ) > 0 )
+            {
+                eZSimplifiedXMLInput::updateUrlObjectLinks( $attr, $urlIdArray );
+            }
         }
     }
 
@@ -170,10 +230,16 @@ class eZXMLTextType extends eZDataType
     function fetchClassAttributeHTTPInput( $http, $base, $classAttribute )
     {
         $column = $base . self::COLS_VARIABLE . $classAttribute->attribute( 'id' );
+        $tagPreset = $base . self::TAG_PRESET_VARIABLE . $classAttribute->attribute( 'id' );
         if ( $http->hasPostVariable( $column ) )
         {
             $columnValue = $http->postVariable( $column );
             $classAttribute->setAttribute( self::COLS_FIELD,  $columnValue );
+            if ( $http->hasPostVariable( $tagPreset ) )
+            {
+                $tagPresetValue = $http->postVariable( $tagPreset );
+                $classAttribute->setAttribute( self::TAG_PRESET_FIELD, $tagPresetValue );
+            }
             return true;
         }
         return false;
@@ -208,9 +274,6 @@ class eZXMLTextType extends eZDataType
         $attribute->setAttribute( 'data_int', self::VERSION_TIMESTAMP );
     }
 
-    /*!
-     \reimp
-    */
     function viewTemplate( $contentobjectAttribute )
     {
         $template = $this->DataTypeString;
@@ -222,9 +285,6 @@ class eZXMLTextType extends eZDataType
         return $template;
     }
 
-    /*!
-     \reimp
-    */
     function editTemplate( $contentobjectAttribute )
     {
         $template = $this->DataTypeString;
@@ -234,9 +294,6 @@ class eZXMLTextType extends eZDataType
         return $template;
     }
 
-    /*!
-     \reimp
-    */
     function informationTemplate( $contentobjectAttribute )
     {
         $template = $this->DataTypeString;
@@ -246,9 +303,6 @@ class eZXMLTextType extends eZDataType
         return $template;
     }
 
-    /*!
-     \reimp
-    */
     function viewTemplateSuffix( &$contentobjectAttribute )
     {
         $content = $this->objectAttributeContent( $contentobjectAttribute );
@@ -256,9 +310,6 @@ class eZXMLTextType extends eZDataType
         return $outputHandler->viewTemplateSuffix( $contentobjectAttribute );
     }
 
-    /*!
-     \reimp
-    */
     function editTemplateSuffix( &$contentobjectAttribute )
     {
         $content = $this->objectAttributeContent( $contentobjectAttribute );
@@ -266,9 +317,6 @@ class eZXMLTextType extends eZDataType
         return $inputHandler->editTemplateSuffix( $contentobjectAttribute );
     }
 
-    /*!
-     \reimp
-    */
     function informationTemplateSuffix( &$contentobjectAttribute )
     {
         $content = $this->objectAttributeContent( $contentobjectAttribute );
@@ -287,7 +335,6 @@ class eZXMLTextType extends eZDataType
         $timestamp = $contentObjectAttribute->attribute( 'data_int' );
         if ( $timestamp < self::VERSION_30_TIMESTAMP )
         {
-            //include_once( 'lib/ezi18n/classes/eztextcodec.php' );
             $charset = 'UTF-8';
             $codec = eZTextCodec::instance( false, $charset );
             $text = $codec->convertString( $text );
@@ -312,7 +359,6 @@ class eZXMLTextType extends eZDataType
     */
     function objectAttributeContent( $contentObjectAttribute )
     {
-        //include_once( 'kernel/classes/datatypes/ezxmltext/ezxmltext.php' );
         $xmlText = new eZXMLText( eZXMLTextType::rawXMLText( $contentObjectAttribute ), $contentObjectAttribute );
         return $xmlText;
     }
@@ -430,24 +476,17 @@ class eZXMLTextType extends eZDataType
         return false;
     }
 
-    /*!
-     \reimp
-    */
     function isIndexable()
     {
         return true;
     }
 
-    /*!
-     \reimp
-    */
     function isInformationCollector()
     {
         return false;
     }
 
     /*!
-     \reimp
      Makes sure content/datatype/.../ezxmltags/... are included.
     */
     function templateList()
@@ -456,27 +495,21 @@ class eZXMLTextType extends eZDataType
                              '#^content/datatype/[a-zA-Z]+/ezxmltags/#' ) );
     }
 
-    /*!
-     \reimp
-    */
     function serializeContentClassAttribute( $classAttribute, $attributeNode, $attributeParametersNode )
     {
         $textColumns = $classAttribute->attribute( self::COLS_FIELD );
-        $textColumnCountNode = $attributeParametersNode->ownerDocument->createElement( 'text-column-count', $textColumns );
+        $dom = $attributeParametersNode->ownerDocument;
+        $textColumnCountNode = $dom->createElement( 'text-column-count' );
+        $textColumnCountNode->appendChild( $dom->createTextNode( $textColumns ) );
         $attributeParametersNode->appendChild( $textColumnCountNode );
     }
 
-    /*!
-     \reimp
-    */
     function unserializeContentClassAttribute( $classAttribute, $attributeNode, $attributeParametersNode )
     {
         $textColumns = $attributeParametersNode->getElementsByTagName( 'text-column-count' )->item( 0 )->textContent;
         $classAttribute->setAttribute( self::COLS_FIELD, $textColumns );
     }
 
-    /*!
-    */
     function customObjectAttributeHTTPAction( $http, $action, $contentObjectAttribute, $parameters )
     {
         $content = $this->objectAttributeContent( $contentObjectAttribute );
@@ -485,7 +518,6 @@ class eZXMLTextType extends eZDataType
     }
 
     /*!
-     \reimp
      \return a DOM representation of the content object attribute
     */
     function serializeContentObjectAttribute( $package, $objectAttribute )
@@ -503,9 +535,6 @@ class eZXMLTextType extends eZDataType
              * - add "href" attribute fetching it from ezurl table.
              * - remove "id" attribute.
              */
-
-            //include_once( 'kernel/classes/datatypes/ezurl/ezurlobjectlink.php' );
-            //include_once( 'kernel/classes/datatypes/ezurl/ezurl.php' );
 
             $links = $doc->getElementsByTagName( 'link' );
             $embeds = $doc->getElementsByTagName( 'embed' );
@@ -574,7 +603,6 @@ class eZXMLTextType extends eZDataType
     }
 
     /*!
-     \reimp
      \param contentobject attribute object
      \param domnode object
     */
@@ -587,9 +615,6 @@ class eZXMLTextType extends eZDataType
          * After that, remove "href" attribute, add new "id" attribute.
          * This new 'id' will always refer to the existing url object.
          */
-        //include_once( 'kernel/classes/datatypes/ezurl/ezurlobjectlink.php' );
-        //include_once( 'kernel/classes/datatypes/ezurl/ezurl.php' );
-
         $linkNodes = $attributeNode->getElementsByTagName( 'link' );
 
         foreach ( $linkNodes as $linkNode )
@@ -731,7 +756,6 @@ class eZXMLTextType extends eZDataType
 
         /* First we remove the link between the keyword and the object
          * attribute to be removed */
-        //include_once( 'kernel/classes/datatypes/ezurl/ezurlobjectlink.php' );
         if ( $version == null )
         {
             eZPersistentObject::removeObject( eZURLObjectLink::definition(),
@@ -772,12 +796,8 @@ class eZXMLTextType extends eZDataType
         }
     }
 
-    /*!
-      \reimp
-    */
     function diff( $old, $new, $options = false )
     {
-        //include_once( 'lib/ezdiff/classes/ezdiff.php' );
         $diff = new eZDiff();
         $diff->setDiffEngineType( $diff->engineType( 'xml' ) );
         $diff->initDiffEngine();
@@ -785,6 +805,20 @@ class eZXMLTextType extends eZDataType
         return $diffObject;
     }
 
+    function supportsBatchInitializeObjectAttribute()
+    {
+        return true;
+    }
+
+    function batchInitializeObjectAttributeData( $classAttribute )
+    {
+        $parser = new eZXMLInputParser();
+        $doc = $parser->createRootNode();
+        $xmlText = eZXMLTextType::domString( $doc );
+        $db = eZDB::instance();
+        $xmlText = "'" . $db->escapeString( $xmlText ) . "'";
+        return array( 'data_text' => $xmlText );
+    }
 }
 
 eZDataType::register( eZXMLTextType::DATA_TYPE_STRING, "eZXMLTextType" );

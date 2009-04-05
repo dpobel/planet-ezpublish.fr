@@ -5,9 +5,9 @@
 // Created on: <28-Jan-2003 13:28:39 bf>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -25,11 +25,6 @@
 //   MA 02110-1301, USA.
 //
 //
-
-//include_once( 'kernel/classes/datatypes/ezxmltext/ezxmlinputhandler.php' );
-//include_once( 'kernel/classes/datatypes/ezurl/ezurlobjectlink.php' );
-//include_once( 'lib/ezutils/classes/ezhttptool.php' );
-//include_once( 'lib/ezutils/classes/ezini.php' );
 
 class eZSimplifiedXMLInput extends eZXMLInputHandler
 {
@@ -63,7 +58,6 @@ class eZSimplifiedXMLInput extends eZXMLInputHandler
     }
 
     /*!
-     \reimp
      Validates the input and returns true if the input was valid for this datatype.
     */
     function validateInput( $http, $base, $contentObjectAttribute )
@@ -82,8 +76,6 @@ class eZSimplifiedXMLInput extends eZXMLInputHandler
             // Set input valid true to a global variable
             $isInputValid = 'isInputValid_' . $contentObjectAttributeID;
             $GLOBALS[$isInputValid] = true;
-
-            //include_once( 'kernel/classes/datatypes/ezxmltext/handlers/input/ezsimplifiedxmlinputparser.php' );
 
             $text = $data;
 
@@ -138,7 +130,6 @@ class eZSimplifiedXMLInput extends eZXMLInputHandler
     }
 
     /*!
-     \reimp
      Returns the input XML representation of the datatype.
     */
     function inputXML()
@@ -157,8 +148,6 @@ class eZSimplifiedXMLInput extends eZXMLInputHandler
         {
             $dom = new DOMDocument( '1.0', 'utf-8' );
             $success = $dom->loadXML( $this->XMLData );
-
-            //include_once( 'kernel/classes/datatypes/ezxmltext/handlers/input/ezsimplifiedxmleditoutput.php' );
 
             $editOutput = new eZSimplifiedXMLEditOutput();
             $dom->formatOutput = true;

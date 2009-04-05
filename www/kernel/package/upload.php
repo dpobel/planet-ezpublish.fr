@@ -3,9 +3,9 @@
 // Created on: <11-Aug-2003 18:12:39 amos>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -25,9 +25,6 @@
 //
 
 require_once( "kernel/common/template.php" );
-//include_once( "kernel/classes/ezpackage.php" );
-//include_once( "lib/ezutils/classes/ezhttpfile.php" );
-
 $module = $Params['Module'];
 
 if ( !eZPackage::canUsePolicyFunction( 'import' ) )
@@ -45,17 +42,9 @@ if ( $module->isCurrentAction( 'UploadPackage' ) )
         if ( $file )
         {
             $packageFilename = $file->attribute( 'filename' );
-            $packageName = $file->attribute( 'original_filename' );
-            if ( preg_match( "#^(.+)-[0-9](\.[0-9]+)-[0-9].ezpkg$#", $packageName, $matches ) )
-                $packageName = $matches[1];
-            $packageName = preg_replace( array( "#[^a-zA-Z0-9]+#",
-                                                "#_+#",
-                                                "#(^_)|(_$)#" ),
-                                         array( '_',
-                                                '_',
-                                                '' ), $packageName );
-            $package =& eZPackage::import( $packageFilename, $packageName );
-            if ( is_object( $package ) )
+
+            $package = eZPackage::import( $packageFilename, $packageName );
+            if ( $package instanceof eZPackage )
             {
                 if ( $package->attribute( 'install_type' ) != 'install' or
                      !$package->attribute( 'can_install' ) )
@@ -70,6 +59,10 @@ if ( $module->isCurrentAction( 'UploadPackage' ) )
             else if ( $package == eZPackage::STATUS_ALREADY_EXISTS )
             {
                 $errorList[] = array( 'description' => ezi18n( 'kernel/package', 'Package %packagename already exists, cannot import the package', false, array( '%packagename' => $packageName ) ) );
+            }
+            else if ( $package == eZPackage::STATUS_INVALID_NAME )
+            {
+                $errorList[] = array( 'description' => ezi18n( 'kernel/package', 'The package name %packagename is invalid, cannot import the package', false, array( '%packagename' => $packageName ) ) );
             }
             else
             {

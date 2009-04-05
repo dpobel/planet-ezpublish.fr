@@ -3,9 +3,9 @@
 // Created on: <17-Apr-2002 11:05:08 amos>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -91,7 +91,7 @@ $ViewList["info"] = array(
     'functions' => array( 'system_info' ),
     "script" => "info.php",
     "default_navigation_part" => 'ezsetupnavigationpart',
-    "params" => array( ) );
+    "params" => array( 'Mode' ) );
 
 $ViewList["rad"] = array(
     'functions' => array( 'setup' ),
@@ -143,7 +143,7 @@ $ViewList['systemupgrade'] = array(
     'params' => array( ) );
 
 
-/*! Provided for backwards compatability */
+/*! Provided for backwards compatibility */
 $ViewList["toolbarlist"] = array(
     'functions' => array( 'setup' ),
     "script" => "toolbarlist.php",

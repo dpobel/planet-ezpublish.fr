@@ -5,9 +5,9 @@
 // Created on: <16-Oct-2003 14:22:43 amos>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -26,7 +26,7 @@
 //
 //
 
-/*! \file ezimagegdhandler.php
+/*! \file
 */
 
 /*!
@@ -40,8 +40,6 @@
   - width - The width
   - height - The height
 */
-
-//include_once( 'lib/ezimage/classes/ezimagehandler.php' );
 
 class eZImageGDHandler extends eZImageHandler
 {
@@ -732,7 +730,6 @@ class eZImageGDHandler extends eZImageHandler
             $iniFilename = 'image.ini';
 
         $handler = false;
-        //include_once( 'lib/ezutils/classes/ezini.php' );
         $ini = eZINI::instance( $iniFilename );
         if ( !$ini )
         {

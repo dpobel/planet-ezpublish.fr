@@ -5,9 +5,9 @@
 // Created on: <18-Apr-2002 14:05:21 amos>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -38,10 +38,6 @@
 
 */
 
-require_once( "lib/ezutils/classes/ezdebug.php" );
-require_once( "lib/ezutils/classes/ezsession.php" );
-//include_once( "lib/ezutils/classes/ezsys.php" );
-
 class eZHTTPTool
 {
     /*!
@@ -68,17 +64,21 @@ class eZHTTPTool
     }
 
     /*!
-     \return a reference to the HTTP post variable $var, or null if it does not exist.
+     \return the HTTP post variable $var, or $fallbackValue if the post variable does not exist , or null if $fallbackValue is omitted.
      \sa variable
     */
-    function postVariable( $var )
+   function postVariable( $var, $fallbackValue = null )
     {
-        $ret = null;
+        $ret = $fallbackValue;
         if ( isset( $_POST[$var] ) )
+        {
             $ret = $_POST[$var];
-        else
+        }
+        else if ( $ret === null )
+        {
             eZDebug::writeWarning( "Undefined post variable: $var",
                                    "eZHTTPTool" );
+        }
         return $ret;
     }
 
@@ -101,17 +101,21 @@ class eZHTTPTool
     }
 
     /*!
-     \return a reference to the HTTP get variable $var, or null if it does not exist.
+     \return the HTTP get variable $var, or $fallbackValue if the get variable does not exist, or null if $fallbackValue is omitted.
      \sa variable
     */
-    function getVariable( $var )
+    function getVariable( $var, $fallbackValue = null )
     {
-        $ret = null;
+        $ret = $fallbackValue;
         if ( isset( $_GET[$var] ) )
+        {
             $ret = $_GET[$var];
-        else
+        }
+        else if ( $ret === null )
+        {
             eZDebug::writeWarning( "Undefined get variable: $var",
                                    "eZHTTPTool" );
+        }
         return $ret;
     }
 
@@ -142,10 +146,10 @@ class eZHTTPTool
     }
 
     /*!
-     \return a reference to the HTTP post/get variable $var, or null if it does not exist.
+     \return the HTTP post/get variable $var, or $fallbackValue if the post/get variable does not exist , or null if $fallbackValue is omitted.
      \sa postVariable
     */
-    function variable( $var )
+    function variable( $var, $fallbackValue = null )
     {
         if ( isset( $_POST[$var] ) )
         {
@@ -155,7 +159,12 @@ class eZHTTPTool
         {
             return $_GET[$var];
         }
-        $ret = false;
+        $ret = $fallbackValue;
+        if ( $ret === null )
+        {
+            eZDebug::writeWarning( "Undefined post/get variable: $var",
+                                   "eZHTTPTool" );
+        }
         return $ret;
     }
 
@@ -202,7 +211,7 @@ class eZHTTPTool
         {
             $GLOBALS["eZHTTPToolInstance"] = new eZHTTPTool();
             $GLOBALS["eZHTTPToolInstance"]->createPostVarsFromImageButtons();
-            eZSessionStart();
+            eZSession::start();
         }
 
         return $GLOBALS["eZHTTPToolInstance"];
@@ -213,18 +222,18 @@ class eZHTTPTool
 
      Sends a http request to the specified host. Using https:// requires PHP 4.3.0, and compiled in OpenSSL support.
 
-     \param http/https address, only path to send request to eZ Publish.
+     \param uri http/https address, only path to send request to eZ Publish.
             examples: http://ez.no, https://secure.ez.no, ssl://secure.ez.no, content/view/full/2
-     \param port, default 80
-     \param post parameters array (optional), if no post parameters are present, a get request will be send.
-     \param user agent, default will be eZ Publish
-     \param passtrough, will send result directly to client, default false
+     \param port which port to connect to, default 80
+     \param postParameters post parameters array (optional), if no post parameters are present, a get request will be send.
+     \param userAgent user agent, default will be eZ Publish
+     \param passthrough will send result directly to client, default false
 
      \return result if http request, or return false if an error occurs.
              If pipetrough, program will end here.
 
     */
-    static function sendHTTPRequest( $uri, $port = 80, $postParameters = false, $userAgent = 'eZ Publish', $passtrough = true )
+    static function sendHTTPRequest( $uri, $port = 80, $postParameters = false, $userAgent = 'eZ Publish', $passthrough = true )
     {
         preg_match( "/^((http[s]?:\/\/)([a-zA-Z0-9_.]+))?([\/]?[~]?(\.?[^.]+[~]?)*)/i", $uri, $matches );
         $protocol = $matches[2];
@@ -358,7 +367,6 @@ class eZHTTPTool
             header( 'Content-Location: ' . $uri );
 
             fpassthru( $fp );
-            require_once( 'lib/ezutils/classes/ezexecution.php' );
             eZExecution::cleanExit();
         }
         else

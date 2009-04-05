@@ -5,9 +5,9 @@
 // Created on: <24-Jan-2003 15:11:23 amos>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -26,7 +26,7 @@
 //
 //
 
-/*! \file ezcollaborationitemmessagelink.php
+/*! \file
 */
 
 /*!
@@ -34,9 +34,6 @@
   \brief The class eZCollaborationItemMessageLink does
 
 */
-
-//include_once( 'kernel/classes/ezpersistentobject.php' );
-//include_once( "lib/ezdb/classes/ezdb.php" );
 
 class eZCollaborationItemMessageLink extends eZPersistentObject
 {
@@ -125,7 +122,6 @@ class eZCollaborationItemMessageLink extends eZPersistentObject
         }
         if ( $participantID === false )
         {
-            //include_once( 'kernel/classes/datatypes/ezuser/ezuser.php' );
             $user = eZUser::currentUser();
             $participantID = $user->attribute( 'contentobject_id' );
         }
@@ -206,7 +202,6 @@ class eZCollaborationItemMessageLink extends eZPersistentObject
     {
         if ( isset( $this->CollaborationID ) and $this->CollaborationID )
         {
-            //include_once( 'kernel/classes/ezcollaborationitem.php' );
             return eZCollaborationItem::fetch( $this->CollaborationID );
         }
 
@@ -222,7 +217,6 @@ class eZCollaborationItemMessageLink extends eZPersistentObject
     {
         if ( isset( $this->MessageID ) and $this->MessageID )
         {
-            //include_once( 'kernel/classes/ezcollaborationsimplemessage.php' );
             return eZCollaborationSimpleMessage::fetch( $this->MessageID );
         }
 

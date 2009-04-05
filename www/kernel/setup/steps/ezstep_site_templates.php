@@ -5,9 +5,9 @@
 // Created on: <12-Aug-2003 15:14:42 kk>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -26,9 +26,8 @@
 //
 //
 
-/*! \file ezstep_site_templates.php
+/*! \file
 */
-//include_once( 'kernel/setup/steps/ezstep_installer.php');
 require_once( "kernel/common/i18n.php" );
 
 /*!
@@ -48,9 +47,6 @@ class eZStepSiteTemplates extends eZStepInstaller
                                 'site_templates', 'Site templates' );
     }
 
-    /*!
-     \reimp
-     */
     function processPostData()
     {
         // set template and template thumbnail
@@ -91,17 +87,11 @@ class eZStepSiteTemplates extends eZStepInstaller
         return true;
     }
 
-    /*!
-     \reimp
-     */
     function init()
     {
         return false; // Always show site template selection
     }
 
-    /*!
-     \reimp
-    */
     function display()
     {
         // Get site templates from setup.ini
@@ -110,8 +100,6 @@ class eZStepSiteTemplates extends eZStepInstaller
         $thumbnailExtension = $config->variable( 'SiteTemplates', 'ThumbnailExtension' );
 
         $site_templates = array();
-
-        //include_once( 'kernel/classes/ezpackage.php' );
 
         $packages = eZPackage::fetchPackages( array( 'path' => 'kernel/setup/packages' ) );
         foreach( $packages as $key => $packages )

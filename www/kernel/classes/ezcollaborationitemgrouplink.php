@@ -5,9 +5,9 @@
 // Created on: <22-Jan-2003 15:51:09 amos>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -26,7 +26,7 @@
 //
 //
 
-/*! \file ezcollaborationitemgrouplink.php
+/*! \file
 */
 
 /*!
@@ -34,10 +34,6 @@
   \brief The class eZCollaborationItemGroupLink does
 
 */
-
-//include_once( 'kernel/classes/ezpersistentobject.php' );
-//include_once( 'kernel/classes/datatypes/ezuser/ezuser.php' );
-//include_once( 'lib/ezlocale/classes/ezdatetime.php' );
 
 class eZCollaborationItemGroupLink extends eZPersistentObject
 {
@@ -158,7 +154,6 @@ class eZCollaborationItemGroupLink extends eZPersistentObject
     {
         if ( isset( $this->UserID ) and $this->UserID )
         {
-            //include_once( 'kernel/classes/datatypes/ezuser/ezuser.php' );
             return eZUser::fetch( $this->UserID );
         }
         return null;
@@ -168,7 +163,6 @@ class eZCollaborationItemGroupLink extends eZPersistentObject
     {
         if ( isset( $this->CollaborationID ) and $this->CollaborationID )
         {
-            //include_once( 'kernel/classes/ezcollaborationitem.php' );
             return eZCollaborationItem::fetch( $this->CollaborationID, $this->UserID );
         }
         return null;
@@ -178,7 +172,6 @@ class eZCollaborationItemGroupLink extends eZPersistentObject
     {
         if ( isset( $this->GroupID ) and $this->GroupID )
         {
-            //include_once( 'kernel/classes/ezcollaborationitem.php' );
             return eZCollaborationGroup::fetch( $this->GroupID, $this->UserID );
         }
         return null;

@@ -5,9 +5,9 @@
 // Created on: <27-Jun-2002 18:24:54 sp>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -32,8 +32,6 @@
   \brief Stores a boolean value
 
 */
-
-//include_once( "kernel/classes/ezdatatype.php" );
 
 class eZBooleanType extends eZDataType
 {
@@ -97,8 +95,6 @@ class eZBooleanType extends eZDataType
         return eZInputValidator::STATE_ACCEPTED;
     }
 
-    /*!
-    */
     function validateCollectionAttributeHTTPInput( $http, $base, $contentObjectAttribute )
     {
         if ( $contentObjectAttribute->validateIsRequired() )
@@ -140,7 +136,6 @@ class eZBooleanType extends eZDataType
     }
 
    /*!
-    \reimp
     Fetches the http post variables for collected information
    */
     function fetchCollectionAttributeHTTPInput( $collection, $collectionAttribute, $http, $base, $contentObjectAttribute )
@@ -198,33 +193,21 @@ class eZBooleanType extends eZDataType
         return $contentObjectAttribute->setAttribute( 'data_int', $string );
     }
 
-    /*!
-     \reimp
-    */
     function isIndexable()
     {
         return true;
     }
 
-    /*!
-     \reimp
-    */
     function isInformationCollector()
     {
         return true;
     }
 
-    /*!
-     \reimp
-    */
     function sortKey( $contentObjectAttribute )
     {
         return $contentObjectAttribute->attribute( 'data_int' );
     }
 
-    /*!
-     \reimp
-    */
     function sortKeyType()
     {
         return 'int';
@@ -251,9 +234,6 @@ class eZBooleanType extends eZDataType
         return true;
     }
 
-    /*!
-     \reimp
-    */
     function serializeContentClassAttribute( $classAttribute, $attributeNode, $attributeParametersNode )
     {
         $defaultValue = $classAttribute->attribute( 'data_int3' );
@@ -263,14 +243,23 @@ class eZBooleanType extends eZDataType
         $attributeParametersNode->appendChild( $defaultValueNode );
     }
 
-    /*!
-     \reimp
-    */
     function unserializeContentClassAttribute( $classAttribute, $attributeNode, $attributeParametersNode )
     {
 
         $defaultValue = strtolower( $attributeParametersNode->getElementsByTagName( 'default-value' )->item( 0 )->getAttribute( 'is-set' ) ) == 'true';
         $classAttribute->setAttribute( 'data_int3', $defaultValue );
+    }
+
+    function supportsBatchInitializeObjectAttribute()
+    {
+        return true;
+    }
+
+    function batchInitializeObjectAttributeData( $classAttribute )
+    {
+        $default = $classAttribute->attribute( "data_int3" );
+        return array( 'data_int'     => $default,
+                      'sort_key_int' => $default );
     }
 }
 

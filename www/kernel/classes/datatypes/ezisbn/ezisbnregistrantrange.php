@@ -3,9 +3,9 @@
 // Created on: <17-Apr-2007 11:10:23 bjorn>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -24,7 +24,7 @@
 //
 //
 
-/*! \file ezisbnregistrantrange.php
+/*! \file
 */
 
 /*!
@@ -44,8 +44,6 @@
   The different Registrant ranges are described in more detail at
   http://www.isbn-international.org
 */
-
-//include_once( 'kernel/classes/ezpersistentobject.php' );
 
 class eZISBNRegistrantRange extends eZPersistentObject
 {
@@ -146,8 +144,6 @@ class eZISBNRegistrantRange extends eZPersistentObject
 
      \param $groupID  The id that point to the ISBN Group object
                       (Which contain info about the area and the unique group number).
-     \param $count    Will contain the count of objects returned and is sent
-                      back in the reference variable.
      \param $asObject If the result should be returned as object or an array.
      \return the registrant list for an ISBN registration group id.
     */

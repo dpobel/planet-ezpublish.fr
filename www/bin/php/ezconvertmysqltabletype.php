@@ -4,9 +4,9 @@
 // Created on: <21-Apr-2004 09:51:56 kk>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -24,9 +24,6 @@
 //   MA 02110-1301, USA.
 //
 //
-
-//include_once( 'lib/ezutils/classes/ezcli.php' );
-//include_once( 'kernel/classes/ezscript.php' );
 
 require 'autoload.php';
 
@@ -114,13 +111,33 @@ function checkParameters( $cli, $script, $options, $host, $user, $password, $dat
     }
 }
 
+// Creates a displayable string for the end-user explaining
+// which database, host, user and password which were tried
+function eZTriedDatabaseString( $database, $host, $user, $password )
+{
+    $msg = "'$database'";
+    if ( strlen( $host ) > 0 )
+    {
+        $msg .= " at host '$host'";
+    }
+    else
+    {
+        $msg .= " locally";
+    }
+    if ( strlen( $user ) > 0 )
+    {
+        $msg .= " with user '$user'";
+    }
+    if ( strlen( $password ) > 0 )
+        $msg .= " and with a password";
+    return $msg;
+}
+
 /**
  * Connect to the database
 **/
 function connectToDatabase( $cli, $script, $host, $user, $password, $database )
 {
-    //include_once( 'lib/ezdb/classes/ezdb.php' );
-
     if ( $user )
     {
         $db = eZDB::instance( "mysql",
@@ -192,7 +209,7 @@ function listTypes( $cli, $db )
 
 function alterType( $db, $tableName, $newType )
 {
-     $db->query( "ALTER TABLE $tableName TYPE=$newType" );
+     $db->query( "ALTER TABLE $tableName ENGINE=$newType" );
 }
 
 function renameTable( $db, $tableFrom, $tableTo )
@@ -209,8 +226,8 @@ function createTableStructure( $db, $tableFrom, $tableTo, $newType )
 {
     $res = $db->arrayQuery( "SHOW CREATE TABLE `$tableFrom`" );
 
-    $pattern = array( "/TYPE=(\w*)/", "/TABLE `$tableFrom`/" );
-    $replacement = array( "TYPE=$newType", "TABLE `$tableTo`" );
+    $pattern = array( "/(TYPE|ENGINE)=(\w*)/", "/TABLE `$tableFrom`/" );
+    $replacement = array( "ENGINE=$newType", "TABLE `$tableTo`" );
     $structure = preg_replace( $pattern, $replacement, $res[0]["Create Table"] );
 
     $db->query( $structure );

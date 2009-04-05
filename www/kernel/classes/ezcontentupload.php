@@ -5,9 +5,9 @@
 // Created on: <28-Apr-2003 11:04:47 sp>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -26,7 +26,7 @@
 //
 //
 
-/*! \file ezcontentupload.php
+/*! \file
 */
 
 /*!
@@ -36,7 +36,7 @@
   This class makes it easy to use the start a new file upload
   and let it be created as a content object.
 
-  Using it is simply to call the \link upload \endlink function with some parameters.
+  Using it is simply to call the \link eZContentUpload::upload() upload \endlink function with some parameters.
 
 \code
 eZContentUpload::upload( array( 'action_name' => 'MyActionName' ), $module );
@@ -65,10 +65,6 @@ $upload->handleUpload( $result, 'UploadFile', 'auto', false );
 $upload->handleLocalFile( $result, 'a_yellow_flower.jpg', 'auto' );
 \endcode
 */
-
-//include_once( 'lib/ezutils/classes/ezhttptool.php' );
-//include_once( 'lib/ezutils/classes/ezini.php' );
-//include_once( 'kernel/classes/ezcontentobject.php' );
 
 class eZContentUpload
 {
@@ -245,7 +241,6 @@ class eZContentUpload
                                                 array( '%filename' => $filePath ) ) );
             return false;
         }
-        //include_once( 'lib/ezutils/classes/ezmimetype.php' );
         $mimeData = eZMimeType::findByFileContents( $filePath );
         $mime = $mimeData['name'];
 
@@ -720,7 +715,6 @@ class eZContentUpload
         $object->setName( $class->contentObjectName( $object ) );
         $object->store();
 
-        //include_once( 'lib/ezutils/classes/ezoperationhandler.php' );
         $operationResult = eZOperationHandler::execute( 'content', 'publish', array( 'object_id' => $object->attribute( 'id' ),
                                                                                      'version' => $publishVersion ) );
 
@@ -819,7 +813,6 @@ class eZContentUpload
     */
     function fetchHTTPFile( $httpFileIdentifier, &$errors, &$file, &$mimeData )
     {
-        //include_once( 'lib/ezutils/classes/ezhttpfile.php' );
         if ( !eZHTTPFile::canFetch( $httpFileIdentifier ) )
         {
             $errors[] = array( 'description' => ezi18n( 'kernel/content/upload',
@@ -835,7 +828,6 @@ class eZContentUpload
             return false;
         }
 
-        //include_once( 'lib/ezutils/classes/ezmimetype.php' );
         $mimeData = eZMimeType::findByFileContents( $file->attribute( "original_filename" ) );
 
         return false;
@@ -1321,7 +1313,6 @@ class eZContentUpload
 
         if ( $handlerName !== false )
         {
-            //include_once( 'lib/ezutils/classes/ezextension.php' );
             $baseDirectory = eZExtension::baseDirectory();
             $extensionDirectories = eZExtension::activeExtensions();
 

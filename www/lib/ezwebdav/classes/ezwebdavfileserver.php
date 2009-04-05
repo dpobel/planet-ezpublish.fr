@@ -5,9 +5,9 @@
 // Created on: <18-Aug-2003 15:15:15 bh>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -39,9 +39,6 @@
   $myserver->processClientRequest();
   \endcode
 */
-
-//include_once( "lib/ezwebdav/classes/ezwebdavserver.php" );
-//include_once( "lib/ezutils/classes/ezmimetype.php" );
 
 // Get and return the files/dir-names that reside at a given path.
 function getDirEntries( $targetPath )
@@ -75,7 +72,7 @@ function getDirEntries( $targetPath )
 function copyDir( $source, $destination )
 {
     // Attempt to create destination dir.
-    $status = mkdir( $destination );
+    $status = eZDir::mkdir( $destination );
 
     // If no success: bail out.
     if ( !$status )
@@ -244,7 +241,6 @@ class eZWebDAVFileServer extends eZWebDAVServer
     }
 
     /*!
-     \reimp
      Returns if the file \a $target exists or not
     */
     function head( $target )
@@ -266,7 +262,6 @@ class eZWebDAVFileServer extends eZWebDAVServer
     }
 
     /*!
-     \reimp
      Renames the temp file \a $tempFile to \a $target.
     */
     function put( $target, $tempFile )
@@ -278,7 +273,6 @@ class eZWebDAVFileServer extends eZWebDAVServer
         append_to_log( "PUT: tempfile is $tempFile" );
 
         // Attempt to move the file from temp to desired location.
-        //include_once( 'lib/ezfile/classes/ezfile.php' );
         eZFile::rename( $tempFile, $realPath );
 
         // Check status & return corresponding code:
@@ -295,7 +289,6 @@ class eZWebDAVFileServer extends eZWebDAVServer
     }
 
     /*!
-     \reimp
      \return An information structure with the filename.
     */
     function get( $target )
@@ -313,7 +306,6 @@ class eZWebDAVFileServer extends eZWebDAVServer
     }
 
     /*!
-     \reimp
      Creates the directory \a $target
     */
     function mkcol( $target )
@@ -349,7 +341,6 @@ class eZWebDAVFileServer extends eZWebDAVServer
     }
 
     /*!
-     \reimp
      Removes the directory or file \a $target
     */
     function delete( $target )
@@ -396,7 +387,6 @@ class eZWebDAVFileServer extends eZWebDAVServer
     }
 
     /*!
-     \reimp
      Moves the file or directory \a $source to \a $destination by trying to rename it.
     */
     function move( $source, $destination )
@@ -408,7 +398,6 @@ class eZWebDAVFileServer extends eZWebDAVServer
         $realDestination = $_SERVER["DOCUMENT_ROOT"] . $destination;
 
         append_to_log( "RealSource: $realSource   RealDestination: $realDestination" );
-        //include_once( 'lib/ezfile/classes/ezfile.php' );
         $status = eZFile::rename( $realSource, $realDestination );
 
         if ( $status )
@@ -424,7 +413,6 @@ class eZWebDAVFileServer extends eZWebDAVServer
     }
 
     /*!
-     \reimp
      Copies the file or directory \a $source to \a $destination.
     */
     function copy( $source, $destination )
@@ -452,7 +440,6 @@ class eZWebDAVFileServer extends eZWebDAVServer
     }
 
     /*!
-     \reimp
      Finds all files and directories in the directory \a $dir and return an element list of it.
     */
     function getCollectionContent( $dir, $depth = false, $properties = false )

@@ -5,9 +5,9 @@
 // Created on: <06-May-2002 20:02:55 bf>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -32,8 +32,6 @@
   \brief Stores a text area value
 
 */
-
-//include_once( "kernel/classes/ezdatatype.php" );
 
 class eZTextType extends eZDataType
 {
@@ -98,11 +96,15 @@ class eZTextType extends eZDataType
                 }
             }
         }
+        else if ( !$classAttribute->attribute( 'is_information_collector' ) and $contentObjectAttribute->validateIsRequired() )
+        {
+            $contentObjectAttribute->setValidationError( ezi18n( 'kernel/classes/datatypes', 'Input required.' ) );
+            return eZInputValidator::STATE_INVALID;
+        }
+
         return eZInputValidator::STATE_ACCEPTED;
     }
 
-    /*!
-    */
     function validateCollectionAttributeHTTPInput( $http, $base, $contentObjectAttribute )
     {
         if ( $http->hasPostVariable( $base . '_data_text_' . $contentObjectAttribute->attribute( 'id' ) ) )
@@ -161,7 +163,6 @@ class eZTextType extends eZDataType
     }
 
     /*!
-     \reimp
      Simple string insertion is supported.
     */
     function isSimpleStringInsertionSupported()
@@ -170,7 +171,6 @@ class eZTextType extends eZDataType
     }
 
     /*!
-     \reimp
      Inserts the string \a $string in the \c 'data_text' database field.
     */
     function insertSimpleString( $object, $objectVersion, $objectLanguage,
@@ -239,47 +239,34 @@ class eZTextType extends eZDataType
         return $data_instance->attribute( "data_text" );
     }
 
-    /*!
-     \reimp
-    */
     function isIndexable()
     {
         return true;
     }
 
-    /*!
-     \reimp
-    */
     function isInformationCollector()
     {
         return true;
     }
 
-    /*!
-     \reimp
-    */
     function serializeContentClassAttribute( $classAttribute, $attributeNode, $attributeParametersNode )
     {
+        $dom = $attributeParametersNode->ownerDocument;
         $textColumns = $classAttribute->attribute( self::COLS_FIELD );
-        $textColumnCountNode = $attributeParametersNode->ownerDocument->createElement( 'text-column-count', $textColumns );
+
+        $textColumnCountNode = $dom->createElement( 'text-column-count' );
+        $textColumnCountNode->appendChild( $dom->createTextNode( $textColumns ) );
         $attributeParametersNode->appendChild( $textColumnCountNode );
     }
 
-    /*!
-     \reimp
-    */
     function unserializeContentClassAttribute( $classAttribute, $attributeNode, $attributeParametersNode )
     {
         $textColumns = $attributeParametersNode->getElementsByTagName( 'text-column-count' )->item( 0 )->textContent;
         $classAttribute->setAttribute( self::COLS_FIELD, $textColumns );
     }
 
-    /*!
-      \reimp
-    */
     function diff( $old, $new, $options = false )
     {
-        //include_once( 'lib/ezdiff/classes/ezdiff.php' );
         $diff = new eZDiff();
         $diff->setDiffEngineType( $diff->engineType( 'text' ) );
         $diff->initDiffEngine();
@@ -287,6 +274,10 @@ class eZTextType extends eZDataType
         return $diffObject;
     }
 
+    function supportsBatchInitializeObjectAttribute()
+    {
+        return true;
+    }
 }
 
 eZDataType::register( eZTextType::DATA_TYPE_STRING, "eZTextType" );

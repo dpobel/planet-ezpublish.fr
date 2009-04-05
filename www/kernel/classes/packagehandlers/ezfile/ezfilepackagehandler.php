@@ -5,9 +5,9 @@
 // Created on: <23-Jul-2003 16:11:42 amos>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -26,7 +26,7 @@
 //
 //
 
-/*! \file ezfilepackagehandler.php
+/*! \file
 */
 
 /*!
@@ -34,8 +34,6 @@
   \brief Handles content classes in the package system
 
 */
-
-//include_once( 'kernel/classes/ezpackagehandler.php' );
 
 class eZFilePackageHandler extends eZPackageHandler
 {
@@ -74,14 +72,14 @@ class eZFilePackageHandler extends eZPackageHandler
                     if ( is_dir( $filePath ) )
                     {
                         $newFilePath = $package->fileStorePath( $fileItem, $collectionName, $installParameters['path'], $installVariables );
-                        eZDir::mkdir( $newFilePath, eZDir::directoryPermission(), true );
+                        eZDir::mkdir( $newFilePath, false, true );
                     }
                     else
                     {
                         $newFilePath = $package->fileStorePath( $fileItem, $collectionName, $installParameters['path'], $installVariables );
                         if ( preg_match( "#^(.+)/[^/]+$#", $newFilePath, $matches ) )
                         {
-                            eZDir::mkdir( $matches[1], eZDir::directoryPermission(), true );
+                            eZDir::mkdir( $matches[1], false, true );
                         }
                         eZFileHandler::copy( $filePath, $newFilePath );
                     }
@@ -108,9 +106,6 @@ class eZFilePackageHandler extends eZPackageHandler
         return true;
     }
 
-    /*!
-     \reimp
-    */
     function add( $packageType, $package, $cli, $parameters )
     {
         $collections = array();
@@ -605,17 +600,11 @@ class eZFilePackageHandler extends eZPackageHandler
         return false;
     }
 
-    /*!
-     \reimp
-    */
     function createInstallNode( $package, $installNode, $installItem, $installType )
     {
         $installNode->setAttribute( 'collection', $installItem['collection'] );
     }
 
-    /*!
-     \reimp
-    */
     function parseInstallNode( $package, $installNode, &$installParameters, $isInstall )
     {
         $collection = $installNode->getAttribute( 'collection' );

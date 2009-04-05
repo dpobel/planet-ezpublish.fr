@@ -5,9 +5,9 @@
 // Created on: <16-Apr-2002 11:08:14 amos>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -59,9 +59,6 @@
   and a descriptive name. The datatype string id must be unique for the whole
   system and should have a prefix, for instance we in eZ Systems use ez as our prefix.
 */
-
-//include_once( "kernel/classes/ezpersistentobject.php" );
-//include_once( "lib/ezutils/classes/ezinputvalidator.php" );
 
 class eZDataType
 {
@@ -1067,7 +1064,7 @@ class eZDataType
 
     /*!
      \param package
-     \param content attribute
+     \param objectAttribute content attribute
 
      \return a DOM representation of the content object attribute
     */
@@ -1091,34 +1088,38 @@ class eZDataType
                 {
                     $value = $objectAttribute->attribute( $attributeName );
                     unset( $attributeNode );
-                    $attributeNode = $dom->createElement( $xmlName, (string)$value );
+                    $attributeNode = $dom->createElement( $xmlName );
+                    $attributeNode->appendChild( $dom->createTextNode( (string)$value ) );
                     $node->appendChild( $attributeNode );
                 }
                 else
                 {
-                    eZDebug::writeError( "The attribute '$attributeName' does not exists for contentobject attribute " . $objectAttribute->attribute( 'id' ),
+                    eZDebug::writeError( "The attribute '$attributeName' does not exist for contentobject attribute " . $objectAttribute->attribute( 'id' ),
                                          'eZDataType::serializeContentObjectAttribute' );
                 }
             }
         }
         else
         {
-            $dataIntNode = $dom->createElement( 'data-int', (string)$objectAttribute->attribute( 'data_int' ) );
+            $dataIntNode = $dom->createElement( 'data-int' );
+            $dataIntNode->appendChild( $dom->createTextNode( (string)$objectAttribute->attribute( 'data_int' ) ) );
             $node->appendChild( $dataIntNode );
-            $dataFloatNode = $dom->createElement( 'data-float', (string)$objectAttribute->attribute( 'data_float' ) );
+            $dataFloatNode = $dom->createElement( 'data-float' );
+            $dataFloatNode->appendChild( $dom->createTextNode( (string)$objectAttribute->attribute( 'data_float' ) ) );
             $node->appendChild( $dataFloatNode );
-            $dataTextNode = $dom->createElement( 'data-text', $objectAttribute->attribute( 'data_text' ) );
+            $dataTextNode = $dom->createElement( 'data-text' );
+            $dataTextNode->appendChild( $dom->createTextNode( $objectAttribute->attribute( 'data_text' ) ) );
             $node->appendChild( $dataTextNode );
         }
         return $node;
     }
 
     /*!
-     Unserailize contentobject attribute
+     Unserialize contentobject attribute
 
      \param package
-     \param contentobject attribute object
-     \param ezdomnode object
+     \param objectAttribute contentobject attribute object
+     \param attributeNode ezdomnode object
     */
     function unserializeContentObjectAttribute( $package, $objectAttribute, $attributeNode )
     {
@@ -1194,7 +1195,6 @@ class eZDataType
             return false;
         }
 
-        //include_once( 'lib/ezutils/classes/ezextension.php' );
         $baseDirectory = eZExtension::baseDirectory();
         $contentINI = eZINI::instance( 'content.ini' );
 
@@ -1282,7 +1282,6 @@ class eZDataType
     */
     function diff( $old, $new, $options = false )
     {
-        //include_once( 'lib/ezdiff/classes/ezdiff.php' );
         $diff = new eZDiff();
         $diff->setDiffEngineType( $diff->engineType( 'container' ) );
         $diff->initDiffEngine();
@@ -1305,7 +1304,7 @@ class eZDataType
     function getDBAFilePath( $checkExtensions = true )
     {
          $fileName = 'kernel/classes/datatypes/' . $this->DataTypeString . '/' . $this->getDBAFileName();
-         if ( !file_exists( $fileName ) and $checkExtensions === true )
+         if ( $checkExtensions === true && !file_exists( $fileName ) )
          {
              $fileName = $this->getDBAExtensionFilePath();
          }
@@ -1318,8 +1317,6 @@ class eZDataType
     */
     function getDBAExtensionFilePath()
     {
-        include_once( 'lib/ezutils/classes/ezextension.php' );
-
         $activeExtensions = eZExtension::activeExtensions();
         $dataTypeString = $this->DataTypeString;
         $dbaFileName = $this->getDBAFileName();
@@ -1357,7 +1354,6 @@ class eZDataType
         $result = true;
         if ( $fileExist === true )
         {
-            //include_once( 'lib/ezdbschema/classes/ezdbschema.php' );
             $dataArray = eZDbSchema::read( $dbaFilePath, true );
             if ( is_array( $dataArray ) and count( $dataArray ) > 0 )
             {
@@ -1395,6 +1391,16 @@ class eZDataType
     function cleanDBDataBeforeImport()
     {
         return true;
+    }
+
+    function batchInitializeObjectAttributeData( $classAttribute )
+    {
+        return array();
+    }
+
+    function supportsBatchInitializeObjectAttribute()
+    {
+        return false;
     }
 
     /// \privatesection

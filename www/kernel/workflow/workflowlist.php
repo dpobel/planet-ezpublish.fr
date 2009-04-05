@@ -3,9 +3,9 @@
 // Created on: <16-Apr-2002 11:00:12 amos>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -24,11 +24,6 @@
 //
 //
 
-
-//include_once( 'kernel/classes/ezworkflow.php' );
-//include_once( 'kernel/classes/ezworkflowgroup.php' );
-//include_once( "kernel/classes/ezworkflowgrouplink.php" );
-//include_once( 'lib/ezutils/classes/ezhttppersistence.php' );
 
 $Module = $Params['Module'];
 $WorkflowGroupID = null;
@@ -72,7 +67,6 @@ if ( $http->hasPostVariable( 'DeleteButton' ) and
                 if ( count( $workflowInGroups ) == 1 )
                 {
                     //remove entry from eztrigger table also, if it exists there.
-                    //include_once( "kernel/classes/eztrigger.php" );
                     eZTrigger::removeTriggerForWorkflow( $workflowID );
 
                     // if there is only one group which the workflow belongs to, delete (=disable) it:
@@ -81,8 +75,6 @@ if ( $http->hasPostVariable( 'DeleteButton' ) and
                 else
                 {
                     // if there is more than 1 group, remove only from the group:
-                    //include_once( "kernel/workflow/ezworkflowfunctions.php" );
-
                     eZWorkflowFunctions::removeGroup( $workflowID, 0, array( $groupID ) );
                 }
 
@@ -120,7 +112,6 @@ foreach( array_keys( $workflows ) as $workflowID )
     $workflowList[$workflow->attribute( 'id' )] = $workflow;
 }
 */
-//include_once( "kernel/classes/datatypes/ezuser/ezuser.php" );
 $user = eZUser::currentUser();
 
 $list_in_group = eZWorkflowGroupLink::fetchWorkflowList( 0, $WorkflowGroupID, $asObject = true);

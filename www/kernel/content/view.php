@@ -3,9 +3,9 @@
 // Created on: <24-Apr-2002 11:18:59 bf>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -24,13 +24,6 @@
 //
 //
 
-//include_once( 'kernel/classes/ezcontentobject.php' );
-//include_once( 'kernel/classes/ezcontentclass.php' );
-//include_once( 'kernel/classes/ezcontentobjecttreenode.php' );
-//include_once( 'kernel/classes/eznodeviewfunctions.php' );
-
-//include_once( 'lib/ezutils/classes/ezhttptool.php' );
-
 require_once( 'kernel/common/template.php' );
 
 $http = eZHTTPTool::instance();
@@ -47,7 +40,6 @@ $Month = $Params['Month'];
 $Day = $Params['Day'];
 
 // Check if we should switch access mode (http/https) for this node.
-//include_once( 'kernel/classes/ezsslzone.php' );
 eZSSLZone::checkNodeID( 'content', 'view', $NodeID );
 
 if ( isset( $Params['UserParameters'] ) )
@@ -86,6 +78,15 @@ elseif ( $viewCacheEnabled && !in_array( $ViewMode, $ini->variableArray( 'Conten
     $viewCacheEnabled = false;
 }
 
+if ( $viewCacheEnabled && $ini->hasVariable( 'ContentSettings', 'ViewCacheTweaks' ) )
+{
+    $viewCacheTweaks = $ini->variable( 'ContentSettings', 'ViewCacheTweaks' );
+    if ( isset( $viewCacheTweaks[$NodeID] ) && strpos( $viewCacheTweaks[$NodeID], 'disabled' ) !== false )
+    {
+        $viewCacheEnabled = false;
+    }
+}
+
 $collectionAttributes = false;
 if ( isset( $Params['CollectionAttributes'] ) )
     $collectionAttributes = $Params['CollectionAttributes'];
@@ -94,19 +95,6 @@ $validation = array( 'processed' => false,
                      'attributes' => array() );
 if ( isset( $Params['AttributeValidation'] ) )
     $validation = $Params['AttributeValidation'];
-
-// Check if read operations should be used
-$workflowINI = eZINI::instance( 'workflow.ini' );
-$operationList = $workflowINI->variableArray( 'OperationSettings', 'AvailableOperations' );
-$operationList = array_unique( array_merge( $operationList, $workflowINI->variable( 'OperationSettings', 'AvailableOperationList' ) ) );
-if ( in_array( 'content_read', $operationList ) )
-{
-    $useTriggers = true;
-}
-else
-{
-    $useTriggers = false;
-}
 
 $res = eZTemplateDesignResource::instance();
 $keys = $res->keys();
@@ -127,18 +115,13 @@ $user = eZUser::currentUser();
 eZDebugSetting::addTimingPoint( 'kernel-content-view', 'Operation start' );
 
 
-//include_once( 'lib/ezutils/classes/ezmoduleoperationdefinition.php' );
-
 $operationResult = array();
 
-if ( $useTriggers == true )
+if ( eZOperationHandler::operationIsAvailable( 'content_read' ) )
 {
-    //include_once( 'lib/ezutils/classes/ezoperationhandler.php' );
-    //include_once( 'kernel/classes/eztrigger.php' );
-
     $operationResult = eZOperationHandler::execute( 'content', 'read', array( 'node_id' => $NodeID,
                                                                               'user_id' => $user->id(),
-                                                                              'language_code' => $LanguageCode ), null, $useTriggers );
+                                                                              'language_code' => $LanguageCode ), null, true );
 }
 
 if ( ( array_key_exists(  'status', $operationResult ) && $operationResult['status'] != eZModuleOperationInfo::STATUS_CONTINUE ) )
@@ -192,11 +175,10 @@ else
     {
         $user = eZUser::currentUser();
 
-        $cacheFileArray = eZNodeviewfunctions::generateViewCacheFile( $user, $NodeID, $Offset, $layout, $LanguageCode, $ViewMode, $viewParameters );
+        $cacheFileArray = eZNodeviewfunctions::generateViewCacheFile( $user, $NodeID, $Offset, $layout, $LanguageCode, $ViewMode, $viewParameters, false );
 
         $cacheFilePath = $cacheFileArray['cache_path'];
 
-        require_once( 'kernel/classes/ezclusterfilehandler.php' );
         $cacheFile = eZClusterFileHandler::instance( $cacheFilePath );
         $args = compact( $localVars );
         $Result = $cacheFile->processCache( array( 'eZNodeviewfunctions', 'contentViewRetrieve' ),

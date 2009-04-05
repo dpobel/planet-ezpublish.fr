@@ -5,9 +5,9 @@
 // Created on: <17-Apr-2002 11:11:39 amos>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -33,8 +33,6 @@
 
 */
 
-require_once( "lib/ezutils/classes/ezdebug.php" );
-
 class eZModule
 {
     const STATUS_IDLE = 0;
@@ -47,9 +45,9 @@ class eZModule
     const HOOK_STATUS_CANCEL_RUN = 1;
     const HOOK_STATUS_FAILED = 2;
 
-    function eZModule( $path, $file, $moduleName )
+    function eZModule( $path, $file, $moduleName, $checkFileExistence = true )
     {
-        $this->initialize( $path, $file, $moduleName );
+        $this->initialize( $path, $file, $moduleName, $checkFileExistence);
     }
 
     /*!
@@ -59,9 +57,9 @@ class eZModule
      of that file, it will then assume that some variables were set
      which defines the module and it's view/functions.
     */
-    function initialize( $path, $file, $moduleName )
+    function initialize( $path, $file, $moduleName, $checkFileExistence = true )
     {
-        if ( file_exists( $file ) )
+        if ( $checkFileExistence === false || file_exists( $file ) )
         {
             unset( $FunctionList );
             unset( $Module );
@@ -500,7 +498,6 @@ class eZModule
             return $viewData['params'];
         }
         return null;
-        return $retValue;
     }
 
     /*!
@@ -679,7 +676,6 @@ class eZModule
             $view = eZModule::currentView();
         if ( isset( $this->ViewActions[$view] ) )
             return $this->ViewActions[$view];
-        //include_once( "lib/ezutils/classes/ezhttptool.php" );
         $http = eZHTTPTool::instance();
         if ( isset( $this->Functions[$view]['default_action'] ) )
         {
@@ -757,7 +753,6 @@ class eZModule
         if ( isset( $this->ViewActionParameters[$view][$parameterName] ) )
             return $this->ViewActionParameters[$view][$parameterName];
         $currentAction = $this->currentAction( $view );
-        //include_once( "lib/ezutils/classes/ezhttptool.php" );
         $http = eZHTTPTool::instance();
         if ( isset( $this->Functions[$view]['post_action_parameters'][$currentAction] ) )
         {
@@ -799,7 +794,6 @@ class eZModule
         if ( isset( $this->ViewActionParameters[$view][$parameterName] ) )
             return true;
         $currentAction = $this->currentAction( $view );
-        //include_once( "lib/ezutils/classes/ezhttptool.php" );
         $http = eZHTTPTool::instance();
         if ( isset( $this->Functions[$view]['post_action_parameters'][$currentAction] ) )
         {
@@ -1185,7 +1179,6 @@ class eZModule
         $params["FunctionName"] = $functionName;
         $params["Parameters"] = $parameters;
         $params_as_var = isset( $this->Module["variable_params"] ) ? $this->Module["variable_params"] : false;
-        //include_once( "lib/ezutils/classes/ezprocess.php" );
         $this->ExitStatus = eZModule::STATUS_OK;
 //        eZDebug::writeNotice( $params, 'module parameters1' );
 
@@ -1288,8 +1281,6 @@ class eZModule
     */
     static function activeModuleRepositories( $useExtensions = true )
     {
-        //include_once( 'lib/ezutils/classes/ezini.php' );
-        //include_once( 'lib/ezutils/classes/ezextension.php' );
         $moduleINI = eZINI::instance( 'module.ini' );
         $moduleRepositories = $moduleINI->variable( 'ModuleSettings', 'ModuleRepositories' );
 
@@ -1304,7 +1295,13 @@ class eZModule
             {
                 $extPath = $extensionDirectory . '/' . $extensionRepository;
                 $modulePath = $extPath . '/modules';
-                if ( file_exists( $modulePath ) )
+                if ( !in_array( $extensionRepository, $activeExtensions ) )
+                {
+                    eZDebug::writeWarning( "Extension '$extensionRepository' was reported to have modules but has not yet been activated.\n" .
+                                           "Check the setting ModuleSettings/ExtensionRepositories in module.ini for your extensions\n" .
+                                           "or make sure it is activated in the setting ExtensionSettings/ActiveExtensions in site.ini." );
+                }
+                else if ( file_exists( $modulePath ) )
                 {
                     $globalExtensionRepositories[] = $modulePath;
                 }
@@ -1313,12 +1310,6 @@ class eZModule
                     eZDebug::writeWarning( "Extension '$extensionRepository' was reported to have modules but the extension itself does not exist.\n" .
                                            "Check the setting ModuleSettings/ExtensionRepositories in module.ini for your extensions.\n" .
                                            "You should probably remove this extension from the list." );
-                }
-                else if ( !in_array( $extensionRepository, $activeExtensions ) )
-                {
-                    eZDebug::writeWarning( "Extension '$extensionRepository' was reported to have modules but has not yet been activated.\n" .
-                                           "Check the setting ModuleSettings/ExtensionRepositories in module.ini for your extensions\n" .
-                                           "or make sure it is activated in the setting ExtensionSettings/ActiveExtensions in site.ini." );
                 }
                 else
                 {
@@ -1416,9 +1407,9 @@ class eZModule
             if ( file_exists( $file ) )
             {
                 if ( $module === null )
-                    $module = new eZModule( $path, $file, $moduleName );
+                    $module = new eZModule( $path, $file, $moduleName, false );
                 else
-                    $module->initialize( $path, $file, $moduleName );
+                    $module->initialize( $path, $file, $moduleName, false );
                 return $module;
             }
             else if ( !file_exists( $dir ) )

@@ -3,9 +3,9 @@
 // Created on: <13-Feb-2005 03:13:00 bh>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -25,9 +25,6 @@
 //
 
 require_once( 'kernel/common/template.php' );
-//include_once( 'kernel/classes/ezpreferences.php' );
-//include_once( 'kernel/classes/ezinformationcollection.php' );
-
 $http = eZHTTPTool::instance();
 $module = $Params['Module'];
 $offset = $Params['Offset'];
@@ -97,7 +94,7 @@ $db = eZDB::instance();
 $objects = $db->arrayQuery( 'SELECT DISTINCT ezinfocollection.contentobject_id,
                                     ezcontentobject.name,
                                     ezcontentobject_tree.main_node_id,
-                                    ezcontentclass.*,
+                                    ezcontentclass.serialized_name_list,
                                     ezcontentclass.identifier AS class_identifier
                              FROM   ezinfocollection,
                                     ezcontentobject,
@@ -105,6 +102,7 @@ $objects = $db->arrayQuery( 'SELECT DISTINCT ezinfocollection.contentobject_id,
                                     ezcontentclass
                              WHERE  ezinfocollection.contentobject_id=ezcontentobject.id
                                     AND ezcontentobject.contentclass_id=ezcontentclass.id
+                                    AND ezcontentclass.version = ' . eZContentClass::VERSION_STATUS_DEFINED . '
                                     AND ezinfocollection.contentobject_id=ezcontentobject_tree.contentobject_id',
                              array( 'limit'  => (int)$limit,
                                     'offset' => (int)$offset ) );

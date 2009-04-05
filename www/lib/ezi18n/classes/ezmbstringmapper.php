@@ -5,9 +5,9 @@
 // Created on: <12-Jul-2002 12:56:48 amos>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -26,7 +26,7 @@
 //
 //
 
-/*! \file ezmbstringmapper.php
+/*! \file
 */
 
 /*!
@@ -41,8 +41,6 @@
   ISO-8859-9, ISO-8859-10, ISO-8859-13, ISO-8859-14, ISO-8859-15, byte2be, byte2le, byte4be,
   byte4le, BASE64, 7bit, 8bit and UTF7-IMAP.
 */
-
-//include_once( "lib/ezi18n/classes/ezcharsetinfo.php" );
 
 class eZMBStringMapper
 {

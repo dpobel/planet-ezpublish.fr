@@ -3,9 +3,9 @@
 // Created on: <15-Apr-2003 11:25:31 bf>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -28,10 +28,6 @@ $http = eZHTTPTool::instance();
 $module = $Params['Module'];
 
 require_once( "kernel/common/template.php" );
-//include_once( "kernel/classes/ezcache.php" );
-//include_once( 'lib/ezutils/classes/ezhttptool.php' );
-//include_once( 'lib/ezfile/classes/ezdir.php' );
-
 $ini = eZINI::instance( );
 $tpl = templateInit();
 
@@ -105,8 +101,6 @@ if ( $module->isCurrentAction( 'ClearCache' ) && $module->hasActionParameter( 'C
 
 if ( $module->isCurrentAction( 'RegenerateStaticCache' ) )
 {
-    //include_once( 'kernel/classes/ezstaticcache.php' );
-
     $staticCache = new eZStaticCache();
     $staticCache->generateCache( true, true );
     eZStaticCache::executeActions();

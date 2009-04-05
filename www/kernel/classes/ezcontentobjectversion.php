@@ -5,9 +5,9 @@
 // Created on: <18-Apr-2002 10:05:34 bf>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -29,19 +29,9 @@
 /*!
   \class eZContentObjectVersion ezcontentobjectversion.php
   \brief The class eZContentObjectVersion handles different versions of an content object
-  \ingourp eZKernel
+  \ingroup eZKernel
 
 */
-
-//include_once( "lib/ezdb/classes/ezdb.php" );
-//include_once( "kernel/classes/ezpersistentobject.php" );
-//include_once( "kernel/classes/eznodeassignment.php" );
-//include_once( "kernel/classes/ezcontentobject.php" );
-
-//include_once( "kernel/classes/ezcontentobjectattribute.php" );
-//include_once( "kernel/classes/ezcontentobjecttranslation.php" );
-//include_once( "kernel/classes/datatypes/ezuser/ezuser.php" );
-//include_once( "kernel/classes/ezcontentclassattribute.php" );
 
 class eZContentObjectVersion extends eZPersistentObject
 {
@@ -335,8 +325,6 @@ class eZContentObjectVersion extends eZPersistentObject
 
     /*!
      \return \c true if the current user can read this version of the object.
-     \note The reference for the return value is required to workaround
-           a bug with PHP references.
     */
     function canVersionRead( )
     {
@@ -349,8 +337,6 @@ class eZContentObjectVersion extends eZPersistentObject
 
     /*!
      \return \c true if the current user can remove this version of the object.
-     \note The reference for the return value is required to workaround
-           a bug with PHP references.
     */
     function canVersionRemove( )
     {
@@ -375,7 +361,6 @@ class eZContentObjectVersion extends eZPersistentObject
             $classID = $objectClassID;
         }
 
-        //include_once( 'kernel/classes/ezcontentlanguage.php' );
         // Fetch the ID of the language if we get a string with a language code
         // e.g. 'eng-GB'
         $originalLanguage = $language;
@@ -721,10 +706,6 @@ class eZContentObjectVersion extends eZPersistentObject
         return $this->ContentObject;
     }
 
-    /*!
-     \note The reference for the return value is required to workaround
-           a bug with PHP references.
-    */
     function mainParentNodeID()
     {
         $temp = eZNodeAssignment::fetchForObject( $this->attribute( 'contentobject_id' ), $this->attribute( 'version' ), 1 );
@@ -754,8 +735,7 @@ class eZContentObjectVersion extends eZPersistentObject
         return eZNodeAssignment::fetchForObject( $this->attribute( 'contentobject_id' ), $this->attribute( 'version' ) );
     }
 
-    function assignToNode( $nodeID, $main = 0, $fromNodeID = 0, $sortField = null, $sortOrder = null,
-                            $remoteID = 0 )
+    function assignToNode( $nodeID, $main = 0, $fromNodeID = 0, $sortField = null, $sortOrder = null, $remoteID = 0 )
     {
         if ( $fromNodeID == 0 && ( $this->attribute( 'status' ) == eZContentObjectVersion::STATUS_DRAFT ||
                                    $this->attribute( 'status' ) == eZContentObjectVersion::STATUS_INTERNAL_DRAFT ) )
@@ -769,7 +749,7 @@ class eZContentObjectVersion extends eZPersistentObject
         if ( $sortField !== null )
             $nodeRow['sort_field'] = $sortField;
         if ( $sortOrder !== null )
-            $nodeRow['sort_order'] = ( $sortOrder ? 1 : 0 );
+            $nodeRow['sort_order'] = ( $sortOrder ? eZContentObjectTreeNode::SORT_ORDER_ASC : eZContentObjectTreeNode::SORT_ORDER_DESC );
 
         $nodeAssignment = eZNodeAssignment::create( $nodeRow );
         $nodeAssignment->store();
@@ -871,10 +851,6 @@ class eZContentObjectVersion extends eZPersistentObject
         return new eZContentObjectVersion( $row );
     }
 
-    /*!
-     \note The reference for the return value is required to workaround
-           a bug with PHP references.
-    */
     function reverseRelatedObjectList()
     {
         return $this->attribute( 'contentobject' )->reverseRelatedObjectList( $this->Version );
@@ -1057,8 +1033,6 @@ class eZContentObjectVersion extends eZPersistentObject
 
     /*!
      \return An array with all the translations for the current version.
-     \note The reference for the return value is required to workaround
-           a bug with PHP references.
     */
     function translations( $asObject = true )
     {
@@ -1067,8 +1041,6 @@ class eZContentObjectVersion extends eZPersistentObject
 
     /*!
      \return An array with all the translations for the current version.
-     \note The reference for the return value is required to workaround
-           a bug with PHP references.
      \deprecated
     */
     function translation( $asObject = true )
@@ -1078,8 +1050,6 @@ class eZContentObjectVersion extends eZPersistentObject
 
     /*!
      \return An array with all the translations for the current version.
-     \note The reference for the return value is required to workaround
-           a bug with PHP references.
 
      \note Transaction unsafe. If you call several transaction unsafe methods you must enclose
            the calls within a db transaction; thus within db->begin and db->commit.
@@ -1124,8 +1094,6 @@ class eZContentObjectVersion extends eZPersistentObject
 
     /*!
      \return An array with all translations except default language for the this version.
-     \note The reference for the return value is required to workaround
-           a bug with PHP references.
 
      \note Transaction unsafe. If you call several transaction unsafe methods you must enclose
            the calls within a db transaction; thus within db->begin and db->commit.
@@ -1228,11 +1196,11 @@ class eZContentObjectVersion extends eZPersistentObject
      \static
      Unserialize xml structure. Create object from xml input.
 
-     \param XML DOM Node
-     \param contentobject.
-     \param owner ID
-     \param section ID
-     \param new object, true if first version of new object
+     \param domNode XML DOM Node
+     \param contentObject contentobject
+     \param ownerID owner ID
+     \param sectionID section ID
+     \param activeVersion new object, true if first version of new object
      \param options
      \param package
 
@@ -1281,7 +1249,6 @@ class eZContentObjectVersion extends eZPersistentObject
             $contentObjectVersion = $contentObject->createNewVersionIn( $initialLanguage );
         }
 
-        //include_once( 'lib/ezlocale/classes/ezdateutils.php' );
         $created = eZDateUtils::textToDate( $domNode->getAttributeNS( 'http://ez.no/ezobject', 'created' ) );
         $modified = eZDateUtils::textToDate( $domNode->getAttributeNS( 'http://ez.no/ezobject', 'modified' ) );
         $contentObjectVersion->setAttribute( 'created', $created );
@@ -1428,9 +1395,9 @@ class eZContentObjectVersion extends eZPersistentObject
      \return a DOM structure of the content object version, it's translations and attributes.
 
      \param package
-     \param package options ( optianal )
-     \param array of allowed nodes ( optional )
-     \param array of top nodes in current package export (optional )
+     \param options package options ( optional )
+     \param contentNodeIDArray array of allowed nodes ( optional )
+     \param topNodeIDArray array of top nodes in current package export (optional )
      \note Transaction unsafe. If you call several transaction unsafe methods you must enclose
      the calls within a db transaction; thus within db->begin and db->commit.
     */
@@ -1440,8 +1407,6 @@ class eZContentObjectVersion extends eZPersistentObject
 
         $versionNode = $dom->createElementNS( 'http://ez.no/object/', 'ezobject:version' );
         $dom->appendChild( $versionNode );
-
-        //include_once( 'lib/ezlocale/classes/ezdateutils.php' );
 
         $versionNode->setAttributeNS( 'http://ez.no/ezobject', 'ezremote:version', $this->Version );
         $versionNode->setAttributeNS( 'http://ez.no/ezobject', 'ezremote:status', $this->Status );
@@ -1495,14 +1460,12 @@ class eZContentObjectVersion extends eZPersistentObject
             $attributes = $this->contentObjectAttributes( $language );
             foreach ( $attributes as $attribute )
             {
-                unset( $serializedAttributeNode );
                 $serializedAttributeNode = $attribute->serialize( $package );
                 $importedSerializedAttributeNode = $dom->importNode( $serializedAttributeNode, true );
                 $translationNode->appendChild( $importedSerializedAttributeNode );
             }
 
             $versionNode->appendChild( $translationNode );
-            unset( $translationNode );
             $exportedLanguages[] = $language;
         }
 
@@ -1512,11 +1475,9 @@ class eZContentObjectVersion extends eZPersistentObject
         $contentNodeArray = eZContentObjectTreeNode::fetchByContentObjectID( $this->ContentObjectID, true, $this->Version );
         foreach( $contentNodeArray as $contentNode )
         {
-            unset( $contentNodeDOMNode );
             $contentNodeDOMNode = $contentNode->serialize( $options, $contentNodeIDArray, $topNodeIDArray );
             if ( $contentNodeDOMNode !== false )
             {
-                unset( $importedContentDOMNode );
                 $importedContentDOMNode = $dom->importNode( $contentNodeDOMNode, true );
                 $nodeAssignmentListNode->appendChild( $importedContentDOMNode );
             }
@@ -1540,8 +1501,8 @@ class eZContentObjectVersion extends eZPersistentObject
                 {
                     $relatedObjectRemoteID = $relatedObject->attribute( 'remote_id' );
 
-                    unset( $relationNode );
-                    $relationNode = $dom->createElement( 'related-object-remote-id', $relatedObjectRemoteID );
+                    $relationNode = $dom->createElement( 'related-object-remote-id' );
+                    $relationNode->appendChild( $dom->createTextNode( $relatedObjectRemoteID ) );
 
                     $relationListNode->appendChild( $relationNode );
                 }
@@ -1560,7 +1521,6 @@ class eZContentObjectVersion extends eZPersistentObject
     {
         if ( isset( $this->CreatorID ) and $this->CreatorID )
         {
-            //include_once( 'kernel/classes/datatypes/ezuser/ezuser.php' );
             return eZContentObject::fetch( $this->CreatorID );
         }
         return null;

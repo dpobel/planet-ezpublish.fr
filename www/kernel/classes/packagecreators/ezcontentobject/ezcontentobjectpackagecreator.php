@@ -5,9 +5,9 @@
 // Created on: <09-Mar-2004 12:39:59 kk>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -26,7 +26,7 @@
 //
 //
 
-/*! \file ezcontentobjectpackagecreator.php
+/*! \file
 */
 
 /*!
@@ -35,13 +35,8 @@
   \brief A package creator for content objects
 */
 
-//include_once( 'kernel/classes/ezpackagecreationhandler.php' );
-
 class eZContentObjectPackageCreator extends eZPackageCreationHandler
 {
-    /*!
-     \reimp
-    */
     function eZContentObjectPackageCreator( $id )
     {
         $steps = array();
@@ -66,7 +61,6 @@ class eZContentObjectPackageCreator extends eZPackageCreationHandler
     }
 
     /*!
-     \reimp
      Creates the package and adds the selected content classes.
     */
     function finalize( &$package, $http, &$persistentData )
@@ -88,7 +82,6 @@ class eZContentObjectPackageCreator extends eZPackageCreationHandler
     }
 
     /*!
-     \reimp
      Returns \c 'stable', content class packages are always stable.
     */
     function packageInitialState( $package, &$persistentData )
@@ -113,7 +106,6 @@ class eZContentObjectPackageCreator extends eZPackageCreationHandler
     {
         if ( $http->hasPostVariable( 'AddSubtree' ) )
         {
-            //include_once( 'kernel/classes/ezcontentbrowse.php' );
             eZContentBrowse::browse( array( 'action_name' => 'FindLimitationSubtree',
                                             'description_template' => 'design:package/creators/ezcontentobject/browse_subtree.tpl',
                                             'from_page' => '/package/create',
@@ -125,7 +117,6 @@ class eZContentObjectPackageCreator extends eZPackageCreationHandler
         }
         else if ( $http->hasPostVariable( 'AddNode' ) )
         {
-            //include_once( 'kernel/classes/ezcontentbrowse.php' );
             eZContentBrowse::browse( array( 'action_name' => 'FindLimitationNode',
                                             'description_template' => 'design:package/creators/ezcontentobject/browse_node.tpl',
                                             'from_page' => '/package/create',
@@ -196,11 +187,9 @@ class eZContentObjectPackageCreator extends eZPackageCreationHandler
                                                    'related_objects' => 'selected',
                                                    'embed_objects' => 'selected' );
 
-        //include_once( 'lib/ezutils/classes/ezini.php' );
         $ini = eZINI::instance();
         $persistentData['object_options']['site_access_array'] = array( $ini->variable( 'SiteSettings', 'DefaultAccess' ) );
 
-        //include_once( 'kernel/classes/ezcontentobject.php' );
         $availableLanguages = eZContentObject::translationList();
         foreach ( $availableLanguages as $language )
         {
@@ -210,11 +199,9 @@ class eZContentObjectPackageCreator extends eZPackageCreationHandler
 
     function loadObjectLimits( $package, $http, $step, &$persistentData, $tpl, &$module )
     {
-        //include_once( 'lib/ezutils/classes/ezini.php' );
         $ini = eZINI::instance();
         $availableSiteAccesses = $ini->variable( 'SiteAccessSettings', 'RelatedSiteAccessList' );
 
-        //include_once( 'kernel/classes/ezcontentobject.php' );
         $availableLanguages = eZContentObject::translationList();
         $availableLanguageArray = array();
         foreach ( $availableLanguages as $language )
@@ -264,7 +251,6 @@ class eZContentObjectPackageCreator extends eZPackageCreationHandler
     }
 
     /*!
-     \reimp
      Fetches the selected content classes and generates a name, summary and description from the selection.
     */
     function generatePackageInformation( &$packageInformation, $package, $http, $step, &$persistentData )

@@ -5,9 +5,9 @@
 // Created on: <24-Jan-2007 16:36:24 amos>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -26,7 +26,7 @@
 //
 //
 
-/*! \file ezurlalias.php
+/*! \file
 */
 
 /*!
@@ -75,10 +75,6 @@
 
 */
 
-//include_once( "kernel/classes/ezpersistentobject.php" );
-//include_once( "kernel/classes/ezcontentlanguage.php" );
-//include_once( 'lib/ezi18n/classes/ezchartransform.php' );
-
 class eZURLAliasML extends eZPersistentObject
 {
     // Return values from storePath()
@@ -108,9 +104,6 @@ class eZURLAliasML extends eZPersistentObject
         }
     }
 
-    /*!
-     \reimp
-    */
     static public function definition()
     {
         return array( "fields" => array( "id" => array( 'name' => 'ID',
@@ -239,18 +232,9 @@ class eZURLAliasML extends eZPersistentObject
     */
     function store( $fieldFilters = null )
     {
-        $locked = false;
         if ( $this->ID === null )
         {
-            $locked = true;
-            $db = eZDB::instance();
-            $db->lock( "ezurlalias_ml" );
-            $query = "SELECT max( id ) + 1 AS id FROM ezurlalias_ml";
-            $rows = $db->arrayQuery( $query );
-            $id = (int)$rows[0]['id'];
-            if ( $id == 0 )
-                $id = 1;
-            $this->ID = $id;
+            $this->ID = self::getNewID();
         }
         if ( $this->Link === null )
         {
@@ -274,10 +258,6 @@ class eZURLAliasML extends eZPersistentObject
         }
 
         eZPersistentObject::store( $fieldFilters );
-        if ( $locked )
-        {
-            $db->unlock();
-        }
     }
 
     /*!
@@ -360,7 +340,7 @@ class eZURLAliasML extends eZPersistentObject
      \note If you know the action values of the path use fetchPathByActionList() instead, it is more optimized.
      \note The calculated path is cached in $Path.
      */
-    function getPath()
+    function getPath( $locale = null )
     {
         if ( $this->Path !== null )
             return $this->Path;
@@ -372,6 +352,13 @@ class eZURLAliasML extends eZPersistentObject
         while ( $id != 0 )
         {
             $query = "SELECT parent, lang_mask, text FROM ezurlalias_ml WHERE id={$id}";
+            if ( $locale !== null && is_string( $locale ) )
+            {
+                $mask = eZContentLanguage::maskByLocale( $locale );
+                $langFilter = $db->bitAnd( 'lang_mask', $mask );
+
+                $query .= " AND ({$langFilter} > 0)";
+            }
             $rows = $db->arrayQuery( $query );
             if ( count( $rows ) == 0 )
             {
@@ -562,7 +549,7 @@ class eZURLAliasML extends eZPersistentObject
             if ( $newElementID === null )
             {
                 $query = "SELECT * FROM ezurlalias_ml\n" .
-                         "WHERE parent = $parentID AND action = '{$actionStr}'";
+                         "WHERE parent = $parentID AND action = '{$actionStr}' AND is_original = 1 AND is_alias = 0";
                 $rows = $db->arrayQuery( $query );
                 if ( count( $rows ) > 0 )
                 {
@@ -615,13 +602,7 @@ class eZURLAliasML extends eZPersistentObject
                 $idtmp = (int)$row['id'];
                 if ( $idtmp == $newElementID )
                 {
-                    $db->lock( "ezurlalias_ml" );
-                    $query = "SELECT max( id ) + 1 AS id FROM ezurlalias_ml";
-                    $rowstmp = $db->arrayQuery( $query );
-                    $idtmp = (int)$rowstmp[0]['id'];
-                    if ( $idtmp == 0 )
-                        $idtmp = 1;
-                    $db->unlock();
+                    $idtmp = self::getNewID();
                 }
                 $parentIDTmp = (int)$row['parent'];
                 $textMD5Tmp = eZURLALiasML::md5( $db, $row['text'] );
@@ -667,13 +648,13 @@ class eZURLAliasML extends eZPersistentObject
             // and only for real system-generated url aliases. Custom aliases are left alone.
             $bitAnd = $db->bitAnd( 'lang_mask', $languageID );
             $query = "SELECT id FROM ezurlalias_ml\n" .
-                     "WHERE action = '{$actionStr}' AND (${bitAnd} > 0) AND is_alias = 0 AND (parent != $parentID OR text_md5 != {$textMD5})";
+                     "WHERE action = '{$actionStr}' AND is_alias = 0 AND (parent != $parentID OR text_md5 != {$textMD5})";
             $rows = $db->arrayQuery( $query );
             foreach ( $rows as $row )
             {
                 $oldParentID = (int)$row['id'];
                 $query = "UPDATE ezurlalias_ml SET parent = {$newElementID}\n" .
-                         "WHERE parent = {$oldParentID}";
+                         "WHERE parent = {$oldParentID} AND (${bitAnd} > 0)";
                 $res = $db->query( $query );
                 if ( !$res ) return eZURLAliasML::dbError( $db );
             }
@@ -783,7 +764,7 @@ class eZURLAliasML extends eZPersistentObject
                 $element->Action     = $action;
                 // Note: The `text` field is updated too, this ensures case-changes are stored.
                 $element->Text       = $newText;
-                $element->TextMD5    = null; 
+                $element->TextMD5    = null;
                 $element->ActionType = null;
                 $element->Link       = null;
             }
@@ -876,15 +857,23 @@ class eZURLAliasML extends eZPersistentObject
         $db = eZDB::instance();
         $actionStr = $db->escapeString( $action );
         $langMask = '';
-        if ( $maskLanguages )
+        if ( is_bool( $maskLanguages ) && $maskLanguages )
         {
             $langMask = "(" . trim( eZContentLanguage::languagesSQLFilter( 'ezurlalias_ml', 'lang_mask' ) ) . ") AND ";
+        }
+        else if ( is_string( $maskLanguages ) )
+        {
+            // maskByLocale can support array input, here we only want one item.
+            $mask = eZContentLanguage::maskByLocale( $maskLanguages );
+            $langFilter = $db->bitAnd( 'lang_mask', $mask );
+            $langMask = "({$langFilter} > 0) AND";
         }
         $query = "SELECT * FROM ezurlalias_ml WHERE $langMask action = '$actionStr'";
         if ( !$includeRedirections )
         {
             $query .= " AND is_original = 1 AND is_alias = 0";
         }
+
         $rows = $db->arrayQuery( $query );
         if ( count( $rows ) == 0 )
             return array();
@@ -998,7 +987,7 @@ class eZURLAliasML extends eZPersistentObject
      \note This function is faster than getPath() since it can fetch all elements in one SQL.
      \note If the fetched elements does not point to each other (parent/id) then null is returned.
      */
-    static public function fetchPathByActionList( $actionName, $actionValues )
+    static public function fetchPathByActionList( $actionName, $actionValues, $locale = null )
     {
         if ( count( $actionValues ) == 0 )
         {
@@ -1024,7 +1013,16 @@ class eZURLAliasML extends eZPersistentObject
             $actionMap[$action][] = $row;
         }
 
-        $prioritizedLanguages = eZContentLanguage::prioritizedLanguages();
+        if ( $locale !== null && is_string( $locale ) && !empty( $locale ) )
+        {
+            $selectedLanguage = eZContentLanguage::fetchByLocale( $locale );
+            $prioritizedLanguages = $selectedLanguage !== false ? array( $selectedLanguage ): eZContentLanguage::prioritizedLanguages();
+        }
+        else
+        {
+            $prioritizedLanguages = eZContentLanguage::prioritizedLanguages();
+        }
+
         $path = array();
         $lastID = false;
         foreach ( $actionValues as $actionValue )
@@ -1675,6 +1673,33 @@ class eZURLAliasML extends eZPersistentObject
 
     /*!
      \static
+     Checks if url translation should be used on the current url.
+
+     \param $uri The current eZUri object
+     */
+    static public function urlTranslationEnabledByUri( eZURI $uri )
+    {
+        if ( $uri->isEmpty() )
+            return false;
+
+        $ini = eZINI::instance();
+        if ( $ini->variable( 'URLTranslator', 'Translation' ) === 'enabled' )
+        {
+            if ( $ini->variable( 'URLTranslator', 'TranslatableSystemUrls' ) === 'disabled' )
+            {
+                $moduleName = $uri->element( 0 );
+                $moduleINI  = eZINI::instance( 'module.ini' );
+                $moduleList = $moduleINI->variable( 'ModuleSettings', 'ModuleList' );
+                if ( in_array( $moduleName, $moduleList, true ) )
+                  return false;
+            }
+            return true;
+        }
+        return false;
+    }
+
+    /*!
+     \static
      Checks if the text entry $text is unique on the current level in the URL path.
      If not the name is adjusted with a number at the end until it becomes unique.
      The unique text string is returned.
@@ -2068,7 +2093,6 @@ class eZURLAliasML extends eZPersistentObject
     */
     static public function convertToAlias( $urlElement, $defaultValue = false )
     {
-        //include_once( 'lib/ezi18n/classes/ezchartransform.php' );
         $trans = eZCharTransform::instance();
 
         $ini = eZINI::instance();
@@ -2109,7 +2133,6 @@ class eZURLAliasML extends eZPersistentObject
     */
     static public function convertToAliasCompat( $urlElement, $defaultValue = false )
     {
-        //include_once( 'lib/ezi18n/classes/ezchartransform.php' );
         $trans = eZCharTransform::instance();
 
         $urlElement = $trans->transformByGroup( $urlElement, "urlalias_compat" );
@@ -2182,6 +2205,21 @@ class eZURLAliasML extends eZPersistentObject
         return $db->md5( "'" . $text . "'" );
     }
 
+    static function getNewID()
+    {
+        $db = eZDB::instance();
+        if ( $db->supportsDefaultValuesInsertion() )
+        {
+            $db->query( 'INSERT INTO ezurlalias_ml_incr DEFAULT VALUES' );
+        }
+        else
+        {
+            // can not use VALUES(DEFAULT), because of http://bugs.mysql.com/bug.php?id=42270
+            $db->query( 'INSERT INTO ezurlalias_ml_incr(id) VALUES(NULL)' );
+        }
+
+        return $db->lastSerialID( 'ezurlalias_ml_incr', 'id' );
+    }
 }
 
 ?>

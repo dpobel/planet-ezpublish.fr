@@ -5,9 +5,9 @@
 // Created on: <03-Oct-2002 15:05:09 amos>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -26,7 +26,7 @@
 //
 //
 
-/*! \file ezimageinterface.php
+/*! \file
 */
 
 /*! \defgroup eZImageObject Image object and layer handling */
@@ -401,7 +401,6 @@ class eZImageInterface
         if ( $this->StoredFile == '' )
             return true;
         $fileArray = array( $this->StoredPath, $this->StoredFile );
-        //include_once( 'lib/ezfile/classes/ezdir.php' );
         $filePath = eZDir::path( $fileArray );
         $imageinfo = getimagesize( $filePath );
         if ( $imageinfo )
@@ -436,12 +435,9 @@ class eZImageInterface
         {
             case 'png':
             {
-                //include_once( 'lib/ezfile/classes/ezdir.php' );
                 if ( !file_exists( $filePath ) )
                 {
-                    $ini = eZINI::instance();
-                    $perm = $ini->variable( 'FileSettings', 'StorageDirPermissions' );
-                    eZDir::mkdir( $filePath, octdec( $perm ), true );
+                    eZDir::mkdir( $filePath, false, true );
                 }
                 $fileFullPath = eZDir::path( array( $filePath, $fileName ) );
                 ImagePNG( $imageObject, $fileFullPath );
@@ -453,12 +449,9 @@ class eZImageInterface
 
             case 'jpg':
             {
-                //include_once( 'lib/ezfile/classes/ezdir.php' );
                 if ( !file_exists( $filePath ) )
                 {
-                    $ini = eZINI::instance();
-                    $perm = $ini->variable( 'FileSettings', 'StorageDirPermissions' );
-                    eZDir::mkdir( $filePath, octdec( $perm ), true );
+                    eZDir::mkdir( $filePath, false, true );
                 }
                 ImageJPEG( $imageObject, eZDir::path( array( $filePath, $fileName ) ) );
                 $this->StoredPath = $filePath;

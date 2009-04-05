@@ -3,9 +3,9 @@
 // Created on: <23-Mar-2005 23:23:23 rl>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -23,9 +23,6 @@
 //   MA 02110-1301, USA.
 //
 //
-
-//include_once( 'kernel/classes/ezcontentobject.php' );
-//include_once( "lib/ezdb/classes/ezdb.php" );
 
 $Module = $Params['Module'];
 $NodeID = $Params['NodeID'];
@@ -250,7 +247,6 @@ function copyPublishContentObject( $sourceObject,
     }
 
     // publish the newly created object
-    //include_once( 'lib/ezutils/classes/ezoperationhandler.php' );
     $result = eZOperationHandler::execute( 'content', 'publish', array( 'object_id' => $newObject->attribute( 'id' ),
                                                                         'version'   => $curVersion ) );
     // Refetch the object data since it might change in the database.
@@ -799,7 +795,6 @@ function browse( $Module, $srcNode )
     if ( $Module->hasActionParameter( 'ViewMode' ) )
         $viewMode = $module->actionParameter( 'ViewMode' );
 
-    //include_once( 'kernel/classes/ezcontentbrowse.php' );
     eZContentBrowse::browse(
          array( 'action_name'          => 'CopySubtree',
                 'description_template' => 'design:content/browse_copy_subtree.tpl',
@@ -826,7 +821,6 @@ either all version or the current one.
 */
 function chooseOptionsToCopy( $Module, &$Result, $srcNode, $chooseVersions, $chooseCreator, $chooseTime )
 {
-        //include_once( 'kernel/classes/ezcontentbrowse.php' );
         $selectedNodeIDArray = eZContentBrowse::result( $Module->currentAction() );
 
         require_once( 'kernel/common/template.php' );
@@ -965,7 +959,6 @@ else if ( $Module->isCurrentAction( 'CopySubtree' ) )
     else
     {
         // actually do copying of the pre-configured object version(s)
-        //include_once( 'kernel/classes/ezcontentbrowse.php' );
         $selectedNodeIDArray = eZContentBrowse::result( $Module->currentAction() );
         $newParentNodeID = $selectedNodeIDArray[0];
         copySubtree( $NodeID, $newParentNodeID, $notifications, $allVersions, $keepCreator, $keepTime );

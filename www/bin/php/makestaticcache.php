@@ -4,9 +4,9 @@
 // Created on: <14-Jan-2005 09:27:13 dr>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -24,9 +24,6 @@
 //   MA 02110-1301, USA.
 //
 //
-
-//include_once( 'lib/ezutils/classes/ezcli.php' );
-//include_once( 'kernel/classes/ezscript.php' );
 
 require 'autoload.php';
 
@@ -47,11 +44,6 @@ $options = $script->getOptions( "[f|force]",
 $force = $options['force'];
 
 $script->initialize();
-
-require_once( 'lib/ezutils/classes/ezdebug.php' );
-//include_once( 'lib/ezfile/classes/ezdir.php' );
-//include_once( 'lib/ezutils/classes/ezini.php' );
-//include_once( 'kernel/classes/ezstaticcache.php' );
 
 $staticCache = new eZStaticCache();
 $staticCache->generateCache( $force, false, $cli, false );

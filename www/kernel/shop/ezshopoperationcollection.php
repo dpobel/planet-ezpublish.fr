@@ -5,9 +5,9 @@
 // Created on: <01-Nov-2002 13:51:17 amos>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -26,7 +26,7 @@
 //
 //
 
-/*! \file ezcontentoperationcollection.php
+/*! \file
 */
 
 /*!
@@ -34,8 +34,6 @@
   \brief The class eZShopOperationCollection does
 
 */
-//include_once( "lib/ezutils/classes/ezinputvalidator.php" );
-
 class eZShopOperationCollection
 {
     /*!
@@ -56,7 +54,6 @@ class eZShopOperationCollection
     function handleUserCountry( $orderID )
     {
         // If user country is not required to calculate VAT then do nothing.
-        require_once( 'kernel/classes/ezvatmanager.php' );
         if ( !eZVATManager::isDynamicVatChargingEnabled() || !eZVATManager::isUserCountryRequired() )
             return array( 'status' => eZModuleOperationInfo::STATUS_CONTINUE );
 
@@ -121,12 +118,10 @@ class eZShopOperationCollection
             return array( 'status' => eZModuleOperationInfo::STATUS_CONTINUE );
         }
 
-        require_once( 'kernel/classes/ezproductcollectionitem.php' );
         $items = eZProductCollectionItem::fetchList( array( 'productcollection_id' => $productCollection->attribute( 'id' ) ) );
         $vatIsKnown = true;
         $db = eZDB::instance();
         $db->begin();
-        //include_once( 'kernel/shop/classes/ezshopfunctions.php' );
         foreach( $items as $item )
         {
             $productContentObject = $item->attribute( 'contentobject' );
@@ -218,7 +213,6 @@ class eZShopOperationCollection
                 break;
             $productCollectionID = $order->attribute( 'productcollection_id' );
 
-            require_once( 'kernel/classes/ezshippingmanager.php' );
             $shippingInfo = eZShippingManager::getShippingInfo( $productCollectionID );
             if ( !isset( $shippingInfo ) )
                 break;
@@ -284,7 +278,6 @@ class eZShopOperationCollection
     function updateShippingInfo( $objectID, $optionList )
     {
         $basket = eZBasket::currentBasket();
-        require_once( 'kernel/classes/ezshippingmanager.php' );
         $shippingInfo = eZShippingManager::updateShippingInfo( $basket->attribute( 'productcollection_id' ) );
         return array( 'status' => eZModuleOperationInfo::STATUS_CONTINUE );
     }
@@ -323,10 +316,8 @@ class eZShopOperationCollection
     /*!
      Operation entry: Adds the object \a $objectID with options \a $optionList to the current basket.
     */
-    function addToBasket( $objectID, $optionList )
+    function addToBasket( $objectID, $optionList, $quantity )
     {
-        //include_once( 'kernel/shop/classes/ezshopfunctions.php' );
-
         $object = eZContentObject::fetch( $objectID );
         $nodeID = $object->attribute( 'main_node_id' );
         $price = 0.0;
@@ -458,7 +449,7 @@ class eZShopOperationCollection
             {
                 /* If found in the basket, just increment number of that items: */
                 $item = eZProductCollectionItem::fetch( $itemID );
-                $item->setAttribute( 'item_count', 1 + $item->attribute( 'item_count' ) );
+                $item->setAttribute( 'item_count', $quantity + $item->attribute( 'item_count' ) );
                 $item->store();
             }
             else
@@ -467,7 +458,7 @@ class eZShopOperationCollection
 
                 $item->setAttribute( 'name', $object->attribute( 'name' ) );
                 $item->setAttribute( "contentobject_id", $objectID );
-                $item->setAttribute( "item_count", 1 );
+                $item->setAttribute( "item_count", $quantity );
                 $item->setAttribute( "price", $price );
                 if ( $priceObj->attribute( 'is_vat_included' ) )
                 {
@@ -536,9 +527,6 @@ class eZShopOperationCollection
 
     function activateOrder( $orderID )
     {
-        //include_once( "kernel/classes/ezbasket.php" );
-        //include_once( 'kernel/classes/ezorder.php' );
-
         $order = eZOrder::fetch( $orderID );
 
         $db = eZDB::instance();
@@ -549,24 +537,19 @@ class eZShopOperationCollection
         $basket->remove();
         $db->commit();
 
-        //include_once( "lib/ezutils/classes/ezhttptool.php" );
         eZHTTPTool::instance()->setSessionVariable( "UserOrderID", $orderID );
         return array( 'status' => eZModuleOperationInfo::STATUS_CONTINUE );
     }
 
     function sendOrderEmails( $orderID )
     {
-        //include_once( 'kernel/classes/ezorder.php' );
         $order = eZOrder::fetch( $orderID );
 
         // Fetch the shop account handler
-        //include_once( 'kernel/classes/ezshopaccounthandler.php' );
-
         $accountHandler = eZShopAccountHandler::instance();
         $email = $accountHandler->email( $order );
 
         // Fetch the confirm order handler
-        //include_once( 'kernel/classes/ezconfirmorderhandler.php' );
         $confirmOrderHandler = eZConfirmOrderHandler::instance();
         $params = array( 'email' => $email,
                          'order' => $order );

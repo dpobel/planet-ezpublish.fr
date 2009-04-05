@@ -3,9 +3,9 @@
 // Created on: <13-Мар-2003 13:06:18 sp>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -24,12 +24,8 @@
 //
 //
 
-/*! \file forgotpassword.php
+/*! \file
 */
-
-//include_once( "lib/ezutils/classes/ezhttptool.php" );
-//include_once( "kernel/classes/datatypes/ezuser/ezuser.php" );
-//include_once( "kernel/classes/datatypes/ezuser/ezforgotpassword.php" );
 
 
 require_once( "kernel/common/template.php" );
@@ -66,9 +62,6 @@ if ( strlen( $hashKey ) == 32 )
         $user->store();
 
         require_once( "kernel/common/template.php" );
-        //include_once( 'lib/ezutils/classes/ezmail.php' );
-        //include_once( 'lib/ezutils/classes/ezmailtransport.php' );
-
         $receiver = $email;
         $mail = new eZMail();
         if ( !$mail->validate( $receiver ) )
@@ -89,6 +82,8 @@ if ( strlen( $hashKey ) == 32 )
         $subject = ezi18n( 'kernel/user/register', 'Registration info' );
         if ( $tpl->hasVariable( 'subject' ) )
             $subject = $tpl->variable( 'subject' );
+        if ( $tpl->hasVariable( 'content_type' ) )
+            $mail->setContentType( $tpl->variable( 'content_type' ) );
         $mail->setSubject( $subject );
         $mail->setBody( $templateResult );
         $mailResult = eZMailTransport::send( $mail );
@@ -138,8 +133,6 @@ if ( $module->isCurrentAction( "Generate" ) )
 
             $userToSendEmail = $user;
             require_once( "kernel/common/template.php" );
-            //include_once( 'lib/ezutils/classes/ezmail.php' );
-            //include_once( 'lib/ezutils/classes/ezmailtransport.php' );
             $receiver = $email;
 
             $mail = new eZMail();
@@ -152,10 +145,11 @@ if ( $module->isCurrentAction( "Generate" ) )
             $tpl->setVariable( 'password', $password );
             $tpl->setVariable( 'link', true );
             $tpl->setVariable( 'hash_key', $hashKey );
-            //include_once( 'lib/ezutils/classes/ezhttptool.php' );
             $http = eZHTTPTool::instance();
             $http->UseFullUrl = true;
             $templateResult = $tpl->fetch( 'design:user/forgotpasswordmail.tpl' );
+            if ( $tpl->hasVariable( 'content_type' ) )
+                $mail->setContentType( $tpl->variable( 'content_type' ) );
             $http->UseFullUrl = false;
             $emailSender = $ini->variable( 'MailSettings', 'EmailSender' );
             if ( !$emailSender )

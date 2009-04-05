@@ -5,9 +5,9 @@
 // Created on: <24-Jul-2003 15:48:06 wy>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -26,7 +26,7 @@
 //
 //
 
-/*! \file ezldapuser.php
+/*! \file
 */
 
 /*!
@@ -35,10 +35,6 @@
   \brief The class eZLDAPUser does
 
 */
-//include_once( "kernel/classes/datatypes/ezuser/ezusersetting.php" );
-//include_once( "kernel/classes/datatypes/ezuser/ezuser.php" );
-//include_once( 'lib/ezutils/classes/ezini.php' );
-
 class eZLDAPUser extends eZUser
 {
     /*!
@@ -77,9 +73,9 @@ class eZLDAPUser extends eZUser
 
         $ini = eZINI::instance();
         $LDAPIni = eZINI::instance( 'ldap.ini' );
-        $databaseImplementation = $ini->variable( 'DatabaseSettings', 'DatabaseImplementation' );
+        $databaseName = $db->databaseName();
         // if mysql
-        if ( $databaseImplementation == "ezmysql" )
+        if ( $databaseName === 'mysql' )
         {
             $query = "SELECT contentobject_id, password_hash, password_hash_type, email, login
                       FROM ezuser, ezcontentobject
@@ -110,7 +106,7 @@ class eZLDAPUser extends eZUser
                                                     $hash );
 
                 // If hash type is MySql
-                if ( $hashType == eZUser::PASSWORD_HASH_MYSQL and $databaseImplementation == "ezmysql" )
+                if ( $hashType == eZUser::PASSWORD_HASH_MYSQL and $databaseName === 'mysql' )
                 {
                     $queryMysqlUser = "SELECT contentobject_id, password_hash, password_hash_type, email, login
                                        FROM ezuser, ezcontentobject
@@ -161,21 +157,23 @@ class eZLDAPUser extends eZUser
 
             return $user;
         }
-        else if ( $LDAPIni->variable( 'LDAPSettings', 'LDAPEnabled' ) == "true" )
+        else if ( $LDAPIni->variable( 'LDAPSettings', 'LDAPEnabled' ) === 'true' )
         {
             // read LDAP ini settings
             // and then try to bind to the ldap server
 
-            $LDAPVersion    = $LDAPIni->variable( 'LDAPSettings', 'LDAPVersion' );
-            $LDAPServer     = $LDAPIni->variable( 'LDAPSettings', 'LDAPServer' );
-            $LDAPPort       = $LDAPIni->variable( 'LDAPSettings', 'LDAPPort' );
-            $LDAPBaseDN     = $LDAPIni->variable( 'LDAPSettings', 'LDAPBaseDn' );
-            $LDAPBindUser   = $LDAPIni->variable( 'LDAPSettings', 'LDAPBindUser' );
+            $LDAPDebugTrace         = $LDAPIni->variable( 'LDAPSettings', 'LDAPDebugTrace' ) === 'enabled';
+            $LDAPVersion            = $LDAPIni->variable( 'LDAPSettings', 'LDAPVersion' );
+            $LDAPServer             = $LDAPIni->variable( 'LDAPSettings', 'LDAPServer' );
+            $LDAPPort               = $LDAPIni->variable( 'LDAPSettings', 'LDAPPort' );
+            $LDAPBaseDN             = $LDAPIni->variable( 'LDAPSettings', 'LDAPBaseDn' );
+            $LDAPBindUser           = $LDAPIni->variable( 'LDAPSettings', 'LDAPBindUser' );
             $LDAPBindPassword       = $LDAPIni->variable( 'LDAPSettings', 'LDAPBindPassword' );
             $LDAPSearchScope        = $LDAPIni->variable( 'LDAPSettings', 'LDAPSearchScope' );
 
             $LDAPLoginAttribute     = $LDAPIni->variable( 'LDAPSettings', 'LDAPLoginAttribute' );
             $LDAPFirstNameAttribute = $LDAPIni->variable( 'LDAPSettings', 'LDAPFirstNameAttribute' );
+            $LDAPFirstNameIsCN      = $LDAPIni->variable( 'LDAPSettings', 'LDAPFirstNameIsCommonName' ) === 'true';
             $LDAPLastNameAttribute  = $LDAPIni->variable( 'LDAPSettings', 'LDAPLastNameAttribute' );
             $LDAPEmailAttribute     = $LDAPIni->variable( 'LDAPSettings', 'LDAPEmailAttribute' );
 
@@ -216,10 +214,28 @@ class eZLDAPUser extends eZUser
                 }
             }
             $LDAPEqualSign = trim($LDAPIni->variable( 'LDAPSettings', "LDAPEqualSign" ) );
-            $LDAPBaseDN = str_replace( $LDAPEqualSign, "=", $LDAPBaseDN );
-            $LDAPFilter = str_replace( $LDAPEqualSign, "=", $LDAPFilter );
+            $LDAPBaseDN    = str_replace( $LDAPEqualSign, "=", $LDAPBaseDN );
+            $LDAPFilter    = str_replace( $LDAPEqualSign, "=", $LDAPFilter );
+            $LDAPBindUser  = str_replace( $LDAPEqualSign, "=", $LDAPBindUser );
 
-            $ds = ldap_connect( $LDAPServer, $LDAPPort );
+            if ( $LDAPDebugTrace )
+            {
+                $debugArray = array( 'stage' => '1/5: Connecting and Binding to LDAP server',
+                                     'LDAPServer' => $LDAPServer,
+                                     'LDAPPort' => $LDAPPort,
+                                     'LDAPBindUser' => $LDAPBindUser,
+                                     'LDAPVersion' => $LDAPVersion
+                );
+                // Set debug trace mode for ldap connections
+                if ( function_exists( 'ldap_set_option' ) )
+                    ldap_set_option(NULL, LDAP_OPT_DEBUG_LEVEL, 7);
+                eZDebug::writeNotice( var_export( $debugArray, true ), 'eZLDAPUser::loginUser' );
+            }
+
+            if ( function_exists( 'ldap_connect' ) )
+                $ds = ldap_connect( $LDAPServer, $LDAPPort );
+            else
+                $ds = false;
 
             if ( $ds )
             {
@@ -235,6 +251,7 @@ class eZLDAPUser extends eZUser
                 if ( !$r )
                 {
                     // Increase number of failed login attempts.
+                    eZDebug::writeError( 'Cannot bind to LDAP server, might be something wronge with connetion or bind user!', 'eZLDAPUser::loginUser()' );
                     if ( isset( $userID ) )
                         eZUser::setFailedLoginAttempts( $userID );
 
@@ -255,6 +272,17 @@ class eZLDAPUser extends eZUser
                 if ( $LDAPUserGroupAttributeType )
                     $retrieveAttributes[] = $LDAPUserGroupAttribute;
 
+                if ( $LDAPDebugTrace )
+                {
+                    $debugArray = array( 'stage' => '2/5: finding user',
+                                         'LDAPFilter' => $LDAPFilter,
+                                         'retrieveAttributes' => $retrieveAttributes,
+                                         'LDAPSearchScope' => $LDAPSearchScope,
+                                         'LDAPBaseDN' => $LDAPBaseDN
+                    );
+                    eZDebug::writeNotice( var_export( $debugArray, true ), 'eZLDAPUser::loginUser' );
+                }
+
                 if ( $LDAPSearchScope == "one" )
                     $sr = ldap_list( $ds, $LDAPBaseDN, $LDAPFilter, $retrieveAttributes );
                 else if ( $LDAPSearchScope == "base" )
@@ -266,6 +294,7 @@ class eZLDAPUser extends eZUser
                 if ( $info['count'] > 1 )
                 {
                     // More than one user with same uid, not allow login.
+                    eZDebug::writeWarning( 'More then one user with same uid, not allowed to login!', 'eZLDAPUser::loginUser()' );
                     $user = false;
                     return $user;
                 }
@@ -276,8 +305,16 @@ class eZLDAPUser extends eZUser
                         eZUser::setFailedLoginAttempts( $userID );
 
                     // user DN was not found
+                    eZDebug::writeWarning( 'User DN was not found!', 'eZLDAPUser::loginUser()' );
                     $user = false;
                     return $user;
+                }
+                else if ( $LDAPDebugTrace )
+                {
+                    $debugArray = array( 'stage' => '3/5: real authentication of user',
+                                         'info' => $info
+                    );
+                    eZDebug::writeNotice( var_export( $debugArray, true ), 'eZLDAPUser::loginUser' );
                 }
 
                 if( !$password )
@@ -292,6 +329,7 @@ class eZLDAPUser extends eZUser
                     if ( isset( $userID ) )
                         eZUser::setFailedLoginAttempts( $userID );
 
+                    eZDebug::writeWarning( "User $userID failed to login!", 'eZLDAPUser::loginUser()' );
                     $user = false;
                     return $user;
                 }
@@ -408,10 +446,23 @@ class eZLDAPUser extends eZUser
                     $LDAPGroupMappingType = $ByGroupAttribute;
                 }
 
+                if ( $LDAPDebugTrace )
+                {
+                    $debugArray = array( 'stage' => '4/5: group mapping init',
+                                         'LDAPUserGroupType' => $LDAPUserGroupType,
+                                         'LDAPGroupMappingType' => $LDAPGroupMappingType,
+                                         'LDAPUserGroup' => $LDAPUserGroup,
+                                         'defaultUserPlacement' => $defaultUserPlacement,
+                                         'extraNodeAssignments' => $extraNodeAssignments
+                    );
+                    eZDebug::writeNotice( var_export( $debugArray, true ), 'eZLDAPUser::loginUser' );
+                }
+
                 if ( $LDAPGroupMappingType == $ByMemberAttribute or
                      $LDAPGroupMappingType == $ByMemberAttributeHierarhicaly )
                 {
                     $LDAPGroupBaseDN          = $LDAPIni->variable( 'LDAPSettings', 'LDAPGroupBaseDN' );
+                    $LDAPGroupBaseDN          = str_replace( $LDAPEqualSign, '=', $LDAPGroupBaseDN );
                     $LDAPGroupClass           = $LDAPIni->variable( 'LDAPSettings', 'LDAPGroupClass' );
 
                     $LDAPGroupNameAttribute   = $LDAPIni->variable( 'LDAPSettings', 'LDAPGroupNameAttribute' );
@@ -429,7 +480,10 @@ class eZLDAPUser extends eZUser
                     $requiredParams[ 'LDAPGroupMemberAttribute' ] = $LDAPGroupMemberAttribute;
                     $requiredParams[ 'LDAPGroupDescriptionAttribute' ] = $LDAPGroupDescriptionAttribute;
                     $requiredParams[ 'ds' ] =& $ds;
-                    $requiredParams[ 'TopUserGroupNodeID' ] = 5;
+                    if ( $LDAPIni->variable( 'LDAPSettings', 'LDAPGroupRootNodeId' ) !== '' )
+                        $requiredParams[ 'TopUserGroupNodeID' ] = $LDAPIni->variable( 'LDAPSettings', 'LDAPGroupRootNodeId' );
+                    else
+                        $requiredParams[ 'TopUserGroupNodeID' ] = 5;
 
                     $groupsTree = array();
                     $stack = array();
@@ -566,10 +620,36 @@ class eZLDAPUser extends eZUser
                     }
                 }
 
+                // remove ' last_name' from first_name if cn is used for first name
+                if ( $LDAPFirstNameIsCN && isset( $userData[ $LDAPFirstNameAttribute ] ) && isset( $userData[ $LDAPLastNameAttribute ] ) )
+                {
+                    $userData[ $LDAPFirstNameAttribute ][0] = str_replace( ' ' . $userData[ $LDAPLastNameAttribute ][0], '', $userData[ $LDAPFirstNameAttribute ][0] );
+                }
+
+                if ( isset( $userData[ $LDAPEmailAttribute ] ) )
+                    $LDAPuserEmail = $userData[ $LDAPEmailAttribute ][0];
+                else if( trim( $LDAPIni->variable( 'LDAPSettings', 'LDAPEmailEmptyAttributeSuffix' ) ) )
+                    $LDAPuserEmail = $login . $LDAPIni->variable( 'LDAPSettings', 'LDAPEmailEmptyAttributeSuffix' );
+                else
+                    $LDAPuserEmail = false;
+
+
                 $userAttributes = array( 'login'      => $login,
                                          'first_name' => isset( $userData[ $LDAPFirstNameAttribute ] ) ? $userData[ $LDAPFirstNameAttribute ][0] : false,
                                          'last_name'  => isset( $userData[ $LDAPLastNameAttribute ] ) ? $userData[ $LDAPLastNameAttribute ][0] : false,
-                                         'email'      => isset( $userData[ $LDAPEmailAttribute ] ) ? $userData[ $LDAPEmailAttribute ][0] : false );
+                                         'email'      => $LDAPuserEmail );
+
+                if ( $LDAPDebugTrace )
+                {
+                    $debugArray = array( 'stage' => '5/5: storing user',
+                                         'userAttributes' => $userAttributes,
+                                         'isUtf8Encoding' => $isUtf8Encoding,
+                                         'defaultUserPlacement' => $defaultUserPlacement,
+                                         'extraNodeAssignments' => $extraNodeAssignments,
+                                         'adminUserContentObjectID' => $adminUserContentObjectID
+                    );
+                    eZDebug::writeNotice( var_export( $debugArray, true ), 'eZLDAPUser::loginUser' );
+                }
 
                 $oldUser = clone eZUser::currentUser();
                 eZUser::setCurrentlyLoggedInUser( $adminUser, $adminUserContentObjectID );
@@ -600,6 +680,7 @@ class eZLDAPUser extends eZUser
             if ( isset( $userID ) )
                 eZUser::setFailedLoginAttempts( $userID );
 
+            eZDebug::writeWarning( 'User does not exist or LDAP is not enabled in php', 'eZLDAPUser::loginUser()' );
             $user = false;
             return $user;
         }
@@ -745,7 +826,6 @@ class eZLDAPUser extends eZUser
             //$adminUser = eZUser::fetchByName( 'admin' );
             //eZUser::setCurrentlyLoggedInUser( $adminUser, $adminUser->attribute( 'contentobject_id' ) );
 
-            //include_once( 'lib/ezutils/classes/ezoperationhandler.php' );
             $operationResult = eZOperationHandler::execute( 'content', 'publish', array( 'object_id' => $contentObjectID,
                                                                                          'version' => 1 ) );
         }
@@ -810,7 +890,6 @@ class eZLDAPUser extends eZUser
                         }
                         else
                         {
-                            //include_once( 'kernel/classes/ezcontentobjecttreenodeoperations.php' );
                             if ( !eZContentObjectTreeNodeOperations::move( $mainNodeID, $defaultUserPlacement ) )
                             {
                                 eZDebug::writeError( "Failed to move node $mainNodeID as child of parent node $defaultUserPlacement",
@@ -929,7 +1008,6 @@ class eZLDAPUser extends eZUser
             $descContentAttribute->store();
         }
 
-        //include_once( 'lib/ezutils/classes/ezoperationhandler.php' );
         $operationResult = eZOperationHandler::execute( 'content', 'publish', array( 'object_id' => $contentObjectID,
                                                                                      'version' => 1 ) );
         $newNodes = eZContentObjectTreeNode::fetchByContentObjectID( $contentObjectID, true, 1 );

@@ -5,9 +5,9 @@
 // Created on: <01-Mar-2002 13:48:40 amos>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -75,8 +75,6 @@ print( $time1->isEqualTo( $time3 ) ? 'true' : 'false' ); // Prints 'true'
   \sa eZDate, eZDateTime, eZLocale
 */
 
-//include_once( 'lib/ezlocale/classes/ezlocale.php' );
-
 class eZTime
 {
     /*!
@@ -121,6 +119,7 @@ class eZTime
                       'time_of_day',
                       'hour',
                       'minute',
+                      'second',
                       'is_valid' );
     }
 
@@ -139,6 +138,8 @@ class eZTime
             return $this->hour();
         else if ( $name == 'minute' )
             return $this->minute();
+        else if ( $name == 'second' )
+            return $this->second();
         else if ( $name == 'is_valid'  )
             return $this->isValid();
 
@@ -292,7 +293,7 @@ class eZTime
      Creates a new eZTime object with the time values $hour, $min and $sec and returns a reference to it.
      Any value can be ommitted or set to -1 to use the current time value.
     */
-    function create( $hour = -1, $minute = -1, $second = -1 )
+    static function create( $hour = -1, $minute = -1, $second = -1 )
     {
         $cur_date = getdate();
 
@@ -362,9 +363,10 @@ class eZTime
 
     /*!
      \static
+     \deprecated Use eZTime::SECONDS_A_DAY instead
      Get number of seconds per day
     */
-    function secondsPerDay()
+    static function secondsPerDay()
     {
         return self::SECONDS_A_DAY;
     }

@@ -5,9 +5,9 @@
 // Created on: <20-Apr-2004 11:57:36 bf>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -40,7 +40,6 @@ class eZNodeviewfunctions
                                       $viewParameters = array( 'offset' => 0, 'year' => false, 'month' => false, 'day' => false ),
                                       $collectionAttributes = false, $validation = false )
     {
-        require_once( 'kernel/classes/ezclusterfilehandler.php' );
         $cacheFile = eZClusterFileHandler::instance( $cachePath );
         $args = compact( "tpl", "node", "object", "languageCode", "viewMode", "offset",
                          "viewCacheEnabled",
@@ -58,13 +57,16 @@ class eZNodeviewfunctions
     //       back to eZClusterFileHandler for processing.
     static function generateCallback( $file, $args )
     {
-        $res = call_user_func_array( array( 'eZNodeviewfunctions', 'generateNodeViewData' ),
-                                     $args );
+        extract( $args );
+
+        $res = eZNodeViewFunctions::generateNodeViewData( $tpl, $node, $object, $languageCode, $viewMode, $offset,
+                                                          $viewParameters, $collectionAttributes, $validation );
+
 
         // Check if cache time = 0 (viewcache disabled)
         $store = $res['cache_ttl'] != 0;
         // or if explicitly turned off
-        if ( !$args['viewCacheEnabled'] )
+        if ( !$viewCacheEnabled )
             $store = false;
         $retval = array( 'content' => $res,
                          'scope'   => 'viewcache',
@@ -79,7 +81,6 @@ class eZNodeviewfunctions
                                           $viewParameters = array( 'offset' => 0, 'year' => false, 'month' => false, 'day' => false ),
                                           $collectionAttributes = false, $validation = false )
     {
-        //include_once( 'kernel/classes/ezsection.php' );
         eZSection::setGlobalID( $object->attribute( 'section_id' ) );
 
         $section = eZSection::fetch( $object->attribute( 'section_id' ) );
@@ -95,10 +96,14 @@ class eZNodeviewfunctions
                            array( 'class_identifier', $node->attribute( 'class_identifier' ) ),
                            array( 'view_offset', $offset ),
                            array( 'viewmode', $viewMode ),
+                           array( 'remote_id', $object->attribute( 'remote_id' ) ),
+                           array( 'node_remote_id', $node->attribute( 'remote_id' ) ),
                            array( 'navigation_part_identifier', $navigationPartIdentifier ),
                            array( 'depth', $node->attribute( 'depth' ) ),
                            array( 'url_alias', $node->attribute( 'url_alias' ) ),
-                           array( 'class_group', $object->attribute( 'match_ingroup_id_list' ) ) );
+                           array( 'class_group', $object->attribute( 'match_ingroup_id_list' ) ),
+                           array( 'state', $object->attribute( 'state_id_array' ) ),
+                           array( 'state_identifier', $object->attribute( 'state_identifier_array' ) ) );
 
         $parentClassID = false;
         $parentClassIdentifier = false;
@@ -176,6 +181,8 @@ class eZNodeviewfunctions
         $contentInfoArray['parent_node_id'] =  $node->attribute( 'parent_node_id' );
         $contentInfoArray['class_id'] = $object->attribute( 'contentclass_id' );
         $contentInfoArray['class_identifier'] = $node->attribute( 'class_identifier' );
+        $contentInfoArray['remote_id'] = $object->attribute( 'remote_id' );
+        $contentInfoArray['node_remote_id'] = $node->attribute( 'remote_id' );
         $contentInfoArray['offset'] = $offset;
         $contentInfoArray['viewmode'] = $viewMode;
         $contentInfoArray['navigation_part_identifier'] = $navigationPartIdentifier;
@@ -189,6 +196,8 @@ class eZNodeviewfunctions
             $res->setKeys( $keyArray );
         }
         $contentInfoArray['class_group'] = $object->attribute( 'match_ingroup_id_list' );
+        $contentInfoArray['state'] = $object->attribute( 'state_id_array' );
+        $contentInfoArray['state_identifier'] = $object->attribute( 'state_identifier_array' );
         $contentInfoArray['parent_class_id'] = $parentClassID;
         $contentInfoArray['parent_class_identifier'] = $parentClassIdentifier;
 
@@ -208,36 +217,7 @@ class eZNodeviewfunctions
             $cacheTTL = -1;
         }
 
-/*
-// This checking is now handled outside of this function.
-        // Check if cache time = 0 (disabled)
-        if ( $cacheTTL == 0 )
-        {
-            $viewCacheEnabled = false;
-        }
-*/
-
         $Result['cache_ttl'] = $cacheTTL;
-
-/*
-// File storage is now handled outside of this function
-        // Store view cache
-        if ( $viewCacheEnabled )
-        {
-            $serializeString = serialize( $Result );
-
-            //include_once( "lib/ezfile/classes/ezatomicfile.php" );
-            $cacheFile = new eZAtomicFile( $cachePath );
-            $cacheFile->write( $serializeString );
-            $cacheFile->close();
-
-            // VS-DBFILE
-
-            require_once( 'kernel/classes/ezclusterfilehandler.php' );
-            $fileHandler = eZClusterFileHandler::instance();
-            $fileHandler->fileStore( $cachePath, 'viewcache', true );
-        }
-*/
 
         if ( $languageCode )
         {
@@ -247,35 +227,79 @@ class eZNodeviewfunctions
         return $Result;
     }
 
-    static function generateViewCacheFile( $user, $nodeID, $offset, $layout, $language, $viewMode, $viewParameters = false, $cachedViewPreferences = false )
+    static function generateViewCacheFile( $user, $nodeID, $offset, $layout, $language, $viewMode, $viewParameters = false, $cachedViewPreferences = false, $viewCacheTweak = '' )
     {
-        //include_once( 'kernel/classes/ezuserdiscountrule.php' );
-        //include_once( 'kernel/classes/ezpreferences.php' );
-
-        $limitedAssignmentValueList = $user->limitValueList();
-        $roleList = $user->roleIDList();
-        $discountList = eZUserDiscountRule::fetchIDListByUserID( $user->attribute( 'contentobject_id' ) );
+        $cacheNameExtra = '';
+        $ini = eZINI::instance();
 
         if ( !$language )
         {
             $language = false;
         }
-        $currentSiteAccess = $GLOBALS['eZCurrentAccess']['name'];
+
+        if ( !$viewCacheTweak && $ini->hasVariable( 'ContentSettings', 'ViewCacheTweaks' ) )
+        {
+            $viewCacheTweaks = $ini->variable( 'ContentSettings', 'ViewCacheTweaks' );
+            if ( isset( $viewCacheTweaks[$nodeID] ) )
+            {
+                $viewCacheTweak = $viewCacheTweaks[$nodeID];
+            }
+            else if ( isset( $viewCacheTweaks['global'] ) )
+            {
+                $viewCacheTweak = $viewCacheTweaks['global'];
+            }
+        }
+
+        // should we use current siteaccess or let several siteaccesse share cache?
+        if ( strpos( $viewCacheTweak, 'ignore_siteaccess_name' ) === false )
+        {
+            $currentSiteAccess = $GLOBALS['eZCurrentAccess']['name'];
+        }
+        else
+        {
+            $currentSiteAccess = $ini->variable( 'SiteSettings', 'DefaultAccess' );
+        }
 
         $cacheHashArray = array( $nodeID,
                                  $viewMode,
                                  $language,
                                  $offset,
-                                 $layout,
-                                 implode( '.', $roleList ),
-                                 implode( '.', $limitedAssignmentValueList),
-                                 implode( '.', $discountList ),
-                                 eZSys::indexFile() );
+                                 $layout );
+
+        // several user related cache tweaks
+        if ( strpos( $viewCacheTweak, 'ignore_userroles' ) === false )
+        {
+            $cacheHashArray[] = implode( '.', $user->roleIDList() );
+        }
+
+        if ( strpos( $viewCacheTweak, 'ignore_userlimitedlist' ) === false )
+        {
+            $cacheHashArray[] = implode( '.', $user->limitValueList() );
+        }
+
+        if ( strpos( $viewCacheTweak, 'ignore_discountlist' ) === false )
+        {
+            $cacheHashArray[] = implode( '.', eZUserDiscountRule::fetchIDListByUserID( $user->attribute( 'contentobject_id' ) ) );
+        }
+
+        $cacheHashArray[] = eZSys::indexFile();
+
+        // add access type to cache hash if current access is uri type (so uri and host doesn't share cache)
+        if ( strpos( $viewCacheTweak, 'ignore_siteaccess_type' ) === false && $GLOBALS['eZCurrentAccess']['type'] === EZ_ACCESS_TYPE_URI )
+        {
+            $cacheHashArray[] = EZ_ACCESS_TYPE_URI;
+        }
+
+        // Make the cache unique for every logged in user
+        if ( strpos( $viewCacheTweak, 'pr_user' ) !== false and !$user->isAnonymous() )
+        {
+            $cacheNameExtra = $user->attribute( 'contentobject_id' ) . '-';
+        }
 
         // Make the cache unique for every case of view parameters
-        if ( $viewParameters )
+        if ( strpos( $viewCacheTweak, 'ignore_viewparameters' ) === false && $viewParameters )
         {
-            $vpString = "";
+            $vpString = '';
             ksort( $viewParameters );
             foreach ( $viewParameters as $key => $value )
             {
@@ -289,17 +313,17 @@ class eZNodeviewfunctions
         // Make the cache unique for every case of the preferences
         if ( $cachedViewPreferences === false )
         {
-            $siteIni = eZINI::instance( );
-            $depPreferences = $siteIni->variable( 'ContentSettings', 'CachedViewPreferences' );
+            $depPreferences = $ini->variable( 'ContentSettings', 'CachedViewPreferences' );
         }
         else
         {
             $depPreferences = $cachedViewPreferences;
         }
-        if ( isset ( $depPreferences[$viewMode] ) )
+
+        if ( strpos( $viewCacheTweak, 'ignore_userpreferences' ) === false && isset ( $depPreferences[$viewMode] ) )
         {
             $depPreferences = explode( ';', $depPreferences[$viewMode] );
-            $pString = "";
+            $pString = '';
             // Fetch preferences for the specified user
             $preferences = eZPreferences::values( $user );
             foreach( $depPreferences as $pref )
@@ -316,9 +340,7 @@ class eZNodeviewfunctions
             $cacheHashArray[] = $pString;
         }
 
-        $ini = eZINI::instance();
-
-        $cacheFile = $nodeID . '-' . md5( implode( '-', $cacheHashArray ) ) . '.cache';
+        $cacheFile = $nodeID . '-' . $cacheNameExtra . md5( implode( '-', $cacheHashArray ) ) . '.cache';
         $extraPath = eZDir::filenamePath( $nodeID );
         $cacheDir = eZDir::path( array( eZSys::cacheDirectory(), $ini->variable( 'ContentSettings', 'CacheDir' ), $currentSiteAccess, $extraPath ) );
         $cachePath = eZDir::path( array( $cacheDir, $cacheFile ) );
@@ -384,11 +406,15 @@ class eZNodeviewfunctions
                                    array( 'navigation_part_identifier', $Result['content_info']['navigation_part_identifier'] ),
                                    array( 'viewmode', $Result['content_info']['viewmode'] ),
                                    array( 'depth', $Result['content_info']['node_depth'] ),
+                                   array( 'remote_id', $Result['content_info']['remote_id'] ),
+                                   array( 'node_remote_id', $Result['content_info']['node_remote_id'] ),
                                    array( 'url_alias', $Result['content_info']['url_alias'] ),
                                    array( 'persistent_variable', $Result['content_info']['persistent_variable'] ),
                                    array( 'class_group', $Result['content_info']['class_group'] ),
                                    array( 'parent_class_id', $Result['content_info']['parent_class_id'] ),
-                                   array( 'parent_class_identifier', $Result['content_info']['parent_class_identifier'] ) );
+                                   array( 'parent_class_identifier', $Result['content_info']['parent_class_identifier'] ),
+                                   array( 'state', $Result['content_info']['state'] ),
+                                   array( 'state_identifier', $Result['content_info']['state_identifier'] ) );
 
                 if ( isset( $Result['content_info']['class_identifier'] ) )
                     $keyArray[] = array( 'class_identifier', $Result['content_info']['class_identifier'] );
@@ -397,7 +423,6 @@ class eZNodeviewfunctions
                 $res->setKeys( $keyArray );
 
                 // set section id
-                //include_once( 'kernel/classes/ezsection.php' );
                 eZSection::setGlobalID( $Result['section_id'] );
 
                 return $Result;
@@ -411,7 +436,6 @@ class eZNodeviewfunctions
         // Cache is expired so return specialized cluster object
         if ( !isset( $expiryReason ) )
             $expiryReason = 'Content cache is expired';
-        //include_once( 'kernel/classes/ezclusterfilefailure.php' );
         return new eZClusterFileFailure( 1, $expiryReason );
     }
 

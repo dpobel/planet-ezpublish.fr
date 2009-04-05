@@ -5,9 +5,9 @@
 // Created on: <26-Apr-2002 16:54:35 bf>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -32,9 +32,6 @@
   \brief Stores a float value
 
 */
-
-//include_once( "kernel/classes/ezdatatype.php" );
-//include_once( "lib/ezutils/classes/ezfloatvalidator.php" );
 
 class eZFloatType extends eZDataType
 {
@@ -93,7 +90,6 @@ class eZFloatType extends eZDataType
             $data = $http->postVariable( $base . "_data_float_" . $contentObjectAttribute->attribute( "id" ) );
             $contentObjectAttribute->setHTTPValue( $data );
 
-            //include_once( 'lib/ezlocale/classes/ezlocale.php' );
             $locale = eZLocale::instance();
             $data = $locale->internalNumber( $data );
 
@@ -125,7 +121,6 @@ class eZFloatType extends eZDataType
                 return eZInputValidator::STATE_ACCEPTED;
             }
 
-            //include_once( 'lib/ezlocale/classes/ezlocale.php' );
             $locale = eZLocale::instance();
             $data = $locale->internalNumber( $data );
 
@@ -196,7 +191,6 @@ class eZFloatType extends eZDataType
              $http->hasPostVariable( $maxValueName ) and
              $http->hasPostVariable( $defaultValueName ) )
         {
-            //include_once( 'lib/ezlocale/classes/ezlocale.php' );
             $locale = eZLocale::instance();
 
             $minValueValue = $http->postVariable( $minValueName );
@@ -247,7 +241,6 @@ class eZFloatType extends eZDataType
              $http->hasPostVariable( $maxValueName ) and
              $http->hasPostVariable( $defaultValueName ) )
         {
-            //include_once( 'lib/ezlocale/classes/ezlocale.php' );
             $locale = eZLocale::instance();
 
             $minValueValue = $http->postVariable( $minValueName );
@@ -306,7 +299,6 @@ class eZFloatType extends eZDataType
         $maxValueName = $base . self::MAX_VARIABLE . $classAttribute->attribute( "id" );
         if ( $http->hasPostVariable( $minValueName ) and $http->hasPostVariable( $maxValueName ) )
         {
-            //include_once( 'lib/ezlocale/classes/ezlocale.php' );
             $locale = eZLocale::instance();
 
             $minValueValue = $http->postVariable( $minValueName );
@@ -369,9 +361,6 @@ class eZFloatType extends eZDataType
         return $contentObjectAttribute->setAttribute( 'data_float', $string );
     }
 
-    /*!
-     \reimp
-    */
     function serializeContentClassAttribute( $classAttribute, $attributeNode, $attributeParametersNode )
     {
         $defaultValue = $classAttribute->attribute( self::DEFAULT_FIELD );
@@ -380,23 +369,23 @@ class eZFloatType extends eZDataType
         $minMaxState = $classAttribute->attribute( self::INPUT_STATE_FIELD );
 
         $dom = $attributeParametersNode->ownerDocument;
-        $defaultValueNode = $dom->createElement( 'default-value', $defaultValue );
+        $defaultValueNode = $dom->createElement( 'default-value' );
+        $defaultValueNode->appendChild( $dom->createTextNode( $defaultValue ) );
         $attributeParametersNode->appendChild( $defaultValueNode );
         if ( $minMaxState == self::HAS_MIN_VALUE or $minMaxState == self::HAS_MIN_MAX_VALUE )
         {
-            $minValueNode = $dom->createElement( 'min-value', $minValue );
+            $minValueNode = $dom->createElement( 'min-value' );
+            $minValueNode->appendChild( $dom->createTextNode( $minValue ) );
             $attributeParametersNode->appendChild( $minValueNode );
         }
         if ( $minMaxState == self::HAS_MAX_VALUE or $minMaxState == self::HAS_MIN_MAX_VALUE )
         {
-            $maxValueNode = $dom->createElement( 'max-value', $maxValue );
+            $maxValueNode = $dom->createElement( 'max-value' );
+            $maxValueNode->appendChild( $dom->createTextNode( $maxValue ) );
             $attributeParametersNode->appendChild( $maxValueNode );
         }
     }
 
-    /*!
-     \reimp
-    */
     function unserializeContentClassAttribute( $classAttribute, $attributeNode, $attributeParametersNode )
     {
         $defaultValue = $attributeParametersNode->getElementsByTagName( 'default-value' )->item( 0 )->textContent;
@@ -416,6 +405,22 @@ class eZFloatType extends eZDataType
         $classAttribute->setAttribute( self::MIN_FIELD, $minValue );
         $classAttribute->setAttribute( self::MAX_FIELD, $maxValue );
         $classAttribute->setAttribute( self::INPUT_STATE_FIELD, $minMaxState );
+    }
+
+    function supportsBatchInitializeObjectAttribute()
+    {
+        return true;
+    }
+
+    function batchInitializeObjectAttributeData( $classAttribute )
+    {
+        $default = $classAttribute->attribute( 'data_float3' );
+        if ( $default !== 0 )
+        {
+            return array( 'data_float' => $default );
+        }
+
+        return array();
     }
 
     /// \privatesection

@@ -5,9 +5,9 @@
 // Created on: <11-Aug-2003 16:45:50 kk>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -26,10 +26,8 @@
 //
 //
 
-/*! \file ezstep_database_choice.php
+/*! \file
 */
-//include_once( 'kernel/setup/steps/ezstep_installer.php' );
-//include_once( 'kernel/setup/ezsetupcommon.php' );
 require_once( "kernel/common/i18n.php" );
 
 /*!
@@ -42,7 +40,6 @@ class eZStepDatabaseChoice extends eZStepInstaller
 {
     /*!
      Constructor
-    \reimp
     */
     function eZStepDatabaseChoice( $tpl, $http, $ini, &$persistenceList )
     {
@@ -50,9 +47,6 @@ class eZStepDatabaseChoice extends eZStepInstaller
                                 'database_choice', 'Database choice' );
     }
 
-    /*!
-     \reimp
-     */
     function processPostData()
     {
         $databaseMap = eZSetupDatabaseMap();
@@ -60,9 +54,6 @@ class eZStepDatabaseChoice extends eZStepInstaller
         return true;
     }
 
-    /*!
-     \reimp
-     */
     function init()
     {
         $databaseMap = eZSetupDatabaseMap();
@@ -82,7 +73,6 @@ class eZStepDatabaseChoice extends eZStepInstaller
             }
         }
 
-        //include_once( "kernel/setup/ezsetuptests.php" );
         if ( eZSetupTestInstaller() == 'windows' )
         {
             $this->PersistenceList['database_info'] = $databaseMap['mysql'];
@@ -115,9 +105,6 @@ class eZStepDatabaseChoice extends eZStepInstaller
         return true;
     }
 
-    /*!
-     \reimp
-     */
     function display()
     {
         $databaseMap = eZSetupDatabaseMap();

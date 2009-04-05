@@ -5,9 +5,9 @@
 // <creation-tag>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -26,7 +26,7 @@
 //
 //
 
-/*! \file ezdiffxmltextengine.php
+/*! \file
   eZDiffXMLTextEngine class
 */
 
@@ -35,8 +35,6 @@
   \ingroup eZDiff
   \brief This class creates a diff for xml text.
 */
-
-//include_once( 'lib/ezdiff/classes/ezdiffengine.php' );
 
 class eZDiffXMLTextEngine extends eZDiffEngine
 {
@@ -50,11 +48,6 @@ class eZDiffXMLTextEngine extends eZDiffEngine
     */
     function createDifferenceObject( $fromData, $toData )
     {
-        //include_once( 'lib/ezdiff/classes/ezxmltextdiff.php' );
-        //include_once( 'lib/ezdiff/classes/ezdifftextengine.php' );
-        //include_once( 'lib/ezutils/classes/ezini.php' );
-        //include_once( 'kernel/classes/datatypes/ezxmltext/handlers/input/ezsimplifiedxmleditoutput.php' );
-
         $changes = new eZXMLTextDiff();
         $contentINI = eZINI::instance( 'content.ini' );
         $useSimplifiedXML = $contentINI->variable( 'ContentVersionDiffSettings', 'UseSimplifiedXML' );

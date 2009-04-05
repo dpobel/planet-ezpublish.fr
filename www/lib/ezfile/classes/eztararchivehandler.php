@@ -18,14 +18,13 @@
 //
 // $Id: Tar.php,v 1.20 2004/01/08 17:33:09 sniper Exp $
 
-//include_once( 'lib/ezfile/classes/ezarchivehandler.php' );
-
 /**
 * Creates a (compressed) Tar archive
 *
 * @author   Vincent Blavet <vincent@blavet.net>
 * @version  $Revision: 1.20 $
 * @package  Archive
+* @deprecated
 */
 class eZTARArchiveHandler extends eZArchiveHandler
 {
@@ -70,6 +69,8 @@ class eZTARArchiveHandler extends eZArchiveHandler
     */
     function eZTARArchiveHandler( &$fileHandler, $p_tarname, $p_compress = false )
     {
+        eZDebug::writeWarning( __METHOD__ . " is deprecated, use ezcArchive instead" );
+
         $this->eZArchiveHandler( $fileHandler );
 //         $this->PEAR();
         $this->_tarname = $p_tarname;
@@ -342,7 +343,7 @@ class eZTARArchiveHandler extends eZArchiveHandler
     * indicated by $p_path. When relevant the memorized path of the
     * files/dir can be modified by removing the $p_remove_path path at the
     * beginning of the file/dir path.
-    * While extracting a file, if the directory path does not exists it is
+    * While extracting a file, if the directory path does not exist it is
     * created.
     * While extracting a file, if the file already exists it is replaced
     * without looking for last modification date.
@@ -1395,7 +1396,7 @@ class eZTARArchiveHandler extends eZArchiveHandler
         if ($v_extract_file) {
           if ($v_header['typeflag'] == "5") {
             if (!@file_exists($v_header['filename'])) {
-                if (!@mkdir($v_header['filename'], 0777)) {
+                if (!@eZDir::mkdir($v_header['filename'] )) {
                     $this->_error('Unable to create directory {'.$v_header['filename'].'}');
                     return false;
                 }
@@ -1432,6 +1433,9 @@ class eZTARArchiveHandler extends eZArchiveHandler
                 $mode = fileperms($v_header['filename']) | (~umask() & 0111);
                 @chmod($v_header['filename'], $mode);
             }
+            // If we don`t force this, we can never delete installed packages
+            @chmod( $v_header['filename'],
+                octdec( eZINI::instance()->variable( 'FileSettings', 'StorageFilePermissions' ) ) );
           }
 
           // ----- Check the file size
@@ -1597,7 +1601,7 @@ class eZTARArchiveHandler extends eZArchiveHandler
             (!$this->_dirCheck($p_parent_dir)))
              return false;
 
-        if (!@mkdir($p_dir, 0777)) {
+        if (!@eZDir::mkdir( $p_dir )) {
             $this->_error("Unable to create directory '$p_dir'");
             return false;
         }

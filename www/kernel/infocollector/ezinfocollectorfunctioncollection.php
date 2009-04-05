@@ -5,9 +5,9 @@
 // Created on: <03-Oct-2006 13:05:24 sp>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -26,7 +26,7 @@
 //
 //
 
-/*! \file ezinfocollectorfunctioncollection.php
+/*! \file
 */
 
 /*!
@@ -46,7 +46,6 @@ class eZInfocollectorFunctionCollection
 
     static function fetchCollectedInfoCount( $objectAttributeID, $objectID, $value, $creatorID = false, $userIdentifier = false )
     {
-        //include_once( 'kernel/classes/ezinformationcollection.php' );
         if ( $objectAttributeID )
             $count = eZInformationCollection::fetchCountForAttribute( $objectAttributeID, $value );
         else
@@ -56,14 +55,12 @@ class eZInfocollectorFunctionCollection
 
     static function fetchCollectedInfoCountList( $objectAttributeID )
     {
-        //include_once( 'kernel/classes/ezinformationcollection.php' );
         $count = eZInformationCollection::fetchCountList( $objectAttributeID );
         return array( 'result' => $count );
     }
 
     static function fetchCollectedInfoCollection( $collectionID, $contentObjectID )
     {
-        //include_once( 'kernel/classes/ezinformationcollection.php' );
         $collection = false;
         if ( $collectionID )
             $collection = eZInformationCollection::fetch( $collectionID );
@@ -77,8 +74,6 @@ class eZInfocollectorFunctionCollection
 
     static function fetchCollectionsList( $objectID = false, $creatorID = false, $userIdentifier = false, $limit = false, $offset = false, $sortBy = false )
     {
-        //include_once( 'kernel/classes/ezinformationcollection.php' );
-
         $collection = eZInformationCollection::fetchCollectionsList( $objectID,
                                                                      $creatorID,
                                                                      $userIdentifier,

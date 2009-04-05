@@ -5,9 +5,9 @@
 // Created on: <11-Aug-2003 14:04:59 bf>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -26,7 +26,7 @@
 //
 //
 
-/*! \file ezkerneloperator.php
+/*! \file
 */
 
 /*!
@@ -108,7 +108,6 @@ class eZKernelOperator
         {
             case 'ezpreference':
             {
-                //include_once( 'kernel/classes/ezpreferences.php' );
                 $name = $namedParameters['name'];
                 $value = eZPreferences::value( $name );
                 $operatorValue = $value;

@@ -5,9 +5,9 @@
 // Created on: <02-ïËÔ-2002 15:58:10 sp>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -26,7 +26,7 @@
 //
 //
 
-/*! \file eznodeassignment.php
+/*! \file
 */
 
 /*!
@@ -34,9 +34,6 @@
   \brief The class eZNodeAssignment does
 
 */
-require_once( "lib/ezutils/classes/ezdebug.php" );
-//include_once( "kernel/classes/ezpersistentobject.php" );
-
 class eZNodeAssignment extends eZPersistentObject
 {
     // Bit 0 is used to mark if the action is to be performed or not
@@ -96,11 +93,11 @@ class eZNodeAssignment extends eZPersistentObject
                                                                  'multiplicity' => '1..*' ),
                                          'sort_field' => array( 'name' => 'SortField',
                                                                 'datatype' => 'integer',
-                                                                'default' => 1,
+                                                                'default' => eZContentObjectTreeNode::SORT_FIELD_PATH,
                                                                 'required' => true ),
                                          'sort_order' => array( 'name' => 'SortOrder',
                                                                 'datatype' => 'integer',
-                                                                'default' => 1,
+                                                                'default' => eZContentObjectTreeNode::SORT_ORDER_ASC,
                                                                 'required' => true ),
                                          'is_main' => array( 'name' => 'Main',
                                                              'datatype' => 'integer',
@@ -231,11 +228,11 @@ class eZNodeAssignment extends eZPersistentObject
         }
         if ( !isset( $parameters['sort_field'] ) )
         {
-            $parameters['sort_field'] = 2; // Published
+            $parameters['sort_field'] = eZContentObjectTreeNode::SORT_FIELD_PUBLISHED;
         }
         if ( !isset( $parameters['sort_order'] ) )
         {
-            $parameters['sort_order'] = 0; // Desc
+            $parameters['sort_order'] = eZContentObjectTreeNode::SORT_ORDER_DESC;
         }
         if ( !isset( $parameters['from_node_id'] ) )
         {
@@ -488,7 +485,6 @@ class eZNodeAssignment extends eZPersistentObject
     */
     static function setNewMainAssignment( $objectID, $version )
     {
-
         $assignments = eZNodeAssignment::fetchForObject( $objectID, $version );
 
         if ( count( $assignments ) == 0 )

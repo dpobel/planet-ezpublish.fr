@@ -1,9 +1,9 @@
 <?php
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -40,18 +40,8 @@ if ( isset( $_SERVER['HTTP_IF_MODIFIED_SINCE'] ) )
     exit();
 }
 
-//require_once( 'lib/ezutils/classes/ezexecution.php' );
-////include_once( 'lib/ezutils/classes/ezsys.php' );
-//require_once( 'lib/ezutils/classes/ezdebug.php' );
-////include_once( 'lib/ezutils/classes/ezini.php' );
-////include_once( 'lib/ezutils/classes/ezuri.php' );
-require_once( 'lib/ezutils/classes/ezsession.php' );
-////include_once( 'lib/ezutils/classes/ezextension.php' );
-require_once( 'kernel/common/ezincludefunctions.php' );
-////include_once( 'lib/ezutils/classes/ezmodule.php' );
-////include_once( 'lib/ezdb/classes/ezdb.php' );
-////include_once( 'kernel/classes/datatypes/ezuser/ezuser.php' );
 require 'autoload.php';
+require_once( 'kernel/common/ezincludefunctions.php' );
 
 function ezupdatedebugsettings()
 {
@@ -99,8 +89,6 @@ $GLOBALS['eZRequestedURI'] = $uri;
 require_once 'pre_check.php';
 
 // Check for extension
-//include_once( 'lib/ezutils/classes/ezextension.php' );
-require_once( 'kernel/common/ezincludefunctions.php' );
 eZExtension::activateExtensions( 'default' );
 // Extension check end
 
@@ -116,7 +104,7 @@ $GLOBALS['eZCurrentAccess'] = $access;
 $db = eZDB::instance();
 if ( $db->isConnected() )
 {
-    eZSessionStart();
+    eZSession::start();
 }
 else
 {
@@ -179,7 +167,7 @@ if ( !$hasAccessToSite )
 }
 
 $GLOBALS['eZRequestedModule'] = $module;
-$moduleResult = $module->run( $function_name );
+$moduleResult = $module->run( $function_name, $uri->elements( false ) );
 
 eZExecution::cleanup();
 eZExecution::setCleanExit();

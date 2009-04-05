@@ -3,9 +3,9 @@
 // Created on: <23-Sen-2005 13:42:58 vd>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -24,11 +24,7 @@
 //
 //
 
-//include_once( "kernel/classes/ezcontentobject.php" );
-//include_once( "lib/ezutils/classes/ezhttptool.php" );
 require_once( "kernel/common/template.php" );
-//include_once( 'kernel/classes/ezpreferences.php' );
-
 $http = eZHTTPTool::instance();
 
 $Module = $Params['Module'];
@@ -97,21 +93,8 @@ $path_strings2 .= "tree2.path_string like '$contentObjectTreeNode->PathString%'"
 $path_strings_where = $path_strings2." ) ";
 $path_strings .= " )";
 
-// Select all elements having reverse relations. And ignore those items that don't relate to objects other than being removed.
-$rows = $db->arrayQuery( "SELECT   DISTINCT( tree.node_id )
-                          FROM     ezcontentobject_tree tree,  ezcontentobject obj,
-                                   ezcontentobject_link link LEFT JOIN ezcontentobject_tree tree2
-                                   ON link.from_contentobject_id = tree2.contentobject_id
-                          WHERE    $path_strings
-                                   and link.to_contentobject_id = tree.contentobject_id
-                                   and obj.id = link.from_contentobject_id
-                                   and obj.current_version = link.from_contentobject_version
-                                   and not ( $path_strings_where )
-
-                            ", array( 'limit' => $pageLimit,
-                                      'offset' => $Offset ) );
 // Total count of sub items
-$countOfItems = $db->arrayQuery( "SELECT COUNT( DISTINCT( tree.node_id ) ) count
+$countOfItems = $db->arrayQuery( "SELECT COUNT( DISTINCT( tree.node_id ) ) AS count
 
                                   FROM  ezcontentobject_tree tree,  ezcontentobject obj,
                                         ezcontentobject_link link LEFT JOIN ezcontentobject_tree tree2
@@ -122,9 +105,31 @@ $countOfItems = $db->arrayQuery( "SELECT COUNT( DISTINCT( tree.node_id ) ) count
                                         and obj.current_version = link.from_contentobject_version
                                         and not ( $path_strings_where )
                             " );
+
 $rowsCount = 0;
 if ( isset( $countOfItems[0] ) )
     $rowsCount = $countOfItems[0]['count'];
+
+if ( $rowsCount > 0 )
+{
+    // Select all elements having reverse relations. And ignore those items that don't relate to objects other than being removed.
+    $rows = $db->arrayQuery( "SELECT   DISTINCT( tree.node_id )
+                              FROM     ezcontentobject_tree tree,  ezcontentobject obj,
+                                       ezcontentobject_link link LEFT JOIN ezcontentobject_tree tree2
+                                       ON link.from_contentobject_id = tree2.contentobject_id
+                              WHERE    $path_strings
+                                       and link.to_contentobject_id = tree.contentobject_id
+                                       and obj.id = link.from_contentobject_id
+                                       and obj.current_version = link.from_contentobject_version
+                                       and not ( $path_strings_where )
+
+                                ", array( 'limit' => $pageLimit,
+                                          'offset' => $Offset ) );
+}
+else
+{
+    $rows = array();
+}
 
 $childrenList = array(); // Contains children of Nodes from $deleteIDArray
 

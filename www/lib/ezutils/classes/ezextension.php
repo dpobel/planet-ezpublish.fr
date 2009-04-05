@@ -5,9 +5,9 @@
 // Created on: <16-Mar-2002 14:23:45 amos>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -26,7 +26,7 @@
 //
 //
 
-/*! \file ezextension.php
+/*! \file
 */
 
 /*!
@@ -34,8 +34,6 @@
   \brief The class eZExtension does
 
 */
-
-//include_once( 'lib/ezutils/classes/ezini.php' );
 
 class eZExtension
 {
@@ -103,10 +101,6 @@ class eZExtension
         $ini = eZINI::instance();
         foreach ( $activeExtensions as $activeExtension )
         {
-            if ( !file_exists( $extensionDirectory . '/' . $activeExtension ) )
-            {
-                eZDebug::writeWarning( "Extension '$activeExtension' does not exist, looked for directory '" . $extensionDirectory . '/' . $activeExtension . "'" );
-            }
             $extensionSettingsPath = $extensionDirectory . '/' . $activeExtension . '/settings';
             if ( file_exists( $extensionSettingsPath ) )
             {
@@ -118,6 +112,10 @@ class eZExtension
                 }
                 $hasExtensions = true;
             }
+            else if ( !file_exists( $extensionDirectory . '/' . $activeExtension ) )
+            {
+                eZDebug::writeWarning( "Extension '$activeExtension' does not exist, looked for directory '" . $extensionDirectory . '/' . $activeExtension . "'" );
+            }
         }
         if ( $hasExtensions )
             $ini->loadCache();
@@ -128,7 +126,7 @@ class eZExtension
 
      Prepend extension siteaccesses
 
-     \param siteaccess name ( default false )
+     \param accessName siteaccess name ( default false )
     */
     static function prependExtensionSiteAccesses( $accessName = false, $ini = false, $globalDir = true, $identifier = false, $order = true )
     {
@@ -209,7 +207,7 @@ class eZExtension
      - type-directory - Whether the type has a directory for it's file or not. Default is true.
      - type - The type to look for, it will try to find a file named repository/subdir/type/type-suffix or
               if type-directory is false repository/subdir/type-suffix.
-              If type is not specified the type-group and typ-variable may be used for fetching the current type.
+              If type is not specified the type-group and type-variable may be used for fetching the current type.
      - type-group - The INI group which has the type setting.
      - type-variable - The INI variable which has the type setting.
      - alias-group - The INI group which defines type aliases, see below.
@@ -329,7 +327,6 @@ class eZExtension
     */
     static function extensionInfo( $extension )
     {
-        //include_once( 'lib/ezfile/classes/ezdir.php' );
         $infoFileName = eZDir::path( array( eZExtension::baseDirectory(), $extension, 'ezinfo.php' ) );
         if ( file_exists( $infoFileName ) )
         {
@@ -357,7 +354,6 @@ class eZExtension
     */
     static function nameFromPath( $path )
     {
-        //include_once( 'lib/ezfile/classes/ezdir.php' );
         $path = eZDir::cleanPath( $path );
         $base = eZExtension::baseDirectory() . '/';
         $base = preg_quote( $base, '/' );
@@ -382,6 +378,103 @@ class eZExtension
             return false;
     }
 
+    /**
+     * Returns the correct handler defined in $iniFile configuration file
+     * A correct class name for the handler needs to be specified in the 
+     * ini settings, and the class needs to be present for the autoload system.
+     *
+     * @static
+     * @param object $options, and ezpExtensionOptions object
+     * @return null|false|object Returns a valid handler object, null if setting did not exists and false if no handler was found
+     */
+    public static function getHandlerClass( ezpExtensionOptions $options )
+    {
+        $iniFile       = $options->iniFile;
+        $iniSection    = $options->iniSection;
+        $iniVariable   = $options->iniVariable;
+        $handlerIndex  = $options->handlerIndex;
+        $callMethod    = $options->callMethod;
+        $handlerParams = $options->handlerParams;
+        $aliasSection  = $options->aliasSection;
+        $aliasVariable = $options->aliasVariable;
+
+        $ini = eZINI::instance( $iniFile );
+
+        if ( !$ini->hasVariable( $iniSection, $iniVariable ) )
+        {
+            eZDebug::writeError( 'Unable to find variable ' . $iniVariable . ' in section ' . $iniSection . ' in file ' . $iniFile, __METHOD__ );
+            return null;
+        }
+
+        $handlers = $ini->variable( $iniSection, $iniVariable );
+
+        if ( $handlerIndex !== null )
+        {
+            if ( is_array( $handlers ) && isset( $handlers[ $handlerIndex  ] ) )
+                $handlers = $handlers[ $handlerIndex  ];
+            else
+                return null;
+        }
+
+        // prepend alias settings if defined
+        if ( $aliasVariable !== null && is_string( $handlers ) )
+        {
+            if ( $aliasSection === null )
+            {
+                $aliasSection = $iniSection;
+            }
+            $aliasHandlers = $ini->variable( $aliasSection, $aliasVariable );
+            if ( is_array( $aliasHandlers ) && isset( $aliasHandlers[ $handlers ] ) )
+            {
+                $handlers = array( $aliasHandlers[ $handlers ], $handlers );
+            }
+            else
+            {
+                $handlers = array( $handlers );
+            }
+        }
+        else if ( !is_array( $handlers ) )
+        {
+            $handlers = array( $handlers );
+        }
+
+        foreach( $handlers as $handler )
+        {
+            // we rely on the autoload system here
+            if ( class_exists( $handler ) )
+            {
+                // only use reflection if we have params to avoid exception on objects withouth constructor
+                if ( $handlerParams !== null && is_array( $handlerParams ) && count( $handlerParams ) > 0 )
+                {
+                    $reflection = new ReflectionClass( $handler );
+                    $object = $reflection->newInstanceArgs( $handlerParams );
+                }
+                else
+                {
+                    $object = new $handler();
+                }
+                // if callMethod is set, then call it so handler can decide if it is a valid handler
+                if ( $callMethod !== null )
+                {
+                    if ( !is_callable( array( $object, $callMethod ) ) )
+                    {
+                        eZDebug::writeNotice( 'Method ' . $callMethod . ' is not callable on class ' . $handler, __METHOD__ );
+                        continue;
+                    }
+
+                    if ( !call_user_func(array( $object, $callMethod ) ) )
+                        continue;
+                }
+                return $object;
+            }
+            else
+            {
+                eZDebug::writeError( "Class '$handler' does not exists, defined in setting $iniFile [$iniSection] $iniVariable ", __METHOD__ );
+            }
+        }
+
+        return false;
+    }
 }
 
 ?>

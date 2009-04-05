@@ -3,9 +3,9 @@
 // Created on: <24-Nov-2004 14:37:53 vs>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -25,7 +25,7 @@
 //
 
 /*!
-  \file move.php
+  \file
   This script is just a wrapper for action.php with action set to 'MoveNodeRequest'
   and has been created for moving operation to be simply invoked using URI like /content/move/NODE_ID.
 */

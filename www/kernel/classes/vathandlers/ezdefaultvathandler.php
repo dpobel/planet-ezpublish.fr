@@ -5,9 +5,9 @@
 // Created on: <15-Dec-2005 15:42:29 vs>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -26,7 +26,7 @@
 //
 //
 
-/*! \file ezdefaultvathandler.php
+/*! \file
 */
 
 /*!
@@ -51,8 +51,6 @@ class eZDefaultVATHandler
         // If product category is not specified
         if ( $productCategory === null )
         {
-            require_once( 'kernel/classes/ezproductcategory.php' );
-
             // Default to a fake product category (*) that will produce
             // weak match on category for any VAT rule.
             $productCategory = new eZProductCategory( array( 'id' => -1,
@@ -136,17 +134,17 @@ class eZDefaultVATHandler
      * CountryMatch  = 0
      * CategoryMatch = 1
      *
-     * if ( <there is exact match on country> )
+     * if ( there is exact match on country )
      *     CountryMatch = 2
-     * elseif ( <there is weak match on country> )
+     * elseif ( there is weak match on country )
      *     CountryMatch = 1
      *
-     * if ( <there is exact match on product category> )
+     * if ( there is exact match on product category )
      *     CategoryMatch = 2
-     * elseif ( <there is weak match on product category> )
+     * elseif ( there is weak match on product category )
      *     CategoryMatch = 1
      *
-     * if ( <there is match on both country and category )
+     * if ( there is match on both country and category )
      *     VatTypePriority = CountryMatch * 2 + CategoryMatch - 2
      * else
      *     VatTypePriority = 0
@@ -156,8 +154,6 @@ class eZDefaultVATHandler
      */
     function chooseVatType( $productCategory, $country )
     {
-        require_once( 'kernel/classes/ezvatrule.php' );
-
         $vatRules = eZVatRule::fetchList();
 
         $catID = $productCategory->attribute( 'id' );
@@ -196,7 +192,10 @@ class eZDefaultVATHandler
 
         $bestPriority = 0;
         if ( $vatPriorities )
-            $bestPriority = array_shift( array_keys( $vatPriorities ) );
+        {
+            $tmpKeys = array_keys( $vatPriorities );
+            $bestPriority = array_shift( $tmpKeys );
+        }
 
         if ( $bestPriority == 0 )
         {

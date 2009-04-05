@@ -5,9 +5,9 @@
 // Created on: <16-Jul-2004 15:54:21 amos>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -26,7 +26,7 @@
 //
 //
 
-/*! \file ezchartransform.php
+/*! \file
 */
 
 /*!
@@ -36,9 +36,6 @@
 
   \sa eZCodeMapper
 */
-
-//include_once( 'lib/ezi18n/classes/eztextcodec.php' );
-//include_once( 'lib/ezi18n/classes/ezcharsetinfo.php' );
 
 class eZCharTransform
 {
@@ -55,7 +52,6 @@ class eZCharTransform
     */
     function eZCharTransform()
     {
-        $this->Mapper = false;
     }
 
     /*!
@@ -76,7 +72,6 @@ class eZCharTransform
         if ( $useCache )
         {
             // CRC32 is used for speed, MD5 would be more unique but is slower
-            //include_once( 'lib/ezutils/classes/ezsys.php' );
             $key = eZSys::ezcrc32( 'Rule: ' . ( is_array( $rule ) ? implode( ',', $rule ) : $rule ) . '-' . $charset );
             $filepath = $this->cacheFilePath( 'rule-',
                                               '-' . $charsetName,
@@ -94,20 +89,16 @@ class eZCharTransform
         }
 
         // Make sure we have a mapper
-        if ( $this->Mapper === false )
-        {
-            //include_once( 'lib/ezi18n/classes/ezcodemapper.php' );
-            $this->Mapper = new eZCodeMapper();
-        }
+        $mapper = new eZCodeMapper();
 
-        $this->Mapper->loadTransformationFiles( $charsetName, false );
+        $mapper->loadTransformationFiles( $charsetName, false );
 
         // First generate a unicode based mapping table from the rules
-        $unicodeTable = $this->Mapper->generateMappingCode( $rule );
+        $unicodeTable = $mapper->generateMappingCode( $rule );
         unset($unicodeTable[0]);
         // Then transform that to a table that works with the current charset
         // Any character not available in the current charset will be removed
-        $charsetTable = $this->Mapper->generateCharsetMappingTable( $unicodeTable, $charset );
+        $charsetTable = $mapper->generateCharsetMappingTable( $unicodeTable, $charset );
         $transformationData = array( 'table' => $charsetTable );
         unset( $unicodeTable );
 
@@ -126,7 +117,7 @@ class eZCharTransform
     /*!
      Transforms the text according to the rules defined in \a $rule using character set \a $charset.
      \param $text The text string to be converted, currently Unicode arrays are not supported
-     \param $rule Which transformation rule to use, can either be a string identifier or an array with identifiers.
+     \param $group Which transformation group to use, of which the rules will be applied.
      \param $charset Which charset to use when transforming, if \c false it will use current charset (i18n.ini).
      \param $useCache If \c true then it will use cache files for the tables,
                       if not it will have to calculate them each time.
@@ -141,8 +132,6 @@ class eZCharTransform
         if ( $useCache )
         {
             // CRC32 is used for speed, MD5 would be more unique but is slower
-            //include_once( 'lib/ezutils/classes/ezsys.php' );
-
             $keyText = 'Group:' . $group;
             $key = eZSys::ezcrc32( $keyText . '-' . $charset );
             $filepath = $this->cacheFilePath( 'g-' . $group . '-',
@@ -162,28 +151,23 @@ class eZCharTransform
         if ( $commands === false )
             return false;
 
-        // Make sure we have a mapper
-        if ( $this->Mapper === false )
-        {
-            //include_once( 'lib/ezi18n/classes/ezcodemapper.php' );
-            $this->Mapper = new eZCodeMapper();
-        }
+        $mapper = new eZCodeMapper();
 
-        $this->Mapper->loadTransformationFiles( $charsetName, $group );
+        $mapper->loadTransformationFiles( $charsetName, $group );
 
         $rules = array();
         foreach ( $commands as $command )
         {
             $rules = array_merge( $rules,
-                                  $this->Mapper->decodeCommand( $command['command'], $command['parameters'] ) );
+                                  $mapper->decodeCommand( $command['command'], $command['parameters'] ) );
         }
 
         // First generate a unicode based mapping table from the rules
-        $unicodeTable = $this->Mapper->generateMappingCode( $rules );
+        $unicodeTable = $mapper->generateMappingCode( $rules );
         unset($unicodeTable[0]);
         // Then transform that to a table that works with the current charset
         // Any character not available in the current charset will be removed
-        $charsetTable = $this->Mapper->generateCharsetMappingTable( $unicodeTable, $charset );
+        $charsetTable = $mapper->generateCharsetMappingTable( $unicodeTable, $charset );
         $transformationData = array( 'table' => $charsetTable );
         unset( $unicodeTable );
 
@@ -192,7 +176,7 @@ class eZCharTransform
             $extraCode = '';
             foreach ( $commands as $command )
             {
-                $code = $this->Mapper->generateCommandCode( $command, $charsetName );
+                $code = $mapper->generateCommandCode( $command, $charsetName );
                 if ( $code !== false )
                 {
                     $extraCode .= $code . "\n";
@@ -209,7 +193,7 @@ class eZCharTransform
         // Execute custom code
         foreach ( $commands as $command )
         {
-            $this->Mapper->executeCommandCode( $text, $command, $charsetName );
+            $mapper->executeCommandCode( $text, $command, $charsetName );
         }
 
         return $text;
@@ -226,7 +210,6 @@ class eZCharTransform
         if ( isset( $dir ) )
             return $dir;
 
-        //include_once( 'lib/ezutils/classes/ezsys.php' );
         $sys = eZSys::instance();
         $dir = $sys->cacheDirectory() . '/trans';
         return $dir;
@@ -298,7 +281,6 @@ class eZCharTransform
         $path = eZCharTransform::cachedTransformationPath();
         if ( !file_exists( $path ) )
         {
-            //include_once( 'lib/ezfile/classes/ezdir.php' );
             eZDir::mkdir( $path, false, true );
         }
         return $path . '/' . $prefix . sprintf( "%u", $key ) . $suffix . '.ctt.php'; // ctt=charset transform table
@@ -307,12 +289,10 @@ class eZCharTransform
     /*!
      \private
      \param $text The text that should be transformed
-     \param $key The unique key for the cache, this should be a CRC32 or MD5 of
-                 the current rules or commands which are used.
+     \param $filepath The filepath for the cache file
      \param $timestamp A timestamp value which is matched against the cache file,
                        pass for instance the timestamp of the INI file.
-     \param[out] $filepath The filepath for the cache file will be generated here,
-                           this can be used for the storeCacheFile() method.
+
      \return The restored transformation data or \c false if there is no cached data.
     */
     protected function executeCacheFile( $text, $filepath, $timestamp = false )
@@ -339,37 +319,26 @@ class eZCharTransform
      \private
      Stores the mapping table \a $table in the cache file \a $filepath.
     */
-    function storeCacheFile( $filepath, $transformationData,
-                             $extraCode, $type, $charsetName )
+    function storeCacheFile( $filepath, $transformationData,$extraCode, $type, $charsetName )
     {
-        $fd = @fopen( $filepath, 'wb' );
-        if ( $fd )
+        $file = basename( $filepath );
+        $dir = dirname( $filepath );
+        $php = new eZPHPCreator( $dir, $file );
+
+        $php->addComment( "Cached transformation data" );
+        $php->addComment( "Type: $type" );
+        $php->addComment( "Charset: $charsetName" );
+        $php->addComment( "Cached transformation data" );
+
+        $php->addCodePiece( '$data = ' . eZCharTransform::varExport( $transformationData ) . ";\n" );
+        $php->addCodePiece( "\$text = strtr( \$text, \$data['table'] );\n" );
+
+        if ( $extraCode )
         {
-            @fwrite( $fd, "<?" . "php\n" );
-            @fwrite( $fd, "// Cached transformation data\n" );
-            @fwrite( $fd, "// Type: $type\n" );
-            @fwrite( $fd, "// Charset: $charsetName\n" );
-            @fwrite( $fd, "// Cached transformation data\n" );
-
-            // The code that does the transformation
-            // http://ez.no/community/bugs/char_transform_cache_file_is_not_valid_php
-            // the following line makes the cache file outputting to the browser with PHP5
-            @fwrite( $fd, '$data = ' . eZCharTransform::varExport( $transformationData ) . ";\n" );
-            @fwrite( $fd, "\$text = strtr( \$text, \$data['table'] );\n" );
-
-            if ( $extraCode )
-            {
-                @fwrite( $fd, $extraCode );
-            }
-
-            fwrite( $fd, '?' );
-            fwrite( $fd, '>' );
-            @fclose( $fd );
+            $php->addCodePiece( $extraCode );
         }
-        else
-        {
-            eZDebug::writeError( "Failed to store transformation table $filepath" );
-        }
+
+        return $php->store( true );
     }
 
     /*!
@@ -384,11 +353,6 @@ class eZCharTransform
      - numeric, displays the value as-is.
      - array, expands all value recursively using this function
      - object, creates a representation of an object creation if the object has \c serializeData implemented.
-
-     \param $column Determines the starting column in which the text will be placed.
-                    This is used for expanding arrays and objects which can span multiple lines.
-     \param $iteration The current iteration, starts at 0 and increases with 1 for each recursive call
-
     */
     static function varExport( $value )
     {
@@ -401,6 +365,10 @@ class eZCharTransform
      Creates a text representation of the value \a $value which can
      be placed in files and be read back by a PHP parser as it was.
      Meant as a replacement for PHP versions with broken var_export.
+
+     \param $column Determines the starting column in which the text will be placed.
+                    This is used for expanding arrays and objects which can span multiple lines.
+     \param $iteration The current iteration, starts at 0 and increases with 1 for each recursive call
     */
     static function varExportInternal( $value, $column = 0, $iteration = 0 )
     {

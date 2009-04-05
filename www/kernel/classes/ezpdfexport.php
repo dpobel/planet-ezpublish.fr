@@ -5,9 +5,9 @@
 // Created on: <21-Nov-2003 15:59:56 kk>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -26,7 +26,7 @@
 //
 //
 
-/*! \file ezpdfexport.php
+/*! \file
 */
 
 /*!
@@ -35,8 +35,6 @@
 
   eZPDFExport is used to create PDF exports from published content. See kernel/pdf for more files.
 */
-
-//include_once( 'kernel/classes/ezpersistentobject.php' );
 
 class eZPDFExport extends eZPersistentObject
 {
@@ -54,9 +52,6 @@ class eZPDFExport extends eZPersistentObject
         $this->eZPersistentObject( $row );
     }
 
-    /*!
-     \reimp
-    */
     static function definition()
     {
         return array( 'fields' => array( 'id' => array( 'name' => 'ID',
@@ -178,8 +173,6 @@ class eZPDFExport extends eZPersistentObject
     */
     function store( $publish = false )
     {
-        //include_once( 'kernel/classes/datatypes/ezuser/ezuser.php' );
-
         if ( $publish )
         {
             $originalVersion = $this->attribute( 'version' );
@@ -217,8 +210,7 @@ class eZPDFExport extends eZPersistentObject
     }
 
     /*!
-     \reimp
-     \transaction unsafe.
+      transaction unsafe.
     */
     function remove( $conditions = null, $extraConditions = null )
     {
@@ -255,7 +247,6 @@ class eZPDFExport extends eZPersistentObject
     {
         if ( isset( $this->ModifierID ) and $this->ModifierID )
         {
-            //include_once( 'kernel/classes/datatypes/ezuser/ezuser.php' );
             return eZUser::fetch( $this->ModifierID );
         }
 
@@ -266,7 +257,6 @@ class eZPDFExport extends eZPersistentObject
     {
         if ( isset( $this->SourceNodeID ) and $this->SourceNodeID )
         {
-            //include_once( 'kernel/classes/ezcontentobjecttreenode.php' );
             return eZContentObjectTreeNode::fetch( $this->SourceNodeID );
         }
 

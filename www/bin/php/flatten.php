@@ -4,9 +4,9 @@
 // Created on: <19-Dec-2003 14:34:55 amos>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -27,8 +27,6 @@
 
 set_time_limit( 0 );
 
-//include_once( 'lib/ezutils/classes/ezcli.php' );
-//include_once( 'kernel/classes/ezscript.php' );
 require 'autoload.php';
 
 $cli = eZCLI::instance();
@@ -154,32 +152,26 @@ if ( $dbHost or $dbName or $dbUser or $dbImpl )
 
 $db->setIsSQLOutputEnabled( $showSQL );
 
-//include_once( 'kernel/classes/ezpersistentobject.php' );
-
 if ( $flatten['contentobject'] )
 {
-    //include_once( 'kernel/classes/ezcontentobject.php' );
     $cli->output( "Removing non-published content object versions" );
     eZContentObjectVersion::removeVersions();
 }
 
 if ( $flatten['contentclass'] )
 {
-    //include_once( 'kernel/classes/ezcontentclass.php' );
     $cli->output( "Removing temporary content classes" );
     eZContentClass::removeTemporary();
 }
 
 if ( $flatten['workflow'] )
 {
-    //include_once( 'kernel/classes/ezworkflow.php' );
     $cli->output( "Removing temporary workflows" );
     eZWorkflow::removeTemporary();
 }
 
 if ( $flatten['role'] )
 {
-    //include_once( 'kernel/classes/ezrole.php' );
     $cli->output( "Removing temporary roles" );
     eZRole::removeTemporary();
 }

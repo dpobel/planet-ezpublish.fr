@@ -4,9 +4,9 @@
 // Created on: <17-Apr-2007 15:47:58 bjorn>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -26,17 +26,11 @@
 //
 
 
-/*! \file updateisbn13.php
+/*! \file
   \brief Updates the different ranges used by the ISBN standard to
          calculate the length of Registration group, Registrant and Publication element.
  */
 
-//include_once( 'lib/ezutils/classes/ezcli.php' );
-//include_once( 'kernel/classes/ezscript.php' );
-
-//include_once( 'kernel/classes/datatypes/ezisbn/ezisbngroup.php' );
-//include_once( 'kernel/classes/datatypes/ezisbn/ezisbngrouprange.php' );
-//include_once( 'kernel/classes/datatypes/ezisbn/ezisbnregistrantrange.php' );
 require 'autoload.php';
 
 

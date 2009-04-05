@@ -5,9 +5,9 @@
 // Created on: <22-Jan-2003 16:08:22 amos>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -26,7 +26,7 @@
 //
 //
 
-/*! \file ezcollaborationparticipantlink.php
+/*! \file
 */
 
 /*!
@@ -34,8 +34,6 @@
   \brief The class eZCollaborationItemParticipantLink does
 
 */
-
-//include_once( 'kernel/classes/ezpersistentobject.php' );
 
 class eZCollaborationItemParticipantLink extends eZPersistentObject
 {
@@ -129,14 +127,12 @@ class eZCollaborationItemParticipantLink extends eZPersistentObject
     {
         if ( $userID === false )
         {
-            //include_once( 'kernel/classes/datatypes/ezuser/ezuser.php' );
             $userID = eZUser::currentUserID();
         }
         if ( $timestamp === false )
         {
             $timestamp = time();
         }
-        //include_once( 'lib/ezdb/classes/ezdb.php' );
         $db = eZDB::instance();
         $userID = (int) $userID;
         $timestamp = (int) $timestamp;
@@ -307,7 +303,6 @@ class eZCollaborationItemParticipantLink extends eZPersistentObject
 
     function collaborationItem()
     {
-        //include_once( 'kernel/classes/ezcollaborationitem.php' );
         return eZCollaborationItem::fetch( $this->CollaborationID );
     }
 
@@ -315,12 +310,10 @@ class eZCollaborationItemParticipantLink extends eZPersistentObject
     {
         if ( $this->ParticipantType == self::TYPE_USER )
         {
-            //include_once( 'kernel/classes/datatypes/ezuser/ezuser.php' );
             return eZUser::fetch( $this->ParticipantID );
         }
         else if ( $this->ParticipantType == self::TYPE_USERGROUP )
         {
-            //include_once( 'kernel/classes/ezcontentobject.php' );
             return eZContentObject::fetch( $this->ParticipantID );
         }
         return null;

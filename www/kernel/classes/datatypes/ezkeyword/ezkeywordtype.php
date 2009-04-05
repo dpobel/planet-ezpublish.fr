@@ -5,9 +5,9 @@
 // Created on: <29-Apr-2003 14:59:12 bf>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -33,10 +33,7 @@
 
 */
 
-//include_once( 'kernel/classes/ezdatatype.php' );
 require_once( 'kernel/common/i18n.php' );
-
-//include_once( 'kernel/classes/datatypes/ezkeyword/ezkeyword.php' );
 
 class eZKeywordType extends eZDataType
 {
@@ -80,21 +77,26 @@ class eZKeywordType extends eZDataType
     */
     function validateObjectAttributeHTTPInput( $http, $base, $contentObjectAttribute )
     {
+        $classAttribute = $contentObjectAttribute->contentClassAttribute();
+
         if ( $http->hasPostVariable( $base . '_ezkeyword_data_text_' . $contentObjectAttribute->attribute( 'id' ) ) )
         {
             $data = $http->postVariable( $base . '_ezkeyword_data_text_' . $contentObjectAttribute->attribute( 'id' ) );
-            $classAttribute = $contentObjectAttribute->contentClassAttribute();
 
             if ( $data == "" )
             {
-                if ( !$classAttribute->attribute( 'is_information_collector' ) and
-                     $contentObjectAttribute->validateIsRequired() )
+                if ( !$classAttribute->attribute( 'is_information_collector' ) and $contentObjectAttribute->validateIsRequired() )
                 {
                     $contentObjectAttribute->setValidationError( ezi18n( 'kernel/classes/datatypes',
                                                                          'Input required.' ) );
                     return eZInputValidator::STATE_INVALID;
                 }
             }
+        }
+        else if ( !$classAttribute->attribute( 'is_information_collector' ) and $contentObjectAttribute->validateIsRequired() )
+        {
+            $contentObjectAttribute->setValidationError( ezi18n( 'kernel/classes/datatypes', 'Input required.' ) );
+            return eZInputValidator::STATE_INVALID;
         }
         return eZInputValidator::STATE_ACCEPTED;
     }
@@ -137,24 +139,15 @@ class eZKeywordType extends eZDataType
     {
     }
 
-    /*!
-     \reimp
-    */
     function validateClassAttributeHTTPInput( $http, $base, $attribute )
     {
         return eZInputValidator::STATE_ACCEPTED;
     }
 
-    /*!
-     \reimp
-    */
     function fixupClassAttributeHTTPInput( $http, $base, $attribute )
     {
     }
 
-    /*!
-     \reimp
-    */
     function fetchClassAttributeHTTPInput( $http, $base, $attribute )
     {
         return true;
@@ -184,7 +177,7 @@ class eZKeywordType extends eZDataType
     }
 
     /*!
-     \reuturn the collect information action if enabled
+     \return the collect information action if enabled
     */
     function contentActionList( $classAttribute )
     {
@@ -263,9 +256,6 @@ class eZKeywordType extends eZDataType
         return count( $array ) > 0;
     }
 
-    /*!
-     \reimp
-    */
     function isIndexable()
     {
         return true;
@@ -293,13 +283,6 @@ class eZKeywordType extends eZDataType
         return true;
     }
 
-    /*!
-     \reimp
-     \param package
-     \param content attribute
-
-     \return a DOM representation of the content object attribute
-    */
     function serializeContentObjectAttribute( $package, $objectAttribute )
     {
         $node = $this->createContentObjectAttributeDOMNode( $objectAttribute );
@@ -308,26 +291,24 @@ class eZKeywordType extends eZDataType
         $keyword->fetch( $objectAttribute );
         $keyWordString = $keyword->keywordString();
         $dom = $node->ownerDocument;
-        $keywordStringNode = $dom->createElement( 'keyword-string', $keyWordString );
+        $keywordStringNode = $dom->createElement( 'keyword-string' );
+        $keywordStringNode->appendChild( $dom->createTextNode( $keyWordString ) );
         $node->appendChild( $keywordStringNode );
 
         return $node;
     }
 
-    /*!
-     \reimp
-     Unserailize contentobject attribute
-
-     \param package
-     \param contentobject attribute object
-     \param domnode object
-    */
     function unserializeContentObjectAttribute( $package, $objectAttribute, $attributeNode )
     {
         $keyWordString = $attributeNode->getElementsByTagName( 'keyword-string' )->item( 0 )->textContent;
         $keyword = new eZKeyword();
         $keyword->initializeKeyword( $keyWordString );
         $objectAttribute->setContent( $keyword );
+    }
+
+    function supportsBatchInitializeObjectAttribute()
+    {
+        return true;
     }
 }
 

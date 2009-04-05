@@ -3,9 +3,9 @@
 // Created on: <19-Sep-2002 15:40:08 kk>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -24,11 +24,6 @@
 //
 //
 
-//include_once( 'kernel/classes/ezrssexport.php' );
-//include_once( 'kernel/classes/ezrssexportitem.php' );
-//include_once( 'kernel/classes/ezrssimport.php' );
-//include_once( 'lib/ezutils/classes/ezhttppersistence.php' );
-
 class eZRSSEditFunction
 {
     /*!
@@ -43,15 +38,6 @@ class eZRSSEditFunction
     {
         $valid = true;
         $validationErrors = array();
-/*        if ( $http->hasPostVariable( 'active' ) && $http->postVariable( 'active' )  == 'on'
-             && $http->hasPostVariable( 'Access_URL' ) && strlen( trim( $http->postVariable( 'Access_URL' ) ) ) == 0 )
-        {
-            $valid = false;
-            $publish = false;
-            $validationErrors[] =ezi18n( 'design/admin/rss/edit_export',
-                                         'If RSS Export is Active then a valid Access URL is required.'  );
-        }*/
-        // VS-DBFILE
 
         /* Kill the RSS cache in all siteaccesses */
         $config = eZINI::instance( 'site.ini' );
@@ -61,11 +47,9 @@ class eZRSSEditFunction
         foreach ( $availableSiteAccessList as $siteAccess )
         {
             $cacheFilePath = $cacheDir . '/rss/' . md5( $siteAccess . $http->postVariable( 'Access_URL' ) ) . '.xml';
-            require_once( 'kernel/classes/ezclusterfilehandler.php' );
             $cacheFile = eZClusterFileHandler::instance( $cacheFilePath );
             if ( $cacheFile->exists() )
             {
-                // VS-DBFILE : FIXME: optimize not to use recursive delete.
                 $cacheFile->delete();
             }
         }
@@ -96,6 +80,7 @@ class eZRSSEditFunction
 
             $titleClassAttributeIdentifier = $http->postVariable( 'Item_Class_Attribute_Title_'.$itemCount );
             $descriptionClassAttributeIdentifier = $http->postVariable( 'Item_Class_Attribute_Description_'.$itemCount );
+            $categoryClassAttributeIdentifier = $http->postVariable( 'Item_Class_Attribute_Category_'.$itemCount );
 
             if ( !$class )
             {
@@ -120,10 +105,18 @@ class eZRSSEditFunction
                                                   'Invalid selection for description class %1 does not have attribute "%2"', null,
                                                   array( $class->attribute( 'name'), $descriptionClassAttributeIdentifier ) );
                 }
+                if ( $categoryClassAttributeIdentifier != '' && !isset( $dataMap[$categoryClassAttributeIdentifier] ) )
+                {
+                    $valid = false;
+                    $validationErrors[] = ezi18n( 'kernel/rss/edit_export',
+                                                  'Invalid selection for category class %1 does not have attribute "%2"', null,
+                                                  array( $class->attribute( 'name'), $categoryClassAttributeIdentifier ) );
+                }
             }
 
             $rssExportItem->setAttribute( 'title', $http->postVariable( 'Item_Class_Attribute_Title_'.$itemCount ) );
             $rssExportItem->setAttribute( 'description', $http->postVariable( 'Item_Class_Attribute_Description_'.$itemCount ) );
+            $rssExportItem->setAttribute( 'category', $http->postVariable( 'Item_Class_Attribute_Category_'.$itemCount ) );
             if( $publish && $valid )
             {
                 $rssExportItem->setAttribute( 'status', 1 );

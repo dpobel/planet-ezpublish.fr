@@ -3,9 +3,9 @@
 // Created on: <04-Feb-2004 21:56:50 kk>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -27,9 +27,6 @@
 $Module = $Params['Module'];
 
 require_once( "kernel/common/template.php" );
-//include_once( "kernel/common/eztemplatedesignresource.php" );
-//include_once( 'lib/ezutils/classes/ezhttptool.php' );
-
 define( 'MD5_SUM_LIST_FILE', 'share/filelist.md5' );
 
 $tpl = templateInit();
@@ -49,7 +46,6 @@ if ( $Module->isCurrentAction( 'MD5Check' ) )
     }
     else
     {
-        //include_once( 'lib/ezfile/classes/ezmd5.php' );
         $checkResult = eZMD5::checkMD5Sums( 'share/filelist.md5' );
 
         if ( count( $checkResult ) == 0 )
@@ -65,9 +61,6 @@ if ( $Module->isCurrentAction( 'MD5Check' ) )
 
 if ( $Module->isCurrentAction( 'DBCheck' ) )
 {
-    //include_once( 'lib/ezdbschema/classes/ezdbschemachecker.php');
-    //include_once( 'lib/ezdbschema/classes/ezdbschema.php' );
-
     $db = eZDB::instance();
     $dbSchema = eZDbSchema::instance();
     $differences = eZDbSchemaChecker::diff( $dbSchema->schema(), eZDbSchema::read( 'share/db_schema.dba' ) );

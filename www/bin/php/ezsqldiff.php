@@ -4,9 +4,9 @@
 // Created on: <19-Mar-2004 09:51:56 amos>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -24,9 +24,6 @@
 //   MA 02110-1301, USA.
 //
 //
-
-//include_once( 'lib/ezutils/classes/ezcli.php' );
-//include_once( 'kernel/classes/ezscript.php' );
 
 require 'autoload.php';
 
@@ -125,15 +122,12 @@ function loadDatabaseSchema( $type, $host, $user, $password, $socket, $db, $cli 
     $dbSchema = false;
     if ( file_exists( $db ) and is_file( $db ) )
     {
-        //include_once( 'lib/ezdbschema/classes/ezdbschema.php' );
         $dbSchema = eZDbSchema::instance( array( 'type' => $type,
                                                  'schema' => eZDbSchema::read( $db ) ) );
         return $dbSchema;
     }
     else
     {
-        //include_once( 'lib/ezdbschema/classes/ezdbschema.php' );
-        //include_once( 'lib/ezdb/classes/ezdb.php' );
         $parameters = array( 'use_defaults' => false,
                              'server' => $host,
                              'user' => $user,
@@ -190,7 +184,6 @@ function loadDatabaseSchema( $type, $host, $user, $password, $socket, $db, $cli 
 
 function loadLintSchema( $dbSchema, $cli )
 {
-    //include_once( 'lib/ezdbschema/classes/ezlintschema.php' );
     return new eZLintSchema( false, $dbSchema );
 }
 
@@ -217,8 +210,6 @@ else
         $script->shutdown( 1 );
     }
 }
-
-//include_once( 'lib/ezdbschema/classes/ezdbschemachecker.php' );
 
 if ( $options['reverse'] )
 {

@@ -7,9 +7,9 @@
 // Created on: <15-Mar-2001 20:40:06 fh>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -42,12 +42,9 @@
 
 */
 
-//include_once( 'lib/ezi18n/classes/eztextcodec.php' );
-//include_once( 'lib/ezutils/classes/ezini.php' );
-
 class eZMail
 {
-    const REGEXP = '([0-9a-zA-Z]([-+.\w]*[0-9a-zA-Z_])*@(((([0-9a-zA-Z])+([-\w]*[0-9a-zA-Z])*\.)+[a-zA-Z]{2,9})|(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)))';
+    const REGEXP = '(((\"[^\"\f\n\r\t\v\b]+\")|([A-Za-z0-9_\!\#\$\%\&\'\*\+\-\~\/\^\`\|\{\}]+(\.[A-Za-z0-9_\!\#\$\%\&\'\*\+\-\~\/\^\`\|\{\}]+)*))@((\[(((25[0-5])|(2[0-4][0-9])|([0-1]?[0-9]?[0-9]))\.((25[0-5])|(2[0-4][0-9])|([0-1]?[0-9]?[0-9]))\.((25[0-5])|(2[0-4][0-9])|([0-1]?[0-9]?[0-9]))\.((25[0-5])|(2[0-4][0-9])|([0-1]?[0-9]?[0-9])))\])|(((25[0-5])|(2[0-4][0-9])|([0-1]?[0-9]?[0-9]))\.((25[0-5])|(2[0-4][0-9])|([0-1]?[0-9]?[0-9]))\.((25[0-5])|(2[0-4][0-9])|([0-1]?[0-9]?[0-9]))\.((25[0-5])|(2[0-4][0-9])|([0-1]?[0-9]?[0-9])))|((([A-Za-z0-9\-])+\.)+[A-Za-z\-]{2,})))';
 
     /*!
       Constructs a new eZMail object.
@@ -66,7 +63,6 @@ class eZMail
         $this->MessageID = false;
 
         // Sets some default values
-        //include_once( 'lib/version.php' );
         $version = eZPublishSDK::version();
 
         $this->MIMEVersion = '1.0';
@@ -426,7 +422,7 @@ class eZMail
     }
 
     /*!
-      Returns the message ID format : <number@serverID>
+      Returns the message ID format : <number\@serverID>
       Read in the RFC's if you want to know more about it..
      */
     function messageID()
@@ -513,8 +509,7 @@ class eZMail
     */
     static function validate( $address )
     {
-        $pos = ( ereg( '^' . eZMail::REGEXP . '$', $address) );
-        return $pos;
+        return preg_match( '/^' . eZMail::REGEXP . '$/', $address );
     }
 
     static function extractEmail( $text, &$email, &$name )
@@ -522,7 +517,7 @@ class eZMail
         if ( preg_match( "/([^<]+)<" . eZMail::REGEXP . ">/", $text, $matches ) )
         {
             $email = $matches[2];
-            $name = $matches[1];
+            $name = trim( $matches[1], '" ' );
         }
         else
         {
@@ -539,7 +534,8 @@ class eZMail
     */
     static function stripEmail( $address )
     {
-        $res = ereg( eZMail::REGEXP, $address, $email );
+        $res = preg_match( "/" . eZMail::REGEXP . "/", $address, $email );
+
         if ( $res )
             return $email[0];
         else
@@ -856,7 +852,6 @@ class eZMail
     */
     function isAllowedCharset( $charset )
     {
-        //include_once( 'lib/ezi18n/classes/ezcharsetinfo.php' );
         $realCharset = eZCharsetInfo::realCharsetCode( $charset );
         $charsets = $this->allowedCharsets();
         foreach ( $charsets as $charsetName )

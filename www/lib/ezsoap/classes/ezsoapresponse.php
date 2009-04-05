@@ -8,9 +8,9 @@
 // Created on: <19-Feb-2002 16:51:10 bf>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -35,10 +35,6 @@
   \brief eZSOAPResponse handles SOAP response packages
 
 */
-
-require_once( "lib/ezutils/classes/ezdebug.php" );
-//include_once( 'lib/ezsoap/classes/ezsoapcodec.php' );
-//include_once( "lib/ezsoap/classes/ezsoapenvelope.php" );
 
 class eZSOAPResponse extends eZSOAPEnvelope
 {
@@ -88,6 +84,14 @@ class eZSOAPResponse extends eZSOAPEnvelope
 
             // get the response
             $response = $dom->getElementsByTagNameNS( $request->namespace(), $request->name() . "Response" );
+
+            /* Some protocols do not use namespaces, and do not work with an empty namespace.
+            So, if we get no response, try again without namespace.
+            */
+            if ( $response->length == 0 )
+            {
+                $response = $dom->getElementsByTagName( $request->name() . "Response" );
+            }
 
             $response = $response->item(0);
 
@@ -219,7 +223,7 @@ TODO: add encoding checks with schema validation.
             {
                 foreach ( $node->childNodes as $childNode )
                 {
-                    if ( $child instanceof DOMElement )
+                    if ( $childNode instanceof DOMElement )
                     {
                         // check data type for child
                         $attr = $childNode->getAttributeNodeNS( eZSOAPEnvelope::SCHEMA_INSTANCE, 'type' )->value;
@@ -228,8 +232,7 @@ TODO: add encoding checks with schema validation.
                         $attrParts = explode( ":", $attr );
                         $dataType = $attrParts[1];
 
-
-                        $returnValue[$childNode->name()] = eZSOAPResponse::decodeDataTypes( $childNode );
+                        $returnValue[$childNode->tagName] = eZSOAPResponse::decodeDataTypes( $childNode );
                     }
                 }
 

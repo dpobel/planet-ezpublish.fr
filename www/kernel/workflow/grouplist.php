@@ -3,9 +3,9 @@
 // Created on: <16-Apr-2002 11:00:12 amos>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -23,12 +23,6 @@
 //   MA 02110-1301, USA.
 //
 //
-
-//include_once( "kernel/classes/ezworkflow.php" );
-//include_once( "kernel/classes/eztrigger.php" );
-//include_once( "kernel/classes/ezworkflowgroup.php" );
-//include_once( "kernel/classes/ezworkflowgrouplink.php" );
-//include_once( "lib/ezutils/classes/ezhttppersistence.php" );
 
 function removeSelectedGroups( $http, &$groups, $base )
 {
@@ -105,7 +99,6 @@ $Module->setTitle( ezi18n( 'kernel/workflow', 'Workflow group list' ) );
 require_once( "kernel/common/template.php" );
 $tpl = templateInit();
 
-//include_once( "kernel/classes/datatypes/ezuser/ezuser.php" );
 $user = eZUser::currentUser();
 foreach( $TemplateData as $tpldata )
 {

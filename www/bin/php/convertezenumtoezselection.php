@@ -2,9 +2,9 @@
 <?php
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -24,9 +24,6 @@
 //
 
 require 'autoload.php';
-
-include_once( 'kernel/classes/ezscript.php' );
-include_once( 'lib/ezutils/classes/ezcli.php' );
 
 $cli = eZCLI::instance();
 
@@ -56,9 +53,6 @@ if ( count( $options['arguments'] ) != 1 )
 $preview = !is_null( $options['preview'] );
 
 $attributeID = $options['arguments'][0];
-
-include_once( 'kernel/classes/ezcontentobjecttreenode.php' );
-include_once( 'kernel/classes/ezcontentclassattribute.php' );
 
 if ( !is_numeric( $attributeID ) )
 {
@@ -120,7 +114,6 @@ foreach ( $oldOptions as $enumValueID => $name )
 
 $xml = $doc->saveXML();
 
-include_once( 'lib/ezdb/classes/ezdb.php' );
 $db = eZDB::instance();
 $db->begin();
 
@@ -128,7 +121,6 @@ $classAttribute->setAttribute( 'data_text5', $xml );
 $classAttribute->setAttribute( 'data_type_string', 'ezselection' );
 $classAttribute->store();
 
-include_once( 'kernel/classes/ezcontentobjectattribute.php' );
 $attributes = eZContentObjectAttribute::fetchSameClassAttributeIDList( $classAttribute->attribute( 'id' ) );
 
 $count = count( $attributes );

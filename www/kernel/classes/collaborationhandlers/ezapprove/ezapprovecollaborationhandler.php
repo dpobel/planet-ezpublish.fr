@@ -5,9 +5,9 @@
 // Created on: <23-Jan-2003 11:57:11 amos>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -26,7 +26,7 @@
 //
 //
 
-/*! \file ezapprovecollaborationhandler.php
+/*! \file
 */
 
 /*!
@@ -42,15 +42,6 @@
 
 */
 
-//include_once( 'kernel/classes/ezcollaborationitemhandler.php' );
-//include_once( 'kernel/classes/ezcollaborationitem.php' );
-//include_once( 'kernel/classes/ezcollaborationitemmessagelink.php' );
-//include_once( 'kernel/classes/ezcollaborationitemparticipantlink.php' );
-//include_once( 'kernel/classes/ezcollaborationitemgrouplink.php' );
-//include_once( 'kernel/classes/datatypes/ezuser/ezuser.php' );
-//include_once( 'kernel/classes/ezcollaborationprofile.php' );
-//include_once( 'kernel/classes/ezcollaborationsimplemessage.php' );
-//include_once( 'kernel/classes/ezcontentobjectversion.php' );
 require_once( 'kernel/common/i18n.php' );
 
 class eZApproveCollaborationHandler extends eZCollaborationItemHandler
@@ -82,17 +73,11 @@ class eZApproveCollaborationHandler extends eZCollaborationItemHandler
                                                   'notification-collection-handling' => eZCollaborationItemHandler::NOTIFICATION_COLLECTION_PER_PARTICIPATION_ROLE ) );
     }
 
-    /*!
-     \reimp
-    */
     function title( $collaborationItem )
     {
         return ezi18n( 'kernel/classes', 'Approval' );
     }
 
-    /*!
-     \reimp
-    */
     function content( $collaborationItem )
     {
         return array( "content_object_id" => $collaborationItem->attribute( "data_int1" ),
@@ -125,7 +110,6 @@ class eZApproveCollaborationHandler extends eZCollaborationItemHandler
     }
 
     /*!
-     \reimp
      Updates the last_read for the participant link.
     */
     function readItem( $collaborationItem, $viewMode = false )
@@ -134,7 +118,6 @@ class eZApproveCollaborationHandler extends eZCollaborationItemHandler
     }
 
     /*!
-     \reimp
      \return the number of messages for the approve item.
     */
     function messageCount( $collaborationItem )
@@ -143,7 +126,6 @@ class eZApproveCollaborationHandler extends eZCollaborationItemHandler
     }
 
     /*!
-     \reimp
      \return the number of unread messages for the approve item.
     */
     function unreadMessageCount( $collaborationItem )
@@ -234,7 +216,6 @@ class eZApproveCollaborationHandler extends eZCollaborationItemHandler
     }
 
     /*!
-     \reimp
      Adds a new comment, approves the item or denies the item.
     */
     function handleCustomAction( $module, $collaborationItem )

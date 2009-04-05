@@ -1,9 +1,9 @@
 <?php
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -31,7 +31,7 @@ if ( version_compare( phpversion(), '5.1' ) < 0 )
     exit;
 }
 
-// Set a default time zone if none is given to avoid "It is not safe to rely 
+// Set a default time zone if none is given to avoid "It is not safe to rely
 // on the system's timezone settings" warnings. The time zone can be overriden
 // in config.php or php.ini.
 if ( !ini_get( "date.timezone" ) )
@@ -87,11 +87,6 @@ $GLOBALS['eZRedirection'] = false;
 
 error_reporting ( E_ALL | E_STRICT );
 
-// include standard libs
-require_once( "lib/ezutils/classes/ezdebug.php" );
-////include_once( "lib/ezutils/classes/ezini.php" );
-////include_once( "lib/ezutils/classes/ezdebugsetting.php" );
-
 $debugINI = eZINI::instance( 'debug.ini' );
 eZDebugSetting::setDebugINI( $debugINI );
 
@@ -131,7 +126,6 @@ function eZUpdateTextCodecSettings()
     list( $i18nSettings['internal-charset'], $i18nSettings['http-charset'], $i18nSettings['mbstring-extension'] ) =
         $ini->variableMulti( 'CharacterSettings', array( 'Charset', 'HTTPCharset', 'MBStringExtension' ), array( false, false, 'enabled' ) );
 
-    ////include_once( 'lib/ezi18n/classes/eztextcodec.php' );
     eZTextCodec::updateSettings( $i18nSettings );
 }
 
@@ -149,7 +143,7 @@ $ini = eZINI::instance();
 $timezone = $ini->variable( "TimeZoneSettings", "TimeZone");
 if ( $timezone )
 {
-    putenv( "TZ=$timezone" );
+    date_default_timezone_set( $timezone );
 }
 
 
@@ -185,18 +179,6 @@ function eZAppendWarningItem( $parameters = array() )
                             'text' => $text,
                             'identifier' => $identifier );
 }
-
-// Needed by the error handler, since the current directory is lost when
-// the callback function eZExecutionUncleanShutdownHandler is called.
-$GLOBALS['eZDocumentRoot'] = dirname( __FILE__ );
-require_once( 'lib/ezutils/classes/ezexecution.php' );
-/*
-    see:
-    - http://www.php.net/manual/en/function.session-set-save-handler.php
-    - http://bugs.php.net/bug.php?id=33635
-    - http://bugs.php.net/bug.php?id=33772
-*/
-register_shutdown_function( 'session_write_close' );
 
 function eZDBCleanup()
 {
@@ -253,7 +235,6 @@ function eZDisplayDebug()
             eZDebug::appendTopReport( "Debug toolbar", $result );
         }
 
-        ////include_once( 'kernel/common/eztemplatesstatisticsreporter.php' );
         eZDebug::appendBottomReport( 'Template Usage Statistics', eZTemplatesStatisticsReporter::generateStatistics( $as_html ) );
 
         return eZDebug::printReport( $type == "popup", $as_html, true );
@@ -268,6 +249,11 @@ function eZDisplayResult( $templateResult )
 {
     if ( $templateResult !== null )
     {
+        $classname = eZINI::instance()->variable( "OutputSettings", "OutputFilterName" );
+        if( !empty( $classname ) && class_exists( $classname ) )
+        {
+            $templateResult = call_user_func( array ( $classname, 'filter' ), $templateResult );
+        }
         $debugMarker = '<!--DEBUG_REPORT-->';
         $pos = strpos( $templateResult, $debugMarker );
         if ( $pos !== false )
@@ -316,14 +302,10 @@ function fetchModule( $uri, $check, &$module, &$module_name, &$function_name, &$
     return true;
 }
 
-////include_once( 'lib/ezi18n/classes/eztextcodec.php' );
 $httpCharset = eZTextCodec::httpCharset();
-////include_once( 'lib/ezlocale/classes/ezlocale.php' );
 $ini = eZINI::instance();
 if ( $ini->variable( 'RegionalSettings', 'Debug' ) == 'enabled' )
     eZLocale::setIsDebugEnabled( true );
-
-////include_once( "lib/ezutils/classes/ezsys.php" );
 
 
 eZDebug::setHandleType( eZDebug::HANDLE_FROM_PHP );
@@ -336,32 +318,11 @@ eZSys::init( 'index.php', $ini->variable( 'SiteAccessSettings', 'ForceVirtualHos
 
 eZDebug::addTimingPoint( "Script start" );
 
-////include_once( "lib/ezutils/classes/ezuri.php" );
-
 $uri = eZURI::instance( eZSys::requestURI() );
 $GLOBALS['eZRequestedURI'] = $uri;
 require_once "pre_check.php";
 
-// Shall we start the eZ setup module?
-//if ( $ini->variable( "SiteAccessSettings", "CheckValidity" ) == "true" )
-//    //include_once( "lib/ezsetup/classes/ezsetup.php" );
-
-//require_once 'kernel/error/errors.php';
-
-/*
-print( "<pre>" );
-var_dump( $_SERVER );
-print( "</pre>" );
-print( "HTTP_HOST=" . eZSys::serverVariable( 'HTTP_HOST' ) . "<br/" );
-*/
-
-// include ezsession override implementation
-//Needs to be added no class definition
-require_once( "lib/ezutils/classes/ezsession.php" );
-
-
 // Check for extension
-//include_once( 'lib/ezutils/classes/ezextension.php' );
 require_once( 'kernel/common/ezincludefunctions.php' );
 eZExtension::activateExtensions( 'default' );
 // Extension check end
@@ -396,7 +357,6 @@ if ( !$useCronjob )
     // Functions for session to make sure baskets are cleaned up
     function eZSessionBasketDestroy( $db, $key, $escapedKey )
     {
-        ////include_once( 'kernel/classes/ezbasket.php' );
         $basket = eZBasket::fetch( $key );
         if ( is_object( $basket ) )
             $basket->remove();
@@ -404,24 +364,21 @@ if ( !$useCronjob )
 
     function eZSessionBasketGarbageCollector( $db, $time )
     {
-        ////include_once( 'kernel/classes/ezbasket.php' );
         eZBasket::cleanupExpired( $time );
     }
 
     function eZSessionBasketEmpty( $db )
     {
-        ////include_once( 'kernel/classes/ezbasket.php' );
         eZBasket::cleanup();
     }
 
     // Fill in hooks
-    $GLOBALS['eZSessionFunctions']['destroy_pre'][] = 'eZSessionBasketDestroy';
-    $GLOBALS['eZSessionFunctions']['gc_pre'][] = 'eZSessionBasketGarbageCollector';
-    $GLOBALS['eZSessionFunctions']['empty_pre'][] = 'eZSessionBasketEmpty';
+    eZSession::addCallback( 'destroy_pre', 'eZSessionBasketDestroy');
+    eZSession::addCallback( 'gc_pre', 'eZSessionBasketGarbageCollector');
+    eZSession::addCallback( 'cleanup_pre', 'eZSessionBasketCleanup');
 }
 
 // Initialize module loading
-////include_once( "lib/ezutils/classes/ezmodule.php" );
 $moduleRepositories = eZModule::activeModuleRepositories();
 eZModule::setGlobalPathList( $moduleRepositories );
 
@@ -437,12 +394,11 @@ if ( $sessionRequired )
 $db = false;
 if ( $dbRequired )
 {
-    ////include_once( 'lib/ezdb/classes/ezdb.php' );
     $db = eZDB::instance();
     if ( $sessionRequired and
          $db->isConnected() )
     {
-        eZSessionStart();
+        eZSession::start();
     }
 
     if ( !$db->isConnected() )
@@ -452,7 +408,6 @@ if ( $dbRequired )
 }
 
 // Initialize with locale settings
-////include_once( "lib/ezlocale/classes/ezlocale.php" );
 $locale = eZLocale::instance();
 $languageCode = $locale->httpLocaleCode();
 $phpLocale = trim( $ini->variable( 'RegionalSettings', 'SystemLocale' ) );
@@ -477,7 +432,6 @@ $site = array( 'title' => $ini->variable( 'SiteSettings', 'SiteName' ),
                                       'Content-language' => $languageCode ) );
 
 
-////include_once( 'kernel/classes/ezhttpheader.php' );
 $headerOverrideArray = eZHTTPHeader::headerOverrideArray( $uri );
 
 $headerList = array_merge( $headerList, $headerOverrideArray );
@@ -487,7 +441,6 @@ foreach( $headerList as $key => $value )
     header( $key . ': ' . $value );
 }
 
-////include_once( 'kernel/classes/ezsection.php' );
 eZSection::initGlobalID();
 
 // Read role settings
@@ -523,18 +476,15 @@ while ( $moduleRunRequired )
 
     // Check for URL translation
     if ( $urlTranslatorAllowed and
-         $ini->variable( 'URLTranslator', 'Translation' ) == 'enabled' and
-         !$uri->isEmpty() )
+         eZURLAliasML::urlTranslationEnabledByUri( $uri ) )
     {
-        ////include_once( 'kernel/classes/ezurlaliasml.php' );
         $translateResult = eZURLAliasML::translate( $uri );
 
-        if ( !$translateResult )
+        if ( !is_string( $translateResult ) )
         {
             $useWildcardTranslation = $ini->variable( 'URLTranslator', 'WildcardTranslation' ) == 'enabled';
             if ( $useWildcardTranslation )
             {
-                ////include_once( 'kernel/classes/ezurlwildcard.php' );
                 $translateResult = eZURLWildcard::translate( $uri );
             }
         }
@@ -572,7 +522,6 @@ while ( $moduleRunRequired )
         }
     }
 
-    ////include_once( "lib/ezutils/classes/ezhttptool.php" );
     $http = eZHTTPTool::instance();
 
     $displayMissingModule = false;
@@ -718,7 +667,6 @@ while ( $moduleRunRequired )
                 }
 
                 // Check if we should switch access mode (http/https) for this module view.
-                ////include_once( 'kernel/classes/ezsslzone.php' );
                 eZSSLZone::checkModuleView( $module->attribute( 'name' ), $function_name );
 
                 $moduleResult = $module->run( $function_name, $params, false, $userParameters );
@@ -771,75 +719,54 @@ while ( $moduleRunRequired )
     }
 }
 
+if ( $ini->variable( "SiteAccessSettings", "CheckValidity" ) !== 'true' )
+{
+    $currentUser = eZUser::currentUser();
+    $ini = eZINI::instance();
+
+    $wwwDir = eZSys::wwwDir();
+    // On host based site accesses this can be empty, causing the cookie to be set for the current dir,
+    // but we want it to be set for the whole eZ publish site
+    $cookiePath = $wwwDir != '' ? $wwwDir : '/';
+
+    if ( $currentUser->isLoggedIn() )
+    {
+        setcookie( 'is_logged_in', 'true', 0, $cookiePath );
+        header( 'Etag: ' . $currentUser->attribute( 'contentobject_id' ) );
+    }
+    else
+    {
+        setcookie( 'is_logged_in', false, 0, $cookiePath );
+    }
+}
+
 if ( $module->exitStatus() == eZModule::STATUS_REDIRECT )
 {
     $GLOBALS['eZRedirection'] = true;
     $ini = eZINI::instance();
-    $uri = eZURI::instance( eZSys::requestURI() );
-
-    list( $redirUri, $debugByIP, $debugIPList ) =
-        $ini->variableMulti( "DebugSettings", array( 'DebugRedirection', 'DebugByIP', 'DebugIPList' ) );
     $automatic_redir = true;
 
-    if ( $redirUri == "enabled" )
+    if ( $GLOBALS['eZDebugAllowed'] && ( $redirUri = $ini->variable( 'DebugSettings', 'DebugRedirection' ) ) != 'disabled' )
     {
-        $automatic_redir = false;
-    }
-    else if ( $redirUri != "disabled" )
-    {
-        $redirUris = $ini->variableArray( "DebugSettings", "DebugRedirection" );
-        $uri->toBeginning();
-        foreach ( $redirUris as $redirUri )
+        if ( $redirUri == "enabled" )
         {
-            $redirUri = new eZURI( $redirUri );
-            if ( $redirUri->matchBase( $uri ) )
-            {
-                $automatic_redir = false;
-                break;
-            }
-        }
-    }
-
-    $debugEnabled = false;
-    if ( $debugByIP == 'enabled' )
-    {
-        $ipAddress = eZSys::serverVariable( 'REMOTE_ADDR', true );
-        if ( $ipAddress )
-        {
-            foreach( $debugIPList as $itemToMatch )
-            {
-                if ( preg_match("/^(([0-9]+)\.([0-9]+)\.([0-9]+)\.([0-9]+))(\/([0-9]+)$|$)/", $itemToMatch, $matches ) )
-                {
-                    if ( $matches[6] )
-                    {
-                        if ( eZDebug::isIPInNet( $ipAddress, $matches[1], $matches[7] ) )
-                        {
-                            $debugEnabled=true;
-                            break;
-                        }
-                    }
-                    else
-                    {
-                        if ( $matches[1] == $ipAddress )
-                        {
-                            $debugEnabled=true;
-                            break;
-                        }
-                    }
-                }
-            }
+            $automatic_redir = false;
         }
         else
         {
-            $debugEnabled = (
-                in_array( 'commandline', $debugIPList ) &&
-                ( php_sapi_name() == 'cli' )
-            );
+            $redirUris = $ini->variableArray( "DebugSettings", "DebugRedirection" );
+            $uri = eZURI::instance( eZSys::requestURI() );
+            $uri->toBeginning();
+            foreach ( $redirUris as $redirUri )
+            {
+                $redirUri = new eZURI( $redirUri );
+                if ( $redirUri->matchBase( $uri ) )
+                {
+                    $automatic_redir = false;
+                    break;
+                }
+            }
         }
-    }
-    if ( !$debugEnabled && $redirUri == 'disabled' )
-    {
-        $automatic_redir = true;
     }
 
     $redirectURI = eZSys::indexDir();
@@ -847,9 +774,9 @@ if ( $module->exitStatus() == eZModule::STATUS_REDIRECT )
     $moduleRedirectUri = $module->redirectURI();
     $redirectStatus = $module->redirectStatus();
     $translatedModuleRedirectUri = $moduleRedirectUri;
-    if ( $ini->variable( 'URLTranslator', 'Translation' ) == 'enabled' )
+    if ( $ini->variable( 'URLTranslator', 'Translation' ) == 'enabled' &&
+         eZURLAliasML::urlTranslationEnabledByUri( new eZURI( $moduleRedirectUri ) ) )
     {
-        ////include_once( 'kernel/classes/ezurlaliasml.php' );
         if ( eZURLAliasML::translate( $translatedModuleRedirectUri, true ) )
         {
             $moduleRedirectUri = $translatedModuleRedirectUri;
@@ -881,7 +808,6 @@ if ( $module->exitStatus() == eZModule::STATUS_REDIRECT )
         $redirectURI .= $moduleRedirectUri;
     }
 
-    ////include_once( 'kernel/classes/ezstaticcache.php' );
     eZStaticCache::executeActions();
 
     eZDB::checkTransactionCounter();
@@ -1018,7 +944,6 @@ if ( $show_page_layout )
         $meta['description'] = $metaDescription;
     }
 
-    ////include_once( 'lib/version.php' );
     $site['uri'] = $oldURI;
     $site['redirect'] = false;
     $site['meta'] = $meta;
@@ -1027,7 +952,6 @@ if ( $show_page_layout )
 
     $tpl->setVariable( "site", $site );
 
-    ////include_once( 'lib/version.php' );
     $ezinfo = array( 'version' => eZPublishSDK::version( true ),
                      'version_alias' => eZPublishSDK::version( true, true ),
                      'revision' => eZPublishSDK::revision() );
@@ -1069,8 +993,6 @@ if ( $show_page_layout )
 
         if ( $userObjectRequired )
         {
-            // include user class
-            // if( //include_once( "kernel/classes/datatypes/ezuser/ezuser.php" ) )
             $currentUser = eZUser::currentUser();
 
             $tpl->setVariable( "current_user", $currentUser );
@@ -1081,10 +1003,6 @@ if ( $show_page_layout )
             $tpl->setVariable( "current_user", false );
             $tpl->setVariable( "anonymous_user_id", false );
         }
-
-//         ////include_once( "lib/ezutils/classes/ezexecutionstack.php" );
-//         $execStack = eZExecutionStack::instance();
-//         $tpl->setVariable( "execution_entries", $execStack->entries() );
 
         $tpl->setVariable( "access_type", $access );
 

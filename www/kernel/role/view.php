@@ -3,9 +3,9 @@
 // Created on: <22-Aug-2002 16:38:41 sp>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -24,17 +24,8 @@
 //
 //
 
-/*! \file view.php
+/*! \file
 */
-
-//include_once( 'kernel/classes/ezmodulemanager.php' );
-//include_once( 'kernel/classes/ezrole.php' );
-//include_once( 'kernel/classes/ezsearch.php' );
-//include_once( 'kernel/classes/ezcontentbrowse.php' );
-//include_once( 'lib/ezutils/classes/ezhttptool.php' );
-//include_once( 'lib/ezutils/classes/ezhttppersistence.php' );
-//include_once( 'lib/ezutils/classes/ezmodule.php' );
-//include_once( 'kernel/classes/ezcontentobjecttreenode.php' );
 
 require_once( 'kernel/common/template.php' );
 
@@ -60,7 +51,6 @@ if ( $http->hasPostVariable( 'EditRoleButton' ) )
 // Redirect to content node browse in the user tree
 if ( $http->hasPostVariable( 'AssignRoleButton' ) )
 {
-    //include_once( 'kernel/classes/ezcontentbrowse.php' );
     eZContentBrowse::browse( array( 'action_name' => 'AssignRole',
                                     'from_page' => '/role/assign/' . $roleID,
                                     'cancel_page' => '/role/view/'. $roleID ),
@@ -91,14 +81,12 @@ if ( $Module->isCurrentAction( 'AssignRole' ) )
         }
     }
     /* Clean up policy cache */
-    //include_once( 'kernel/classes/datatypes/ezuser/ezuser.php' );
     eZUser::cleanupCache();
 
     // Clear role caches.
     eZRole::expireCache();
 
     // Clear all content cache.
-    //include_once( 'kernel/classes/ezcontentcachemanager.php' );
     eZContentCacheManager::clearAllContentCache();
 
     $db->commit();
@@ -116,14 +104,12 @@ if ( $http->hasPostVariable( 'RemoveRoleAssignmentButton' ) )
         $role->removeUserAssignmentByID( $id );
     }
     /* Clean up policy cache */
-    //include_once( 'kernel/classes/datatypes/ezuser/ezuser.php' );
     eZUser::cleanupCache();
 
     // Clear role caches.
     eZRole::expireCache();
 
     // Clear all content cache.
-    //include_once( 'kernel/classes/ezcontentcachemanager.php' );
     eZContentCacheManager::clearAllContentCache();
 
     $db->commit();

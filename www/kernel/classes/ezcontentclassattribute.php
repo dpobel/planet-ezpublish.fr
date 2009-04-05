@@ -5,9 +5,9 @@
 // Created on: <16-Apr-2002 11:08:14 amos>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -32,10 +32,6 @@
   \brief Encapsulates data for a class attribute
 
 */
-
-//include_once( "lib/ezdb/classes/ezdb.php" );
-//include_once( "kernel/classes/ezpersistentobject.php" );
-//include_once( 'kernel/classes/ezcontentclassattributenamelist.php' );
 
 class eZContentClassAttribute extends eZPersistentObject
 {
@@ -232,10 +228,6 @@ class eZContentClassAttribute extends eZPersistentObject
         $attribute->postInitialize();
     }
 
-    /*!
-     \note The reference for the return value is required to workaround
-           a bug with PHP references.
-    */
     function instantiateTemporary( $contentobjectID = false )
     {
         return eZContentObjectAttribute::create( $this->attribute( 'id' ), $contentobjectID );
@@ -485,14 +477,11 @@ class eZContentClassAttribute extends eZPersistentObject
 
     function dataType()
     {
-        //include_once( 'kernel/classes/ezdatatype.php' );
         return eZDataType::create( $this->DataTypeString );
     }
 
     /*!
      \return The content for this attribute.
-     \note The reference for the return value is required to workaround
-           a bug with PHP references.
     */
     function content()
     {
@@ -553,12 +542,11 @@ class eZContentClassAttribute extends eZPersistentObject
 
     static function cachedInfo()
     {
-        //include_once( 'lib/ezutils/classes/ezphpcreator.php' );
         eZExpiryHandler::registerShutdownFunction();
 
         $info = array();
         $db = eZDB::instance();
-        $dbName = $db->DB;
+        $dbName = md5( $db->DB );
 
         $cacheDir = eZSys::cacheDirectory();
         $phpCache = new eZPHPCreator( "$cacheDir", "sortkey_$dbName.php", '', array( 'clustering' => 'sortkey' ) );
@@ -588,8 +576,6 @@ class eZContentClassAttribute extends eZPersistentObject
                 $attributeTypeArray[$attribute['id']] = $attribute['data_type_string'];
                 $sortKeyTypeArray[$attribute['data_type_string']] = 0;
             }
-
-            //include_once( 'kernel/classes/ezdatatype.php' );
 
             // Fetch datatype for every unique datatype
             foreach ( array_keys( $sortKeyTypeArray ) as $key )
@@ -657,9 +643,9 @@ class eZContentClassAttribute extends eZPersistentObject
     /*!
      \static
     */
-    static function nameFromSerializedString( $serailizedNameList, $languageLocale = false )
+    static function nameFromSerializedString( $serializedNameList, $languageLocale = false )
     {
-        return eZContentClassAttributeNameList::nameFromSerializedString( $serailizedNameList, $languageLocale );
+        return eZContentClassAttributeNameList::nameFromSerializedString( $serializedNameList, $languageLocale );
     }
 
     function name( $languageLocale = false )
@@ -694,6 +680,165 @@ class eZContentClassAttribute extends eZPersistentObject
         $this->NameList->removeName( $languageLocale );
     }
 
+    /**
+     * Resolves the string class attribute identifier $identifier to its numeric value
+     * Use {@link eZContentObjectTreeNode::classAttributeIDByIdentifier()} for < 4.1.
+     * If multiple classes have the same identifier, the first found is returned.
+     *
+     * @static
+     * @since Version 4.1
+     * @return int|false Returns classattributeid or false
+     */
+    public static function classAttributeIDByIdentifier( $identifier )
+    {
+        $identifierHash = self::classAttributeIdentifiersHash();
+
+        if ( isset( $identifierHash[$identifier] ) )
+            return $identifierHash[$identifier];
+        else
+            return false;
+    }
+
+    /**
+     * Resolves the numeric class attribute identifier $id to its string value
+     *
+     * @static
+     * @since Version 4.1
+     * @return string|false Returns classattributeidentifier or false
+     */
+    public static function classAttributeIdentifierByID( $id )
+    {
+        $identifierHash = array_flip( self::classAttributeIdentifiersHash() );
+
+        if ( isset( $identifierHash[$id] ) )
+        {
+            $classAndClassAttributeIdentifier = explode( '/', $identifierHash[$id] );
+            return $classAndClassAttributeIdentifier[1];
+        }
+        else
+            return false;
+    }
+
+    /**
+     * Returns the class attribute identifier hash for the current database.
+     * If it is outdated or non-existent, the method updates/generates the file
+     *
+     * @static
+     * @since Version 4.1
+     * @access protected
+     * @return array Returns hash of classattributeidentifier => classattributeid
+     */
+    protected static function classAttributeIdentifiersHash()
+    {
+        static $identifierHash = null;
+
+        if ( $identifierHash === null )
+        {
+            $db = eZDB::instance();
+            $dbName = md5( $db->DB );
+
+            $cacheDir = eZSys::cacheDirectory();
+            $phpCache = new eZPHPCreator( $cacheDir,
+                                          'classattributeidentifiers_' . $dbName . '.php',
+                                          '',
+                                          array( 'clustering' => 'classattributeidentifiers' ) );
+
+            eZExpiryHandler::registerShutdownFunction();
+            $handler = eZExpiryHandler::instance();
+            $expiryTime = 0;
+            if ( $handler->hasTimestamp( 'class-identifier-cache' ) )
+            {
+                $expiryTime = $handler->timestamp( 'class-identifier-cache' );
+            }
+
+            if ( $phpCache->canRestore( $expiryTime ) )
+            {
+                $var = $phpCache->restore( array( 'identifierHash' => 'identifier_hash' ) );
+                $identifierHash = $var['identifierHash'];
+            }
+            else
+            {
+                // Fetch identifier/id pair from db
+                $query = "SELECT ezcontentclass_attribute.id as attribute_id, ezcontentclass_attribute.identifier as attribute_identifier, ezcontentclass.identifier as class_identifier
+                          FROM ezcontentclass_attribute, ezcontentclass
+                          WHERE ezcontentclass.id=ezcontentclass_attribute.contentclass_id";
+                $identifierArray = $db->arrayQuery( $query );
+
+                $identifierHash = array();
+                foreach ( $identifierArray as $identifierRow )
+                {
+                    $combinedIdentifier = $identifierRow['class_identifier'] . '/' . $identifierRow['attribute_identifier'];
+                    $identifierHash[$combinedIdentifier] = (int) $identifierRow['attribute_id'];
+                }
+
+                // Store identifier list to cache file
+                $phpCache->addVariable( 'identifier_hash', $identifierHash );
+                $phpCache->store();
+            }
+        }
+        return $identifierHash;
+    }
+
+    function initializeObjectAttributes( &$objects = null )
+    {
+        $classAttributeID = $this->ID;
+        $classID = $this->ContentClassID;
+        $dataType = $this->attribute( 'data_type' );
+        if ( $dataType->supportsBatchInitializeObjectAttribute() )
+        {
+            $db = eZDB::instance();
+
+            $data = array( 'contentobject_id'         => 'a.contentobject_id',
+                           'version'                  => 'a.version',
+                           'contentclassattribute_id' => $classAttributeID,
+                           'data_type_string'         => "'" . $db->escapeString( $this->DataTypeString ) . "'",
+                           'language_code'            => 'a.language_code',
+                           'language_id'              => 'MAX(a.language_id)' );
+
+            $datatypeData = $dataType->batchInitializeObjectAttributeData( $this );
+            $data = array_merge( $data, $datatypeData );
+
+            $cols = implode( ', ', array_keys( $data ) );
+            $values = implode( ', ', $data );
+
+            $sql = "INSERT INTO ezcontentobject_attribute( $cols )
+            SELECT $values
+            FROM ezcontentobject_attribute a, ezcontentobject o
+            WHERE o.id = a.contentobject_id AND
+                  o.contentclass_id=$classID
+            GROUP BY contentobject_id,
+                     version,
+                     language_code";
+
+            $db->query( $sql );
+        }
+        else
+        {
+            if ( !is_array( $objects ) )
+            {
+                $objects = eZContentObject::fetchSameClassList( $classID );
+            }
+
+            foreach ( $objects as $object )
+            {
+                $contentobjectID = $object->attribute( 'id' );
+                $objectVersions = $object->versions();
+                foreach ( $objectVersions as $objectVersion )
+                {
+                    $translations = $objectVersion->translations( false );
+                    $version = $objectVersion->attribute( 'version' );
+                    foreach ( $translations as $translation )
+                    {
+                        $objectAttribute = eZContentObjectAttribute::create( $classAttributeID, $contentobjectID, $version, $translation );
+                        $objectAttribute->setAttribute( 'language_code', $translation );
+                        $objectAttribute->initialize();
+                        $objectAttribute->store();
+                        $objectAttribute->postInitialize();
+                    }
+                }
+            }
+        }
+    }
 
     /// \privatesection
     /// Contains the content for this attribute

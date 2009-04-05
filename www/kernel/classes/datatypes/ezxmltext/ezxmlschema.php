@@ -5,9 +5,9 @@
 // Created on: <27-Mar-2006 15:28:39 ks>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -41,7 +41,7 @@ class eZXMLSchema
                               'isInline' => true,
                               'attributes' => array( 'object_id', 'node_id', 'show_path', 'size',
                                                      'align', 'view', 'xhtml:id', 'class', 'target' ),
-                              'attributesDefaults' => array( 'align' => 'right', 'view' => 'embed', 'class' => '' ) ),
+                              'attributesDefaults' => array( 'align' => '', 'view' => 'embed', 'class' => '' ) ),
 
         'embed-inline' => array( 'blockChildrenAllowed' => false,
                               'inlineChildrenAllowed' => false,
@@ -49,13 +49,13 @@ class eZXMLSchema
                               'isInline' => true,
                               'attributes' => array( 'object_id', 'node_id', 'show_path', 'size',
                                                      'align', 'view', 'xhtml:id', 'class', 'target' ),
-                              'attributesDefaults' => array( 'align' => 'right', 'view' => 'embed-inline', 'class' => '' ) ),
+                              'attributesDefaults' => array( 'align' => '', 'view' => 'embed-inline', 'class' => '' ) ),
 
         'table'     => array( 'blockChildrenAllowed' => array( 'tr' ),
                               'inlineChildrenAllowed' => false,
                               'childrenRequired' => true,
                               'isInline' => false,
-                              'attributes' => array( 'class', 'width', 'border' ) ),
+                              'attributes' => array( 'class', 'width', 'border', 'align' ) ),
 
         'tr'        => array( 'blockChildrenAllowed' => array( 'td', 'th' ),
                               'inlineChildrenAllowed' => false,
@@ -67,13 +67,13 @@ class eZXMLSchema
                               'inlineChildrenAllowed' => false,
                               'childrenRequired' => false,
                               'isInline' => false,
-                              'attributes' => array( 'class', 'xhtml:width', 'xhtml:colspan', 'xhtml:rowspan' ) ),
+                              'attributes' => array( 'class', 'align', 'xhtml:width', 'xhtml:colspan', 'xhtml:rowspan' ) ),
 
         'th'        => array( 'blockChildrenAllowed' => array( 'header', 'paragraph', 'section', 'table' ),
                               'inlineChildrenAllowed' => false,
                               'childrenRequired' => false,
                               'isInline' => false,
-                              'attributes' => array( 'class', 'xhtml:width', 'xhtml:colspan', 'xhtml:rowspan' ) ),
+                              'attributes' => array( 'class', 'align', 'xhtml:width', 'xhtml:colspan', 'xhtml:rowspan' ) ),
 
         'ol'        => array( 'blockChildrenAllowed' => array( 'li' ),
                               'inlineChildrenAllowed' => false,
@@ -97,13 +97,13 @@ class eZXMLSchema
                               'inlineChildrenAllowed' => true,
                               'childrenRequired' => true,
                               'isInline' => false,
-                              'attributes' => array( 'class', 'anchor_name' ) ),
+                              'attributes' => array( 'class', 'anchor_name', 'align' ) ),
 
         'paragraph' => array( 'blockChildrenAllowed' => array( 'line', 'link', 'embed', 'table', 'ol', 'ul', 'custom', 'literal' ),
                               'inlineChildrenAllowed' => true,
                               'childrenRequired' => true,
                               'isInline' => false,
-                              'attributes' => array( 'class' ) ),
+                              'attributes' => array( 'class', 'align' ) ),
 
         'line'      => array( 'blockChildrenAllowed' => false,
                               'inlineChildrenAllowed' => true,
@@ -148,7 +148,7 @@ class eZXMLSchema
                               'inlineChildrenAllowed' => true,
                               'childrenRequired' => false,
                               'isInline' => null,
-                              'attributes' => array( 'name' ) ),
+                              'attributes' => array( 'name', 'align' ) ),
 
         '#text'     => array( 'blockChildrenAllowed' => false,
                               'inlineChildrenAllowed' => false,
@@ -159,7 +159,6 @@ class eZXMLSchema
 
     function eZXMLSchema()
     {
-        //include_once( 'lib/ezutils/classes/ezini.php' );
         $ini = eZINI::instance( 'content.ini' );
 
         // Get inline custom tags list
@@ -171,7 +170,6 @@ class eZXMLSchema
         if ( !is_array( $this->Schema['custom']['tagList'] ) )
             $this->Schema['custom']['tagList'] = array();
 
-        //include_once( 'lib/version.php' );
         $eZPublishVersion = eZPublishSDK::majorVersion() + eZPublishSDK::minorVersion() * 0.1;
 
         // Get all tags available classes list

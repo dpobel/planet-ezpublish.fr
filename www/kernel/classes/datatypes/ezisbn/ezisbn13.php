@@ -3,9 +3,9 @@
 // Created on: <17-Apr-2007 11:07:06 bjorn>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -24,7 +24,7 @@
 //
 //
 
-/*! \file ezisbn13.php
+/*! \file
 */
 
 /*!
@@ -35,10 +35,6 @@
   based on the information stored in the different ranges for Registration group
   and Registration elements. The Publication element will get the space left available.
 */
-
-//include_once( 'kernel/classes/datatypes/ezisbn/ezisbngroup.php' );
-//include_once( 'kernel/classes/datatypes/ezisbn/ezisbngrouprange.php' );
-//include_once( 'kernel/classes/datatypes/ezisbn/ezisbnregistrantrange.php' );
 
 class eZISBN13
 {

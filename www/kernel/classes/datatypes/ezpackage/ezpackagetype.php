@@ -5,9 +5,9 @@
 // Created on: <15-Oct-2003 13:17:04 wy>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -26,7 +26,7 @@
 //
 //
 
-/*! \file ezpackagetype.php
+/*! \file
 */
 
 /*!
@@ -35,8 +35,6 @@
   \brief The class eZPackageType does
 
 */
-//include_once( 'kernel/classes/ezdatatype.php' );
-//include_once( 'kernel/classes/ezpackage.php' );
 require_once( 'kernel/common/i18n.php' );
 
 class eZPackageType extends eZDataType
@@ -63,9 +61,6 @@ class eZPackageType extends eZDataType
     {
     }
 
-    /*!
-     \reimp
-    */
     function validateObjectAttributeHTTPInput( $http, $base, $contentObjectAttribute )
     {
         return eZInputValidator::STATE_ACCEPTED;
@@ -161,13 +156,9 @@ class eZPackageType extends eZDataType
         eZDir::unlinkWildcard( $compiledTemplateDir . "/", "*pagelayout*.*" );
 
         // Expire template block cache
-        //include_once( 'kernel/classes/ezcontentcachemanager.php' );
         eZContentCacheManager::clearTemplateBlockCacheIfNeeded( false );
     }
 
-    /*!
-     \reimp
-    */
     function fetchClassAttributeHTTPInput( $http, $base, $classAttribute )
     {
         $packageTypeName = $base . self::TYPE_VARIABLE . $classAttribute->attribute( 'id' );
@@ -216,52 +207,36 @@ class eZPackageType extends eZDataType
         return trim( $contentObjectAttribute->attribute( 'data_text' ) ) != '';
     }
 
-    /*!
-     \reimp
-    */
     function isIndexable()
     {
         return false;
     }
 
-    /*!
-     \reimp
-    */
     function sortKey( $contentObjectAttribute )
     {
         return strtolower( $contentObjectAttribute->attribute( 'data_text' ) );
     }
 
-    /*!
-     \reimp
-    */
     function sortKeyType()
     {
         return 'string';
     }
 
-    /*!
-     \reimp
-    */
     function serializeContentClassAttribute( $classAttribute, $attributeNode, $attributeParametersNode )
     {
         $type = $classAttribute->attribute( self::TYPE_FIELD );
-        $typeNode = $attributeParametersNode->ownerDocument->createElement( 'type', $type );
+        $dom = $attributeParametersNode->ownerDocument;
+        $typeNode = $dom->createElement( 'type' );
+        $typeNode->appendChild( $dom->createTextNode( $type ) );
         $attributeParametersNode->appendChild( $typeNode );
     }
 
-    /*!
-     \reimp
-    */
     function unserializeContentClassAttribute( $classAttribute, $attributeNode, $attributeParametersNode )
     {
         $type = $attributeParametersNode->getElementsByTagName( 'type' )->item( 0 )->textContent;
         $classAttribute->setAttribute( self::TYPE_FIELD, $type );
     }
 
-    /*!
-      \reimp
-    */
     function diff( $old, $new, $options = false )
     {
         return null;

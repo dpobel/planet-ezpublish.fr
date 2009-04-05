@@ -5,9 +5,9 @@
 // Created on: <23-Jul-2003 12:51:27 bf>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -34,9 +34,6 @@
   \author  Bård Farstad
 
 */
-
-//include_once( "kernel/classes/ezdatatype.php" );
-//include_once( 'lib/ezutils/classes/ezstringutils.php' );
 
 class eZSelectionType extends eZDataType
 {
@@ -164,10 +161,11 @@ class eZSelectionType extends eZDataType
     */
     function validateObjectAttributeHTTPInput( $http, $base, $contentObjectAttribute )
     {
+        $classAttribute = $contentObjectAttribute->contentClassAttribute();
+
         if ( $http->hasPostVariable( $base . '_ezselect_selected_array_' . $contentObjectAttribute->attribute( 'id' ) ) )
         {
             $data = $http->postVariable( $base . '_ezselect_selected_array_' . $contentObjectAttribute->attribute( 'id' ) );
-            $classAttribute = $contentObjectAttribute->contentClassAttribute();
 
             if ( $data == "" )
             {
@@ -179,6 +177,11 @@ class eZSelectionType extends eZDataType
                     return eZInputValidator::STATE_INVALID;
                 }
             }
+        }
+        else if ( !$classAttribute->attribute( 'is_information_collector' ) && $contentObjectAttribute->validateIsRequired() )
+        {
+            $contentObjectAttribute->setValidationError( ezi18n( 'kernel/classes/datatypes', 'Input required.' ) );
+            return eZInputValidator::STATE_INVALID;
         }
         return eZInputValidator::STATE_ACCEPTED;
     }
@@ -199,9 +202,6 @@ class eZSelectionType extends eZDataType
         return false;
     }
 
-    /*!
-     \reimp
-    */
     function validateCollectionAttributeHTTPInput( $http, $base, $contentObjectAttribute )
     {
         if ( $http->hasPostVariable( $base . '_ezselect_selected_array_' . $contentObjectAttribute->attribute( 'id' ) ) )
@@ -225,7 +225,6 @@ class eZSelectionType extends eZDataType
     }
 
    /*!
-    \reimp
     Fetches the http post variables for collected information
    */
     function fetchCollectionAttributeHTTPInput( $collection, $collectionAttribute, $http, $base, $contentObjectAttribute )
@@ -395,17 +394,11 @@ class eZSelectionType extends eZDataType
         return true;
     }
 
-    /*!
-     \reimp
-    */
     function sortKey( $contentObjectAttribute )
     {
         return strtolower( $contentObjectAttribute->attribute( 'data_text' ) );
     }
 
-    /*!
-     \reimp
-    */
     function sortKeyType()
     {
         return 'string';
@@ -419,36 +412,30 @@ class eZSelectionType extends eZDataType
         return true;
     }
 
-    /*!
-     \reimp
-    */
     function isInformationCollector()
     {
         return true;
     }
 
-    /*!
-     \reimp
-    */
     function serializeContentClassAttribute( $classAttribute, $attributeNode, $attributeParametersNode )
     {
         $isMultipleSelection = $classAttribute->attribute( 'data_int1'  );
         $xmlString = $classAttribute->attribute( 'data_text5' );
 
-        $dom = new DOMDocument( '1.0', 'utf-8' );
-        $success = $dom->loadXML( $xmlString );
-        $domRoot = $dom->documentElement;
+        $selectionDom = new DOMDocument( '1.0', 'utf-8' );
+        $success = $selectionDom->loadXML( $xmlString );
+        $domRoot = $selectionDom->documentElement;
         $options = $domRoot->getElementsByTagName( 'options' )->item( 0 );
 
-        $importedOptionsNode = $attributeParametersNode->ownerDocument->importNode( $options, true );
+        $dom = $attributeParametersNode->ownerDocument;
+
+        $importedOptionsNode = $dom->importNode( $options, true );
         $attributeParametersNode->appendChild( $importedOptionsNode );
-        $isMultiSelectNode = $attributeParametersNode->ownerDocument->createElement( 'is-multiselect', $isMultipleSelection );
+        $isMultiSelectNode = $dom->createElement( 'is-multiselect' );
+        $isMultiSelectNode->appendChild( $dom->createTextNode( $isMultipleSelection ) );
         $attributeParametersNode->appendChild( $isMultiSelectNode );
     }
 
-    /*!
-     \reimp
-    */
     function unserializeContentClassAttribute( $classAttribute, $attributeNode, $attributeParametersNode )
     {
         $options = $attributeParametersNode->getElementsByTagName( 'options' )->item( 0 );
@@ -468,29 +455,12 @@ class eZSelectionType extends eZDataType
         else
             $classAttribute->setAttribute( 'data_int1', 1 );
     }
+
+    function supportsBatchInitializeObjectAttribute()
+    {
+        return true;
+    }
 }
-    /*!
-     \reimp
-    */
-    function serializeContentObjectAttribute( $package, $objectAttribute )
-    {
-       $node = $this->createContentObjectAttributeDOMNode( $objectAttribute );
-       $idString = $objectAttribute->attribute( 'data_text' );
-
-       $idStringNode = $node->ownerDocument->createElement( 'idstring', $idString );
-       $node->appendChild( $idStringNode );
-       return $node;
-    }
-
-    /*!
-     \reimp
-    */
-    function unserializeContentObjectAttribute( $package, $objectAttribute, $attributeNode )
-    {
-        $idStringNode = $attributeNode->getElementsByTagName( 'idstring' )->item( 0 );
-        $idString = $idStringNode ? $idStringNode->textContent : '';
-        $objectAttribute->setAttribute( 'data_text', $idString );
-    }
 
 eZDataType::register( eZSelectionType::DATA_TYPE_STRING, "eZSelectionType" );
 ?>

@@ -5,9 +5,9 @@
 // Created on: <01-Oct-2002 11:18:14 kk>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -34,8 +34,6 @@
   Enable editing and versioning of ini files from the admin interface
 */
 
-//include_once( 'kernel/classes/ezdatatype.php' );
-//include_once( 'lib/ezutils/classes/ezintegervalidator.php' );
 require_once( 'kernel/common/i18n.php' );
 
 class eZIniSettingType extends eZDataType
@@ -67,9 +65,6 @@ class eZIniSettingType extends eZDataType
                                                                 'serialize_supported' => true ) );
     }
 
-    /*!
-      \reimp
-    */
     function validateObjectAttributeHTTPInput( $http, $base, $contentObjectAttribute )
     {
         if ( $http->hasPostVariable( $base . '_ini_setting_' . $contentObjectAttribute->attribute( 'id' ) ) )
@@ -102,9 +97,6 @@ class eZIniSettingType extends eZDataType
         return eZInputValidator::STATE_ACCEPTED;
     }
 
-    /*!
-     \reimp
-    */
     function validateClassAttributeHTTPInput( $http, $base, $classAttribute )
     {
         $fileParam = $base . self::CLASS_FILE . $classAttribute->attribute( 'id' );
@@ -145,17 +137,11 @@ class eZIniSettingType extends eZDataType
         return eZInputValidator::STATE_INVALID;
     }
 
-    /*!
-     \reimp
-    */
     function initializeClassAttribute( $classAttribute )
     {
         eZIniSettingType::setSiteAccessList( $classAttribute );
     }
 
-    /*!
-     \reimp
-    */
     function initializeObjectAttribute( $objectAttribute, $currentVersion, $originalContentObjectAttribute )
     {
         if ( $currentVersion != false )
@@ -228,9 +214,6 @@ class eZIniSettingType extends eZDataType
         }
     }
 
-    /*!
-     \reimp
-    */
     function fetchClassAttributeHTTPInput( $http, $base, $classAttribute )
     {
         $fileParam = $base . self::CLASS_FILE . $classAttribute->attribute( 'id' );
@@ -278,9 +261,6 @@ class eZIniSettingType extends eZDataType
         return false;
     }
 
-    /*!
-      \reimp
-    */
     function fetchObjectAttributeHTTPInput( $http, $base, $contentObjectAttribute )
     {
         if ( $http->hasPostVariable( $base . '_ini_setting_' . $contentObjectAttribute->attribute( "id" ) ) )
@@ -303,9 +283,6 @@ class eZIniSettingType extends eZDataType
         return false;
     }
 
-    /*!
-     \reimp
-    */
     function onPublish( $contentObjectAttribute, $contentObject, $publishedNodes )
     {
         $contentClassAttribute = $contentObjectAttribute->attribute( 'contentclass_attribute' );
@@ -401,9 +378,6 @@ class eZIniSettingType extends eZDataType
         return true;
     }
 
-    /*!
-     \reimp
-    */
     function objectAttributeContent( $contentObjectAttribute )
     {
         $contentClassAttribute = $contentObjectAttribute->attribute( 'contentclass_attribute' );
@@ -455,9 +429,6 @@ class eZIniSettingType extends eZDataType
         return $data;
     }
 
-    /*!
-      \reimp
-    */
     function title( $contentObjectAttribute, $name = null )
     {
         return $contentObjectAttribute->attribute( 'data_text' );
@@ -468,9 +439,6 @@ class eZIniSettingType extends eZDataType
         return true;
     }
 
-    /*!
-     \reimp
-    */
     function serializeContentClassAttribute( $classAttribute, $attributeNode, $attributeParametersNode )
     {
         $file = $classAttribute->attribute( self::CLASS_FILE_FIELD );
@@ -481,22 +449,27 @@ class eZIniSettingType extends eZDataType
         $siteAccess = $classAttribute->attribute( self::SITE_ACCESS_LIST_FIELD );
 
         $dom = $attributeParametersNode->ownerDocument;
-        $fileNode = $dom->createElement( 'file', $file );
+        $fileNode = $dom->createElement( 'file' );
+        $fileNode->appendChild( $dom->createTextNode( $file ) );
         $attributeParametersNode->appendChild( $fileNode );
-        $sectionNode = $dom->createElement( 'section', $section );
+        $sectionNode = $dom->createElement( 'section' );
+        $sectionNode->appendChild( $dom->createTextNode( $section ) );
         $attributeParametersNode->appendChild( $sectionNode );
-        $parameterNode = $dom->createElement( 'parameter', $parameter );
+        $parameterNode = $dom->createElement( 'parameter' );
+        $parameterNode->appendChild( $dom->createTextNode( $parameter ) );
         $attributeParametersNode->appendChild( $parameterNode );
-        $typeNode = $dom->createElement( 'type', $type );
+        $typeNode = $dom->createElement( 'type' );
+        $typeNode->appendChild( $dom->createTextNode( $type ) );
         $attributeParametersNode->appendChild( $typeNode );
-        $iniInstanceNode = $dom->createElement( 'ini_instance', $iniInstance );
+        $iniInstanceNode = $dom->createElement( 'ini_instance' );
+        $iniInstanceNode->appendChild( $dom->createTextNode( $iniInstance ) );
         $attributeParametersNode->appendChild( $iniInstanceNode );
-        $siteAccessListNode = $dom->createElement( 'site_access_list', $siteAccess );
+        $siteAccessListNode = $dom->createElement( 'site_access_list' );
+        $siteAccessListNode->appendChild( $dom->createTextNode( $siteAccess ) );
         $attributeParametersNode->appendChild( $siteAccessListNode );
     }
 
     /*!
-     \reimp
 
      Use Override to do ini alterations if the specified site access does not exist
     */
@@ -630,9 +603,6 @@ class eZIniSettingType extends eZDataType
         return true;
     }
 
-    /*!
-     \reimp
-    */
     function serializeContentObjectAttribute( $package, $objectAttribute )
     {
         $node = $this->createContentObjectAttributeDOMNode( $objectAttribute );
@@ -641,17 +611,16 @@ class eZIniSettingType extends eZDataType
 
         $dom = $node->ownerDocument;
 
-        $makeEmptyArrayNode = $dom->createElement( 'make_empty_array', $makeEmptyArray );
+        $makeEmptyArrayNode = $dom->createElement( 'make_empty_array' );
+        $makeEmptyArrayNode->appendChild( $dom->createTextNode( $makeEmptyArray ) );
         $node->appendChild( $makeEmptyArrayNode );
-        $valueNode = $dom->createElement( 'value', $value );
+        $valueNode = $dom->createElement( 'value' );
+        $valueNode->appendChild( $dom->createTextNode( $value ) );
         $node->appendChild( $valueNode );
 
         return $node;
     }
 
-    /*!
-     \reimp
-    */
     function unserializeContentObjectAttribute( $package, $objectAttribute, $attributeNode )
     {
         $makeEmptyArray = $attributeNode->getElementsByTagName( 'make_empty_array' )->item( 0 )->textContent;
@@ -667,9 +636,6 @@ class eZIniSettingType extends eZDataType
         $objectAttribute->setAttribute( 'data_text', $value );
     }
 
-    /*!
-      \reimp
-    */
     function diff( $old, $new, $options = false )
     {
         return null;

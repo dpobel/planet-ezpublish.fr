@@ -4,9 +4,9 @@
 // Created on: <16-ïËÔ-2002 10:45:47 sp>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -24,9 +24,6 @@
 //   MA 02110-1301, USA.
 //
 //
-
-//include_once( 'kernel/classes/ezrole.php' );
-//include_once( 'kernel/classes/ezcontentbrowse.php' );
 
 $http = eZHTTPTool::instance();
 
@@ -81,12 +78,10 @@ else if ( $http->hasPostVariable( 'BrowseActionName' ) and
     $db->commit();
     if ( count( $selectedObjectIDArray ) > 0 )
     {
-        //include_once( 'kernel/classes/ezcontentcachemanager.php' );
         eZContentCacheManager::clearAllContentCache();
     }
 
     /* Clean up policy cache */
-    //include_once( 'kernel/classes/datatypes/ezuser/ezuser.php' );
     eZUser::cleanupCache();
 
     $Module->redirectTo( '/role/view/' . $roleID );
@@ -107,7 +102,6 @@ else if ( is_string( $limitIdent ) && !isset( $limitValue ) )
         case 'section':
         {
             require_once( 'kernel/common/template.php' );
-            //include_once( 'kernel/classes/ezsection.php' );
             $sectionArray = eZSection::fetchList( );
             $tpl = templateInit();
             $tpl->setVariable( 'section_array', $sectionArray );

@@ -5,9 +5,9 @@
 // Created on: <21-Nov-2003 11:52:36 amos>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -26,7 +26,7 @@
 //
 //
 
-/*! \file ezpackagecreationhandler.php
+/*! \file
 */
 
 /*!
@@ -35,9 +35,6 @@
   \brief The class eZPackageCreationHandler does
 
 */
-
-//include_once( 'kernel/classes/ezpackage.php' );
-//include_once( 'lib/ezutils/classes/ezextension.php' );
 
 class eZPackageCreationHandler
 {
@@ -165,9 +162,6 @@ class eZPackageCreationHandler
         return $this->StepMap;
     }
 
-    /*!
-     \virtual
-    */
     function stepTemplate( $step )
     {
         $stepTemplateName = $step['template'];
@@ -181,7 +175,6 @@ class eZPackageCreationHandler
     }
 
     /*!
-     \virtual
      This is called the first time the step is entered (ie. not on validations)
      and can be used to fill in values in the \a $persistentData variable
      for use in the template or later retrieval.
@@ -200,7 +193,6 @@ class eZPackageCreationHandler
     }
 
     /*!
-     \virtual
      Called each time a step is loaded, and can be used to fetch and process input data in each step.
     */
     function loadStep( $package, $http, $currentStepID, &$persistentData, $tpl, &$module )
@@ -245,9 +237,6 @@ class eZPackageCreationHandler
         return $nextStep;
     }
 
-    /*!
-     \virtual
-    */
     function validateAndAdvanceStep( $package, $http, $currentStepID, &$stepMap, &$persistentData, &$errorList )
     {
         $methodMap = $this->validateStepMethodMap();
@@ -263,7 +252,6 @@ class eZPackageCreationHandler
     }
 
     /*!
-     \virtual
      This is called after a step has validated it's information. It can
      be used to put values in the \a $persistentData variable for later retrieval.
     */
@@ -281,7 +269,6 @@ class eZPackageCreationHandler
     }
 
     /*!
-     \virtual
      Finalizes the creation process with the gathered information.
      This is usually the function that creates the package and
      adds the proper elements.
@@ -314,7 +301,6 @@ class eZPackageCreationHandler
     {
         $allowedCreators = false;
 
-        //include_once( "kernel/classes/datatypes/ezuser/ezuser.php" );
         $currentUser = eZUser::currentUser();
         $accessResult = $currentUser->hasAccessTo( 'package', 'create' );
         $limitationList = array();
@@ -370,36 +356,24 @@ class eZPackageCreationHandler
         if ( !isset( $handlers ) )
             $handlers = array();
         $handler = false;
-        if ( eZExtension::findExtensionType( array( 'ini-name' => 'package.ini',
-                                                    'repository-group' => 'PackageSettings',
-                                                    'repository-variable' => 'RepositoryDirectories',
-                                                    'extension-group' => 'PackageSettings',
-                                                    'extension-variable' => 'ExtensionDirectories',
-                                                    'subdir' => 'packagecreators',
-                                                    'extension-subdir' => 'packagecreators',
-                                                    'suffix-name' => 'packagecreator.php',
-                                                    'type-directory' => true,
-                                                    'type' => $handlerName,
-                                                    'alias-group' => 'CreationSettings',
-                                                    'alias-variable' => 'HandlerAlias' ),
-                                             $result ) )
+
+        if( isset( $handlers[$handlerName] ) )
         {
-            $handlerFile = $result['found-file-path'];
-            if ( file_exists( $handlerFile ) )
-            {
-                include_once( $handlerFile );
-                $handlerClassName = $result['type'] . 'PackageCreator';
-                if ( isset( $handlers[$result['type']] ) )
-                {
-                    $handler =& $handlers[$result['type']];
-                    $handler->reset();
-                }
-                else
-                {
-                    $handler = new $handlerClassName( $handlerName );
-                    $handlers[$result['type']] =& $handler;
-                }
-            }
+            $handler = $handlers[$handlerName];
+            $handler->reset();
+        }
+        else
+        {
+            $optionArray = array( 'iniFile'       => 'package.ini',
+                                  'iniSection'    => 'CreationSettings',
+                                  'iniVariable'   => 'HandlerAlias',
+                                  'handlerIndex'  => $handlerName,
+                                  'handlerParams' => array( $handlerName ) );
+
+            $options = new ezpExtensionOptions( $optionArray );
+
+            $handler = eZExtension::getHandlerClass( $options );
+            $handlers[$handlerName] = $handler;
         }
         return $handler;
     }
@@ -466,7 +440,6 @@ class eZPackageCreationHandler
     }
 
     /*!
-     \virtual
      \return the type installation this package uses.
 
      This method is called from the createPackage() method and will return \c 'install' by default.
@@ -478,7 +451,6 @@ class eZPackageCreationHandler
     }
 
     /*!
-     \virtual
      \return the initial state of the package.
 
      The state of a package generally tells how stable a package is,
@@ -491,7 +463,6 @@ class eZPackageCreationHandler
     }
 
     /*!
-     \virtual
      \return The initial changelog entry for a package.
      It is possible to get different initial texts by reimplementing this function.
 
@@ -503,7 +474,6 @@ class eZPackageCreationHandler
     }
 
     /*!
-     \virtual
      \return The package type taken from \a $package if the package exists,
              otherwise \c false.
      If the creator should have a specific package type this function should be reimplemented.
@@ -633,7 +603,6 @@ class eZPackageCreationHandler
     }
 
     /*!
-     \virtual
      This is called on the package information step to initialize the name, summary and description fields.
      Reimplementing this function allows the creator to fill in some default values for the information fields.
      \note The default does nothing.
@@ -667,9 +636,8 @@ class eZPackageCreationHandler
         $this->generatePackageInformation( $persistentData, $package, $http, $step, $persistentData );
 
         // Make sure the package name contains only valid characters
-        //include_once( 'lib/ezi18n/classes/ezchartransform.php' );
         $trans = eZCharTransform::instance();
-        $persistentData['name'] = $trans->transformByGroup( $persistentData['name'], 'urlalias' );
+        $persistentData['name'] = $trans->transformByGroup( $persistentData['name'], 'identifier' );
     }
 
     /*!
@@ -730,9 +698,8 @@ class eZPackageCreationHandler
             else
             {
                 // Make sure the package name contains only valid characters
-                //include_once( 'lib/ezi18n/classes/ezchartransform.php' );
                 $trans = eZCharTransform::instance();
-                $validPackageName = $trans->transformByGroup( $packageName, 'urlalias' );
+                $validPackageName = $trans->transformByGroup( $packageName, 'identifier' );
                 if ( strcmp( $validPackageName, $packageName ) != 0 )
                 {
                     $errorList[] = array( 'field' => ezi18n( 'kernel/package', 'Package name' ),
@@ -970,7 +937,6 @@ class eZPackageCreationHandler
     */
     function validatePackageThumbnail( $package, $http, $currentStepID, &$stepMap, &$persistentData, &$errorList )
     {
-        //include_once( 'lib/ezutils/classes/ezhttpfile.php' );
         // If we don't have an image we continue as normal
         if ( !eZHTTPFile::canFetch( 'PackageThumbnail' ) )
             return true;
@@ -980,7 +946,6 @@ class eZPackageCreationHandler
         $result = true;
         if ( $file )
         {
-            //include_once( 'lib/ezutils/classes/ezmimetype.php' );
             $mimeData = eZMimeType::findByFileContents( $file->attribute( 'original_filename' ) );
             $dir = eZSys::storageDirectory() . '/temp';
             eZMimeType::changeDirectoryPath( $mimeData, $dir );

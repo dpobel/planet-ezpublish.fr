@@ -5,9 +5,9 @@
 // Created on: <09-Jul-2003 16:37:01 amos>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -26,7 +26,7 @@
 //
 //
 
-/*! \file ezcollaborationnotificationhandler.php
+/*! \file
 */
 
 /*!
@@ -34,13 +34,6 @@
   \brief The class eZCollaborationNotificationHandler does
 
 */
-
-//include_once( 'kernel/classes/notification/eznotificationeventhandler.php' );
-//include_once( 'kernel/classes/ezcollaborationitemhandler.php' );
-//include_once( 'kernel/classes/datatypes/ezuser/ezuser.php' );
-//include_once( 'kernel/classes/notification/eznotificationcollection.php' );
-//include_once( 'kernel/classes/notification/eznotificationschedule.php' );
-//include_once( 'kernel/classes/notification/handler/ezcollaborationnotification/ezcollaborationnotificationrule.php' );
 
 class eZCollaborationNotificationHandler extends eZNotificationEventHandler
 {
@@ -89,8 +82,6 @@ class eZCollaborationNotificationHandler extends eZNotificationEventHandler
         return eZCollaborationItemHandler::fetchList();
     }
 
-    /*!
-    */
     function collaborationSelections()
     {
         $rules = eZCollaborationNotificationRule::fetchList();
@@ -184,9 +175,6 @@ class eZCollaborationNotificationHandler extends eZNotificationEventHandler
         }
     }
 
-    /*!
-     \reimp
-    */
     function cleanup()
     {
         eZCollaborationNotificationRule::cleanup();

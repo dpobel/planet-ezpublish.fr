@@ -5,9 +5,9 @@
 // Created on: <08-Aug-2003 15:00:02 kk>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -26,10 +26,9 @@
 //
 //
 
-/*! \file ezstep_welcome.php
+/*! \file
 */
 
-//include_once( 'kernel/setup/steps/ezstep_installer.php');
 require_once( "kernel/common/i18n.php" );
 
 /*!
@@ -42,7 +41,6 @@ class eZStepWelcome extends eZStepInstaller
 
     /*!
      Constructor
-     \reimp
     */
     function eZStepWelcome( $tpl, $http, $ini, &$persistenceList )
     {
@@ -50,9 +48,6 @@ class eZStepWelcome extends eZStepInstaller
                                 'welcome', 'Welcome' );
     }
 
-    /*!
-     \reimp
-     */
     function processPostData()
     {
         if ( $this->Http->hasPostVariable( 'eZSetup_finetune_button' ) )
@@ -65,16 +60,12 @@ class eZStepWelcome extends eZStepInstaller
             $wizardLanguage = $this->Http->postVariable( 'eZSetupWizardLanguage' );
             $this->PersistenceList['setup_wizard'] = array( 'language' => $wizardLanguage );
 
-            //include_once( 'lib/ezi18n/classes/eztranslatormanager.php' );
             eZTranslatorManager::setActiveTranslation( $wizardLanguage );
         }
 
         return true;
     }
 
-    /*!
-     \reimp
-     */
     function init()
     {
         $optionalTests = eZSetupOptionalTests();
@@ -99,9 +90,6 @@ class eZStepWelcome extends eZStepInstaller
         return false; // Always show welcome message
     }
 
-    /*!
-     \reimp
-    */
     function display()
     {
         $result = array();
@@ -112,7 +100,6 @@ class eZStepWelcome extends eZStepInstaller
 
         eZSetupLanguageList( $languages, $defaultLanguage, $defaultExtraLanguages );
 
-        //include_once( 'lib/ezi18n/classes/eztranslatormanager.php' );
         eZTranslatorManager::setActiveTranslation( $defaultLanguage, false );
 
         $this->Tpl->setVariable( 'language_list', $languages );
@@ -127,9 +114,6 @@ class eZStepWelcome extends eZStepInstaller
         return $result;
     }
 
-    /*!
-     \reimp
-    */
     function showMessage()
     {
         return true;

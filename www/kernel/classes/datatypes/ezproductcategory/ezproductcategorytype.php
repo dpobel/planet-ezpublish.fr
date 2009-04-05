@@ -5,9 +5,9 @@
 // Created on: <19-Feb-2006 14:08:26 vs>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -32,9 +32,6 @@
   \brief Stores product category.
 
 */
-
-require_once( 'kernel/classes/ezdatatype.php' );
-require_once( 'kernel/classes/ezproductcategory.php' );
 
 class eZProductCategoryType extends eZDataType
 {
@@ -106,7 +103,6 @@ class eZProductCategoryType extends eZDataType
     }
 
    /*!
-    \reimp
     Fetches the http post variable for collected information
    */
     function fetchCollectionAttributeHTTPInput( $collection, $collectionAttribute, $http, $base, $contentObjectAttribute )
@@ -131,33 +127,21 @@ class eZProductCategoryType extends eZDataType
         return $contentObjectAttribute->attribute( "data_int" );
     }
 
-    /*!
-     \reimp
-    */
     function isIndexable()
     {
         return true;
     }
 
-    /*!
-     \reimp
-    */
     function isInformationCollector()
     {
         return true;
     }
 
-    /*!
-     \reimp
-    */
     function sortKey( $contentObjectAttribute )
     {
         return $contentObjectAttribute->attribute( 'data_int' );
     }
 
-    /*!
-     \reimp
-    */
     function sortKeyType()
     {
         return 'int';
@@ -168,14 +152,10 @@ class eZProductCategoryType extends eZDataType
     */
     function objectAttributeContent( $contentObjectAttribute )
     {
-        require_once( 'kernel/classes/ezproductcategory.php' );
         $category = eZProductCategory::fetch( $contentObjectAttribute->attribute( 'data_int' ) );
         return $category;
     }
 
-    /*!
-     \reimp
-     */
     function hasObjectAttributeContent( $contentObjectAttribute )
     {
         $productCategory = $this->objectAttributeContent( $contentObjectAttribute );
@@ -231,12 +211,20 @@ class eZProductCategoryType extends eZDataType
         return is_object( $category ) ? $category->attribute( 'name' ) : '';
     }
 
-    /*!
-      \reimp
-    */
     function diff( $old, $new, $options = null )
     {
         return null;
+    }
+
+    function supportsBatchInitializeObjectAttribute()
+    {
+        return true;
+    }
+
+    function batchInitializeObjectAttributeData( $classAttribute )
+    {
+        $default = 0;
+        return array( 'data_int' => $default, 'sort_key_int' => $default );
     }
 }
 

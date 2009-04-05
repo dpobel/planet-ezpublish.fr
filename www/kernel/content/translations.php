@@ -5,9 +5,9 @@
 // Created on: <23-ñÎ×-2003 12:52:42 sp>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -26,14 +26,10 @@
 //
 //
 
-/*! \file translations.php
+/*! \file
 */
 
 require_once( 'kernel/common/template.php' );
-//include_once( 'kernel/classes/ezcontentlanguage.php' );
-//include_once( 'kernel/classes/ezcontentobject.php' );
-//include_once( 'lib/ezdb/classes/ezdb.php' );
-
 $tpl = templateInit();
 $http = eZHTTPTool::instance();
 $Module = $Params['Module'];
@@ -74,7 +70,6 @@ if ( $Module->isCurrentAction( 'StoreNew' ) /* || $http->hasPostVariable( 'Store
         eZDebug::writeDebug( $translationLocale, 'translationLocale' );
     }
 
-    //include_once( 'lib/ezlocale/classes/ezlocale.php' );
     // Make sure the locale string is valid, if not we try to extract a valid part of it
     if ( !preg_match( "/^" . eZLocale::localeRegexp( false, false ) . "$/", $translationLocale ) )
     {

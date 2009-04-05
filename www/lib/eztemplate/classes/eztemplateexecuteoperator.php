@@ -5,9 +5,9 @@
 // Created on: <06-Oct-2002 17:53:19 amos>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -26,7 +26,7 @@
 //
 //
 
-/*! \file eztemplateexecuteoperator.php
+/*! \file
 */
 
 /*!
@@ -34,8 +34,6 @@
   \brief The class eZTemplateExecuteOperator does
 
 */
-
-//include_once( 'lib/eztemplate/classes/eztemplate.php' );
 
 class eZTemplateExecuteOperator
 {
@@ -99,7 +97,6 @@ class eZTemplateExecuteOperator
             $moduleName = eZTemplateNodeTool::elementStaticValue( $parameters[0] );
             $functionName = eZTemplateNodeTool::elementStaticValue( $parameters[1] );
 
-            //include_once( 'lib/ezutils/classes/ezfunctionhandler.php' );
             $moduleFunctionInfo = eZFunctionHandler::moduleFunctionInfo( $moduleName );
             if ( !$moduleFunctionInfo->isValid() )
             {
@@ -123,7 +120,6 @@ class eZTemplateExecuteOperator
             $aliasSettings = eZINI::instance( 'fetchalias.ini' );
             if ( $aliasSettings->hasSection( $aliasFunctionName ) )
             {
-                //include_once( 'lib/ezutils/classes/ezfunctionhandler.php' );
                 $moduleFunctionInfo = eZFunctionHandler::moduleFunctionInfo( $aliasSettings->variable( $aliasFunctionName, 'Module' ) );
                 if ( !$moduleFunctionInfo->isValid() )
                 {
@@ -155,6 +151,13 @@ class eZTemplateExecuteOperator
                     }
                 }
             }
+            else
+            {
+                $placement = eZTemplateNodeTool::extractFunctionNodePlacement( $node );
+                $tpl->warning( 'fetch_alias', "Fetch alias '$aliasFunctionName' is not defined in fetchalias.ini", $placement );
+                return array();
+            }
+
             $fetchParameters = array();
             if ( isset( $parameters[1] ) )
                 $fetchParameters = $parameters[1];
@@ -338,8 +341,6 @@ class eZTemplateExecuteOperator
     {
         $functionName = $namedParameters['function_name'];
         $functionParameters = $namedParameters['function_parameters'];
-
-        //include_once( 'lib/ezutils/classes/ezfunctionhandler.php' );
 
         if ( $operatorName == $this->Fetch )
         {

@@ -5,9 +5,9 @@
 // Created on: <13-Aug-2003 16:20:19 amos>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -26,7 +26,7 @@
 //
 //
 
-/*! \file ezbzip2handler.php
+/*! \file
 */
 
 /*!
@@ -36,8 +36,6 @@
 
 NOTE: This is not done yet.
 */
-
-//include_once( 'lib/ezfile/classes/ezcompressionhandler.php' );
 
 class eZBZIP2Handler extends eZCompressionHandler
 {
@@ -49,72 +47,42 @@ class eZBZIP2Handler extends eZCompressionHandler
         $this->eZCompressionHandler();
     }
 
-    /*!
-     \reimp
-    */
     function doOpen( $filename, $mode )
     {
     }
 
-    /*!
-     \reimp
-    */
     function doClose()
     {
     }
 
-    /*!
-     \reimp
-    */
     function doRead( $uncompressedLength = false )
     {
     }
 
-    /*!
-     \reimp
-    */
     function doWrite( $data, $uncompressedLength = false )
     {
     }
 
-    /*!
-     \reimp
-    */
     function doFlush()
     {
     }
 
-    /*!
-     \reimp
-    */
     function compress( $source )
     {
     }
 
-    /*!
-     \reimp
-    */
     function decompress( $source )
     {
     }
 
-    /*!
-     \reimp
-    */
     function error()
     {
     }
 
-    /*!
-     \reimp
-    */
     function errorString()
     {
     }
 
-    /*!
-     \reimp
-    */
     function errorNumber()
     {
     }

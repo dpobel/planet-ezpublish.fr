@@ -5,9 +5,9 @@
 // Created on: <13-Aug-2003 16:20:19 amos>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -26,7 +26,7 @@
 //
 //
 
-/*! \file ezfilehandler.php
+/*! \file
 */
 
 /*!
@@ -146,7 +146,6 @@ class eZFileHandler
     }
 
     /*!
-     \virtual
      \return true if this handler can be used.
      \note The default implementation is to return \c true for all handlers.
     */
@@ -312,8 +311,6 @@ class eZFileHandler
     */
     static function move( $sourceFilename, $destinationFilename )
     {
-        // VS-DBFILE : TODO
-
         if ( !file_exists( $sourceFilename ) and
              !is_link( $sourceFilename ) )
         {
@@ -358,7 +355,6 @@ class eZFileHandler
         {
             $isLink = true;
         }
-        //include_once( 'lib/ezfile/classes/ezfile.php' );
         if ( !$isLink and
              eZFile::rename( $sourceFilename, $destinationFilename ) )
         {
@@ -420,6 +416,7 @@ class eZFileHandler
         }
 
         $destinationFD = fopen( $destinationFilename, 'wb' );
+        chmod( $destinationFilename, octdec( eZINI::instance()->variable( 'FileSettings', 'StorageFilePermissions' ) ) );
         if ( !$destinationFD )
         {
             @fclose( $sourceFD );
@@ -918,7 +915,6 @@ class eZFileHandler
     }
 
     /*!
-     \virtual
      Does the actual file rewind.
      \sa rewind
      \note Default implementation calls seek with offset set to 0 from the file start.
@@ -1003,12 +999,10 @@ class eZFileHandler
     */
     static function doRename( $destinationFilename, $sourceFilename )
     {
-        //include_once( 'lib/ezfile/classes/ezfile.php' );
         return eZFile::rename( $sourceFilename, $destinationFilename );
     }
 
     /*!
-     \virtual
      Returns error data as an associative array, the array contains:
      - string - The error string
      - number - The error number
@@ -1039,7 +1033,6 @@ class eZFileHandler
     }
 
     /*!
-     \virtual
      Creates a copy of the current handler and returns a reference to the copy.
      \note The default does a simple copy of \c $this, this method must be reimplemented for specific handlers.
     */
@@ -1056,7 +1049,6 @@ class eZFileHandler
     */
     static function instance( $identifier, $filename = false, $mode = false, $binaryFile = true )
     {
-        //include_once( 'lib/ezutils/classes/ezini.php' );
         $ini = eZINI::instance( 'file.ini' );
         $handlers = $ini->variable( 'FileSettings', 'Handlers' );
         $instance = false;

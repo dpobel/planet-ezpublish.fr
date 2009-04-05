@@ -5,9 +5,9 @@
 // Created on: <16-Apr-2002 11:08:14 amos>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -31,11 +31,6 @@
 /*!
 
 */
-
-//include_once( "lib/ezdb/classes/ezdb.php" );
-//include_once( "kernel/classes/ezpersistentobject.php" );
-//include_once( "kernel/classes/ezworkflowevent.php" );
-//include_once( 'kernel/classes/ezworkflowgrouplink.php' );
 
 class eZWorkflow extends eZPersistentObject
 {
@@ -339,9 +334,9 @@ class eZWorkflow extends eZPersistentObject
       \static
       Fetch workflows based on module, function and connection type
 
-      \param module name
-      \param function name
-      \param connect type
+      \param $moduleName module name
+      \param $functionName function name
+      \param $connectType connection type
 
       \returns array of allowed workflows limited by trigger
     */
@@ -366,9 +361,9 @@ class eZWorkflow extends eZPersistentObject
     /*!
       Check if a trigger specified trigger is allowed to use with this workflow
 
-      \param module name
-      \param function name
-      \param connect type
+      \param $moduleName module name
+      \param $functionName function name
+      \param $connectType connection type
 
       \return true if allowed, false if not.
     */
@@ -488,7 +483,6 @@ class eZWorkflow extends eZPersistentObject
     {
         if ( isset( $this->CreatorID ) and $this->CreatorID )
         {
-            //include_once( "kernel/classes/datatypes/ezuser/ezuser.php" );
             return eZUser::fetch( $this->CreatorID );
         }
 
@@ -499,7 +493,6 @@ class eZWorkflow extends eZPersistentObject
     {
         if ( isset( $this->ModifierID ) and $this->ModifierID )
         {
-            //include_once( "kernel/classes/datatypes/ezuser/ezuser.php" );
             return eZUser::fetch( $this->ModifierID );
         }
 
@@ -536,7 +529,6 @@ class eZWorkflow extends eZPersistentObject
 
     function workflowType()
     {
-        //include_once( "kernel/classes/ezworkflowtype.php" );
         return eZWorkflowType::createType( $this->WorkflowTypeString );
     }
 

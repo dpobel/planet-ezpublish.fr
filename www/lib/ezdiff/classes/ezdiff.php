@@ -5,9 +5,9 @@
 // <creation-tag>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -26,11 +26,9 @@
 //
 //
 
-/*! \file ezdiff.php
+/*! \file
   Diff functionality
 */
-
-require_once( 'lib/ezutils/classes/ezdebug.php' );
 
 /*!
   \class eZDiff ezdiff.php
@@ -109,27 +107,22 @@ class eZDiff
     */
     function initDiffEngine()
     {
-        //include_once( 'lib/ezdiff/classes/ezdiffengine.php' );
-
         if ( !$diffEngine = $this->DiffEngineInstance )
         {
             switch( $this->DiffEngine )
             {
                 case '0': //Text
                 {
-                    //include_once( 'lib/ezdiff/classes/ezdifftextengine.php' );
                     $this->DiffEngineInstance = new eZDiffTextEngine();
                 }break;
 
                 case '1': //XML
                 {
-                    //include_once( 'lib/ezdiff/classes/ezdiffxmltextengine.php' );
                     $this->DiffEngineInstance = new eZDiffXMLTextEngine();
                 }break;
 
                 case '2': //ObjectContainer
                 {
-                    //include_once( 'lib/ezdiff/classes/ezdiffcontainerobjectengine.php' );
                     $this->DiffEngineInstance = new eZDiffContainerObjectEngine();
                 }
             }

@@ -1,9 +1,9 @@
 <?php
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -57,11 +57,19 @@ function accessType( $uri, $host, $port, $file )
     $access = array( 'name' => $ini->variable( 'SiteSettings', 'DefaultAccess' ),
                      'type' => EZ_ACCESS_TYPE_DEFAULT );
 
-
     if ( $order == 'none' )
         return $access;
 
     $order = $ini->variableArray( 'SiteAccessSettings', 'MatchOrder' );
+
+    // Change the default type to EZ_ACCESS_TYPE_URI if we're using URI MatchOrder.
+    // This is to keep backward compatiblity with the ezurl operator. ezurl has since
+    // rev 4949 added default siteaccess to generated URLs, even when there is
+    // no siteaccess in the current URL.
+    if ( in_array( 'uri', $order ) )
+    {
+        $access['type'] = EZ_ACCESS_TYPE_URI;
+    }
 
     foreach ( $order as $matchprobe )
     {
@@ -73,7 +81,6 @@ function accessType( $uri, $host, $port, $file )
         {
             case 'servervar':
             {
-                //include_once( 'lib/ezutils/classes/ezsys.php' );
                 if ( $serversiteaccess = eZSys::serverVariable( $ini->variable( 'SiteAccessSettings', 'ServerVariableName' ), true ) )
                 {
                     $access['name'] = $serversiteaccess;
@@ -229,7 +236,7 @@ function accessType( $uri, $host, $port, $file )
         else if ( $match_type == 'text' )
             $name = accessMatchText( $match_item, $matcher_pre, $matcher_post );
 
-        if ( ( isset( $name ) && $name != '' ) || $type == EZ_ACCESS_TYPE_URI )
+        if ( isset( $name ) && $name != '' )
         {
             $name = preg_replace( array( '/[^a-zA-Z0-9]+/',
                                          '/_+/',
@@ -263,11 +270,6 @@ function accessType( $uri, $host, $port, $file )
                 $access['name'] = $name;
                 return $access;
             }
-            else if ( $type == EZ_ACCESS_TYPE_URI )
-            {
-                $access['type'] = $type;
-                return $access;
-            }
         }
     }
     return $access;
@@ -290,7 +292,6 @@ function changeAccess( $access )
     if ( isset( $access['type'] ) &&
          $access['type'] == EZ_ACCESS_TYPE_URI )
     {
-        //include_once( 'lib/ezutils/classes/ezsys.php' );
         eZSys::addAccessPath( $name );
     }
 
@@ -300,7 +301,6 @@ function changeAccess( $access )
     }
 
     /* Make sure extension siteaccesses are prepended */
-    //include_once( 'lib/ezutils/classes/ezextension.php' );
     eZExtension::prependExtensionSiteAccesses( $name );
 
     $ini->loadCache();

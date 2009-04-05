@@ -3,9 +3,9 @@
 // Created on: <18-Nov-2003 10:00:08 amos>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.0.1
-// BUILD VERSION: 22260
-// COPYRIGHT NOTICE: Copyright (C) 1999-2008 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.0
+// BUILD VERSION: 23234
+// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -23,10 +23,6 @@
 //   MA 02110-1301, USA.
 //
 //
-
-//include_once( "kernel/classes/ezcontentclass.php" );
-//include_once( "kernel/classes/ezcontentclassattribute.php" );
-//include_once( "kernel/classes/ezcontentclassclassgroup.php" );
 
 $Module = $Params['Module'];
 $LanguageCode = $Params['Language'];
@@ -52,40 +48,19 @@ if ( !$LanguageCode)
 
 if ( $http->hasPostVariable( 'AddGroupButton' ) && $http->hasPostVariable( 'ContentClass_group' ) )
 {
-    //include_once( "kernel/class/ezclassfunctions.php" );
     eZClassFunctions::addGroup( $ClassID, $ClassVersion, $http->postVariable( 'ContentClass_group' ) );
 }
 
 if ( $http->hasPostVariable( 'RemoveGroupButton' ) && $http->hasPostVariable( 'group_id_checked' ) )
 {
-    //include_once( "kernel/class/ezclassfunctions.php" );
     if ( !eZClassFunctions::removeGroup( $ClassID, $ClassVersion, $http->postVariable( 'group_id_checked' ) ) )
     {
         $validation['groups'][] = array( 'text' => ezi18n( 'kernel/class', 'You have to have at least one group that the class belongs to!' ) );
         $validation['processed'] = true;
     }
 }
-else if ( $http->hasPostVariable( 'SetSorting' ) &&
-          $http->hasPostVariable( 'ContentClass_default_sorting_exists' ) )
-{
-    $db = eZDB::instance();
-    $db->begin();
-    if ( $http->hasPostVariable( 'ContentClass_default_sorting_field' ) )
-    {
-        $sortingField = $http->postVariable( 'ContentClass_default_sorting_field' );
-        $class->setAttribute( 'sort_field', $sortingField );
-    }
-    if ( $http->hasPostVariable( 'ContentClass_default_sorting_order' ) )
-    {
-        $sortingOrder = $http->postVariable( 'ContentClass_default_sorting_order' );
-        $class->setAttribute( 'sort_order', $sortingOrder );
-    }
-    $class->store();
-    $db->commit();
-}
 
 $attributes = $class->fetchAttributes();
-//include_once( "kernel/classes/ezdatatype.php" );
 $datatypes = eZDataType::registeredDataTypes();
 
 $mainGroupID = false;
