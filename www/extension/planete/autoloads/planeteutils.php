@@ -79,6 +79,7 @@ class eZPlaneteUtils
         $xml = '<div>' . $res . '</div>';
         $dom = new DomDocument();
         $parsing = $dom->loadXML( $xml );
+        eZDebug::writeDebug( $xml );
         if ( $parsing )
         {
             $xpath = new DomXPath( $dom );
@@ -119,6 +120,20 @@ class eZPlaneteUtils
 
     static function cleanTags( $xpath )
     {
+        // remove <br /> at the beginning
+        $root = $xpath->document->documentElement;
+        foreach( $root->childNodes as $child )
+        {
+            if ( $child->localName == 'br' )
+            {
+                $root->removeChild( $child );
+            }
+            else
+            {
+                break ;
+            }
+        }
+
         // get rid of <a /> used as anchor
         $anchorNodes = $xpath->query( '//a[not( @href )]' );
         foreach( $anchorNodes as $anchor )
