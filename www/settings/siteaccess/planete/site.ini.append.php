@@ -32,7 +32,7 @@ TemplateCompile=enabled
 TemplateCache=enabled
 
 [DebugSettings]
-DebugOutput=enabled
+DebugOutput=disabled
 
 [InformationCollectionSettings]
 EmailReceiver=dpobel@free.fr
