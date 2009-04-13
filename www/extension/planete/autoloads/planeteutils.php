@@ -6,7 +6,9 @@ class eZPlaneteUtils
 
     function __construct()
     {
-        $this->Operators = array( 'clean_rewrite_xhtml', 'bookmarkize' );
+        $this->Operators = array( 'clean_rewrite_xhtml',
+                                  'bookmarkize',
+                                  'entity_decode' );
     }
 
     function operatorList()
@@ -24,6 +26,7 @@ class eZPlaneteUtils
         return array( 'clean_rewrite_xhtml' => array( 'url_site' => array( 'type' => 'string',
                                                                            'required' => true,
                                                                            'default' => '' ) ),
+                      'entity_decode' => array(),
                       'bookmarkize' => array( 'post_url' => array( 'type' => 'string',
                                                                    'required' => true,
                                                                    'default' => '' ),
@@ -41,6 +44,13 @@ class eZPlaneteUtils
             eZDebug::accumulatorStart( 'planete', 'Planete', 'Clean rewrite operator' );
             $operatorValue = self::cleanRewriteXHTML( $html, $namedParameters['url_site'] );
             eZDebug::accumulatorStop( 'planete' );
+        }
+        elseif ( $operatorName == 'entity_decode' )
+        {
+            $html = $operatorValue;
+            $ini = eZINI::instance( 'template.ini' );
+            $operatorValue = html_entity_decode( $html, ENT_QUOTES,
+                                                 $ini->variable( 'CharsetSettings', 'DefaultTemplateCharset' ) );
         }
         elseif ( $operatorName == 'bookmarkize' )
         {

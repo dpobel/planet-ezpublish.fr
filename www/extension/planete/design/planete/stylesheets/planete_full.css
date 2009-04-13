@@ -101,6 +101,10 @@ display:block;
 color:#fff;
 text-decoration:none;
 }
+div.post h1.blog a
+{
+display:inline;
+}
 div.post h1 a.search-rs
 {
 display:inline;
@@ -463,4 +467,14 @@ margin:0;
 blockquote span.quoteleft,blockquote span.quoteright
 {
 display:none;
+}
+div.post dl.post-list dd
+{
+margin-bottom:1em;
+}
+div.post dl.post-list dt a
+{
+font-weight:bold;
+background:url(../images/d.png) no-repeat -2919px 0.4em;
+padding-left:10px;
 }

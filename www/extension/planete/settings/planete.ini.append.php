@@ -3,6 +3,7 @@
 [PageSettings]
 Revision=20090402
 PostByPage=10
+PostByBlogPage=10
 BookmarkURL[]
 BookmarkURL[Delicious]=http://del.icio.us/post?url=%url&title=%title
 BookmarkURL[Blogmark]=http://blogmarks.net/my/new.php?url=%url&title=%title&summary=%title

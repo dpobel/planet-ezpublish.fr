@@ -1,5 +1,17 @@
 <?php /* #?ini charset="utf-8"?
 
+[full_site]
+Source=node/view/full.tpl
+MatchFile=full/site.tpl
+Subdir=templates
+Match[class_identifier]=site
+
+[line_post]
+Source=node/view/line.tpl
+MatchFile=line/post.tpl
+Subdir=templates
+Match[class_identifier]=post
+
 [full_planet]
 Source=node/view/full.tpl
 MatchFile=full/planet.tpl

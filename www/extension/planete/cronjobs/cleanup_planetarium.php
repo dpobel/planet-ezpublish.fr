@@ -15,13 +15,13 @@ $logFile = $planetINI->variable( 'ImportSettings', 'LogFile' );
 
 foreach( $planetNodes as $planet )
 {
-    // keeping only 30 posts from any planet source
+    // keeping only 100 posts from any planet source
     // to avoid creating the same objet again and again
     $paramsPost = array( 'ClassFilterType' => 'include',
                          'ClassFilterArray' => array( $postClassID ),
                          'SortBy' => array( array( 'published', false ) ),
                          'Limit' => 10000, // to avoid http://issues.ez.no/14342
-                         'Offset' => 30 );
+                         'Offset' => 100 );
     $postNodes = $planet->subTree( $paramsPost );  
     foreach( $postNodes as $post )
     {
