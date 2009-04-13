@@ -3,8 +3,10 @@
 [CacheSettings]
 HostName=www.planet-ezpublish.fr
 StaticStorageDir=static
-MaxCacheDepth=1
+MaxCacheDepth=3
 CachedURLArray[]
+CachedURLArray[]=/blogs/*
+CachedURLArray[]=/planetarium/*
 CachedSiteAccesses[]
 
 AlwaysUpdateArray[]
