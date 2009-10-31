@@ -17,6 +17,7 @@ ActiveExtensions[]=planete
 #ActiveExtensions[]=ezdevtools
 ActiveExtensions[]=ezclasslists
 ActiveExtensions[]=ezoe
+ActiveExtensions[]=autostatus
 
 [Session]
 SessionNameHandler=custom

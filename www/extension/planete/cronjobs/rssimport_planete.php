@@ -1,7 +1,9 @@
 <?php
 
+$ini = eZINI::instance();
 $planetINI = eZINI::instance( 'planete.ini' );
 $planetRootNodeID = $planetINI->variable( 'TreeSettings', 'PlanetRootNodeID' );
+$planetariumNodeID = $planetINI->variable( 'TreeSettings', 'PlanetariumNodeID' );
 $siteClassID = $planetINI->variable( 'ImportSettings', 'SiteClassID' );
 $postClassID = $planetINI->variable( 'ImportSettings', 'PostClassID' );
 $postOwnerID = $planetINI->variable( 'ImportSettings', 'PostOwnerID' );
@@ -9,6 +11,7 @@ $postOwnerID = $planetINI->variable( 'ImportSettings', 'PostOwnerID' );
 $titleAttributeID = $planetINI->variable( 'ImportSettings', 'PostTitleAttributeID' );
 $descriptionAttributeID = $planetINI->variable( 'ImportSettings', 'PostDescriptionAttributeID' );
 $urlAttributeID = $planetINI->variable( 'ImportSettings', 'PostURLAttributeID' );
+$twitterMessageAttributeID = $planetINI->variable( 'ImportSettings', 'PostTwitterMessageAttributeID' );
 
 $params = array( 'ClassFilterType' => 'include',
                  'ClassFilterArray' => array( $siteClassID ) );
@@ -57,6 +60,7 @@ foreach ( $blogNodes as $blog )
         $remoteID = $md5Sum . '_' . $blog->attribute( 'node_id' ) . '_Planete_RSSImport';
         $contentObject = eZContentObject::fetchByRemoteID( $remoteID );
         $dataMap = null;
+        $newObject = false;
         $db->begin();
         if ( !is_object( $contentObject ) )
         {
@@ -76,6 +80,7 @@ foreach ( $blogNodes as $blog )
             $version->setAttribute( 'status', eZContentObjectVersion::STATUS_DRAFT );
             $version->store();
             $dataMap = $version->attribute( 'data_map' );
+            $newObject = true;
         }
         else
         {
@@ -145,6 +150,22 @@ foreach ( $blogNodes as $blog )
                     $dataMap[$k]->fromString( trim( $item->link[0] ) );
                     $dataMap[$k]->store();
                 }
+                elseif ( $contentAttribute->attribute( 'contentclassattribute_id' ) == $twitterMessageAttributeID )
+                {
+                    if ( !$newObject || $planetariumNodeID == $blog->attribute( 'parent_node_id' ) ) 
+                    {
+                        // empty twitter message attribute, if it's an update of an existing object
+                        // or it's a post in the planetarium
+                        $dataMap[$k]->fromString( '' );
+                        $dataMap[$k]->store();
+                    }
+                    else
+                    {
+                        $url = trim( $item->link[0] );
+                        $dataMap[$k]->fromString( '%title ' . $url );
+                        $dataMap[$k]->store();
+                    }
+                }
             }
             $contentObject->setAttribute( 'remote_id', $remoteID );
             $contentObject->store();
@@ -171,7 +192,6 @@ foreach ( $blogNodes as $blog )
 }
 if ( $updated )
 {
-    $ini = eZINI::instance();
     // need to clear feed/planet cache
     eZLog::write( 'Need to clear feed/planet cache', $logFile );
     $cacheInfo = eZPlaneteUtils::rssCacheInfo();

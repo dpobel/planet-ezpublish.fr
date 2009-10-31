@@ -24,6 +24,7 @@ PostClassID=18
 PostTitleAttributeID=188
 PostURLAttributeID=186
 PostDescriptionAttributeID=185
+PostTwitterMessageAttributeID=205
 PostOwnerID=14
 
 LogFile=planete.log
