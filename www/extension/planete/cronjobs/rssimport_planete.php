@@ -162,7 +162,7 @@ foreach ( $blogNodes as $blog )
                     else
                     {
                         $url = trim( $item->link[0] );
-                        $dataMap[$k]->fromString( '%title ' . $url );
+                        $dataMap[$k]->fromString( '%title ' . $url . ' #ezpublish' );
                         $dataMap[$k]->store();
                     }
                 }
