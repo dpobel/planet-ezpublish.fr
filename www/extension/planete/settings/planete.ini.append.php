@@ -1,7 +1,7 @@
 <?php /*
 
 [PageSettings]
-Revision=20090101
+Revision=200901011
 PostByPage=10
 PostByBlogPage=10
 BookmarkURL[]
