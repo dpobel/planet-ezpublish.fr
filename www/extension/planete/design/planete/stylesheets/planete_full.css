@@ -45,7 +45,7 @@ width:950px;
 }
 #header p
 {
-background:url(../images/d.png) no-repeat 0 4px;
+background:url(../images/e.png) no-repeat 0 4px;
 height:80px;
 }
 
@@ -62,7 +62,7 @@ display:none;
 #header ul
 {
 height:30px;
-background:#5c7999 url(../images/d.png) no-repeat -952px 0;
+background:#5c7999 url(../images/e.png) no-repeat -952px 0;
 border-bottom:4px solid #ff490f;
 }
 #header ul li
@@ -125,7 +125,7 @@ font-size:16px;
 font-weight:bold;
 border-bottom:1px solid #999;
 padding:5px 5px 3px 5px;
-background:#f2f2f2 url(../images/d.png) repeat-y -1950px 0;
+background:#f2f2f2 url(../images/e.png) repeat-y -1950px 0;
 border-bottom:2px solid #ff490f;
 }
 div.post h1.search-title
@@ -285,11 +285,15 @@ padding:12px 0 20px 0;
 }
 #menu div.flux
 {
-padding-bottom:5px;
+padding:0 0 15px 0;
 }
 #menu div.flux p a span
 {
 display:none;
+}
+#menu div.flux p
+{
+height:64px;
 }
 #menu div.flux p a
 {
@@ -297,7 +301,16 @@ margin:10px auto 0 auto;
 display:block;
 width:64px;
 height:64px;
-background:url(../images/d.png) no-repeat -2855px -7px;
+float:left;
+margin-left:24px;
+}
+#menu div.flux p a#rss
+{
+background:url(../images/e.png) no-repeat -2855px -7px;
+}
+#menu div.flux p a#twitter
+{
+background:url(../images/e.png) no-repeat -2919px -7px;
 }
 #menu h1
 {
@@ -320,7 +333,7 @@ list-style-type:none;
 #menu li
 {
 padding-left:14px;
-background:url(../images/d.png) no-repeat -2919px 0.5em;
+background:url(../images/e.png) no-repeat -2979px 0.5em;
 line-height:1.5em;
 }
 #search
@@ -475,6 +488,6 @@ margin-bottom:1em;
 div.post dl.post-list dt a
 {
 font-weight:bold;
-background:url(../images/d.png) no-repeat -2919px 0.4em;
+background:url(../images/e.png) no-repeat -2919px 0.4em;
 padding-left:10px;
 }

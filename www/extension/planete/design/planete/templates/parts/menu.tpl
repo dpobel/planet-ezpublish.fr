@@ -1,7 +1,9 @@
 <div id="menu">
     <div class="block flux">
-        <h1><a href={'feed/planet'|ezurl()}>Flux RSS</a></h1>
-        <p><a href={'feed/planet'|ezurl()}><span>Flux RSS</span></a></p>
+        <p>
+            <a href={'feed/planet'|ezurl()} id="rss" title="Suivez le Planet par le flux RSS"><span>Flux RSS</span></a>
+            <a href="http://twitter.com/pl_ezpublish_fr" id="twitter" title="Suivez le Planet sur Twitter"><span>Twitter du Planet eZ Publish.fr</span></a>
+        </p>
     </div>
     {cache-block keys=array( 'menu', ezini( 'TreeSettings', 'BlogsNodeID', 'planete.ini' ) )
                  expiry=0 subtree_expiry=ezini( 'TreeSettings', 'BlogsNodeID', 'planete.ini' )}
