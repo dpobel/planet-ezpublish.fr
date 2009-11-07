@@ -1,4 +1,9 @@
 <?php
+/**
+ * $Id$
+ * $HeadURL$
+ */
+
 $db = eZDB::instance();
 
 $ini = eZINI::instance();

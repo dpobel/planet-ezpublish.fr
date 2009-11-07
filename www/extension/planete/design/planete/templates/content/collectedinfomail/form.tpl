@@ -1,4 +1,7 @@
-{set-block scope=root variable=subject}[Planet eZ Publish.fr] Message par le formulaire de contact{/set-block}
+{*
+ * $Id$
+ * $HeadURL$
+ *}{set-block scope=root variable=subject}[Planet eZ Publish.fr] Message par le formulaire de contact{/set-block}
 
 Champs remplis par l'utilisateur :
 

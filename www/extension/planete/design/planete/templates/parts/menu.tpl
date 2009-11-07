@@ -1,3 +1,7 @@
+{*
+ * $Id$
+ * $HeadURL$
+ *}
 <div id="menu">
     <div class="block flux">
         <p>

@@ -1,3 +1,7 @@
+{*
+ * $Id$
+ * $HeadURL$
+ *}
 {def $by_page = ezini( 'PageSettings', 'PostByBlogPage', 'planete.ini' )
      $posts_count = fetch( content, list_count, hash( parent_node_id, $node.node_id,
                                                       class_filter_type, include,

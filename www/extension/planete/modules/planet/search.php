@@ -1,4 +1,9 @@
 <?php
+/**
+ * $Id$
+ * $HeadURL$
+ */
+
 require_once( "kernel/common/template.php" );
 
 $Module = $Params['Module'];

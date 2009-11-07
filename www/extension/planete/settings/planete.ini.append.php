@@ -1,4 +1,8 @@
 <?php /*
+#
+# $Id$
+# $HeadURL
+#
 
 [PageSettings]
 Revision=200901011

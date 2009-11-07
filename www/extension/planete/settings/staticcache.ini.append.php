@@ -1,4 +1,8 @@
 <?php /*
+#
+# $Id$
+# $HeadURL
+#
 
 [CacheSettings]
 HostName=www.planet-ezpublish.fr

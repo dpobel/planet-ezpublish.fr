@@ -1,5 +1,8 @@
 <?php /*
-
+#
+# $Id$
+# $HeadURL
+#
 
 [ModuleSettings]
 ExtensionRepositories[]=planete

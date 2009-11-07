@@ -1,4 +1,8 @@
 <?php /*
+#
+# $Id$
+# $HeadURL
+#
 
 [ContentSettings]
 StaticCache=enabled

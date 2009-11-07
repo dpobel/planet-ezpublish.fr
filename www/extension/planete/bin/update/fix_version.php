@@ -1,5 +1,9 @@
 #!/usr/bin/env php
 <?php
+/**
+ * $Id$
+ * $HeadURL$
+ */
 require 'autoload.php';
 
 $cli = eZCLI::instance();

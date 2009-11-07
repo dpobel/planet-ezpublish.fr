@@ -1,4 +1,8 @@
 <?php /*
+#
+# $Id$
+# $HeadURL
+#
 
 [CronjobSettings]
 ExtensionDirectories[]=planete

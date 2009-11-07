@@ -1,4 +1,8 @@
 <?php
+/**
+ * $Id$
+ * $HeadURL$
+ */
 
 $planetINI = eZINI::instance( 'planete.ini' );
 $planetariumNodeID = $planetINI->variable( 'TreeSettings', 'PlanetariumNodeID' );

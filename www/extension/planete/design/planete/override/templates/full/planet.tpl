@@ -1,3 +1,7 @@
+{*
+ * $Id$
+ * $HeadURL$
+ *}
 {def $posts_limit = ezini( 'PageSettings', 'PostByPage', 'planete.ini' )
      $blogs_node_id = ezini( 'TreeSettings', 'BlogsNodeID', 'planete.ini' )
      $posts = fetch( content, tree, hash( 'parent_node_id', $blogs_node_id,

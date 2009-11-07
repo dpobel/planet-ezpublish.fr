@@ -1,4 +1,8 @@
 <?php
+/**
+ * $Id$
+ * $HeadURL$
+ */
 
 class eZPlaneteUtils
 {
