@@ -17,7 +17,7 @@ ActiveExtensions[]=planete
 #ActiveExtensions[]=ezdevtools
 ActiveExtensions[]=ezclasslists
 ActiveExtensions[]=ezoe
-#ActiveExtensions[]=autostatus
+ActiveExtensions[]=autostatus
 
 [Session]
 SessionNameHandler=custom
@@ -35,10 +35,8 @@ AvailableSiteAccessList[]=planete
 AvailableSiteAccessList[]=bo
 MatchOrder=host
 HostMatchMapItems[]
-HostMatchMapItems[]=planet42.loc;planete
 HostMatchMapItems[]=planet.loc;planete
 HostMatchMapItems[]=www.planet-ezpublish.fr;planete
-HostMatchMapItems[]=admin.planet42.loc;bo
 HostMatchMapItems[]=admin.planet.loc;bo
 HostMatchMapItems[]=admin.planet-ezpublish.fr;bo
 
