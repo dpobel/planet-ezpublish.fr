@@ -5,8 +5,8 @@
 // Created on: <12-Feb-2003 16:50:52 bf>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.1.0
-// BUILD VERSION: 23234
+// SOFTWARE RELEASE: 4.2.0
+// BUILD VERSION: 24182
 // COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
@@ -33,9 +33,13 @@ class eZShopAccountHandler
 
     }
 
-    /*!
-     returns the current shop account instance
-    */
+    /**
+     * Returns a shared instance of the eZShopAccountHandler class
+     * as defined in shopaccount.ini[HandlerSettings]Repositories
+     * and ExtensionRepositories.
+     *
+     * @return eZDefaultShopAccountHandler Or similar clases.
+     */
     static function instance()
     {
         $accountHandler = null;

@@ -5,8 +5,8 @@
 // Created on: <24-Jul-2003 15:11:57 wy>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.1.0
-// BUILD VERSION: 23234
+// SOFTWARE RELEASE: 4.2.0
+// BUILD VERSION: 24182
 // COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
@@ -97,12 +97,13 @@ class eZUserLoginHandler
         }
     }
 
-    /*!
-     Fetch object instance of specified login handler.
-
-     \param login handler name
-
-     \return Login handler object
+    /**
+     * Returns a new instance of the eZUser class pr $protocol.
+     *
+     * @param $protocol string If not set to 'standard' (default), then the code will look
+     *        for handler first in kernel/classes/datatypes/ezuser/, then according to
+     *        site.ini[UserSettings]ExtensionDirectory settings
+     * @return eZUser
      */
     static function instance( $protocol = "standard" )
     {

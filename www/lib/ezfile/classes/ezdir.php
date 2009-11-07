@@ -5,8 +5,8 @@
 // Created on: <02-Jul-2002 15:33:41 sp>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.1.0
-// BUILD VERSION: 23234
+// SOFTWARE RELEASE: 4.2.0
+// BUILD VERSION: 24182
 // COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
@@ -221,20 +221,23 @@ class eZDir
     {
         $path = eZDir::convertSeparators( $path, $toType );
         $separator = eZDir::separator( $toType );
-        $path = preg_replace( "#$separator{2,}#", $separator, $path );
+        if ( strpos( $path, $separator . $separator ) !== false )
+        {
+            $path = preg_replace( "#$separator{2,}#", $separator, $path );
+        }
         $pathElements = explode( $separator, $path );
         $newPathElements = array();
         foreach ( $pathElements as $pathElement )
         {
-            if ( $pathElement == '.' )
+            if ( $pathElement === '.' )
                 continue;
-            if ( $pathElement == '..' and
+            if ( $pathElement === '..' and
                  count( $newPathElements ) > 0 )
                 array_pop( $newPathElements );
             else
                 $newPathElements[] = $pathElement;
         }
-        if ( count( $newPathElements ) == 0 )
+        if ( !isset( $newPathElements[0] )  )
             $newPathElements[] = '.';
         $path = implode( $separator, $newPathElements );
         return $path;

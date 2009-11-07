@@ -3,8 +3,8 @@
 // Created on: <17-Apr-2002 10:34:48 bf>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.1.0
-// BUILD VERSION: 23234
+// SOFTWARE RELEASE: 4.2.0
+// BUILD VERSION: 24182
 // COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
@@ -232,6 +232,42 @@ foreach ( $contentObjectAttributes as $contentObjectAttribute )
 $inputValidated = true;
 $requireFixup = false;
 $validatedAttributes = array();
+
+if ( $_SERVER['REQUEST_METHOD'] === 'POST' )
+{
+    // Need to detect if post_max_size has been reached. If so, all post variables are gone...
+    $postMaxSize = trim( ini_get( 'post_max_size' ) );
+    $postMaxSizeBytes = $postMaxSize;
+    $postMaxSizeUnit = 'b';
+    // post_max_size can have values like 8M which needs to be converted to bytes
+    $last = strtolower( $postMaxSize[strlen($postMaxSize)-1] );
+    if ( !is_numeric( $last ) )
+        $postMaxSize = substr( $postMaxSize, 0, -1 );
+    switch ( $last )
+    {
+        case 'g':
+            $postMaxSizeBytes *= 1073741824; // = 1024 * 1024 * 1024
+            $postMaxSizeUnit = 'Gb';
+            break;
+        case 'm':
+            $postMaxSizeBytes *= 1048576; // = 1024 * 1024
+            $postMaxSizeUnit = 'Mb';
+            break;
+        case 'k':
+            $postMaxSizeBytes *= 1024;
+            $postMaxSizeUnit = 'Kb';
+            break;
+    }
+    if ( (int)$_SERVER['CONTENT_LENGTH'] > $postMaxSizeBytes &&  // This is not 100% acurrate as $_SERVER['CONTENT_LENGTH'] doesn't only count post data but also other things
+        count( $_POST ) === 0 )                                 // Therefore we also check if request got no post variables.
+    {
+        $validation['attributes'][] = array( 'id' => '1',
+                                             'identified' => 'generalid',
+                                             'name' => ezi18n( 'kernel/content', 'Error' ),
+                                             'description' => ezi18n( 'kernel/content', 'The request sent to the server was too big to be accepted. This probably means that you uploaded a file which was too big. The maximum allowed request size is %max_size_string.', null, array( '%max_size_string' => "$postMaxSize $postMaxSizeUnit" ) ) );
+        $validation['processed'] = true;
+    }
+}
 
 if ( $storingAllowed && $hasObjectInput)
 {

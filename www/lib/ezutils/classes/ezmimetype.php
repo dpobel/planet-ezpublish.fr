@@ -5,8 +5,8 @@
 // Created on: <15-Aug-2002 12:44:57 sp>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.1.0
-// BUILD VERSION: 23234
+// SOFTWARE RELEASE: 4.2.0
+// BUILD VERSION: 24182
 // COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
@@ -349,10 +349,11 @@ class eZMimeType
         return eZMimeType::findByURL( $url, $returnDefault );
     }
 
-    /*!
-     \static
-     \return the unique instance of the eZMimeType class.
-    */
+    /**
+     * Returns a shared instance of the eZMimeType class.
+     *
+     * @return eZMimeType
+     */
     static function instance()
     {
         $instance =& $GLOBALS['eZMIMETypeInstance'];

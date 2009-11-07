@@ -3,8 +3,8 @@
 // Created on: <23-Mar-2005 23:23:23 rl>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.1.0
-// BUILD VERSION: 23234
+// SOFTWARE RELEASE: 4.2.0
+// BUILD VERSION: 24182
 // COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
@@ -563,8 +563,8 @@ function copySubtree( $srcNodeID, $dstNodeID, &$notifications, $allVersions, $ke
         return $notifications;
     }
 
-    $idListStr = $db->implodeWithTypeCast( ',', $syncObjectIDListNew, 'int' );
-    $relatedRecordsList = $db->arrayQuery( "SELECT * FROM ezcontentobject_link WHERE from_contentobject_id IN ($idListStr)" );
+    $idListINString = $db->generateSQLINStatement( $syncObjectIDListNew, 'from_contentobject_id', false, false, 'int' );
+    $relatedRecordsList = $db->arrayQuery( "SELECT * FROM ezcontentobject_link WHERE $idListINString" );
 
     foreach ( $relatedRecordsList as $relatedEntry )
     {

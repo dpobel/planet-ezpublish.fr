@@ -3,8 +3,8 @@
 // Created on: <01-Jun-2007 15:00:00 dl>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.1.0
-// BUILD VERSION: 23234
+// SOFTWARE RELEASE: 4.2.0
+// BUILD VERSION: 24182
 // COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
@@ -1434,30 +1434,49 @@ class eZSiteInstaller
          $languageName = substr( $locale , 0, $pos );
          return $languageName;
     }
+    
+    /*!
+     Helper function used for extracting hostname from the given \param $uri
+    */
+    public function extractHostname( $uri )
+    {
+        $hostname = false;
+
+        $parts = parse_url( $uri );
+        
+        if ( isset( $parts['host'] ) )
+            $hostname = $parts['host'];
+
+        return $hostname;
+    }
 
     /*!
      Create siteaccess urls for additional user siteacceses using info about access type(host, post, uri)
      Params:
         'siteaccess_list'         - list of siteaccess names to build urls;
         'access_type'             - access type: port, hostname, url;
-        'port'                    - optional, port number to start with. used if 'access_type' is 'port';
+        'access_type_value'       - access type value provided by setup wizard
         'exclude_port_list'       - optional, ports to skip. used if 'access_type' is 'port';
         'host'                    - host name
         'host_prepend_siteaccess' - optional, boolean which instructs to prepend the site access name or not to the value of 'host', by default true
     */
     function createSiteaccessUrls( $params )
     {
-        $sys = eZSys::instance();
-
         $urlList = array();
 
         $siteaccessList = $params['siteaccess_list'];
         $accessType = $params['access_type'];
+        $accessTypeValue = $params['access_type_value'];
 
         $excludePortList = isset( $params['exclude_port_list'] ) ? $params['exclude_port_list'] : array();
 
-        $port = isset( $params['port'] ) ? $params['port'] : 8085;
-        $host = isset( $params['host'] ) && $params['host'] ? $params['host'] : $sys->hostname();
+        $hostname = false;
+
+        if ( isset( $params['host'] ) && $params['host'] !== '' )
+            $hostname = $this->extractHostname( $params['host'] );
+
+        if ( !$hostname )
+            $hostname = eZSys::hostname();
 
         $indexFile = eZSys::wwwDir() . eZSys::indexFileName();
 
@@ -1465,11 +1484,8 @@ class eZSiteInstaller
         {
             case 'port':
                 {
-                    // grep server url stripping port number
-                    $pos = strpos( $host, ':' );
-                    if( $pos !== false )
-                        $host = substr( $host, 0, $pos );
-
+                    $port = $accessTypeValue;
+                    
                     // build urls
                     foreach( $siteaccessList as $siteaccess )
                     {
@@ -1477,7 +1493,7 @@ class eZSiteInstaller
                         while( in_array( $port, $excludePortList ) )
                             ++$port;
 
-                        $urlList[$siteaccess]['url'] = "$host:$port" . $indexFile;
+                        $urlList[$siteaccess]['url'] = "$hostname:$port" . $indexFile;
                         $urlList[$siteaccess]['port'] = $port;
                         ++$port;
                     }
@@ -1488,9 +1504,10 @@ class eZSiteInstaller
                 {
                     $prependSiteAccess = isset( $params['host_prepend_siteaccess'] ) && is_bool( $params['host_prepend_siteaccess'] ) ? $params['host_prepend_siteaccess'] : true;
 
-                    // grep domain
-                    if( preg_match( "#^[a-zA-Z0-9]+://(.*)$#", $host, $matches ) )
-                        $host = $matches[1];
+                    $hostname = $this->extractHostname( $accessTypeValue );
+
+                    if ( !$hostname )
+                        $hostname = $accessTypeValue;
 
                     foreach( $siteaccessList as $siteaccess )
                     {
@@ -1500,14 +1517,14 @@ class eZSiteInstaller
                             $hostPrefix = preg_replace( '/(_)/', '-', $siteaccess);
 
                             // create url and host
-                            $urlList[$siteaccess]['url'] = $hostPrefix . '.' . $host . $indexFile;
-                            $urlList[$siteaccess]['host'] = $hostPrefix . '.' . $host;
+                            $urlList[$siteaccess]['url'] = $hostPrefix . '.' . $hostname . $indexFile;
+                            $urlList[$siteaccess]['host'] = $hostPrefix . '.' . $hostname;
                         }
                         else
                         {
                             // create url and host
-                            $urlList[$siteaccess]['url'] = $host . $indexFile;
-                            $urlList[$siteaccess]['host'] = $host;
+                            $urlList[$siteaccess]['url'] = $hostname . $indexFile;
+                            $urlList[$siteaccess]['host'] = $hostname;
                         }
                     }
                 }
@@ -1517,7 +1534,7 @@ class eZSiteInstaller
                 {
                     foreach( $siteaccessList as $siteaccess )
                     {
-                        $urlList[$siteaccess]['url'] = $host . $indexFile . '/' . $siteaccess;
+                        $urlList[$siteaccess]['url'] = $hostname . $indexFile . '/' . $siteaccess;
                     }
                 }
                 break;

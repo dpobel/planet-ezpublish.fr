@@ -5,8 +5,8 @@
 // Created on: <10-æÅ×-2003 16:04:18 sp>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.1.0
-// BUILD VERSION: 23234
+// SOFTWARE RELEASE: 4.2.0
+// BUILD VERSION: 24182
 // COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
@@ -26,20 +26,14 @@
 //
 //
 
-/*! \file
-*/
-
-/*!
-  \class eZProductCollectionItemOption ezproductcollectionitemoption.php
-  \brief The class eZProductCollectionItemOption does
-
-*/
-
 class eZProductCollectionItemOption extends eZPersistentObject
 {
-    /*!
-     Constructor
-    */
+    /**
+     * Initialized an eZProductCollectionItemOption object with the given
+     * attribute array
+     *
+     * @param array $row Array of object attributes
+     **/
     function eZProductCollectionItemOption( $row )
     {
         $this->eZPersistentObject( $row );
@@ -91,6 +85,16 @@ class eZProductCollectionItemOption extends eZPersistentObject
                       "name" => "ezproductcollection_item_opt" );
     }
 
+    /**
+     * Creates an eZProductCollectionItem
+     *
+     * @param int $productCollectionItemID
+     * @param int $optionItemID
+     * @param string $optionName
+     * @param string $optionValue
+     * @param string $optionPrice
+     * @param int $attributeID
+     **/
     static function create( $productCollectionItemID, $optionItemID, $optionName, $optionValue, $optionPrice, $attributeID )
     {
         $row = array( 'item_id' => $productCollectionItemID,
@@ -102,22 +106,23 @@ class eZProductCollectionItemOption extends eZPersistentObject
         return new eZProductCollectionItemOption( $row );
     }
 
-    /*!
-     Clones the collection item option object and returns it. The ID of the clone is erased.
-    */
+    /**
+     * Clones the collection item option object and returns it.
+     * The ID of the clone is reset so that the clone can be saved
+     **/
     function __clone()
     {
         $this->setAttribute( 'id', null );
     }
 
-    /*!
-     Copies the collection object item option,
-     the new copy will point to the collection item \a $collectionItemID.
-     \return the new collection item option object.
-     \note The new collection item option will already be present in the database.
-     \note Transaction unsafe. If you call several transaction unsafe methods you must enclose
-     the calls within a db transaction; thus within db->begin and db->commit.
-    */
+    /**
+     * Copies the collection object item option. The copy will point to the
+     * collection item parameter $collectionItemID.
+     *
+     * @param int $collectionItemID Collection item ID to match the option to
+     *
+     * @return eZProductCollectionItemOption The new object
+     **/
     function copy( $collectionItemID )
     {
         $item = clone $this;
@@ -126,6 +131,15 @@ class eZProductCollectionItemOption extends eZPersistentObject
         return $item;
     }
 
+    /**
+     * Fetches eZProductCollectionItemOption items that match the given item ID,
+     * sorted by ascending order of option ID
+     *
+     * @param int $productCollectionItemID
+     * @param bool $asObject
+     *
+     * @return array(eZProductCollectionItemOption)
+     **/
     static function fetchList( $productCollectionItemID, $asObject = true )
     {
         return eZPersistentObject::fetchObjectList( eZProductCollectionItemOption::definition(),
@@ -135,17 +149,19 @@ class eZProductCollectionItemOption extends eZPersistentObject
                                                     $asObject );
     }
 
-    /*!
-     \static
-     Removes all product collections options which are related to the collection items specified in the array \a $itemIDList.
-     \note Transaction unsafe. If you call several transaction unsafe methods you must enclose
-     the calls within a db transaction; thus within db->begin and db->commit.
-    */
+    /**
+     * Removes all product collections options which are related to the
+     * collection items specified in the parameter array
+     *
+     * @param array $itemIDList Array of eZProductCollectionItem IDs
+     *
+     * @return void
+     **/
     static function cleanupList( $itemIDList )
     {
         $db = eZDB::instance();
-        $idText = $db->implodeWithTypeCast( ', ', $itemIDList, 'int' );
-        $db->query( "DELETE FROM ezproductcollection_item_opt WHERE item_id IN ( $idText )" );
+        $inText = $db->generateSQLINStatement( $itemIDList, 'item_id', false, false, 'int' );
+        $db->query( $q = "DELETE FROM ezproductcollection_item_opt WHERE $inText" );
     }
 
 }

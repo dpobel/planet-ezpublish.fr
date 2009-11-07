@@ -2143,8 +2143,8 @@ CREATE TABLE ezpdf_export (
 
 CREATE TABLE ezpending_actions (
     "action" character varying(64) DEFAULT ''::character varying NOT NULL,
-    param text,
-    created integer
+    created integer,
+    param text
 );
 
 
@@ -2420,8 +2420,8 @@ CREATE TABLE ezsession (
     data text NOT NULL,
     expiration_time integer DEFAULT 0 NOT NULL,
     session_key character varying(32) DEFAULT ''::character varying NOT NULL,
-    user_id integer DEFAULT 0 NOT NULL,
-    user_hash character varying(32) DEFAULT ''::character varying NOT NULL
+    user_hash character varying(32) DEFAULT ''::character varying NOT NULL,
+    user_id integer DEFAULT 0 NOT NULL
 );
 
 
@@ -2769,10 +2769,10 @@ CREATE TABLE ezworkflow_event (
     data_int2 integer,
     data_int3 integer,
     data_int4 integer,
-    data_text1 character varying(50),
-    data_text2 character varying(50),
-    data_text3 character varying(50),
-    data_text4 character varying(50),
+    data_text1 character varying(255),
+    data_text2 character varying(255),
+    data_text3 character varying(255),
+    data_text4 character varying(255),
     data_text5 text,
     description character varying(50) DEFAULT ''::character varying NOT NULL,
     id integer DEFAULT nextval('ezworkflow_event_s'::text) NOT NULL,
@@ -3278,6 +3278,14 @@ CREATE INDEX ezimagefile_file ON ezimagefile USING btree (filepath);
 
 
 
+CREATE INDEX ezinfocollection_co_id_created ON ezinfocollection USING btree (contentobject_id, created);
+
+
+
+
+
+
+
 CREATE INDEX ezinfocollection_attr_co_id ON ezinfocollection_attribute USING btree (contentobject_id);
 
 
@@ -3311,6 +3319,14 @@ CREATE INDEX ezkeyword_attr_link_keyword_id ON ezkeyword_attribute_link USING bt
 
 
 CREATE INDEX ezkeyword_attr_link_kid_oaid ON ezkeyword_attribute_link USING btree (keyword_id, objectattribute_id);
+
+
+
+
+
+
+
+CREATE INDEX ezkeyword_attr_link_oaid ON ezkeyword_attribute_link USING btree (objectattribute_id);
 
 
 
@@ -3487,6 +3503,14 @@ CREATE INDEX ezpending_actions_action ON ezpending_actions USING btree ("action"
 
 
 CREATE INDEX ezpending_actions_created ON ezpending_actions USING btree (created);
+
+
+
+
+
+
+
+CREATE INDEX policy_id ON ezpolicy_limitation USING btree (policy_id);
 
 
 
@@ -3846,6 +3870,14 @@ CREATE INDEX ezurlalias_ml_text_lang ON ezurlalias_ml USING btree (text, lang_ma
 
 
 
+CREATE INDEX hash_key ON ezuser_accountkey USING btree (hash_key);
+
+
+
+
+
+
+
 CREATE INDEX ezuser_role_contentobject_id ON ezuser_role USING btree (contentobject_id);
 
 
@@ -3871,6 +3903,14 @@ CREATE INDEX ezuservisit_co_visit_count ON ezuservisit USING btree (current_visi
 
 
 CREATE INDEX ezwaituntildateevalue_wf_ev_id_wf_ver ON ezwaituntildatevalue USING btree (workflow_event_id, workflow_event_version);
+
+
+
+
+
+
+
+CREATE INDEX wid_version_placement ON ezworkflow_event USING btree (workflow_id, "version", placement);
 
 
 

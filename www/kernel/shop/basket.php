@@ -3,8 +3,8 @@
 // Created on: <04-Jul-2002 13:19:43 bf>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.1.0
-// BUILD VERSION: 23234
+// SOFTWARE RELEASE: 4.2.0
+// BUILD VERSION: 24182
 // COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
@@ -187,10 +187,11 @@ if ( $http->hasPostVariable( "ContinueShoppingButton" ) )
             $module->redirectTo( $module->functionURI( "basket" ) . "/(error)/invaliditemcount" );
             return;
         }
-
-        $fromURL = $http->sessionVariable( "FromPage" );
-        $module->redirectTo( $fromURL );
     }
+    $fromURL = $http->sessionVariable( "FromPage" );
+    $http->RemoveSessionVariable( "FromPage" );
+    $module->redirectTo( $fromURL );
+    return;
 }
 
 $doCheckout = false;

@@ -5,8 +5,8 @@
 // Created on: <01-Oct-2002 11:18:14 kk>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.1.0
-// BUILD VERSION: 23234
+// SOFTWARE RELEASE: 4.2.0
+// BUILD VERSION: 24182
 // COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
@@ -597,9 +597,9 @@ class eZIniSettingType extends eZDataType
             return true;
         $iniData = explode( '|', $string );
 
-        $contentObjectAttribute->setAttribute( 'data_text', $value );
+        $contentObjectAttribute->setAttribute( 'data_text', $iniData[0] );
         if ( isset ( $iniData[1] ) )
-            $contentObjectAttribute->setAttribute( 'data_int', $makeEmptyArray );
+            $contentObjectAttribute->setAttribute( 'data_int', $iniData[1] );
         return true;
     }
 

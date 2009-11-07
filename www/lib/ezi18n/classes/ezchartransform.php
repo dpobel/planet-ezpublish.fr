@@ -5,8 +5,8 @@
 // Created on: <16-Jul-2004 15:54:21 amos>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.1.0
-// BUILD VERSION: 23234
+// SOFTWARE RELEASE: 4.2.0
+// BUILD VERSION: 24182
 // COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
@@ -373,9 +373,11 @@ class eZCharTransform
     static function varExportInternal( $value, $column = 0, $iteration = 0 )
     {
 
-        if ( is_bool( $value ) )
-            $text = ( $value ? 'true' : 'false' );
-        else if ( is_null( $value ) )
+        if ( $value === true )
+            $text = 'true';
+        else if ( $value === false )
+            $text = 'false';
+        else if ( $value === null )
             $text = 'null';
         else if ( is_string( $value ) )
         {
@@ -532,7 +534,7 @@ class eZCharTransform
         $sep  = eZCharTransform::wordSeparator();
         $sepQ = preg_quote( $sep );
         $text = preg_replace( array( "#[^a-zA-Z0-9_!.-]+#",
-                                     "#^[.]+|[.]+$#", # Remove dots at beginning/end
+                                     "#^[.]+|[!.]+$#", # Remove dots at beginning/end
                                      "#\.\.+#", # Remove double dots
                                      "#[{$sepQ}]+#", # Turn multiple separators into one
                                      "#^[{$sepQ}]+|[{$sepQ}]+$#" ), # Strip separator from beginning/end
@@ -560,7 +562,7 @@ class eZCharTransform
         if ( $sep != "-" )
             $prepost .= "-";
         $text = preg_replace( array( "#[ \\\\%\#&;/:=?\[\]()+]+#",
-                                     "#^[.]+|[.]+$#", # Remove dots at beginning/end
+                                     "#^[.]+|[!.]+$#", # Remove dots at beginning/end
                                      "#\.\.+#", # Remove double dots
                                      "#[{$sepQ}]+#", # Turn multiple separators into one
                                      "#^[{$prepost}]+|[{$prepost}]+$#" ),
@@ -573,9 +575,11 @@ class eZCharTransform
         return $text;
     }
 
-    /*!
-     \return The unique instance of the character transformer.
-    */
+    /**
+     * Returns a shared instance of the eZCharTransform class.
+     *
+     * @return eZCharTransform
+     */
     static function instance()
     {
         $instance =& $GLOBALS['eZCharTransformInstance'];

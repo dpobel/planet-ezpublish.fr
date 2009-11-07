@@ -5,8 +5,8 @@
 // Created on: <10-Jun-2002 11:05:00 amos>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.1.0
-// BUILD VERSION: 23234
+// SOFTWARE RELEASE: 4.2.0
+// BUILD VERSION: 24182
 // COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
@@ -44,7 +44,7 @@ class eZRandomTranslator extends eZTranslatorGroup
     function eZRandomTranslator( $is_key_based )
     {
         $this->eZTranslatorGroup( $is_key_based );
-        srand( $this->makeSeed() );
+        mt_srand();
     }
 
     /*!
@@ -54,7 +54,7 @@ class eZRandomTranslator extends eZTranslatorGroup
     {
         if ( $this->handlerCount() == 0 )
             return -1;
-        return rand( 0, $this->handlerCount() - 1 );
+        return mt_rand( 0, $this->handlerCount() - 1 );
     }
 
     /*!
@@ -64,12 +64,13 @@ class eZRandomTranslator extends eZTranslatorGroup
     {
         if ( $this->handlerCount() == 0 )
             return -1;
-        return rand( 0, $this->handlerCount() - 1 );
+        return mt_rand( 0, $this->handlerCount() - 1 );
     }
 
     /*!
      \private
      Generates a seed usable for srand() and returns it.
+     DEPRECATED: as of eZ Publish 4.2 (seeding is not needed as of PHP 4.2.0)
     */
     function makeSeed()
     {

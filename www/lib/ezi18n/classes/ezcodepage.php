@@ -3,8 +3,8 @@
 // Definition of eZCodePage class
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.1.0
-// BUILD VERSION: 23234
+// SOFTWARE RELEASE: 4.2.0
+// BUILD VERSION: 24182
 // COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
@@ -364,6 +364,9 @@ class eZCodePage
     function cacheFileName( $charset_code )
     {
         $permissionArray = eZCodePage::permissionSetting();
+
+        if ( $permissionArray === false )
+            return false;
         $charset_code = eZCharsetInfo::realCharsetCode( $charset_code );
         $cache_dir = $permissionArray['var_directory'] . "/codepages/";
         $cache_filename = md5( $charset_code );
@@ -495,6 +498,9 @@ class eZCodePage
     function cacheFilepath()
     {
         $permissionArray = eZCodePage::permissionSetting();
+
+        if ( $permissionArray === false )
+            return false;
         $cache_dir = $permissionArray['var_directory'] . "/codepages/";
         $cache_filename = md5( $this->CharsetCode );
         $cache = $cache_dir . $cache_filename . ".php";
@@ -517,10 +523,17 @@ class eZCodePage
         $file = "share/codepages/" . $this->CharsetCode;
 //         eZDebug::writeDebug( "ezcodepage::load was called for $file..." );
 
-        $permissionArray = eZCodePage::permissionSetting();
-        $cache_dir = $permissionArray['var_directory'] . "/codepages/";
-        $cache_filename = md5( $this->CharsetCode );
-        $cache = $cache_dir . $cache_filename . ".php";
+        $permissionArray = self::permissionSetting();
+        if ( $permissionArray !== false )
+        {
+            $cache_dir = $permissionArray['var_directory'] . "/codepages/";
+            $cache_filename = md5( $this->CharsetCode );
+            $cache = $cache_dir . $cache_filename . ".php";
+        }
+        else
+        {
+            $cache = false;
+        }
 
         if ( !file_exists( $file ) )
         {
@@ -536,7 +549,7 @@ class eZCodePage
                  $siteBasics['no-cache-adviced'] )
                 $use_cache = false;
         }
-        if ( file_exists( $cache ) and $use_cache )
+        if ( $cache && file_exists( $cache ) and $use_cache )
         {
             $cache_m = filemtime( $cache );
             if ( $file_m <= $cache_m )
@@ -637,9 +650,6 @@ class eZCodePage
 
         if ( $use_cache )
         {
-            // Grab the permission setting(s).
-            $permissionArray = $this->permissionSetting();
-
             // If there is no setting; do nothing:
             if ( $permissionArray === false )
             {
@@ -704,9 +714,14 @@ class eZCodePage
         return $this->Valid;
     }
 
-    /*!
-     Returns the only instance of the codepage for $charset_code.
-    */
+    /**
+     * Returns a shared instance of the eZCodePage pr the
+     * $charset_code param.
+     *
+     * @param $charset_code string
+     * @param $use_cache bool
+     * @return eZCodePage
+     */
     static function instance( $charset_code, $use_cache = true )
     {
         if ( empty( $GLOBALS["eZCodePage-$charset_code"] ) )
@@ -765,7 +780,7 @@ class eZCodePage
         }
 
         // Grab the permission setting for codepage cache files.
-        $permissionArray = eZCodePage::permissionSetting();
+        $permissionArray = self::permissionSetting();
 
         // If we were unable to extract the permission setting:
         if ( $permissionArray === false )

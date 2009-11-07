@@ -4,8 +4,8 @@
 // Created on: <18-Dec-2003 17:44:15 amos>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.1.0
-// BUILD VERSION: 23234
+// SOFTWARE RELEASE: 4.2.0
+// BUILD VERSION: 24182
 // COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
@@ -79,6 +79,7 @@ if ( $siteAccess )
 
 $cleanAllItems = false;
 $clean = array( 'session' => false,
+                'expired_session' => false,
                 'preferences' => false,
                 'browse' => false,
                 'tipafriend' => false,

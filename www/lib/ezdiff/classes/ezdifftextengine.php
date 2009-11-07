@@ -5,8 +5,8 @@
 // <creation-tag>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.1.0
-// BUILD VERSION: 23234
+// SOFTWARE RELEASE: 4.2.0
+// BUILD VERSION: 24182
 // COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
@@ -63,8 +63,8 @@ class eZDiffTextEngine extends eZDiffEngine
         $old = preg_replace( $pattern, $replace, $fromData );
         $new = preg_replace( $pattern, $replace, $toData );
 
-        $oldArray = split( "\r\n", $old );
-        $newArray = split( "\r\n", $new );
+        $oldArray = explode( "\r\n", $old );
+        $newArray = explode( "\r\n", $new );
 
         $oldSums = array();
         foreach( $oldArray as $paragraph )

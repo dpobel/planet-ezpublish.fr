@@ -5,8 +5,8 @@
 // Created on: <18-Jun-2004 14:56:15 amos>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.1.0
-// BUILD VERSION: 23234
+// SOFTWARE RELEASE: 4.2.0
+// BUILD VERSION: 24182
 // COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
@@ -1661,7 +1661,7 @@ class eZCodeMapper
             $commands = $ini->variable( 'Extensions', 'Commands' );
             if ( isset( $commands[$command['command']] ) )
             {
-                list( $path, $className ) = split( ":", $commands[$command['command']], 2 );
+                list( $path, $className ) = explode( ':', $commands[$command['command']], 2 );
                 if ( file_exists( $path ) )
                 {
                     $charsetNameTxt = var_export( $charsetName, true );
@@ -1805,7 +1805,7 @@ class eZCodeMapper
             $commands = $ini->variable( 'Extensions', 'Commands' );
             if ( isset( $commands[$command['command']] ) )
             {
-                list( $path, $className ) = split( ":", $commands[$command['command']], 2 );
+                list( $path, $className ) = explode( ':', $commands[$command['command']], 2 );
                 if ( file_exists( $path ) )
                 {
                     include_once( $path );

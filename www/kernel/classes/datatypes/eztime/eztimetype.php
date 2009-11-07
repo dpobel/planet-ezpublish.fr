@@ -4,8 +4,8 @@
 //
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.1.0
-// BUILD VERSION: 23234
+// SOFTWARE RELEASE: 4.2.0
+// BUILD VERSION: 24182
 // COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
@@ -201,7 +201,7 @@ class eZTimeType extends eZDataType
     {
         $stamp = $contentObjectAttribute->attribute( 'data_int' );
 
-        if ( !is_null( $stamp ) )
+        if ( $stamp !== null )
         {
             $time = new eZTime( $stamp );
 
@@ -219,7 +219,7 @@ class eZTimeType extends eZDataType
     function sortKey( $contentObjectAttribute )
     {
         $timestamp = $contentObjectAttribute->attribute( 'data_int' );
-        if ( !is_null( $timestamp ) )
+        if ( $timestamp !== null )
         {
             $time = new eZTime( $timestamp );
             return $time->timeOfDay();
@@ -337,7 +337,7 @@ class eZTimeType extends eZDataType
         $timestamp = $contentObjectAttribute->attribute( 'data_int' );
         $locale = eZLocale::instance();
 
-        if ( !is_null( $timestamp ) )
+        if ( $timestamp !== null )
         {
             $time = new eZTime( $timestamp );
             return $locale->formatTime( $time->timeStamp() );
@@ -347,7 +347,7 @@ class eZTimeType extends eZDataType
 
     function hasObjectAttributeContent( $contentObjectAttribute )
     {
-        return !is_null( $contentObjectAttribute->attribute( 'data_int' ) );
+        return $contentObjectAttribute->attribute( 'data_int' ) !== null;
     }
 
     function serializeContentClassAttribute( $classAttribute, $attributeNode, $attributeParametersNode )
@@ -409,7 +409,7 @@ class eZTimeType extends eZDataType
 
         $stamp = $objectAttribute->attribute( 'data_int' );
 
-        if ( !is_null( $stamp ) )
+        if ( $stamp !== null )
         {
             $dom = $node->ownerDocument;
             $dateNode = $dom->createElement( 'time' );

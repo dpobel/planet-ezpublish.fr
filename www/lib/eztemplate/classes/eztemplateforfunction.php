@@ -5,8 +5,8 @@
 // Created on: <21-Feb-2005 12:38:26 vs>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.1.0
-// BUILD VERSION: 23234
+// SOFTWARE RELEASE: 4.2.0
+// BUILD VERSION: 24182
 // COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
@@ -184,7 +184,7 @@ class eZTemplateForFunction
 
         $loop->parseParamVarName( 'loop_var' , $loopVarName );
 
-        if ( is_null( $firstVal ) || is_null( $lastVal ) || !$loopVarName )
+        if ( $firstVal === null || $lastVal === null || !$loopVarName )
         {
             $tpl->error( eZTemplateForFunction::FUNCTION_NAME, "Wrong arguments passed." );
             return;

@@ -76,7 +76,7 @@ INSERT INTO ezsearch_word (id, object_count, word) VALUES (57,1,'guest'), (58,1,
 INSERT INTO ezsection (id, locale, name, navigation_part_identifier) VALUES (1,'','Standard','ezcontentnavigationpart'), (2,'','Users','ezusernavigationpart'), (3,'','Media','ezmedianavigationpart'), (4,'','Setup','ezsetupnavigationpart'), (5,'','Design','ezvisualnavigationpart')
 ;
 
-INSERT INTO ezsite_data (name, value) VALUES ('ezpublish-release','1'), ('ezpublish-version','4.1.0')
+INSERT INTO ezsite_data (name, value) VALUES ('ezpublish-release','1'), ('ezpublish-version','4.2.0')
 ;
 
 INSERT INTO ezurl (created, id, is_valid, last_checked, modified, original_url_md5, url) VALUES (1082368571,1,1,0,1082368571,'1c4c1d746fbd23350bcfa5e978841f23','http://ez.no/ez_publish/documentation'), (1082368571,4,1,0,1082368571,'41caff1d7f5ad51e70ad46abbcf28fb7','http://ez.no/community/forum'), (1082368571,5,1,0,1082368571,'7f0bed2dad9e69cc2c573d0868fe1a00','http://ez.no/services/support'), (1082368571,6,1,0,1082368571,'90c2b2894d43ee98fd5df8452dbfbfbd','http://ez.no/services/consulting'), (1082368571,7,1,0,1082368571,'23b22a1f1e566e15dead54b6d1b42706','http://ez.no/services/training'), (1082368571,8,1,0,1082368571,'dfcdb471b240d964dc3f57b998eb0533','http://ez.no')

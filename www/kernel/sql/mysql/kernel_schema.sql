@@ -689,7 +689,8 @@ CREATE TABLE ezinfocollection (
   id int(11) NOT NULL auto_increment,
   modified int(11) default '0',
   user_identifier varchar(34) default NULL,
-  PRIMARY KEY  (id)
+  PRIMARY KEY  (id),
+  KEY ezinfocollection_co_id_created (contentobject_id,created)
 ) ENGINE=InnoDB;
 
 
@@ -772,7 +773,8 @@ CREATE TABLE ezkeyword_attribute_link (
   objectattribute_id int(11) NOT NULL default '0',
   PRIMARY KEY  (id),
   KEY ezkeyword_attr_link_keyword_id (keyword_id),
-  KEY ezkeyword_attr_link_kid_oaid (keyword_id,objectattribute_id)
+  KEY ezkeyword_attr_link_kid_oaid (keyword_id,objectattribute_id),
+  KEY ezkeyword_attr_link_oaid (objectattribute_id)
 ) ENGINE=InnoDB;
 
 
@@ -1055,8 +1057,8 @@ CREATE TABLE ezpdf_export (
 
 CREATE TABLE ezpending_actions (
   action varchar(64) NOT NULL default '',
-  param longtext,
   created int(11) default NULL,
+  param longtext,
   KEY ezpending_actions_action (action),
   KEY ezpending_actions_created (created)
 ) ENGINE=InnoDB;
@@ -1081,7 +1083,8 @@ CREATE TABLE ezpolicy_limitation (
   id int(11) NOT NULL auto_increment,
   identifier varchar(255) NOT NULL default '',
   policy_id int(11) default NULL,
-  PRIMARY KEY  (id)
+  PRIMARY KEY  (id),
+  KEY policy_id (policy_id)
 ) ENGINE=InnoDB;
 
 
@@ -1332,8 +1335,8 @@ CREATE TABLE ezsession (
   data longtext NOT NULL,
   expiration_time int(11) NOT NULL default '0',
   session_key varchar(32) NOT NULL default '',
-  user_id int(11) NOT NULL default '0',
   user_hash varchar(32) NOT NULL default '',
+  user_id int(11) NOT NULL default '0',
   PRIMARY KEY  (session_key),
   KEY expiration_time (expiration_time),
   KEY ezsession_user_id (user_id)
@@ -1523,7 +1526,8 @@ CREATE TABLE ezuser_accountkey (
   id int(11) NOT NULL auto_increment,
   time int(11) NOT NULL default '0',
   user_id int(11) NOT NULL default '0',
-  PRIMARY KEY  (id)
+  PRIMARY KEY  (id),
+  KEY hash_key (hash_key)
 ) ENGINE=InnoDB;
 
 
@@ -1684,10 +1688,10 @@ CREATE TABLE ezworkflow_event (
   data_int2 int(11) default NULL,
   data_int3 int(11) default NULL,
   data_int4 int(11) default NULL,
-  data_text1 varchar(50) default NULL,
-  data_text2 varchar(50) default NULL,
-  data_text3 varchar(50) default NULL,
-  data_text4 varchar(50) default NULL,
+  data_text1 varchar(255) default NULL,
+  data_text2 varchar(255) default NULL,
+  data_text3 varchar(255) default NULL,
+  data_text4 varchar(255) default NULL,
   data_text5 longtext,
   description varchar(50) NOT NULL default '',
   id int(11) NOT NULL auto_increment,
@@ -1695,7 +1699,8 @@ CREATE TABLE ezworkflow_event (
   version int(11) NOT NULL default '0',
   workflow_id int(11) NOT NULL default '0',
   workflow_type_string varchar(50) NOT NULL default '',
-  PRIMARY KEY  (id,version)
+  PRIMARY KEY  (id,version),
+  KEY wid_version_placement (workflow_id,version,placement)
 ) ENGINE=InnoDB;
 
 

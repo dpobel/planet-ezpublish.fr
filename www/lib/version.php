@@ -3,8 +3,8 @@
 // Created on: <29-May-2002 10:38:45 bf>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.1.0
-// BUILD VERSION: 23234
+// SOFTWARE RELEASE: 4.2.0
+// BUILD VERSION: 24182
 // COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
@@ -31,12 +31,12 @@
 class eZPublishSDK
 {
     const VERSION_MAJOR = 4;
-    const VERSION_MINOR = 1;
+    const VERSION_MINOR = 2;
     const VERSION_RELEASE = 0;
     const VERSION_STATE = '';
     const VERSION_DEVELOPMENT = false;
-    const VERSION_REVISION_STRING = '$Rev: 23233 $';
-    const VERSION_ALIAS = '4.1';
+    const VERSION_REVISION_STRING = '$Rev: 24175 $';
+    const VERSION_ALIAS = '4.2';
     const VERSION_REVISION = 19785;
 
     /*!

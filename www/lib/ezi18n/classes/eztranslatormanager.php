@@ -5,8 +5,8 @@
 // Created on: <10-Jun-2002 11:16:48 amos>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.1.0
-// BUILD VERSION: 23234
+// SOFTWARE RELEASE: 4.2.0
+// BUILD VERSION: 24182
 // COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
@@ -140,10 +140,11 @@ class eZTranslatorManager
         return $trans;
     }
 
-    /*!
-     \static
-     \return the unique instance of the translator system.
-    */
+    /**
+     * Returns a shared instance of the eZTranslatorManager class.
+     *
+     * @return eZTranslatorManager
+     */
     static function instance()
     {
         if ( empty( $GLOBALS['eZTranslatorManagerInstance'] ) )

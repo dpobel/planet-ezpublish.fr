@@ -5,8 +5,8 @@
 // Created on: <08-Nov-2002 11:00:54 kd>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.1.0
-// BUILD VERSION: 23234
+// SOFTWARE RELEASE: 4.2.0
+// BUILD VERSION: 24182
 // COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
@@ -47,6 +47,7 @@ function eZSetupTestTable()
                   'curl_extension' => array( 'eZSetupTestExtension' ),
                   'zlib_extension' => array( 'eZSetupTestExtension' ),
                   'dom_extension' => array( 'eZSetupTestExtension' ),
+                  'iconv_extension' => array( 'eZSetupTestExtension' ),
                   'file_upload' => array( 'eZSetupTestFileUpload' ),
                   'open_basedir' => array( 'eZSetupTestOpenBasedir' ),
                   'safe_mode' => array( 'eZSetupTestSafeMode' ),
@@ -58,7 +59,8 @@ function eZSetupTestTable()
                   'execution_time' => array( 'eZSetupTestExecutionTime' ),
                   'allow_url_fopen' => array( 'eZSetupTestAllowURLFOpen' ),
                   'accept_path_info' => array( 'eZSetupTestAcceptPathInfo' ),
-                  'timezone' => array( 'eZSetupTestTimeZone' ) );
+                  'timezone' => array( 'eZSetupTestTimeZone' ),
+                  'ezcversion' => array( 'eZSetupTestComponentsVersion' ) );
 }
 
 function eZSetupConfigVariable( $type, $name )
@@ -269,6 +271,40 @@ function eZSetupCheckMagicQuotes( $type )
 }
 
 /*!
+    Test if eZ Components version is greater than required version
+    This is currently done by checking existence of class and function
+    since ezc does not have an api to get version information atm.
+*/
+function eZSetupTestComponentsVersion( $type )
+{
+    $minVersion = eZSetupConfigVariable( $type, 'MinimumVersion' );
+    $testClass = eZSetupConfigVariable( $type, 'TestClass' );
+    $testFunction = eZSetupConfigVariable( $type, 'TestFunction' );
+    $result = true;
+    $ezcExists = true;
+
+    if ( $testClass && class_exists( $testClass ) )
+    {
+        if ( $testFunction && !is_callable( array( $testClass, $testFunction ) ) )
+        {
+            $result = false;
+        }
+    }
+    else if ( $testClass )
+    {
+        $result = false;
+        $ezcExists = false;
+    }
+
+    return array( 'result' => $result,
+                  'persistent_data' => array( 'result' => array( 'value' => $result ),
+                                              'required' => array( 'value' => $minVersion ) ),
+                  'needed_version' => $minVersion,
+                  'class_exists' => !$ezcExists );
+}
+
+
+/*!
     Test if PHP version is equal or greater than required version
 */
 function eZSetupTestPhpVersion( $type )
@@ -278,7 +314,7 @@ function eZSetupTestPhpVersion( $type )
 
     /*
      // Get the operating systems name
-    $operatingSystem = split( " ", php_uname() );
+    $operatingSystem = explode( ' ', php_uname() );
     $operatingSystem = strtolower( $operatingSystem[0] );
 
     // Find out if there is an os specific version needed
@@ -876,6 +912,7 @@ function eZSetupTestOpenBasedir( $type )
     if ( $openBasedir != '' and
          $openBasedir != '.' )
     {
+        $returnData['result'] = false;
         $returnData['warnings'] = array( array( 'name' => 'open_basedir',
                                                 'text' => array( 'open_basedir is in use and can give problems running eZ Publish due to bugs in some PHP versions.',
                                                                  'It\'s recommended that it is turned off if you experience problems running eZ Publish.' ) ) );

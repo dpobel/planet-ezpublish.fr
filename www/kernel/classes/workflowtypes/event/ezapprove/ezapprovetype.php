@@ -5,8 +5,8 @@
 // Created on: <16-Apr-2002 11:08:14 amos>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.1.0
-// BUILD VERSION: 23234
+// SOFTWARE RELEASE: 4.2.0
+// BUILD VERSION: 24182
 // COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
@@ -709,7 +709,7 @@ class eZApproveType extends eZWorkflowEventType
                          foreach ( $excludedGroupsID as $groupID )
                          {
                              // $IDArray will contain IDs of "Excluded user groups"
-                             $IDArray = split( ',', $groupID[ 'data_text2' ] );
+                             $IDArray = explode( ',', $groupID[ 'data_text2' ] );
                              // $newIDArray will contain  array without $contentObjectID
                              $newIDArray = array_filter( $IDArray, create_function( '$v', 'return ( $v != ' . $contentObjectID .' );' ) );
                              $newValues = $db->escapeString( implode( ',', $newIDArray ) );

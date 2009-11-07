@@ -5,8 +5,8 @@
 // Created on: <16-Apr-2002 11:08:14 amos>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.1.0
-// BUILD VERSION: 23234
+// SOFTWARE RELEASE: 4.2.0
+// BUILD VERSION: 24182
 // COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
@@ -289,7 +289,7 @@ class eZPersistentObject
         foreach ( $keys as $key )
         {
             $value = $obj->attribute( $key );
-            if ( is_null( $value ) )
+            if ( $value === null )
             {
                 $insert_object = true;
                 $exclude_fields[] = $key;
@@ -312,7 +312,7 @@ class eZPersistentObject
             $field_def = $fields[$field_name];
             $value = $obj->attribute( $field_name );
 
-            if ( is_null( $value ) )
+            if ( $value === null )
             {
                 if ( ! is_array( $field_def ) )
                 {
@@ -321,7 +321,7 @@ class eZPersistentObject
                 else
                 {
                     if ( array_key_exists( 'default', $field_def ) &&
-                         (! is_null( $field_def['default'] ) ||
+                         ( $field_def['default'] !== null ||
                           ( $field_name == 'data_int' &&
                             array_key_exists( 'required', $field_def ) &&
                             $field_def[ 'required' ] == false ) ) )
@@ -340,12 +340,12 @@ class eZPersistentObject
                  is_array( $field_def ) &&
                  in_array( $field_def['datatype'], $numericDataTypes  ) &&
                  array_key_exists( 'default', $field_def ) &&
-                 ( is_null( $field_def[ 'default' ] ) || is_numeric( $field_def[ 'default' ] ) ) )
+                 ( $field_def[ 'default' ] === null || is_numeric( $field_def[ 'default' ] ) ) )
             {
                 $obj->setAttribute( $field_name, $field_def[ 'default' ] );
             }
 
-            if ( !is_null( $value )                             &&
+            if ( $value !== null                                &&
                  $field_def['datatype'] === 'string'            &&
                  array_key_exists( 'max_length', $field_def )   &&
                  $field_def['max_length'] > 0                   &&
@@ -433,7 +433,7 @@ class eZPersistentObject
 
                 if ( $field_def['datatype'] == 'float' || $field_def['datatype'] == 'double' )
                 {
-                    if ( is_null( $value ) )
+                    if ( $value === null )
                     {
                         $use_values_hash[$key] = 'NULL';
                     }
@@ -444,7 +444,7 @@ class eZPersistentObject
                 }
                 else if ( $field_def['datatype'] == 'int' || $field_def['datatype'] == 'integer' )
                 {
-                    if ( is_null( $value ) )
+                    if ( $value === null )
                     {
                         $use_values_hash[$key] = 'NULL';
                     }
@@ -512,14 +512,14 @@ class eZPersistentObject
 
                     if ( $fields[$key]['datatype'] == 'float' || $fields[$key]['datatype'] == 'double' )
                     {
-                        if (is_null($value))
+                        if ( $value === null )
                             $field_text_entry = $use_field_names[$key] . '=NULL';
                         else
                             $field_text_entry = $use_field_names[$key] . "=" . sprintf( '%F', $value );
                     }
                     else if ($fields[$key]['datatype'] == 'int' || $fields[$key]['datatype'] == 'integer' )
                     {
-                        if (is_null($value))
+                        if ( $value === null )
                             $field_text_entry = $use_field_names[$key] . '=NULL';
                         else
                             $field_text_entry = $use_field_names[$key] . "=" . sprintf( '%d', $value );
@@ -1106,9 +1106,9 @@ static function definition()
                  is_array( $fieldDef ) &&
                  in_array( $fieldDef['datatype'], $numericDataTypes  ) &&
                  array_key_exists( 'default', $fieldDef ) &&
-                 !is_null( $fieldDef[ 'default' ] ) )
+                 $fieldDef[ 'default' ] !== null )
             {
-                $value=$fieldDef[ 'default' ];
+                $value = $fieldDef[ 'default' ];
             }
 
             $bindDataTypes = array( 'text' );

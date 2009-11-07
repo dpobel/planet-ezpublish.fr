@@ -5,8 +5,8 @@
 // Created on: <16-Apr-2002 11:08:14 amos>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.1.0
-// BUILD VERSION: 23234
+// SOFTWARE RELEASE: 4.2.0
+// BUILD VERSION: 24182
 // COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
@@ -120,18 +120,26 @@ class eZWorkflowEvent extends eZPersistentObject
                       "name" => "ezworkflow_event" );
     }
 
-    static function create( $workflow_id, $type_string )
+    /**
+     * Creates a new workflow event
+     *
+     * @param int $workflowID
+     * @param string $typeString
+     *
+     * @return eZWorkflowEvent
+     **/
+    static function create( $workflowID, $typeString )
     {
         $row = array(
             "id" => null,
             "version" => 1,
-            "workflow_id" => $workflow_id,
-            "workflow_type_string" => $type_string,
+            "workflow_id" => $workflowID,
+            "workflow_type_string" => $typeString,
             "description" => "",
             "placement" => eZPersistentObject::newObjectOrder( eZWorkflowEvent::definition(),
                                                                "placement",
                                                                array( "version" => 1,
-                                                                      "workflow_id" => $workflow_id ) ) );
+                                                                      "workflow_id" => $workflowID ) ) );
         return new eZWorkflowEvent( $row );
     }
 

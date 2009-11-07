@@ -5,8 +5,8 @@
 // Created on: <28-Nov-2002 08:28:23 amos>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.1.0
-// BUILD VERSION: 23234
+// SOFTWARE RELEASE: 4.2.0
+// BUILD VERSION: 24182
 // COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
@@ -501,9 +501,11 @@ $php->addInclude( 'lib/ezutils/classes/ezphpcreator.php' );
             return var_export( $value, true );
         }
 
-        if ( is_bool( $value ) )
-            $text = ( $value ? 'true' : 'false' );
-        else if ( is_null( $value ) )
+        if ( $value === true  )
+            $text = 'true';
+        else if ( $value === false )
+            $text = 'false';
+        else if ( $value === null )
             $text = 'null';
         else if ( is_string( $value ) )
         {
@@ -630,9 +632,11 @@ $php->addInclude( 'lib/ezutils/classes/ezphpcreator.php' );
         // the last parameter will always be ignored
         $maxIterations = false;
 
-        if ( is_bool( $value ) )
-            $text = ( $value ? 'true' : 'false' );
-        else if ( is_null( $value ) )
+        if ( $value === true  )
+            $text = 'true';
+        else if ( $value === false )
+            $text = 'false';
+        else if ( $value === null )
             $text = 'null';
         else if ( is_string( $value ) )
         {
@@ -860,15 +864,9 @@ $php->addInclude( 'lib/ezutils/classes/ezphpcreator.php' );
             {
                 $this->ClusterHandler = eZClusterFileHandler::instance( $path );
             }
-            $canRestore= $this->ClusterHandler->exists();
-
-            if ( $timestamp !== false and $canRestore )
-            {
-                $cacheModifierTime = $this->ClusterHandler->mtime();
-                $canRestore = ( $cacheModifierTime >= $timestamp );
-            }
-
-            return $canRestore;
+            // isExpired() expects -1 to disable expiry check
+            $expiry = ( $timestamp === false ) ? -1 : $timestamp;
+            return !$this->ClusterHandler->isExpired( $expiry, time(), null );
         }
 
         $canRestore = file_exists( $path );
@@ -1064,7 +1062,6 @@ print( $values['MyValue'] );
     */
     function writeElements()
     {
-        $count = count( $this->Elements );
         foreach( $this->Elements as $element )
         {
             if ( $element[0] == eZPHPCreator::DEFINE )

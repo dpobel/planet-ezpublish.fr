@@ -7,8 +7,8 @@
 // Created on: <12-Feb-2002 15:41:03 bf>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.1.0
-// BUILD VERSION: 23234
+// SOFTWARE RELEASE: 4.2.0
+// BUILD VERSION: 24182
 // COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
@@ -86,7 +86,7 @@
 
   foreach ( $rows as $row )
   {
-     print( $row['name'] );
+     print( $row['name']ï¿½);
   }
 
   // fetch some data with a limit
@@ -131,11 +131,15 @@ class eZDB
         $GLOBALS['eZDBGlobalInstance'] = $instance;
     }
 
-    /*!
-      \static
-      Returns an instance of the database object.
-      If you want to change the current database values you should set \a $forceNewInstance to \c true to force a new instance.
-    */
+    /**
+     * Returns a shared instance of the eZDBInterface class aka database object.
+     * If you want to change the current database values you should use $forceNewInstance.
+     *
+     * @param $databaseImplementation string|false
+     * @param $databaseParameters array|false if array, then key 'use_defaults' (bool) is used.
+     * @param $forceNewInstance bool
+     * @return eZDBInterface
+     */
     static function instance( $databaseImplementation = false, $databaseParameters = false, $forceNewInstance = false )
     {
         $impl =& $GLOBALS['eZDBGlobalInstance'];
@@ -193,7 +197,7 @@ class eZDB
                 $numberServers = count( $slaveServers );
                 if ( $numberServers > 1 )
                 {
-                    $index = rand( 1, $numberServers ) - 1;
+                    $index = mt_rand( 1, $numberServers ) - 1;
                 }
                 else
                     $index = 0;

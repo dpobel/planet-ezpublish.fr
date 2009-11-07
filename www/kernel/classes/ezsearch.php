@@ -5,8 +5,8 @@
 // Created on: <25-Jun-2002 10:56:09 bf>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.1.0
-// BUILD VERSION: 23234
+// SOFTWARE RELEASE: 4.2.0
+// BUILD VERSION: 24182
 // COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
@@ -525,13 +525,13 @@ class eZSearch
         return false;
     }
 
-    public static function addNodeAssignment( $mainNodeID, $objectID, $nodeAssigmentIDList )
+    public static function addNodeAssignment( $mainNodeID, $objectID, $nodeAssignmentIDList )
     {
         $searchEngine = eZSearch::getEngine();
 
         if ( is_object( $searchEngine ) && method_exists( $searchEngine, 'addNodeAssignment'))
         {
-            return $searchEngine->addNodeAssignment( $mainNodeID, $objectID, $nodeAssigmentIDList );
+            return $searchEngine->addNodeAssignment( $mainNodeID, $objectID, $nodeAssignmentIDList );
         }
 
         return false;

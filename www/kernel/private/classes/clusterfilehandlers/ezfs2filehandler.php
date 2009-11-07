@@ -5,8 +5,8 @@
 // Created on: <29-Dec-2008 12:23 bd>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.1.0
-// BUILD VERSION: 23234
+// SOFTWARE RELEASE: 4.2.0
+// BUILD VERSION: 24182
 // COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
@@ -38,7 +38,6 @@
 **/
 class eZFS2FileHandler extends eZFSFileHandler
 {
-
     function __construct(  $filePath = false  )
     {
         parent::__construct( $filePath );
@@ -109,10 +108,11 @@ class eZFS2FileHandler extends eZFSFileHandler
     **/
     public function processCache( $retrieveCallback, $generateCallback = null, $ttl = null, $expiry = null, $extraData = null )
     {
-        $forceDB = false;
+        $forceDB   = false;
         $timestamp = null;
         $curtime   = time();
         $tries     = 0;
+        $noCache   = false;
 
         if ( $expiry < 0 )
             $expiry = null;
@@ -165,7 +165,7 @@ class eZFS2FileHandler extends eZFSFileHandler
                     // generate the dynamic data without storage
                     if ( $this->nonExistantStaleCacheHandling[ $this->cacheType ] == 'generate' )
                     {
-                        eZDebugSetting::writeDebug( 'kernel-clustering', $this->filePath, "Generation is being processed, generating own version" );
+                        eZDebugSetting::writeDebug( 'kernel-clustering', $this->filePath, "Generation is being processed, generating own version", __METHOD__ );
                         break;
                     }
                     // wait for the generating process to be finished (or timedout)
@@ -216,7 +216,17 @@ class eZFS2FileHandler extends eZFSFileHandler
             if ( isset( $retval ) &&
                 $retval instanceof eZClusterFileFailure )
             {
-                if ( $retval->errno() != 1 ) // check for non-expiry error codes
+                // This specific error means that the retrieve callback told
+                // us NOT to enter generation mode and therefore NOT to store this
+                // cache.
+                // This parameter will then be passed to the generate callback,
+                // and this will set store to false
+                if ( $retval->errno() == 3 )
+                {
+                    $noCache = true;
+                }
+                // check for non-expiry error codes
+                elseif ( $retval->errno() != 1 )
                 {
                     eZDebug::writeError( "Failed to retrieve data from callback: " . print_r( $retrieveCallback, true ), __METHOD__ );
                     return null;
@@ -234,7 +244,7 @@ class eZFS2FileHandler extends eZFSFileHandler
             // Note: false means no generation
             if ( $generateCallback !== false )
             {
-                if ( !$this->useStaleCache )
+                if ( !$this->useStaleCache and !$noCache )
                 {
                     $res = $this->startCacheGeneration();
 
@@ -257,6 +267,8 @@ class eZFS2FileHandler extends eZFSFileHandler
             if ( $generateCallback )
             {
                 $args = array( $this->filePath );
+                if ( $noCache )
+                    $extraData['noCache'] = true;
                 if ( $extraData !== null )
                     $args[] = $extraData;
                 $fileData = call_user_func_array( $generateCallback, $args );
@@ -286,12 +298,6 @@ class eZFS2FileHandler extends eZFSFileHandler
     */
     function storeCache( $fileData, $storeCache = true )
     {
-        // si on a été placé en timeout, le TS du fichier .generating aura changé
-        // dans ce cas, on considère que l'autre process prend la main sur le
-        // stockage et on ne stocke rien
-        if ( !$this->checkCacheGenerationTimeout() )
-            $storeCache = false;
-
         $scope       = false;
         $datatype    = false;
         $binaryData  = null;
@@ -313,6 +319,11 @@ class eZFS2FileHandler extends eZFSFileHandler
         else
             $binaryData = $fileData;
 
+        // if generation timedout, the .generating file's timeout has changed,
+        // and we must not store the cache file
+        if ( $store and !$this->checkCacheGenerationTimeout() )
+            $storeCache = false;
+
         $mtime = false;
         $result = null;
         if ( $binaryData === null &&
@@ -333,7 +344,7 @@ class eZFS2FileHandler extends eZFSFileHandler
         // stale cache handling: we just return the result, no lock has been set
         if ( $this->useStaleCache )
         {
-            eZDebugSetting::writeDebug( 'kernel-clustering', "Returning locally generated data without storing" );
+            eZDebugSetting::writeDebug( 'kernel-clustering', "Returning locally generated data without storing", __METHOD__ );
             return $result;
         }
 
@@ -364,7 +375,7 @@ class eZFS2FileHandler extends eZFSFileHandler
      * @return mixed true if generation lock was granted, an integer matching the
      *               time before the current generation times out
      **/
-    private function startCacheGeneration()
+    public function startCacheGeneration()
     {
         eZDebugSetting::writeDebug( "kernel-clustering", $this->filePath, __METHOD__ );
 
@@ -438,25 +449,46 @@ class eZFS2FileHandler extends eZFSFileHandler
 
     /**
      * Ends the cache generation started by startCacheGeneration().
+     *
+     * If $rename is set to true (default), the .generating file is renamed and
+     * overwrites the real file.
+     * If set to false, the .generating file is removed, and the real file made
+     * available.
+     *
+     * True should be used when actual data is stored in the standard file and
+     * not the .generating one, for instance when using image alias generation.
+     *
+     * @param bool $rename Rename (true) or delete (false) the generating file
+     *
+     * @return bool
      **/
-    private function endCacheGeneration()
+    public function endCacheGeneration( $rename = true)
     {
         eZDebug::accumulatorStart( 'dbfile', false, 'dbfile' );
 
         $ret = false;
-        eZDebugSetting::writeDebug( "kernel-clustering", $this->filePath, __METHOD__ );
+        eZDebugSetting::writeDebug( "kernel-clustering", $this->realFilePath, __METHOD__ );
 
         // rename the file to its final name
-        if ( eZFile::rename( $this->filePath, $this->realFilePath ) )
+        if ( $rename === true )
         {
-            $this->filePath = $this->realFilePath;
-            $this->realFilePath = null;
-            $this->remainingCacheGenerationTime = false;
-            $ret = true;
+            if ( eZFile::rename( $this->filePath, $this->realFilePath ) )
+            {
+                $this->filePath = $this->realFilePath;
+                $this->realFilePath = null;
+                $this->remainingCacheGenerationTime = false;
+                $ret = true;
+            }
+            else
+            {
+                eZLog::write( "eZFS2FileHandler::endCacheGeneration: Failed renaming '$this->filePath' to '$this->realFilePath'", 'cluster.log' );
+            }
         }
         else
         {
-            eZLog::write( "eZFS2FileHandler::endCacheGeneration: Failed renaming '$this->filePath' to '$this->realFilePath'", 'cluster.log' );
+            unlink( $this->filePath );
+            $this->filePath = $this->realFilePath;
+            $this->realFilePath = null;
         }
 
         eZDebug::accumulatorStop( 'dbfile' );
@@ -470,8 +502,9 @@ class eZFS2FileHandler extends eZFSFileHandler
      * Does so by rolling back the current transaction, which should be the
      * .generating file lock
      **/
-    private function abortCacheGeneration()
+    public function abortCacheGeneration()
     {
+        eZDebugSetting::writeDebug( 'kernel-clustering', $this->realFilePath, __METHOD__ );
         @unlink( $this->filePath );
         $this->filePath = $this->realFilePath;
         $this->realFilePath = null;
@@ -483,7 +516,7 @@ class eZFS2FileHandler extends eZFSFileHandler
     * timed out. If not timed out, refreshes the timestamp so that storage won't
     * be stolen
     **/
-    private function checkCacheGenerationTimeout()
+    public function checkCacheGenerationTimeout()
     {
         clearstatcache();
         // file_exists = false: another process stole the lock and finished the generation
@@ -599,19 +632,6 @@ class eZFS2FileHandler extends eZFSFileHandler
         }
 
         eZDebug::accumulatorStop( 'dbfile' );
-    }
-
-    /**
-     * Deletes a file that has been fetched before.
-     *
-     * In case of fetching from filesystem does nothing.
-     *
-     * \public
-     * \static
-     */
-    function fileDeleteLocal( $path )
-    {
-        eZDebugSetting::writeDebug( 'kernel-clustering', "fs::fileDeleteLocal( '$path' )", __METHOD__ );
     }
 
     /**
@@ -739,6 +759,15 @@ class eZFS2FileHandler extends eZFSFileHandler
                 return $cacheType;
             } break;
         }
+    }
+
+    /**
+     * eZFS2 doesn't require clusterizing, as it only uses the filesystem
+     * @return bool
+     **/
+    public function requiresClusterizing()
+    {
+        return false;
     }
 
     /**

@@ -3,8 +3,8 @@
 // Created on: <24-Apr-2002 16:06:53 bf>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.1.0
-// BUILD VERSION: 23234
+// SOFTWARE RELEASE: 4.2.0
+// BUILD VERSION: 24182
 // COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
@@ -59,19 +59,24 @@ $Offset = $Params['Offset'];
 if ( !is_numeric( $Offset ) )
     $Offset = 0;
 
+$searchPageLimit = 2;
 $tpl = templateInit();
-
 $ini = eZINI::instance();
 $useSearchCode = $ini->variable( 'SearchSettings', 'SearchViewHandling' ) == 'default';
 $logSearchStats = $ini->variable( 'SearchSettings', 'LogSearchStats' ) == 'enabled';
 
-$searchPageLimit = 2;
-if ( $http->hasVariable( 'SearchPageLimit' ) )
+if ( $http->hasVariable( 'BrowsePageLimit' ) )
 {
-    $searchPageLimit = $http->variable( 'SearchPageLimit' );
+    $pageLimit = $http->variable( 'BrowsePageLimit' );
 }
-
-$pageLimit = pageLimit( $searchPageLimit );
+else
+{
+    if ( $http->hasVariable( 'SearchPageLimit' ) )
+    {
+        $searchPageLimit = $http->variable( 'SearchPageLimit' );
+    }
+    $pageLimit = pageLimit( $searchPageLimit );
+}
 
 $maximumSearchLimit = $ini->variable( 'SearchSettings', 'MaximumSearchLimit' );
 if ( $pageLimit > $maximumSearchLimit )
@@ -162,9 +167,10 @@ if ( $http->hasVariable( 'Mode' ) && $http->variable( 'Mode' ) == 'browse' )
 //    $searchResult['RequestedURISuffix'] = $sys->serverVariable( "QUERY_STRING" );
 
 
-    $searchResult['RequestedURISuffix'] = 'SearchText=' . urlencode ( $searchText ) . ( ( $searchTimestamp > 0 ) ?  '&SearchTimestamp=' . $searchTimestamp : '' ) . '&Mode=browse';
+    $searchResult['RequestedURISuffix'] = 'SearchText=' . urlencode ( $searchText ) . ( ( $searchTimestamp > 0 ) ?  '&SearchTimestamp=' . $searchTimestamp : '' ) . '&BrowsePageLimit=' . $pageLimit . '&Mode=browse';
     return $Module->run( 'browse',array(),array( "NodeList" => $searchResult,
-                                                 "Offset" => $Offset ) );
+                                                 "Offset" => $Offset,
+                                                 "NodeID" => isset( $subTreeArray[0] ) && $subTreeArray[0] != 1 ? $subTreeArray[0] : null  ) );
 }
 
 // --- Compatibility code start ---

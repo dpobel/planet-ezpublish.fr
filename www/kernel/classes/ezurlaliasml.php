@@ -5,8 +5,8 @@
 // Created on: <24-Jan-2007 16:36:24 amos>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.1.0
-// BUILD VERSION: 23234
+// SOFTWARE RELEASE: 4.2.0
+// BUILD VERSION: 24182
 // COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
@@ -106,7 +106,7 @@ class eZURLAliasML extends eZPersistentObject
 
     static public function definition()
     {
-        return array( "fields" => array( "id" => array( 'name' => 'ID',
+        static $definition = array( "fields" => array( "id" => array( 'name' => 'ID',
                                                         'datatype' => 'integer',
                                                         'default' => 0,
                                                         'required' => true ),
@@ -155,6 +155,7 @@ class eZURLAliasML extends eZPersistentObject
                                                       "path" => "getPath" ),
                       "class_name" => "eZURLAliasML",
                       "name" => "ezurlalias_ml" );
+        return $definition;
     }
 
     /*!
@@ -163,7 +164,7 @@ class eZURLAliasML extends eZPersistentObject
     static function strtolower( $text )
     {
         //We need to detect our internal charset
-        if ( is_null( self::$charset ) )
+        if ( self::$charset === null )
         {
             self::$charset = eZTextCodec::internalCharset();
         }
@@ -337,10 +338,13 @@ class eZURLAliasML extends eZPersistentObject
     /*!
      Calculates the full path for the current item and returns it.
 
+     \param $locale The locale for which a path should be calculated.
+     \param $incomingLanguageList Array of locale codes representing the prioritized site language list.
+
      \note If you know the action values of the path use fetchPathByActionList() instead, it is more optimized.
      \note The calculated path is cached in $Path.
      */
-    function getPath( $locale = null )
+    function getPath( $locale = null, $incomingLanguageList = null )
     {
         if ( $this->Path !== null )
             return $this->Path;
@@ -354,17 +358,30 @@ class eZURLAliasML extends eZPersistentObject
             $query = "SELECT parent, lang_mask, text FROM ezurlalias_ml WHERE id={$id}";
             if ( $locale !== null && is_string( $locale ) )
             {
-                $mask = eZContentLanguage::maskByLocale( $locale );
-                $langFilter = $db->bitAnd( 'lang_mask', $mask );
+                // We also want to consider the prioritized language list for the
+                // destination siteaccess, so that untranslated objects, are not
+                // disregarded from the URL.
+                if ( $incomingLanguageList !== null )
+                {
+                    eZContentLanguage::setPrioritizedLanguages( $incomingLanguageList );
+                }
 
-                $query .= " AND ({$langFilter} > 0)";
+                $langMask = trim( eZContentLanguage::languagesSQLFilter( 'ezurlalias_ml', 'lang_mask' ) );
+                $query .= " AND ({$langMask})";
             }
             $rows = $db->arrayQuery( $query );
+
             if ( count( $rows ) == 0 )
             {
                 break;
             }
             $result = eZURLAliasML::choosePrioritizedRow( $rows );
+
+            if ( $incomingLanguageList !== null )
+            {
+                eZContentLanguage::clearPrioritizedLanguages();
+            }
+
             if ( !$result )
             {
                 $result = $rows[0];
@@ -419,7 +436,7 @@ class eZURLAliasML extends eZPersistentObject
             $languageMask |= 1;
 
         $path = eZURLAliasML::cleanURL( $path );
-        $elements = split( "/", $path );
+        $elements = explode( '/', $path );
 
         $db = eZDB::instance();
         $parentID = 0;
@@ -560,6 +577,26 @@ class eZURLAliasML extends eZPersistentObject
             // Create or update the element
             if ( $curElementID !== null )
             {
+                // Check if an already existing entry at the same level exists, with a different id
+                // if so the id must be updated.
+                $query = "SELECT * FROM ezurlalias_ml\n" .
+                         "WHERE parent = $parentID AND action = '{$actionStr}' AND is_original = 1 AND is_alias = 0";
+                $rows = $db->arrayQuery( $query );
+                if ( count( $rows ) > 0 )
+                {
+                    $existingEntryId = (int)$rows[0]['id'];
+
+                    if ( $existingEntryId != $curElementID )
+                    {
+                        // move history entry to the same id
+                        $query = "UPDATE ezurlalias_ml SET id = {$existingEntryId} " .
+                                 "WHERE parent = $parentID AND text_md5 = {$textMD5}";
+                        $res = $db->query( $query );
+                        if ( !$res ) return eZURLAliasML::dbError( $db );
+                        $curElementID = $existingEntryId;
+                    }
+                }
+
                 $bitOr = $db->bitOr( $db->bitAnd( 'lang_mask', ~1 ), $languageMask );
                 // Note: The `text` field is updated too, this ensures case-changes are stored.
                 $query = "UPDATE ezurlalias_ml SET link = id, lang_mask = {$bitOr}, text = '{$textEsc}', action = '{$actionStr}', action_type = '{$actionTypeStr}', is_alias = 0, is_original = 1\n" .
@@ -585,10 +622,37 @@ class eZURLAliasML extends eZPersistentObject
             // OMS-urlalias-fix: We want to retain the lang_mask of url entries, but mark others as history elements is_original = 0
             // Furthermore this change is not performed on custom alias entries.
             $bitAnd = $db->bitAnd( 'lang_mask', $languageID );
-            $query = "UPDATE ezurlalias_ml SET is_original = 0\n" .
+
+            // First we look at the entries to mark as history entries, if an entry comprise more languages, it must not be set as history element.
+            $query = "SELECT * FROM ezurlalias_ml\n" .
                      "WHERE action = '{$actionStr}' AND (${bitAnd} > 0) AND is_original = 1 AND is_alias = 0 AND (parent != $parentID OR text_md5 != {$textMD5})";
-            $res = $db->query( $query );
-            if ( !$res ) return eZURLAliasML::dbError( $db );
+            $toBeUpdated = $db->arrayQuery( $query );
+
+            // 0. Check if the entry to be updated represents multiple languages:
+            // IF YES:
+            //  1. "Downgrade" existing entry, by removing the active translation's language id from the language_mask.
+            // IF NO:
+            //  1. Mark entry as a history entry
+
+            if ( count( $toBeUpdated ) > 0 )
+            {
+                $languageMask = $toBeUpdated[0]['lang_mask'];
+                if ( ( $languageMask & ~( $languageID | 1 ) ) != 0 )
+                {
+                    // "Composite entry", downgrade current entry
+                    $currentEntry = new eZURLAliasML( $toBeUpdated[0] );
+                    $currentEntry->LangMask = (int)$currentEntry->LangMask & ~$languageID;
+                    $currentEntry->store();
+                }
+                else
+                {
+                    // Mark as history element.
+                    $query = "UPDATE ezurlalias_ml SET is_original = 0\n" .
+                             "WHERE action = '{$actionStr}' AND (${bitAnd} > 0) AND is_original = 1 AND is_alias = 0 AND (parent != $parentID OR text_md5 != {$textMD5})";
+                    $res = $db->query( $query );
+                    if ( !$res ) return eZURLAliasML::dbError( $db );
+                }
+            }
 
             // OMS-urlalias-fix: instead entries without language we look at history elements with same action (and language)
             // Look for other nodes with the same action and language
@@ -857,7 +921,7 @@ class eZURLAliasML extends eZPersistentObject
         $db = eZDB::instance();
         $actionStr = $db->escapeString( $action );
         $langMask = '';
-        if ( is_bool( $maskLanguages ) && $maskLanguages )
+        if ( $maskLanguages === true )
         {
             $langMask = "(" . trim( eZContentLanguage::languagesSQLFilter( 'ezurlalias_ml', 'lang_mask' ) ) . ") AND ";
         }
@@ -989,9 +1053,9 @@ class eZURLAliasML extends eZPersistentObject
      */
     static public function fetchPathByActionList( $actionName, $actionValues, $locale = null )
     {
-        if ( count( $actionValues ) == 0 )
+        if ( !is_array( $actionValues ) || count( $actionValues ) == 0 )
         {
-            eZDebug::writeError( "Action value array must not be empty" );
+            eZDebug::writeError( "Action values array must not be empty", __METHOD__ );
             return null;
         }
         $db = eZDB::instance();
@@ -1141,7 +1205,7 @@ class eZURLAliasML extends eZPersistentObject
         if ( $uriString == '' && $glob !== false )
             $elements = array();
         else
-            $elements = split( "/", $uriString );
+            $elements = explode( '/', $uriString );
         $len      = count( $elements );
         $i = 0;
         $selects = array();
@@ -1420,7 +1484,7 @@ class eZURLAliasML extends eZPersistentObject
         }
 
         $db = eZDB::instance();
-        $elements = split( "/", $internalURIString );
+        $elements = explode( '/', $internalURIString );
         $len      = count( $elements );
         if ( $reverse )
         {
@@ -1769,6 +1833,11 @@ class eZURLAliasML extends eZPersistentObject
      */
     static public function setLangMaskAlwaysAvailable( $langID, $actionName, $actionValue )
     {
+        if ( !$actionName )
+        {
+            eZDebug::writeError( "ActionName value must not be empty", __METHOD__ );
+            return null;
+        }
         $db = eZDB::instance();
         if ( is_array( $actionName ) )
         {
@@ -1809,10 +1878,11 @@ class eZURLAliasML extends eZPersistentObject
         }
     }
 
-    /*!
-     \static
-     Chooses the most prioritized row (based on language) of $rows and returns it.
-    */
+    /**
+     * Chooses the most prioritized row (based on language) of $rows and returns it.
+     * @param array $rows
+     * @return array|false The most prioritized row, or false if no match was found
+     **/
     static public function choosePrioritizedRow( $rows )
     {
         $result = false;
@@ -1834,6 +1904,16 @@ class eZURLAliasML extends eZPersistentObject
                 $score = eZURLAliasML::languageScore( $row['lang_mask'] );
             }
         }
+
+        // If score is still 0, this means that the objects languages don't
+        // match the INI settings, and these should be fix according to the doc.
+        if ( $score == 0 )
+        {
+            eZDebug::writeWarning(
+                "None of the available languages are prioritized in the SiteLanguageList setting. An arbitrary language will be used.",
+                __METHOD__ );
+        }
+
         return $result;
     }
 

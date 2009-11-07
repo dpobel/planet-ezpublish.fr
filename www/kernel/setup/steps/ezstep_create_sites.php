@@ -5,8 +5,8 @@
 // Created on: <13-Aug-2003 19:54:38 kk>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.1.0
-// BUILD VERSION: 23234
+// SOFTWARE RELEASE: 4.2.0
+// BUILD VERSION: 24182
 // COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
@@ -86,6 +86,17 @@ class eZStepCreateSites extends eZStepInstaller
         $this->Error = array( 'errors' => array()  );
 
         set_time_limit( 10*60 );
+
+        $siteType = $this->chosenSiteType();
+
+        // If we are installing a package without extension packages we
+        // generate the autoload array for extensions.
+        // For the time being we only do this for the plain_site package.
+        if ( $siteType['identifier'] == 'plain_site' )
+        {
+            ezpAutoloader::updateExtensionAutoloadArray();
+        }
+
         $saveData = true; // set to true to save data
 
         //$ini = eZINI::create();
@@ -162,8 +173,6 @@ class eZStepCreateSites extends eZStepInstaller
             $i18nINI->setVariable( 'CharacterSettings', 'Charset', $charset );
             $i18nINI->save( false, '.php', 'append', true );
         }
-
-        $siteType = $this->chosenSiteType();
 
         $siteINISettings = array();
         $result = true;
@@ -619,7 +628,7 @@ class eZStepCreateSites extends eZStepInstaller
         */
 
         // Add a policy to permit editors using OE
-        eZPolicy::createNew( 3, array( 'ModuleName' => 'ezdhtml', 'FunctionName' => '*' ) );
+        eZPolicy::createNew( 3, array( 'ModuleName' => 'ezoe', 'FunctionName' => '*' ) );
 
         // Install site package and it's required packages
         $sitePackageName = $this->chosenSitePackage();

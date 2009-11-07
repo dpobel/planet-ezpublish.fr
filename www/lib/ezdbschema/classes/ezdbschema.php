@@ -3,8 +3,8 @@
 // Created on: <28-Jan-2004 15:46:30 dr>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.1.0
-// BUILD VERSION: 23234
+// SOFTWARE RELEASE: 4.2.0
+// BUILD VERSION: 24182
 // COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
@@ -33,14 +33,13 @@
 
 class eZDbSchema
 {
-    /*!
-     \static
-     Create new instance of eZDBSchemaInterface. placed here for simplicity.
-
-     \param param options array, with the following keys:
-                  - instance: the eZDB instance (optional), if none provided, eZDB::instance() will be used.
-     \return new Instance of eZDbSchema, false if failed
-    */
+    /**
+     * Returns a shared instance of the eZDBSchemaInterface class.
+     *
+     * @param $params array|eZDBInterface|false if array, following key is needed:
+     *        - instance: the eZDB instance (optional), if none provided, eZDB::instance() will be used.
+     * @return eZDBSchemaInterface|false
+     */
     static function instance( $params = false )
     {
         if ( is_object( $params ) )

@@ -5,8 +5,8 @@
 // Created on: <19-Aug-2002 12:49:18 bf>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.1.0
-// BUILD VERSION: 23234
+// SOFTWARE RELEASE: 4.2.0
+// BUILD VERSION: 24182
 // COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
@@ -86,6 +86,7 @@ class eZSession
     /**
      * User id, see {@link eZSession::userID()}.
      *
+     * @static
      * @access protected
      */
     static protected $userID = 0;
@@ -93,6 +94,7 @@ class eZSession
     /**
      * Flag session started, see {@link eZSession::start()}.
      *
+     * @static
      * @access protected
      */
     static protected $hasStarted = false;
@@ -100,6 +102,7 @@ class eZSession
     /**
      * Flag request contains session cookie, set in {@link eZSession::registerFunctions()}.
      *
+     * @static
      * @access protected
      */
     static protected $hasSessionCookie = null;
@@ -107,6 +110,7 @@ class eZSession
     /**
      * Flag if user session validated when reading data from session, set in {@link eZSession::internalRead()}.
      *
+     * @static
      * @access protected
      */
     static protected $userSessionIsValid = null;
@@ -114,6 +118,7 @@ class eZSession
     /**
      * User session hash (ip + ua string), set in {@link eZSession::registerFunctions()}.
      *
+     * @static
      * @access protected
      */
     static protected $userSessionHash = null;
@@ -121,12 +126,13 @@ class eZSession
     /**
      * List of callback actions, see {@link eZSession::addCallback()}.
      *
+     * @static
      * @access protected
      */
     static protected $callbackFunctions = array(); 
 
     /**
-     * Constructor
+     * Constructor (not used, this is an all static class)
      *
      * @access protected
      */
@@ -137,6 +143,7 @@ class eZSession
     /**
      * Does nothing, eZDB will open connection when needed.
      * 
+     * @static
      * @return true
      */
     static public function open()
@@ -147,6 +154,7 @@ class eZSession
     /**
      * Does nothing, eZDB will handle closing db connection.
      * 
+     * @static
      * @return true
      */
     static public function close()
@@ -157,6 +165,7 @@ class eZSession
     /**
      * Reads the session data from the database for a specific session id
      *
+     * @static
      * @param string $sessionId
      * @return string|false Returns false if session doesn't exits, string in php session format if it does.
      */
@@ -171,6 +180,7 @@ class eZSession
      * Note: user will be "kicked out" as in get a new session id if {@link self::getUserSessionHash()} does
      * not equals to the existing user_hash unless the user_hash is empty.
      *
+     * @static
      * @access private
      * @param string $sessionId
      * @param bool $isCurrentUserSession
@@ -219,6 +229,7 @@ class eZSession
     /**
      * Inserts|Updates the session data in the database for a specific session id
      *
+     * @static
      * @param string $sessionId
      * @param string $value session data (in php session data format)
      */
@@ -231,10 +242,12 @@ class eZSession
      * Internal function that inserts|updates the session data in the database, this function
      * is registered as session_write handler in {@link eZSession::registerFunctions()}
      *
+     * @static
      * @access private
      * @param string $sessionId
-     * @param string $value session data
+     * @param string $value session data (in php session data format)
      * @param bool $isCurrentUserSession
+     * @return bool
      */
     static public function internalWrite( $sessionId, $value, $isCurrentUserSession = true )
     {
@@ -296,6 +309,7 @@ class eZSession
      * Deletes the session data from the database, this function is 
      * register in {@link eZSession::registerFunctions()}
      *
+     * @static
      * @param string $sessionId
      */
     static public function destroy( $sessionId )
@@ -313,6 +327,8 @@ class eZSession
     /**
      * Deletes all expired session data in the database, this function is 
      * register in {@link eZSession::registerFunctions()}
+     * 
+     * @static
      */
     static public function garbageCollector()
     {
@@ -329,6 +345,8 @@ class eZSession
     /**
      * Truncates all session data in the database.
      * Named eZSessionEmpty() in eZ Publish 4.0 and earlier!
+     * 
+     * @static
      */
     static public function cleanup()
     {
@@ -344,6 +362,7 @@ class eZSession
     /**
      * Counts the number of active session and returns it.
      * 
+     * @static
      * @return string Returns number of sessions.
      */
     static public function countActive()
@@ -359,6 +378,7 @@ class eZSession
      * {@link eZSession::start()}, so only call this if you don't start the session.
      * Named eZRegisterSessionFunctions() in eZ Publish 4.0 and earlier!
      * 
+     * @static
      * @return bool Returns true|false depending on if eZSession is registrated as session handler.
     */
     static protected function registerFunctions()
@@ -373,7 +393,8 @@ class eZSession
             if ( $ini->variable( 'Session', 'SessionNamePerSiteAccess' ) == 'enabled' )
             {
                 $access = $GLOBALS['eZCurrentAccess'];
-                $sessionName .=  $access['name'];
+                // use md5 to make sure name is only alphanumeric characters
+                $sessionName .=  md5( $access['name'] );
             }
             session_name( $sessionName );
         }
@@ -382,30 +403,21 @@ class eZSession
             $sessionName = session_name();
         }
 
-        // See if user has session cookie, used to avoid reading from db if no session
-        if ( isset( $_COOKIE[ $sessionName ] ) )
+        // See if user has session, used to avoid reading from db if no session.
+        // Allow session bye post params for use by flash, but use $_POST directly
+        // to avoid session double start issues ( #014686 ) caused by eZHTTPTool
+        if ( isset( $_POST[ $sessionName ] ) && isset( $_POST[ 'UserSessionHash' ] ) )
         {
+            // First use session id from post params (for use in flash upload)  
+            session_id( $_POST[ $sessionName ] );
             self::$hasSessionCookie = true;
+            // allow verification of user hash if client is different ua then actual session client
+            self::$userSessionHash = $_POST[ 'UserSessionHash' ];
         }
         else
         {
-            // look for session id in post params if no cookie  
-            $http = eZHTTPTool::instance();
-            if ( $http->hasPostVariable( $sessionName ) )
-            {
-                session_id( $http->postVariable( $sessionName ) );
-                self::$hasSessionCookie = true;
-                // allow verification of user hash if client is
-                // different ua then session client
-                if ( $http->hasPostVariable( 'UserSessionHash' ) )
-                {
-                    self::$userSessionHash = $http->postVariable( 'UserSessionHash' );
-                }
-            }
-            else
-            {
-                self::$hasSessionCookie = false;
-            }
+            // else check cookie as used by default
+            self::$hasSessionCookie = isset( $_COOKIE[ $sessionName ] );
         }
 
         session_set_save_handler(
@@ -423,6 +435,7 @@ class eZSession
      * Starts the session and sets the timeout of the session cookie.
      * Multiple calls will be ignored unless you call {@link eZSession::stop()} first.
      * 
+     * @static
      * @param bool|int $cookieTimeout use this to set custom cookie timeout.
      * @return bool Returns true|false depending on if session was started.
      */
@@ -461,8 +474,9 @@ class eZSession
 
     /**
      * Gets/generates the user hash for use in validating the session based on [Session]
-     * SessionValidation* site.ini settings.
+     * SessionValidation* site.ini settings. The default hash is result of md5('empty').
      * 
+     * @static
      * @return string Returns md5 hash based on parts of the user ip and agent string.
      */
     static public function getUserSessionHash()
@@ -472,20 +486,21 @@ class eZSession
             $ini = eZINI::instance();
             $sessionValidationString = '';
             $sessionValidationIpParts = (int) $ini->variable( 'Session', 'SessionValidationIpParts' );
-            if ( $sessionValidationIpParts )
+            if ( $sessionValidationIpParts && isset( $_SERVER['REMOTE_ADDR'] ) )
             {
-                $sessionValidationString .= self::getIpPart( $_SERVER['REMOTE_ADDR'], $sessionValidationIpParts );
+                $sessionValidationString .= '-' . self::getIpPart( $_SERVER['REMOTE_ADDR'], $sessionValidationIpParts );
             }
             $sessionValidationForwardedIpParts = (int) $ini->variable( 'Session', 'SessionValidationForwardedIpParts' );
-            if ( isset( $_SERVER['HTTP_X_FORWARDED_FOR'] ) && $sessionValidationForwardedIpParts )
+            if ( $sessionValidationForwardedIpParts && isset( $_SERVER['HTTP_X_FORWARDED_FOR'] ) )
             {
                 $sessionValidationString .= '-' . self::getIpPart( $_SERVER['HTTP_X_FORWARDED_FOR'], $sessionValidationForwardedIpParts );
             }
-            if ( $ini->variable( 'Session', 'SessionValidationUseUA' ) === 'enabled' )
+            $sessionValidationUAString = $ini->variable( 'Session', 'SessionValidationUseUA' ) === 'enabled';
+            if ( $sessionValidationUAString && isset( $_SERVER['HTTP_USER_AGENT'] ) )
             {
                 $sessionValidationString .= '-' . $_SERVER['HTTP_USER_AGENT'];
             }
-            self::$userSessionHash = $sessionValidationString ? md5( $sessionValidationString ) : '';
+            self::$userSessionHash = $sessionValidationString ? md5( $sessionValidationString ) : 'a2e4822a98337283e39f7b60acf85ec9';
         }
         return self::$userSessionHash;
     }
@@ -493,6 +508,7 @@ class eZSession
     /**
      * Gets part of a ipv4/ipv6 address, used internally by {@link eZSession::getUserSessionHash()} 
      * 
+     * @static
      * @access protected
      * @param string $ip IPv4 or IPv6 format
      * @param int $parts number from 0-4
@@ -508,6 +524,7 @@ class eZSession
     /**
      * Writes session data and stops the session, if not already stopped.
      * 
+     * @static
      * @return bool Returns true|false depending on if session was stopped.
      */
     static public function stop()
@@ -531,6 +548,7 @@ class eZSession
      * This is useful to call on logins, to avoid sessions theft from users.
      * NOTE: make sure you set new user id first using {@link eZSession::setUserID()} 
      * 
+     * @static
      * @param bool $updateUserSession set to false to not update session in db with new session id and user id.
      * @return bool Returns true|false depending on if session was regenerated.
      */
@@ -552,12 +570,7 @@ class eZSession
         }
 
         $oldSessionId = session_id();
-
-        // need to close and then start session in order to work around issues
-        // where several subdomains use same cookie name (but different domain in cookie params)
-        session_write_close();
-        session_regenerate_id( true );
-        self::start();
+        session_regenerate_id();
 
         // If user has session and $updateUserSession is true, then update user session data
         if ( $updateUserDBSession && self::$hasSessionCookie )
@@ -583,6 +596,7 @@ class eZSession
     /**
      * Removes the current session and resets session variables.
      * 
+     * @static
      * @return bool Returns true|false depending on if session was removed.
      */
     static public function remove()
@@ -605,6 +619,7 @@ class eZSession
     /**
      * Sets the current userID used by self::write on shutdown.
      * 
+     * @static
      * @param int $userID to use in {@link eZSession::write()}
      */
     static public function setUserID( $userID )
@@ -615,6 +630,7 @@ class eZSession
     /**
      * Gets the current user id.
      * 
+     * @static
      * @return int Returns user id stored by {@link eZSession::setUserID()}
      */
     static public function userID()
@@ -625,6 +641,7 @@ class eZSession
     /**
      * Returns if user had session cookie at start of request or not.
      * 
+     * @static
      * @return bool|null returns null if session is not started yet.
      */
     static public function userHasSessionCookie()
@@ -636,6 +653,7 @@ class eZSession
      * Returns if user session validated against stored data in db
      * or if it was invalidated during the current request.
      * 
+     * @static
      * @return bool|null returns null if user is not validated yet (for instance a new session).
      */
     static public function userSessionIsValid()
@@ -654,6 +672,7 @@ class eZSession
      * when a certan session event occurs.
      * Use: eZSession::addCallback('gc_pre', myCustomGarabageFunction );
      * 
+     * @static
      * @param string $type cleanup, gc, destroy, insert and update, pre and post types.
      * @param handler $callback a function to call.
      */
@@ -670,8 +689,10 @@ class eZSession
      * Triggers callback functions by type, registrated by {@link eZSession::addCallback()}
      * Use: eZSession::triggerCallback('gc_pre', array( $db, $time ) );
      * 
+     * @static
      * @param string $type cleanup, gc, destroy, insert and update, pre and post types.
      * @param array $params list of parameters to pass to the callback function.
+     * @return bool
      */
     static public function triggerCallback( $type, $params )
     {

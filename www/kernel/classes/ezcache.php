@@ -5,8 +5,8 @@
 // Created on: <09-Oct-2003 15:24:36 amos>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.1.0
-// BUILD VERSION: 23234
+// SOFTWARE RELEASE: 4.2.0
+// BUILD VERSION: 24182
 // COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
@@ -59,6 +59,7 @@ class eZCache
         if ( !isset( $cacheList ) )
         {
             $ini = eZINI::instance();
+            $textToImageIni = eZINI::instance( 'texttoimage.ini' );
             $cacheList = array( array( 'name' => ezi18n( 'kernel/cache', 'Content view cache' ),
                                        'id' => 'content',
                                        'tag' => array( 'content' ),
@@ -135,7 +136,15 @@ class eZCache
                                        'id' => 'template-override',
                                        'tag' => array( 'template' ),
                                        'enabled' => true,
-                                       'path' => 'override' ),
+                                       'path' => 'override',
+                                       'function' => array( 'eZCache', 'clearTemplateOverrideCache' ) ),
+                                array( 'name' => ezi18n( 'kernel/cache', 'Text to image cache' ),
+                                       'id' => 'texttoimage',
+                                       'tag' => array( 'template' ),
+                                       'enabled' => $textToImageIni->variable( 'ImageSettings', 'UseCache' ) == 'enabled',
+                                       'path' => $textToImageIni->variable( 'PathSettings', 'CacheDir' ),
+                                       'function' => array( 'eZCache', 'clearTextToImageCache' ),
+                                       'purge-function' => array( 'eZCache', 'purgeTextToImageCache' ) ),
                                 array( 'name' => ezi18n( 'kernel/cache', 'RSS cache' ),
                                        'id' => 'rss_cache',
                                        'tag' => array( 'content' ),
@@ -458,6 +467,21 @@ class eZCache
         $expiryHandler->store();
     }
 
+    /**
+     * Removes all template override cache files, subtree entries
+     * and clears in memory override cache.
+     *
+     * @static
+     * @since 4.2
+     * @access private
+    */
+    static function clearTemplateOverrideCache( $cacheItem )
+    {
+        $cachePath = eZSys::cacheDirectory() . '/' . $cacheItem['path'];
+        eZDir::recursiveDelete( $cachePath );
+        eZTemplateDesignResource::clearInMemoryOverrideArray();
+    }
+
     /*!
      \private
      \static
@@ -532,9 +556,31 @@ class eZCache
      \static
      Clear global ini cache
     */
-    static function clearGlobalINICache()
+    static function clearGlobalINICache( $cacheItem )
     {
-        eZDir::recursiveDelete( 'var/cache/ini' );
+        eZDir::recursiveDelete( $cacheItem['path'] );
+    }
+
+    /*!
+     \private
+     \static
+     Clear texttoimage cache
+    */
+    static function clearTextToImageCache( $cacheItem )
+    {
+        $fileHandler = eZClusterFileHandler::instance( $cacheItem['path'] );
+        $fileHandler->delete();
+    }
+
+    /*!
+     \private
+     \static
+     Purge texttoimage cache
+    */
+    static function purgeTextToImageCache( $cacheItem )
+    {
+        $fileHandler = eZClusterFileHandler::instance( $cacheItem['path'] );
+        $fileHandler->purge();
     }
 
     /*!
@@ -578,7 +624,7 @@ function eZCacheClearClassID( $cacheItem )
 */
 function eZCacheClearGlobalINI( $cacheItem )
 {
-    eZCache::clearGlobalINICache();
+    eZCache::clearGlobalINICache( $cacheItem );
 }
 
 

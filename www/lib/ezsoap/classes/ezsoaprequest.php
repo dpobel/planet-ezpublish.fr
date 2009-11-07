@@ -5,8 +5,8 @@
 // Created on: <19-Feb-2002 15:42:03 bf>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.1.0
-// BUILD VERSION: 23234
+// SOFTWARE RELEASE: 4.2.0
+// BUILD VERSION: 24182
 // COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
@@ -65,10 +65,12 @@ class eZSOAPRequest extends eZSOAPEnvelope
         return $this->Name;
     }
 
-    /*!
-      Returns the request target namespace.
+   /** Returns the request target namespace.
+     *
+     * @since 4.1.4 (renamed from namespace() for php 5.3 compatibility)
+     * @return string
     */
-    function namespace()
+    function ns()
     {
         return $this->Namespace;
     }

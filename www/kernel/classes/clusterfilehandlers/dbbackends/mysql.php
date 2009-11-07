@@ -5,8 +5,8 @@
 // Created on: <19-Apr-2006 16:15:17 vs>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.1.0
-// BUILD VERSION: 23234
+// SOFTWARE RELEASE: 4.2.0
+// BUILD VERSION: 24182
 // COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
@@ -39,7 +39,7 @@ CREATE TABLE ezdbfile (
   name_trunk    TEXT          NOT NULL,
   name_hash     VARCHAR(34)   NOT NULL DEFAULT '',
   scope         VARCHAR(20)   NOT NULL DEFAULT '',
-  size          BIGINT(20)    UNSIGNED NOT NULL,
+  size          BIGINT(20)    UNSIGNED NOT NULL DEFAULT '0',
   mtime         INT(11)       NOT NULL DEFAULT '0',
   expired       BOOL          NOT NULL DEFAULT '0',
   PRIMARY KEY (name_hash),
@@ -1300,10 +1300,10 @@ class eZDBFileHandlerMysqlBackend
      */
     function _quote( $value )
     {
-        if ( is_integer( $value ) )
-            return (string)$value;
-        elseif ( is_null( $value ) )
+        if ( $value === null )
             return 'NULL';
+    	elseif ( is_integer( $value ) )
+            return (string)$value;
         else
             return "'" . mysql_real_escape_string( $value ) . "'";
     }
@@ -1454,66 +1454,82 @@ class eZDBFileHandlerMysqlBackend
     * @param string $filePath
     * @return bool
     **/
-    function _endCacheGeneration( $filePath, $generatingFilePath )
+    function _endCacheGeneration( $filePath, $generatingFilePath, $rename )
     {
         $fname = "_endCacheGeneration( $filePath )";
 
         eZDebugSetting::writeDebug( 'kernel-clustering', $filePath, __METHOD__ );
 
-        $this->_begin( $fname );
-
-        // both files are locked for update
-        if ( !$res = $this->_query( "SELECT * FROM " . TABLE_METADATA . " WHERE name_hash=MD5('$generatingFilePath') FOR UPDATE", $fname, true ) )
+        // if no rename is asked, the .generating file is just removed
+        if ( $rename === false )
         {
-            $this->_rollback( $fname );
-            return false;
-        }
-        $generatingMetaData = mysql_fetch_assoc( $res );
-
-        $res = $this->_query( "SELECT * FROM " . TABLE_METADATA . " WHERE name_hash=MD5('$filePath') FOR UPDATE", $fname, false );
-        // the original file does not exist: we move the generating file
-        if ( mysql_num_rows( $res ) == 0 )
-        {
-            $metaData = $generatingMetaData;
-            $metaData['name'] = $filePath;
-            $metaData['name_hash'] = md5( $filePath );
-            $metaData['name_trunk'] = $this->nameTrunk( $filePath, $metaData['scope'] );
-            $insertSQL = "INSERT INTO " . TABLE_METADATA . " ( " . implode( ', ', array_keys( $metaData ) ) . " ) " .
-                         "VALUES( " . $this->_sqlList( $metaData ) . ")";
-            if ( !$this->_query( $insertSQL, $fname, true ) )
+            if ( !$this->_query( "DELETE FROM " . TABLE_METADATA . " WHERE name_hash=MD5('$generatingFilePath')" ) )
             {
-                $this->_rollback( $fname );
+                eZDebug::writeError( "Failed removing metadata entry for '$generatingFilePath'", $fname );
                 return false;
             }
-            if ( !$this->_query( "UPDATE " . TABLE_DATA . " SET name_hash=MD5('$filePath') WHERE name_hash=MD5('$generatingFilePath')", $fname, true ) )
+            else
             {
-                $this->_rollback( $fname );
-                return false;
+                return true;
             }
-            $this->_query( "DELETE FROM " . TABLE_METADATA . " WHERE name_hash=MD5('$generatingFilePath')", $fname, true );
         }
-        // the original file exists: we move the generating data to this file
-        // and update it
         else
         {
-            $this->_query( "DELETE FROM " . TABLE_DATA . " WHERE name_hash=MD5('$filePath')", $fname, false );
-            if ( !$this->_query( "UPDATE " . TABLE_DATA . " SET name_hash=MD5('$filePath') WHERE name_hash=MD5('$generatingFilePath')", $fname, true ) )
+            $this->_begin( $fname );
+
+            // both files are locked for update
+            if ( !$res = $this->_query( "SELECT * FROM " . TABLE_METADATA . " WHERE name_hash=MD5('$generatingFilePath') FOR UPDATE", $fname, true ) )
             {
                 $this->_rollback( $fname );
                 return false;
+            }
+            $generatingMetaData = mysql_fetch_assoc( $res );
+
+            $res = $this->_query( "SELECT * FROM " . TABLE_METADATA . " WHERE name_hash=MD5('$filePath') FOR UPDATE", $fname, false );
+            // the original file does not exist: we move the generating file
+            if ( mysql_num_rows( $res ) == 0 )
+            {
+                $metaData = $generatingMetaData;
+                $metaData['name'] = $filePath;
+                $metaData['name_hash'] = md5( $filePath );
+                $metaData['name_trunk'] = $this->nameTrunk( $filePath, $metaData['scope'] );
+                $insertSQL = "INSERT INTO " . TABLE_METADATA . " ( " . implode( ', ', array_keys( $metaData ) ) . " ) " .
+                             "VALUES( " . $this->_sqlList( $metaData ) . ")";
+                if ( !$this->_query( $insertSQL, $fname, true ) )
+                {
+                    $this->_rollback( $fname );
+                    return false;
+                }
+                if ( !$this->_query( "UPDATE " . TABLE_DATA . " SET name_hash=MD5('$filePath') WHERE name_hash=MD5('$generatingFilePath')", $fname, true ) )
+                {
+                    $this->_rollback( $fname );
+                    return false;
+                }
+                $this->_query( "DELETE FROM " . TABLE_METADATA . " WHERE name_hash=MD5('$generatingFilePath')", $fname, true );
+            }
+            // the original file exists: we move the generating data to this file
+            // and update it
+            else
+            {
+                $this->_query( "DELETE FROM " . TABLE_DATA . " WHERE name_hash=MD5('$filePath')", $fname, false );
+                if ( !$this->_query( "UPDATE " . TABLE_DATA . " SET name_hash=MD5('$filePath') WHERE name_hash=MD5('$generatingFilePath')", $fname, true ) )
+                {
+                    $this->_rollback( $fname );
+                    return false;
+                }
+
+                $mtime = $generatingMetaData['mtime'];
+                $filesize = $generatingMetaData['size'];
+                if ( !$this->_query( "UPDATE " . TABLE_METADATA . " SET mtime = '{$mtime}', expired = 0, size = '{$filesize}' WHERE name_hash=MD5('$filePath')", $fname, true ) )
+                {
+                    $this->_rollback( $fname );
+                    return false;
+                }
+                $this->_query( "DELETE FROM " . TABLE_METADATA . " WHERE name_hash=MD5('$generatingFilePath')", $fname, true );
             }
 
-            $mtime = $generatingMetaData['mtime'];
-            $filesize = $generatingMetaData['size'];
-            if ( !$this->_query( "UPDATE " . TABLE_METADATA . " SET mtime = '{$mtime}', expired = 0, size = '{$filesize}' WHERE name_hash=MD5('$filePath')", $fname, true ) )
-            {
-                $this->_rollback( $fname );
-                return false;
-            }
-            $this->_query( "DELETE FROM " . TABLE_METADATA . " WHERE name_hash=MD5('$generatingFilePath')", $fname, true );
+            $this->_commit( $fname );
         }
-
-        $this->_commit( $fname );
 
         return true;
     }

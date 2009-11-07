@@ -5,8 +5,8 @@
 // Created on: <03-Mar-2004 09:45:38 wy>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.1.0
-// BUILD VERSION: 23234
+// SOFTWARE RELEASE: 4.2.0
+// BUILD VERSION: 24182
 // COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
@@ -55,7 +55,7 @@ else // no action yet: just displaying the template
     foreach ( $deleteIDArray as $orderID )
     {
         $order = eZOrder::fetch( $orderID );
-        if ( is_null( $order ) )
+        if ( $order === null )
             continue;   // just to prevent possible fatal error below
 
         $orderNumbersArray[] = $order->attribute( 'order_nr' );

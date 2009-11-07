@@ -5,8 +5,8 @@
 // Created on: <16-Apr-2002 11:08:14 amos>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.1.0
-// BUILD VERSION: 23234
+// SOFTWARE RELEASE: 4.2.0
+// BUILD VERSION: 24182
 // COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
@@ -294,7 +294,7 @@ class eZWorkflowProcess extends eZPersistentObject
             {
                 eZDebugSetting::writeDebug( 'workflow-process', get_class( $workflowEvent ), "workflowEvent class is ezworkflowevent" );
             }
-            else
+            else if ( $workflowEvent !== null )
             {
                 eZDebugSetting::writeDebug( 'workflow-process', get_class( $workflowEvent ), "workflowEvent class is not ezworkflowevent" );
             }
@@ -359,9 +359,13 @@ class eZWorkflowProcess extends eZPersistentObject
                             $done = true;
                         } break;
                         case eZWorkflowType::STATUS_FETCH_TEMPLATE:
-                        case eZWorkflowType::STATUS_FETCH_TEMPLATE_REPEAT:
                         {
                             $workflowStatus = eZWorkflow::STATUS_FETCH_TEMPLATE;
+                            $done = true;
+                        } break;
+                        case eZWorkflowType::STATUS_FETCH_TEMPLATE_REPEAT:
+                        {
+                            $workflowStatus = eZWorkflow::STATUS_FETCH_TEMPLATE_REPEAT;
                             $done = true;
                         } break;
                         case eZWorkflowType::STATUS_REDIRECT:
@@ -468,13 +472,21 @@ class eZWorkflowProcess extends eZPersistentObject
             foreach ( $keys as $key )
             {
                 $value = $parameters[$key];
+                if ( is_array( $value ) )
+                {
+                    $value = serialize( $value );
+                }
                 $string .= $key . $value;
             }
         }else
         {
             foreach ( array_keys( $parameters ) as $key )
             {
-                $value =& $parameters[$key];
+                $value = $parameters[$key];
+                if ( is_array( $value ) )
+                {
+                    $value = serialize( $value );
+                }
                 $string .= $key . $value;
             }
         }
@@ -547,7 +559,7 @@ class eZWorkflowProcess extends eZPersistentObject
 
     function setParameters( $parameterList = null )
     {
-        if ( !is_null( $parameterList ) )
+        if ( $parameterList !== null )
         {
             $this->Parameters = $parameterList;
             unset( $this->ParameterList );

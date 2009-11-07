@@ -5,8 +5,8 @@
 // Created on: <30-Apr-2002 13:06:21 bf>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.1.0
-// BUILD VERSION: 23234
+// SOFTWARE RELEASE: 4.2.0
+// BUILD VERSION: 24182
 // COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
@@ -468,13 +468,24 @@ class eZImageType extends eZDataType
     {
         $content = $objectAttribute->content();
         $original = $content->attribute( 'original' );
-        return $original['url'];
+        $alternativeText = $content->attribute( 'alternative_text' );
+        return $original['url'] . '|' . $alternativeText;
     }
 
     function fromString( $objectAttribute, $string )
     {
+        $delimiterPos = strpos( $string, '|' );
+
         $content = $objectAttribute->attribute( 'content' );
-        $content->initializeFromFile( $string, "" );
+        if ( $delimiterPos === false )
+        {
+        	$content->initializeFromFile( $string, '' );
+        }
+        else
+        {
+            $content->initializeFromFile( substr( $string, 0, $delimiterPos ), '' );
+            $content->setAttribute( 'alternative_text', substr( $string, $delimiterPos + 1 ) );
+        }
         $content->store( $objectAttribute );
         return true;
     }

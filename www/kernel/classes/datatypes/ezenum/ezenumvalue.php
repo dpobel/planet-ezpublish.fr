@@ -2,11 +2,11 @@
 //
 // Definition of eZEnum class
 //
-// Created on: <24-ßÂ-2002 16:07:05 wy>
+// Created on: <24-ï¿½ï¿½-2002 16:07:05 wy>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.1.0
-// BUILD VERSION: 23234
+// SOFTWARE RELEASE: 4.2.0
+// BUILD VERSION: 24182
 // COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
@@ -137,7 +137,7 @@ class eZEnumValue extends eZPersistentObject
 
     static function fetchAllElements( $classAttributeID, $version, $asObject = true )
     {
-        if ( is_null( $classAttributeID ) )
+        if ( $classAttributeID === null )
         {
             return array();
         }

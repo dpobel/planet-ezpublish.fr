@@ -5,8 +5,8 @@
 // Created on: <27-Nov-2002 13:05:59 wy>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.1.0
-// BUILD VERSION: 23234
+// SOFTWARE RELEASE: 4.2.0
+// BUILD VERSION: 24182
 // COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
@@ -147,15 +147,22 @@ class eZUserDiscountRule extends eZPersistentObject
         return $rules;
     }
 
+    /**
+     * Fetches the eZDiscountRules matching an array of eZUserID
+     *
+     * @param array(eZUserID) $idArray Array of user ID
+     *
+     * @return array(eZDiscountRule)
+     **/
     static function &fetchByUserIDArray( $idArray )
     {
         $db = eZDB::instance();
-        $groupString = $db->implodeWithTypeCast( ',', $idArray, 'int' );
+        $inString = $db->generateSQLINStatement( $idArray, 'ezuser_discountrule.contentobject_id', false, false, 'int' );
         $query = "SELECT DISTINCT ezdiscountrule.id,
                                   ezdiscountrule.name
                   FROM ezdiscountrule,
                        ezuser_discountrule
-                  WHERE ezuser_discountrule.contentobject_id IN ( $groupString ) AND
+                  WHERE $inString AND
                         ezuser_discountrule.discountrule_id = ezdiscountrule.id";
         $ruleArray = $db->arrayQuery( $query );
 

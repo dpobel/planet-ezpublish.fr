@@ -3,8 +3,8 @@
 // Created on: <19-Aug-2002 16:38:41 sp>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.1.0
-// BUILD VERSION: 23234
+// SOFTWARE RELEASE: 4.2.0
+// BUILD VERSION: 24182
 // COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
@@ -38,7 +38,7 @@ $modules = $ini->variable( 'ModuleSettings', 'ModuleList' );
 sort( $modules );
 
 $role = eZRole::fetch( 0, $roleID );
-if ( is_null( $role ) )
+if ( $role === null )
 {
     $role = eZRole::fetch( $roleID );
     if ( $role )

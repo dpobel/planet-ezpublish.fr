@@ -5,8 +5,8 @@
 // Created on: <07-Jul-2003 10:06:19 wy>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.1.0
-// BUILD VERSION: 23234
+// SOFTWARE RELEASE: 4.2.0
+// BUILD VERSION: 24182
 // COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
@@ -52,8 +52,8 @@ foreach ( $linkList as $link )
             if ( eZSys::osType() != 'win32' )
             {
                 $url = trim( preg_replace("/^mailto:(.+)/i", "\\1", $url));
-                list($userName, $host) = split("@", $url);
-                list($host, $junk)= split("\?", $host);
+                list($userName, $host) = explode( '@', $url );
+                list($host, $junk) = explode( '?', $host );
                 $dnsCheck = checkdnsrr( $host,"MX" );
                 if ( !$dnsCheck )
                 {

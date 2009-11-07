@@ -3,8 +3,8 @@
 // Created on: <28-May-2007 17:44:41 ar>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.1.0
-// BUILD VERSION: 23234
+// SOFTWARE RELEASE: 4.2.0
+// BUILD VERSION: 24182
 // COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
@@ -65,11 +65,11 @@ while( true )
                     {
                         $cli->output( "\tFetching URL: $source" );
                     }
-                    $fileContentCache[$source] = file_get_contents( $source );
+                    $fileContentCache[$source] = eZHTTPTool::getDataByURL( $source, false, eZStaticCache::USER_AGENT );
                 }
                 if ( $fileContentCache[$source] === false )
                 {
-                    $cli->output( "\tCould not grab content, is the hostname correct and Apache running?" );
+                    $cli->output( "\tCould not grab content from \"$source\", is the hostname correct and Apache running?" );
                 }
                 else
                 {

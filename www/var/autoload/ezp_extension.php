@@ -10,6 +10,13 @@
  */
 
 return array(
+      'EnchantSpell'                                     => 'extension/ezoe/modules/ezoe/classes/EnchantSpell.php',
+      'GoogleSpell'                                      => 'extension/ezoe/modules/ezoe/classes/GoogleSpell.php',
+      'Moxiecode_JSON'                                   => 'extension/ezoe/modules/ezoe/classes/utils/mcejson.php',
+      'Moxiecode_JSONReader'                             => 'extension/ezoe/modules/ezoe/classes/utils/mcejson.php',
+      'PSpell'                                           => 'extension/ezoe/modules/ezoe/classes/PSpell.php',
+      'PSpellShell'                                      => 'extension/ezoe/modules/ezoe/classes/PSpellShell.php',
+      'SpellChecker'                                     => 'extension/ezoe/modules/ezoe/classes/SpellChecker.php',
       'Zend_Date'                                        => 'extension/autostatus/classes/Zend/Date.php',
       'Zend_Date_Cities'                                 => 'extension/autostatus/classes/Zend/Date/Cities.php',
       'Zend_Date_DateObject'                             => 'extension/autostatus/classes/Zend/Date/DateObject.php',
@@ -240,8 +247,21 @@ return array(
       'autostatusTwitterClient'                          => 'extension/autostatus/classes/autostatustwitterclient.php',
       'autostatusType'                                   => 'extension/autostatus/eventtypes/event/autostatus/autostatustype.php',
       'cssmin'                                           => 'extension/planete/classes/cssmin-v1.0.1.b3.php',
+      'eZOEAjaxContent'                                  => 'extension/ezoe/classes/ezoeajaxcontent.php',
+      'eZOEInputParser'                                  => 'extension/ezoe/ezxmltext/handlers/input/ezoeinputparser.php',
+      'eZOEPacker'                                       => 'extension/ezoe/autoloads/ezoepacker.php',
+      'eZOEPackerFunctions'                              => 'extension/ezoe/classes/ezoepackerfunctions.php',
+      'eZOETemplateUtils'                                => 'extension/ezoe/autoloads/ezoetemplateutils.php',
+      'eZOEXMLInput'                                     => 'extension/ezoe/ezxmltext/handlers/input/ezoexmlinput.php',
+      'eZOOConverter'                                    => 'extension/ezodf/classes/ezooconverter.php',
+      'eZOOGenerator'                                    => 'extension/ezodf/classes/ezoogenerator.php',
+      'eZOOImport'                                       => 'extension/ezodf/classes/ezooimport.php',
+      'eZOpenofficeUploadHandler'                        => 'extension/ezodf/uploadhandlers/ezopenofficeuploadhandler.php',
       'eZPlaneteUtils'                                   => 'extension/planete/autoloads/planeteutils.php',
+      'eZRESTODFHandler'                                 => 'extension/ezodf/classes/ezrestodfhandler.php',
       'ezclasslistsInfo'                                 => 'extension/ezclasslists/ezinfo.php',
+      'ezodfInfo'                                        => 'extension/ezodf/ezinfo.php',
+      'ezoeInfo'                                         => 'extension/ezoe/ezinfo.php',
     );
 
 ?>

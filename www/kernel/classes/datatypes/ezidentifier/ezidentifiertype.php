@@ -5,8 +5,8 @@
 // Created on: <28-Aug-2003 11:43:09 br>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.1.0
-// BUILD VERSION: 23234
+// SOFTWARE RELEASE: 4.2.0
+// BUILD VERSION: 24182
 // COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
@@ -270,7 +270,7 @@ class eZIdentifierType extends eZDataType
         $retValue = false;
         $ret = array();
         $version = $contentObjectAttribute->attribute( 'version' );
-        $contentClassID = $contentClassAttribute->attribute( 'id' );
+        $contentClassAttributeID = $contentClassAttribute->attribute( 'id' );
         $objectID = (int)$contentObjectAttribute->attribute( 'contentobject_id' );
         $classAttributeID = (int)$contentObjectAttribute->attribute( 'contentclassattribute_id' );
 
@@ -291,20 +291,23 @@ class eZIdentifierType extends eZDataType
         {
             $db->begin();
 
-            // Ensure that we don't get another identifier with the same id.
-            $db->lock( array( array( "table" => "ezcontentobject_attribute" ),
-                              array( "table" => "ezcontentclass_attribute" ) ) );
+            // Ensure that we don't get another identifier with the same id, so lock ezcontentclass_attribute
+            $db->lock( array( array( 'table' => 'ezcontentclass_attribute' ) ) );
 
             $selectQuery = "SELECT data_int3 FROM ezcontentclass_attribute WHERE " .
-                 "id='$contentClassID' AND version='0'";
+                 "id=$contentClassAttributeID AND version=0";
             $result = $db->arrayQuery( $selectQuery );
             $identifierValue = $result[0]['data_int3'];
 
             // should only increment when we don't have the first version
             $updateQuery = "UPDATE ezcontentclass_attribute SET data_int3=data_int3 + 1 WHERE " .
-                  "id='$contentClassID' AND version='0'";
+                  "id=$contentClassAttributeID AND version=0";
 
             $ret[] = $db->query( $updateQuery );
+            
+            $db->unlock();
+            // unlock before we start to update the ezcontentobject_attribute table
+            
             $ret[] = eZIdentifierType::storeIdentifierValue( $contentClassAttribute, $contentObjectAttribute, $identifierValue );
 
             if ( !in_array( false, $ret ) )
@@ -328,8 +331,6 @@ class eZIdentifierType extends eZDataType
                 $db->commit();
             else
                 $db->rollback();
-
-            $db->unlock();
         }
 
         if ( !in_array( false, $ret ) )

@@ -5,8 +5,8 @@
 // Created on: <20-Dec-2005 14:19:36 hovik>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.1.0
-// BUILD VERSION: 23234
+// SOFTWARE RELEASE: 4.2.0
+// BUILD VERSION: 24182
 // COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
@@ -57,6 +57,7 @@ class eZContentObjectEditHandler
     */
     static function storeActionList()
     {
+        return array();
     }
 
     /*!
@@ -68,6 +69,9 @@ class eZContentObjectEditHandler
 
     /*!
      Override this function in the extension to handle input validation.
+     
+     Result with warnings are expected in the following format:
+     array( 'is_valid' => false, 'warnings' => array( array( 'text' => 'Input parameter <some_id> must be an integer.' ) ) );
     */
     function validateInput( $http, &$module, &$class, $object, &$version, $contentObjectAttributes, $editVersion, $editLanguage, $fromLanguage, $validationParameters )
     {

@@ -3,8 +3,8 @@
 // Created on: <06-Jul-2003 15:52:54 amos>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.1.0
-// BUILD VERSION: 23234
+// SOFTWARE RELEASE: 4.2.0
+// BUILD VERSION: 24182
 // COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
@@ -107,7 +107,11 @@ if ( $useTextTranslation || eZTranslatorManager::dynamicTranslationsEnabled() )
             return ezinsertarguments( $trans, $arguments );
         }
 
-        eZDebug::writeDebug( "No translation for file(translation.ts) in context($context): '$source' with comment($comment)", "ezi18n" );
+        if ( $comment != null and strlen( $comment ) > 0 )
+            eZDebug::writeDebug( "Missing translation for message in context: '$context' with comment: '$comment'. The untranslated message is: '$source'", "ezi18n" );
+        else
+            eZDebug::writeDebug( "Missing translation for message in context: '$context'. The untranslated message is: '$source'", "ezi18n" );
+
         return ezinsertarguments( $source, $arguments );
     }
 }

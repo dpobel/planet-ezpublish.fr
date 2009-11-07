@@ -3,8 +3,8 @@
 // Created on: <01-Aug-2002 09:58:09 bf>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.1.0
-// BUILD VERSION: 23234
+// SOFTWARE RELEASE: 4.2.0
+// BUILD VERSION: 24182
 // COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
@@ -210,17 +210,25 @@ if ( !function_exists( 'checkContentActions' ) )
             if ( $verifyUserType === 'email' ) // and if it is email type
             {
                 // Disable user account and send verification mail to the user
-                $userSetting = eZUserSetting::fetch( $user->attribute( 'contentobject_id' ) );
-                $userSetting->setAttribute( 'is_enabled', 0 );
-                $userSetting->store();
+                $userID = $object->attribute( 'id' );
+
+                // Create enable account hash and send it to the newly registered user
+                $hash = md5( mt_rand() . time() . $userID );
+
+                if ( eZOperationHandler::operationIsAvailable( 'user_activation' ) )
+                {
+                    $operationResult = eZOperationHandler::execute( 'user',
+                                                                    'activation', array( 'user_id'    => $userID,
+                                                                                         'user_hash'  => $hash,
+                                                                                         'is_enabled' => false ) );
+                }
+                else
+                {
+                    eZUserOperationCollection::activation( $userID, $hash, false );
+                }
 
                 // Log out current user
                 eZUser::logoutCurrent();
-
-                // Create enable account hash and send it to the newly registered user
-                $hash = md5( time() . $user->attribute( 'contentobject_id' ) );
-                $accountKey = eZUserAccountKey::createNew( $user->attribute( 'contentobject_id' ), $hash, time() );
-                $accountKey->store();
 
                 $tpl->setVariable( 'hash', $hash );
 

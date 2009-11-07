@@ -5,8 +5,8 @@
 // Created on: <02-���-2002 14:04:21 sp>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.1.0
-// BUILD VERSION: 23234
+// SOFTWARE RELEASE: 4.2.0
+// BUILD VERSION: 24182
 // COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
@@ -90,7 +90,7 @@ foreach( $workflowProcessList as $process )
     else
     {   //restore memento and run it
         $bodyMemento = eZOperationMemento::fetchChild( $process->attribute( 'memento_key' ) );
-        if ( is_null( $bodyMemento ) )
+        if ( $bodyMemento === null )
         {
             eZDebug::writeError( $bodyMemento, "Empty body memento in workflow.php" );
             $db->commit();

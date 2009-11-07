@@ -3,8 +3,8 @@
 // Created on: <17-Jan-2004 12:41:17 oh>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.1.0
-// BUILD VERSION: 23234
+// SOFTWARE RELEASE: 4.2.0
+// BUILD VERSION: 24182
 // COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
@@ -64,7 +64,7 @@ if ( $http->hasPostVariable( 'RemoveButton' ) )
         $deletedSettingArray = $http->postVariable( 'RemoveSettingsArray' );
         foreach ( $deletedSettingArray as $deletedSetting )
         {
-            list( $block, $setting ) = split( ':', $deletedSetting );
+            list( $block, $setting ) = explode( ':', $deletedSetting );
 
             if ( is_array( $placements[$block][$setting] ) )
             {

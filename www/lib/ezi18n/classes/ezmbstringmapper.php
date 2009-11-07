@@ -5,8 +5,8 @@
 // Created on: <12-Jul-2002 12:56:48 amos>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.1.0
-// BUILD VERSION: 23234
+// SOFTWARE RELEASE: 4.2.0
+// BUILD VERSION: 24182
 // COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
@@ -183,6 +183,14 @@ class eZMBStringMapper
         return mb_substr( $str, $start, $length, $this->InputCharsetCode );
     }
 
+    /**
+     * Returns a shared instance of the eZMBStringMapper pr the $input_charset_code
+     * and $output_charset_code params.
+     *
+     * @param $input_charset_code string
+     * @param $output_charset_code string
+     * @return eZMBStringMapper
+     */
     static function instance( $input_charset_code, $output_charset_code )
     {
         $globalsKey = "eZMBStringMapper-$input_charset_code-$output_charset_code";

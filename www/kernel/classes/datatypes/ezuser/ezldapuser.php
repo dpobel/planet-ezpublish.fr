@@ -5,8 +5,8 @@
 // Created on: <24-Jul-2003 15:48:06 wy>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.1.0
-// BUILD VERSION: 23234
+// SOFTWARE RELEASE: 4.2.0
+// BUILD VERSION: 24182
 // COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
@@ -166,6 +166,7 @@ class eZLDAPUser extends eZUser
             $LDAPVersion            = $LDAPIni->variable( 'LDAPSettings', 'LDAPVersion' );
             $LDAPServer             = $LDAPIni->variable( 'LDAPSettings', 'LDAPServer' );
             $LDAPPort               = $LDAPIni->variable( 'LDAPSettings', 'LDAPPort' );
+            $LDAPFollowReferrals    = (int) $LDAPIni->variable( 'LDAPSettings', 'LDAPFollowReferrals' );
             $LDAPBaseDN             = $LDAPIni->variable( 'LDAPSettings', 'LDAPBaseDn' );
             $LDAPBindUser           = $LDAPIni->variable( 'LDAPSettings', 'LDAPBindUser' );
             $LDAPBindPassword       = $LDAPIni->variable( 'LDAPSettings', 'LDAPBindPassword' );
@@ -240,6 +241,7 @@ class eZLDAPUser extends eZUser
             if ( $ds )
             {
                 ldap_set_option( $ds, LDAP_OPT_PROTOCOL_VERSION, $LDAPVersion );
+                ldap_set_option( $ds, LDAP_OPT_REFERRALS, $LDAPFollowReferrals );
                 if ( $LDAPBindUser == '' )
                 {
                     $r = ldap_bind( $ds );
@@ -741,8 +743,6 @@ class eZLDAPUser extends eZUser
             $class = eZContentClass::fetch( $userClassID );
             $contentObject = $class->instantiate( $userCreatorID, $defaultSectionID );
 
-            $remoteID = "LDAP_" . $login;
-            $contentObject->setAttribute( 'remote_id', $remoteID );
             $contentObject->store();
 
             $userID = $contentObjectID = $contentObject->attribute( 'id' );
@@ -942,8 +942,6 @@ class eZLDAPUser extends eZUser
         $userGroupClass = eZContentClass::fetch( $userGroupClassID );
         $contentObject = $userGroupClass->instantiate( $userCreatorID, $defaultSectionID );
 
-        $remoteID = "LDAP_" . $newGroupAttributes[ 'name' ];
-        $contentObject->setAttribute( 'remote_id', $remoteID );
         $contentObject->store();
 
         $contentObjectID = $contentObject->attribute( 'id' );
@@ -1124,8 +1122,7 @@ class eZLDAPUser extends eZUser
                     $parentNode = eZContentObjectTreeNode::fetch( $parentNodeID );
                     if ( is_object( $parentNode ) )
                     {
-                        $params = array( 'Depth' => 1,
-                                         'AttributeFilter' => array( array( 'name', '=', $currentName ) ) );
+                        $params = array( 'AttributeFilter' => array( array( 'name', '=', $currentName ) ) );
                         $nodes = eZContentObjectTreeNode::subTreeByNodeID( $params, $parentNodeID );
 
                         if ( is_array( $nodes ) and count( $nodes ) > 0 and !$isUser )
@@ -1233,7 +1230,7 @@ class eZLDAPUser extends eZUser
             for ( $i = 0; $i < $entries[ 'count' ]; $i++ )
             {
                 $parent =& $entries[ $i ];
-                if ( is_null( $parent ) )
+                if ( $parent === null )
                    continue;
 
                 $parentDN =& $parent['dn'];

@@ -3,8 +3,8 @@
 // Created on: <01-Aug-2002 09:58:09 bf>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.1.0
-// BUILD VERSION: 23234
+// SOFTWARE RELEASE: 4.2.0
+// BUILD VERSION: 24182
 // COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
@@ -97,9 +97,17 @@ if ( $http->hasPostVariable( "OKButton" ) )
             }
             else
             {
-                $newHash = $user->createHash( $login, $newPassword, $site, $type );
-                $user->setAttribute( "password_hash", $newHash );
-                $user->store();
+                // Change user password
+                if ( eZOperationHandler::operationIsAvailable( 'user_password' ) )
+                {
+                    $operationResult = eZOperationHandler::execute( 'user',
+                                                                    'password', array( 'user_id'    => $UserID,
+                                                                                       'new_password'  => $newPassword ) );
+                }
+                else
+                {
+                    eZUserOperationCollection::password( $UserID, $newPassword );
+                }
             }
             $message = true;
             $newPassword = '';

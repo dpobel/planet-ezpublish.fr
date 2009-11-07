@@ -5,8 +5,8 @@
 // Created on: <29-Nov-2002 11:24:42 amos>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.1.0
-// BUILD VERSION: 23234
+// SOFTWARE RELEASE: 4.2.0
+// BUILD VERSION: 24182
 // COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
@@ -203,21 +203,25 @@ class eZExecution
             header( 'HTTP/1.x 500 Internal Server Error' );
             header( 'Content-Type: text/html' );
 
-            echo "An unexpected error has occurred. Please contact the webmaster.<br/>";
+            echo "An unexpected error has occurred. Please contact the webmaster.<br />";
 
-            $ini = eZINI::instance( 'site.ini' );
-            if( $ini->variable( 'DebugSettings', 'DebugOutput' ) == 'enabled' )
+            if( eZDebug::isDebugEnabled() )
             {
-                echo $e->getMessage() , ' in ', $e->getFile(), ' on line ', $e->getLine();
+                echo $e->getMessage() . ' in ' . $e->getFile() . ' on line ' . $e->getLine();
             }
         }
         else
         {
             $cli = eZCLI::instance();
             $cli->error( "An unexpected error has occurred. Please contact the webmaster.");
+
+            if( eZDebug::isDebugEnabled() )
+            {
+                $cli->error( $e->getMessage() . ' in ' . $e->getFile() . ' on line ' . $e->getLine() );
+            }
         }
 
-        eZLog::write( 'Unexpected error, the message was : ' . $e->getMessage(), 'error.log' );
+        eZLog::write( 'Unexpected error, the message was : ' . $e->getMessage() . ' in ' . $e->getFile() . ' on line ' . $e->getLine(), 'error.log' );
 
         eZExecution::cleanup();
         eZExecution::setCleanExit();

@@ -5,8 +5,8 @@
 // Created on: <18-Apr-2002 12:15:07 amos>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.1.0
-// BUILD VERSION: 23234
+// SOFTWARE RELEASE: 4.2.0
+// BUILD VERSION: 24182
 // COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
@@ -224,7 +224,7 @@ class eZTemplateTypeOperator
 
             case $this->IsBooleanName:
             {
-                $code .= 'is_bool( %1% );';
+                $code .= '( %1% === true || %1% === false );';
             } break;
 
             case $this->IsIntegerName:
@@ -260,7 +260,7 @@ class eZTemplateTypeOperator
 
             case $this->IsNullName:
             {
-                $code .= 'is_null( %1% );';
+                $code .= '(%1% === null);';
             } break;
 
             case $this->IsSetName:

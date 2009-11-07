@@ -3,8 +3,8 @@
 // Created on: <01-Aug-2002 09:58:09 bf>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.1.0
-// BUILD VERSION: 23234
+// SOFTWARE RELEASE: 4.2.0
+// BUILD VERSION: 24182
 // COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
@@ -47,11 +47,30 @@ if ( $accountKey )
 {
     $accountActivated = true;
     $userID = $accountKey->attribute( 'user_id' );
+    
+    $userContentObject = eZContentObject::fetch( $userID );
+    if ( !$userContentObject instanceof eZContentObject )
+    {
+        return $Module->handleError( eZError::KERNEL_NOT_FOUND, 'kernel' );
+    }
+
+    if ( $userContentObject->attribute('main_node_id') != $mainNodeID )
+    {
+        return $Module->handleError( eZError::KERNEL_ACCESS_DENIED, 'kernel' );
+    }
 
     // Enable user account
-    $userSetting = eZUserSetting::fetch( $userID );
-    $userSetting->setAttribute( 'is_enabled', 1 );
-    $userSetting->store();
+    if ( eZOperationHandler::operationIsAvailable( 'user_activation' ) )
+    {
+        $operationResult = eZOperationHandler::execute( 'user',
+                                                        'activation', array( 'user_id'    => $userID,
+                                                                             'user_hash'  => $hash,
+                                                                             'is_enabled' => true ) );
+    }
+    else
+    {
+        eZUserOperationCollection::activation( $userID, $hash, true );
+    }
 
     // Log in user
     $user = eZUser::fetch( $userID );
@@ -60,18 +79,18 @@ if ( $accountKey )
         return $Module->handleError( eZError::KERNEL_NOT_FOUND, 'kernel' );
 
     $user->loginCurrent();
-
-    // Remove key
-    $accountKey->remove( $userID );
 }
 elseif( $mainNodeID )
 {
     $userContentObject = eZContentObject::fetchByNodeID( $mainNodeID );
-    $userSetting = eZUserSetting::fetch( $userContentObject->attribute( 'id' ) );
-
-    if ( $userSetting !== null && $userSetting->attribute( 'is_enabled' ) )
+    if ( $userContentObject instanceof eZContentObject )
     {
-        $alreadyActive = true;
+        $userSetting = eZUserSetting::fetch( $userContentObject->attribute( 'id' ) );
+    
+        if ( $userSetting !== null && $userSetting->attribute( 'is_enabled' ) )
+        {
+            $alreadyActive = true;
+        }
     }
 }
 

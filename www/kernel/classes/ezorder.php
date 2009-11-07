@@ -5,8 +5,8 @@
 // Created on: <31-Jul-2002 14:00:03 bf>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.1.0
-// BUILD VERSION: 23234
+// SOFTWARE RELEASE: 4.2.0
+// BUILD VERSION: 24182
 // COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
@@ -212,7 +212,7 @@ class eZOrder extends eZPersistentObject
 
     static function getShowOrdersQuery( $show, $table = null )
     {
-        $table = ( is_null( $table ) ? "" : $table . "." );
+        $table = ( $table === null ? '' : $table . '.' );
 
         switch( $show )
         {

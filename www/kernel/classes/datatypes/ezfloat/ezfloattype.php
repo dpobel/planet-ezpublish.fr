@@ -5,8 +5,8 @@
 // Created on: <26-Apr-2002 16:54:35 bf>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.1.0
-// BUILD VERSION: 23234
+// SOFTWARE RELEASE: 4.2.0
+// BUILD VERSION: 24182
 // COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
@@ -345,7 +345,7 @@ class eZFloatType extends eZDataType
 
     function hasObjectAttributeContent( $contentObjectAttribute )
     {
-        return true;
+        return $contentObjectAttribute->attribute( 'data_float' ) !== null;
     }
     /*!
      \return string representation of an contentobjectattribute data for simplified export

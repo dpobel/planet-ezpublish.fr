@@ -4127,6 +4127,14 @@
         <source>You cannot manage the versions of this object because there is only one version available (the one that is being displayed).</source>
         <translation>No pots gestionar les versions d&apos;aquest objecte perquè només hi ha una versió disponible (la que s&apos;està mostrant).</translation>
     </message>
+    <message>
+        <source>Translation mismatch</source>
+        <translation>La traducció no coincideix</translation>
+    </message>
+    <message>
+        <source>Your selected translation does not match the language of your selected siteaccess. This may lead to unexpected results in the preview, however it may also be what you intended.</source>
+        <translation>La traducció seleccionada no es correspon amb el idioma de l&apos;accés al lloc seleccionat. Això pot provocar resultats inesperats a la previsualització, però també pot ser el que vols.</translation>
+    </message>
 </context>
 <context>
     <name>design/admin/contentstructuremenu</name>
@@ -11162,6 +11170,22 @@ Nota: Els paquets no seran desinstal·lats.</translation>
         <source>New content object state</source>
         <translation>Nou estat d&apos;objecte de contingut</translation>
     </message>
+    <message>
+        <source>Identifier:</source>
+        <translation>Identificador:</translation>
+    </message>
+    <message>
+        <source>Default language:</source>
+        <translation>Idioma predeterminat:</translation>
+    </message>
+    <message>
+        <source>Name:</source>
+        <translation>Nom:</translation>
+    </message>
+    <message>
+        <source>Description:</source>
+        <translation>Descripció:</translation>
+    </message>
 </context>
 <context>
     <name>design/admin/state/group</name>
@@ -11221,6 +11245,10 @@ Nota: Els paquets no seran desinstal·lats.</translation>
         <source>Create a new state.</source>
         <translation>Crea un nou estat.</translation>
     </message>
+    <message>
+        <source>Description</source>
+        <translation>Descripció</translation>
+    </message>
 </context>
 <context>
     <name>design/admin/state/group_edit</name>
@@ -11259,6 +11287,22 @@ Nota: Els paquets no seran desinstal·lats.</translation>
     <message>
         <source>Cancel creating this state group.</source>
         <translation>Cancel.la la creació de grup d&apos;estats.</translation>
+    </message>
+    <message>
+        <source>Identifier:</source>
+        <translation>Identificador:</translation>
+    </message>
+    <message>
+        <source>Default language:</source>
+        <translation>Idioma predeterminat:</translation>
+    </message>
+    <message>
+        <source>Name:</source>
+        <translation>Nom:</translation>
+    </message>
+    <message>
+        <source>Description:</source>
+        <translation>Descripció:</translation>
     </message>
 </context>
 <context>
@@ -11310,6 +11354,25 @@ Nota: Els paquets no seran desinstal·lats.</translation>
     <message>
         <source>Create a new state group.</source>
         <translation>Crea un nou grup d&apos;estats.</translation>
+    </message>
+</context>
+<context>
+    <name>design/admin/state/view</name>
+    <message>
+        <source>ID</source>
+        <translation>ID</translation>
+    </message>
+    <message>
+        <source>Identifier</source>
+        <translation>Identificador</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation>Nom</translation>
+    </message>
+    <message>
+        <source>Description</source>
+        <translation>Descripció</translation>
     </message>
 </context>
 <context>
@@ -11836,7 +11899,7 @@ Segueix les instruccions d&apos;aquest correu per activar el teu compte.</transl
     </message>
     <message>
         <source>Account has been locked because the maximum number of failed login attempts was exceeded.</source>
-        <translation type="unfinished">El compte d&apos;usuari s&apos;ha bloquejat perquè s&apos;ha excedit el nombre màxim d&apos;intents per connectar.</translation>
+        <translation>El compte d&apos;usuari s&apos;ha bloquejat perquè s&apos;ha excedit el nombre màxim d&apos;intents per connectar.</translation>
     </message>
 </context>
 <context>
@@ -15311,7 +15374,7 @@ Si vols enviar comentaris a l&apos;encarregat d&apos;aprovar el contingut o veur
     </message>
     <message>
         <source>Order</source>
-        <translation>Comanda</translation>
+        <translation>Ordre</translation>
     </message>
     <message>
         <source>Published</source>
@@ -17147,17 +17210,6 @@ Si esborres cap objecte, només s&apos;esborrarà de la llista.</translation>
     </message>
 </context>
 <context>
-    <name>design/standard/form</name>
-    <message>
-        <source>Thank you for your feedback</source>
-        <translation>Gràcies per la teva aportació</translation>
-    </message>
-    <message>
-        <source>Your information was successfully received.</source>
-        <translation>La teva informació s&apos;ha rebut amb èxit.</translation>
-    </message>
-</context>
-<context>
     <name>design/standard/gui</name>
     <message>
         <source>Delete</source>
@@ -17505,10 +17557,6 @@ Si ho fas, també s&apos;esborraran tots els seus fills.</translation>
     <message>
         <source>Store</source>
         <translation>Emmagatzema</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation>Cancel·la</translation>
     </message>
     <message>
         <source>%sitename notification system</source>
@@ -21288,6 +21336,14 @@ També podràs fer-ho més endavant de la Interfície d&apos;Administració.</tr
         <source>The &apos;digest&apos; function is not available in your database, you cannot run eZ Publish without this. See the documentation for more information.</source>
         <translation>La funció &apos;recopil.lació&apos; no està disponible a la teva base de dades, no pots fer servir eZ Publish sense això. Llegeix la documentació per més informació.</translation>
     </message>
+    <message>
+        <source>MySQL support was detected on your system. Please choose the database driver you would like to use.</source>
+        <translation>S&apos;ha detectat suport per a MySQL en el teu sistema. Tria quin tipus de base de dades vols fer servir.</translation>
+    </message>
+    <message>
+        <source>PostgreSQL support was detected on your system. Please choose the database driver you would like to use.</source>
+        <translation>S&apos;ha detectat suport per a PostgreSQL en el teu sistema. Tria quin tipus de base de dades vols fer servir.</translation>
+    </message>
 </context>
 <context>
     <name>design/standard/setup/operatorcode</name>
@@ -21745,10 +21801,6 @@ Això és un problema de seguretat i ha de ser canviat a un altre directori glob
         <translation>Nota: Si es produeix un error aquí també es produirà un error al test accept_path_info.</translation>
     </message>
     <message>
-        <source>, but the latest released PHP 4.4.x version is highly recommended.</source>
-        <translation>, tot i que la darrera versió PHP 4.4.x és molt recomanable.</translation>
-    </message>
-    <message>
         <source>Missed some directories</source>
         <translation>Falten alguns directoris</translation>
     </message>
@@ -22003,6 +22055,38 @@ Per fer-ho, cal que canviïs els comandaments %chown sota els comandaments alter
     <message>
         <source>To fix this, edit your php.ini configuration and add E to the variables_order setting.</source>
         <translation>Per arreglar això, edita la configuració del teu php.ini and afegeix E a al configuració variables_order.</translation>
+    </message>
+    <message>
+        <source>Wrong eZ Components version detected</source>
+        <translation>S&apos;ha detectat una versió incorrecta dels eZ Components</translation>
+    </message>
+    <message>
+        <source>Missing eZ Components dependancy</source>
+        <translation>No es troba la dependència eZ Components</translation>
+    </message>
+    <message>
+        <source>The minimum required eZ Components version is</source>
+        <translation>La versió mínima requerida dels eZ Components és</translation>
+    </message>
+    <message>
+        <source>Download instructions for both regular download and PEAR are provided at</source>
+        <translation>Les instruccions de descarrega via PEAR o normal estan a</translation>
+    </message>
+    <message>
+        <source>Missing iconv extension</source>
+        <translation>No es troba l&apos;extensió iconv</translation>
+    </message>
+    <message>
+        <source>The iconv extension is not available to eZ Publish. Without it eZ Publish will not work.</source>
+        <translation>L&apos;extensió iconv no està disponible a eZ Publish. Sense això eZ Publish no funciona.</translation>
+    </message>
+    <message>
+        <source>In most cases, the iconv extension is enabled by default because it is included in the PHP core. However, some Linux distributions have PHP without compiled-in support for iconv. Instead, they provide iconv as a shared module in a separate RPM package called &quot;php-iconv&quot; (or &quot;php5-iconv&quot;).</source>
+        <translation>En molts casos, l&apos;extensió iconv està activada per defecte perquè està inclosa a l&apos;instal.lació del PHP. Encara que a vegades, algunes distribucions Linux tenen el PHP sense soport per iconv compil.lat. Aquestes distribucions proveeixen iconv com a un mòdul compartit en un paquet RPM anomenat &quot;php-iconv&quot; (o &quot;php5-iconv&quot;).</translation>
+    </message>
+    <message>
+        <source>, but the latest released stable PHP version is always recommended.</source>
+        <translation>, però sempre es recomana l&apos;última versió establa de PHP.</translation>
     </message>
 </context>
 <context>
@@ -22849,6 +22933,63 @@ Fes clic en els noms d&apos;objecte per canviar la llista de navegació.</transl
     <message>
         <source>Fold/Unfold</source>
         <translation>Plega/Desplega</translation>
+    </message>
+</context>
+<context>
+    <name>design/standard/state/edit</name>
+    <message>
+        <source>Identifier:</source>
+        <translation>Identificador:</translation>
+    </message>
+    <message>
+        <source>Default language:</source>
+        <translation>Idioma predeterminat:</translation>
+    </message>
+    <message>
+        <source>Name:</source>
+        <translation>Nom:</translation>
+    </message>
+    <message>
+        <source>Description:</source>
+        <translation>Descripció:</translation>
+    </message>
+</context>
+<context>
+    <name>design/standard/state/group</name>
+    <message>
+        <source>ID</source>
+        <translation>ID</translation>
+    </message>
+    <message>
+        <source>Identifier</source>
+        <translation>Identificador</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation>Nom</translation>
+    </message>
+    <message>
+        <source>Description</source>
+        <translation>Descripció</translation>
+    </message>
+</context>
+<context>
+    <name>design/standard/state/group_edit</name>
+    <message>
+        <source>Identifier:</source>
+        <translation>Identificador:</translation>
+    </message>
+    <message>
+        <source>Default language:</source>
+        <translation>Idioma predeterminat:</translation>
+    </message>
+    <message>
+        <source>Name:</source>
+        <translation>Nom:</translation>
+    </message>
+    <message>
+        <source>Description:</source>
+        <translation>Descripció:</translation>
     </message>
 </context>
 <context>
@@ -24247,6 +24388,10 @@ Segueix les instruccions d&apos;aquest correu per activar el teu compte. </trans
         <source>State limitations cache</source>
         <translation>Memòria cau de limitacions d&apos;estat</translation>
     </message>
+    <message>
+        <source>Text to image cache</source>
+        <translation>Memòria cau de text a imatge</translation>
+    </message>
 </context>
 <context>
     <name>kernel/class</name>
@@ -25256,6 +25401,18 @@ si has triat l&apos;opció &quot;%3&quot; des de &quot;%4&quot; </translation>
         <source>The receiver has already received the maximum number of tipafriend mails the last hours</source>
         <translation>El destinatari ja ha rebut el màxim nombre d&apos;avisos d&apos;un amic en les últimes hores</translation>
     </message>
+    <message>
+        <source>Error</source>
+        <translation>Error</translation>
+    </message>
+    <message>
+        <source>The request sent to the server was too big to be accepted. This probably means that you uploaded a file which was too big. The maximum allowed request size is %max_size_string.</source>
+        <translation>La petició enviada al servidor era massa gran per ser acceptada. Això vol dir que has carregar un fitxer massa gran. La grandària màxima permès és %max_size_string.</translation>
+    </message>
+    <message>
+        <source>You have already sent a tipafriend mail to this reciver regarding &apos;$nodeName&apos; content</source>
+        <translation>Ja havies enviat un e-mail a aquest destinatari fent referencia a &apos;$nodeName&apos;</translation>
+    </message>
 </context>
 <context>
     <name>kernel/content/copysubtree</name>
@@ -25491,13 +25648,6 @@ si has triat l&apos;opció &quot;%3&quot; des de &quot;%4&quot; </translation>
     <message>
         <source>Copyright</source>
         <translation>Copyright</translation>
-    </message>
-</context>
-<context>
-    <name>kernel/form</name>
-    <message>
-        <source>Form processing</source>
-        <translation>Procés de formulari</translation>
     </message>
 </context>
 <context>
@@ -26247,6 +26397,14 @@ si has triat l&apos;opció &quot;%3&quot; des de &quot;%4&quot; </translation>
     <message>
         <source>Changes were stored successfully.</source>
         <translation>Els canvis s&apos;han emmagatzemat correctament.</translation>
+    </message>
+    <message>
+        <source>&apos;%value&apos; is not a valid custom rate value (positive number expected)</source>
+        <translation>&apos;%value&apos; no és un valor de rati vàlid (s&apos;espera un nombre positiu)</translation>
+    </message>
+    <message>
+        <source>&apos;%value&apos; is not a valid rate_factor value (positive number expected)</source>
+        <translation>&apos;%value&apos; no és un valor de factor de rati vàlid (s&apos;espera un nombre positiu)</translation>
     </message>
 </context>
 <context>

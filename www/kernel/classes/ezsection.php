@@ -5,8 +5,8 @@
 // Created on: <27-Aug-2002 15:55:18 bf>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.1.0
-// BUILD VERSION: 23234
+// SOFTWARE RELEASE: 4.2.0
+// BUILD VERSION: 24182
 // COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
@@ -48,7 +48,7 @@ class eZSection extends eZPersistentObject
     */
     static function definition()
     {
-        return array( "fields" => array( "id" => array( 'name' => 'ID',
+        static $definition = array( "fields" => array( "id" => array( 'name' => 'ID',
                                                         'datatype' => 'integer',
                                                         'default' => 0,
                                                         'required' => true ),
@@ -69,6 +69,7 @@ class eZSection extends eZPersistentObject
                       "class_name" => "eZSection",
                       "sort" => array( "name" => "asc" ),
                       "name" => "ezsection" );
+        return $definition;
     }
 
     /*!

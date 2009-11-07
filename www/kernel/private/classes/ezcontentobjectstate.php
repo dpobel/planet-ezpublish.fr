@@ -25,7 +25,7 @@ class eZContentObjectState extends eZPersistentObject
 
     static function definition()
     {
-        $def = array( "fields" => array( "id" => array( "name" => "ID",
+        static $definition = array( "fields" => array( "id" => array( "name" => "ID",
                                                         "datatype" => "integer",
                                                         "required" => true ),
                                          "group_id" => array( "name" => "GroupID",
@@ -59,7 +59,7 @@ class eZContentObjectState extends eZPersistentObject
                       "class_name" => "eZContentObjectState",
                       "sort" => array( "group_id" => "asc", "priority" => "asc" ),
                       "name" => "ezcobj_state" );
-        return $def;
+        return $definition;
     }
 
     /**
@@ -217,7 +217,7 @@ class eZContentObjectState extends eZPersistentObject
                     {
                         $row['contentobject_state_id'] = $this->ID;
                     }
-                    $allTranslations[] = new eZContentObjectStateLanguage( $row );
+                    $allTranslations[$languageID] = new eZContentObjectStateLanguage( $row );
                 }
             }
             ksort( $allTranslations );
@@ -301,7 +301,7 @@ class eZContentObjectState extends eZPersistentObject
      */
     public function store( $fieldFilters = null )
     {
-        if ( is_null( $fieldFilters ) )
+        if ( $fieldFilters === null )
         {
             $db = eZDB::instance();
 
@@ -362,7 +362,7 @@ class eZContentObjectState extends eZPersistentObject
                 {
                     // the name and description are empty
                     // so the translation needs to be removed if it was stored before
-                    if ( !is_null( $translation->attribute( 'contentobject_state_id' ) ) )
+                    if ( $translation->attribute( 'contentobject_state_id' ) !== null )
                     {
                         $translation->remove();
                     }

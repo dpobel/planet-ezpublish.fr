@@ -5,8 +5,8 @@
 // Created on: <06-Nov-2002 15:10:02 wy>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.1.0
-// BUILD VERSION: 23234
+// SOFTWARE RELEASE: 4.2.0
+// BUILD VERSION: 24182
 // COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
@@ -188,7 +188,6 @@ class eZXMLOutputHandler
         }
 
         $this->Document = new DOMDocument( '1.0', 'utf-8' );
-        $this->Document->preserveWhiteSpace = false;
         $success = $this->Document->loadXML( $this->XMLData );
 
         if ( !$success )
@@ -480,13 +479,13 @@ class eZXMLOutputHandler
                 $this->Tpl->setVariable( $name, $value, 'xmltagns' );
             }
 
-            // Create design keys array
+            // Create design keys array (including the ones with no value so they still overwrite values of parent tag)
             $designKeys = array();
             if ( isset( $currentTag['attrDesignKeys'] ) )
             {
                 foreach( $currentTag['attrDesignKeys'] as $attrName=>$keyName )
                 {
-                    if ( isset( $attributes[$attrName] ) && $attributes[$attrName] )
+                    if ( isset( $attributes[$attrName] ) )
                     {
                         $designKeys[$keyName] = $attributes[$attrName];
                     }
@@ -498,11 +497,16 @@ class eZXMLOutputHandler
                 $designKeys = array_merge( $designKeys, $result['design_keys'] );
             }
 
-            // Save existing keys and set new ones
             $existingKeys = $this->Res->keys();
-            $this->Res->Keys = array();
-            foreach( $designKeys as $key => $value )
+            $savedKeys = array();
+
+            // Save old keys values and set new design keys
+            foreach( $designKeys as $key=>$value )
             {
+                if ( isset( $existingKeys[$key] ) )
+                {
+                    $savedKeys[$key] = $existingKeys[$key];
+                }
                 $this->Res->setKeys( array( array( $key, $value ) ) );
             }
 
@@ -522,8 +526,18 @@ class eZXMLOutputHandler
 
         if ( !isset( $currentTag['quickRender'] ) )
         {
-            // Restore saved template override keys
-            $this->Res->Keys = $existingKeys;
+            // Restore saved template override keys and remove others
+            foreach( $designKeys as $key => $value )
+            {
+                if ( isset( $savedKeys[$key] ) )
+                {
+                    $this->Res->setKeys( array( array( $key, $savedKeys[$key] ) ) );
+                }
+                else
+                {
+                    $this->Res->removeKey( $key );
+                }
+            }
 
             // Unset variables
             foreach ( $vars as $name=>$value )

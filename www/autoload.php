@@ -52,7 +52,7 @@ class ezpAutoloader
 
     public static function autoload( $className )
     {
-        if ( is_null( self::$ezpClasses ) )
+        if ( self::$ezpClasses === null )
         {
             $ezpKernelClasses = require 'autoload/ezp_kernel.php';
             $ezpExtensionClasses = false;
@@ -88,7 +88,7 @@ class ezpAutoloader
             if ( defined( 'EZP_AUTOLOAD_ALLOW_KERNEL_OVERRIDE' ) and EZP_AUTOLOAD_ALLOW_KERNEL_OVERRIDE )
             {
                 $ezpKernelOverrideClasses = require 'var/autoload/ezp_override.php';
-                self::$ezpClasses = array_merge( $ezpClasses, $ezpKernelOverrideClasses );
+                self::$ezpClasses = array_merge( self::$ezpClasses, $ezpKernelOverrideClasses );
             }
         }
 
@@ -100,7 +100,7 @@ class ezpAutoloader
 
     /**
      * Resets the local, in-memory autoload cache.
-     * 
+     *
      * If the autoload arrays are extended during a requsts lifetime, this
      * method must be called, to make them available.
      *
@@ -109,6 +109,21 @@ class ezpAutoloader
     public static function reset()
     {
         self::$ezpClasses = null;
+    }
+
+    public static function updateExtensionAutoloadArray()
+    {
+        $autoloadGenerator = new eZAutoloadGenerator();
+        try
+        {
+            $autoloadGenerator->buildAutoloadArrays();
+
+            self::reset();
+        }
+        catch ( Exception $e )
+        {
+            echo $e->getMessage() . ' in ' . $e->getFile() . ' on line ' . $e->getLine();
+        }
     }
 }
 

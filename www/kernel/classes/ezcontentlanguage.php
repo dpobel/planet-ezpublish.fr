@@ -5,8 +5,8 @@
 // Created on: <08-Feb-2006 10:23:51 jk>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.1.0
-// BUILD VERSION: 23234
+// SOFTWARE RELEASE: 4.2.0
+// BUILD VERSION: 24182
 // COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
@@ -45,7 +45,7 @@ class eZContentLanguage extends eZPersistentObject
      */
     static function definition()
     {
-        return array( 'fields' => array( 'id' => array( 'name' => 'ID',
+        static $definition = array( 'fields' => array( 'id' => array( 'name' => 'ID',
                                                         'datatype' => 'integer',
                                                         'required' => true ),
                                          'name' => array( 'name' => 'Name',
@@ -66,6 +66,7 @@ class eZContentLanguage extends eZPersistentObject
                       'sort' => array( 'name' => 'asc' ),
                       'class_name' => 'eZContentLanguage',
                       'name' => 'ezcontent_language' );
+        return $definition;
     }
 
     /**
@@ -191,22 +192,31 @@ class eZContentLanguage extends eZPersistentObject
      */
     static function fetchList( $forceReloading = false )
     {
-        if ( !isset( $GLOBALS['eZContentLanguageList'] ) || $forceReloading )
+        if( isset( $GLOBALS['eZContentLanguageList'] ) && $forceReloading === false )
+            return $GLOBALS['eZContentLanguageList'];
+
+        $cachePath = eZSys::cacheDirectory() . '/ezcontentlanguage_cache.php';
+        $clusterFileHandler = eZClusterFileHandler::instance( $cachePath );
+
+        if( $forceReloading || !$clusterFileHandler->fileExists( $cachePath ) )
         {
-            $mask = 1; // we want have 0-th bit set too!
             $languages = eZPersistentObject::fetchObjectList( eZContentLanguage::definition() );
-
-            unset( $GLOBALS['eZContentLanguageList'] );
-            unset( $GLOBALS['eZContentLanguageMask'] );
-            $GLOBALS['eZContentLanguageList'] = array();
-            foreach ( $languages as $language )
-            {
-                $GLOBALS['eZContentLanguageList'][$language->attribute( 'id' )] = $language;
-                $mask += $language->attribute( 'id' );
-            }
-
-            $GLOBALS['eZContentLanguageMask'] = $mask;
+            $clusterFileHandler->fileStoreContents( $cachePath, serialize( $languages ), 'content', 'php' );
         }
+        else
+            $languages = unserialize( $clusterFileHandler->fetchContents() );
+
+        unset( $GLOBALS['eZContentLanguageList'] );
+        unset( $GLOBALS['eZContentLanguageMask'] );
+        $GLOBALS['eZContentLanguageList'] = array();
+        $mask = 1; // we want have 0-th bit set too!
+        foreach ( $languages as $language )
+        {
+            $GLOBALS['eZContentLanguageList'][$language->attribute( 'id' )] = $language;
+            $mask += $language->attribute( 'id' );
+        }
+
+        $GLOBALS['eZContentLanguageMask'] = $mask;
 
         return $GLOBALS['eZContentLanguageList'];
     }
@@ -927,6 +937,11 @@ class eZContentLanguage extends eZPersistentObject
                $GLOBALS['eZContentLanguagePrioritizedLanguages'],
                $GLOBALS['eZContentLanguageMask'],
                $GLOBALS['eZContentLanguageCronjobMode'] );
+
+        // With the solution to #14227 we also need to clear the cached
+        // list of languages
+        $cachePath = eZSys::cacheDirectory() . '/ezcontentlanguage_cache.php';
+        eZClusterFileHandler::instance()->fileDelete( $cachePath );
     }
 }
 

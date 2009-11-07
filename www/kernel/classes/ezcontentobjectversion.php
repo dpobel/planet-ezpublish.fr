@@ -5,8 +5,8 @@
 // Created on: <18-Apr-2002 10:05:34 bf>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.1.0
-// BUILD VERSION: 23234
+// SOFTWARE RELEASE: 4.2.0
+// BUILD VERSION: 24182
 // COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
@@ -41,6 +41,8 @@ class eZContentObjectVersion extends eZPersistentObject
     const STATUS_ARCHIVED = 3;
     const STATUS_REJECTED = 4;
     const STATUS_INTERNAL_DRAFT = 5;
+    // used when a workflow event returns FETCH_TEMPLATE_REPEAT to allow editing again
+    const STATUS_REPEAT = 6;
 
     function eZContentObjectVersion( $row=array() )
     {
@@ -54,7 +56,7 @@ class eZContentObjectVersion extends eZPersistentObject
 
     static function definition()
     {
-        return array( "fields" => array( 'id' =>  array( 'name' => 'ID',
+        static $definition = array( "fields" => array( 'id' =>  array( 'name' => 'ID',
                                                          'datatype' => 'integer',
                                                          'default' => 0,
                                                          'required' => true ),
@@ -135,6 +137,7 @@ class eZContentObjectVersion extends eZPersistentObject
                       "increment_key" => "id",
                       'sort' => array( 'version' => 'asc' ),
                       'name' => 'ezcontentobject_version' );
+        return $definition;
     }
 
     static function statusList( $limit = false )
@@ -1722,6 +1725,12 @@ class eZContentObjectVersion extends eZPersistentObject
         }
 
         return $conflictVersions;
+    }
+
+    public function store( $fieldFilters = null )
+    {
+        eZContentObject::clearCache( $this->attribute( 'contentobject_id' ) );
+        parent::store( $fieldFilters );
     }
 
     public $CurrentLanguage = false;

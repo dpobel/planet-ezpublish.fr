@@ -5,8 +5,8 @@
 // Created on: <28-Feb-2003 16:52:53 amos>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.1.0
-// BUILD VERSION: 23234
+// SOFTWARE RELEASE: 4.2.0
+// BUILD VERSION: 24182
 // COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
@@ -75,21 +75,24 @@ class eZExpiryHandler
     */
     function store()
     {
-        $cacheDirectory = eZSys::cacheDirectory();
-
-        $storeString = "<?php\n\$Timestamps = array( ";
-        $i = 0;
-        foreach ( $this->Timestamps as $key => $value )
+        if ( $this->IsModified )
         {
-            if ( $i > 0 )
-                $storeString .= ",\n" . str_repeat( ' ', 21 );
-            $storeString .= "'$key' => $value";
-            ++$i;
-        }
-        $storeString .= " );\n?>";
+            $cacheDirectory = eZSys::cacheDirectory();
 
-        $this->CacheFile->storeContents( $storeString, 'expirycache', false, true );
-        $this->IsModified = false;
+            $storeString = "<?php\n\$Timestamps = array( ";
+            $i = 0;
+            foreach ( $this->Timestamps as $key => $value )
+            {
+                if ( $i > 0 )
+                    $storeString .= ",\n" . str_repeat( ' ', 21 );
+                $storeString .= "'$key' => $value";
+                ++$i;
+            }
+            $storeString .= " );\n?>";
+
+            $this->CacheFile->storeContents( $storeString, 'expirycache', false, true );
+            $this->IsModified = false;
+        }
     }
 
     /*!
@@ -136,10 +139,11 @@ class eZExpiryHandler
         return $handler->Timestamps[$name];
     }
 
-    /*!
-     \static
-     \return the unique instance of the expiry handler.
-    */
+    /**
+     * Returns a shared instance of the eZExpiryHandler class
+     *
+     * @return eZExpiryHandler
+     */
     static function instance()
     {
         if ( !isset( $GLOBALS['eZExpiryHandlerInstance'] ) ||
@@ -161,25 +165,13 @@ class eZExpiryHandler
     }
 
     /*!
-     \return true if the expiry handler has modified data.
-    */
-    function isModified()
-    {
-        return $this->IsModified;
-    }
-
-    /*!
      Called at the end of execution and will store the data if it is modified.
     */
     static function shutdown()
     {
         if ( eZExpiryHandler::hasInstance() )
         {
-            $instance = eZExpiryHandler::instance();
-            if ( $instance->isModified() )
-            {
-                $instance->store();
-            }
+            eZExpiryHandler::instance()->store();
         }
     }
 
@@ -193,10 +185,26 @@ class eZExpiryHandler
         }
     }
 
+    /**
+     * Returns the data modification status
+     *
+     * @return bool true if data was modified, false if it wasn't
+     * @deprecated 4.2 will be removed in 4.3
+     **/
+    public function isModified()
+    {
+        return $this->IsModified;
+    }
+
     /// \privatesection
     private static $isShutdownFunctionRegistered = false;
 
     public $Timestamps;
+
+    /**
+    * Wether data has been modified or not
+    * @var bool
+    **/
     public $IsModified;
 }
 

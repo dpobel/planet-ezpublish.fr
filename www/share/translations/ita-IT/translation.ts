@@ -1,5 +1,4 @@
 <!DOCTYPE TS><TS>
-<defaultcodec></defaultcodec>
 <context>
     <name>contentstructuremenu/show_content_structure</name>
     <message>
@@ -11,15 +10,15 @@
     <name>design</name>
     <message>
         <source>%group_name [Content object state group]</source>
-        <translation type="unfinished"></translation>
+        <translation>%group_name [Gruppo di stato dell&apos;oggetto contenuto]</translation>
     </message>
     <message>
         <source>Edit</source>
-        <translation type="unfinished">Modifica</translation>
+        <translation>Modifica</translation>
     </message>
     <message>
         <source>%state_name [Content object state]</source>
-        <translation type="unfinished"></translation>
+        <translation>%state_name [Stato dell&apos;oggetto contenuto]</translation>
     </message>
 </context>
 <context>
@@ -2043,11 +2042,11 @@
     </message>
     <message>
         <source>States</source>
-        <translation type="unfinished"></translation>
+        <translation>Stati</translation>
     </message>
     <message>
         <source>The following data is invalid according to the custom validation rules</source>
-        <translation type="unfinished"></translation>
+        <translation>I dati seguenti non sono validi sulla base delle regole di validazione impostate</translation>
     </message>
 </context>
 <context>
@@ -2979,7 +2978,7 @@
     </message>
     <message>
         <source>Available languages for translation of content [%translations_count]</source>
-        <translation>Lingue disponibile per la traduzione del contenuto [%translations_count]</translation>
+        <translation>Lingue disponibili per la traduzione del contenuto [%translations_count]</translation>
     </message>
     <message>
         <source>Invert selection.</source>
@@ -3641,7 +3640,7 @@
     </message>
     <message>
         <source>Enter the destination URL for the new alias. Use forward slashes (/) to create subentries.</source>
-        <translation>Inserisci l&apos;URL di destinazione per il nuovo alias. Usa la barra (/) per per separare gli elementi.</translation>
+        <translation>Inserisci l&apos;URL di destinazione per il nuovo alias. Usa la barra (/) per separare gli elementi.</translation>
     </message>
     <message>
         <source>Choose the language for the new URL alias.</source>
@@ -3669,7 +3668,7 @@
     </message>
     <message>
         <source>Enter some text in the destination input box to create a new alias.</source>
-        <translation>Inserisci un testo nel box di destinazione per creare nuovo alias.</translation>
+        <translation>Inserisci un testo nel box di destinazione per creare un nuovo alias.</translation>
     </message>
     <message>
         <source>Ensure that the destination points to a valid entry, one of:</source>
@@ -3717,7 +3716,7 @@
     </message>
     <message>
         <source>Destination (path to existing functionality or resource)</source>
-        <translation type="unfinished"></translation>
+        <translation>Destinazione (percorso verso una funzionalità o risorsa esistente)</translation>
     </message>
 </context>
 <context>
@@ -3744,7 +3743,7 @@
     </message>
     <message>
         <source>Enter some text in the destination input box to create a new alias.</source>
-        <translation>Inserisci un testo nel box di destinazione per creare nuovo alias.</translation>
+        <translation>Inserisci un testo nel box di destinazione per creare un nuovo alias.</translation>
     </message>
     <message>
         <source>The URL alias &lt;%wildcard_src_url&gt; was successfully created</source>
@@ -3840,11 +3839,11 @@
     </message>
     <message>
         <source>Enter the URL for the new wildcard. Example: developer/*</source>
-        <translation type="unfinished"></translation>
+        <translation>Inserisci l&apos;URL per il nuovo wildcard. Ad esempio: developer/*</translation>
     </message>
     <message>
         <source>Enter the destination URL for the new wildcard. Example: dev/{1\}</source>
-        <translation type="unfinished"></translation>
+        <translation>Inserisci l&apos;URL di destinazione per il nuovo wildcard. Ad esempio: dev/{1\}</translation>
     </message>
 </context>
 <context>
@@ -4128,6 +4127,14 @@
         <source>You cannot manage the versions of this object because there is only one version available (the one that is being displayed).</source>
         <translation>Non puoi gestire le versioni di quest&apos;oggetto perché c&apos;è solo una versione disponibile (quella che viene mostrata).</translation>
     </message>
+    <message>
+        <source>Translation mismatch</source>
+        <translation>Non corrispondenza della traduzione</translation>
+    </message>
+    <message>
+        <source>Your selected translation does not match the language of your selected siteaccess. This may lead to unexpected results in the preview, however it may also be what you intended.</source>
+        <translation>La traduzione selezionata non corrisponde alla lingua del siteaccess selezionato. Ciò può comportare risultati inaspettati nell&apos;anteprima, ma potrebbe essere proprio quello che vuoi.</translation>
+    </message>
 </context>
 <context>
     <name>design/admin/contentstructuremenu</name>
@@ -4161,7 +4168,7 @@
     </message>
     <message>
         <source>Node does not exist</source>
-        <translation>Il nodo non esiste.</translation>
+        <translation>Il nodo non esiste</translation>
     </message>
     <message>
         <source>Internal error</source>
@@ -4520,7 +4527,7 @@
     </message>
     <message>
         <source>There are no objects that have collected any information.</source>
-        <translation>Non vi sono oggetti che hanno raccolto alcuna informazioni.</translation>
+        <translation>Non vi sono oggetti che hanno raccolto informazioni.</translation>
     </message>
     <message>
         <source>Remove selected</source>
@@ -5408,55 +5415,55 @@
     </message>
     <message>
         <source>Move selected</source>
-        <translation type="unfinished"></translation>
+        <translation>Sposta selezionati</translation>
     </message>
     <message>
         <source>Move the selected items from the list above.</source>
-        <translation type="unfinished"></translation>
+        <translation>Sposta gli elementi selezionati dall&apos;elenco in alto.</translation>
     </message>
     <message>
         <source>You do not have permission to move any of the items from the list above.</source>
-        <translation type="unfinished"></translation>
+        <translation>Non sei abilitato a spostare nessuno degli elementi dall&apos;elenco in alto.</translation>
     </message>
     <message>
         <source>Object states for object</source>
-        <translation type="unfinished"></translation>
+        <translation>Stato dell&apos;oggetto per l&apos;oggetto</translation>
     </message>
     <message>
         <source>Content object state group</source>
-        <translation type="unfinished"></translation>
+        <translation>Gruppo di stato dell&apos;oggetto contenuto</translation>
     </message>
     <message>
         <source>Available states</source>
-        <translation type="unfinished"></translation>
+        <translation>Stati disponibili</translation>
     </message>
     <message>
         <source>No content object state is configured. This can be done %urlstart here %urlend.</source>
-        <translation type="unfinished"></translation>
+        <translation>Non vi sono stati dell&apos;oggetto contenuto configurati. Si possono configurare %urlstart qui %urlend.</translation>
     </message>
     <message>
         <source>Set states</source>
-        <translation type="unfinished"></translation>
+        <translation>Imposta stati</translation>
     </message>
     <message>
         <source>Apply states from the list above.</source>
-        <translation type="unfinished"></translation>
+        <translation>Applica gli stati dall&apos;elenco in alto.</translation>
     </message>
     <message>
         <source>No state to be applied to this content object. You might need to be assigned a more permissive access policy.</source>
-        <translation type="unfinished"></translation>
+        <translation>Non vi sono stati da aplicare a questo oggetto contenuto. Povresti aver bisogno di una politica di accesso più permissiva.</translation>
     </message>
     <message>
         <source>Object states</source>
-        <translation type="unfinished"></translation>
+        <translation>Stati oggetto</translation>
     </message>
     <message>
         <source>Hide state assignment widget.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nascondi widget di assegnazione stato.</translation>
     </message>
     <message>
         <source>Show state assignment widget.</source>
-        <translation type="unfinished"></translation>
+        <translation>Mostra widget di assegnazione stato.</translation>
     </message>
 </context>
 <context>
@@ -6495,7 +6502,7 @@ Note: The packages will not be uninstalled.</source>
     </message>
     <message>
         <source>States</source>
-        <translation type="unfinished"></translation>
+        <translation>Stati</translation>
     </message>
 </context>
 <context>
@@ -7877,23 +7884,23 @@ Note: The packages will not be uninstalled.</source>
     </message>
     <message>
         <source>Leave this field empty if you want system automaticaly detect the URL of your site from the URL you access feed with</source>
-        <translation type="unfinished"></translation>
+        <translation>Lascia vuoto questo campo se vuoi che il sistema rilevi automaticamente l&apos;URL del tuo sito dalla URL con cui accedi al flusso</translation>
     </message>
     <message>
         <source>Category</source>
-        <translation type="unfinished"></translation>
+        <translation>Categoria</translation>
     </message>
     <message>
         <source>optional</source>
-        <translation type="unfinished"></translation>
+        <translation>opzionale</translation>
     </message>
     <message>
         <source>Use this drop-down to select the attribute that should be exported as the category of the RSS export entry.</source>
-        <translation type="unfinished"></translation>
+        <translation>Usa questo menù a tendina per selezionare quale attributo deve essere esportato come categoria dell&apos;esportazione RSS.</translation>
     </message>
     <message>
         <source>Skip</source>
-        <translation type="unfinished">Salta</translation>
+        <translation>Salta</translation>
     </message>
 </context>
 <context>
@@ -8161,7 +8168,7 @@ Note: The packages will not be uninstalled.</source>
     </message>
     <message>
         <source>The section &lt; %1 &gt; was not assigned to the nodes listed below because of insufficient permission:</source>
-        <translation>La sezione &lt; %1 &gt; non può essere assegnata ai nodi sotto-elencati a causa di permessi insufficienti</translation>
+        <translation>La sezione &lt; %1 &gt; non può essere assegnata ai nodi sotto-elencati a causa di permessi insufficienti:</translation>
     </message>
     <message>
         <source>There are no objects in the system that you could assign the section &lt; %1 &gt; to.</source>
@@ -8507,7 +8514,7 @@ Note: The packages will not be uninstalled.</source>
     </message>
     <message>
         <source>View settings</source>
-        <translation>Vedi Impostazioni</translation>
+        <translation>Visualizza le impostazioni</translation>
     </message>
     <message>
         <source>Using siteaccess</source>
@@ -8599,7 +8606,7 @@ Note: The packages will not be uninstalled.</source>
     </message>
     <message>
         <source>Values for each location setting are shown. The first values have lowest priority; the values toward the end have higher priority than the first ones.</source>
-        <translation type="unfinished"></translation>
+        <translation>Vengono mostrati i valori per le impostazioni di ogni collocazione. I primi valori hanno la priorità più bassa, ed i valori verso la fine  avranno una priorità maggiore rispetto ai primi.</translation>
     </message>
 </context>
 <context>
@@ -8835,7 +8842,7 @@ Note: The packages will not be uninstalled.</source>
     </message>
     <message>
         <source>Regenerate autoload arrays for extensions</source>
-        <translation>Rigenera gli autoload arrays per le estensioni</translation>
+        <translation>Rigenera gli arrays di autocaricamento per le estensioni</translation>
     </message>
     <message>
         <source>Click this button to regenerate the autoload arrays used by the system for extensions.</source>
@@ -8843,7 +8850,7 @@ Note: The packages will not be uninstalled.</source>
     </message>
     <message>
         <source>Problems detected during autoload generation:</source>
-        <translation type="unfinished"></translation>
+        <translation>Problemi rilevati durante la generazione degli autocaricamenti:</translation>
     </message>
 </context>
 <context>
@@ -9077,11 +9084,11 @@ Note: The packages will not be uninstalled.</source>
     <message>
         <source>Details</source>
         <comment>Detailed PHP information</comment>
-        <translation type="unfinished">Dettagli</translation>
+        <translation>Dettagli</translation>
     </message>
     <message>
         <source>PHP autoload functions</source>
-        <translation type="unfinished"></translation>
+        <translation>Fuzioni di autocaricamento di PHP</translation>
     </message>
 </context>
 <context>
@@ -10242,7 +10249,7 @@ Note: The packages will not be uninstalled.</source>
     </message>
     <message>
         <source>Cancel creating new currency.</source>
-        <translation>Elimina creazione nuova valuta.</translation>
+        <translation>Annulla creazione nuova valuta.</translation>
     </message>
     <message>
         <source>Create</source>
@@ -11126,195 +11133,250 @@ Note: The packages will not be uninstalled.</source>
     <name>design/admin/state/edit</name>
     <message>
         <source>The content object state was successfully stored.</source>
-        <translation type="unfinished"></translation>
+        <translation>Registrazione dello stato dell&apos;oggetto contenuto riuscita.</translation>
     </message>
     <message>
         <source>The content object state could not be stored.</source>
-        <translation type="unfinished"></translation>
+        <translation>Registrazione dello stato dell&apos;oggetto contenuto non riuscita.</translation>
     </message>
     <message>
         <source>Required data is either missing or is invalid</source>
-        <translation type="unfinished">I dati richiesti sono mancanti o non corretti</translation>
+        <translation>I dati richiesti sono mancanti o non corretti</translation>
     </message>
     <message>
         <source>Edit content object state &quot;%state_name&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>Modifica lo stato dell&apos;oggetto contenuto &quot;%state_name&quot;</translation>
     </message>
     <message>
         <source>New content object state</source>
-        <translation type="unfinished"></translation>
+        <translation>Nuovo stato dell&apos;oggetto contenuto</translation>
     </message>
     <message>
         <source>Save changes</source>
-        <translation type="unfinished"></translation>
+        <translation>Registra le modifiche</translation>
     </message>
     <message>
         <source>Save changes to this states.</source>
-        <translation type="unfinished"></translation>
+        <translation>Registra le modifiche per questi stati.</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Annulla</translation>
+        <translation>Annulla</translation>
     </message>
     <message>
         <source>Cancel saving any changes.</source>
-        <translation type="unfinished"></translation>
+        <translation>Annulla salva ogni modifica.</translation>
+    </message>
+    <message>
+        <source>Identifier:</source>
+        <translation>Identificatore:</translation>
+    </message>
+    <message>
+        <source>Default language:</source>
+        <translation>Lingua predefinita:</translation>
+    </message>
+    <message>
+        <source>Name:</source>
+        <translation>Nome:</translation>
+    </message>
+    <message>
+        <source>Description:</source>
+        <translation>Descrizione:</translation>
     </message>
 </context>
 <context>
     <name>design/admin/state/group</name>
     <message>
         <source>Object states in this group [%state_count]</source>
-        <translation type="unfinished"></translation>
+        <translation>Stati dell&apos;oggetto in questo gruppo [%state_count]</translation>
     </message>
     <message>
         <source>Invert selection.</source>
-        <translation type="unfinished">Inverti selezione.</translation>
+        <translation>Inverti selezione.</translation>
     </message>
     <message>
         <source>ID</source>
-        <translation type="unfinished">ID</translation>
+        <translation>ID</translation>
     </message>
     <message>
         <source>Identifier</source>
-        <translation type="unfinished">Identificatore</translation>
+        <translation>Identificatore</translation>
     </message>
     <message>
         <source>Name</source>
-        <translation type="unfinished">Nome</translation>
+        <translation>Nome</translation>
     </message>
     <message>
         <source>Object count</source>
-        <translation type="unfinished">Numero oggetti</translation>
+        <translation>Numero oggetti</translation>
     </message>
     <message>
         <source>Order</source>
-        <translation type="unfinished">Ordine</translation>
+        <translation>Ordine</translation>
     </message>
     <message>
         <source>Select content object state group for removal.</source>
-        <translation type="unfinished"></translation>
+        <translation>Seleziona il gruppo di stato dell&apos;oggetto contenuto da eliminare.</translation>
     </message>
     <message>
         <source>Remove selected</source>
-        <translation type="unfinished"></translation>
+        <translation>Elimina selezionati</translation>
     </message>
     <message>
         <source>Remove selected states.</source>
-        <translation type="unfinished"></translation>
+        <translation>Elimina gli stati selezionati.</translation>
     </message>
     <message>
         <source>Create new</source>
-        <translation type="unfinished"></translation>
+        <translation>Crea nuovo</translation>
     </message>
     <message>
         <source>Create a new state.</source>
-        <translation type="unfinished"></translation>
+        <translation>Crea un nuovo stato.</translation>
     </message>
     <message>
         <source>Update ordering</source>
-        <translation type="unfinished"></translation>
+        <translation>Aggiorna ordinamento</translation>
     </message>
     <message>
         <source>Update the order of the content object states in this group.</source>
-        <translation type="unfinished"></translation>
+        <translation>Aggiorna ordinamento stati dell&apos;oggetto in questo gruppo.</translation>
+    </message>
+    <message>
+        <source>Description</source>
+        <translation>Descrizione</translation>
     </message>
 </context>
 <context>
     <name>design/admin/state/group_edit</name>
     <message>
         <source>Edit content object state group &quot;%group_name&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>Modifica il gruppo dello stato dell&apos;oggetto contenuto &quot;%group_name&quot;</translation>
     </message>
     <message>
         <source>New content object state group</source>
-        <translation type="unfinished"></translation>
+        <translation>Nuovo gruppo di stato dell&apos;oggetto contenuto</translation>
     </message>
     <message>
         <source>Save changes</source>
-        <translation type="unfinished"></translation>
+        <translation>Registra le modifiche</translation>
     </message>
     <message>
         <source>Save changes to this state group.</source>
-        <translation type="unfinished"></translation>
+        <translation>Registra le modifiche per questo gruppo di stato.</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Annulla</translation>
+        <translation>Annulla</translation>
     </message>
     <message>
         <source>Cancel saving any changes.</source>
-        <translation type="unfinished"></translation>
+        <translation>Annulla salva ogni modifica.</translation>
     </message>
     <message>
         <source>Create</source>
-        <translation type="unfinished">Crea</translation>
+        <translation>Crea</translation>
     </message>
     <message>
         <source>Create this state group.</source>
-        <translation type="unfinished"></translation>
+        <translation>Crea questo gruppo di stato.</translation>
     </message>
     <message>
         <source>Cancel creating this state group.</source>
-        <translation type="unfinished"></translation>
+        <translation>Annulla la creazione di questo gruppo di stato.</translation>
+    </message>
+    <message>
+        <source>Identifier:</source>
+        <translation>Identificatore:</translation>
+    </message>
+    <message>
+        <source>Default language:</source>
+        <translation>Lingua predefinita:</translation>
+    </message>
+    <message>
+        <source>Name:</source>
+        <translation>Nome:</translation>
+    </message>
+    <message>
+        <source>Description:</source>
+        <translation>Descrizione:</translation>
     </message>
 </context>
 <context>
     <name>design/admin/state/groups</name>
     <message>
         <source>The content object state group was successfully stored.</source>
-        <translation type="unfinished"></translation>
+        <translation>Registrazione del gruppo dello stato dell&apos;oggetto contenuto riuscita.</translation>
     </message>
     <message>
         <source>The content object state group could not be stored.</source>
-        <translation type="unfinished"></translation>
+        <translation>Registrazione del gruppo dello stato dell&apos;oggetto contenuto non riuscita.</translation>
     </message>
     <message>
         <source>Required data is either missing or is invalid</source>
-        <translation type="unfinished">I dati richiesti sono mancanti o non corretti</translation>
+        <translation>I dati richiesti sono mancanti o non corretti</translation>
     </message>
     <message>
         <source>Invert selection.</source>
-        <translation type="unfinished">Inverti selezione.</translation>
+        <translation>Inverti selezione.</translation>
     </message>
     <message>
         <source>ID</source>
-        <translation type="unfinished">ID</translation>
+        <translation>ID</translation>
     </message>
     <message>
         <source>Identifier</source>
-        <translation type="unfinished">Identificatore</translation>
+        <translation>Identificatore</translation>
     </message>
     <message>
         <source>Name</source>
-        <translation type="unfinished">Nome</translation>
+        <translation>Nome</translation>
     </message>
     <message>
         <source>Select content object state group for removal.</source>
-        <translation type="unfinished"></translation>
+        <translation>Seleziona il gruppo di stato dell&apos;oggetto contenuto da eliminare.</translation>
     </message>
     <message>
         <source>Remove selected</source>
-        <translation type="unfinished"></translation>
+        <translation>Elimina selezionati</translation>
     </message>
     <message>
         <source>Remove selected state groups.</source>
-        <translation type="unfinished"></translation>
+        <translation>Elimina i gruppi di stato selezionati.</translation>
     </message>
     <message>
         <source>Create new</source>
-        <translation type="unfinished"></translation>
+        <translation>Crea nuovo</translation>
     </message>
     <message>
         <source>Create a new state group.</source>
-        <translation type="unfinished"></translation>
+        <translation>Crea un nuovo gruppo di stato.</translation>
+    </message>
+</context>
+<context>
+    <name>design/admin/state/view</name>
+    <message>
+        <source>ID</source>
+        <translation>ID</translation>
+    </message>
+    <message>
+        <source>Identifier</source>
+        <translation>Identificatore</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation>Nome</translation>
+    </message>
+    <message>
+        <source>Description</source>
+        <translation>Descrizione</translation>
     </message>
 </context>
 <context>
     <name>design/admin/state_groups</name>
     <message>
         <source>Content object state groups [%group_count]</source>
-        <translation type="unfinished"></translation>
+        <translation>Gruppi di stato dell&apos;oggetto contenuto [%group_count]</translation>
     </message>
 </context>
 <context>
@@ -12281,7 +12343,7 @@ your account.</source>
     </message>
     <message>
         <source>Users without workflow IDs</source>
-        <translation>Utenti senza workflow ID</translation>
+        <translation>Grupopi di utenti senza workflow</translation>
     </message>
     <message>
         <source>Workflow to run</source>
@@ -13902,23 +13964,23 @@ your account.</source>
     </message>
     <message>
         <source>Use seconds</source>
-        <translation type="unfinished"></translation>
+        <translation>Usa secondi</translation>
     </message>
     <message>
         <source>Second</source>
-        <translation type="unfinished"></translation>
+        <translation>Second</translation>
     </message>
     <message>
         <source>Silverlight</source>
-        <translation type="unfinished"></translation>
+        <translation>Silverlight</translation>
     </message>
     <message>
         <source>Tag preset</source>
-        <translation type="unfinished"></translation>
+        <translation>Programma tag</translation>
     </message>
     <message>
         <source>seconds(s)</source>
-        <translation type="unfinished"></translation>
+        <translation>secondo(i)</translation>
     </message>
 </context>
 <context>
@@ -15315,11 +15377,11 @@ Se vuoi inviare commenti all&apos;approvatore o vederne lo stato usa la URL sott
     </message>
     <message>
         <source>Second</source>
-        <translation type="unfinished"></translation>
+        <translation>Second</translation>
     </message>
     <message>
         <source>Silverlight</source>
-        <translation type="unfinished"></translation>
+        <translation>Silverlight</translation>
     </message>
 </context>
 <context>
@@ -15657,7 +15719,7 @@ Puoi sia contattare la persona per la bozza che creare una nuova bozza per una m
     </message>
     <message>
         <source>Select the language the added translation will be based on</source>
-        <translation>Seleziona la lingua che verrà usata dalla traduzione aggiunta</translation>
+        <translation>Seleziona la lingua che verrà usata dalla traduzione aggiuntiva</translation>
     </message>
     <message>
         <source>However you can select one of the following languages for editing</source>
@@ -17123,17 +17185,6 @@ Scegli i tuoi elementi e premi il pulsante %buttonname.
     </message>
 </context>
 <context>
-    <name>design/standard/form</name>
-    <message>
-        <source>Thank you for your feedback</source>
-        <translation>Grazie per aver compilato il modulo</translation>
-    </message>
-    <message>
-        <source>Your information was successfully received.</source>
-        <translation>La tua informazione è stata ricevuta con successo.</translation>
-    </message>
-</context>
-<context>
     <name>design/standard/gui</name>
     <message>
         <source>Delete</source>
@@ -17501,10 +17552,6 @@ Se procedi verranno anche eliminati i figli.</translation>
     <message>
         <source>Store</source>
         <translation>Registra</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation>Annulla</translation>
     </message>
     <message>
         <source>Notification admin</source>
@@ -18063,11 +18110,11 @@ Inoltre puoi eliminare il pacchetto senza disinstallarlo dalla lista dei pacchet
     </message>
     <message>
         <source>Please select the extensions to be exported.</source>
-        <translation type="unfinished"></translation>
+        <translation>Sei pregato di selezionare le estensioni da esportare.</translation>
     </message>
     <message>
         <source>Use content object modification and publication dates from the package.</source>
-        <translation type="unfinished"></translation>
+        <translation>Usa la le date di modifica e pubblicazione dell&apos;oggetto contenuto dal pacchetto.</translation>
     </message>
 </context>
 <context>
@@ -18339,7 +18386,7 @@ menu on the top.</source>
     </message>
     <message>
         <source>You are not able to give access to limited functions of module</source>
-        <translation>Non sei abilitato a dare accesso a funzioni limitate del modulo:</translation>
+        <translation>Non sei abilitato a dare accesso a funzioni limitate del modulo</translation>
     </message>
     <message>
         <source>because function list for it is not defined.</source>
@@ -18789,15 +18836,15 @@ menu on the top.</source>
     </message>
     <message>
         <source>Category</source>
-        <translation type="unfinished"></translation>
+        <translation>Categoria</translation>
     </message>
     <message>
         <source>optional</source>
-        <translation type="unfinished"></translation>
+        <translation>opzionale</translation>
     </message>
     <message>
         <source>Skip</source>
-        <translation type="unfinished">Salta</translation>
+        <translation>Salta</translation>
     </message>
 </context>
 <context>
@@ -19886,7 +19933,7 @@ Il codice predefinito è stato ricavato dai parametri di base che hai scelto.</t
     <name>design/standard/setup/extensions</name>
     <message>
         <source>Regenerate autoload arrays for extensions</source>
-        <translation>Rigenera gli autoload arrays per le estensioni</translation>
+        <translation>Rigenera gli arrays di autocaricamento per le estensioni</translation>
     </message>
     <message>
         <source>Click this button to regenerate the autoload arrays used by the system for extensions.</source>
@@ -19894,7 +19941,7 @@ Il codice predefinito è stato ricavato dai parametri di base che hai scelto.</t
     </message>
     <message>
         <source>Problems detected during autoload generation:</source>
-        <translation type="unfinished"></translation>
+        <translation>Problemi rilevati durante la generazione degli autocaricamenti:</translation>
     </message>
 </context>
 <context>
@@ -21259,7 +21306,15 @@ Questa funzionalità la troverai anche sull&apos;Interfaccia di Amministrazione.
     </message>
     <message>
         <source>The &apos;digest&apos; function is not available in your database, you cannot run eZ Publish without this. See the documentation for more information.</source>
-        <translation type="unfinished"></translation>
+        <translation>La funzione &apos;digest&apos; non è disponibile sul tuo database, non puoi far girare eZ Publish senza di essa. Visita le FAQ per saperne di più.</translation>
+    </message>
+    <message>
+        <source>MySQL support was detected on your system. Please choose the database driver you would like to use.</source>
+        <translation>E&apos; stato rilevato sul tuo sistema il supporto per MySQL. Sei pregato di scegliere il database driver che vuoi utilizzare.</translation>
+    </message>
+    <message>
+        <source>PostgreSQL support was detected on your system. Please choose the database driver you would like to use.</source>
+        <translation>E&apos; stato rilevato sul tuo sistema il supporto per PostgreSQL. Sei pregato di scegliere il database driver che vuoi utilizzare.</translation>
     </message>
 </context>
 <context>
@@ -21716,10 +21771,6 @@ This is a security problem and should be changed to another global temporary dir
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>, but the latest released PHP 4.4.x version is highly recommended.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Missed some directories</source>
         <translation type="unfinished"></translation>
     </message>
@@ -21967,6 +22018,38 @@ To do this you need to change the %chown commands under Alternative shell comman
     </message>
     <message>
         <source>To fix this, edit your php.ini configuration and add E to the variables_order setting.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Wrong eZ Components version detected</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Missing eZ Components dependancy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The minimum required eZ Components version is</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Download instructions for both regular download and PEAR are provided at</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Missing iconv extension</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The iconv extension is not available to eZ Publish. Without it eZ Publish will not work.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>In most cases, the iconv extension is enabled by default because it is included in the PHP core. However, some Linux distributions have PHP without compiled-in support for iconv. Instead, they provide iconv as a shared module in a separate RPM package called &quot;php-iconv&quot; (or &quot;php5-iconv&quot;).</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>, but the latest released stable PHP version is always recommended.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -22817,6 +22900,63 @@ To do this you need to change the %chown commands under Alternative shell comman
     </message>
 </context>
 <context>
+    <name>design/standard/state/edit</name>
+    <message>
+        <source>Identifier:</source>
+        <translation>Identificatore:</translation>
+    </message>
+    <message>
+        <source>Default language:</source>
+        <translation>Lingua predefinita:</translation>
+    </message>
+    <message>
+        <source>Name:</source>
+        <translation>Nome:</translation>
+    </message>
+    <message>
+        <source>Description:</source>
+        <translation>Descrizione:</translation>
+    </message>
+</context>
+<context>
+    <name>design/standard/state/group</name>
+    <message>
+        <source>ID</source>
+        <translation>ID</translation>
+    </message>
+    <message>
+        <source>Identifier</source>
+        <translation>Identificatore</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation>Nome</translation>
+    </message>
+    <message>
+        <source>Description</source>
+        <translation>Descrizione</translation>
+    </message>
+</context>
+<context>
+    <name>design/standard/state/group_edit</name>
+    <message>
+        <source>Identifier:</source>
+        <translation>Identificatore:</translation>
+    </message>
+    <message>
+        <source>Default language:</source>
+        <translation>Lingua predefinita:</translation>
+    </message>
+    <message>
+        <source>Name:</source>
+        <translation>Nome:</translation>
+    </message>
+    <message>
+        <source>Description:</source>
+        <translation>Descrizione:</translation>
+    </message>
+</context>
+<context>
     <name>design/standard/toolbar</name>
     <message>
         <source>Toolbar management</source>
@@ -23318,11 +23458,11 @@ per attivare il tuo account.</translation>
     </message>
     <message>
         <source>Your browser does not seem to support cookies, to register a new user, cookies need to be supported and enabled!</source>
-        <translation type="unfinished"></translation>
+        <translation>Sembra che il tuo browser non supporti i cookies, per registrare un nuovo utente, i cookies devono essere supportati e abilitati!</translation>
     </message>
     <message>
         <source>Try again</source>
-        <translation type="unfinished"></translation>
+        <translation>Riprova</translation>
     </message>
 </context>
 <context>
@@ -24211,7 +24351,11 @@ per attivare il tuo account.</translation>
     </message>
     <message>
         <source>State limitations cache</source>
-        <translation type="unfinished"></translation>
+        <translation>Cache limitazione stati</translation>
+    </message>
+    <message>
+        <source>Text to image cache</source>
+        <translation>Testo per cache immagine</translation>
     </message>
 </context>
 <context>
@@ -24415,19 +24559,19 @@ per attivare il tuo account.</translation>
     </message>
     <message>
         <source>Replace existing object</source>
-        <translation type="unfinished"></translation>
+        <translation>Sostituisci l&apos;oggetto esistente</translation>
     </message>
     <message>
         <source>Skip object</source>
-        <translation type="unfinished"></translation>
+        <translation>Salta l&apos;oggetto</translation>
     </message>
     <message>
         <source>Keep existing and create a new one</source>
-        <translation type="unfinished">Mantieni l&apos;oggetto esistente e creane uno nuovo</translation>
+        <translation>Mantieni l&apos;oggetto esistente e creane uno nuovo</translation>
     </message>
     <message>
         <source>Update existing object</source>
-        <translation type="unfinished"></translation>
+        <translation>Aggiorna l&apos;oggetto esistente</translation>
     </message>
 </context>
 <context>
@@ -24926,11 +25070,11 @@ per attivare il tuo account.</translation>
     </message>
     <message>
         <source>Missing email input.</source>
-        <translation type="unfinished"></translation>
+        <translation>Inserimento email mancante.</translation>
     </message>
     <message>
         <source>Input required</source>
-        <translation type="unfinished"></translation>
+        <translation>Inserimento obbligatorio</translation>
     </message>
 </context>
 <context>
@@ -25222,6 +25366,18 @@ per attivare il tuo account.</translation>
         <source>The receiver has already received the maximum number of tipafriend mails the last hours</source>
         <translation>Il destinatario ha già ricevuto il numero massimo di email di segnalazione nelle ultime ore</translation>
     </message>
+    <message>
+        <source>Error</source>
+        <translation>Errore</translation>
+    </message>
+    <message>
+        <source>The request sent to the server was too big to be accepted. This probably means that you uploaded a file which was too big. The maximum allowed request size is %max_size_string.</source>
+        <translation>Il file inviato al server era troppo grande per essere accettato. Probabilmente hai caricato un file troppo grande. La grandezza massima accettata è %max_size_string.</translation>
+    </message>
+    <message>
+        <source>You have already sent a tipafriend mail to this reciver regarding &apos;$nodeName&apos; content</source>
+        <translation>Hai già inviato un&apos;email di segnalazione a questo ricevente sul contenuto &apos;$nodeName&apos;</translation>
+    </message>
 </context>
 <context>
     <name>kernel/content/copysubtree</name>
@@ -25235,7 +25391,7 @@ per attivare il tuo account.</translation>
     </message>
     <message>
         <source>Fatal error: cannot get destination node (ID = %1).</source>
-        <translation>Errore Fatale: nodo di destinazione non trovato (ID = %1).</translation>
+        <translation>Errore fatale: nodo di destinazione non trovato (ID = %1).</translation>
     </message>
     <message>
         <source>Number of nodes of source subtree - %1</source>
@@ -25457,13 +25613,6 @@ per attivare il tuo account.</translation>
     <message>
         <source>Copyright</source>
         <translation>Copyright</translation>
-    </message>
-</context>
-<context>
-    <name>kernel/form</name>
-    <message>
-        <source>Form processing</source>
-        <translation>Elaborazione del modulo</translation>
     </message>
 </context>
 <context>
@@ -25818,27 +25967,27 @@ per attivare il tuo account.</translation>
     </message>
     <message>
         <source>Extensions to include</source>
-        <translation type="unfinished"></translation>
+        <translation>Estensioni da includere</translation>
     </message>
     <message>
         <source>Extension list</source>
-        <translation type="unfinished"></translation>
+        <translation>Elenco estensioni</translation>
     </message>
     <message>
         <source>You must select at least one extension</source>
-        <translation type="unfinished"></translation>
+        <translation>Seleziona almeno un&apos;estensione</translation>
     </message>
     <message>
         <source>Package contains an invalid extension name: %extensionname</source>
-        <translation type="unfinished"></translation>
+        <translation>Il pacchetto contiene un nome estensione non valido: %extensionname</translation>
     </message>
     <message>
         <source>Advanced options</source>
-        <translation type="unfinished"></translation>
+        <translation>Opzioni savanzate</translation>
     </message>
     <message>
         <source>The package name %packagename is invalid, cannot import the package</source>
-        <translation type="unfinished"></translation>
+        <translation>Il pacchetto col nome %packagename non è valido, non puoi caricare il pacchetto</translation>
     </message>
 </context>
 <context>
@@ -25932,7 +26081,7 @@ per attivare il tuo account.</translation>
     </message>
     <message>
         <source>Invalid selection for category class %1 does not have attribute &quot;%2&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>Selezione non valida perché la categoria della classe  %1 non ha l&apos;attributo &quot;%2&quot;</translation>
     </message>
 </context>
 <context>
@@ -26214,6 +26363,14 @@ per attivare il tuo account.</translation>
         <source>Changes were stored successfully.</source>
         <translation>Registrazione modifiche riuscita.</translation>
     </message>
+    <message>
+        <source>&apos;%value&apos; is not a valid custom rate value (positive number expected)</source>
+        <translation>&apos;%value&apos; non è un valore di tasso speciale valido (si richiede un numero positivo)</translation>
+    </message>
+    <message>
+        <source>&apos;%value&apos; is not a valid rate_factor value (positive number expected)</source>
+        <translation>&apos;%value&apos; non è un fattore di tasso valido (si richiede un numero positivo)</translation>
+    </message>
 </context>
 <context>
     <name>kernel/shop/classes/ezcurrencydata</name>
@@ -26317,74 +26474,74 @@ per attivare il tuo account.</translation>
     <name>kernel/state</name>
     <message>
         <source>State</source>
-        <translation type="unfinished">Stato</translation>
+        <translation>Stato</translation>
     </message>
     <message>
         <source>Assign</source>
-        <translation type="unfinished">Assegna</translation>
+        <translation>Assegna</translation>
     </message>
     <message>
         <source>New</source>
-        <translation type="unfinished"></translation>
+        <translation>Nuovo</translation>
     </message>
     <message>
         <source>Edit</source>
-        <translation type="unfinished">Modifica</translation>
+        <translation>Modifica</translation>
     </message>
     <message>
         <source>Groups</source>
-        <translation type="unfinished">Gruppi</translation>
+        <translation>Gruppi</translation>
     </message>
     <message>
         <source>New group</source>
-        <translation type="unfinished">Nuovo gruppo</translation>
+        <translation>Nuovo gruppo</translation>
     </message>
     <message>
         <source>Group edit</source>
-        <translation type="unfinished">Modifica gruppo</translation>
+        <translation>Modifica gruppo</translation>
     </message>
 </context>
 <context>
     <name>kernel/state/edit</name>
     <message>
         <source>Identifier: input required</source>
-        <translation type="unfinished"></translation>
+        <translation>Identificatore: inserimento obbligatorio</translation>
     </message>
     <message>
         <source>Identifier: invalid, it can only consist of characters in the range a-z, 0-9 and underscore.</source>
-        <translation type="unfinished"></translation>
+        <translation>Identificatore: non valido, può contenere solo caratteri nell&apos;ambito di a-z, 0-9 e underscore.</translation>
     </message>
     <message>
         <source>Identifier: invalid, maximum %max characters allowed.</source>
-        <translation type="unfinished"></translation>
+        <translation>Identificatore: non valido, al massimo sono permessi %max caratteri.</translation>
     </message>
     <message>
         <source>Identifier: a content object state group with this identifier already exists, please give another identifier</source>
-        <translation type="unfinished"></translation>
+        <translation>Identificatore: un gruppo di stato oggetto contenuto con questo identificatore esiste già, sei pregato di usare un altro identificatore</translation>
     </message>
     <message>
         <source>%language_name: this language is the default but neither name or description were provided for this language</source>
-        <translation type="unfinished"></translation>
+        <translation>%language_name: questa lingua è quella predefinita, ma non sono stati forniti nè nome nè descrizione per questa lingua</translation>
     </message>
     <message>
         <source>Translations: you need to add at least one localization</source>
-        <translation type="unfinished"></translation>
+        <translation>Traduzioni: devi fornire almeno una localizzazione</translation>
     </message>
     <message>
         <source>Translations: there are multiple localizations but you did not specify which is the default one</source>
-        <translation type="unfinished"></translation>
+        <translation>Traduzioni: vi sono localizzazioni multiple ma devi specificare qual&apos;è quella predefinita</translation>
     </message>
     <message>
         <source>Identifier: identifiers starting with &quot;ez&quot; are reserved.</source>
-        <translation type="unfinished"></translation>
+        <translation>Identificatore: gli identificatori che cominciano con &quot;ez&quot; sono riservati.</translation>
     </message>
     <message>
         <source>Name in %language_name is too long. Maximum 45 characters allowed.</source>
-        <translation type="unfinished"></translation>
+        <translation>Il nome in %language_name è troppo lungo. Sono permessi al massimo 45 caratteri.</translation>
     </message>
     <message>
         <source>Name in %language_name: input required</source>
-        <translation type="unfinished"></translation>
+        <translation>Nome in %language_name: inserimento richiesto</translation>
     </message>
 </context>
 <context>

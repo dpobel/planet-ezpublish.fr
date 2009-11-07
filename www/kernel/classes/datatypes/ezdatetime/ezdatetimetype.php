@@ -4,8 +4,8 @@
 //
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.1.0
-// BUILD VERSION: 23234
+// SOFTWARE RELEASE: 4.2.0
+// BUILD VERSION: 24182
 // COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
@@ -403,7 +403,7 @@ class eZDateTimeType extends eZDataType
             }
             else if ( $defaultType == self::DEFAULT_ADJUSTMENT )
             {
-                $adjustments = eZDateTimeType::classAttributeContent( $contentClassAttribute );
+                $adjustments = $this->classAttributeContent( $contentClassAttribute );
                 $value = new eZDateTime();
                 $secondAdjustment = $contentClassAttribute->attribute( self::USE_SECONDS_FIELD ) == 1 ? $adjustments['second'] : 0;
                 $value->adjustDateTime( $adjustments['hour'], $adjustments['minute'], $secondAdjustment, $adjustments['month'], $adjustments['day'], $adjustments['year'] );
@@ -627,7 +627,7 @@ class eZDateTimeType extends eZDataType
 
             case self::DEFAULT_ADJUSTMENT:
             {
-                $adjustments = self::classAttributeContent( $classAttribute );
+                $adjustments = $this->classAttributeContent( $classAttribute );
                 $value = new eZDateTime();
                 $secondAdjustment = $classAttribute->attribute( self::USE_SECONDS_FIELD ) == 1 ? $adjustments['second'] : 0;
                 $value->adjustDateTime( $adjustments['hour'], $adjustments['minute'], $secondAdjustment, $adjustments['month'], $adjustments['day'], $adjustments['year'] );

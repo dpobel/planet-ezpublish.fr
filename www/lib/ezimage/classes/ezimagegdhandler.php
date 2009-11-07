@@ -5,8 +5,8 @@
 // Created on: <16-Oct-2003 14:22:43 amos>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.1.0
-// BUILD VERSION: 23234
+// SOFTWARE RELEASE: 4.2.0
+// BUILD VERSION: 24182
 // COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
@@ -688,12 +688,7 @@ class eZImageGDHandler extends eZImageHandler
     */
     static function isImageTrueColor( &$imageObject, $mimeData )
     {
-        if ( eZSys::isPHPVersionSufficient( array( 4, 3, 2 ) ) )
-            return ImageIsTrueColor( $imageObject );
-        $nonTrueColorMimeTypes = array( 'image/gif' );
-        if ( in_array( $sourceMimeData['name'], $nonTrueColorMimeTypes ) )
-            return false;
-        return true;
+        return ImageIsTrueColor( $imageObject );
     }
 
     /*!

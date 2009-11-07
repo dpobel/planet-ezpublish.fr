@@ -5,8 +5,8 @@
 // Created on: <16-Apr-2002 10:53:33 amos>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.1.0
-// BUILD VERSION: 23234
+// SOFTWARE RELEASE: 4.2.0
+// BUILD VERSION: 24182
 // COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
@@ -74,6 +74,11 @@ class eZProcess
         return $Result;
     }
 
+    /**
+     * Returns a shared instance of the eZProcess class
+     *
+     * @return eZProcess
+     */
     static function instance()
     {
         if ( empty( $GLOBALS['eZProcessInstance'] ) )

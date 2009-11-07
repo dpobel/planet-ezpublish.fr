@@ -5,8 +5,8 @@
 // Created on: <11-Jul-2002 15:39:41 amos>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.1.0
-// BUILD VERSION: 23234
+// SOFTWARE RELEASE: 4.2.0
+// BUILD VERSION: 24182
 // COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
@@ -231,9 +231,15 @@ class eZCodePageMapper
         }
     }
 
-    /*!
-     Returns the only instance of the codepage mapper for $input_charset_code and $output_charset_code.
-    */
+    /**
+     * Returns a shared instance of the eZCodePageMapper pr the 
+     * $input_charset_code and $output_charset_code params.
+     *
+     * @param $input_charset_code string
+     * @param $output_charset_code string
+     * @param $use_cache bool
+     * @return eZCodePageMapper
+     */
     static function instance( $input_charset_code, $output_charset_code, $use_cache = true )
     {
         $globalsKey = "eZCodePageMapper-$input_charset_code-$output_charset_code";

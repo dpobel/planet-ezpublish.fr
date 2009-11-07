@@ -5,8 +5,8 @@
 // Created on: <11-Aug-2003 13:23:55 bf>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.1.0
-// BUILD VERSION: 23234
+// SOFTWARE RELEASE: 4.2.0
+// BUILD VERSION: 24182
 // COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
@@ -60,6 +60,7 @@ class eZPreferences
     {
         $db = eZDB::instance();
         $name = $db->escapeString( $name );
+        $rawValue = $value;
         $value = $db->escapeString( $value );
 
         $isCurrentUser = true;
@@ -106,9 +107,10 @@ class eZPreferences
         }
 
         // We also store in session if this is the current user (anonymous or normal user)
+        // use $rawValue as value will be escaped by session code (see #014520)
         if ( $isCurrentUser )
         {
-            eZPreferences::storeInSession( $name, $value );
+            eZPreferences::storeInSession( $name, $rawValue );
         }
 
         return true;

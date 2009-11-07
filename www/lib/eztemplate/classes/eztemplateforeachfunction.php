@@ -5,8 +5,8 @@
 // Created on: <24-Feb-2005 15:47:35 vs>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.1.0
-// BUILD VERSION: 23234
+// SOFTWARE RELEASE: 4.2.0
+// BUILD VERSION: 24182
 // COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
@@ -312,7 +312,7 @@ class eZTemplateForeachFunction
             return;
 
         // fix definitely incorrect offset
-        if ( is_null( $offset ) )
+        if ( $offset === null )
             $offset = 0;
         elseif ( $offset < 0 || $offset >= $nItems )
         {
@@ -324,7 +324,7 @@ class eZTemplateForeachFunction
         }
 
         // fix definitely incorrect max
-        if ( is_null( $max ) )
+        if ( $max === null )
             $max = $nItems - $offset;
         elseif ( $max < 0 || $offset+$max > $nItems )
         {
@@ -334,7 +334,7 @@ class eZTemplateForeachFunction
         }
 
         // process 'reverse' parameter
-        if ( is_null( $reverse ) )
+        if ( $reverse === null )
             $reverse = false;
         if ( $reverse )
         {

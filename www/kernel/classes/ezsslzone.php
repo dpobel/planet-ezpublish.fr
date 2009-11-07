@@ -5,8 +5,8 @@
 // Created on: <12-Jul-2005 13:01:07 vs>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.1.0
-// BUILD VERSION: 23234
+// SOFTWARE RELEASE: 4.2.0
+// BUILD VERSION: 24182
 // COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
@@ -141,8 +141,8 @@ class eZSSLZone
                         continue;
                     }
                     $nodeID = (int)$matches[1];
-                    $node =& eZContentObjectTreeNode::fetch( $nodeID );
-                    if ( !is_object( $node ) )
+                    $node = eZContentObjectTreeNode::fetch( $nodeID );
+                    if ( !$node instanceof eZContentObjectTreeNode )
                     {
                         eZDebug::writeError( "cannot fetch node by URI '$uri'", 'eZSSLZone::getSSLZones' );
                         continue;
@@ -271,7 +271,7 @@ class eZSSLZone
         if ( $sslZoneRedirectionURL ) // if a redirection URL is found
         {
             eZDebugSetting::writeDebug( 'kernel-ssl-zone', "redirecting to [$sslZoneRedirectionURL]" );
-            eZHTTPTool::redirect( $sslZoneRedirectionURL );
+            eZHTTPTool::redirect( $sslZoneRedirectionURL, array(), false, false );
             eZExecution::cleanExit();
         }
     }

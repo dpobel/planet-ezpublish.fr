@@ -5,8 +5,8 @@
 // Created on: <08-Mar-2004 16:09:21 kk>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.1.0
-// BUILD VERSION: 23234
+// SOFTWARE RELEASE: 4.2.0
+// BUILD VERSION: 24182
 // COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
@@ -102,13 +102,12 @@ class eZImportLookupTable
         return $this->ObjectIDTable[(string)$oldObjectID];
     }
 
-    /*!
-     \static
-
-     Fetch instance of eZImportLookupTable
-
-     \param force new instance (optional), default false
-    */
+    /**
+     * Returns a shared instance of the eZImportLookupTable class.
+     *
+     * @param $forceNewInstance bool Force new instance on true
+     * @return eZImportLookupTable
+     */
     static function instance( $forceNewInstance = false )
     {
         if ( $forceNewInstance === true )

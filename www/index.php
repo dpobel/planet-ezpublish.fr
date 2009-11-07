@@ -1,8 +1,8 @@
 <?php
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.1.0
-// BUILD VERSION: 23234
+// SOFTWARE RELEASE: 4.2.0
+// BUILD VERSION: 24182
 // COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
@@ -22,10 +22,10 @@
 //
 //
 
-if ( version_compare( phpversion(), '5.1' ) < 0 )
+if ( version_compare( PHP_VERSION, '5.1' ) < 0 )
 {
-    print( "<h1>Unsupported PHP version " . phpversion() . "</h1>" );
-    print( "<p>eZ Publish 4.x does not run with PHP 4.</p>".
+    print( "<h1>Unsupported PHP version " . PHP_VERSION . "</h1>" );
+    print( "<p>eZ Publish 4.x does not run with PHP version lower than 5.1.</p>".
            "<p>For more information about supported software please visit ".
            "<a href=\"http://ez.no/download/ez_publish\" >eZ Publish download page</a></p>" );
     exit;
@@ -193,7 +193,7 @@ function eZDBCleanup()
 
 function eZFatalError()
 {
-    //eZDebug::setHandleType( eZDebug::HANDLE_NONE );
+    header("HTTP/1.1 500 Internal Server Error");
     print( "<b>Fatal error</b>: eZ Publish did not finish its request<br/>" );
     print( "<p>The execution of eZ Publish was abruptly ended, the debug output is present below.</p>" );
     $templateResult = null;
@@ -303,7 +303,6 @@ function fetchModule( $uri, $check, &$module, &$module_name, &$function_name, &$
 }
 
 $httpCharset = eZTextCodec::httpCharset();
-$ini = eZINI::instance();
 if ( $ini->variable( 'RegionalSettings', 'Debug' ) == 'enabled' )
     eZLocale::setIsDebugEnabled( true );
 
@@ -377,6 +376,14 @@ if ( !$useCronjob )
     eZSession::addCallback( 'gc_pre', 'eZSessionBasketGarbageCollector');
     eZSession::addCallback( 'cleanup_pre', 'eZSessionBasketCleanup');
 }
+
+// addCallBack to update session id for shop basket on session regenerate
+function eZSessionBasketRegenerate( $db, $escNewKey, $escOldKey, $escUserID  )
+{
+    $db->query( "UPDATE ezbasket SET session_id='$escNewKey' WHERE session_id='$escOldKey'" );
+}
+
+eZSession::addCallback( 'regenerate_post', 'eZSessionBasketRegenerate');
 
 // Initialize module loading
 $moduleRepositories = eZModule::activeModuleRepositories();
@@ -554,6 +561,18 @@ while ( $moduleRunRequired )
         $moduleAccessAllowed = true;
         $omitPolicyCheck = true;
         $runModuleView = true;
+
+        $availableViewsInModule = $module->attribute( 'views' );
+        if ( !isset( $availableViewsInModule[$function_name] )
+                && !$objectHasMovedError
+                    && !isset( $module->Module['function']['script'] ) )
+        {
+            $moduleResult = $module->handleError( eZError::KERNEL_MODULE_VIEW_NOT_FOUND, 'kernel' );
+            $runModuleView = false;
+            $policyCheckRequired = false;
+            $omitPolicyCheck = true;
+        }
+
         if ( $policyCheckRequired )
         {
             $omitPolicyCheck = false;
@@ -642,7 +661,6 @@ while ( $moduleRunRequired )
             }
             else if ( !$moduleAccessAllowed )
             {
-                $availableViewsInModule = $module->attribute( 'views' );
                 if ( isset( $availableViewsInModule[$function_name][ 'default_navigation_part' ] ) )
                 {
                     $defaultNavigationPart = $availableViewsInModule[$function_name][ 'default_navigation_part' ];
@@ -722,7 +740,6 @@ while ( $moduleRunRequired )
 if ( $ini->variable( "SiteAccessSettings", "CheckValidity" ) !== 'true' )
 {
     $currentUser = eZUser::currentUser();
-    $ini = eZINI::instance();
 
     $wwwDir = eZSys::wwwDir();
     // On host based site accesses this can be empty, causing the cookie to be set for the current dir,
@@ -734,7 +751,7 @@ if ( $ini->variable( "SiteAccessSettings", "CheckValidity" ) !== 'true' )
         setcookie( 'is_logged_in', 'true', 0, $cookiePath );
         header( 'Etag: ' . $currentUser->attribute( 'contentobject_id' ) );
     }
-    else
+    else if ( isset( $_COOKIE['is_logged_in'] ) )
     {
         setcookie( 'is_logged_in', false, 0, $cookiePath );
     }

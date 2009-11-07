@@ -5,8 +5,8 @@
 // Created on: <01-Mar-2002 13:48:53 amos>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.1.0
-// BUILD VERSION: 23234
+// SOFTWARE RELEASE: 4.2.0
+// BUILD VERSION: 24182
 // COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
@@ -581,8 +581,14 @@ class eZSys
     */
     static function hostname()
     {
-        $retVal = eZSys::serverVariable( 'HTTP_HOST' );
-        return  $retVal;
+        $forwardedHostsString = eZSys::serverVariable( 'HTTP_X_FORWARDED_HOST', true );
+        if ( $forwardedHostsString !== null )
+        {
+            $forwardedHosts = explode( ',', $forwardedHostsString );
+            return $forwardedHosts[0];
+        }
+
+        return eZSys::serverVariable( 'HTTP_HOST' );
     }
 
     /*!
@@ -1029,10 +1035,11 @@ class eZSys
         return eZSys::instance()->RequestURI;
     }
 
-    /*!
-     Returns the only legal instance of the eZSys class.
-     \static
-    */
+    /**
+     * Returns a shared instance of the eZSys class
+     *
+     * @return eZSys
+     */
     static function instance()
     {
         if ( empty( $GLOBALS['eZSysInstance'] ) )
@@ -1091,7 +1098,11 @@ class eZSys
             $files = self::simulateGlobBrace( array( $pattern ) );
             foreach( $files as $file )
             {
-                $result = array_merge( $result, glob( $file, $flags ) );
+                $globList = glob( $file, $flags );
+                if ( is_array( $globList ) )
+                {
+                    $result = array_merge( $result, $globList );
+                }
             }
             return $result;
         }

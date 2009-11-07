@@ -6,8 +6,8 @@
 // Created on: <14-Jul-2008 15:15:15 as>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.1.0
-// BUILD VERSION: 23234
+// SOFTWARE RELEASE: 4.2.0
+// BUILD VERSION: 24182
 // COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
@@ -1688,7 +1688,8 @@ class eZWebDAVContentBackend extends ezcWebdavSimpleBackend implements ezcWebdav
         }
         else
         {
-            if ( $this->isObjectFolder( null, $node ) )
+            $class = $object->contentClass();
+            if ( $this->isObjectFolder( $object, $class ) )
             {
                 $result['isCollection'] = true;
             }
@@ -2899,14 +2900,14 @@ class eZWebDAVContentBackend extends ezcWebdavSimpleBackend implements ezcWebdav
     }
 
     /**
-     * Returns weather $class is an folder class.
+     * Returns whether $class is an folder class.
      *
      * @param resource $object
-     * @param resource &$class
+     * @param resource $class
      */
-    protected function isObjectFolder( $object, &$class )
+    protected function isObjectFolder( $object, $class )
     {
-        $classIdentifier = isset( $class->ClassIdentifier ) ? $class->ClassIdentifier : null;
+        $classIdentifier = $class->attribute( 'identifier' );
 
         return in_array( $classIdentifier, $this->FolderClasses );
     }

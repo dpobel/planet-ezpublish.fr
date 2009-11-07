@@ -5,8 +5,8 @@
 // Created on: <30-Apr-2002 16:47:08 bf>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.1.0
-// BUILD VERSION: 23234
+// SOFTWARE RELEASE: 4.2.0
+// BUILD VERSION: 24182
 // COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
@@ -42,7 +42,7 @@ class eZImageFile extends eZPersistentObject
 
     static function definition()
     {
-        return array( 'fields' => array( 'id' => array( 'name' => 'id',
+        static $definition = array( 'fields' => array( 'id' => array( 'name' => 'id',
                                                         'datatype' => 'integer',
                                                         'default' => 0,
                                                         'required' => true ),
@@ -60,6 +60,7 @@ class eZImageFile extends eZPersistentObject
                       'keys' => array( 'id' ),
                       'class_name' => 'eZImageFile',
                       'name' => 'ezimagefile' );
+        return $definition;
     }
 
     static function create( $contentObjectAttributeID, $filepath  )
@@ -89,9 +90,19 @@ class eZImageFile extends eZPersistentObject
         else
             return $rows;
     }
-    /*!
-      \return An array of ids and versions of ezimage ezcontentobject_attributes have \a $filepath.
-    */
+
+    /**
+     * Looks up ezcontentobjectattribute entries matching an image filepath and
+     * a contentobjectattribute ID
+     *
+     * @param string $filePath file path to look up as URL in the XML string
+     * @param int $contentObjectAttributeID
+     *
+     * @return array An array of ids and versions of image files where the url
+     *               is referenced
+     *
+     * @todo Rewrite ! A where data_text LIKE '%xxx%' is a resource hog !
+     **/
     static function fetchImageAttributesByFilepath( $filepath, $contentObjectAttributeID )
     {
        $db = eZDB::instance();

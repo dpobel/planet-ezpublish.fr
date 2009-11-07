@@ -5,8 +5,8 @@
 // Created on: <09-Mar-2006 16:40:46 vs>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.1.0
-// BUILD VERSION: 23234
+// SOFTWARE RELEASE: 4.2.0
+// BUILD VERSION: 24182
 // COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
@@ -44,7 +44,7 @@ class eZFSFileHandler
      */
     function eZFSFileHandler( $filePath = false )
     {
-        eZDebugSetting::writeDebug( 'kernel-clustering', "fs::ctor( '$filePath' )" );
+        eZDebugSetting::writeDebug( 'kernel-clustering', "fs::instance( '$filePath' )" );
         $this->Mutex = null;
         $this->filePath = $filePath;
         $this->lifetime = 60; // Lifetime of lock
@@ -164,7 +164,7 @@ class eZFSFileHandler
      *
      * \public
      */
-    function fetch( $cacheLocally = false )
+    function fetch( $noLocalCache = false )
     {
         $filePath = $this->filePath;
         eZDebugSetting::writeDebug( 'kernel-clustering', "fs::fetch( '$filePath' )" );
@@ -173,14 +173,14 @@ class eZFSFileHandler
     /**
      * Fetches file from db and saves it in FS under unique name.
      *
-     * In case of fetching from filesystem does nothing.
-     * \public
+     * In case of fetching from filesystem, does nothing
+     *
+     * @return string The unique file path. on FS, the file path.
      */
-    function fetchUnique( )
+    function fetchUnique()
     {
-        $filePath = $this->filePath;
-        eZDebugSetting::writeDebug( 'kernel-clustering', "fs::fetchUnique( '$filePath' )" );
-        return $filePath;
+        eZDebugSetting::writeDebug( 'kernel-clustering', "fs::fetchUnique( '{$this->filePath}' )" );
+        return $this->filePath;
     }
 
     /**
@@ -337,6 +337,7 @@ class eZFSFileHandler
         $timestamp = null;
         $curtime   = time();
         $tries     = 0;
+        $noCache   = false;
 
         if ( $expiry < 0 )
             $expiry = null;
@@ -372,7 +373,16 @@ class eZFSFileHandler
             if ( isset( $retval ) &&
                  $retval instanceof eZClusterFileFailure )
             {
-                if ( $retval->errno() != 1 ) // check for non-expiry error codes
+                // This error means that the retrieve callback told
+                // us NOT to enter generation mode and therefore NOT to store this
+                // cache.
+                // This parameter will then be passed to the generate callback,
+                // and this will set store to false
+                if ( $retval->errno() == 3 )
+                {
+                    $noCache = true;
+                }
+                elseif ( $retval->errno() != 1 ) // check for non-expiry error codes
                 {
                     eZDebug::writeError( "Failed to retrieve data from callback", __METHOD__ );
                     return null;
@@ -388,7 +398,7 @@ class eZFSFileHandler
             // We need to lock if we have a generate-callback or
             // the generation is deferred to the caller.
             // Note: false means no generation
-            if ( $generateCallback !== false && $forceGeneration === false )
+            if ( !$noCache and $generateCallback !== false and $forceGeneration === false )
             {
                 // Lock the entry for exclusive access, if the entry does not exist
                 // it will be inserted with mtime=-1
@@ -418,6 +428,8 @@ class eZFSFileHandler
             if ( $generateCallback )
             {
                 $args = array( $fname );
+                if ( $noCache )
+                    $extraData['noCache'] = true;
                 if ( $extraData !== null )
                     $args[] = $extraData;
                 $fileData = call_user_func_array( $generateCallback, $args );
@@ -450,7 +462,7 @@ class eZFSFileHandler
         {
             $ret = true;
         }
-        elseif ( $ttl === null )
+        elseif ( $expiry != -1 and $ttl === null )
         {
             $ret = $mtime < $expiry;
         }
@@ -571,7 +583,7 @@ class eZFSFileHandler
      */
     function stat()
     {
-        eZDebugSetting::writeDebug( 'kernel-clustering', "fs::stat()" );
+        eZDebugSetting::writeDebug( 'kernel-clustering', $this->metaData, "fs::stat( {$this->filePath} )" );
         return $this->metaData;
     }
 
@@ -582,8 +594,9 @@ class eZFSFileHandler
      */
     function size()
     {
-        eZDebugSetting::writeDebug( 'kernel-clustering', "fs::size()" );
-        return isset( $this->metaData['size'] ) ? $this->metaData['size'] : null;
+        $size = isset( $this->metaData['size'] ) ? $this->metaData['size'] : null;
+        eZDebugSetting::writeDebug( 'kernel-clustering', $size, "fs::size( {$this->filePath} )" );
+        return $size;
     }
 
     /**
@@ -593,8 +606,9 @@ class eZFSFileHandler
      */
     function mtime()
     {
-        eZDebugSetting::writeDebug( 'kernel-clustering', "fs::mtime()" );
-        return isset( $this->metaData['mtime'] ) ? $this->metaData['mtime'] : null;
+        $mtime = isset( $this->metaData['mtime'] ) ? $this->metaData['mtime'] : null;
+        eZDebugSetting::writeDebug( 'kernel-clustering', $mtime, "fs::mtime( {$this->filePath} )" );
+        return $mtime;
     }
 
     /**
@@ -604,7 +618,7 @@ class eZFSFileHandler
      */
     function name()
     {
-        eZDebugSetting::writeDebug( 'kernel-clustering', "fs::name()" );
+        eZDebugSetting::writeDebug( 'kernel-clustering', $this->filePath, "fs::name( {$this->filePath} )" );
         return $this->filePath;
     }
 
@@ -671,7 +685,11 @@ class eZFSFileHandler
         eZDebugSetting::writeDebug( 'kernel-clustering', "fs::fileDeleteByWildcard( '$wildcard' )" );
 
         eZDebug::accumulatorStart( 'dbfile', false, 'dbfile' );
-        array_map( 'unlink', eZSys::globBrace( $wildcard ) );
+        $unlinkArray = eZSys::globBrace( $wildcard );
+        if ( $unlinkArray !== false and ( count( $unlinkArray ) > 0 ) )
+        {
+            array_map( 'unlink', $unlinkArray );
+        }
         eZDebug::accumulatorStop( 'dbfile' );
     }
 
@@ -689,10 +707,14 @@ class eZFSFileHandler
         $dirs = implode( ',', $dirList );
         $wildcard = $commonPath .'/{' . $dirs . '}/' . $commonSuffix . '*';
 
-        eZDebugSetting::writeDebug( 'kernel-clustering', "fs::fileDeleteByDirList( '$dirList', '$commonPath', '$commonSuffix' )" );
+        eZDebugSetting::writeDebug( 'kernel-clustering', "fs::fileDeleteByDirList( '$dirs', '$commonPath', '$commonSuffix' )" );
 
         eZDebug::accumulatorStart( 'dbfile', false, 'dbfile' );
-        array_map( 'unlink', eZSys::globBrace( $wildcard ) );
+        $unlinkArray = eZSys::globBrace( $wildcard );
+        if ( $unlinkArray !== false and ( count( $unlinkArray ) > 0 ) )
+        {
+            array_map( 'unlink', $unlinkArray );
+        }
         eZDebug::accumulatorStop( 'dbfile' );
     }
 
@@ -709,7 +731,11 @@ class eZFSFileHandler
         $list = array();
         if ( $fnamePart !== false )
         {
-            $list = glob( $path . "/" . $fnamePart . "*" );
+            $globResult = glob( $path . "/" . $fnamePart . "*" );
+            if ( is_array( $globResult ) )
+            {
+                $list = $globResult;
+            }
         }
         else
         {
@@ -764,17 +790,17 @@ class eZFSFileHandler
         eZDebug::accumulatorStop( 'dbfile' );
     }
 
+
     /**
      * Deletes a file that has been fetched before.
      *
-     * In case of fetching from filesystem does nothing.
+     * @see fetchUnique
      *
-     * \public
-     * \static
-     */
+     * In case of fetching from filesystem does nothing.
+     **/
     function fileDeleteLocal( $path )
     {
-        eZDebugSetting::writeDebug( 'kernel-clustering', "fs::fileDeleteLocal( '$path' )" );
+        eZDebugSetting::writeDebug( 'kernel-clustering', "fs::fileDeleteLocal( '$path' )", __METHOD__ );
     }
 
     /**
@@ -799,10 +825,19 @@ class eZFSFileHandler
         if ( $max === false )
             $max = 100;
         $count = 0;
+        $list = array();
         if ( is_file( $file ) )
+        {
             $list = array( $file );
+        }
         else
-            $list = glob( $file . "/*" );
+        {
+            $globResult = glob( $file . "/*" );
+            if ( is_array( $globResult ) )
+            {
+                $list = $globResult;
+            }
+        }
         do
         {
             if ( ( $count % $max ) == 0 && $microsleep )
@@ -821,7 +856,11 @@ class eZFSFileHandler
             }
             else if ( is_dir( $file ) )
             {
-                $list = array_merge( $list, glob( $file . "/*" ) );
+                $globResult = glob( $file . "/*" );
+                if ( is_array( $globResult ) )
+                {
+                    $list = array_merge( $list, $globResult );
+                }
             }
 
             if ( $printCallback )
@@ -951,6 +990,61 @@ class eZFSFileHandler
         eZDebug::accumulatorStart( 'dbfile', false, 'dbfile' );
         eZFileHandler::move( $srcPath, $dstPath );
         eZDebug::accumulatorStop( 'dbfile' );
+    }
+
+    /**
+     * Starts cache generation for the current file.
+     *
+     * This is done by creating a file named by the original file name, prefixed
+     * with '.generating'.
+     *
+     * @todo add timeout handling...
+     *
+     * @return mixed true if generation lock was granted, an integer matching the
+     *               time before the current generation times out
+     **/
+    public function startCacheGeneration()
+    {
+        return true;
+    }
+
+    /**
+     * Ends the cache generation started by startCacheGeneration().
+     **/
+    public function endCacheGeneration()
+    {
+        return true;
+    }
+
+    /**
+     * Aborts the current cache generation process.
+     *
+     * Does so by rolling back the current transaction, which should be the
+     * .generating file lock
+     **/
+    public function abortCacheGeneration()
+    {
+        return;
+    }
+
+    /**
+     * Checks if the .generating file was changed, which would mean that generation
+     * timed out. If not timed out, refreshes the timestamp so that storage won't
+     * be stolen
+     **/
+    public function checkCacheGenerationTimeout()
+    {
+        return true;
+    }
+
+    /**
+     * eZFS only stores data to FS and doesn't require/support clusterizing
+     *
+     * @return bool false
+     **/
+    public function requiresClusterizing()
+    {
+        return false;
     }
 
     public $metaData = null;

@@ -5,8 +5,8 @@
 // Created on: <04-Jul-2002 13:45:10 bf>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.1.0
-// BUILD VERSION: 23234
+// SOFTWARE RELEASE: 4.2.0
+// BUILD VERSION: 24182
 // COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
@@ -78,7 +78,7 @@ class eZProductCollectionItem extends eZPersistentObject
                                                                'default' => 0,
                                                                'required' => true ),
                                          'discount' => array( 'name' => "DiscountValue",
-                                                              'datatype' => 'integer',
+                                                              'datatype' => 'float',
                                                               'default' => 0,
                                                               'required' => true ),
                                          'name' => array( 'name' => 'Name',
@@ -231,7 +231,7 @@ class eZProductCollectionItem extends eZPersistentObject
                 }
 
                 $dataType = $objectAttribute->dataType();
-                $optionData = $dataType->productOptionInformation( $objectAttribute, $option->attribute( 'option_item_id' ), $this, $option );
+                $optionData = $dataType->productOptionInformation( $objectAttribute, $option->attribute( 'option_item_id' ), $this );
 
                 if ( $optionData )
                 {
@@ -289,18 +289,20 @@ class eZProductCollectionItem extends eZPersistentObject
         return false;
     }
 
-    /*!
-     \static
-     Removes all product collection items which related to the product collections specified in the array \a $productCollectionIDList.
-     \note Transaction unsafe. If you call several transaction unsafe methods you must enclose
-     the calls within a db transaction; thus within db->begin and db->commit.
-    */
+    /**
+     * Removes all product collection items which related to the product
+     * collections specified in the parameter array
+     *
+     * @param array $productCollectionIDList array of eZProductCollection IDs
+     *
+     * @return void
+     **/
     static function cleanupList( $productCollectionIDList )
     {
         $db = eZDB::instance();
         $db->begin();
-        $idText = $db->implodeWithTypeCast( ', ', $productCollectionIDList, 'int' );
-        $rows = $db->arrayQuery( "SELECT id FROM ezproductcollection_item WHERE productcollection_id IN ( $idText )" );
+        $inText = $db->generateSQLINStatement( $productCollectionIDList, 'productcollection_id', false, false, 'int' );
+        $rows = $db->arrayQuery( "SELECT id FROM ezproductcollection_item WHERE $inText" );
         if ( count( $rows ) > 0 )
         {
             $itemIDList = array();
@@ -310,9 +312,8 @@ class eZProductCollectionItem extends eZPersistentObject
             }
             eZProductCollectionItemOption::cleanupList( $itemIDList );
         }
-        $db->query( "DELETE FROM ezproductcollection_item WHERE productcollection_id IN ( $idText )" );
+        $db->query( "DELETE FROM ezproductcollection_item WHERE $inText" );
         $db->commit();
-
     }
 
     /// Stores the content object

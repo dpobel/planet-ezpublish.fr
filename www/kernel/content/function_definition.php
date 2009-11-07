@@ -3,8 +3,8 @@
 // Created on: <06-Oct-2002 16:01:10 amos>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.1.0
-// BUILD VERSION: 23234
+// SOFTWARE RELEASE: 4.2.0
+// BUILD VERSION: 24182
 // COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
@@ -39,7 +39,7 @@ $FunctionList['object'] = array( 'name' => 'object',
                                                                'default' => false,
                                                                'required' => false ),
                                                         array( 'name' => 'remote_id',
-                                                               'type' => 'integer',
+                                                               'type' => 'string',
                                                                'default' => false,
                                                                'required' => false ) ) );
 $FunctionList['version'] = array( 'name' => 'version',
@@ -72,7 +72,7 @@ $FunctionList['node'] = array( 'name' => 'node',
                                                              'required' => false,
                                                              'default' => false ),
                                                       array( 'name' => 'remote_id',
-                                                             'type' => 'integer',
+                                                             'type' => 'string',
                                                              'default' => false,
                                                              'required' => false )  ) );
 $FunctionList['locale_list'] = array( 'name' => 'locale_list',

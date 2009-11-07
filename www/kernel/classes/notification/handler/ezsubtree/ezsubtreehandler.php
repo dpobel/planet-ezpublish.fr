@@ -5,8 +5,8 @@
 // Created on: <12-May-2003 16:35:47 sp>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.1.0
-// BUILD VERSION: 23234
+// SOFTWARE RELEASE: 4.2.0
+// BUILD VERSION: 24182
 // COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
@@ -118,8 +118,25 @@ class eZSubTreeHandler extends eZNotificationEventHandler
         $tpl->resetVariables();
 
         $parentNode = $contentNode->attribute( 'parent' );
+        if ( !$parentNode instanceof eZContentObjectTreeNode )
+        {
+            eZDebug::writeError( 'DB corruption: Node id ' . $contentNode->attribute( 'node_id' ) . ' is missing parent node.', __METHOD__ );
+            return eZNotificationEventHandler::EVENT_SKIPPED;
+        }
+
         $parentContentObject = $parentNode->attribute( 'object' );
+        if ( !$parentContentObject instanceof eZContentObject )
+        {
+            eZDebug::writeError( 'DB corruption: Node id ' . $parentNode->attribute( 'node_id' ) . ' is missing object.', __METHOD__ );
+            return eZNotificationEventHandler::EVENT_SKIPPED;
+        }
+
         $parentContentClass = $parentContentObject->attribute( 'content_class' );
+        if ( !$parentContentClass instanceof eZContentClass )
+        {
+            eZDebug::writeError( 'DB corruption: Object id ' . $parentContentObject->attribute( 'id' ) . ' is missing class object.', __METHOD__ );
+            return eZNotificationEventHandler::EVENT_SKIPPED;
+        }
 
         $res = eZTemplateDesignResource::instance();
         $res->setKeys( array( array( 'object', $contentObject->attribute( 'id' ) ),
@@ -192,7 +209,7 @@ class eZSubTreeHandler extends eZNotificationEventHandler
             if ( $subscriber['use_digest'] == 0 )
             {
                 $settings = eZGeneralDigestUserSettings::fetchForUser( $subscriber['address'] );
-                if ( !is_null( $settings ) && $settings->attribute( 'receive_digest' ) == 1 )
+                if ( $settings !== null && $settings->attribute( 'receive_digest' ) == 1 )
                 {
                     $time = $settings->attribute( 'time' );
                     $timeArray = explode( ':', $time );

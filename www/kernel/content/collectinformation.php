@@ -3,8 +3,8 @@
 // Created on: <21-Nov-2002 18:27:06 bf>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.1.0
-// BUILD VERSION: 23234
+// SOFTWARE RELEASE: 4.2.0
+// BUILD VERSION: 24182
 // COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
@@ -286,6 +286,7 @@ if ( $Module->isCurrentAction( 'CollectInformation' ) )
             $ccReceivers = $tpl->variable( 'email_cc_receivers' );
             $bccReceivers = $tpl->variable( 'email_bcc_receivers' );
             $sender = $tpl->variable( 'email_sender' );
+            $replyTo = $tpl->variable( 'email_reply_to' );
             $redirectToNodeID = $tpl->variable( 'redirect_to_node_id' );
 
             $ini = eZINI::instance();
@@ -307,7 +308,18 @@ if ( $Module->isCurrentAction( 'CollectInformation' ) )
                 $sender = $ini->variable( "MailSettings", "EmailSender" );
             }
             $mail->setSender( $sender );
-            $mail->setReplyTo( $sender );
+
+            if ( !$mail->validate( $replyTo ) )
+            {
+                // If replyTo address is not set in the template, take it from the settings
+                $replyTo = $ini->variable( "MailSettings", "EmailReplyTo" );
+                if ( !$mail->validate( $replyTo ) )
+                {
+                    // If replyTo address is not set in the settings, use the sender address
+                    $replyTo = $sender;
+                }
+            }
+            $mail->setReplyTo( $replyTo );
 
             // Handle CC recipients
             if ( $ccReceivers )

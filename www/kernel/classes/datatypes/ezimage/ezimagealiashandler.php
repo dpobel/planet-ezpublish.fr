@@ -5,8 +5,8 @@
 // Created on: <16-Oct-2003 09:34:25 bf>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.1.0
-// BUILD VERSION: 23234
+// SOFTWARE RELEASE: 4.2.0
+// BUILD VERSION: 24182
 // COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
@@ -289,6 +289,7 @@ class eZImageAliasHandler
         }
         $objectName = eZImageAliasHandler::normalizeImageName( $objectName );
         $objectName .= $this->imageSerialNumber();
+
         return $objectName;
     }
 
@@ -662,12 +663,12 @@ class eZImageAliasHandler
         return $aliasList;
     }
 
-   /*!
-     \static
-     Removes all image alias files which the attribute refers to.
-
-     If you want to remove the alias information use removeAliases().
-    */
+   /**
+    * Removes all image alias files which the attribute refers to.
+    *
+    * @param eZContentObjectAttribute
+    * @note If you want to remove the alias information use removeAliases().
+    **/
     static function removeAllAliases( $contentObjectAttribute )
     {
         $handler = $contentObjectAttribute->attribute( 'content' );
@@ -697,16 +698,19 @@ class eZImageAliasHandler
         eZImageFile::removeForContentObjectAttribute( $attributeData['attribute_id'] );
     }
 
-    /*!
-     Removes all the image aliases and their information.
-
-     The stored images will also be removed if the attribute is the owner
-     of the images.
-
-     After the images are removed the attribute will contained an internal structures with empty data.
-
-     \note Transaction unsafe.
-    */
+    /**
+     * Removes all the image aliases and their information.
+     * The stored images will also be removed if the attribute is the owner
+     * of the images.
+     *
+     * After the images are removed the attribute will containe an internal
+     * structure with empty data
+     *
+     * @param eZContentObjectAttribute $contentObjectAttribute
+     *        Content object attribute to remove aliases for
+     *
+     * @return void
+     **/
     function removeAliases( $contentObjectAttribute )
     {
         $aliasList = $this->aliasList();
@@ -716,6 +720,9 @@ class eZImageAliasHandler
         $contentObjectAttributeID = $this->ContentObjectAttributeData['id'];
 
         $isImageOwner = $this->isImageOwner();
+
+        // We loop over each image alias, and look up the file in ezcontentobject_attribute
+        // Only images referenced by one version will be removed
         foreach ( $aliasList as $aliasName => $alias )
         {
             $dirpath = $alias['dirpath'];
@@ -727,19 +734,34 @@ class eZImageAliasHandler
             {
                 $filepath = $alias['url'];
 
-                // Fetch ezimage attributes that have $filepath.
+                // Fetch ezimage attributes that use $filepath
                 // Always returns current attribute (array of $contentObjectAttributeID and $contentObjectAttributeVersion)
                 $dbResult = eZImageFile::fetchImageAttributesByFilepath( $filepath, $contentObjectAttributeID );
+                $dbResultCount = count( $dbResult );
                 // Check if there are the attributes.
-                if ( count( $dbResult ) > 0 )
+                if ( $dbResultCount > 0 )
                 {
                     $doNotDelete = true;
                     foreach ( $dbResult as $res )
                     {
-                        // If attr is current
-                        if ( $res['id'] == $contentObjectAttributeID and
-                             $res['version'] == $contentObjectAttributeVersion )
-                            continue;
+                        // We only look results where the version matches
+                        if ( $res['version'] == $contentObjectAttributeVersion )
+                        {
+                            // If more than one result has been returned, it means
+                            // that another version is using the same image,
+                            // and we should not delete this file
+                            if ( $dbResultCount > 1 )
+                            {
+                                continue;
+                            }
+                            // Only one result means that the current attribute
+                            // & version are the only ones using this image,
+                            // and it can be removed
+                            else
+                            {
+                                $doNotDelete = false;
+                            }
+                        }
 
                         eZImageFile::appendFilepath( $res['id'], $filepath, true );
                     }
@@ -1030,19 +1052,27 @@ class eZImageAliasHandler
         return $imageName;
     }
 
-    /*!
-     Sets the uploaded HTTP file object to \a $httpFile.
-     This object is used to store information about the image file until the content object attribute is to be stored.
-     \sa httpFile
+    /**
+     * Sets the uploaded HTTP file object to $httpFile.
+     *
+     * This object is used to store information about the image file until the
+     * content object attribute is to be stored.
+     *
+     * @param mixed $httpFile
+     *
+     * @see httpFile
     */
     function setHTTPFile( $httpFile )
     {
         $this->ContentObjectAttributeData['DataTypeCustom']['http_file'] = $httpFile;
     }
 
-    /*!
-     \return the stored HTTP file object or \c false if no object is previously stored.
-     \sa setHTTPFile
+    /**
+     * Returns the stored HTTP file object or false if no object is stored.
+     *
+     * @param bool $release Erase the content of the stored HTTP file
+     *
+     * @see setHTTPFile
     */
     function httpFile( $release = false )
     {
@@ -1059,10 +1089,14 @@ class eZImageAliasHandler
         return false;
     }
 
-    /*!
-     Initializes the content object attribute \a $contentObjectAttribute with the uploaded HTTP file \a $httpFile.
-     Optionally you may also specify the alternative text in the parameter \a $imageAltText.
-    */
+    /**
+     * Initializes the content object attribute with the uploaded HTTP file
+     *
+     * @param eZHTTPFile $httpFile
+     * @param string $imageAltText Optional image ALT text
+     *
+     * @return TODO: FIXME
+     **/
     function initializeFromHTTPFile( $httpFile, $imageAltText = false )
     {
         $this->increaseImageSerialNumber();
@@ -1301,6 +1335,7 @@ class eZImageAliasHandler
                 }
                 else
                 {
+                    $infoItem = iconv( mb_detect_encoding( $infoItem ), 'UTF-8//IGNORE', $infoItem );
                     $imageInfoNode->setAttribute( $infoItemName, $infoItem );
                 }
             }

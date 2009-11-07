@@ -7,8 +7,8 @@
 // Created on: <12-Feb-2002 15:54:17 bf>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.1.0
-// BUILD VERSION: 23234
+// SOFTWARE RELEASE: 4.2.0
+// BUILD VERSION: 24182
 // COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
@@ -76,7 +76,7 @@ class eZMySQLiDB extends eZDBInterface
         /// Connect to master server
         if ( !is_object( $this->DBWriteConnection ) )
         {
-            $connection = $this->connect( $this->Server, $this->DB, $this->User, $this->Password, $this->SocketPath, $this->Charset );
+            $connection = $this->connect( $this->Server, $this->DB, $this->User, $this->Password, $this->SocketPath, $this->Charset, $this->Port );
             if ( $this->IsConnected )
             {
                 $this->DBWriteConnection = $connection;
@@ -88,7 +88,7 @@ class eZMySQLiDB extends eZDBInterface
         {
             if ( $this->UseSlaveServer === true )
             {
-                $connection = $this->connect( $this->SlaveServer, $this->SlaveDB, $this->SlaveUser, $this->SlavePassword, $this->SocketPath, $this->Charset );
+                $connection = $this->connect( $this->SlaveServer, $this->SlaveDB, $this->SlaveUser, $this->SlavePassword, $this->SocketPath, $this->Charset, $this->SlavePort );
             }
             else
             {
@@ -123,10 +123,14 @@ class eZMySQLiDB extends eZDBInterface
 
         if ( $this->UsePersistentConnection == true )
         {
-            eZDebug::writeWarning( 'mysqli does not support persistent connections', 'eZMySQLiDB::connect' );
+            // Only supported on PHP 5.3 (mysqlnd)
+            if ( version_compare( PHP_VERSION, '5.3' ) > 0 )
+                $this->Server = 'p:' . $this->Server;
+            else
+                eZDebug::writeWarning( 'mysqli only supports persistent connections when using php 5.3 and higher', 'eZMySQLiDB::connect' );
         }
 
-        $connection = mysqli_connect( $server, $user, $password, null, $port, $socketPath );
+        $connection = mysqli_connect( $server, $user, $password, null, (int)$port, $socketPath );
 
         $dbErrorText = mysqli_connect_error();
         $maxAttempts = $this->connectRetryCount();
@@ -135,12 +139,8 @@ class eZMySQLiDB extends eZDBInterface
         while ( !is_object( $connection ) and $numAttempts <= $maxAttempts )
         {
             sleep( $waitTime );
-            if ( $this->UsePersistentConnection == true )
-            {
-                eZDebug::writeWarning( 'mysqli does not support persistent connections', 'eZMySQLiDB::connect' );
-            }
 
-            $connection = mysqli_connect( $this->Server, $this->User, $this->Password, null, $this->Port, $this->SocketPath );
+            $connection = mysqli_connect( $this->Server, $this->User, $this->Password, null, (int)$this->Port, $this->SocketPath );
 
             $numAttempts++;
         }
@@ -158,9 +158,9 @@ class eZMySQLiDB extends eZDBInterface
         if ( $this->IsConnected && $db != null )
         {
             $ret = mysqli_select_db( $connection, $db );
-            //$this->setError();
             if ( !$ret )
             {
+                //$this->setError();
                 eZDebug::writeError( "Connection error: " . mysqli_errno( $connection ) . ": " . mysqli_error( $connection ), "eZMySQLiDB" );
                 $this->IsConnected = false;
             }
@@ -436,7 +436,7 @@ class eZMySQLiDB extends eZDBInterface
             }
             else
             {
-                eZDebug::writeError( "Query error: " . mysqli_error( $connection ) . ". Query: ". $sql, "eZMySQLiDB"  );
+                eZDebug::writeError( 'Query error (' . mysqli_errno( $connection ) . '): ' . mysqli_error( $connection ) . '. Query: ' . $sql, "eZMySQLiDB" );
                 $oldRecordError = $this->RecordError;
                 // Turn off error handling while we unlock
                 $this->RecordError = false;
@@ -750,7 +750,7 @@ class eZMySQLiDB extends eZDBInterface
 
     function escapeString( $str )
     {
-        if ( is_object( $this->DBConnection ) )
+        if ( $this->IsConnected )
         {
             return mysqli_real_escape_string( $this->DBConnection, $str );
         }
@@ -772,16 +772,25 @@ class eZMySQLiDB extends eZDBInterface
 
     function createDatabase( $dbName )
     {
-        if ( $this->DBConnection != false )
+        if ( $this->IsConnected )
         {
-            mysqli_create_db( $dbName, $this->DBConnection );
+            $this->query( "CREATE DATABASE $dbName" );
+            $this->setError();
+        }
+    }
+
+    function removeDatabase( $dbName )
+    {
+        if ( $this->IsConnected )
+        {
+            $this->query( "DROP DATABASE $dbName" );
             $this->setError();
         }
     }
 
     function setError()
     {
-        if ( is_object( $this->DBConnection ) )
+        if ( $this->IsConnected )
         {
             $this->ErrorMessage = mysqli_error( $this->DBConnection );
             $this->ErrorNumber = mysqli_errno( $this->DBConnection );
@@ -824,7 +833,7 @@ class eZMySQLiDB extends eZDBInterface
 
     function databaseServerVersion()
     {
-        if ( is_object( $this->DBConnection ) )
+        if ( $this->IsConnected )
         {
             $versionInfo = mysqli_get_server_info( $this->DBConnection );
 

@@ -5,8 +5,8 @@
 // Created on: <01-Mar-2002 13:49:57 amos>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.1.0
-// BUILD VERSION: 23234
+// SOFTWARE RELEASE: 4.2.0
+// BUILD VERSION: 24182
 // COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
@@ -1106,7 +1106,7 @@ class eZTemplate
         }
         foreach ( $dataElements as $dataElement )
         {
-            if ( is_null( $dataElement ) )
+            if ( $dataElement === null )
             {
                 return null;
             }
@@ -1163,7 +1163,7 @@ class eZTemplate
                     $attributeData = $dataElement[1];
                     $attributeValue = $this->elementValue( $attributeData, $rootNamespace, $currentNamespace, false, $checkExistance );
 
-                    if ( !is_null( $attributeValue ) )
+                    if ( $attributeValue !== null )
                     {
                         if ( !is_numeric( $attributeValue ) and
                              !is_string( $attributeValue ) and
@@ -2319,9 +2319,11 @@ class eZTemplate
         return $this->WarningLog;
     }
 
-    /*!
-     Returns the globale template instance, creating it if it does not exist.
-    */
+    /**
+     * Returns a shared instance of the eZTemplate class.
+     *
+     * @return eZTemplate
+     */
     static function instance()
     {
         if ( !isset( $GLOBALS['eZTemplateInstance'] ) )

@@ -5,8 +5,8 @@
 // Created on: <18-Apr-2002 14:05:21 amos>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.1.0
-// BUILD VERSION: 23234
+// SOFTWARE RELEASE: 4.2.0
+// BUILD VERSION: 24182
 // COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
@@ -201,9 +201,11 @@ class eZHTTPTool
         return $retValue;
     }
 
-    /*!
-     \return the unique instance of the HTTP tool
-    */
+    /**
+     * Return a unique instance of the eZHTTPTool class
+     *
+     * @return eZHTTPTool
+     */
     static function instance()
     {
         if ( !isset( $GLOBALS["eZHTTPToolInstance"] ) ||
@@ -227,7 +229,7 @@ class eZHTTPTool
      \param port which port to connect to, default 80
      \param postParameters post parameters array (optional), if no post parameters are present, a get request will be send.
      \param userAgent user agent, default will be eZ Publish
-     \param passthrough will send result directly to client, default false
+     \param passthrough will send result directly to client, default true
 
      \return result if http request, or return false if an error occurs.
              If pipetrough, program will end here.
@@ -332,7 +334,7 @@ class eZHTTPTool
         }
 
         $buf = '';
-        if ( $passtrough )
+        if ( $passthrough )
         {
             ob_end_clean();
             $header = true;
@@ -590,7 +592,18 @@ class eZHTTPTool
         return $uri;
     }
 
-    static function redirect( $path, $parameters = array(), $status = false )
+    /**
+     * \static
+     * Performs an HTTP redirect.
+     *
+     * \param  $path  The path to redirect
+     * \param  $parameters  \see createRedirectUrl()
+     * \param  $status  The HTTP status code as a string
+     * \param  $encodeURL  Encode the URL. This should normally be true, but
+     * may be set to false to avoid double encoding when redirect() is called
+     * twice.
+     */
+    static function redirect( $path, $parameters = array(), $status = false, $encodeURL = true )
     {
         $url = eZHTTPTool::createRedirectUrl( $path, $parameters );
         if ( strlen( $status ) > 0 )
@@ -599,7 +612,10 @@ class eZHTTPTool
             eZHTTPTool::headerVariable( "Status", $status );
         }
 
-        $url = eZURI::encodeURL( $url );
+        if ( $encodeURL )
+        {
+            $url = eZURI::encodeURL( $url );
+        }
 
         eZHTTPTool::headerVariable( 'Location', $url );
 

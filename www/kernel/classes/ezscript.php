@@ -5,8 +5,8 @@
 // Created on: <06-Aug-2003 11:06:35 amos>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.1.0
-// BUILD VERSION: 23234
+// SOFTWARE RELEASE: 4.2.0
+// BUILD VERSION: 24182
 // COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
@@ -828,11 +828,21 @@ class eZScript
         $cli->output( $helpText );
     }
 
+    /*!
+     Parse command line into options array. If stanadrd options are in use, carry
+     out the associated task (eg. switch siteaccess ir logged-in user)
+     /param $config see ezcli::parseOptionString
+     /param $argumentConfig  see ezcli::getOptions (unused for now)
+     /param $optionHelp string echoed to screen when script invoked with -h/--help
+     /param $arguments array of arguments. If false, command line is parsed automatically
+     /param $useStandardOptions true or an array of standard options to be used.
+       standard options are: 'debug', 'colors', 'log', 'siteaccess', 'verbose', 'user' (false), and can be set to false to be disabled
+    */
     function getOptions( $config = '', $argumentConfig = '', $optionHelp = false,
                          $arguments = false, $useStandardOptions = true )
     {
         if ( is_string( $config ) )
-            $config = eZCLI::parseOptionString( $config, $optionConfig );
+            $config = eZCLI::parseOptionString( $config, $tmpConfig );
         if ( is_string( $argumentConfig ) )
             $argumentConfig = eZCLI::parseOptionString( $argumentConfig, $tmpArgumentConfig );
 
@@ -998,6 +1008,12 @@ class eZScript
         return $options;
     }
 
+    /**
+     * Returns a shared instance of the eZScript class.
+     *
+     * @param $settings array Used by the first generated instance, but ignored for subsequent calls.
+     * @return eZScript
+     */
     static function instance( $settings = array() )
     {
         if ( !isset( $GLOBALS['eZScriptInstance'] ) or

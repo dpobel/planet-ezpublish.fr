@@ -3,8 +3,8 @@
 // Created on: <11-Oct-2004 15:41:12 kk>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.1.0
-// BUILD VERSION: 23234
+// SOFTWARE RELEASE: 4.2.0
+// BUILD VERSION: 24182
 // COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
@@ -95,6 +95,9 @@ eZDebug::checkDebugByUser();
 eZExtension::activateExtensions( 'access' );
 // Siteaccess extension check end
 
+// reload soap.ini cache now that override paths have changed
+$soapINI->loadCache();
+
 /*!
  Reads settings from i18n.ini and passes them to eZTextCodec.
 */
@@ -110,8 +113,6 @@ function eZUpdateTextCodecSettings()
 
 // Initialize text codec settings
 eZUpdateTextCodecSettings();
-
-$db = eZDB::instance();
 
 // Initialize module loading
 $moduleRepositories = eZModule::activeModuleRepositories();

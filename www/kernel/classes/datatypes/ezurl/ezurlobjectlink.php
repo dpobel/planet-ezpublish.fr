@@ -5,8 +5,8 @@
 // Created on: <04-Jul-2003 13:14:41 wy>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.1.0
-// BUILD VERSION: 23234
+// SOFTWARE RELEASE: 4.2.0
+// BUILD VERSION: 24182
 // COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
@@ -48,7 +48,7 @@ class eZURLObjectLink extends eZPersistentObject
 
     static function definition()
     {
-        return array( 'fields' => array( 'url_id' => array( 'name' => 'URLID',
+        static $definition = array( 'fields' => array( 'url_id' => array( 'name' => 'URLID',
                                                             'datatype' => 'integer',
                                                             'default' => 0,
                                                             'required' => true,
@@ -71,6 +71,7 @@ class eZURLObjectLink extends eZPersistentObject
                       'sort' => array( 'url_id' => 'asc' ),
                       'class_name' => 'eZURLObjectLink',
                       'name' => 'ezurl_object_link' );
+        return $definition;
     }
 
     /*!
@@ -135,11 +136,10 @@ class eZURLObjectLink extends eZPersistentObject
                 if ( $object )
                 {
                     $versionObject = $object->version( $objectVersion );
-                    $versionID = $versionObject->attribute( 'id' );
-                    if ( !in_array( $versionID, $storedVersionList ) )
+                    if ( $versionObject and !in_array( $versionObject->attribute( 'id' ), $storedVersionList ) )
                     {
                         $objectVersionList[] = $versionObject;
-                        $storedVersionList[] = $versionID;
+                        $storedVersionList[] = $versionObject->attribute( 'id' );
                     }
                 }
             }

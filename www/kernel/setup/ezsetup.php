@@ -5,8 +5,8 @@
 // Created on: <08-Nov-2002 11:00:54 kd>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.1.0
-// BUILD VERSION: 23234
+// SOFTWARE RELEASE: 4.2.0
+// BUILD VERSION: 24182
 // COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
@@ -28,6 +28,8 @@
 
 $GLOBALS['eZSiteBasics']['no-cache-adviced'] = false;
 
+// Avoid compiling templates just for 1 view to improve performance
+$GLOBALS['eZTemplateCompilerSettings']['compile'] = false;
 
 // Include common functions
 include_once( "kernel/setup/ezsetupcommon.php" );

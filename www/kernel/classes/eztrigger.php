@@ -2,11 +2,11 @@
 //
 // Definition of eZTrigger class
 //
-// Created on: <11-аущ-2002 13:11:15 sp>
+// Created on: <11-О©╫О©╫О©╫-2002 13:11:15 sp>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.1.0
-// BUILD VERSION: 23234
+// SOFTWARE RELEASE: 4.2.0
+// BUILD VERSION: 24182
 // COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
@@ -43,6 +43,7 @@ class eZTrigger extends eZPersistentObject
     const FETCH_TEMPLATE = 4;
     const REDIRECT = 5;
     const WORKFLOW_RESET = 6;
+    const FETCH_TEMPLATE_REPEAT = 7;
 
     /*!
      Constructor
@@ -167,7 +168,10 @@ class eZTrigger extends eZPersistentObject
                 $keys[] = 'workflow_id';
             }
 
-            $parameters['workflow_id'] = $workflowID;
+            $parameters['workflow_id']     = $workflowID;
+            $parameters['trigger_name']    = $name;
+            $parameters['module_name']     = $moduleName;
+            $parameters['module_function'] = $function;
             // It is very important that the user_id is set correctly.
             // If it was not supplied by the calling code we will use
             // the currently logged in user.
@@ -201,6 +205,7 @@ class eZTrigger extends eZPersistentObject
                                       'Result' => null );
                     } break;
                     case eZWorkflow::STATUS_FETCH_TEMPLATE:
+                    case eZWorkflow::STATUS_FETCH_TEMPLATE_REPEAT:
                     case eZWorkflow::STATUS_REDIRECT:
                     case eZWorkflow::STATUS_RESET:
                     {
@@ -273,6 +278,7 @@ class eZTrigger extends eZPersistentObject
                               'Result' => null );
             } break;
             case eZWorkflow::STATUS_FETCH_TEMPLATE:
+            case eZWorkflow::STATUS_FETCH_TEMPLATE_REPEAT:
             {
                 require_once( 'kernel/common/template.php' );
                 $tpl = templateInit();
@@ -287,7 +293,15 @@ class eZTrigger extends eZPersistentObject
                     $result['path'] = $workflowProcess->Template['path'];
 
                     $db->commit();
-                return array( 'Status' => eZTrigger::FETCH_TEMPLATE,
+                if ( $workflowStatus == eZWorkflow::STATUS_FETCH_TEMPLATE )
+                {
+                    $triggerStatus = eZTrigger::FETCH_TEMPLATE;
+                }
+                elseif ( $workflowStatus == eZWorkflow::STATUS_FETCH_TEMPLATE_REPEAT )
+                {
+                    $triggerStatus = eZTrigger::FETCH_TEMPLATE_REPEAT;
+                }
+                return array( 'Status' => $triggerStatus,
                               'WorkflowProcess' => $workflowProcess,
                               'Result' => $result );
             } break;

@@ -1,10 +1,10 @@
 <?php
 //
-// Created on: <13-íÁÒ-2003 13:06:18 sp>
+// Created on: <13-ĞœĞ°r-2003 13:06:18 sp>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.1.0
-// BUILD VERSION: 23234
+// SOFTWARE RELEASE: 4.2.0
+// BUILD VERSION: 24182
 // COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
@@ -45,21 +45,30 @@ if ( strlen( $hashKey ) == 32 )
     $forgotPasswdObj = eZForgotPassword::fetchByKey( $hashKey );
     if ( $forgotPasswdObj )
     {
-        $user = eZUser::fetch( $forgotPasswdObj->attribute( 'user_id' ) );
-        $email = $user->attribute( 'email' );
+        $userID = $forgotPasswdObj->attribute( 'user_id' );
+        $user   = eZUser::fetch( $userID  );
+        $email  = $user->attribute( 'email' );
 
         $ini = eZINI::instance();
         $passwordLength = $ini->variable( "UserSettings", "GeneratePasswordLength" );
-        $password = eZUser::createPassword( $passwordLength );
-        $passwordConfirm = $password;
+        $newPassword = eZUser::createPassword( $passwordLength );
 
         $userToSendEmail = $user;
-        $user->setInformation( $user->id(), $user->attribute( 'login' ), $email, $password, $passwordConfirm );
 
         $db = eZDB::instance();
         $db->begin();
 
-        $user->store();
+        // Change user password
+        if ( eZOperationHandler::operationIsAvailable( 'user_password' ) )
+        {
+            $operationResult = eZOperationHandler::execute( 'user',
+                                                            'password', array( 'user_id'    => $userID,
+                                                                               'new_password'  => $newPassword ) );
+        }
+        else
+        {
+            eZUserOperationCollection::password( $userID, $newPassword );
+        }
 
         require_once( "kernel/common/template.php" );
         $receiver = $email;
@@ -71,7 +80,7 @@ if ( strlen( $hashKey ) == 32 )
 
         $tpl->setVariable( 'user', $userToSendEmail );
         $tpl->setVariable( 'object', $userToSendEmail->attribute( 'contentobject' ) );
-        $tpl->setVariable( 'password', $password );
+        $tpl->setVariable( 'password', $newPassword );
 
         $templateResult = $tpl->fetch( 'design:user/forgotpasswordmail.tpl' );
         $emailSender = $ini->variable( 'MailSettings', 'EmailSender' );
@@ -125,11 +134,23 @@ if ( $module->isCurrentAction( "Generate" ) )
         }
         if ( count($users) > 0 )
         {
-            $user = $users[0];
-            $time = time();
-            $hashKey = md5( $time . ":" . mt_rand() );
-            $forgotPasswdObj = eZForgotPassword::createNew( $user->id(), $hashKey, $time );
-            $forgotPasswdObj->store();
+            $user   = $users[0];
+            $time   = time();
+            $userID = $user->id();
+            $hashKey = md5( $userID . ':' . $time . ':' . mt_rand() );
+
+            // Create forgot password object
+            if ( eZOperationHandler::operationIsAvailable( 'user_forgotpassword' ) )
+            {
+                $operationResult = eZOperationHandler::execute( 'user',
+                                                                'forgotpassword', array( 'user_id'    => $userID,
+                                                                                         'password_hash'  => $hashKey,
+                                                                                         'time' => $time ) );
+            }
+            else
+            {
+                eZUserOperationCollection::forgotpassword( $userID, $hashKey, $time );
+            }
 
             $userToSendEmail = $user;
             require_once( "kernel/common/template.php" );
@@ -145,12 +166,9 @@ if ( $module->isCurrentAction( "Generate" ) )
             $tpl->setVariable( 'password', $password );
             $tpl->setVariable( 'link', true );
             $tpl->setVariable( 'hash_key', $hashKey );
-            $http = eZHTTPTool::instance();
-            $http->UseFullUrl = true;
             $templateResult = $tpl->fetch( 'design:user/forgotpasswordmail.tpl' );
             if ( $tpl->hasVariable( 'content_type' ) )
                 $mail->setContentType( $tpl->variable( 'content_type' ) );
-            $http->UseFullUrl = false;
             $emailSender = $ini->variable( 'MailSettings', 'EmailSender' );
             if ( !$emailSender )
                 $emailSender = $ini->variable( 'MailSettings', 'AdminEmail' );

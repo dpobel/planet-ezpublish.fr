@@ -3,8 +3,8 @@
 // Created on: <17-Apr-2002 10:34:48 bf>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.1.0
-// BUILD VERSION: 23234
+// SOFTWARE RELEASE: 4.2.0
+// BUILD VERSION: 24182
 // COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
@@ -203,7 +203,7 @@ function checkNodeMovements( $module, $class, $object, $version, $contentObjectA
                         $db = eZDB::instance();
                         $db->begin();
                         // No longer remove then add assignment, instead change the existing one
-                        if ( is_null( $realNode ) )
+                        if ( $realNode  === null )
                         {
                             $fromNodeID = 0;
                         }
@@ -275,10 +275,6 @@ function storeNodeAssignments( $module, $class, $object, $version, $contentObjec
 
         $mainNodeID = $setPlacementNodeIDArray[$elementNumber];
     }
-
-    $nodesID = array();
-    if ( $http->hasPostVariable( 'NodesID' ) )
-        $nodesID = $http->postVariable( 'NodesID' );
 
     $nodeID = eZContentObjectTreeNode::findNode( $mainNodeID, $object->attribute('id') );
     eZDebugSetting::writeDebug( 'kernel-content-edit', $nodeID, 'nodeID' );
@@ -766,7 +762,8 @@ function handleNodeTemplate( $module, $class, $object, $version, $contentObjectA
         else
         {
             $assignedNode->purge();
-            unset( $assignedNodeArray[$assignedNodeKey] );
+            if( isset( $assignedNodeArray[$assignedNodeKey] ) )
+                unset( $assignedNodeArray[$assignedNodeKey] );
         }
     }
     $db->commit();

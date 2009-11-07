@@ -5,8 +5,8 @@
 // Created on: <14-Sep-2002 15:37:17 amos>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.1.0
-// BUILD VERSION: 23234
+// SOFTWARE RELEASE: 4.2.0
+// BUILD VERSION: 24182
 // COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
@@ -37,6 +37,15 @@
 
 class eZTemplateDesignResource extends eZTemplateFileResource
 {
+    /**
+     * Contains in memory cache of override array used by {@link eZTemplateDesignResource::overrideArray()}
+     *
+     * @static
+     * @protected
+     * @var $overrideArrayCache null|array
+     */
+    protected static $overrideArrayCache = null;
+
     /*!
      Initializes with a default resource name "design".
     */
@@ -236,6 +245,7 @@ class eZTemplateDesignResource extends eZTemplateFileResource
     */
     static function fileMatch( $bases, $element, $path, &$triedFiles )
     {
+        $bases = array_unique( $bases );
         foreach ( $bases as $base )
         {
             $resource = $element != '' ? "$base/$element" : $base;
@@ -700,6 +710,7 @@ class eZTemplateDesignResource extends eZTemplateFileResource
 
         array_unshift( $siteDesignList, $siteDesign );
         $siteDesignList[] = $standardDesign;
+        $siteDesignList = array_unique( $siteDesignList );
 
         $bases = array();
         $extensionDirectory = eZExtension::baseDirectory();
@@ -764,13 +775,21 @@ class eZTemplateDesignResource extends eZTemplateFileResource
         $GLOBALS['eZTemplateDesignResourceStartPath'] = $path;
     }
 
-    /*!
-     \static
-     \return an array of all the current templates and overrides for them.
-             The current siteaccess is used if none is specified.
-    */
+    /**
+     * Get an array of all the current templates and overrides for them.
+     * The current siteaccess is used if none is specified.
+     * 
+     * @static
+     * @return array
+     */
     static function overrideArray( $siteAccess = false )
     {
+        
+        if ( $siteAccess === false and self::$overrideArrayCache !== null )
+        {
+            return self::$overrideArrayCache;
+        }
+        
         $bases = eZTemplateDesignResource::allDesignBases( $siteAccess );
 
         // fetch the override array from a specific siteacces
@@ -858,7 +877,23 @@ class eZTemplateDesignResource extends eZTemplateFileResource
 
         }
 
+        if ( $siteAccess === false )
+        {
+            self::$overrideArrayCache = $matchFileArray;
+        }
+
         return $matchFileArray;
+    }
+
+    /**
+     * Clear in memory override array cache
+     * 
+     * @static
+     * @since 4.2
+     */
+    static public function clearInMemoryOverrideArray( )
+    {
+        self::$overrideArrayCache = null;
     }
 
     /*!
@@ -928,9 +963,11 @@ class eZTemplateDesignResource extends eZTemplateFileResource
                                                       'Match' => $matches );
     }
 
-    /*!
-     \return the unique instance of the design resource.
-    */
+    /**
+     * Returns a shared instance of the eZTemplateDesignResource class.
+     *
+     * @return eZTemplateDesignResource
+     */
     static function instance()
     {
         if ( !isset( $GLOBALS['eZTemplateDesignResourceInstance'] ) )

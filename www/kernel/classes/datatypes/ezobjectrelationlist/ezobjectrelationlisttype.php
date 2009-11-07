@@ -5,8 +5,8 @@
 // Created on: <16-Apr-2002 11:08:14 amos>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.1.0
-// BUILD VERSION: 23234
+// SOFTWARE RELEASE: 4.2.0
+// BUILD VERSION: 24182
 // COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
@@ -517,9 +517,15 @@ class eZObjectRelationListType extends eZDataType
                     {
                         // create related object copies only if they are subobjects
                         $object = eZContentObject::fetch( $relationItem['contentobject_id'] );
-                        $mainNode = $object->attribute( 'main_node' );
+                        if ( !$object instanceof eZContentObject )
+                        {
+                            unset( $content['relation_list'][$key] );
+                            $contentModified = true;
+                            continue;
+                        }
 
-                        if ( is_object( $mainNode ) )
+                        $mainNode = $object->attribute( 'main_node' );
+                        if ( $mainNode instanceof eZContentObjectTreeNode )
                         {
                             $node = ( is_numeric( $relationItem['node_id'] ) and $relationItem['node_id'] ) ?
                                       eZContentObjectTreeNode::fetch( $relationItem['node_id'] ) : null;
@@ -531,7 +537,11 @@ class eZObjectRelationListType extends eZDataType
                                 $contentModified = true;
                             }
 
-                            $parentNodeID = $node->attribute( 'parent_node_id' );
+                            if ( $node instanceof eZContentObjectTreeNode )
+                                $parentNodeID =  $node->attribute( 'parent_node_id' );
+                            else
+                                $parentNodeID = -1;
+
                             if ( $relationItem['parent_node_id'] != $parentNodeID )
                             {
                                 $content['relation_list'][$key]['parent_node_id'] = $parentNodeID;
@@ -1446,7 +1456,7 @@ class eZObjectRelationListType extends eZDataType
     */
     function metaData( $contentObjectAttribute )
     {
-        $metaDataArray = array();
+        $metaDataArray = $attributes = array();
         $content = $contentObjectAttribute->content();
         foreach( $content['relation_list'] as $relationItem )
         {
@@ -1639,9 +1649,17 @@ class eZObjectRelationListType extends eZDataType
     {
         $node = $this->createContentObjectAttributeDOMNode( $objectAttribute );
 
-        $dom = new DOMDocument( '1.0', 'utf-8' );
         eZDebug::writeDebug( $objectAttribute->attribute( 'data_text' ), 'xml string from data_text field' );
-        $success = $dom->loadXML( $objectAttribute->attribute( 'data_text' ) );
+        if ( $objectAttribute->attribute( 'data_text' ) === null )
+        {
+            $content = array( 'relation_list' => array() );
+            $dom = eZObjectRelationListType::createObjectDOMDocument( $content );
+        }
+        else
+        {
+            $dom = new DOMDocument( '1.0', 'utf-8' );
+            $success = $dom->loadXML( $objectAttribute->attribute( 'data_text' ) );
+        }
         $rootNode = $dom->documentElement;
         $relationList = $rootNode->getElementsByTagName( 'relation-list' )->item( 0 );
         if ( $relationList )

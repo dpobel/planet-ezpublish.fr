@@ -1,5 +1,4 @@
 <!DOCTYPE TS><TS>
-<defaultcodec></defaultcodec>
 <context>
     <name>contentstructuremenu/show_content_structure</name>
     <message>
@@ -11,15 +10,15 @@
     <name>design</name>
     <message>
         <source>%group_name [Content object state group]</source>
-        <translation type="unfinished"></translation>
+        <translation>%group_name [Tilstandsgruppe for innholdsobjekter]</translation>
     </message>
     <message>
         <source>Edit</source>
-        <translation type="unfinished">Rediger</translation>
+        <translation>Rediger</translation>
     </message>
     <message>
         <source>%state_name [Content object state]</source>
-        <translation type="unfinished"></translation>
+        <translation>%state_name [Tilstand for innholdsobjekter]</translation>
     </message>
 </context>
 <context>
@@ -2043,11 +2042,11 @@
     </message>
     <message>
         <source>The following data is invalid according to the custom validation rules</source>
-        <translation type="unfinished"></translation>
+        <translation>Følgende data er ugyldige i henhold til egendefinerte valideringsregler</translation>
     </message>
     <message>
         <source>States</source>
-        <translation type="unfinished"></translation>
+        <translation>Tilstander</translation>
     </message>
 </context>
 <context>
@@ -3483,63 +3482,63 @@
     </message>
     <message>
         <source>Create new URL forwarding with wildcard</source>
-        <translation type="unfinished"></translation>
+        <translation>Lag ny URL-videresending med jokertegn</translation>
     </message>
     <message>
         <source>Redirecting URL</source>
-        <translation type="unfinished"></translation>
+        <translation>URL-videresending</translation>
     </message>
     <message>
         <source>Type</source>
-        <translation type="unfinished">Type</translation>
+        <translation>Type</translation>
     </message>
     <message>
         <source>Redirect</source>
-        <translation type="unfinished">Videresend</translation>
+        <translation>Videresend</translation>
     </message>
     <message>
         <source>Direct</source>
-        <translation type="unfinished"></translation>
+        <translation>Direkte</translation>
     </message>
     <message>
         <source>URL alias name:</source>
-        <translation type="unfinished"></translation>
+        <translation>Navn på URL-alias:</translation>
     </message>
     <message>
         <source>Destination:</source>
-        <translation type="unfinished"></translation>
+        <translation>Mål:</translation>
     </message>
     <message>
         <source>Destination.</source>
-        <translation type="unfinished"></translation>
+        <translation>Mål.</translation>
     </message>
     <message>
         <source>Language:</source>
-        <translation type="unfinished"></translation>
+        <translation>Språk:</translation>
     </message>
     <message>
         <source>Alias should redirect to its destination</source>
-        <translation type="unfinished"></translation>
+        <translation>Alias skal videresende til målet</translation>
     </message>
     <message>
         <source>With &lt;em&gt;Alias should redirect to its destination&lt;/em&gt; checked eZ Publish will redirect to the destination using a HTTP 301 response. Un-check it and the URL will stay the same &amp;#8212; no redirection will be performed.</source>
-        <translation type="unfinished"></translation>
+        <translation>Med &lt;em&gt;Alias skal videresende til målet&lt;/em&gt; avkrysset vil eZ Publish videresende til målet med en &quot;HTTP 301&quot;-melding. Hvis dette ikke er valgt videresendes det ikke &amp;#8212; og URL-en blir den samme.</translation>
     </message>
     <message>
         <source>If checked the alias will start from the parent of the current node. If un-checked the aliases will start from the root of the site.</source>
-        <translation type="unfinished"></translation>
+        <translation>Hvis avkrysset vil aliaset starte ved forelder til gjeldende node. Hvis ikke avkrysset vil aliaset starte fra roten av nettstedet.</translation>
     </message>
     <message>
         <source>Place alias on the site root</source>
-        <translation type="unfinished"></translation>
+        <translation>Plasser alias i roten av nettstedet</translation>
     </message>
     <message>
         <source>The new alias be placed under %link</source>
-        <translation type="unfinished"></translation>
+        <translation>Plasser det nye aliaset under %link</translation>
     </message>
     <message>
         <source>&lt;em&gt;Un-check&lt;/em&gt; to create the new alias under %link. Leave it checked and the new alias will be created on &lt;em&gt;&lt;a href=&apos;/&apos;&gt;%siteroot&lt;/a&gt;&lt;/em&gt;.</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;em&gt;Fjern krysset&lt;/em&gt; for å plassere nytt alias under %link. La det stå og aliaset blir plassert her: &lt;em&gt;&lt;a href=&apos;/&apos;&gt;%siteroot&lt;/a&gt;&lt;/em&gt;.</translation>
     </message>
 </context>
 <context>
@@ -3702,23 +3701,23 @@
     </message>
     <message>
         <source>Alias should redirect to its destination</source>
-        <translation type="unfinished"></translation>
+        <translation>Alias skal videresende til målet</translation>
     </message>
     <message>
         <source>Type</source>
-        <translation type="unfinished">Type</translation>
+        <translation>Type</translation>
     </message>
     <message>
         <source>Redirect</source>
-        <translation type="unfinished">Videresend</translation>
+        <translation>Videresend</translation>
     </message>
     <message>
         <source>Direct</source>
-        <translation type="unfinished"></translation>
+        <translation>Direkte</translation>
     </message>
     <message>
         <source>Destination (path to existing functionality or resource)</source>
-        <translation type="unfinished"></translation>
+        <translation>Mål (sti til eksisterende funksjonalitet eller ressurs)</translation>
     </message>
 </context>
 <context>
@@ -3729,7 +3728,7 @@
     </message>
     <message>
         <source>All wildcard aliases were successfully removed.</source>
-        <translation type="unfinished"></translation>
+        <translation>Alle jokertegn-alias ble fjernet.</translation>
     </message>
     <message>
         <source>Text is missing for the URL alias</source>
@@ -3753,7 +3752,7 @@
     </message>
     <message>
         <source>The URL alias &lt;%wildcard_src_url&gt; already exists, and it points to &lt;%wildcard_dst_url&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>URL-aliaset &lt;%wildcard_src_url&gt; eksisterer allerede, og det peker til &lt;%wildcard_dst_url&gt;</translation>
     </message>
     <message>
         <source>Defined URL aliases with wildcard[%wildcard_count]</source>
@@ -3765,87 +3764,87 @@
     </message>
     <message>
         <source>The URL wildcard list does not contain any aliases.</source>
-        <translation type="unfinished"></translation>
+        <translation>Listen over jokertegn-alias er tom.</translation>
     </message>
     <message>
         <source>Invert selection.</source>
-        <translation type="unfinished">Speilvend utvalg.</translation>
+        <translation>Speilvend utvalg.</translation>
     </message>
     <message>
         <source>URL alias wildcard</source>
-        <translation type="unfinished"></translation>
+        <translation>URL-alias med jokertegn</translation>
     </message>
     <message>
         <source>Destination</source>
-        <translation type="unfinished">Mål</translation>
+        <translation>Mål</translation>
     </message>
     <message>
         <source>Type</source>
-        <translation type="unfinished">Type</translation>
+        <translation>Type</translation>
     </message>
     <message>
         <source>Forward</source>
-        <translation type="unfinished"></translation>
+        <translation>Videresend</translation>
     </message>
     <message>
         <source>Direct</source>
-        <translation type="unfinished"></translation>
+        <translation>Direkte</translation>
     </message>
     <message>
         <source>Undefined</source>
-        <translation type="unfinished">Udefinert</translation>
+        <translation>Udefinert</translation>
     </message>
     <message>
         <source>Remove selected</source>
-        <translation type="unfinished">Fjern valgte</translation>
+        <translation>Fjern valgte</translation>
     </message>
     <message>
         <source>Remove selected aliases from the list above.</source>
-        <translation type="unfinished">Fjern valgte alias fra listen over.</translation>
+        <translation>Fjern valgte alias fra listen over.</translation>
     </message>
     <message>
         <source>Are you sure you want to remove the selected wildcards?</source>
-        <translation type="unfinished"></translation>
+        <translation>Er du sikker på at du vil fjerne valgte alias?</translation>
     </message>
     <message>
         <source>Remove all</source>
-        <translation type="unfinished">Fjern alle</translation>
+        <translation>Fjern alle</translation>
     </message>
     <message>
         <source>Remove all wildcard aliases.</source>
-        <translation type="unfinished"></translation>
+        <translation>Fjern alle jokertegn-alias.</translation>
     </message>
     <message>
         <source>Are you sure you want to remove all wildcard aliases?</source>
-        <translation type="unfinished"></translation>
+        <translation>Er du sikker på at du vil fjerne alle jokertegn-alias?</translation>
     </message>
     <message>
         <source>There are no removable aliases.</source>
-        <translation type="unfinished">Det er ingen alias som kan fjernes.</translation>
+        <translation>Det er ingen alias som kan fjernes.</translation>
     </message>
     <message>
         <source>New URL wildcard</source>
-        <translation type="unfinished"></translation>
+        <translation>Nytt URL-alias med jokertegn</translation>
     </message>
     <message>
         <source>Perform redirecting.</source>
-        <translation type="unfinished"></translation>
+        <translation>Videresend</translation>
     </message>
     <message>
         <source>Create</source>
-        <translation type="unfinished">Lag</translation>
+        <translation>Lag</translation>
     </message>
     <message>
         <source>Create a new wildcard URL alias.</source>
-        <translation type="unfinished"></translation>
+        <translation>Lag et nytt URL-alias med jokertegn.</translation>
     </message>
     <message>
         <source>Enter the URL for the new wildcard. Example: developer/*</source>
-        <translation type="unfinished"></translation>
+        <translation>Oppgi en URL for nytt jokertegn-alias. Eksempel: developer/*</translation>
     </message>
     <message>
         <source>Enter the destination URL for the new wildcard. Example: dev/{1\}</source>
-        <translation type="unfinished"></translation>
+        <translation>Oppgi mål-URL for nytt jokertegn-alias. Eksempel: dev/{1\}</translation>
     </message>
 </context>
 <context>
@@ -4128,6 +4127,14 @@
     <message>
         <source>You cannot manage the versions of this object because there is only one version available (the one that is being displayed).</source>
         <translation>Du kan ikke redigere versjonene av dette objektet, fordi det bare er en versjon tilgjengelig (den som redigeres).</translation>
+    </message>
+    <message>
+        <source>Translation mismatch</source>
+        <translation>Har du valgt riktig språk?</translation>
+    </message>
+    <message>
+        <source>Your selected translation does not match the language of your selected siteaccess. This may lead to unexpected results in the preview, however it may also be what you intended.</source>
+        <translation>Språket du har valgt er ikke det samme som det som brukes i valgt nettstedstilgang. Dette kan gi uventede resultater i forhåndsvisningen, men er ellers ikke noe problem og kan være hensiktsmessig.</translation>
     </message>
 </context>
 <context>
@@ -5409,55 +5416,55 @@
     </message>
     <message>
         <source>Move selected</source>
-        <translation type="unfinished"></translation>
+        <translation>Flytt valgte</translation>
     </message>
     <message>
         <source>Move the selected items from the list above.</source>
-        <translation type="unfinished"></translation>
+        <translation>Flytt valgte elementer fra listen over.</translation>
     </message>
     <message>
         <source>You do not have permission to move any of the items from the list above.</source>
-        <translation type="unfinished"></translation>
+        <translation>Du har ikke tilgang til å flytte noen av elementene i listen over.</translation>
     </message>
     <message>
         <source>Object states</source>
-        <translation type="unfinished"></translation>
+        <translation>Objekttilstander</translation>
     </message>
     <message>
         <source>Content object state group</source>
-        <translation type="unfinished"></translation>
+        <translation>Tilstandsgruppe for innholdsobjekter</translation>
     </message>
     <message>
         <source>Available states</source>
-        <translation type="unfinished"></translation>
+        <translation>Tilgjengelige tilstander</translation>
     </message>
     <message>
         <source>No content object state is configured. This can be done %urlstart here %urlend.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ingen objekttilstander er definert. Du kan gjøre det %urlstart her %urlend.</translation>
     </message>
     <message>
         <source>Set states</source>
-        <translation type="unfinished"></translation>
+        <translation>Set tilstander</translation>
     </message>
     <message>
         <source>Apply states from the list above.</source>
-        <translation type="unfinished"></translation>
+        <translation>Sett tilstander fra listen over.</translation>
     </message>
     <message>
         <source>No state to be applied to this content object. You might need to be assigned a more permissive access policy.</source>
-        <translation type="unfinished"></translation>
+        <translation>Du kan ikke sette tilstander på dette objektet. Du har ikke tilgangsrettigheter til dette.</translation>
     </message>
     <message>
         <source>Hide state assignment widget.</source>
-        <translation type="unfinished"></translation>
+        <translation>Skjul verktøy for tilstander.</translation>
     </message>
     <message>
         <source>Show state assignment widget.</source>
-        <translation type="unfinished"></translation>
+        <translation>Vis verktøy for tilstander.</translation>
     </message>
     <message>
         <source>Object states for object</source>
-        <translation type="unfinished"></translation>
+        <translation>Tilstander for objekt</translation>
     </message>
 </context>
 <context>
@@ -6492,11 +6499,11 @@ Note: The packages will not be uninstalled.</source>
     </message>
     <message>
         <source>URL wildcards</source>
-        <translation type="unfinished"></translation>
+        <translation>URL-alias med jokertegn</translation>
     </message>
     <message>
         <source>States</source>
-        <translation type="unfinished"></translation>
+        <translation>Tilstander</translation>
     </message>
 </context>
 <context>
@@ -7878,23 +7885,23 @@ Note: The packages will not be uninstalled.</source>
     </message>
     <message>
         <source>Leave this field empty if you want system automaticaly detect the URL of your site from the URL you access feed with</source>
-        <translation type="unfinished"></translation>
+        <translation>La dette feltet stå tomt hvis du vil la systemet finne URL-en til nettstedet ditt automatisk</translation>
     </message>
     <message>
         <source>Category</source>
-        <translation type="unfinished"></translation>
+        <translation>Kategori</translation>
     </message>
     <message>
         <source>optional</source>
-        <translation type="unfinished"></translation>
+        <translation>valgfri</translation>
     </message>
     <message>
         <source>Use this drop-down to select the attribute that should be exported as the category of the RSS export entry.</source>
-        <translation type="unfinished"></translation>
+        <translation>Bruk denne rullegardinmenyen til å velge hvilket felt som skal eksporteres som kategorien for RSS-nyheten.</translation>
     </message>
     <message>
         <source>Skip</source>
-        <translation type="unfinished">Hopp over</translation>
+        <translation>Hopp over</translation>
     </message>
 </context>
 <context>
@@ -8600,7 +8607,7 @@ Note: The packages will not be uninstalled.</source>
     </message>
     <message>
         <source>Values for each location setting are shown. The first values have lowest priority; the values toward the end have higher priority than the first ones.</source>
-        <translation type="unfinished"></translation>
+        <translation>Viser verdier for hver plasseringsinnstilling. De første verdiene har lavest prioritet, og verdiene mot slutten har høyere prioritet.</translation>
     </message>
 </context>
 <context>
@@ -8836,7 +8843,7 @@ Note: The packages will not be uninstalled.</source>
     </message>
     <message>
         <source>Regenerate autoload arrays for extensions</source>
-        <translation type="unfinished">Generer autoload-arrays for utvidelser</translation>
+        <translation>Generer autoload-arrays for utvidelser</translation>
     </message>
     <message>
         <source>Click this button to regenerate the autoload arrays used by the system for extensions.</source>
@@ -8844,7 +8851,7 @@ Note: The packages will not be uninstalled.</source>
     </message>
     <message>
         <source>Problems detected during autoload generation:</source>
-        <translation type="unfinished"></translation>
+        <translation>Det har oppstått problemer under generering av autoload-lister:</translation>
     </message>
 </context>
 <context>
@@ -9078,11 +9085,11 @@ Note: The packages will not be uninstalled.</source>
     <message>
         <source>Details</source>
         <comment>Detailed PHP information</comment>
-        <translation type="unfinished">Detaljer</translation>
+        <translation>Detaljer</translation>
     </message>
     <message>
         <source>PHP autoload functions</source>
-        <translation type="unfinished"></translation>
+        <translation>PHP autoload-funksjoner</translation>
     </message>
 </context>
 <context>
@@ -9105,7 +9112,7 @@ Note: The packages will not be uninstalled.</source>
     </message>
     <message>
         <source>\\return an array with the template operator name.</source>
-        <translation type="unfinished"></translation>
+        <translation>\\return en liste med navn på maloperatoren.</translation>
     </message>
 </context>
 <context>
@@ -9211,7 +9218,7 @@ Note: The packages will not be uninstalled.</source>
     </message>
     <message>
         <source>Class constant name</source>
-        <translation type="unfinished"></translation>
+        <translation>Navn på klassekonstant</translation>
     </message>
 </context>
 <context>
@@ -11127,195 +11134,250 @@ Note: The packages will not be uninstalled.</source>
     <name>design/admin/state/edit</name>
     <message>
         <source>The content object state was successfully stored.</source>
-        <translation type="unfinished"></translation>
+        <translation>Den nye objekttilstanden er lagret.</translation>
     </message>
     <message>
         <source>The content object state could not be stored.</source>
-        <translation type="unfinished"></translation>
+        <translation>Den nye objekttilstanden kunne ikke lagres.</translation>
     </message>
     <message>
         <source>Required data is either missing or is invalid</source>
-        <translation type="unfinished">Påkrevde data mangler eller er ugyldige</translation>
+        <translation>Påkrevde data mangler eller er ugyldige</translation>
     </message>
     <message>
         <source>Edit content object state &quot;%state_name&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>Rediger objekttilstand &quot;%state_name&quot;</translation>
     </message>
     <message>
         <source>Save changes</source>
-        <translation type="unfinished"></translation>
+        <translation>Lagre endringer</translation>
     </message>
     <message>
         <source>Save changes to this states.</source>
-        <translation type="unfinished"></translation>
+        <translation>Lagre endringer av disse tilstandene.</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Avbryt</translation>
     </message>
     <message>
         <source>Cancel saving any changes.</source>
-        <translation type="unfinished"></translation>
+        <translation>Avbryt lagring av endringer.</translation>
     </message>
     <message>
         <source>New content object state</source>
-        <translation type="unfinished"></translation>
+        <translation>Ny objekttilstand</translation>
+    </message>
+    <message>
+        <source>Identifier:</source>
+        <translation>Identifikator:</translation>
+    </message>
+    <message>
+        <source>Default language:</source>
+        <translation>Standardspråk:</translation>
+    </message>
+    <message>
+        <source>Name:</source>
+        <translation>Navn:</translation>
+    </message>
+    <message>
+        <source>Description:</source>
+        <translation>Beskrivelse:</translation>
     </message>
 </context>
 <context>
     <name>design/admin/state/group</name>
     <message>
         <source>Object states in this group [%state_count]</source>
-        <translation type="unfinished"></translation>
+        <translation>Objekttilstander i denne gruppen [%state_count]</translation>
     </message>
     <message>
         <source>Invert selection.</source>
-        <translation type="unfinished">Speilvend utvalg.</translation>
+        <translation>Speilvend utvalg.</translation>
     </message>
     <message>
         <source>ID</source>
-        <translation type="unfinished">ID</translation>
+        <translation>ID</translation>
     </message>
     <message>
         <source>Identifier</source>
-        <translation type="unfinished">Identifikator</translation>
+        <translation>Identifikator</translation>
     </message>
     <message>
         <source>Name</source>
-        <translation type="unfinished">Navn</translation>
+        <translation>Navn</translation>
     </message>
     <message>
         <source>Object count</source>
-        <translation type="unfinished">Antall objekter</translation>
+        <translation>Antall objekter</translation>
     </message>
     <message>
         <source>Order</source>
-        <translation type="unfinished">Ordre</translation>
+        <translation>Rekkefølge</translation>
     </message>
     <message>
         <source>Select content object state group for removal.</source>
-        <translation type="unfinished"></translation>
+        <translation>Velg tilstandsgrupper som skal slettes.</translation>
     </message>
     <message>
         <source>Remove selected</source>
-        <translation type="unfinished">Fjern valgte</translation>
+        <translation>Fjern valgte</translation>
     </message>
     <message>
         <source>Remove selected states.</source>
-        <translation type="unfinished"></translation>
+        <translation>Fjern valgte tilstander.</translation>
     </message>
     <message>
         <source>Update ordering</source>
-        <translation type="unfinished"></translation>
+        <translation>Oppdater rekkefølge</translation>
     </message>
     <message>
         <source>Update the order of the content object states in this group.</source>
-        <translation type="unfinished"></translation>
+        <translation>Oppdater rekkefølgen på objekttilstander i denne gruppen.</translation>
     </message>
     <message>
         <source>Create new</source>
-        <translation type="unfinished">Lag ny</translation>
+        <translation>Lag ny</translation>
     </message>
     <message>
         <source>Create a new state.</source>
-        <translation type="unfinished"></translation>
+        <translation>Lag en ny tilstand.</translation>
+    </message>
+    <message>
+        <source>Description</source>
+        <translation>Beskrivelse</translation>
     </message>
 </context>
 <context>
     <name>design/admin/state/group_edit</name>
     <message>
         <source>Edit content object state group &quot;%group_name&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>Rediger tilstandsgruppe &quot;%group_name&quot;</translation>
     </message>
     <message>
         <source>Save changes</source>
-        <translation type="unfinished"></translation>
+        <translation>Lagre endringer</translation>
     </message>
     <message>
         <source>Save changes to this state group.</source>
-        <translation type="unfinished"></translation>
+        <translation>Lagre endringer i denne tilstandsgruppen.</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Avbryt</translation>
     </message>
     <message>
         <source>Cancel saving any changes.</source>
-        <translation type="unfinished"></translation>
+        <translation>Avbryt lagring av endringer.</translation>
     </message>
     <message>
         <source>New content object state group</source>
-        <translation type="unfinished"></translation>
+        <translation>Ny tilstandsgruppe for innholdsobjekter</translation>
     </message>
     <message>
         <source>Create</source>
-        <translation type="unfinished">Lag</translation>
+        <translation>Lag</translation>
     </message>
     <message>
         <source>Create this state group.</source>
-        <translation type="unfinished"></translation>
+        <translation>Opprett denne tilstandsgruppen.</translation>
     </message>
     <message>
         <source>Cancel creating this state group.</source>
-        <translation type="unfinished"></translation>
+        <translation>Avbryt opprettelse av denne tilstandsgruppen.</translation>
+    </message>
+    <message>
+        <source>Identifier:</source>
+        <translation>Identifikator:</translation>
+    </message>
+    <message>
+        <source>Default language:</source>
+        <translation>Standardspråk:</translation>
+    </message>
+    <message>
+        <source>Name:</source>
+        <translation>Navn:</translation>
+    </message>
+    <message>
+        <source>Description:</source>
+        <translation>Beskrivelse:</translation>
     </message>
 </context>
 <context>
     <name>design/admin/state/groups</name>
     <message>
         <source>The content object state group was successfully stored.</source>
-        <translation type="unfinished"></translation>
+        <translation>Den nye tilstandsgruppen er lagret.</translation>
     </message>
     <message>
         <source>The content object state group could not be stored.</source>
-        <translation type="unfinished"></translation>
+        <translation>Den nye tilstandsgruppen kunne ikke lagres.</translation>
     </message>
     <message>
         <source>Required data is either missing or is invalid</source>
-        <translation type="unfinished">Påkrevde data mangler eller er ugyldige</translation>
+        <translation>Påkrevde data mangler eller er ugyldige</translation>
     </message>
     <message>
         <source>Invert selection.</source>
-        <translation type="unfinished">Speilvend utvalg.</translation>
+        <translation>Speilvend utvalg.</translation>
     </message>
     <message>
         <source>ID</source>
-        <translation type="unfinished">ID</translation>
+        <translation>ID</translation>
     </message>
     <message>
         <source>Identifier</source>
-        <translation type="unfinished">Identifikator</translation>
+        <translation>Identifikator</translation>
     </message>
     <message>
         <source>Name</source>
-        <translation type="unfinished">Navn</translation>
+        <translation>Navn</translation>
     </message>
     <message>
         <source>Select content object state group for removal.</source>
-        <translation type="unfinished"></translation>
+        <translation>Velg tilstandsgrupper som skal slettes.</translation>
     </message>
     <message>
         <source>Remove selected</source>
-        <translation type="unfinished">Fjern valgte</translation>
+        <translation>Fjern valgte</translation>
     </message>
     <message>
         <source>Remove selected state groups.</source>
-        <translation type="unfinished"></translation>
+        <translation>Fjern valgte tilstandsgrupper.</translation>
     </message>
     <message>
         <source>Create new</source>
-        <translation type="unfinished">Lag ny</translation>
+        <translation>Lag ny</translation>
     </message>
     <message>
         <source>Create a new state group.</source>
-        <translation type="unfinished"></translation>
+        <translation>Lag en ny tilstandsgruppe.</translation>
+    </message>
+</context>
+<context>
+    <name>design/admin/state/view</name>
+    <message>
+        <source>ID</source>
+        <translation>ID</translation>
+    </message>
+    <message>
+        <source>Identifier</source>
+        <translation>Identifikator</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation>Navn</translation>
+    </message>
+    <message>
+        <source>Description</source>
+        <translation>Beskrivelse</translation>
     </message>
 </context>
 <context>
     <name>design/admin/state_groups</name>
     <message>
         <source>Content object state groups [%group_count]</source>
-        <translation type="unfinished"></translation>
+        <translation>Tilstandsgrupper for innholdsobjekter [%group_count]</translation>
     </message>
 </context>
 <context>
@@ -11834,7 +11896,7 @@ your account.</source>
     </message>
     <message>
         <source>Account has been locked because the maximum number of failed login attempts was exceeded.</source>
-        <translation type="unfinished"></translation>
+        <translation>Brukerkontoen er låst på grunn av for mange mislykkede innloggingsforsøk.</translation>
     </message>
 </context>
 <context>
@@ -13903,23 +13965,23 @@ your account.</source>
     </message>
     <message>
         <source>Use seconds</source>
-        <translation type="unfinished"></translation>
+        <translation>Bruk sekunder</translation>
     </message>
     <message>
         <source>Second</source>
-        <translation type="unfinished"></translation>
+        <translation>Sekund</translation>
     </message>
     <message>
         <source>Silverlight</source>
-        <translation type="unfinished"></translation>
+        <translation>Silverlight</translation>
     </message>
     <message>
         <source>seconds(s)</source>
-        <translation type="unfinished"></translation>
+        <translation>sekund(er)</translation>
     </message>
     <message>
         <source>Tag preset</source>
-        <translation type="unfinished"></translation>
+        <translation>Tagg-begrensning</translation>
     </message>
 </context>
 <context>
@@ -15316,11 +15378,11 @@ Hvis du vil sende en kommentar til den som skal godkjenne, eller se på status, 
     </message>
     <message>
         <source>Second</source>
-        <translation type="unfinished"></translation>
+        <translation>Sekund</translation>
     </message>
     <message>
         <source>Silverlight</source>
-        <translation type="unfinished"></translation>
+        <translation>Silverlight</translation>
     </message>
 </context>
 <context>
@@ -17106,17 +17168,6 @@ Velg ny plassering og klikk på &apos;%buttonname&apos;-knappen.Bruk nylig valgt
     </message>
 </context>
 <context>
-    <name>design/standard/form</name>
-    <message>
-        <source>Thank you for your feedback</source>
-        <translation>Takk for din tilbakemelding</translation>
-    </message>
-    <message>
-        <source>Your information was successfully received.</source>
-        <translation>Din informasjon ble mottatt.</translation>
-    </message>
-</context>
-<context>
     <name>design/standard/gui</name>
     <message>
         <source>Delete</source>
@@ -17424,7 +17475,7 @@ Hvis du fjerner dem blir barna også fjernet.</translation>
     </message>
     <message>
         <source>Default object view.</source>
-        <translation>Standard objektvisning</translation>
+        <translation>Standard objektvisning.</translation>
     </message>
     <message>
         <source>Node ID</source>
@@ -17464,10 +17515,6 @@ Hvis du fjerner dem blir barna også fjernet.</translation>
     <message>
         <source>Store</source>
         <translation>Lagre</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation>Avbryt</translation>
     </message>
     <message>
         <source>Day of the week</source>
@@ -18040,11 +18087,11 @@ You can also remove the package without uninstalling it from the package list.</
     </message>
     <message>
         <source>Please select the extensions to be exported.</source>
-        <translation type="unfinished"></translation>
+        <translation>Vennligst velg en utvidelse som skal eksporteres.</translation>
     </message>
     <message>
         <source>Use content object modification and publication dates from the package.</source>
-        <translation type="unfinished"></translation>
+        <translation>Bruk innholdsobjektenes endrings- og publiseringsdato fra pakken.</translation>
     </message>
 </context>
 <context>
@@ -18752,15 +18799,15 @@ menyen på toppen.</translation>
     </message>
     <message>
         <source>Category</source>
-        <translation type="unfinished"></translation>
+        <translation>Kategori</translation>
     </message>
     <message>
         <source>optional</source>
-        <translation type="unfinished"></translation>
+        <translation>valgfri</translation>
     </message>
     <message>
         <source>Skip</source>
-        <translation type="unfinished">Hopp over</translation>
+        <translation>Hopp over</translation>
     </message>
 </context>
 <context>
@@ -19482,7 +19529,7 @@ Ved å bruke %operatorname kan du ...</translation>
     </message>
     <message>
         <source>Template overrides and template compiling.</source>
-        <translation>Maloverstyring og malkompilering</translation>
+        <translation>Maloverstyring og malkompilering.</translation>
     </message>
     <message>
         <source>Template caches</source>
@@ -19724,7 +19771,7 @@ Standardkoden ble laget på grunnlag av parameterne du valgte.</translation>
     <message>
         <source>Class constant name</source>
         <comment>Datatype</comment>
-        <translation type="unfinished"></translation>
+        <translation>Navn på klassekonstant</translation>
     </message>
 </context>
 <context>
@@ -19845,15 +19892,15 @@ Standardkoden ble laget på grunnlag av parameterne du valgte.</translation>
     <name>design/standard/setup/extensions</name>
     <message>
         <source>Regenerate autoload arrays for extensions</source>
-        <translation type="unfinished"></translation>
+        <translation>Lag nye autoload-lister for utvidelser</translation>
     </message>
     <message>
         <source>Click this button to regenerate the autoload arrays used by the system for extensions.</source>
-        <translation type="unfinished">Klikk her for a regenerere autoload-arrays som er brukt for systemet for utvidelser.</translation>
+        <translation>Klikk her for å lage nye autoload-lister som brukes av systemet for utvidelser.</translation>
     </message>
     <message>
         <source>Problems detected during autoload generation:</source>
-        <translation type="unfinished"></translation>
+        <translation>Det har oppstått problemer under generering av autoload-lister:</translation>
     </message>
 </context>
 <context>
@@ -21213,6 +21260,14 @@ This functionality is also available at a later time from the Administration Int
         <source>The &apos;digest&apos; function is not available in your database, you cannot run eZ Publish without this. See the documentation for more information.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>MySQL support was detected on your system. Please choose the database driver you would like to use.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>PostgreSQL support was detected on your system. Please choose the database driver you would like to use.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>design/standard/setup/operatorcode</name>
@@ -21234,7 +21289,7 @@ This functionality is also available at a later time from the Administration Int
     </message>
     <message>
         <source>\\return an array with the template operator name.</source>
-        <translation type="unfinished"></translation>
+        <translation>\\return en liste med navn på maloperatoren.</translation>
     </message>
 </context>
 <context>
@@ -21668,10 +21723,6 @@ This is a security problem and should be changed to another global temporary dir
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>, but the latest released PHP 4.4.x version is highly recommended.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Missed some directories</source>
         <translation type="unfinished"></translation>
     </message>
@@ -21919,6 +21970,38 @@ To do this you need to change the %chown commands under Alternative shell comman
     </message>
     <message>
         <source>To fix this, edit your php.ini configuration and add E to the variables_order setting.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Wrong eZ Components version detected</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Missing eZ Components dependancy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The minimum required eZ Components version is</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Download instructions for both regular download and PEAR are provided at</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>, but the latest released stable PHP version is always recommended.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Missing iconv extension</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The iconv extension is not available to eZ Publish. Without it eZ Publish will not work.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>In most cases, the iconv extension is enabled by default because it is included in the PHP core. However, some Linux distributions have PHP without compiled-in support for iconv. Instead, they provide iconv as a shared module in a separate RPM package called &quot;php-iconv&quot; (or &quot;php5-iconv&quot;).</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -22761,6 +22844,63 @@ To do this you need to change the %chown commands under Alternative shell comman
     </message>
 </context>
 <context>
+    <name>design/standard/state/edit</name>
+    <message>
+        <source>Identifier:</source>
+        <translation>Identifikator:</translation>
+    </message>
+    <message>
+        <source>Default language:</source>
+        <translation>Standardspråk:</translation>
+    </message>
+    <message>
+        <source>Name:</source>
+        <translation>Navn:</translation>
+    </message>
+    <message>
+        <source>Description:</source>
+        <translation>Beskrivelse:</translation>
+    </message>
+</context>
+<context>
+    <name>design/standard/state/group</name>
+    <message>
+        <source>ID</source>
+        <translation>ID</translation>
+    </message>
+    <message>
+        <source>Identifier</source>
+        <translation>Identifikator</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation>Navn</translation>
+    </message>
+    <message>
+        <source>Description</source>
+        <translation>Beskrivelse</translation>
+    </message>
+</context>
+<context>
+    <name>design/standard/state/group_edit</name>
+    <message>
+        <source>Identifier:</source>
+        <translation>Identifikator:</translation>
+    </message>
+    <message>
+        <source>Default language:</source>
+        <translation>Standardspråk:</translation>
+    </message>
+    <message>
+        <source>Name:</source>
+        <translation>Navn:</translation>
+    </message>
+    <message>
+        <source>Description:</source>
+        <translation>Beskrivelse:</translation>
+    </message>
+</context>
+<context>
     <name>design/standard/toolbar</name>
     <message>
         <source>Toolbar management</source>
@@ -23257,22 +23397,22 @@ Følg veiledningen i den e-posten for å aktivere kontoen din.</translation>
     </message>
     <message>
         <source>Please note that your browser must use and support cookies to register a new user.</source>
-        <translation type="unfinished"></translation>
+        <translation>Merk at informasjonskapsler (cookies) må være aktivert i nettleseren for at du skal kunne registrere deg som bruker.</translation>
     </message>
     <message>
         <source>Your browser does not seem to support cookies, to register a new user, cookies need to be supported and enabled!</source>
-        <translation type="unfinished"></translation>
+        <translation>Nettleseren din aksepterer ikke informasjonskapsler (cookies). For å registrere deg som bruker må nettleseren støtte informasjonskapsler, og de må være aktivert!</translation>
     </message>
     <message>
         <source>Try again</source>
-        <translation type="unfinished"></translation>
+        <translation>Prøv igjen</translation>
     </message>
 </context>
 <context>
     <name>design/standard/user/</name>
     <message>
         <source>The new password must be at least %1 characters long. Please retype your new password.</source>
-        <translation type="unfinished"></translation>
+        <translation>Det nye passordet må være minst %1 tegn langt. Vennligst oppgi et nytt passord.</translation>
     </message>
 </context>
 <context>
@@ -23489,7 +23629,7 @@ Følg veiledningen i den e-posten for å aktivere kontoen din.</translation>
     </message>
     <message>
         <source>Extension</source>
-        <translation type="unfinished"></translation>
+        <translation>Utvidelse</translation>
     </message>
 </context>
 <context>
@@ -24154,7 +24294,11 @@ Følg veiledningen i den e-posten for å aktivere kontoen din.</translation>
     </message>
     <message>
         <source>State limitations cache</source>
-        <translation type="unfinished"></translation>
+        <translation>Cache for tilstandsbegrensninger</translation>
+    </message>
+    <message>
+        <source>Text to image cache</source>
+        <translation>Cache for tekst-til-bilde</translation>
     </message>
 </context>
 <context>
@@ -24358,19 +24502,19 @@ Følg veiledningen i den e-posten for å aktivere kontoen din.</translation>
     </message>
     <message>
         <source>Replace existing object</source>
-        <translation type="unfinished"></translation>
+        <translation>Erstatt eksisterende objekt</translation>
     </message>
     <message>
         <source>Skip object</source>
-        <translation type="unfinished"></translation>
+        <translation>Hopp over objekt</translation>
     </message>
     <message>
         <source>Keep existing and create a new one</source>
-        <translation type="unfinished">Behold eksisterende klasse, og lag en ny</translation>
+        <translation>Behold eksisterende klasse, og lag en ny</translation>
     </message>
     <message>
         <source>Update existing object</source>
-        <translation type="unfinished"></translation>
+        <translation>Oppdaterer eksisterende objekt</translation>
     </message>
 </context>
 <context>
@@ -24868,11 +25012,11 @@ Følg veiledningen i den e-posten for å aktivere kontoen din.</translation>
     </message>
     <message>
         <source>Missing email input.</source>
-        <translation type="unfinished"></translation>
+        <translation>Mangler e-post.</translation>
     </message>
     <message>
         <source>Input required</source>
-        <translation type="unfinished"></translation>
+        <translation>Innhold er påkrevet</translation>
     </message>
 </context>
 <context>
@@ -24948,19 +25092,19 @@ Følg veiledningen i den e-posten for å aktivere kontoen din.</translation>
     </message>
     <message>
         <source>Node &apos;%1&apos; does not exist.</source>
-        <translation type="unfinished"></translation>
+        <translation>Noden &apos;%1&apos; eksisterer ikke.</translation>
     </message>
     <message>
         <source>Using scripts in links is not allowed, link &apos;%1&apos; has been removed</source>
-        <translation type="unfinished"></translation>
+        <translation>Bruk av skript i lenker er ikke tillatt, lenken &apos;%1&apos; er fjernet</translation>
     </message>
     <message>
         <source>Invalid e-mail address: &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
+        <translation>Ugyldig e-postadresse: &apos;%1&apos;</translation>
     </message>
     <message>
         <source>Object %1 can not be embeded to itself.</source>
-        <translation type="unfinished">Objekt %1 kan ikke vises inni seg selv.</translation>
+        <translation>Objekt %1 kan ikke vises inni seg selv.</translation>
     </message>
 </context>
 <context>
@@ -25164,6 +25308,18 @@ Følg veiledningen i den e-posten for å aktivere kontoen din.</translation>
         <source>The receiver has already received the maximum number of tipafriend mails the last hours</source>
         <translation>Mottakeren har allerede mottatt maksimalt tillatt antall &quot;Tips en venn&quot;-mailer de siste timene</translation>
     </message>
+    <message>
+        <source>Error</source>
+        <translation>Feil</translation>
+    </message>
+    <message>
+        <source>The request sent to the server was too big to be accepted. This probably means that you uploaded a file which was too big. The maximum allowed request size is %max_size_string.</source>
+        <translation>Du har sendt en forspørsel som er for stor til at serveren kan akseptere den. Dette betyr vanligvis at du har forsøkt å laste opp en fil som er for stor. Forespørsler kan ikke være større enn %max_size_string.</translation>
+    </message>
+    <message>
+        <source>You have already sent a tipafriend mail to this reciver regarding &apos;$nodeName&apos; content</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>kernel/content/copysubtree</name>
@@ -25338,7 +25494,7 @@ Følg veiledningen i den e-posten for å aktivere kontoen din.</translation>
     <name>kernel/content/urlalias_wildcard</name>
     <message>
         <source>URL wildcard aliases</source>
-        <translation type="unfinished"></translation>
+        <translation>URL-aliaser med jokertegn</translation>
     </message>
 </context>
 <context>
@@ -25399,13 +25555,6 @@ Følg veiledningen i den e-posten for å aktivere kontoen din.</translation>
     <message>
         <source>Copyright</source>
         <translation>Copyright</translation>
-    </message>
-</context>
-<context>
-    <name>kernel/form</name>
-    <message>
-        <source>Form processing</source>
-        <translation>Prosessering av skjema</translation>
     </message>
 </context>
 <context>
@@ -25760,27 +25909,27 @@ Følg veiledningen i den e-posten for å aktivere kontoen din.</translation>
     </message>
     <message>
         <source>Extensions to include</source>
-        <translation type="unfinished"></translation>
+        <translation>Utvidelser som skal inkluderes</translation>
     </message>
     <message>
         <source>Extension list</source>
-        <translation type="unfinished"></translation>
+        <translation>Utvidelsesliste</translation>
     </message>
     <message>
         <source>You must select at least one extension</source>
-        <translation type="unfinished"></translation>
+        <translation>Du må velge minst en utvidelse</translation>
     </message>
     <message>
         <source>Advanced options</source>
-        <translation type="unfinished"></translation>
+        <translation>Avanserte valg</translation>
     </message>
     <message>
         <source>Package contains an invalid extension name: %extensionname</source>
-        <translation type="unfinished"></translation>
+        <translation>Pakken inneholder et ugyldig navn på en utvidelse: %extensionname</translation>
     </message>
     <message>
         <source>The package name %packagename is invalid, cannot import the package</source>
-        <translation type="unfinished"></translation>
+        <translation>Pakkenavnet %packagename er ugyldig, kan ikke importere pakken</translation>
     </message>
 </context>
 <context>
@@ -25874,7 +26023,7 @@ Følg veiledningen i den e-posten for å aktivere kontoen din.</translation>
     </message>
     <message>
         <source>Invalid selection for category class %1 does not have attribute &quot;%2&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>Ugyldig valg for kategori. Klassen %1 har ingen attributt  &quot;%2&quot;</translation>
     </message>
 </context>
 <context>
@@ -26156,6 +26305,14 @@ Følg veiledningen i den e-posten for å aktivere kontoen din.</translation>
         <source>Statistics</source>
         <translation>Statistikk</translation>
     </message>
+    <message>
+        <source>&apos;%value&apos; is not a valid custom rate value (positive number expected)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&apos;%value&apos; is not a valid rate_factor value (positive number expected)</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>kernel/shop/classes/ezcurrencydata</name>
@@ -26259,74 +26416,74 @@ Følg veiledningen i den e-posten for å aktivere kontoen din.</translation>
     <name>kernel/state</name>
     <message>
         <source>State</source>
-        <translation type="unfinished"></translation>
+        <translation>Tilstand</translation>
     </message>
     <message>
         <source>Edit</source>
-        <translation type="unfinished">Rediger</translation>
+        <translation>Rediger</translation>
     </message>
     <message>
         <source>Groups</source>
-        <translation type="unfinished">Grupper</translation>
+        <translation>Grupper</translation>
     </message>
     <message>
         <source>Group edit</source>
-        <translation type="unfinished">Grupperedigering</translation>
+        <translation>Grupperedigering</translation>
     </message>
     <message>
         <source>New</source>
-        <translation type="unfinished">Ny</translation>
+        <translation>Ny</translation>
     </message>
     <message>
         <source>New group</source>
-        <translation type="unfinished">Ny gruppe</translation>
+        <translation>Ny gruppe</translation>
     </message>
     <message>
         <source>Assign</source>
-        <translation type="unfinished">Tilordne</translation>
+        <translation>Tilordne</translation>
     </message>
 </context>
 <context>
     <name>kernel/state/edit</name>
     <message>
         <source>Identifier: input required</source>
-        <translation type="unfinished"></translation>
+        <translation>Identifikator: Innhold er påkrevet</translation>
     </message>
     <message>
         <source>Identifier: invalid, it can only consist of characters in the range a-z, 0-9 and underscore.</source>
-        <translation type="unfinished"></translation>
+        <translation>Identifikator: Ugyldig, den kan bare inneholde bokstavene a-z, tallene 0-9, og understreking (underscore).</translation>
     </message>
     <message>
         <source>Identifier: invalid, maximum %max characters allowed.</source>
-        <translation type="unfinished"></translation>
+        <translation>Identifikator: Ugyldig, ikke tillatt med mer enn %max characters tegn.</translation>
     </message>
     <message>
         <source>Identifier: a content object state group with this identifier already exists, please give another identifier</source>
-        <translation type="unfinished"></translation>
+        <translation>Identifikator: Det finnes allerede en tilstandsgruppe med denne identifikatoren, vennligst velg en annen identifikator</translation>
     </message>
     <message>
         <source>%language_name: this language is the default but neither name or description were provided for this language</source>
-        <translation type="unfinished"></translation>
+        <translation>%language_name: Dette språket er standard, men hverken navn eller beskrivelse er oppgitt for det</translation>
     </message>
     <message>
         <source>Translations: you need to add at least one localization</source>
-        <translation type="unfinished"></translation>
+        <translation>Oversettelser: Du må legge til minst ett språk</translation>
     </message>
     <message>
         <source>Translations: there are multiple localizations but you did not specify which is the default one</source>
-        <translation type="unfinished"></translation>
+        <translation>Oversettelser: Det er flere språk,.men du har ikke spesifisert hvilket av dem som er standard</translation>
     </message>
     <message>
         <source>Name in %language_name is too long. Maximum 45 characters allowed.</source>
-        <translation type="unfinished"></translation>
+        <translation>Navnet for %language_name er for langt. Maksimalt antall tegn er 45.</translation>
     </message>
     <message>
         <source>Name in %language_name: input required</source>
-        <translation type="unfinished"></translation>
+        <translation>Navnet for %language_name: Innhold er påkrevet</translation>
     </message>
     <message>
         <source>Identifier: identifiers starting with &quot;ez&quot; are reserved.</source>
-        <translation type="unfinished"></translation>
+        <translation>Identifikator: Identifikatorer som begynner med &quot;ez&quot; er reservert og kan ikke brukes.</translation>
     </message>
 </context>
 <context>
@@ -26536,7 +26693,7 @@ Følg veiledningen i den e-posten for å aktivere kontoen din.</translation>
     <name>lib/template</name>
     <message>
         <source>The maximum nesting level of %max has been reached. The execution is stopped to avoid infinite recursion.</source>
-        <translation type="unfinished"></translation>
+        <translation>Det maksimale antallet nøstede nivåer (%max) er nådd. Programmet ble avbrutt for å unngå uendelig rekursjon.</translation>
     </message>
 </context>
 <context>

@@ -5,8 +5,8 @@
 // Created on: <06-Mar-2002 08:07:54 amos>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.1.0
-// BUILD VERSION: 23234
+// SOFTWARE RELEASE: 4.2.0
+// BUILD VERSION: 24182
 // COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
@@ -275,7 +275,7 @@ class eZTemplateSwitchFunction
                                 if ( !isset( $items[$child_match] ) )
                                 {
                                     $items[$child_match] = $child;
-                                    if ( is_null( $case ) and
+                                    if ( $case === null and
                                          $match == $child_match )
                                     {
                                         $case = $child;
@@ -298,9 +298,9 @@ class eZTemplateSwitchFunction
                                 $child_in = $tpl->elementValue( $child_in, $rootNamespace, $currentNamespace, $functionPlacement );
                                 if ( !is_array( $child_in ) )
                                     break;
-                                if ( is_null( $case ) )
+                                if ( $case === null )
                                 {
-                                    if ( is_null( $key_name ) )
+                                    if ( $key_name === null )
                                     {
                                         if ( in_array( $match, $child_in ) )
                                         {
@@ -349,7 +349,7 @@ class eZTemplateSwitchFunction
             }
         }
 
-        if ( is_null( $case ) )
+        if ( $case === null )
         {
             $case = $def;
         }

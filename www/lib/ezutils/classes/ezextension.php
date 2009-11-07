@@ -5,8 +5,8 @@
 // Created on: <16-Mar-2002 14:23:45 amos>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.1.0
-// BUILD VERSION: 23234
+// SOFTWARE RELEASE: 4.2.0
+// BUILD VERSION: 24182
 // COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
@@ -458,7 +458,7 @@ class eZExtension
                 {
                     if ( !is_callable( array( $object, $callMethod ) ) )
                     {
-                        eZDebug::writeNotice( 'Method ' . $callMethod . ' is not callable on class ' . $handler, __METHOD__ );
+                        eZDebug::writeNotice( 'Method ' . $callMethod . ' is not callable on class ' . $handler . " as defined in setting $iniFile [$iniSection] $iniVariable", __METHOD__ );
                         continue;
                     }
 
@@ -469,7 +469,7 @@ class eZExtension
             }
             else
             {
-                eZDebug::writeError( "Class '$handler' does not exists, defined in setting $iniFile [$iniSection] $iniVariable ", __METHOD__ );
+                eZDebug::writeError( "Class '$handler' as defined in setting $iniFile [$iniSection] $iniVariable could not be autoloaded. Did you remember to run bin/php/ezpgenerateautoloads.php after you added extension(s)?", __METHOD__ );
             }
         }
 

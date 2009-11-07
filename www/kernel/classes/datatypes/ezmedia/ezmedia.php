@@ -5,8 +5,8 @@
 // Created on: <30-Apr-2002 16:47:08 bf>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.1.0
-// BUILD VERSION: 23234
+// SOFTWARE RELEASE: 4.2.0
+// BUILD VERSION: 24182
 // COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
@@ -42,7 +42,7 @@ class eZMedia extends eZPersistentObject
 
     static function definition()
     {
-        return array( "fields" => array( "contentobject_attribute_id" => array( 'name' => "ContentObjectAttributeID",
+        static $definition = array( "fields" => array( "contentobject_attribute_id" => array( 'name' => "ContentObjectAttributeID",
                                                                                 'datatype' => 'integer',
                                                                                 'default' => 0,
                                                                                 'required' => true,
@@ -108,6 +108,7 @@ class eZMedia extends eZPersistentObject
                                                                 "field" => "version" )),
                       "class_name" => "eZMedia",
                       "name" => "ezmedia" );
+        return $definition;
     }
 
     function fileSize()

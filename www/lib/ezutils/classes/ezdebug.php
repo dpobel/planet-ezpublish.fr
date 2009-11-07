@@ -5,8 +5,8 @@
 // Created on: <12-Feb-2002 11:00:54 bf>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.1.0
-// BUILD VERSION: 23234
+// SOFTWARE RELEASE: 4.2.0
+// BUILD VERSION: 24182
 // COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
@@ -209,10 +209,11 @@ class eZDebug
         return $this->MessageNames[$messageType];
     }
 
-    /*!
-      Will return the current eZDebug object. If no object exists one will
-      be created.
-    */
+    /**
+     * Returns a shared instance of the eZDebug class.
+     *
+     * @return eZDebug
+     */
     static function instance( )
     {
         if ( empty( $GLOBALS["eZDebugGlobalInstance"] ) )
@@ -342,55 +343,71 @@ class eZDebug
         if ( !eZDebug::isDebugEnabled() )
             return;
         $str = "$errstr in $errfile on line $errline";
-        if ( empty( $GLOBALS["eZDebugPHPErrorNames"] ) )
+        if ( empty( $GLOBALS['eZDebugPHPErrorNames'] ) )
         {
-            $GLOBALS["eZDebugPHPErrorNames"] =
-                array( E_ERROR => "E_ERROR",
-                       E_PARSE => "E_PARSE",
-                       E_CORE_ERROR => "E_CORE_ERROR",
-                       E_COMPILE_ERROR => "E_COMPILE_ERROR",
-                       E_USER_ERROR => "E_USER_ERROR",
-                       E_WARNING => "E_WARNING",
-                       E_CORE_WARNING => "E_CORE_WARNING",
-                       E_COMPILE_WARNING => "E_COMPILE_WARNING",
-                       E_USER_WARNING => "E_USER_WARNING",
-                       E_NOTICE => "E_NOTICE",
-                       E_USER_NOTICE => "E_USER_NOTICE",
-                       E_STRICT => "E_STRICT" );
+            $GLOBALS['eZDebugPHPErrorNames'] =
+                array( E_ERROR => 'E_ERROR',
+                       E_PARSE => 'E_PARSE',
+                       E_CORE_ERROR => 'E_CORE_ERROR',
+                       E_COMPILE_ERROR => 'E_COMPILE_ERROR',
+                       E_USER_ERROR => 'E_USER_ERROR',
+                       E_WARNING => 'E_WARNING',
+                       E_CORE_WARNING => 'E_CORE_WARNING',
+                       E_COMPILE_WARNING => 'E_COMPILE_WARNING',
+                       E_USER_WARNING => 'E_USER_WARNING',
+                       E_NOTICE => 'E_NOTICE',
+                       E_USER_NOTICE => 'E_USER_NOTICE',
+                       E_STRICT => 'E_STRICT' );
+            // Since PHP 5.2
+            if ( defined('E_RECOVERABLE_ERROR') )
+                $GLOBALS['eZDebugPHPErrorNames'][E_RECOVERABLE_ERROR] = 'E_RECOVERABLE_ERROR';
+            // Since PHP 5.3
+            if ( defined('E_DEPRECATED') )
+                $GLOBALS['eZDebugPHPErrorNames'][E_DEPRECATED] = 'E_DEPRECATED';
+            if ( defined('E_USER_DEPRECATED') )
+                $GLOBALS['eZDebugPHPErrorNames'][E_USER_DEPRECATED] = 'E_USER_DEPRECATED';
+            
         }
-        $errname = "unknown";
-        if ( isset( $GLOBALS["eZDebugPHPErrorNames"][$errno] ) )
+        $errname = "Unknown error code ($errno)";
+        if ( isset( $GLOBALS['eZDebugPHPErrorNames'][$errno] ) )
         {
-            $errname = $GLOBALS["eZDebugPHPErrorNames"][$errno];
+            $errname = $GLOBALS['eZDebugPHPErrorNames'][$errno];
         }
-        switch ( $errno )
+        switch ( $errname )
         {
-            case E_ERROR:
-            case E_PARSE:
-            case E_CORE_ERROR:
-            case E_COMPILE_ERROR:
-            case E_USER_ERROR:
+            case 'E_ERROR':
+            case 'E_PARSE':
+            case 'E_CORE_ERROR':
+            case 'E_COMPILE_ERROR':
+            case 'E_USER_ERROR':
+            case 'E_RECOVERABLE_ERROR':
             {
-                $this->writeError( $str, "PHP" );
+                $this->writeError( $str, 'PHP: ' . $errname );
             } break;
 
-            case E_WARNING:
-            case E_CORE_WARNING:
-            case E_COMPILE_WARNING:
-            case E_USER_WARNING:
-            case E_NOTICE:
+            case 'E_WARNING':
+            case 'E_CORE_WARNING':
+            case 'E_COMPILE_WARNING':
+            case 'E_USER_WARNING':
+            case 'E_DEPRECATED':
+            case 'E_USER_DEPRECATED':
             {
-                $this->writeWarning( $str, "PHP" );
+                $this->writeWarning( $str, 'PHP: ' . $errname );
             } break;
 
-            case E_USER_NOTICE:
+            case 'E_NOTICE':
+            case 'E_USER_NOTICE':
             {
-                $this->writeNotice( $str, "PHP" );
+                $this->writeNotice( $str, 'PHP: ' . $errname );
             } break;
 
-            case E_STRICT:
+            case 'E_STRICT':
             {
-                return $this->writeStrict( $str, "PHP" );
+                return $this->writeStrict( $str, 'PHP: ' . $errname );
+            } break;
+            default:
+            {
+                 $this->writeError( $str, 'PHP: ' . $errname );
             } break;
         }
     }
@@ -1222,7 +1239,7 @@ showDebug();
     static function timeToFloat( $mtime )
     {
         $tTime = explode( " ", $mtime );
-        ereg( "0\.([0-9]+)", "" . $tTime[0], $t1 );
+        preg_match( "#0\.([0-9]+)#", "" . $tTime[0], $t1 );
         $time = $tTime[1] . "." . $t1[1];
         return $time;
     }
@@ -1398,34 +1415,34 @@ showDebug();
                 echo "<STYLE TYPE='text/css'>
                 <!--
 td.debugheader
-\{
+{
     background-color : #eeeeee;
     border-top : 1px solid #444488;
     border-bottom : 1px solid #444488;
     font-size : 65%;
     font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
-\}
+}
 
 pre.debugtransaction
-\{
+{
     background-color : #f8f6d8;
-\}
+}
 
 td.timingpoint1
-\{
+{
     background-color : #ffffff;
     border-top : 1px solid #444488;
     font-size : 65%;
     font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
-\}
+}
 
 td.timingpoint2
-\{
+{
     background-color : #eeeeee;
     border-top : 1px solid #444488;
     font-size : 65%;
     font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
-\}
+}
 
 -->
 </STYLE>";
@@ -1508,6 +1525,7 @@ td.timingpoint2
                     $startTime = $time;
                 $elapsed = $time - $startTime;
 
+                $relMemory = 0;
                 $memory = $point["MemoryUsage"];
                 // Calculate relative time and memory usage
                 if ( $nextPoint !== false )

@@ -5,8 +5,8 @@
 // Created on: <15-Dec-2005 11:15:42 ks>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.1.0
-// BUILD VERSION: 23234
+// SOFTWARE RELEASE: 4.2.0
+// BUILD VERSION: 24182
 // COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
@@ -112,7 +112,7 @@ class eZExtensionPackageHandler extends eZPackageHandler
         }
 
         // Regenerate the autoloads to remove of no longer existing classes
-        $this->updateAutoload();
+        ezpAutoloader::updateExtensionAutoloadArray();
 
         return true;
     }
@@ -175,7 +175,7 @@ class eZExtensionPackageHandler extends eZPackageHandler
         eZDir::copy( $packageExtensionDir, $extensionRootDir );
 
         // Regenerate autoloads for extensions to pick up the newly created extension
-        $this->updateAutoload();
+        ezpAutoloader::updateExtensionAutoloadArray();
 
         // Activate extension
         $siteINI = eZINI::instance( 'site.ini', 'settings/override', null, null, false, true );
@@ -277,27 +277,6 @@ class eZExtensionPackageHandler extends eZPackageHandler
         }
 
         return $extensionsToAdd;
-    }
-
-    protected function updateAutoload()
-    {
-        $autoloadGenerator = new eZAutoloadGenerator();
-        try
-        {
-            $autoloadGenerator->buildAutoloadArrays();
-
-            $autoloadWarningMessages = $autoloadGenerator->getWarnings();
-            foreach ( $autoloadWarningMessages as $warning )
-            {
-                eZDebug::writeWarning( $warning, __METHOD__ );
-            }
-            
-            ezpAutoloader::reset();
-        }
-        catch ( Exception $e )
-        {
-            eZDebug::writeError( $e->getMessage(), __METHOD__ );
-        }
     }
 
     public $Package = null;

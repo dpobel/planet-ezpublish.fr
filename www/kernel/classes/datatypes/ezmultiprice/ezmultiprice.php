@@ -5,8 +5,8 @@
 // Created on: <04-Nov-2005 12:26:52 dl>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.1.0
-// BUILD VERSION: 23234
+// SOFTWARE RELEASE: 4.2.0
+// BUILD VERSION: 24182
 // COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
@@ -332,7 +332,7 @@ class eZMultiPrice extends eZSimplePrice
 
                 case self::CALCULATION_TYPE_DISCOUNT_EXCLUDE :
                 {
-                    $value = $this->calcDiscountIncVATPrice( $price->attribute( 'value' ) );
+                    $value = $this->calcDiscountExVATPrice( $price->attribute( 'value' ) );
                 } break;
 
                 default:

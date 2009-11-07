@@ -5,8 +5,8 @@
 // Created on: <06-Oct-2002 16:27:36 amos>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.1.0
-// BUILD VERSION: 23234
+// SOFTWARE RELEASE: 4.2.0
+// BUILD VERSION: 24182
 // COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
@@ -45,10 +45,13 @@ class eZModuleOperationInfo
     const STATUS_CONTINUE = 1;
     const STATUS_CANCELLED = 2;
     const STATUS_HALTED = 3;
+    const STATUS_REPEAT = 4;
 
-    /*!
-     Constructor
-    */
+    /**
+     * Constructor
+     * @param string $moduleName
+     * @param bool $useTriggers
+    **/
     function eZModuleOperationInfo( $moduleName, $useTriggers = true )
     {
         $this->ModuleName = $moduleName;
@@ -58,11 +61,20 @@ class eZModuleOperationInfo
         $this->UseTriggers = $useTriggers;
     }
 
+    /**
+     * ???
+     *
+     * @return bool
+     */
     function isValid()
     {
         return $this->IsValid;
     }
 
+    /**
+    * Loads the operations definition for the current module
+    * @return bool true if the operations were loaded, false if an error occured
+    **/
     function loadDefinition()
     {
         $pathList = eZModule::globalPathList();
@@ -123,6 +135,14 @@ class eZModuleOperationInfo
         return $keyArray;
     }
 
+    /**
+     * Executes the operation
+     *
+     * @param string $operationName
+     * @param array $operationParameters
+     * @param array $mementoData
+     * @return mixed the operation execution result, or null if an error occured
+     */
     function execute( $operationName, $operationParameters, $mementoData = null )
     {
         $moduleName = $this->ModuleName;
@@ -229,7 +249,8 @@ class eZModuleOperationInfo
 
             if ( is_array( $resultArray ) and
                  isset( $resultArray['status'] ) and
-                 $resultArray['status'] == eZModuleOperationInfo::STATUS_HALTED )
+                 ( $resultArray['status'] == eZModuleOperationInfo::STATUS_HALTED
+                   or $resultArray['status'] == eZModuleOperationInfo::STATUS_REPEAT ) )
             {
 //                 eZDebug::writeDebug( $this->Memento, 'ezmodule operation result halted' );
                 if ( $this->Memento !== null )
@@ -332,6 +353,21 @@ class eZModuleOperationInfo
         return null;
     }
 
+    /**
+     * Executes the operation body
+     *
+     * @param string $includeFile Path to the file where the operation class is defined
+     * @param string $className Name of the class holding the operation methods (@see $includeFile)
+     * @param array $bodyStructure
+     * @param array $operationKeys
+     * @param array $operationParameterDefinitions
+     * @param array $operationParameters
+     * @param array $mementoData
+     * @param int $bodyCallCount
+     * @param string $operationName
+     * @param array $currentLoopData
+     * @return array
+     */
     function executeBody( $includeFile, $className, $bodyStructure,
                           $operationKeys, $operationParameterDefinitions, $operationParameters,
                           &$mementoData, &$bodyCallCount, $operationName, $currentLoopData = null )
@@ -387,6 +423,7 @@ class eZModuleOperationInfo
                         $countDone = 0;
                         $countHalted = 0;
                         $countCanceled = 0;
+                        $countRepeated = 0;
                         foreach ( $parameters as $parameterStructure )
                         {
                             $tmpOperationParameters = $operationParameters;
@@ -418,6 +455,11 @@ class eZModuleOperationInfo
                                 {
                                     $bodyReturnValue = $returnValue;
                                     ++$countHalted;
+                                }break;
+                                case eZModuleOperationInfo::STATUS_REPEAT:
+                                {
+                                    $bodyReturnValue = $returnValue;
+                                    ++$countRepeated;
                                 }break;
                             }
                         }
@@ -489,6 +531,12 @@ class eZModuleOperationInfo
                                 $bodyReturnValue['status'] = eZModuleOperationInfo::STATUS_HALTED;
                                 return $bodyReturnValue;
                             }
+                            case eZModuleOperationInfo::STATUS_REPEAT:
+                            {
+
+                                $bodyReturnValue['status'] = eZModuleOperationInfo::STATUS_REPEAT;
+                                return $bodyReturnValue;
+                            }
                         }
                     }else
                     {
@@ -514,7 +562,7 @@ class eZModuleOperationInfo
                             $result = $this->executeClassMethod( $includeFile, $className, $method,
                                                                  $tmpOperationParameterDefinitions, $operationParameters );
                             if ( $result && array_key_exists( 'status', $result ) )
-                {
+                            {
                                 switch( $result['status'] )
                                 {
                                     case eZModuleOperationInfo::STATUS_CONTINUE:
@@ -544,6 +592,20 @@ class eZModuleOperationInfo
         return $bodyReturnValue;
     }
 
+    /**
+     * Executes an operation trigger
+     *
+     * @param array $bodyReturnValue The current return value
+     * @param array $body Body data for the trigger being executed
+     * @param array $operationParameterDefinitions Operation parameters definition
+     * @param array $operationParameters Operation parameters values
+     * @param int $bodyCallCount Number of times the body was called
+     * @param array $currentLoopData Memento data for the operation
+     * @param bool $triggerRestored Boolean that indicates if operation data (memento) was restored
+     * @param string $operationName The operation name
+     * @param array $operationKeys Additional parameters. Only used by looping so far.
+     * @return
+     */
     function executeTrigger( &$bodyReturnValue, $body,
                              $operationParameterDefinitions, $operationParameters,
                              &$bodyCallCount, $currentLoopData,
@@ -563,13 +625,14 @@ class eZModuleOperationInfo
         }
         else if ( $status['Status'] == eZTrigger::STATUS_CRON_JOB ||
                   $status['Status'] == eZTrigger::FETCH_TEMPLATE ||
+                  $status['Status'] == eZTrigger::FETCH_TEMPLATE_REPEAT ||
                   $status['Status'] == eZTrigger::REDIRECT )
         {
             $bodyMemento = $this->storeBodyMemento( $triggerName, $triggerKeys,
                                                     $operationKeys, $operationParameterDefinitions, $operationParameters,
                                                     $bodyCallCount, $currentLoopData, $operationName );
             $workflowProcess = $status['WorkflowProcess'];
-            if ( ! is_null( $workflowProcess ) )
+            if ( $workflowProcess !== null )
             {
                 $workflowProcess->setAttribute( 'memento_key', $bodyMemento->attribute( 'memento_key' ) );
                 $workflowProcess->store();
@@ -580,7 +643,22 @@ class eZModuleOperationInfo
             {
                 $bodyReturnValue['redirect_url'] = $status['Result'];
             }
-            return eZModuleOperationInfo::STATUS_HALTED;
+            if ( $status['Status'] == eZTrigger::FETCH_TEMPLATE_REPEAT )
+            {
+                // Hack for project issue #14371 (fetch template repeat)
+                // The object version's status is set to REPEAT so that it can
+                // be submitted again
+                if ( $operationName == 'publish' && $this->ModuleName == 'content' )
+                {
+                    eZContentOperationCollection::setVersionStatus( $operationParameters['object_id'],
+                        $operationParameters['version'], eZContentObjectVersion::STATUS_REPEAT );
+                }
+                return eZModuleOperationInfo::STATUS_REPEAT;
+            }
+            else
+            {
+                return eZModuleOperationInfo::STATUS_HALTED;
+            }
         }
         else if ( $status['Status'] == eZTrigger::WORKFLOW_CANCELLED or
                   $status['Status'] == eZTrigger::WORKFLOW_RESET )
@@ -619,6 +697,20 @@ class eZModuleOperationInfo
     {
         $keyArray = $this->makeKeyArray( $operationKeys, $operationParameterDefinitions, $operationParameters );
     }
+
+    /**
+     * Packs the current body data (memento) for save & re-use
+     *
+     * @param string $bodyName
+     * @param array $bodyKeys
+     * @param array $operationKeys
+     * @param array $operationParameterDefinitions
+     * @param array $operationParameters
+     * @param int $bodyCallCount
+     * @param array $currentLoopData
+     * @param string $operationName
+     * @return The memento
+     */
     function storeBodyMemento( $bodyName, $bodyKeys,
                                $operationKeys, $operationParameterDefinitions, $operationParameters,
                                &$bodyCallCount, $currentLoopData, $operationName )
@@ -679,6 +771,16 @@ class eZModuleOperationInfo
         return true;
     }
 
+    /**
+     * Executes a class method in an operation body
+     *
+     * @param string $includeFile The file where the class & method are defined
+     * @param string $className The class where the method is implemented
+     * @param string $methodName The method to call
+     * @param mixed $operationParameterDefinitions The method parameters definition
+     * @param mixed $operationParameters The method parameters values
+     * @return array
+     */
     function executeClassMethod( $includeFile, $className, $methodName,
                                  $operationParameterDefinitions, $operationParameters )
     {
@@ -737,6 +839,13 @@ class eZModuleOperationInfo
         return call_user_func_array( array( $classObject, $methodName ), $parameterArray );
     }
 
+    /**
+     * Helper method that keeps and returns the instances of operation objects
+     * @param string $className The class the method should return an object for
+     * @return $className
+     * @private
+     * @todo Use a static variable instead of globals
+     **/
     function objectForClass( $className )
     {
         if ( !isset( $GLOBALS['eZModuleOperationClassObjectList'] ) )
@@ -751,9 +860,9 @@ class eZModuleOperationInfo
         return $GLOBALS['eZModuleOperationClassObjectList'][$className] = new $className();
     }
 
-    /*!
-     \deprecated use call_user_func_array() instead
-    */
+    /**
+     * @deprecated use call_user_func_array() instead
+    **/
     function callClassMethod( $methodName, $classObject, $parameterArray )
     {
         return call_user_func_array( array( $classObject, $methodName ), $parameterArray );

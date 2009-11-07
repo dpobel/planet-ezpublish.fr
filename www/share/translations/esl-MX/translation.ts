@@ -4127,6 +4127,14 @@
         <source>You cannot manage the versions of this object because there is only one version available (the one that is being displayed).</source>
         <translation>No se pueden administrar las versiones de este objeto porque sólo hay una disponible, la actual.</translation>
     </message>
+    <message>
+        <source>Translation mismatch</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Your selected translation does not match the language of your selected siteaccess. This may lead to unexpected results in the preview, however it may also be what you intended.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>design/admin/contentstructuremenu</name>
@@ -11163,6 +11171,22 @@ Nota: los paquetes no se desinstalarán.</translation>
         <source>Cancel saving any changes.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Identifier:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Default language:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Name:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Description:</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>design/admin/state/group</name>
@@ -11222,6 +11246,10 @@ Nota: los paquetes no se desinstalarán.</translation>
         <source>Update the order of the content object states in this group.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Description</source>
+        <translation type="unfinished">Descripción</translation>
+    </message>
 </context>
 <context>
     <name>design/admin/state/group_edit</name>
@@ -11259,6 +11287,22 @@ Nota: los paquetes no se desinstalarán.</translation>
     </message>
     <message>
         <source>Cancel creating this state group.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Identifier:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Default language:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Name:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Description:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -11311,6 +11355,25 @@ Nota: los paquetes no se desinstalarán.</translation>
     <message>
         <source>Create a new state group.</source>
         <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>design/admin/state/view</name>
+    <message>
+        <source>ID</source>
+        <translation type="unfinished">ID</translation>
+    </message>
+    <message>
+        <source>Identifier</source>
+        <translation type="unfinished">Identificador</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation type="unfinished">Nombre</translation>
+    </message>
+    <message>
+        <source>Description</source>
+        <translation type="unfinished">Descripción</translation>
     </message>
 </context>
 <context>
@@ -17149,18 +17212,6 @@ Ponte en contacto con el dueño del borrador o crea uno nuevo para editarlo pers
     </message>
 </context>
 <context>
-    <name>design/standard/form</name>
-    <message>
-        <source>Thank you for your feedback</source>
-        <translation>
-Gracias por la retroalimentación</translation>
-    </message>
-    <message>
-        <source>Your information was successfully received.</source>
-        <translation>La información se recibió correctamente.</translation>
-    </message>
-</context>
-<context>
     <name>design/standard/gui</name>
     <message>
         <source>Delete</source>
@@ -17508,10 +17559,6 @@ Si lo haces todos los hijos se eliminarán.</translation>
     <message>
         <source>Store</source>
         <translation>Almacenar</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation>Cancelar</translation>
     </message>
     <message>
         <source>%sitename notification system</source>
@@ -21293,6 +21340,14 @@ Esta funcionalidad se encuentra también disponible más adelante desde la Inter
         <source>The &apos;digest&apos; function is not available in your database, you cannot run eZ Publish without this. See the documentation for more information.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>MySQL support was detected on your system. Please choose the database driver you would like to use.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>PostgreSQL support was detected on your system. Please choose the database driver you would like to use.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>design/standard/setup/operatorcode</name>
@@ -21749,10 +21804,6 @@ Esto supone un problema de seguridad y debe de cambiarse a otro directorio tempo
         <translation>Atención: Una falla aquí provocará también que la comprobación del &quot;accept_path_info&quot; falle.</translation>
     </message>
     <message>
-        <source>, but the latest released PHP 4.4.x version is highly recommended.</source>
-        <translation>, sin embargo, la última versión disponible PHP 4.4.x es muy recomendable.</translation>
-    </message>
-    <message>
         <source>Missed some directories</source>
         <translation>Faltan algunos directorios</translation>
     </message>
@@ -22006,6 +22057,38 @@ Para hacer esto necesitas cambiar los comandos %chown en comandos de consola alt
     </message>
     <message>
         <source>More information on this subject is available at</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Wrong eZ Components version detected</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Missing eZ Components dependancy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The minimum required eZ Components version is</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Download instructions for both regular download and PEAR are provided at</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Missing iconv extension</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The iconv extension is not available to eZ Publish. Without it eZ Publish will not work.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>In most cases, the iconv extension is enabled by default because it is included in the PHP core. However, some Linux distributions have PHP without compiled-in support for iconv. Instead, they provide iconv as a shared module in a separate RPM package called &quot;php-iconv&quot; (or &quot;php5-iconv&quot;).</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>, but the latest released stable PHP version is always recommended.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -22853,6 +22936,63 @@ Para hacer esto necesitas cambiar los comandos %chown en comandos de consola alt
     <message>
         <source>Fold/Unfold</source>
         <translation>Plegar/Desplegar</translation>
+    </message>
+</context>
+<context>
+    <name>design/standard/state/edit</name>
+    <message>
+        <source>Identifier:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Default language:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Name:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Description:</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>design/standard/state/group</name>
+    <message>
+        <source>ID</source>
+        <translation type="unfinished">ID</translation>
+    </message>
+    <message>
+        <source>Identifier</source>
+        <translation type="unfinished">Identificador</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation type="unfinished">Nombre</translation>
+    </message>
+    <message>
+        <source>Description</source>
+        <translation type="unfinished">Descripción</translation>
+    </message>
+</context>
+<context>
+    <name>design/standard/state/group_edit</name>
+    <message>
+        <source>Identifier:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Default language:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Name:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Description:</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -24253,6 +24393,10 @@ tu cuenta.</translation>
         <source>State limitations cache</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Text to image cache</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>kernel/class</name>
@@ -25262,6 +25406,18 @@ si se elegió la opción &quot;%3&quot; desde &quot;%4&quot; </translation>
         <source>The receiver has already received the maximum number of tipafriend mails the last hours</source>
         <translation>El destinatario ya recibió el máximo número de avisos de un amigo en las últimas horas</translation>
     </message>
+    <message>
+        <source>Error</source>
+        <translation type="unfinished">Error</translation>
+    </message>
+    <message>
+        <source>The request sent to the server was too big to be accepted. This probably means that you uploaded a file which was too big. The maximum allowed request size is %max_size_string.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You have already sent a tipafriend mail to this reciver regarding &apos;$nodeName&apos; content</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>kernel/content/copysubtree</name>
@@ -25497,13 +25653,6 @@ si se elegió la opción &quot;%3&quot; desde &quot;%4&quot; </translation>
     <message>
         <source>Copyright</source>
         <translation>Derechos de autor</translation>
-    </message>
-</context>
-<context>
-    <name>kernel/form</name>
-    <message>
-        <source>Form processing</source>
-        <translation>Proceso del formulario</translation>
     </message>
 </context>
 <context>
@@ -26254,6 +26403,14 @@ si se elegió la opción &quot;%3&quot; desde &quot;%4&quot; </translation>
         <source>Changes were stored successfully.</source>
         <translation>Los cambios se almacenaron correctamente.</translation>
     </message>
+    <message>
+        <source>&apos;%value&apos; is not a valid custom rate value (positive number expected)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&apos;%value&apos; is not a valid rate_factor value (positive number expected)</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>kernel/shop/classes/ezcurrencydata</name>
@@ -26634,7 +26791,7 @@ si se elegió la opción &quot;%3&quot; desde &quot;%4&quot; </translation>
     <name>lib/template</name>
     <message>
         <source>The maximum nesting level of %max has been reached. The execution is stopped to avoid infinite recursion.</source>
-        <translation type="unfinished"></translation>
+        <translation>Se alcanzó el máximo nivel de anidación que es de %max. Se detuvo la ejecución para evitar la repetición infinita.</translation>
     </message>
 </context>
 <context>

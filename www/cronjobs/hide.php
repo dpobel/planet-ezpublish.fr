@@ -3,8 +3,8 @@
 // Created on: <21-Jan-05 16:00:52 kk>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.1.0
-// BUILD VERSION: 23234
+// SOFTWARE RELEASE: 4.2.0
+// BUILD VERSION: 24182
 // COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
@@ -68,7 +68,7 @@ foreach( $rootNodeIDList as $nodeID )
 
             $dateAttribute = $dataMap[$dateAttributeName];
 
-            if ( is_null( $dateAttribute ) || !$dateAttribute->hasContent() )
+            if ( $dateAttribute === null || !$dateAttribute->hasContent() )
             {
                 continue;
             }

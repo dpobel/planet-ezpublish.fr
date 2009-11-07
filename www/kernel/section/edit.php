@@ -3,8 +3,8 @@
 // Created on: <27-Aug-2002 16:31:33 bf>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.1.0
-// BUILD VERSION: 23234
+// SOFTWARE RELEASE: 4.2.0
+// BUILD VERSION: 24182
 // COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
@@ -39,7 +39,7 @@ if ( $SectionID == 0 )
 else
 {
     $section = eZSection::fetch( $SectionID );
-    if( is_null( $section ) )
+    if( $section === null )
     {
         return $Module->handleError( eZError::KERNEL_NOT_AVAILABLE, 'kernel' );
     }

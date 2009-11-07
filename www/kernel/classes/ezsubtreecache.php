@@ -5,8 +5,8 @@
 // Created on: <21-Mar-2005 16:53:41 dl>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.1.0
-// BUILD VERSION: 23234
+// SOFTWARE RELEASE: 4.2.0
+// BUILD VERSION: 24182
 // COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
@@ -136,23 +136,25 @@ class eZSubtreeCache
         // to ensure purging of really old data. If the DB file handler is in
         // use it will check the modified_subnode field of the tree structure
         // to determin expiry when the cache-block entry is accessed.
-
-        if ( $dir )
+        if ( file_exists( $dir ) )
         {
-            $expiryCacheDir = eZTemplateCacheFunction::expiryTemplateBlockCacheDir();
-
-            $uniqid = md5( uniqid( 'ezpsubtreecache'. getmypid(), true ) );
-            $expiryCacheDir .= '/' . $uniqid[0] . '/' . $uniqid[1] . '/' . $uniqid[2] . '/' . $uniqid;
-
-            if ( !file_exists( $expiryCacheDir ) )
+            if ( is_dir( $dir ) )
             {
-                eZDir::mkdir( $expiryCacheDir, false, true );
+                $expiryCacheDir = eZTemplateCacheFunction::expiryTemplateBlockCacheDir();
+
+                $uniqid = md5( uniqid( 'ezpsubtreecache'. getmypid(), true ) );
+                $expiryCacheDir .= '/' . $uniqid[0] . '/' . $uniqid[1] . '/' . $uniqid[2] . '/' . $uniqid;
+
+                if ( !file_exists( $expiryCacheDir ) )
+                {
+                    eZDir::mkdir( $expiryCacheDir, false, true );
+                }
+                eZFile::rename( $dir, $expiryCacheDir );
             }
-            eZFile::rename( $dir, $expiryCacheDir );
-        }
-        else
-        {
-            eZDebug::writeWarning( "$dir should be a directory. Template-block caches for 'subtree_expiry' are not removed.", "eZSubtreeCache::renameDir" );
+            else
+            {
+                eZDebug::writeWarning( "$dir should be a directory. Template-block caches for 'subtree_expiry' are not removed.", "eZSubtreeCache::renameDir" );
+            }
         }
     }
 

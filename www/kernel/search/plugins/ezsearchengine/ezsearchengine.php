@@ -5,8 +5,8 @@
 // Created on: <25-Jun-2002 13:09:57 bf>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.1.0
-// BUILD VERSION: 23234
+// SOFTWARE RELEASE: 4.2.0
+// BUILD VERSION: 24182
 // COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
@@ -116,7 +116,7 @@ class eZSearchEngine
                     {
                         $integerValue = 0;
                     }
-                    $wordArray = split( " ", $text );
+                    $wordArray = explode( ' ', $text );
 
                     foreach ( $wordArray as $word )
                     {
@@ -662,8 +662,8 @@ class eZSearchEngine
             else if ( is_array( $searchContentClassID ) )
             {
                 // Build query for searching in a number of classes
-                $classString = $db->implodeWithTypeCast( ', ', $searchContentClassID, 'int' );
-                $classQuery = "ezsearch_object_word_link.contentclass_id IN ( $classString ) AND ";
+                $classString = $db->generateSQLINStatement( $searchContentClassID, 'ezsearch_object_word_link.contentclass_id', false, false, 'int' );
+                $classQuery = "$classString AND ";
                 $this->GeneralFilter['classAttributeQuery'] = $classQuery;
             }
 
@@ -1332,7 +1332,7 @@ class eZSearchEngine
         $text = preg_replace("(\s+)", " ", $text );
 
         // Split text on whitespace
-        $wordArray = split( " ", $text );
+        $wordArray = explode( ' ', $text );
 
         $retArray = array();
         foreach ( $wordArray as $word )

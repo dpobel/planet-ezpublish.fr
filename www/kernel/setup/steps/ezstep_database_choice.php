@@ -5,8 +5,8 @@
 // Created on: <11-Aug-2003 16:45:50 kk>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.1.0
-// BUILD VERSION: 23234
+// SOFTWARE RELEASE: 4.2.0
+// BUILD VERSION: 24182
 // COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
@@ -108,6 +108,7 @@ class eZStepDatabaseChoice extends eZStepInstaller
     function display()
     {
         $databaseMap = eZSetupDatabaseMap();
+        $availableDatabases = array();
         $databaseList = array();
         if ( isset( $this->PersistenceList['database_extensions']['found'] ) )
         {
@@ -117,6 +118,14 @@ class eZStepDatabaseChoice extends eZStepInstaller
                 if ( !isset( $databaseMap[$extension] ) )
                     continue;
                 $databaseList[] = $databaseMap[$extension];
+                if ( $databaseMap[$extension]['type'] == 'mysql' or $databaseMap[$extension]['type'] == 'mysqli' )
+                {
+                    $availableDatabases['mysql'] = true;
+                }
+                elseif ( $databaseMap[$extension]['type'] == 'postgresql' )
+                {
+                    $availableDatabases['postgresql'] = true;
+                }
             }
         }
 
@@ -126,6 +135,7 @@ class eZStepDatabaseChoice extends eZStepInstaller
 
         $this->Tpl->setVariable( 'database_list', $databaseList );
         $this->Tpl->setVariable( 'database_info', $databaseInfo );
+        $this->Tpl->setVariable( 'available_databases', $availableDatabases );
 
         $result = array();
         // Display template

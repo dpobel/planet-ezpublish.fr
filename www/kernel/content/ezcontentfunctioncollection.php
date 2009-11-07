@@ -5,8 +5,8 @@
 // Created on: <06-Oct-2002 16:19:31 amos>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.1.0
-// BUILD VERSION: 23234
+// SOFTWARE RELEASE: 4.2.0
+// BUILD VERSION: 24182
 // COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
@@ -44,9 +44,9 @@ class eZContentFunctionCollection
     {
     }
 
-    function fetchContentObject( $objectID, $remoteID = false )
+    static public function fetchContentObject( $objectID, $remoteID = false )
     {
-        if ( $objectID ===false && $remoteID !== false )
+        if ( $objectID === false && $remoteID !== false )
         {
             $contentObject = eZContentObject::fetchByRemoteID( $remoteID );
         }
@@ -54,7 +54,7 @@ class eZContentFunctionCollection
         {
             $contentObject = eZContentObject::fetch( $objectID );
         }
-        
+
         if ( $contentObject === null )
         {
             $result = array( 'error' => array( 'error_type' => 'kernel',
@@ -68,7 +68,7 @@ class eZContentFunctionCollection
         return $result;
     }
 
-    function fetchContentVersion( $objectID, $versionID )
+    static public function fetchContentVersion( $objectID, $versionID )
     {
         $contentVersion = eZContentObjectVersion::fetchVersion( $versionID, $objectID );
         if ( !$contentVersion )
@@ -84,7 +84,7 @@ class eZContentFunctionCollection
         return $result;
     }
 
-    function fetchContentNode( $nodeID, $nodePath, $languageCode, $remoteID = false )
+    static public function fetchContentNode( $nodeID, $nodePath, $languageCode, $remoteID = false )
     {
         $contentNode = null;
         if ( $nodeID )
@@ -97,7 +97,11 @@ class eZContentFunctionCollection
         else if ( $nodePath )
         {
             $nodeID = eZURLAliasML::fetchNodeIDByPath( $nodePath );
-            $contentNode = eZContentObjectTreeNode::fetch( $nodeID );
+
+            if ( $nodeID )
+            {
+               $contentNode = eZContentObjectTreeNode::fetch( $nodeID );
+            }
         }
         else if ( $remoteID )
         {
@@ -116,7 +120,7 @@ class eZContentFunctionCollection
         return $retVal;
     }
 
-    function fetchNonTranslationList( $objectID, $version )
+    static public function fetchNonTranslationList( $objectID, $version )
     {
         $version = eZContentObjectVersion::fetchVersion( $version, $objectID );
         if ( !$version )
@@ -130,7 +134,7 @@ class eZContentFunctionCollection
         return array( 'result' => $nonTranslationList );
     }
 
-    function fetchTranslationList()
+    static public function fetchTranslationList()
     {
         $translationList = eZContentObject::translationList();
         if ( $translationList === null )
@@ -146,7 +150,7 @@ class eZContentFunctionCollection
         return $result;
     }
 
-    function fetchPrioritizedLanguages()
+    static public function fetchPrioritizedLanguages()
     {
         $languages = eZContentLanguage::prioritizedLanguages();
         if ( $languages === null )
@@ -162,7 +166,7 @@ class eZContentFunctionCollection
         return $result;
     }
 
-    function fetchPrioritizedLanguageCodes()
+    static public function fetchPrioritizedLanguageCodes()
     {
         $languageCodes = eZContentLanguage::prioritizedLanguageCodes();
         if ( $languageCodes === null )
@@ -178,7 +182,7 @@ class eZContentFunctionCollection
         return $result;
     }
 
-    function fetchLocaleList( $withVariations )
+    static public function fetchLocaleList( $withVariations )
     {
         $localeList = eZLocale::localeList( true, $withVariations );
         if ( $localeList === null )
@@ -194,7 +198,7 @@ class eZContentFunctionCollection
         return $result;
     }
 
-    function fetchLocale( $localeCode )
+    static public function fetchLocale( $localeCode )
     {
         // Fetch locale list
         $localeList = eZLocale::localeList( false, true );
@@ -213,7 +217,7 @@ class eZContentFunctionCollection
         return $result;
     }
 
-    function fetchObject( $objectID )
+    static public function fetchObject( $objectID )
     {
         $object = eZContentObject::fetch( $objectID );
         if ( $object === null )
@@ -229,7 +233,7 @@ class eZContentFunctionCollection
         return $result;
     }
 
-    function fetchClass( $classID )
+    static public function fetchClass( $classID )
     {
         if ( !is_numeric( $classID ) )
             $object = eZContentClass::fetchByIdentifier( $classID );
@@ -248,7 +252,7 @@ class eZContentFunctionCollection
         return $result;
     }
 
-    function fetchClassAttributeList( $classID, $versionID )
+    static public function fetchClassAttributeList( $classID, $versionID )
     {
         $objectList = eZContentClass::fetch( $classID )->fetchAttributes( false, true, $versionID );
         if ( $objectList === null )
@@ -264,7 +268,7 @@ class eZContentFunctionCollection
         return $result;
     }
 
-    function fetchClassAttribute( $attributeID, $versionID )
+    static public function fetchClassAttribute( $attributeID, $versionID )
     {
         $attribute = eZContentClassAttribute::fetch( $attributeID, true, $versionID );
         if ( $attribute === null )
@@ -280,7 +284,7 @@ class eZContentFunctionCollection
         return $result;
     }
 
-    function calendar( $parentNodeID, $offset, $limit, $depth, $depthOperator,
+    static public function calendar( $parentNodeID, $offset, $limit, $depth, $depthOperator,
                                $classID, $attribute_filter, $extended_attribute_filter, $class_filter_type, $class_filter_array,
                                $groupBy, $mainNodeOnly, $ignoreVisibility, $limitation )
     {
@@ -328,7 +332,7 @@ class eZContentFunctionCollection
         return $result;
     }
 
-    function fetchObjectTree( $parentNodeID, $sortBy, $onlyTranslated, $language, $offset, $limit, $depth, $depthOperator,
+    static public function fetchObjectTree( $parentNodeID, $sortBy, $onlyTranslated, $language, $offset, $limit, $depth, $depthOperator,
                               $classID, $attribute_filter, $extended_attribute_filter, $class_filter_type, $class_filter_array,
                               $groupBy, $mainNodeOnly, $ignoreVisibility, $limitation, $asObject, $objectNameFilter, $loadDataMap = null )
     {
@@ -384,7 +388,7 @@ class eZContentFunctionCollection
         }
     }
 
-    function fetchObjectTreeCount( $parentNodeID, $onlyTranslated, $language, $class_filter_type, $class_filter_array,
+    static public function fetchObjectTreeCount( $parentNodeID, $onlyTranslated, $language, $class_filter_type, $class_filter_array,
                                    $attributeFilter, $depth, $depthOperator,
                                    $ignoreVisibility, $limitation, $mainNodeOnly, $extendedAttributeFilter, $objectNameFilter )
     {
@@ -419,7 +423,7 @@ class eZContentFunctionCollection
         return $result;
     }
 
-    function fetchContentSearch( $searchText, $subTreeArray, $offset, $limit, $searchTimestamp, $publishDate, $sectionID,
+    static public function fetchContentSearch( $searchText, $subTreeArray, $offset, $limit, $searchTimestamp, $publishDate, $sectionID,
                                  $classID, $classAttributeID, $ignoreVisibility, $limitation, $sortArray )
     {
         $searchArray = eZSearch::buildSearchArray();
@@ -449,7 +453,7 @@ class eZContentFunctionCollection
         return array( 'result' => $searchResult );
     }
 
-    function fetchTrashObjectCount( $objectNameFilter, $attributeFilter = false )
+    static public function fetchTrashObjectCount( $objectNameFilter, $attributeFilter = false )
     {
         $params = array();
         if ( $objectNameFilter !== false )
@@ -463,7 +467,7 @@ class eZContentFunctionCollection
         return array( 'result' => $trashCount );
     }
 
-    function fetchTrashObjectList( $offset, $limit, $objectNameFilter, $attributeFilter = false, $sortBy = false, $asObject = true )
+    static public function fetchTrashObjectList( $offset, $limit, $objectNameFilter, $attributeFilter = false, $sortBy = false, $asObject = true )
     {
         $params = array();
         if ( $objectNameFilter !== false )
@@ -480,7 +484,7 @@ class eZContentFunctionCollection
         return array( 'result' => $trashNodesList );
     }
 
-    function fetchDraftVersionList( $offset, $limit )
+    static public function fetchDraftVersionList( $offset, $limit )
     {
         $userID = eZUser::currentUserID();
         $draftVersionList =  eZPersistentObject::fetchObjectList( eZContentObjectVersion::definition(),
@@ -493,7 +497,7 @@ class eZContentFunctionCollection
         return array( 'result' => $draftVersionList );
     }
 
-    function fetchDraftVersionCount()
+    static public function fetchDraftVersionCount()
     {
         $userID = eZUser::currentUserID();
         $draftVersionList = eZPersistentObject::fetchObjectList( eZContentObjectVersion::definition(),
@@ -509,7 +513,7 @@ class eZContentFunctionCollection
         return array( 'result' => $draftVersionList[0]['count'] );
     }
 
-    function fetchPendingList( $offset, $limit )
+    static public function fetchPendingList( $offset, $limit )
     {
         $userID = eZUser::currentUserID();
         $pendingList =  eZPersistentObject::fetchObjectList( eZContentObjectVersion::definition(),
@@ -521,7 +525,7 @@ class eZContentFunctionCollection
 
     }
 
-    function fetchPendingCount()
+    static public function fetchPendingCount()
     {
         $userID = eZUser::currentUserID();
         $pendingList = eZPersistentObject::fetchObjectList( eZContentObjectVersion::definition(),
@@ -538,7 +542,7 @@ class eZContentFunctionCollection
     }
 
 
-    function fetchVersionList( $contentObject, $offset, $limit, $sorts = null )
+    static public function fetchVersionList( $contentObject, $offset, $limit, $sorts = null )
     {
         if ( !is_object( $contentObject ) )
             return array( 'result' => null );
@@ -550,7 +554,7 @@ class eZContentFunctionCollection
 
     }
 
-    function fetchVersionCount( $contentObject )
+    static public function fetchVersionCount( $contentObject )
     {
         if ( !is_object( $contentObject ) )
             return array( 'result' => 0 );
@@ -566,7 +570,7 @@ class eZContentFunctionCollection
         return array( 'result' => $versionList[0]['count'] );
     }
 
-    function canInstantiateClassList( $groupID, $parentNode, $filterType = 'include', $fetchID, $asObject )
+    static public function canInstantiateClassList( $groupID, $parentNode, $filterType = 'include', $fetchID, $asObject )
     {
         $ClassGroupIDs = false;
 
@@ -594,7 +598,7 @@ class eZContentFunctionCollection
         return array( 'result' => $classList );
     }
 
-    function canInstantiateClasses( $parentNode )
+    static public function canInstantiateClasses( $parentNode )
     {
         if ( is_object( $parentNode ) )
         {
@@ -604,7 +608,7 @@ class eZContentFunctionCollection
         return array( 'result' => eZContentClass::canInstantiateClasses() );
     }
 
-    function contentobjectAttributes( $version, $languageCode )
+    static public function contentobjectAttributes( $version, $languageCode )
     {
         if ( $languageCode == '' )
         {
@@ -616,24 +620,24 @@ class eZContentFunctionCollection
         }
     }
 
-    function fetchBookmarks( $offset, $limit )
+    static public function fetchBookmarks( $offset, $limit )
     {
         $user = eZUser::currentUser();
         return array( 'result' => eZContentBrowseBookmark::fetchListForUser( $user->id(), $offset, $limit ) );
     }
 
-    function fetchRecent()
+    static public function fetchRecent()
     {
         $user = eZUser::currentUser();
         return array( 'result' => eZContentBrowseRecent::fetchListForUser( $user->id() ) );
     }
 
-    function fetchSectionList()
+    static public function fetchSectionList()
     {
         return array( 'result' => eZSection::fetchList() );
     }
 
-    function fetchTipafriendTopList( $offset, $limit, $start_time, $end_time, $duration, $ascending, $extended )
+    static public function fetchTipafriendTopList( $offset, $limit, $start_time, $end_time, $duration, $ascending, $extended )
     {
         $currentTime = time();
         $conds = array();
@@ -702,7 +706,7 @@ class eZContentFunctionCollection
 
     }
 
-    function fetchMostViewedTopList( $classID, $sectionID, $offset, $limit )
+    static public function fetchMostViewedTopList( $classID, $sectionID, $offset, $limit )
     {
         $topList = eZViewCounter::fetchTopList( $classID, $sectionID, $offset, $limit );
         $contentNodeList = array();
@@ -718,22 +722,22 @@ class eZContentFunctionCollection
         return array( 'result' => $contentNodeList );
     }
 
-    function fetchCollectedInfoCount( $objectAttributeID, $objectID, $value, $creatorID = false, $userIdentifier = false )
+    static public function fetchCollectedInfoCount( $objectAttributeID, $objectID, $value, $creatorID = false, $userIdentifier = false )
     {
         return eZInfocollectorFunctionCollection::fetchCollectedInfoCount( $objectAttributeID, $objectID, $value, $creatorID, $userIdentifier );
     }
 
-    function fetchCollectedInfoCountList( $objectAttributeID )
+    static public function fetchCollectedInfoCountList( $objectAttributeID )
     {
         return eZInfocollectorFunctionCollection::fetchCollectedInfoCountList( $objectAttributeID );
     }
 
-    function fetchCollectedInfoCollection( $collectionID, $contentObjectID )
+    static public function fetchCollectedInfoCollection( $collectionID, $contentObjectID )
     {
         return eZInfocollectorFunctionCollection::fetchCollectedInfoCollection( $collectionID, $contentObjectID );
     }
 
-    function fetchCollectionsList( $objectID = false, $creatorID = false, $userIdentifier = false, $limit = false, $offset = false, $sortBy = false )
+    static public function fetchCollectionsList( $objectID = false, $creatorID = false, $userIdentifier = false, $limit = false, $offset = false, $sortBy = false )
     {
         return eZInfocollectorFunctionCollection::fetchCollectionsList( $objectID,
                                                                         $creatorID,
@@ -743,7 +747,7 @@ class eZContentFunctionCollection
                                                                         $sortBy );
      }
 
-    function fetchObjectByAttribute( $identifier )
+    static public function fetchObjectByAttribute( $identifier )
     {
         $contentObjectAttribute = eZContentObjectAttribute::fetchByIdentifier( $identifier );
         if ( $contentObjectAttribute === null )
@@ -758,13 +762,13 @@ class eZContentFunctionCollection
         return $result;
     }
 
-    function fetchObjectCountByUserID( $classID, $userID )
+    static public function fetchObjectCountByUserID( $classID, $userID )
     {
         $objectCount = eZContentObject::fetchObjectCountByUserID( $classID, $userID );
         return array( 'result' => $objectCount );
     }
 
-    function fetchKeywordCount( $alphabet,
+    static public function fetchKeywordCount( $alphabet,
                                 $classid,
                                 $owner = false,
                                 $parentNodeID = false,
@@ -796,7 +800,7 @@ class eZContentFunctionCollection
         $sqlClassIDs = '';
         if ( $classIDArray != null )
         {
-            $sqlClassIDs = 'AND ezkeyword.class_id IN (' . $db->implodeWithTypeCast( ',', $classIDArray, 'int' ) . ') ';
+            $sqlClassIDs = 'AND ' . $db->generateSQLINStatement( $classIDArray, 'ezkeyword.class_id', false, false, 'int' ) . ' ';
         }
 
         $sqlToExcludeDuplicates = '';
@@ -850,7 +854,7 @@ class eZContentFunctionCollection
     //for this object.
     //Setting $includeDuplicates parameter to false makes fetchKeyword('Skien') to return just
     //one entry for such objects.
-    function fetchKeyword( $alphabet,
+    static public function fetchKeyword( $alphabet,
                            $classid,
                            $offset,
                            $limit,
@@ -957,7 +961,7 @@ class eZContentFunctionCollection
         $sqlClassIDString = '';
         if ( is_array( $classIDArray ) and count( $classIDArray ) )
         {
-            $sqlClassIDString = 'AND ezkeyword.class_id IN (' . $db->implodeWithTypeCast( ',', $classIDArray, 'int' ) . ')';
+            $sqlClassIDString = 'AND ' . $db->generateSQLINStatement( $classIDArray, 'ezkeyword.class_id', false, false, 'int' ) . ' ';
         }
 
         // composing sql for matching tag word, it could be strict equiality or LIKE clause
@@ -1016,7 +1020,7 @@ class eZContentFunctionCollection
         return array( 'result' => $keywordNodeArray );
     }
 
-    function fetchSameClassAttributeNodeList( $contentclassattributeID, $value, $datatype )
+    static public function fetchSameClassAttributeNodeList( $contentclassattributeID, $value, $datatype )
     {
         if ( $datatype == "int" )
              $type = "data_int";
@@ -1054,7 +1058,7 @@ class eZContentFunctionCollection
         return array( 'result' => $resultNodeArray );
     }
 
-    function checkAccess( $access, $contentObject, $contentClassID, $parentContentClassID, $languageCode = false )
+    static public function checkAccess( $access, $contentObject, $contentClassID, $parentContentClassID, $languageCode = false )
     {
         if ( $contentObject instanceof eZContentObjectTreeNode )
         {
@@ -1076,18 +1080,18 @@ class eZContentFunctionCollection
     }
 
     // Fetches all navigation parts as an array
-    function fetchNavigationParts()
+    static public function fetchNavigationParts()
     {
         return array( 'result' => eZNavigationPart::fetchList() );
     }
 
     // Fetches one navigation parts by identifier
-    function fetchNavigationPart( $identifier )
+    static public function fetchNavigationPart( $identifier )
     {
         return array( 'result' => eZNavigationPart::fetchPartByIdentifier( $identifier ) );
     }
 
-    function contentobjectRelationTypeMask( $contentObjectRelationTypes = false )
+    static public function contentobjectRelationTypeMask( $contentObjectRelationTypes = false )
     {
         $relationTypeMask = 0;
         if ( is_array( $contentObjectRelationTypes ) )
@@ -1122,7 +1126,7 @@ class eZContentFunctionCollection
     }
 
     // Fetches related objects id grouped by relation types
-    function fetchRelatedObjectsID( $objectID, $attributeID, $allRelations)
+    static public function fetchRelatedObjectsID( $objectID, $attributeID, $allRelations)
     {
         if ( !is_array( $allRelations ) || $allRelations === array() )
         {
@@ -1154,7 +1158,7 @@ class eZContentFunctionCollection
     }
 
     // Fetches reverse related objects id grouped by relation types
-    function fetchReverseRelatedObjectsID( $objectID, $attributeID, $allRelations )
+    static public function fetchReverseRelatedObjectsID( $objectID, $attributeID, $allRelations )
     {
         if ( !is_array( $allRelations ) || $allRelations === array() )
         {
@@ -1186,13 +1190,21 @@ class eZContentFunctionCollection
     }
 
     // Fetches reverse related objects
-    function fetchRelatedObjects( $objectID, $attributeID, $allRelations, $groupByAttribute, $sortBy, $limit = false, $offset = false, $asObject = true, $loadDataMap = false, $ignoreVisibility = null )
+    static public function fetchRelatedObjects( $objectID, $attributeID, $allRelations, $groupByAttribute, $sortBy, $limit = false, $offset = false, $asObject = true, $loadDataMap = false, $ignoreVisibility = null )
     {
-        if ( !$objectID )
+        if ( !is_numeric( $objectID ) )
         {
-            eZDebug::writeError( "ObjectID is missing" );
+            eZDebug::writeError( "ObjectID is missing or invalid", __METHOD__ );
             return false;
         }
+
+        $object = eZContentObject::fetch( $objectID );
+        if ( !$object instanceof eZContentObject )
+        {
+            eZDebug::writeError( "An error occured fetching object #$objectID", __METHOD__ );
+            return false;
+        }
+
         $params = array();
         $params['Limit'] = $limit;
         $params['Offset'] = $offset;
@@ -1247,18 +1259,22 @@ class eZContentFunctionCollection
             }
         }
 
-        $object = eZContentObject::fetch( $objectID );
-        if ( $object === null )
-            return false;
         return array( 'result' => $object->relatedContentObjectList( false, $objectID, $attributeID, $groupByAttribute, $params ) );
     }
 
         // Fetches count of reverse related objects
-    function fetchRelatedObjectsCount( $objectID, $attributeID, $allRelations )
+    static public function fetchRelatedObjectsCount( $objectID, $attributeID, $allRelations )
     {
-        if ( !$objectID )
+        if ( !is_numeric( $objectID ) )
         {
-            eZDebug::writeError( "ObjectID is missing" );
+            eZDebug::writeError( "ObjectID is missing", __METHOD__ );
+            return false;
+        }
+
+        $object = eZContentObject::fetch( $objectID );
+        if ( !$object instanceof eZContentObject )
+        {
+            eZDebug::writeError( "An error occured fetching object #$objectID", __METHOD__ );
             return false;
         }
 
@@ -1294,14 +1310,24 @@ class eZContentFunctionCollection
             }
         }
 
-        $object = eZContentObject::fetch( $objectID );
-        if ( $object === null )
-            return false;
         return array( 'result' => $object->relatedContentObjectCount( false, $attributeID, $params ) );
     }
 
-    function fetchReverseRelatedObjects( $objectID, $attributeID, $allRelations, $groupByAttribute, $sortBy, $ignoreVisibility,  $limit = false, $offset = false, $asObject = true, $loadDataMap = false  )
+    static public function fetchReverseRelatedObjects( $objectID, $attributeID, $allRelations, $groupByAttribute, $sortBy, $ignoreVisibility,  $limit = false, $offset = false, $asObject = true, $loadDataMap = false  )
     {
+        if ( !$objectID or !is_numeric( $objectID ) )
+        {
+            eZDebug::writeDebug( "Missing or incorrect \$objectID parameter", __METHOD__ );
+            return false;
+        }
+
+        $object = eZContentObject::fetch( $objectID );
+        if ( !$object instanceof eZContentObject )
+        {
+            eZDebug::writeError( "An error occured fetching object #$objectID", __METHOD__ );
+            return false;
+        }
+
         $params = array();
         $params['Limit'] = $limit;
         $params['Offset'] = $offset;
@@ -1353,12 +1379,25 @@ class eZContentFunctionCollection
                 return false;
             }
         }
-        return array( 'result' => eZContentObject::fetch( $objectID )->reverseRelatedObjectList( false, $attributeID, $groupByAttribute, $params ) );
+        return array( 'result' => $object->reverseRelatedObjectList( false, $attributeID, $groupByAttribute, $params ) );
     }
 
     // Fetches count of reverse related objects
-    function fetchReverseRelatedObjectsCount( $objectID, $attributeID, $allRelations, $ignoreVisibility  )
+    static public function fetchReverseRelatedObjectsCount( $objectID, $attributeID, $allRelations, $ignoreVisibility  )
     {
+        if ( !is_numeric( $objectID ) )
+        {
+            eZDebug::writeError( "\$objectID is missing or invalid", __METHOD__ );
+            return false;
+        }
+
+        $object = eZContentObject::fetch( $objectID );
+        if ( !$object instanceof eZContentObject )
+        {
+            eZDebug::writeError( "An error occured fetching object #$objectID", __METHOD__ );
+            return false;
+        }
+
         $params = array();
         if ( isset( $ignoreVisibility ) )
         {
@@ -1395,10 +1434,10 @@ class eZContentFunctionCollection
                 return false;
             }
         }
-        return array( 'result' => eZContentObject::fetch( $objectID )->reverseRelatedObjectCount( false, $attributeID, $params ) );
+        return array( 'result' => $object->reverseRelatedObjectCount( false, $attributeID, $params ) );
     }
 
-    function fetchAvailableSortFieldList()
+    static public function fetchAvailableSortFieldList()
     {
         return array( 'result' => array( '6' => ezi18n( 'kernel/content', 'Class identifier' ),
                                          '7' => ezi18n( 'kernel/content', 'Class name' ),
@@ -1411,7 +1450,7 @@ class eZContentFunctionCollection
                                          '4' => ezi18n( 'kernel/content', 'Section' ) ) );
     }
 
-    function fetchCountryList( $filter, $value )
+    static public function fetchCountryList( $filter, $value )
     {
         // Fetch country list
         if ( !$filter and !$value )
@@ -1426,7 +1465,7 @@ class eZContentFunctionCollection
         return array( 'result' => $country );
     }
 
-    function fetchContentTreeMenuExpiry()
+    static public function fetchContentTreeMenuExpiry()
     {
         eZExpiryHandler::registerShutdownFunction();
 

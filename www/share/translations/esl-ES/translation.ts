@@ -4127,6 +4127,14 @@
         <source>You cannot manage the versions of this object because there is only one version available (the one that is being displayed).</source>
         <translation>No puedes gestionar las versiones de este objeto porque sólo hay una versión disponible (la que se está mostrando).</translation>
     </message>
+    <message>
+        <source>Translation mismatch</source>
+        <translation>La traducción no coincide</translation>
+    </message>
+    <message>
+        <source>Your selected translation does not match the language of your selected siteaccess. This may lead to unexpected results in the preview, however it may also be what you intended.</source>
+        <translation>La traducción seleccionada no se corresponde con el idioma de tu acceso al sitio seleccionado. Esto puede causar resultados inesperados en la previsualización, pero también puede ser lo que esperas.</translation>
+    </message>
 </context>
 <context>
     <name>design/admin/contentstructuremenu</name>
@@ -11161,6 +11169,22 @@ Nota: los paquetes no serán desinstalados.</translation>
         <source>New content object state</source>
         <translation>Nuevo estado de objetos</translation>
     </message>
+    <message>
+        <source>Identifier:</source>
+        <translation>Identificador:</translation>
+    </message>
+    <message>
+        <source>Default language:</source>
+        <translation>Idioma predefinido:</translation>
+    </message>
+    <message>
+        <source>Name:</source>
+        <translation>Nombre:</translation>
+    </message>
+    <message>
+        <source>Description:</source>
+        <translation>Descripción:</translation>
+    </message>
 </context>
 <context>
     <name>design/admin/state/group</name>
@@ -11220,6 +11244,10 @@ Nota: los paquetes no serán desinstalados.</translation>
         <source>Create a new state.</source>
         <translation>Crear un nuevo estado.</translation>
     </message>
+    <message>
+        <source>Description</source>
+        <translation>Descripción</translation>
+    </message>
 </context>
 <context>
     <name>design/admin/state/group_edit</name>
@@ -11258,6 +11286,22 @@ Nota: los paquetes no serán desinstalados.</translation>
     <message>
         <source>Cancel creating this state group.</source>
         <translation>Cancelar la creación de este grupo de estados.</translation>
+    </message>
+    <message>
+        <source>Identifier:</source>
+        <translation>Identificador:</translation>
+    </message>
+    <message>
+        <source>Default language:</source>
+        <translation>Idioma predefinido:</translation>
+    </message>
+    <message>
+        <source>Name:</source>
+        <translation>Nombre:</translation>
+    </message>
+    <message>
+        <source>Description:</source>
+        <translation>Descripción:</translation>
     </message>
 </context>
 <context>
@@ -11309,6 +11353,25 @@ Nota: los paquetes no serán desinstalados.</translation>
     <message>
         <source>Create a new state group.</source>
         <translation>Crear un nuevo grupo de estados.</translation>
+    </message>
+</context>
+<context>
+    <name>design/admin/state/view</name>
+    <message>
+        <source>ID</source>
+        <translation>ID</translation>
+    </message>
+    <message>
+        <source>Identifier</source>
+        <translation>Identificador</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation>Nombre</translation>
+    </message>
+    <message>
+        <source>Description</source>
+        <translation>Descripción</translation>
     </message>
 </context>
 <context>
@@ -15312,7 +15375,7 @@ Si quieres enviar comentarios al encargado de aprobar el contenido o ver el esta
     </message>
     <message>
         <source>Order</source>
-        <translation>Pedido</translation>
+        <translation>Orden</translation>
     </message>
     <message>
         <source>Published</source>
@@ -17147,18 +17210,6 @@ Ponte en contacto con esta persona por el borrador o crea uno nuevo para editarl
     </message>
 </context>
 <context>
-    <name>design/standard/form</name>
-    <message>
-        <source>Thank you for your feedback</source>
-        <translation>
-Gracias por tu feedback</translation>
-    </message>
-    <message>
-        <source>Your information was successfully received.</source>
-        <translation>Tu información ha sido recibida con éxito.</translation>
-    </message>
-</context>
-<context>
     <name>design/standard/gui</name>
     <message>
         <source>Delete</source>
@@ -17506,10 +17557,6 @@ Si lo haces todos los hijos se eliminarán.</translation>
     <message>
         <source>Store</source>
         <translation>Almacenar</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation>Cancelar</translation>
     </message>
     <message>
         <source>%sitename notification system</source>
@@ -21291,6 +21338,14 @@ Esta funcionalidad queda también disponible más adelante desde la Interfaz de 
         <source>The &apos;digest&apos; function is not available in your database, you cannot run eZ Publish without this. See the documentation for more information.</source>
         <translation>La función &apos;recopilación&apos; no está disponible en tu base de datos, no puedes utilizar eZ Publish sin ella. Ver la documentación para más información.</translation>
     </message>
+    <message>
+        <source>MySQL support was detected on your system. Please choose the database driver you would like to use.</source>
+        <translation>Se ha detectado soporte para MySQL en tu sistema. Elige qué base de datos quieres utilizar.</translation>
+    </message>
+    <message>
+        <source>PostgreSQL support was detected on your system. Please choose the database driver you would like to use.</source>
+        <translation>Se ha detectado soporte para PostgreSQL en tu sistema. Elige qué base de datos quieres utilizar.</translation>
+    </message>
 </context>
 <context>
     <name>design/standard/setup/operatorcode</name>
@@ -21747,10 +21802,6 @@ Esto supone un problema de seguridad y debe ser cambiado a otro directorio tempo
         <translation>Nota: Un fallo aquí provocará también un fallo en la comprobación del &quot;accept_path_info&quot;.</translation>
     </message>
     <message>
-        <source>, but the latest released PHP 4.4.x version is highly recommended.</source>
-        <translation>, pero la última versión disponible PHP 4.4.x esta muy recomendada.</translation>
-    </message>
-    <message>
         <source>Missed some directories</source>
         <translation>Faltan algunos directorios</translation>
     </message>
@@ -22005,6 +22056,38 @@ Para hacer esto necesitas cambiar los comandos %chown en comandos de consola alt
     <message>
         <source>To fix this, edit your php.ini configuration and add E to the variables_order setting.</source>
         <translation>Para corregir esto, edita tu configuración php.ini y añade E a la configuración variables_order.</translation>
+    </message>
+    <message>
+        <source>Wrong eZ Components version detected</source>
+        <translation>Se ha detectado una versión incorrecta de los eZ Components</translation>
+    </message>
+    <message>
+        <source>Missing eZ Components dependancy</source>
+        <translation>Falta la dependencia de los eZ Components</translation>
+    </message>
+    <message>
+        <source>The minimum required eZ Components version is</source>
+        <translation>La versión mínima requerida de los eZ Components es</translation>
+    </message>
+    <message>
+        <source>Download instructions for both regular download and PEAR are provided at</source>
+        <translation>Las instrucciones de descarga por PEAR o por método regular están en</translation>
+    </message>
+    <message>
+        <source>Missing iconv extension</source>
+        <translation>Falta la extensión iconv</translation>
+    </message>
+    <message>
+        <source>The iconv extension is not available to eZ Publish. Without it eZ Publish will not work.</source>
+        <translation>La extensión iconv no está disponible para eZ Publish. Sin ella eZ Publish no funciona.</translation>
+    </message>
+    <message>
+        <source>In most cases, the iconv extension is enabled by default because it is included in the PHP core. However, some Linux distributions have PHP without compiled-in support for iconv. Instead, they provide iconv as a shared module in a separate RPM package called &quot;php-iconv&quot; (or &quot;php5-iconv&quot;).</source>
+        <translation>En muchos casos, la extensión iconv está activada por defecto porque está incluida en la instalación del PHP. Sin embargo, algunas distribuciones Linux tienen PHP sin soporte compilado para iconv. A cambio, proveen el módulo compartido iconv en un paquete RPM llamado &quot;php-iconv&quot; (o &quot;php5-iconv&quot;).</translation>
+    </message>
+    <message>
+        <source>, but the latest released stable PHP version is always recommended.</source>
+        <translation>, pero siempre se recomienda la última versión estable de PHP.</translation>
     </message>
 </context>
 <context>
@@ -22851,6 +22934,63 @@ Para hacer esto necesitas cambiar los comandos %chown en comandos de consola alt
     <message>
         <source>Fold/Unfold</source>
         <translation>Plegar/Desplegar</translation>
+    </message>
+</context>
+<context>
+    <name>design/standard/state/edit</name>
+    <message>
+        <source>Identifier:</source>
+        <translation>Identificador:</translation>
+    </message>
+    <message>
+        <source>Default language:</source>
+        <translation>Idioma predefinido:</translation>
+    </message>
+    <message>
+        <source>Name:</source>
+        <translation>Nombre:</translation>
+    </message>
+    <message>
+        <source>Description:</source>
+        <translation>Descripción:</translation>
+    </message>
+</context>
+<context>
+    <name>design/standard/state/group</name>
+    <message>
+        <source>ID</source>
+        <translation>ID</translation>
+    </message>
+    <message>
+        <source>Identifier</source>
+        <translation>Identificador</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation>Nombre</translation>
+    </message>
+    <message>
+        <source>Description</source>
+        <translation>Descripción</translation>
+    </message>
+</context>
+<context>
+    <name>design/standard/state/group_edit</name>
+    <message>
+        <source>Identifier:</source>
+        <translation>Identificador:</translation>
+    </message>
+    <message>
+        <source>Default language:</source>
+        <translation>Idioma predefinido:</translation>
+    </message>
+    <message>
+        <source>Name:</source>
+        <translation>Nombre:</translation>
+    </message>
+    <message>
+        <source>Description:</source>
+        <translation>Descripción:</translation>
     </message>
 </context>
 <context>
@@ -24251,6 +24391,10 @@ tu cuenta.</translation>
         <source>State limitations cache</source>
         <translation>Caché de limitaciones de estado</translation>
     </message>
+    <message>
+        <source>Text to image cache</source>
+        <translation>Caché de texto a imagen</translation>
+    </message>
 </context>
 <context>
     <name>kernel/class</name>
@@ -25106,7 +25250,7 @@ si has elegido la opción &quot;%3&quot; desde &quot;%4&quot; </translation>
     </message>
     <message>
         <source>Tip from %1: %2</source>
-        <translation>Volcar desde %1: %2</translation>
+        <translation>Recomendación de %1: %2</translation>
     </message>
     <message>
         <source>The email address of the sender is not valid</source>
@@ -25259,6 +25403,18 @@ si has elegido la opción &quot;%3&quot; desde &quot;%4&quot; </translation>
     <message>
         <source>The receiver has already received the maximum number of tipafriend mails the last hours</source>
         <translation>El destinatario ya ha recibido el máximo número de avisos de un amigo en las últimas horas</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation>Error</translation>
+    </message>
+    <message>
+        <source>The request sent to the server was too big to be accepted. This probably means that you uploaded a file which was too big. The maximum allowed request size is %max_size_string.</source>
+        <translation>La petición al servidor es demasiado grande para ser aceptada. Esto quiere decir que el archivo que has intentado subir era demasiado grande. El tamaño máximo permitido es %max_size_string.</translation>
+    </message>
+    <message>
+        <source>You have already sent a tipafriend mail to this reciver regarding &apos;$nodeName&apos; content</source>
+        <translation>Ya habías enviado un correo a este destinatario en referencia a &apos;$nodeName&apos;</translation>
     </message>
 </context>
 <context>
@@ -25495,13 +25651,6 @@ si has elegido la opción &quot;%3&quot; desde &quot;%4&quot; </translation>
     <message>
         <source>Copyright</source>
         <translation>Copyright</translation>
-    </message>
-</context>
-<context>
-    <name>kernel/form</name>
-    <message>
-        <source>Form processing</source>
-        <translation>Procesando el formulario</translation>
     </message>
 </context>
 <context>
@@ -26251,6 +26400,14 @@ si has elegido la opción &quot;%3&quot; desde &quot;%4&quot; </translation>
     <message>
         <source>Changes were stored successfully.</source>
         <translation>Los cambios se almacenaron correctamente.</translation>
+    </message>
+    <message>
+        <source>&apos;%value&apos; is not a valid custom rate value (positive number expected)</source>
+        <translation>&apos;%value&apos; no es un valor válido de ratio (se espera un número positivo)</translation>
+    </message>
+    <message>
+        <source>&apos;%value&apos; is not a valid rate_factor value (positive number expected)</source>
+        <translation>&apos;%value&apos; no es un valor válido de factor ratio (se espera un número positivo)</translation>
     </message>
 </context>
 <context>

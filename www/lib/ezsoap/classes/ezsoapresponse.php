@@ -8,8 +8,8 @@
 // Created on: <19-Feb-2002 16:51:10 bf>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.1.0
-// BUILD VERSION: 23234
+// SOFTWARE RELEASE: 4.2.0
+// BUILD VERSION: 24182
 // COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
@@ -83,7 +83,7 @@ class eZSOAPResponse extends eZSOAPEnvelope
             }
 
             // get the response
-            $response = $dom->getElementsByTagNameNS( $request->namespace(), $request->name() . "Response" );
+            $response = $dom->getElementsByTagNameNS( $request->ns(), $request->name() . "Response" );
 
             /* Some protocols do not use namespaces, and do not work with an empty namespace.
             So, if we get no response, try again without namespace.
@@ -277,7 +277,10 @@ TODO: add encoding checks with schema validation.
         {
             // add the request
             $responseName = $this->Name . "Response";
-            $response = $doc->createElementNS( $this->Namespace, "resp:".$responseName );
+            if ( $this->Namespace == '' )
+                $response = $doc->createElement( "resp:".$responseName );
+            else
+                $response = $doc->createElementNS( $this->Namespace, "resp:".$responseName );
 
             $return = $doc->createElement( "return" );
 

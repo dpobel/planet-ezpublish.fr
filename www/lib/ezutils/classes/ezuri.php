@@ -5,8 +5,8 @@
 // Created on: <10-Apr-2002 13:47:41 amos>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.1.0
-// BUILD VERSION: 23234
+// SOFTWARE RELEASE: 4.2.0
+// BUILD VERSION: 24182
 // COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
@@ -87,7 +87,10 @@ class eZURI
                 $out[$i] = urlencode( $o ); // Let PHP do the rest
             }
         }
-        return join( "/", $out );
+        $tmp = join( "/", $out );
+        // Don't encode '~' in URLs
+        $tmp = str_replace( '%7E', '~', $tmp );
+        return $tmp;
     }
 
     /*!
@@ -495,9 +498,13 @@ class eZURI
         }
     }
 
-    /*!
-     \return the unique instance for the URI, if $uri is supplied it used as the global URI value.
-    */
+    /**
+     * Returns a shared instance of the eZURI class IF $uri is false or the same as current
+     * request uri, if not then a new non shared instance is created.
+     *
+     * @param $uri false|string
+     * @return eZURI
+     */
     static function instance( $uri = false )
     {
         // If $uri is false we assume the caller wants eZSys::requestURI()

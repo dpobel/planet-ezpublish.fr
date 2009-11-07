@@ -3,8 +3,8 @@
 // Created on: <24-Sep-2004 13:20:32 jk>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.1.0
-// BUILD VERSION: 23234
+// SOFTWARE RELEASE: 4.2.0
+// BUILD VERSION: 24182
 // COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
@@ -31,7 +31,7 @@ class eZClassFunctions
 {
     static function addGroup( $classID, $classVersion, $selectedGroup )
     {
-        list ( $groupID, $groupName ) = split( '/', $selectedGroup );
+        list ( $groupID, $groupName ) = explode( '/', $selectedGroup );
         $ingroup = eZContentClassClassGroup::create( $classID, $classVersion, $groupID, $groupName );
         $ingroup->store();
         return true;

@@ -5,8 +5,8 @@
 // Created on: <14-May-2003 16:20:24 sp>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.1.0
-// BUILD VERSION: 23234
+// SOFTWARE RELEASE: 4.2.0
+// BUILD VERSION: 24182
 // COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
@@ -130,14 +130,15 @@ class eZSubtreeNotificationRule extends eZPersistentObject
         return $countRes[0]['count'];
     }
 
-    /*!
-     Fetch allowed subtreenotification rules based upon node id list and array pf nodes
-
-     \param node id list for notification event.
-     \param content object to add
-
-     \return array of eZSubtreeNotificationRule objects
-    */
+    /**
+     * Fetch allowed subtreenotification rules based on node_id list and a
+     * content object
+     *
+     * @param array $nodeIDList node id list for notification event
+     * @param eZContentObject content object to add
+     *
+     * @return array matching subtree notification rule data
+     **/
     static function fetchUserList( $nodeIDList, $contentObject )
     {
         if ( count( $nodeIDList ) == 0 )
@@ -149,21 +150,98 @@ class eZSubtreeNotificationRule extends eZPersistentObject
         $db = eZDB::instance();
         $concatString = $db->concatString(  array( 'user_tree.path_string', "'%'" ) );
 
-        $sql = 'SELECT DISTINCT policy.id AS policy_id, subtree_rule.user_id,
+        // Select affected users
+        $sqlINString = $db->generateSQLINStatement( $nodeIDList, 'subtree_rule.node_id', false, false, 'int' );
+        $sql = "SELECT DISTINCT subtree_rule.user_id,
+                                user_node.node_id
+                FROM ezsubtree_notification_rule subtree_rule,
+                     ezcontentobject_tree user_node,
+                     ezuser_setting
+                WHERE $sqlINString AND
+                      user_node.contentobject_id = subtree_rule.user_id AND
+                      ezuser_setting.user_id = subtree_rule.user_id AND
+                      user_node.is_invisible = 0 AND
+                      ezuser_setting.is_enabled = 1";
+        $userPart = $db->arrayQuery( $sql );
+
+        // Remove duplicates
+        $userNodeIDList = array();
+        foreach ( $userPart as $row )
+            $userNodeIDList[] = $row['node_id'];
+        $userNodeIDList = array_unique( $userNodeIDList );
+
+        if ( count( $userNodeIDList ) == 0 )
+        {
+            $retValue = array();
+            return $retValue;
+        }
+
+        // Select affected nodes
+        $sqlINString = $db->generateSQLINstatement( $userNodeIDList, 'user_node.node_id', false, false, 'int' );
+        $sql = "SELECT DISTINCT user_node.node_id,
+                                user_node.path_string,
+                                user_tree.contentobject_id
+                FROM ezcontentobject_tree user_node,
+                     ezcontentobject_tree user_tree
+                WHERE $sqlINString AND
+                      user_node.path_string LIKE $concatString";
+        $nodePart = $db->arrayQuery( $sql );
+
+        // Remove duplicates
+        $objectIDList = array();
+        foreach ( $nodePart as $row )
+            if ( $row['contentobject_id'] != '0' )
+                $objectIDList[] = $row['contentobject_id'];
+        $objectIDList = array_unique( $objectIDList );
+
+        if ( count( $objectIDList ) == 0 )
+        {
+            $retValue = array();
+            return $retValue;
+        }
+
+        // Select affected roles and policies
+        $sqlINString = $db->generateSQLINStatement( $objectIDList, 'user_role.contentobject_id', false, false, 'int' );
+        $sql = "SELECT DISTINCT user_role.contentobject_id,
+                                policy.id AS policy_id,
                                 user_role.limit_identifier AS limitation,
                                 user_role.limit_value AS value
-                  FROM ezuser_role user_role,
-                       ezsubtree_notification_rule subtree_rule,
-                       ezcontentobject_tree user_tree,
-                       ezcontentobject_tree user_node,
-                       ezpolicy policy
-                  WHERE subtree_rule.node_id IN ( ' . $db->implodeWithTypeCast( ', ', $nodeIDList, 'int' ) . ' ) AND
-                        user_node.contentobject_id=subtree_rule.user_id AND
-                        user_node.path_string like ' . $concatString . " AND
-                        user_role.contentobject_id=user_tree.contentobject_id AND
-                        ( user_role.role_id=policy.role_id AND ( policy.module_name='*' OR ( policy.module_name='content' AND ( policy.function_name='*' OR policy.function_name='read' ) ) ) )";
+                FROM ezuser_role user_role,
+                     ezpolicy policy
+                WHERE $sqlINString AND
+                      ( user_role.role_id=policy.role_id AND
+                        ( policy.module_name='*' OR
+                          ( policy.module_name='content' AND
+                            ( policy.function_name='*' OR
+                              policy.function_name='read'
+                            )
+                          )
+                        )
+                      )";
+        $rolePart = $db->arrayQuery( $sql );
 
-        $resultArray = $db->arrayQuery( $sql );
+        // Build resultArray. Make sure there are no duplicates.
+        $resultArray = array();
+        foreach ( $userPart as $up )
+        {
+            foreach ( $nodePart as $np )
+            {
+                if ( $up['node_id'] == $np['node_id'] )
+                {
+                    foreach ( $rolePart as $rp )
+                    {
+                        if ( $np['contentobject_id'] == $rp['contentobject_id'] )
+                        {
+                            $key = $rp['policy_id'] . $up['user_id'] . $rp['limitation'] . $rp['value'];
+                            $resultArray[$key] = array( 'policy_id' => $rp['policy_id'],
+                                                        'user_id' => $up['user_id'],
+                                                        'limitation' => $rp['limitation'],
+                                                        'value' => $rp['value'] );
+                        }
+                    }
+                }
+            }
+        }
 
         $policyIDArray = array();
         $limitedPolicyIDArray = array();
@@ -205,7 +283,7 @@ class eZSubtreeNotificationRule extends eZPersistentObject
             }
 
             $userArray = eZSubtreeNotificationRule::checkObjectAccess( $contentObject, $policyID, $policyIDArray[$policyID] );
-            $acceptedUserArray = array_unique( array_merge( $acceptedUserArray, $userArray ) );
+            $acceptedUserArray = array_merge( $acceptedUserArray, $userArray );
 
             foreach ( $userArray as $userID )
             {
@@ -225,16 +303,17 @@ class eZSubtreeNotificationRule extends eZPersistentObject
                                                                        array( $policyEntry['user_id'] ),
                                                                        array( $policyEntry['limitation'] => $policyEntry['value'] ) );
 
-            $acceptedUserArray = array_unique( array_merge( $acceptedUserArray, $userArray ) );
+            $acceptedUserArray = array_merge( $acceptedUserArray, $userArray );
             foreach ( $userArray as $userID )
             {
                 $userIDArray[(string)$userID] = false;
             }
         }
+        $acceptedUserArray = array_unique( $acceptedUserArray );
 
         foreach( array_keys( $acceptedUserArray ) as $key )
         {
-            if ( !is_int( $acceptedUserArray[$key] ) || $acceptedUserArray[$key] == 0 )
+            if ( !is_int( $acceptedUserArray[$key] ) or $acceptedUserArray[$key] == 0 )
             {
                 unset( $acceptedUserArray[$key] );
             }
@@ -246,13 +325,13 @@ class eZSubtreeNotificationRule extends eZPersistentObject
             return $retValue;
         }
 
-        $nodeIDWhereString = $db->implodeWithTypeCast( ', ', $nodeIDList, 'int' );
-        $userIDWhereString = $db->implodeWithTypeCast( ', ', $acceptedUserArray, 'int' );
+        $nodeIDWhereString = $db->generateSQLINStatement( $nodeIDList, 'rule.node_id', false, false, 'int' );
+        $userIDWhereString = $db->generateSQLINStatement( $acceptedUserArray, 'rule.user_id', false, false, 'int' );
         $rules = $db->arrayQuery( "SELECT rule.user_id, rule.use_digest, ezuser.email as address
                                       FROM ezsubtree_notification_rule rule, ezuser
                                       WHERE rule.user_id=ezuser.contentobject_id AND
-                                            rule.node_id IN ( $nodeIDWhereString ) AND
-                                            rule.user_id IN ( $userIDWhereString )" );
+                                            $nodeIDWhereString AND
+                                            $userIDWhereString" );
         return $rules;
     }
 

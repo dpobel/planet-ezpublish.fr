@@ -5,8 +5,8 @@
 // Created on: <01-Mar-2002 13:48:32 amos>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.1.0
-// BUILD VERSION: 23234
+// SOFTWARE RELEASE: 4.2.0
+// BUILD VERSION: 24182
 // COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
@@ -1550,13 +1550,15 @@ class eZLocale
         return $this->LanguageINI[$type];
     }
 
-    /*!
-     \static
-     Returns an unique instance of the locale class for a given locale string. If $localeString is not
-     specified the default local string in site.ini is used.
-     Use this instead of newing eZLocale to benefit from speed and unified access.
-     \note Use create() if you need to get a new unique copy you can alter.
-    */
+    /**
+     * Returns a shared instance of the eZLocale class pr locale string.
+     * If $localeString is not specified the default local string in site.ini is used.
+     * Use this instead of newing eZLocale to benefit from speed and unified access.
+     * note: Use create() if you need to get a new unique copy you can alter.
+     *
+     * @param $localeString string|false
+     * @return eZLocale
+     */
     static function instance( $localeString = false )
     {
         if ( $localeString === false )

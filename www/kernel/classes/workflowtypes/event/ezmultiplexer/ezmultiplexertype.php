@@ -5,8 +5,8 @@
 // Created on: <01-Ноя-2002 15:34:23 sp>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.1.0
-// BUILD VERSION: 23234
+// SOFTWARE RELEASE: 4.2.0
+// BUILD VERSION: 24182
 // COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
@@ -324,7 +324,7 @@ class eZMultiplexerType extends eZWorkflowEventType
                     $childProcess->store();
                     return eZWorkflowType::STATUS_DEFERRED_TO_CRON_REPEAT;
                 }
-                else if ( $childStatus ==  eZWorkflow::STATUS_FETCH_TEMPLATE )
+                else if ( $childStatus == eZWorkflow::STATUS_FETCH_TEMPLATE or $childStatus == eZWorkflow::STATUS_FETCH_TEMPLATE_REPEAT )
                 {
                     $process->Template =& $childProcess->Template;
                     return eZWorkflowType::STATUS_FETCH_TEMPLATE_REPEAT;

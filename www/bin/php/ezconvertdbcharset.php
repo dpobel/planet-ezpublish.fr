@@ -4,8 +4,8 @@
 // Created on: <03-Dec-2007 09:51:56 dl>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.1.0
-// BUILD VERSION: 23234
+// SOFTWARE RELEASE: 4.2.0
+// BUILD VERSION: 24182
 // COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
@@ -225,10 +225,10 @@ function parseXMLAttributesOption( $xmlAttributesOption )
 
     $xmlAttributesInfo = array();
 
-    $xmlAttributesOption = split( ',', $xmlAttributesOption );
+    $xmlAttributesOption = explode( ',', $xmlAttributesOption );
     foreach ( $xmlAttributesOption as $attributeTableInfoOption )
     {
-        $attributeTableInfo = split( '\.', $attributeTableInfoOption );
+        $attributeTableInfo = explode( '.', $attributeTableInfoOption );
         switch ( count( $attributeTableInfo ) )
         {
             case 1:
@@ -268,10 +268,10 @@ function parseCustomXMLDataOption( $xmlCustomDataOption )
 
     $xmlCustomDataInfo = array();
 
-    $xmlCustomDataOption = split( ',', $xmlCustomDataOption );
+    $xmlCustomDataOption = explode( ',', $xmlCustomDataOption );
     foreach ( $xmlCustomDataOption as $tableInfoOption )
     {
-        $tableInfo = split( '\.', $tableInfoOption );
+        $tableInfo = explode( '.', $tableInfoOption );
         switch ( count( $tableInfo ) )
         {
             case 2:
@@ -306,17 +306,17 @@ function parseCustomSerializedDataOption( $serializedCustomDataOption )
 
     $serializedDataInfo = array();
 
-    $serializedCustomDataOption = split( ',', $serializedCustomDataOption );
+    $serializedCustomDataOption = explode( ',', $serializedCustomDataOption );
     foreach ( $serializedCustomDataOption as $tableInfoOption )
     {
-        $tableInfo = split( '\;', $tableInfoOption );
+        $tableInfo = explode( ';', $tableInfoOption );
         if ( count( $tableInfo ) != 2 )
         {
             showError( "invalid 'extra-serialized-data' '$tableInfoOption' option" );
         }
 
-        $dataInfo = split( '\.', $tableInfo[0] );
-        $keyInfo = split( '\.', $tableInfo[1] );
+        $dataInfo = explode( '.', $tableInfo[0] );
+        $keyInfo = explode( '.', $tableInfo[1] );
 
         switch ( count( $dataInfo ) )
         {
@@ -988,7 +988,7 @@ function removeIllegalUTF8Characters( $text )
 {
     // 0xE2 0x80 0x3F seems to be some kind of quote, replacing it with '
     // 0x3F is acutally a "?" and needs to be escaped
-    return ereg_replace( "\xE2\x80\\\x3F", "'", $text );
+    return preg_replace( "#\xE2\x80\\\x3F#", "'", $text );
 }
 
 /*!
@@ -1016,7 +1016,7 @@ function convertXMLData( $tableInfo, $xmlDataSelectSQLFunction, $xmlDataUpdateSQ
             $xmlString = $row['xml_data'];
 
             $xmlEncoding = false;
-            if ( ereg( '^<\?xml[^>]+encoding="([^"]+)"', $xmlString, $match ) )
+            if ( preg_match( '@^<\?xml[^>]+encoding="([^"]+)"@', $xmlString, $match ) )
             {
                 $xmlEncoding = strtolower( $match[1] );
             }
@@ -1065,7 +1065,7 @@ function convertXMLData( $tableInfo, $xmlDataSelectSQLFunction, $xmlDataUpdateSQ
                     // Let's convert it back to $dbEncoding
                     $xmlString = iconv( 'utf8', $dbEncoding . '//IGNORE', $xmlString );
                 }
-                $row['xml_data'] = ereg_replace( '(^<\?xml[^>]+)( \?>)', "\\1 encoding=\"utf-8\" ?>", $xmlString );
+                $row['xml_data'] = preg_replace( '#(^<\?xml[^>]+)(\?>)#', "\\1 encoding=\"utf-8\" ?>", $xmlString );
             }
             else if ( $xmlEncoding != $dbEncoding )
             {
@@ -1131,13 +1131,13 @@ function convertXMLData( $tableInfo, $xmlDataSelectSQLFunction, $xmlDataUpdateSQ
                 }
                 else
                 {
-                    $row['xml_data'] = ereg_replace( '^(<\?xml[^>]+encoding)="([^"]+)"', "\\1=\"utf-8\"", $convertedXMLString );
+                    $row['xml_data'] = preg_replace( '#^(<\?xml[^>]+encoding)="([^"]+)"#', "\\1=\"utf-8\"", $convertedXMLString );
                 }
             }
             else
             {
                 //showMessage3( "xml's and db's encodings are equal" );
-                $row['xml_data'] = ereg_replace( '^(<\?xml[^>]+encoding)="([^"]+)"', "\\1=\"utf-8\"", $xmlString );
+                $row['xml_data'] = preg_replace( '#^(<\?xml[^>]+encoding)="([^"]+)"#', "\\1=\"utf-8\"", $xmlString );
             }
 
             $updateSQL = $xmlDataUpdateSQLFunction( $tableInfo, $row );

@@ -3,8 +3,8 @@
 // Created on: <13-Feb-2005 03:13:00 bh>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.1.0
-// BUILD VERSION: 23234
+// SOFTWARE RELEASE: 4.2.0
+// BUILD VERSION: 24182
 // COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
@@ -91,19 +91,20 @@ else
 
 
 $db = eZDB::instance();
-$objects = $db->arrayQuery( 'SELECT DISTINCT ezinfocollection.contentobject_id,
-                                    ezcontentobject.name,
-                                    ezcontentobject_tree.main_node_id,
-                                    ezcontentclass.serialized_name_list,
-                                    ezcontentclass.identifier AS class_identifier
-                             FROM   ezinfocollection,
-                                    ezcontentobject,
-                                    ezcontentobject_tree,
-                                    ezcontentclass
-                             WHERE  ezinfocollection.contentobject_id=ezcontentobject.id
-                                    AND ezcontentobject.contentclass_id=ezcontentclass.id
-                                    AND ezcontentclass.version = ' . eZContentClass::VERSION_STATUS_DEFINED . '
-                                    AND ezinfocollection.contentobject_id=ezcontentobject_tree.contentobject_id',
+$objects = $db->arrayQuery( 'SELECT DISTINCT ezcontentobject.id AS contentobject_id,
+                                             ezcontentobject.name,
+                                             ezcontentobject_tree.main_node_id,
+                                             ezcontentclass.serialized_name_list,
+                                             ezcontentclass.identifier AS class_identifier
+                             FROM ezcontentobject,
+                                  ezcontentobject_tree,
+                                  ezcontentclass
+                             WHERE ezcontentobject_tree.contentobject_id = ezcontentobject.id
+                                   AND ezcontentobject.contentclass_id = ezcontentclass.id
+                                   AND ezcontentclass.version = ' . eZContentClass::VERSION_STATUS_DEFINED . '
+                                   AND ezcontentobject.id IN
+                                   ( SELECT DISTINCT ezinfocollection.contentobject_id FROM ezinfocollection )
+                             ORDER BY ezcontentobject.name ASC',
                              array( 'limit'  => (int)$limit,
                                     'offset' => (int)$offset ) );
 
@@ -123,32 +124,26 @@ if ( $infoCollectorObjectsQuery )
 
 foreach ( array_keys( $objects ) as $i )
 {
-    $collections = eZInformationCollection::fetchCollectionsList( (int)$objects[$i]['contentobject_id'], /* object id */
-                                                                  false, /* creator id */
-                                                                  false, /* user identifier */
-                                                                  false, /* limitArray */
-                                                                  false, /* sortArray */
-                                                                  false  /* asObject */
-                                                                 );
+    $firstCollections = eZInformationCollection::fetchCollectionsList( (int)$objects[$i]['contentobject_id'], /* object id */
+                                                                       false, /* creator id */
+                                                                       false, /* user identifier */
+                                                                       array( 'limit' => 1, 'offset' => 0 ), /* limitArray */
+                                                                       array( 'created', true ), /* sortArray */
+                                                                       false  /* asObject */
+                                                                     );
+    $objects[$i]['first_collection'] = $firstCollections[0]['created'];
+
+    $lastCollections = eZInformationCollection::fetchCollectionsList( (int)$objects[$i]['contentobject_id'], /* object id */
+                                                                      false, /* creator id */
+                                                                      false, /* user identifier */
+                                                                      array( 'limit' => 1, 'offset' => 0 ), /* limitArray */
+                                                                      array( 'created', false ), /* sortArray */
+                                                                      false  /* asObject */
+                                                                    );
+    $objects[$i]['last_collection'] = $lastCollections[0]['created'];
 
     $objects[$i]['class_name'] = eZContentClassNameList::nameFromSerializedString( $objects[$i]['serialized_name_list'] );
-    $first = $collections[0]['created'];
-    $last  = $first;
-
-    for($j=0; $j<count( $collections ); $j++ )
-    {
-        $current = $collections[$j]['created'];
-
-        if( $current < $first )
-            $first = $current;
-
-        if( $current > $last )
-            $last = $current;
-    }
-
-    $objects[$i]['first_collection'] = $first;
-    $objects[$i]['last_collection'] = $last;
-    $objects[$i]['collections']= count( $collections );
+    $objects[$i]['collections']= eZInformationCollection::fetchCollectionCountForObject( $objects[$i]['contentobject_id'] );
 }
 
 $viewParameters = array( 'offset' => $offset );

@@ -3,8 +3,8 @@
 // Created on: <22-Apr-2002 15:41:30 bf>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.1.0
-// BUILD VERSION: 23234
+// SOFTWARE RELEASE: 4.2.0
+// BUILD VERSION: 24182
 // COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
@@ -186,20 +186,7 @@ if ( $Module->isCurrentAction( 'CopyVersion' )  )
         return $Module->handleError( eZError::KERNEL_ACCESS_DENIED, 'kernel' );
     }
 
-    $contentINI = eZINI::instance( 'content.ini' );
-    $versionlimit = $contentINI->variable( 'VersionManagement', 'DefaultVersionHistoryLimit' );
-
-    $limitList = $contentINI->variable( 'VersionManagement', 'VersionHistoryClass' );
-
-    $classID = $object->attribute( 'contentclass_id' );
-    foreach ( array_keys ( $limitList ) as $key )
-    {
-        if ( $classID == $key )
-            $versionlimit = $limitList[$key];
-    }
-    if ( $versionlimit < 2 )
-        $versionlimit = 2;
-
+    $versionlimit = eZContentClass::versionHistoryLimit( $object->attribute( 'contentclass_id' ) );
     $versionCount = $object->getVersionCount();
     if ( $versionCount < $versionlimit )
     {

@@ -5,8 +5,8 @@
 // Created on: <01-Aug-2003 13:13:13 bh>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.1.0
-// BUILD VERSION: 23234
+// SOFTWARE RELEASE: 4.2.0
+// BUILD VERSION: 24182
 // COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
@@ -423,7 +423,7 @@ class eZWebDAVServer
             // The following lines take care of URL encoding special characters
             // for each element (stuff between slashes) in the path.
             $href = $entry['href'];
-            $pathArray = split( '/', eZWebDAVServer::recode( "$href", $dataCharset, $xmlCharset ) );
+            $pathArray = explode( '/', eZWebDAVServer::recode( "$href", $dataCharset, $xmlCharset ) );
 
             $encodedPath = '/';
 

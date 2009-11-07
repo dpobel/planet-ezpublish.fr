@@ -5,8 +5,8 @@
 // Created on: <13-May-2003 12:01:34 sp>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.1.0
-// BUILD VERSION: 23234
+// SOFTWARE RELEASE: 4.2.0
+// BUILD VERSION: 24182
 // COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
@@ -43,6 +43,14 @@ class eZNotificationTransport
     {
     }
 
+    /**
+     * Returns a shared instance of the eZNotificationTransport class.
+     *
+     *
+     * @param $transport string|false Uses notification.ini[TransportSettings]DefaultTransport if false
+     * @param $forceNewInstance bool
+     * @return eZNotificationTransport
+     */
     static function instance( $transport = false, $forceNewInstance = false )
     {
         $ini = eZINI::instance( 'notification.ini' );
@@ -51,11 +59,11 @@ class eZNotificationTransport
             $transport = $ini->variable( 'TransportSettings', 'DefaultTransport' );
         }
         $transportImpl =& $GLOBALS['eZNotificationTransportGlobalInstance_' . $transport ];
-        $class = strtolower( get_class( $transportImpl ) );
+        $class = $transportImpl !== null ? strtolower( get_class( $transportImpl ) ) : '';
 
         $fetchInstance = false;
         if ( !preg_match( '/.*?transport/', $class ) )
-            $fetchInstance = true;
+                $fetchInstance = true;
 
         if ( $forceNewInstance  )
         {

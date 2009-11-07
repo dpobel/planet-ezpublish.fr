@@ -1,12 +1,12 @@
 <?php
 //
-// Definition of eZContentDataInstace class
+// Definition of eZContentObjectAttribute class
 //
 // Created on: <22-Apr-2002 09:31:57 bf>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.1.0
-// BUILD VERSION: 23234
+// SOFTWARE RELEASE: 4.2.0
+// BUILD VERSION: 24182
 // COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
@@ -53,7 +53,7 @@ class eZContentObjectAttribute extends eZPersistentObject
 
     static function definition()
     {
-        return array( "fields" => array( "id" => array( 'name' => 'ID',
+        static $definition = array( "fields" => array( "id" => array( 'name' => 'ID',
                                                         'datatype' => 'integer',
                                                         'default' => 0,
                                                         'required' => true ),
@@ -146,6 +146,7 @@ class eZContentObjectAttribute extends eZPersistentObject
                       "class_name" => "eZContentObjectAttribute",
                       "sort" => array( "id" => "asc" ),
                       "name" => "ezcontentobject_attribute" );
+        return $definition;
     }
 
     static function fetch( $id, $version, $asObject = true, $field_filters = null )
@@ -655,7 +656,7 @@ class eZContentObjectAttribute extends eZPersistentObject
 
     /*!
       Tries to fixup the input text to be acceptable.
-     */
+    ï¿½*/
     function fixupInput( $http, $base )
     {
         $dataType = $this->dataType();
@@ -677,7 +678,7 @@ class eZContentObjectAttribute extends eZPersistentObject
 
     /*!
       Validates the information collection data.
-    */
+   ï¿½*/
     function validateInformation( $http, $base,
                                   &$inputParameters, $validationParameters = array() )
     {
@@ -869,11 +870,15 @@ class eZContentObjectAttribute extends eZPersistentObject
                                           $this );
     }
 
-    /*!
-     Initialized the attribute by using the datatype.
-     \note Transaction unsafe. If you call several transaction unsafe methods you must enclose
-     the calls within a db transaction; thus within db->begin and db->commit.
-    */
+    /**
+     * Initializes the attribute by using the datatype
+     *
+     * @param int $currentVersion Current version number
+     * @param eZContentObjectAttribute $originalContentObjectAttribute
+     *        Optional eZContentObjectAttribute the content will be initialized
+     *        from
+     * @return void
+     **/
     function initialize( $currentVersion = null, $originalContentObjectAttribute = null )
     {
         if ( $originalContentObjectAttribute === null )
@@ -921,10 +926,20 @@ class eZContentObjectAttribute extends eZPersistentObject
         }
     }
 
-    /*!
-     Clones the attribute with new version \a $newVersionNumber and old version \a $currentVersionNumber.
-     \note The cloned attribute is not stored.
-    */
+    /**
+     * Clones the attribute to a new version
+     *
+     * @param int $newVersionNumber Target version number
+     * @param int $currentVersionNumnber Source version number
+     * @param int $contentObjectID
+     * @param string $newLanguageCode
+     *
+     * @note The cloned attribute isn't stored automatically
+     *
+     * @return eZContentObjectAttribute The cloned attribute
+     *
+     * @todo Deprecate this in favor of a real __clone
+     **/
     function cloneContentObjectAttribute( $newVersionNumber, $currentVersionNumber, $contentObjectID = false, $newLanguageCode = false )
     {
         $tmp = clone $this;
@@ -1035,7 +1050,7 @@ class eZContentObjectAttribute extends eZPersistentObject
     function dataType()
     {
         $dataType = null;
-        if( !is_null( $this->DataTypeString ) )
+        if( $this->DataTypeString !== null )
             $dataType = eZDataType::create( $this->DataTypeString );
 
         return $dataType;

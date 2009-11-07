@@ -3,8 +3,8 @@
 // Created on: <16-Apr-2002 11:00:12 amos>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.1.0
-// BUILD VERSION: 23234
+// SOFTWARE RELEASE: 4.2.0
+// BUILD VERSION: 24182
 // COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
@@ -66,7 +66,7 @@ if ( is_numeric( $ClassID ) )
     if ( !is_object( $class ) or $class->attribute( 'id' ) == null )
     {
         $class = eZContentClass::fetch( $ClassID, true, eZContentClass::VERSION_STATUS_DEFINED );
-        if( is_null( $class ) ) // Class does not exist
+        if( $class === null ) // Class does not exist
         {
             return $Module->handleError( eZError::KERNEL_NOT_AVAILABLE, 'kernel' );
         }

@@ -5,8 +5,8 @@
 // Created on: <26-Nov-2002 17:25:44 amos>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.1.0
-// BUILD VERSION: 23234
+// SOFTWARE RELEASE: 4.2.0
+// BUILD VERSION: 24182
 // COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
@@ -1376,6 +1376,11 @@ class eZTemplateMultiPassParser extends eZTemplateParser
         $cur_pos = $text_len;
     }
 
+    /**
+     * Returns a shared instance of the eZTemplateMultiPassParser class.
+     *
+     * @return eZTemplateMultiPassParser
+     */
     static function instance()
     {
         if ( !isset( $GLOBALS['eZTemplateMultiPassParserInstance'] ) ||

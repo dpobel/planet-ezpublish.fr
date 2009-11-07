@@ -5,8 +5,8 @@
 // Created on: <23-Feb-2005 17:46:42 vs>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.1.0
-// BUILD VERSION: 23234
+// SOFTWARE RELEASE: 4.2.0
+// BUILD VERSION: 24182
 // COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
@@ -158,7 +158,7 @@ class eZTemplateLoop
      */
     function hasSequence()
     {
-        return !is_null( $this->Sequence );
+        return $this->Sequence !== null;
     }
 
 
@@ -208,7 +208,7 @@ class eZTemplateLoop
                 }
                 elseif ( $childFunctionName == 'delimiter' )
                 {
-                    if ( is_null( $this->Delimiter ) )
+                    if ( $this->Delimiter === null )
                         $this->Delimiter = $child;
                     continue;
                 }
@@ -247,7 +247,7 @@ class eZTemplateLoop
      */
     function processDelimiter( $index = false )
     {
-        if ( is_null( $this->Delimiter ) || $this->SkipDelimiter )
+        if ( $this->Delimiter === null || $this->SkipDelimiter )
             return false;
 
         $delimiterChildren = $this->Delimiter[1];

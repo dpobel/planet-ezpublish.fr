@@ -3,8 +3,8 @@
 // Created on: <15-Apr-2004 11:25:31 bh>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.1.0
-// BUILD VERSION: 23234
+// SOFTWARE RELEASE: 4.2.0
+// BUILD VERSION: 24182
 // COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
@@ -96,8 +96,8 @@ else if ( $module->isCurrentAction( 'RemoveSelectedSessions' ) )
             if ( count( $userIDArray ) > 0 )
             {
                 $db = eZDB::instance();
-                $userIDArrayString = $db->implodeWithTypeCast( ',', $userIDArray, 'int' );
-                $rows = $db->arrayQuery( "SELECT session_key FROM ezsession WHERE user_id IN ( " . $userIDArrayString . " )" );
+                $userINString = $db->generateSQLINStatement( $userIDArray, 'user_id', false, false, 'int' );
+                $rows = $db->arrayQuery( "SELECT session_key FROM ezsession WHERE $userINString" );
                 foreach ( $rows as $row )
                 {
                     eZSession::destroy( $row['session_key'] );

@@ -5,8 +5,8 @@
 // Created on: <16-Apr-2002 11:08:14 amos>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.1.0
-// BUILD VERSION: 23234
+// SOFTWARE RELEASE: 4.2.0
+// BUILD VERSION: 24182
 // COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
@@ -374,7 +374,7 @@ class eZObjectRelationType extends eZDataType
     function objectDisplayInformation( $objectAttribute, $mergeInfo = false )
     {
         $classAttribute = $objectAttribute->contentClassAttribute();
-        $content = eZObjectRelationType::classAttributeContent( $classAttribute );
+        $content = $this->classAttributeContent( $classAttribute );
         $editGrouped = ( $content['selection_type'] == 0 or
                          ( $content['selection_type'] == 1 and $content['fuzzy_match'] ) );
 
@@ -456,7 +456,16 @@ class eZObjectRelationType extends eZDataType
         {
             if ( eZContentObject::recursionProtect( $object->attribute( 'id' ) ) )
             {
-                $attributes = $object->contentObjectAttributes();
+                // Does the related object exist in the same language as the current content attribute ?
+                if ( in_array( $contentObjectAttribute->attribute( 'language_code' ), $object->attribute( 'current' )->translationList( false, false ) ) )
+                {
+                    $attributes = $object->attribute( 'current' )->contentObjectAttributes( $contentObjectAttribute->attribute( 'language_code' ) );
+                }
+                else
+                {
+                    $attributes = $object->contentObjectAttributes();
+                }
+
                 return eZContentObjectAttribute::metaDataArray( $attributes );
             }
             else
@@ -558,7 +567,7 @@ class eZObjectRelationType extends eZDataType
         $node = $this->createContentObjectAttributeDOMNode( $objectAttribute );
         $relatedObjectID = $objectAttribute->attribute( 'data_int' );
 
-        if ( !is_null( $relatedObjectID ) )
+        if ( $relatedObjectID !== null )
         {
             $relatedObject = eZContentObject::fetch( $relatedObjectID );
             if ( !$relatedObject )

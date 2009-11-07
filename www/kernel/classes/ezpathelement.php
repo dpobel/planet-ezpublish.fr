@@ -5,8 +5,8 @@
 // Created on: <01-Aug-2003 16:44:56 bf>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.1.0
-// BUILD VERSION: 23234
+// SOFTWARE RELEASE: 4.2.0
+// BUILD VERSION: 24182
 // COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
@@ -58,7 +58,7 @@ class eZPathElement extends eZPersistentObject
 
     static public function definition()
     {
-        return array( "fields" => array( "id" => array( 'name' => 'ID',
+        static $definition = array( "fields" => array( "id" => array( 'name' => 'ID',
                                                         'datatype' => 'integer',
                                                         'default' => 0,
                                                         'required' => true ),
@@ -110,6 +110,7 @@ class eZPathElement extends eZPersistentObject
                                                       "path_array" => "getPathArray" ),
                       "class_name" => "eZURLAliasML",
                       "name" => "ezurlalias_ml" );
+        return $definition;
     }
 
     /*!

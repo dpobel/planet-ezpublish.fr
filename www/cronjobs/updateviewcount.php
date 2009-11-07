@@ -5,8 +5,8 @@
 // Created on: <07-Jul-2003 10:06:19 wy>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.1.0
-// BUILD VERSION: 23234
+// SOFTWARE RELEASE: 4.2.0
+// BUILD VERSION: 24182
 // COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
@@ -114,18 +114,18 @@ if ( is_file( $logFilePath ) )
                 {
                     $logPartArray = preg_split( "/[\"]+/", $line );
                     $timeIPPart = $logPartArray[0];
-                    list( $ip, $timePart ) = split( "\[", $timeIPPart );
-                    list( $time, $rest ) = split( " ", $timePart );
+                    list( $ip, $timePart ) = explode( '[', $timeIPPart );
+                    list( $time, $rest ) = explode( ' ', $timePart );
 
                     if ( $time == $startTime )
                         $stopParse = true;
                     $requirePart = $logPartArray[1];
 
-                    list( $requireMethod, $url ) = split( " ", $requirePart );
+                    list( $requireMethod, $url ) = explode( ' ', $requirePart );
                     $url = preg_replace( "/\?.*/", "", $url);
                     foreach ( $prefixes as $prefix )
                     {
-                        $urlChanged = preg_replace( "/^\/$prefix\//", "", $url );
+                        $urlChanged = preg_replace( '/^\/' . preg_quote( $prefix, '/' ) . '\//', '', $url );
                         if ( $urlChanged != $url )
                         {
                             $url = $urlChanged;
@@ -142,7 +142,7 @@ if ( is_file( $logFilePath ) )
                     }
                     else
                     {
-                        $urlArray = split( "/", $url );
+                        $urlArray = explode( '/', $url );
                         $firstElement = $urlArray[0];
                         if ( in_array( $firstElement, $contentArray ) )
                         {

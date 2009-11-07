@@ -903,7 +903,7 @@ INSERT INTO ezsection (id, locale, name, navigation_part_identifier) VALUES (4,'
 INSERT INTO ezsection (id, locale, name, navigation_part_identifier) VALUES (5,'','Design','ezvisualnavigationpart');
 
 INSERT INTO ezsite_data (name, value) VALUES ('ezpublish-release','1');
-INSERT INTO ezsite_data (name, value) VALUES ('ezpublish-version','4.1.0');
+INSERT INTO ezsite_data (name, value) VALUES ('ezpublish-version','4.2.0');
 
 INSERT INTO ezurl (created, id, is_valid, last_checked, modified, original_url_md5, url) VALUES (1082368571,1,1,0,1082368571,'1c4c1d746fbd23350bcfa5e978841f23','http://ez.no/ez_publish/documentation');
 INSERT INTO ezurl (created, id, is_valid, last_checked, modified, original_url_md5, url) VALUES (1082368571,4,1,0,1082368571,'41caff1d7f5ad51e70ad46abbcf28fb7','http://ez.no/community/forum');

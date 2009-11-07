@@ -5,8 +5,8 @@
 // Created on: <16-Aug-2002 16:34:41 sp>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.1.0
-// BUILD VERSION: 23234
+// SOFTWARE RELEASE: 4.2.0
+// BUILD VERSION: 24182
 // COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
@@ -49,7 +49,7 @@ class eZPolicy extends eZPersistentObject
 
     static function definition()
     {
-        return array( 'fields' => array( 'id' => array( 'name' => 'ID',
+        static $definition = array( 'fields' => array( 'id' => array( 'name' => 'ID',
                                                         'datatype' => 'integer',
                                                         'default' => 0,
                                                         'required' => true ),
@@ -78,6 +78,7 @@ class eZPolicy extends eZPersistentObject
                       'sort' => array( 'id' => 'asc' ),
                       'class_name' => 'eZPolicy',
                       'name' => 'ezpolicy' );
+        return $definition;
     }
 
     function limitIdentifier()

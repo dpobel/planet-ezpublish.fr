@@ -2,8 +2,8 @@
 // Created on: <08-Aug-2006 15:14:44 bjorn>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.1.0
-// BUILD VERSION: 23234
+// SOFTWARE RELEASE: 4.2.0
+// BUILD VERSION: 24182
 // COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
@@ -41,10 +41,13 @@ class eZConfirmOrderHandler
     {
     }
 
-
-    /*!
-     returns the current order confirmation instance
-    */
+    /**
+     * Returns a shared instance of the eZConfirmOrderHandler class
+     * as defined in shopaccount.ini[HandlerSettings]Repositories
+     * and ExtensionRepositories.
+     *
+     * @return eZDefaultConfirmOrderHandler Or similar clases.
+     */
     static function instance()
     {
         $confirmOrderHandler = null;

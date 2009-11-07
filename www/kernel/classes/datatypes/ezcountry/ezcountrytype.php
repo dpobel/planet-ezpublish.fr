@@ -5,8 +5,8 @@
 // Created on: <20-Feb-2006 11:11:19 vs>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.1.0
-// BUILD VERSION: 23234
+// SOFTWARE RELEASE: 4.2.0
+// BUILD VERSION: 24182
 // COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
@@ -81,6 +81,19 @@ class eZCountryType extends eZDataType
             if ( $translatedName )
                 $countries[$countryKey]['Name'] = $translatedName;
         }
+        usort( $countries, 'eZCountryType::compareCountryNames' );
+    }
+
+    /**
+     * Sort callback used by fetchTranslatedNames to compare two country arrays
+     *
+     * @param array $a Country 1
+     * @param array $b Country 2
+     * @return bool
+     */
+    protected static function compareCountryNames( $a, $b )
+    {
+        return strcoll( $a["Name"], $b["Name"] );
     }
 
     /*!

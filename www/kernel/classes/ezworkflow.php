@@ -5,8 +5,8 @@
 // Created on: <16-Apr-2002 11:08:14 amos>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.1.0
-// BUILD VERSION: 23234
+// SOFTWARE RELEASE: 4.2.0
+// BUILD VERSION: 24182
 // COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
@@ -44,6 +44,7 @@ class eZWorkflow extends eZPersistentObject
     const STATUS_REDIRECT = 7;
     const STATUS_RESET = 8;
     const STATUS_WAITING_PARENT = 9;
+    const STATUS_FETCH_TEMPLATE_REPEAT = 10;
 
     function eZWorkflow( $row )
     {

@@ -3,8 +3,8 @@
 // Created on: <18-Jul-2002 10:55:01 bf>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.1.0
-// BUILD VERSION: 23234
+// SOFTWARE RELEASE: 4.2.0
+// BUILD VERSION: 24182
 // COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
@@ -41,10 +41,15 @@ $parents = array();
 // We get node list when browse is execiuted from search engine ( "search in browse" functionality )
 if ( isset( $Params['NodeList'] ) )
 {
-     $nodeList = $Params['NodeList']['SearchResult'];
-     $nodeListCount = $Params['NodeList']['SearchCount'];
-     $requestedURI = $Params['NodeList']['RequestedURI'];
-     $requestedURISuffix = $Params['NodeList']['RequestedURISuffix'];
+    $nodeList = $Params['NodeList']['SearchResult'];
+    $nodeListCount = $Params['NodeList']['SearchCount'];
+    $requestedURI = $Params['NodeList']['RequestedURI'];
+    $requestedURISuffix = $Params['NodeList']['RequestedURISuffix'];
+
+    if ( isset( $Params['NodeID'] ) && is_numeric( $Params['NodeID'] ) )
+    {
+        $NodeID = $Params['NodeID'];
+    }
 }
 else
 {
@@ -56,7 +61,10 @@ else
     }
 
     $NodeID = $browse->attribute( 'start_node' );
+}
 
+if ( isset( $NodeID ) )
+{
     $node = eZContentObjectTreeNode::fetch( $NodeID );
     if ( !$node )
         return $Module->handleError( eZError::KERNEL_NOT_AVAILABLE, 'kernel' );
@@ -151,7 +159,7 @@ $Result['view_parameters'] = $viewParameters;
 
 // Fetch the navigation part from the section information
 $Result['navigation_part'] = 'ezcontentnavigationpart';
-if ( !isset( $nodeList ) )
+if ( isset( $object ) && isset( $node ) )
 {
     $globalSectionID = $object->attribute( 'section_id' );
     $section = eZSection::fetch( $object->attribute( 'section_id' ) );
@@ -195,7 +203,7 @@ if ( $templatePath )
 {
     $Result['path'] = $templatePath;
 }
-elseif ( isset( $nodeList ) )
+elseif ( isset( $nodeList ) && !( isset( $object ) && isset( $node ) ) )
 {
     $Result['path'] = array( array( 'text' => ezi18n( 'kernel/content', 'Search' ),
                                     'url' => false ) );

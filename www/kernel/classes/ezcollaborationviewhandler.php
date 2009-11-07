@@ -5,8 +5,8 @@
 // Created on: <23-Jan-2003 11:59:34 amos>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.1.0
-// BUILD VERSION: 23234
+// SOFTWARE RELEASE: 4.2.0
+// BUILD VERSION: 24182
 // COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
@@ -121,10 +121,15 @@ class eZCollaborationViewHandler
         return eZCollaborationViewHandler::ini()->variable( 'ViewSettings', 'GroupViewList' );
     }
 
-    /*!
-     \static
-     \return the single instance of the viewmode \a $viewMode.
-    */
+    /**
+     * Returns a shared instance of the eZCollaborationViewHandler class
+     * pr the two input params.
+     *
+     *
+     * @param $viewMode string
+     * @param $type int Is self::TYPE_STANDARD by default
+     * @return eZCollaborationViewHandler
+     */
     static function instance( $viewMode, $type = self::TYPE_STANDARD )
     {
         if ( $type == self::TYPE_STANDARD )

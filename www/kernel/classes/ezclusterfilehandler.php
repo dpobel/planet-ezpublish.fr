@@ -5,8 +5,8 @@
 // Created on: <07-Mar-2006 16:14:02 vs>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.1.0
-// BUILD VERSION: 23234
+// SOFTWARE RELEASE: 4.2.0
+// BUILD VERSION: 24182
 // COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
@@ -32,9 +32,13 @@
 class eZClusterFileHandler
 {
     /**
-     * \public
-     * \static
-     * \return filehandler
+     * Returns the configured instance of an eZClusterFileHandlerInterface
+     * See ClusteringSettings.FileHandler in php.ini
+     *
+     * @param string|bool $filename
+     *        Optional filename the handler should be initialized with
+     *
+     * @return eZClusterFileHandlerInterface
      */
     static function instance( $filename = false )
     {

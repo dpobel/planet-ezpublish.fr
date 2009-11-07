@@ -3,8 +3,8 @@
 // Created on: <04-Jul-2002 13:06:30 bf>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.1.0
-// BUILD VERSION: 23234
+// SOFTWARE RELEASE: 4.2.0
+// BUILD VERSION: 24182
 // COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
@@ -934,9 +934,12 @@ else if ( $http->hasPostVariable( 'RemoveButton' ) )
             $http->setSessionVariable( 'HideRemoveConfirmation', $hideRemoveConfirm );
             $http->setSessionVariable( 'DeleteIDArray', $deleteIDArray );
             $object = eZContentObject::fetch( $contentObjectID );
-            eZSection::setGlobalID( $object->attribute( 'section_id' ) );
-            $section = eZSection::fetch( $object->attribute( 'section_id' ) );
-            if ( $section )
+            if ( $object instanceof eZContentObject )
+            {
+                eZSection::setGlobalID( $object->attribute( 'section_id' ) );
+                $section = eZSection::fetch( $object->attribute( 'section_id' ) );
+            }
+            if ( isset($section) && $section )
                 $navigationPartIdentifier = $section->attribute( 'navigation_part_identifier' );
             else
                 $navigationPartIdentifier = null;
@@ -1220,10 +1223,17 @@ else if ( $http->hasPostVariable( "ContentObjectID" )  )
             $http->setSessionVariable( 'ContentObjectID', $contentObjectID );
             $http->setSessionVariable( 'HideRemoveConfirmation', $hideRemoveConfirm );
             $http->setSessionVariable( 'DeleteIDArray', array( $contentNodeID ) );
-            $object = eZContentObject::fetchByNodeID( $contentNodeID);
-            eZSection::setGlobalID( $object->attribute( 'section_id' ) );
-            $section = eZSection::fetch( $object->attribute( 'section_id' ) );
-            if ( $section )
+
+            $http->setSessionVariable( 'RedirectURIAfterRemove', $http->postVariable( 'RedirectURIAfterRemove', false ) );
+            $http->setSessionVariable( 'RedirectIfCancel', $http->postVariable( 'RedirectIfCancel', false ) );
+
+            $object = eZContentObject::fetchByNodeID( $contentNodeID );
+            if ( $object instanceof eZContentObject )
+            {
+                eZSection::setGlobalID( $object->attribute( 'section_id' ) );
+                $section = eZSection::fetch( $object->attribute( 'section_id' ) );
+            }
+            if ( isset($section) && $section )
                 $navigationPartIdentifier = $section->attribute( 'navigation_part_identifier' );
             else
                 $navigationPartIdentifier = null;

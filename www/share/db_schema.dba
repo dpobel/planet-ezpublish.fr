@@ -3238,6 +3238,15 @@ $schema = array (
           0 => 'id',
         ),
       ),
+      'ezinfocollection_co_id_created' => 
+      array (
+        'type' => 'non-unique',
+        'fields' => 
+        array (
+          0 => 'contentobject_id',
+          1 => 'created',
+        ),
+      ),
     ),
   ),
   'ezinfocollection_attribute' => 
@@ -3576,6 +3585,14 @@ $schema = array (
         array (
           0 => 'keyword_id',
           1 => 'objectattribute_id',
+        ),
+      ),
+      'ezkeyword_attr_link_oaid' => 
+      array (
+        'type' => 'non-unique',
+        'fields' => 
+        array (
+          0 => 'objectattribute_id',
         ),
       ),
     ),
@@ -4840,16 +4857,16 @@ $schema = array (
         'not_null' => '1',
         'default' => '',
       ),
-      'param' => 
-      array (
-        'type' => 'longtext',
-        'default' => false,
-      ),
       'created' => 
       array (
         'length' => 11,
         'type' => 'int',
         'default' => NULL,
+      ),
+      'param' => 
+      array (
+        'type' => 'longtext',
+        'default' => false,
       ),
     ),
     'indexes' => 
@@ -4945,6 +4962,14 @@ $schema = array (
         'fields' => 
         array (
           0 => 'id',
+        ),
+      ),
+      'policy_id' => 
+      array (
+        'type' => 'non-unique',
+        'fields' => 
+        array (
+          0 => 'policy_id',
         ),
       ),
     ),
@@ -6017,19 +6042,19 @@ $schema = array (
         'not_null' => '1',
         'default' => '',
       ),
-      'user_id' => 
-      array (
-        'length' => 11,
-        'type' => 'int',
-        'not_null' => '1',
-        'default' => 0,
-      ),
       'user_hash' => 
       array (
         'length' => 32,
         'type' => 'varchar',
         'not_null' => '1',
         'default' => '',
+      ),
+      'user_id' => 
+      array (
+        'length' => 11,
+        'type' => 'int',
+        'not_null' => '1',
+        'default' => 0,
       ),
     ),
     'indexes' => 
@@ -6892,6 +6917,14 @@ $schema = array (
           0 => 'id',
         ),
       ),
+      'hash_key' => 
+      array (
+        'type' => 'non-unique',
+        'fields' => 
+        array (
+          0 => 'hash_key',
+        ),
+      ),
     ),
   ),
   'ezuser_discountrule' => 
@@ -7497,25 +7530,25 @@ $schema = array (
       ),
       'data_text1' => 
       array (
-        'length' => 50,
+        'length' => 255,
         'type' => 'varchar',
         'default' => NULL,
       ),
       'data_text2' => 
       array (
-        'length' => 50,
+        'length' => 255,
         'type' => 'varchar',
         'default' => NULL,
       ),
       'data_text3' => 
       array (
-        'length' => 50,
+        'length' => 255,
         'type' => 'varchar',
         'default' => NULL,
       ),
       'data_text4' => 
       array (
-        'length' => 50,
+        'length' => 255,
         'type' => 'varchar',
         'default' => NULL,
       ),
@@ -7574,6 +7607,16 @@ $schema = array (
         array (
           0 => 'id',
           1 => 'version',
+        ),
+      ),
+      'wid_version_placement' => 
+      array (
+        'type' => 'non-unique',
+        'fields' => 
+        array (
+          0 => 'workflow_id',
+          1 => 'version',
+          2 => 'placement',
         ),
       ),
     ),

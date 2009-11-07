@@ -5,8 +5,8 @@
 // Created on: <28-Nov-2005 12:26:52 dl>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.1.0
-// BUILD VERSION: 23234
+// SOFTWARE RELEASE: 4.2.0
+// BUILD VERSION: 24182
 // COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
@@ -52,6 +52,11 @@ class eZCurrencyConverter
         $this->setRoundingTarget( null );
     }
 
+    /**
+     * Returns a shared instance of the eZCurrencyConverter class.
+     *
+     * @return eZCurrencyConverter
+     */
     static function instance()
     {
         if ( empty( $GLOBALS["eZCurrencyConverterGlobalInstance"] ) )

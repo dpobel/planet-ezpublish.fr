@@ -2,8 +2,8 @@
 //
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.1.0
-// BUILD VERSION: 23234
+// SOFTWARE RELEASE: 4.2.0
+// BUILD VERSION: 24182
 // COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
@@ -77,7 +77,7 @@ else if ( $currentAction == 'Store' )
 $tpl->setVariable( 'state', $state );
 $tpl->setVariable( 'group', $group );
 
-if ( is_null( $StateIdentifier ) )
+if ( $StateIdentifier === null )
 {
     $path = array(
         array( 'url' => false, 'text' => ezi18n( 'kernel/state', 'State' ) ),

@@ -32,7 +32,7 @@ class eZContentObjectStateGroup extends eZPersistentObject
 
     public static function definition()
     {
-        $def = array( "fields" => array( "id" => array( "name" => "ID",
+        static $definition = array( "fields" => array( "id" => array( "name" => "ID",
                                                         "datatype" => "integer",
                                                         "required" => true ),
                                          "identifier" => array( "name" => "Identifier",
@@ -59,7 +59,7 @@ class eZContentObjectStateGroup extends eZPersistentObject
                       "class_name" => "eZContentObjectStateGroup",
                       "sort" => array( "identifier" => "asc" ),
                       "name" => "ezcobj_state_group" );
-        return $def;
+        return $definition;
     }
 
     /**
@@ -212,7 +212,7 @@ class eZContentObjectStateGroup extends eZPersistentObject
                     {
                         $row['contentobject_state_group_id'] = $this->ID;
                     }
-                    $allTranslations[] = new eZContentObjectStateGroupLanguage( $row );
+                    $allTranslations[$languageID] = new eZContentObjectStateGroupLanguage( $row );
                 }
             }
             ksort( $allTranslations );
@@ -338,7 +338,7 @@ class eZContentObjectStateGroup extends eZPersistentObject
             {
                 // the name and description are empty
                 // so the translation needs to be removed if it was stored before
-                if ( !is_null( $translation->attribute( 'contentobject_state_group_id' ) ) )
+                if ( $translation->attribute( 'contentobject_state_group_id' ) !== null )
                 {
                     $translation->remove();
                 }
@@ -706,8 +706,10 @@ class eZContentObjectStateGroup extends eZPersistentObject
     public static function limitationValues( $groupID )
     {
         $group = self::fetchById( $groupID );
+        $states = array();
 
-        $states = $group->attribute( 'states' );
+        if ( $group !== false )
+            $states = $group->attribute( 'states' );
 
         $limitationValues = array();
         foreach ( $states as $state )

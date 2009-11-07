@@ -4,8 +4,8 @@
 // Created on: <08-Nov-2002 16:02:26 wy>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.1.0
-// BUILD VERSION: 23234
+// SOFTWARE RELEASE: 4.2.0
+// BUILD VERSION: 24182
 // COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
@@ -65,7 +65,18 @@ if ( $http->hasPostVariable( "CancelButton" ) )
     $http->removeSessionVariable( 'ContentNodeID' );
     $http->removeSessionVariable( 'userRedirectURIReverseRelatedList' );
     $http->removeSessionVariable( 'HideRemoveConfirmation' );
-    return $Module->redirectToView( 'view', array( $viewMode, $contentNodeID, $contentLanguage ) );
+    $http->removeSessionVariable( 'RedirectURIAfterRemove' );
+
+    if ( $http->hasSessionVariable( 'RedirectIfCancel' )
+      && $http->sessionVariable( 'RedirectIfCancel' ) )
+    {
+        $Module->redirectTo( $http->sessionVariable( 'RedirectIfCancel' ) );
+        return $http->removeSessionVariable( 'RedirectIfCancel' );
+    }
+    else
+    {
+        return $Module->redirectToView( 'view', array( $viewMode, $contentNodeID, $contentLanguage ) );
+    }
 }
 
 $contentINI = eZINI::instance( 'content.ini' );
@@ -105,7 +116,17 @@ if ( $http->hasPostVariable( "ConfirmButton" ) or
         eZContentOperationCollection::deleteObject( $deleteIDArray, $moveToTrash );
     }
 
-    return $Module->redirectToView( 'view', array( $viewMode, $contentNodeID, $contentLanguage ) );
+    if ( $http->hasSessionVariable( 'RedirectURIAfterRemove' )
+      && $http->sessionVariable( 'RedirectURIAfterRemove' ) )
+    {
+        $Module->redirectTo( $http->sessionVariable( 'RedirectURIAfterRemove' ) );
+        $http->removeSessionVariable( 'RedirectURIAfterRemove' );
+        return $http->removeSessionVariable( 'RedirectIfCancel' );
+    }
+    else
+    {
+        return $Module->redirectToView( 'view', array( $viewMode, $contentNodeID, $contentLanguage ) );
+    }
 }
 
 $showCheck = $contentINI->hasVariable( 'RemoveSettings', 'ShowRemoveToTrashCheck' ) ?
@@ -179,7 +200,18 @@ if ( $totalChildCount == 0 )
         {
             eZContentOperationCollection::removeAssignment( $contentNodeID, $contentObjectID, $deleteNodeArray, $moveToTrash );
         }
-        return $Module->redirectToView( 'view', array( $viewMode, $contentNodeID, $contentLanguage ) );
+
+        if ( $http->hasSessionVariable( 'RedirectURIAfterRemove' )
+          && $http->sessionVariable( 'RedirectURIAfterRemove' ) )
+        {
+            $Module->redirectTo( $http->sessionVariable( 'RedirectURIAfterRemove' ) );
+            $http->removeSessionVariable( 'RedirectURIAfterRemove' );
+            return $http->removeSessionVariable( 'RedirectIfCancel' );
+        }
+        else
+        {
+            return $Module->redirectToView( 'view', array( $viewMode, $contentNodeID, $contentLanguage ) );
+        }
     }
 }
 

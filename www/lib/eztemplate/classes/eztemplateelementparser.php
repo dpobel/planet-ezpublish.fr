@@ -5,8 +5,8 @@
 // Created on: <27-Nov-2002 10:53:36 amos>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.1.0
-// BUILD VERSION: 23234
+// SOFTWARE RELEASE: 4.2.0
+// BUILD VERSION: 24182
 // COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
@@ -589,7 +589,10 @@ class eZTemplateElementParser
         if ( $currentPosition >= $textLength )
             return $currentPosition;
         while( $currentPosition < $textLength and
-               preg_match( "/[ \t\r\n]/", $text[$currentPosition] ) )
+               ( $text[$currentPosition] === ' ' 
+                 or $text[$currentPosition] === "\n"
+                 or $text[$currentPosition] === "\t"
+                 or $text[$currentPosition] === "\r" ) )
         {
             ++$currentPosition;
         }
@@ -601,9 +604,17 @@ class eZTemplateElementParser
     */
     function isWhitespace( $tpl, &$text, $startPosition )
     {
-        return preg_match( "/[ \t\r\n]/", $text[$startPosition] );
+        return ( $text[$startPosition] === ' '
+                 or $text[$startPosition] === "\n"
+                 or $text[$startPosition] === "\t"
+                 or $text[$startPosition] === "\r" );
     }
 
+    /**
+     * Returns a shared instance of the eZTemplateElementParser class.
+     *
+     * @return eZTemplateElementParser
+     */
     static function instance()
     {
         if ( !isset( $GLOBALS['eZTemplateElementParserInstance'] ) ||

@@ -3,8 +3,8 @@
 // Created on: <09-Feb-2004 09:06:24 dr>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.1.0
-// BUILD VERSION: 23234
+// SOFTWARE RELEASE: 4.2.0
+// BUILD VERSION: 24182
 // COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
@@ -263,7 +263,7 @@ class eZPgsqlSchema extends eZDBSchemaInterface
             $fields = array();
             $kn = $row['relname'];
 
-            $column_id_array = split( ' ', $row['indkey'] );
+            $column_id_array = explode( ' ', $row['indkey'] );
             if ( $row['indisprimary'] == 't' )
             {
                 // If the name of the key matches our primary key naming standard

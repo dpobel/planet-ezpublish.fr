@@ -5,8 +5,8 @@
 // Created on: <07-Jun-2002 12:40:42 amos>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.1.0
-// BUILD VERSION: 23234
+// SOFTWARE RELEASE: 4.2.0
+// BUILD VERSION: 24182
 // COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
@@ -62,11 +62,11 @@ class eZShuffleTranslator extends eZTranslatorHandler
     */
     function &shuffleText( $text )
     {
-        $num = rand( 0, $this->MaxChars );
+        $num = mt_rand( 0, $this->MaxChars );
         for ( $i = 0; $i < $num; ++$i )
         {
             $len = strlen( $text );
-            $offs = rand( 0, $len - 1 );
+            $offs = mt_rand( 0, $len - 1 );
             if ( $offs == 0 )
             {
                 $tmp = $text[$offs];

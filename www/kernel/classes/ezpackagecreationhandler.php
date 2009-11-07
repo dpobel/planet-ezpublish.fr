@@ -5,8 +5,8 @@
 // Created on: <21-Nov-2003 11:52:36 amos>
 //
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.1.0
-// BUILD VERSION: 23234
+// SOFTWARE RELEASE: 4.2.0
+// BUILD VERSION: 24182
 // COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
@@ -347,9 +347,13 @@ class eZPackageCreationHandler
         return $creators;
     }
 
-    /*!
-     \return the package creation handler object for the handler named \a $handlerName.
-    */
+    /**
+     * Returns a shared instance of the eZPackageCreationHandler class
+     * pr $handlerName as defined in package.ini[CreationSettings]HandlerAlias
+     *
+     * @param $handlerName string
+     * @return eZPackageCreationHandler
+     */
     static function instance( $handlerName )
     {
         $handlers =& $GLOBALS['eZPackageCreationHandlers'];
