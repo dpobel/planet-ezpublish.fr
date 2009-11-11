@@ -322,7 +322,7 @@ font-size:130%;
 font-family:"Trebuchet MS", sans-serif;
 background-color:#ddd;
 }
-#menu h1 a
+#menu h1 a,#menu h1 span
 {
 padding:3px 3px 3px 5px;
 display:block;

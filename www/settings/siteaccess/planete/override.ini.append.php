@@ -6,6 +6,18 @@ MatchFile=full/site.tpl
 Subdir=templates
 Match[class_identifier]=site
 
+[line_rich_block]
+Source=node/view/line.tpl
+MatchFile=line/rich_block.tpl
+Subdir=templates
+Match[class_identifier]=rich_block
+
+[full_rich_block]
+Source=node/view/full.tpl
+MatchFile=full/rich_block.tpl
+Subdir=templates
+Match[class_identifier]=rich_block
+
 [line_post]
 Source=node/view/line.tpl
 MatchFile=line/post.tpl

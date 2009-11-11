@@ -29,6 +29,16 @@
     </div>
     {/cache-block}
     <div class="block">
+        {def $blocks = fetch( content, list, hash( 'parent_node_id', ezini( 'TreeSettings', 'PlanetRootNodeID', 'planete.ini' ),
+                                                   'class_filter_type', include,
+                                                   'class_filter_array', array( 'rich_block' ),
+                                                   'sort_by', array( 'priority', true() ) ) )}
+        {foreach $blocks as $block}
+            {node_view_gui content_node=$block view='line'}
+        {/foreach}
+        {undef $blocks}
+    </div>
+    <div class="block">
         <h1><a href={'planet/search'|ezurl()}>Recherche</a></h1>
         <form id="search" action={'planet/search'|ezurl()} method="get">
         <p>
