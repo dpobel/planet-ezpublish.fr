@@ -178,6 +178,16 @@ class eZPlaneteUtils
             $contentNode = $divNode->parentNode;
             $contentNode->removeChild( $divNode );
         }
+        // remove tweetmeme widget
+        $divNodes = $xpath->query( '//div[@class="tweetmeme_button"]' );
+        if ( $divNodes && $divNodes->length > 0 )
+        {
+            foreach( $divNodes as $div )
+            {
+                $parent = $div->parentNode;
+                $parent->removeChild( $div );
+            }
+        }
     }
 
     static function cleanScript( $xpath )
