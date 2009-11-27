@@ -7,7 +7,7 @@
     <h1><a href={$node.data_map.url.content|wash|ezurl()}><span>{$node.parent.name|wash()}</span>&nbsp;: {$node.name|wash()}</a></h1>
     <div class="post-content">{attribute_view_gui attribute=$node.data_map.html mode='html' base_url=$node.parent.data_map.url.content}</div>
     <div class="info">
-        <img src={'images/bookmark.png'|ezdesign} alt="Bookmark logos" usemap="#bookmark{$node.node_id}" />
+        <img src="{'images/bookmark.png'|ezdesign( 'no' )}?r={ezini( 'PageSettings', 'Revision', 'planete.ini',, true() )}" alt="Bookmark logos" usemap="#bookmark{$node.node_id}" />
         <map id="bookmark{$node.node_id}" name="bookmark{$node.node_id}">
         {def $start = 0
              $size = ezini( 'PageSettings', 'BookmarkImgSize', 'planete.ini' )

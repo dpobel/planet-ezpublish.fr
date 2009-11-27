@@ -14,6 +14,8 @@ BookmarkURL[Blogmark]=http://blogmarks.net/my/new.php?url=%url&title=%title&summ
 BookmarkURL[Google Bookmark]=http://www.google.com/bookmarks/mark?op=edit&bkmk=%url&title=%title
 BookmarkURL[Linkedin]=http://www.linkedin.com/shareArticle?mini=true&url=%url&title=%title&summary=&source=
 BookmarkURL[Yahoo! Bookmark]=http://bookmarks.yahoo.com/toolbar/savebm?opener=tb&u=%url&t=%title
+BookmarkURL[Partager sur Facebook]=http://www.facebook.com/sharer.php?u=%url&t=%title
+BookmarkURL[Twitter]=http://twitter.com/home?status=%url
 BookmarkImgSize=16
 BookmarkImgPadding=5
 
