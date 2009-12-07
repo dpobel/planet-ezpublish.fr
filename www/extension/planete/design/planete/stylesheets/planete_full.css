@@ -147,11 +147,11 @@ margin:10px 2px;
 text-align:justify;
 line-height:1.5em;
 }
-div.post-content p,div.post-content ul,div.post-content pre,div.post-content ol
+div.post-content p,div.post-content ul,div.post-content pre,div.post-content ol,div.post-content code
 {
 margin-bottom:10px;
 }
-div.post-content pre
+div.post-content pre,div.post-content code
 {
 padding:2px;
 line-height:1.3em;
