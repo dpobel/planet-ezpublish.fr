@@ -5,7 +5,7 @@
 #
 
 [PageSettings]
-Revision=20091111
+Revision=20091207
 PostByPage=10
 PostByBlogPage=10
 BookmarkURL[]
