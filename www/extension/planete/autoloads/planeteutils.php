@@ -78,6 +78,11 @@ class eZPlaneteUtils
 
     static function cleanRewriteXHTML( $html, $urlSite )
     {
+        $html = trim( $html );
+        if ( $html === '' )
+        {
+            return '';
+        }
         // cleanup using tidy
         $tidy = new Tidy();
         $config = array( 'indent' => false,
