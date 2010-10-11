@@ -2,28 +2,29 @@
 //
 // ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.3.0
+// SOFTWARE RELEASE: 4.4.0
 // COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
 //   modify it under the terms of version 2.0  of the GNU General
 //   Public License as published by the Free Software Foundation.
-//
+// 
 //   This program is distributed in the hope that it will be useful,
-//   but WITHOUT ANY WARRANTY; without even the implied warranty of
+//    but WITHOUT ANY WARRANTY; without even the implied warranty of
 //   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //   GNU General Public License for more details.
-//
+// 
 //   You should have received a copy of version 2.0 of the GNU General
 //   Public License along with this program; if not, write to the Free
 //   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 //   MA 02110-1301, USA.
-//
-//
 // ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
+/**
+ * PHP 5.1 is our hard requirement, but PHP 5.2 or higher is highly recommended
+ */
 if ( version_compare( PHP_VERSION, '5.1' ) < 0 )
 {
     print( "<h1>Unsupported PHP version " . PHP_VERSION . "</h1>" );
@@ -190,7 +191,6 @@ function eZDBCleanup()
         $db = eZDB::instance();
         $db->setIsSQLOutputEnabled( false );
     }
-//     session_write_close();
 }
 
 function eZFatalError()
@@ -331,20 +331,19 @@ eZDebug::addTimingPoint( "Script start" );
 
 $uri = eZURI::instance( eZSys::requestURI() );
 $GLOBALS['eZRequestedURI'] = $uri;
-require_once "pre_check.php";
 
 // Check for extension
 require_once( 'kernel/common/ezincludefunctions.php' );
 eZExtension::activateExtensions( 'default' );
 // Extension check end
 
-require_once "access.php";
+include_once( 'access.php' );
 
-$access = accessType( $uri,
+$access = eZSiteAccess::match( $uri,
                       eZSys::hostname(),
                       eZSys::serverPort(),
                       eZSys::indexFile() );
-$access = changeAccess( $access );
+$access = eZSiteAccess::change( $access );
 eZDebugSetting::writeDebug( 'kernel-siteaccess', $access, 'current siteaccess' );
 
 // Check for activating Debug by user ID (Final checking. The first was in eZDebug::updateSettings())
@@ -385,7 +384,7 @@ if ( !$useCronjob )
 
     // Fill in hooks
     eZSession::addCallback( 'destroy_pre', 'eZSessionBasketDestroy');
-    eZSession::addCallback( 'gc_pre', 'eZSessionBasketGarbageCollector');
+    eZSession::addCallback( 'gc_pre',      'eZSessionBasketGarbageCollector');
     eZSession::addCallback( 'cleanup_pre', 'eZSessionBasketCleanup');
 }
 
@@ -401,9 +400,27 @@ eZSession::addCallback( 'regenerate_post', 'eZSessionBasketRegenerate');
 $moduleRepositories = eZModule::activeModuleRepositories();
 eZModule::setGlobalPathList( $moduleRepositories );
 
-$check = eZHandlePreChecks( $siteBasics, $uri );
-
 require_once( 'kernel/common/i18n.php' );
+
+// start: eZCheckValidity
+// pre check, setup wizard related so needs to be before session/db init
+if ( $ini->variable( 'SiteAccessSettings', 'CheckValidity' ) === 'true' )
+{
+    $check = array( 'module' => 'setup',
+                    'function' => 'init' );
+    // Turn off some features that won't bee needed yet
+    $siteBasics['policy-check-omit-list'][] = 'setup';
+    $siteBasics['show-page-layout'] = $ini->variable( 'SetupSettings', 'PageLayout' );
+    $siteBasics['validity-check-required'] = true;
+    $siteBasics['session-required'] = $siteBasics['user-object-required'] = false;
+    $siteBasics['db-required'] = $siteBasics['no-cache-adviced'] = $siteBasics['url-translator-allowed'] = false;
+    $siteBasics['site-design-override'] = $ini->variable( 'SetupSettings', 'OverrideSiteDesign' );
+    $access = array( 'name' => 'setup',
+                     'type' => eZSiteAccess::TYPE_URI );
+    $access = eZSiteAccess::change( $access );
+    eZTranslatorManager::enableDynamicTranslations();
+}
+// stop: eZCheckValidity
 
 if ( $sessionRequired )
 {
@@ -414,17 +431,22 @@ $db = false;
 if ( $dbRequired )
 {
     $db = eZDB::instance();
-    if ( $sessionRequired and
-         $db->isConnected() )
+    if ( $sessionRequired )
     {
-        eZSession::start();
+        if ( $ini->variable( 'Session', 'ForceStart' ) === 'enabled' )
+            eZSession::start();
+        else
+            eZSession::lazyStart();
     }
-
-    if ( !$db->isConnected() )
+    else if ( !$db->isConnected() )
         $warningList[] = array( 'error' => array( 'type' => 'kernel',
                                                   'number' => eZError::KERNEL_NO_DB_CONNECTION ),
                                 'text' => 'No database connection could be made, the system might not behave properly.' );
 }
+
+// pre check, RequireUserLogin & FORCE_LOGIN related so needs to be after session init
+if ( !isset( $check ) )
+    $check = eZUserLoginHandler::preCheck( $siteBasics, $uri );
 
 // Initialize with locale settings
 $locale = eZLocale::instance();
@@ -459,8 +481,6 @@ foreach( $headerList as $key => $value )
 {
     header( $key . ': ' . $value );
 }
-
-eZSection::initGlobalID();
 
 // Read role settings
 $globalPolicyCheckOmitList = $ini->variable( 'RoleSettings', 'PolicyOmitList' );
@@ -524,11 +544,11 @@ while ( $moduleRunRequired )
     if ( $uri->isEmpty() )
     {
         $tmp_uri = new eZURI( $ini->variable( "SiteSettings", "IndexPage" ) );
-        $moduleCheck = accessAllowed( $tmp_uri );
+        $moduleCheck = eZModule::accessAllowed( $tmp_uri );
     }
     else
     {
-        $moduleCheck = accessAllowed( $uri );
+        $moduleCheck = eZModule::accessAllowed( $uri );
     }
 
     if ( !$moduleCheck['result'] )
@@ -761,7 +781,6 @@ if ( $ini->variable( "SiteAccessSettings", "CheckValidity" ) !== 'true' )
     if ( $currentUser->isLoggedIn() )
     {
         setcookie( 'is_logged_in', 'true', 0, $cookiePath );
-        header( 'Etag: ' . $currentUser->attribute( 'contentobject_id' ) );
     }
     else if ( isset( $_COOKIE['is_logged_in'] ) )
     {
@@ -888,9 +907,10 @@ if ( $module->exitStatus() == eZModule::STATUS_REDIRECT )
 }
 
 // Store the last URI for access history for login redirection
-// Only if database is connected and only if there was no error or no redirects happen
-if ( is_object( $db ) and $db->isConnected() and
-     $module->exitStatus() == eZModule::STATUS_OK )
+// Only if database is connected, user has session and only if there was no error or no redirects happen
+if ( eZSession::hasStarted() &&
+    is_object( $db ) && $db->isConnected() &&
+    $module->exitStatus() == eZModule::STATUS_OK )
 {
     $currentURI = $completeRequestedURI;
     if ( strlen( $currentURI ) > 0 and $currentURI[0] != '/' )
@@ -980,11 +1000,6 @@ if ( $show_page_layout )
 
     $tpl->setVariable( "site", $site );
 
-    $ezinfo = array( 'version' => eZPublishSDK::version( true ),
-                     'version_alias' => eZPublishSDK::version( true, true ),
-                     'revision' => eZPublishSDK::revision() );
-
-    $tpl->setVariable( "ezinfo", $ezinfo );
     if ( isset( $tpl_vars ) and is_array( $tpl_vars ) )
     {
         foreach( $tpl_vars as $tpl_var_name => $tpl_var_value )

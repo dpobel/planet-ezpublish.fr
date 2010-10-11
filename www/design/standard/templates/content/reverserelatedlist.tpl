@@ -22,7 +22,7 @@
 
     {* Location. *}
     <td>
-        {section var=path_node loop=$children_item.path|append( $children_item )}
+	{section var=path_node loop=$children_item.path|append( $children_item )}
               {$path_node.name|wash}
               {delimiter} / {/delimiter}
     {/section}
@@ -42,10 +42,10 @@
 {/section}
 
 </table>
-            {include name=navigator
+	    {include name=navigator
                      uri='design:navigator/google.tpl'
                      page_uri=concat( '/content/reverserelatedlist/', $node_id )
-                     item_count=$children_count
+		     item_count=$children_count
                      view_parameters=$view_parameters
                      item_limit=$number_of_items}
 

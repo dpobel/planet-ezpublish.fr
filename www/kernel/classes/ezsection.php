@@ -6,25 +6,23 @@
 //
 // ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.3.0
+// SOFTWARE RELEASE: 4.4.0
 // COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
 //   modify it under the terms of version 2.0  of the GNU General
 //   Public License as published by the Free Software Foundation.
-//
+// 
 //   This program is distributed in the hope that it will be useful,
-//   but WITHOUT ANY WARRANTY; without even the implied warranty of
+//    but WITHOUT ANY WARRANTY; without even the implied warranty of
 //   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //   GNU General Public License for more details.
-//
+// 
 //   You should have received a copy of version 2.0 of the GNU General
 //   Public License along with this program; if not, write to the Free
 //   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 //   MA 02110-1301, USA.
-//
-//
 // ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
@@ -65,6 +63,10 @@ class eZSection extends eZPersistentObject
                                          "locale" => array( 'name' => "Locale",
                                                             'datatype' => 'string',
                                                             'default' => '',
+                                                            'required' => true ),
+                                         "identifier" => array( 'name' => "Identifier",
+                                                            'datatype' => 'string',
+                                                            'default' => '',
                                                             'required' => true ) ),
                       "keys" => array( "id" ),
                       "increment_key" => "id",
@@ -98,6 +100,40 @@ class eZSection extends eZPersistentObject
         {
             $section = $eZContentSectionObjectCache[$sectionID];
         }
+        return $section;
+    }
+
+    /**
+     * fetch object by section identifier
+     * @param string $sectionIdentifier
+     * @param boolean $asObject
+     * @return object|null
+     */
+    static function fetchByIdentifier( $sectionIdentifier, $asObject = true )
+    {
+        global $eZContentSectionObjectCache;
+        if( !isset( $eZContentSectionObjectCache[$sectionIdentifier] ) || $asObject === false )
+        {
+            $sectionFetched = eZPersistentObject::fetchObject( eZSection::definition(),
+                                                       null,
+                                                       array( "identifier" => $sectionIdentifier ),
+                                                       $asObject );
+            if( $asObject )
+            {
+                // the section identifier index refers to the id index object
+                $sectionID = $sectionFetched->attribute( 'id' );
+                if( !isset( $eZContentSectionObjectCache[$sectionID] ) )
+                {
+                    $eZContentSectionObjectCache[$sectionID] = $sectionFetched;
+                }
+                $eZContentSectionObjectCache[$sectionIdentifier] = $eZContentSectionObjectCache[$sectionID];
+            }
+            else
+            {
+                return $sectionFetched;
+            }
+        }
+        $section = $eZContentSectionObjectCache[$sectionIdentifier];
         return $section;
     }
 
@@ -142,65 +178,40 @@ class eZSection extends eZPersistentObject
         return $countArray[0]['count'];
     }
 
-    /*!
-     Makes sure the global section ID is propagated to the template override key.
+   /**
+    * Makes sure the global section ID is propagated to the template override key.
+    * @deprecated since 4.4, global section support has been removed
+    *
+    * @return false
     */
     static function initGlobalID()
     {
-        global $eZSiteBasics;
-        $sessionRequired = $eZSiteBasics['session-required'];
-        $sectionID = false;
-        if ( $sessionRequired )
-        {
-            $http = eZHTTPTool::instance();
-            $sectionArray = array();
-            if ( $http->hasSessionVariable( 'eZGlobalSection' ) )
-                $sectionArray = $http->sessionVariable( 'eZGlobalSection' );
-            if ( !isset( $sectionArray['id'] ) )
-            {
-                return false;
-            }
-            $sectionID = $sectionArray['id'];
-        }
-
-        if ( $sectionID )
-        {
-            // eZTemplateDesignResource will read this global variable
-            $GLOBALS['eZDesignKeys']['section'] = $sectionID;
-            return true;
-        }
         return false;
     }
 
-    /*!
-     Sets the current global section ID to \a $sectionID in the session and
-     the template override key.
+   /**
+    * Sets the current global section ID to \a $sectionID in the session and
+    * the template override key
+    * @deprecated since 4.4, global section support has been removed this
+    *             function only sets value to override values for bc.
+    *
+    *  @param int $sectionID
     */
     static function setGlobalID( $sectionID )
     {
-        $http = eZHTTPTool::instance();
-        $sectionArray = array();
-        if ( $http->hasSessionVariable( 'eZGlobalSection' ) )
-            $sectionArray = $http->sessionVariable( 'eZGlobalSection' );
-        $sectionArray['id'] = $sectionID;
-        $http->setSessionVariable( 'eZGlobalSection', $sectionArray );
-
         // eZTemplateDesignResource will read this global variable
         $GLOBALS['eZDesignKeys']['section'] = $sectionID;
     }
 
-    /*!
-     \return the global section ID or \c null if it is not set yet.
+   /**
+    * Return the global section ID or \c null if it is not set yet.
+    * @deprecated since 4.4, global section support has been removed and
+    *             null is always returned.
+    *
+    * @return null
     */
     static function globalID()
     {
-        $http = eZHTTPTool::instance();
-        if ( $http->hasSessionVariable( 'eZGlobalSection' ) )
-        {
-            $sectionArray = $http->sessionVariable( 'eZGlobalSection' );
-            if ( isset( $sectionArray['id'] ) )
-                return $sectionArray['id'];
-        }
         return null;
     }
 

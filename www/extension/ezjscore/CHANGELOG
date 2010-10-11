@@ -1,3 +1,38 @@
+
+# v1.2.0rc1
+- Fixed bug #017223: Make LoadFromCDN disabled by default
+
+# v1.2.0beta2
+- Added jQuery.ez() post param string support like jQuery.post()
+- ezjscnode::load added to load json data about object / node
+- Update YUI to 3.1.2
+- Fixed bug #017079: ezoe: IE8 Insert MEDIA/IMAGE browse: Tree Nodes not shown
+
+# v1.2.0alpha6
+- Make index_ajax.php compatible with 4.4 eZSession change
+
+# v1.2.0alpha4
+- Fixed bug #016900: [patch] eZJSCore: clearing Packer cache in DB cluster
+
+# v1.2.0alpha3
+- Implemented #16495: Improvements of ezjscPacker::optimizeCSS()
+- Fixed bug #16635: ezjscore: @charset "utf-8"; is not stripped
+- Fixed bug #16831: ezjscore create one js cache file for all siteaccess (patch)
+- Remove ezwebin template override to simplify webin + ezjscore setup (loading order does not matter anymore)
+  BC: Means ezjscore v1.2.0+ will not work on older ezwebin versions, only ezwebin 1.7.0 and up!
+- Updated YUI to 3.1.1 and 2.8.1
+
+# v1.2.0alpha2
+- Fixed bug #16726: Src for original image in "Insert image" has a pipe ("|") at the end
+- Fixed bug #16761: ini settings and ActiveAccessExtension
+- Fixed bug #16669: wrong content-type header for packed js/css files using clustering
+- ezjscAjaxContent: Make sure image attribute has content before we add it to json image array
+
+# v1.2.0alpha1
+- Fixed bug #16393: TC-36 - eZFlow + eZFind show-facets and enable-spellchecker always enabled
+- Upgraded YUI 3.x from 3.0.0 to 3.1.0
+
+
 # v1.1.0rc1
 - Fixed bug #16456: ezjscore not cluster aware?
 
@@ -12,8 +47,6 @@
 - Add support for serializeArray() format as post parameter on jQuery.ez
 - Updated jQuery to 1.4.2
 - Changed back to using ajax.googleapis.com for jQuery like 1.0, reported in #016229
-
-
 
 # v1.1.0alpha1
 
@@ -37,8 +70,8 @@
 - ezjsc::search: Added support for SearchContentClassIdentifier (requires ezp 4.1 or higher)
 - ezjsc::search: Return SearchString as part of returned result for js callback use
 - Bump required eZ Publish version to 4.1
-- Implemented #15811: ez JS Packer option to include mofied time in file url
-- Packer: Don't wast cycles on packing and caching if there is only one file, serve it directly
+- Implemented #15811: ez JS Packer option to include modified time in file url
+- Packer: Don't waste cycles on packing and caching if there is only one file, serve it directly
 - Fixed bug #15972: ezcache.php --clear-all does not clear ezjscore cache
 - Implemented enhancement #16059: DEPRECATED CSSFileList|JavaScriptList in favour of [Frontend|Backend][CSSFileList|JavaScriptList] settings
 - Updated jQuery to 1.4.1

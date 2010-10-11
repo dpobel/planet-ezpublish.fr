@@ -10,7 +10,7 @@
         <div class="object_header">
             <h1>{"Create new weblog"|i18n("design/base")}</h1>
         </div>
-        <input type="hidden" name="MainNodeID" value="{$main_node_id}" />
+	<input type="hidden" name="MainNodeID" value="{$main_node_id}" />
 
         {include uri="design:content/edit_validation.tpl"}
 
@@ -20,7 +20,7 @@
 
         <div class="controls">
             <input class="defaultbutton" type="submit" name="PublishButton" value="{'Post'|i18n('design/base')}" />
-            <input class="button" type="submit" name="PreviewButton" value="{'Preview'|i18n('design/base')}" />
+	    <input class="button" type="submit" name="PreviewButton" value="{'Preview'|i18n('design/base')}" />
             <input class="button" type="submit" name="DiscardButton" value="{'Discard'|i18n('design/base')}" />
         </div>
 

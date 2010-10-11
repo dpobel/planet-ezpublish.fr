@@ -14,20 +14,20 @@
 {section show=$order_list}
 <table class="list" width="100%" cellspacing="0" cellpadding="0" border="0">
 <tr>
-        <th>
-        {"ID"|i18n("design/standard/shop")}
-        </th>
-        <th>
-        {"Date"|i18n("design/standard/shop")}
-        </th>
-        <th>
-        {"Total ex. VAT"|i18n("design/standard/shop")}
-        </th>
-        <th>
-        {"Total inc. VAT"|i18n("design/standard/shop")}
-        </th>
+	<th>
+	{"ID"|i18n("design/standard/shop")}
+	</th>
+	<th>
+	{"Date"|i18n("design/standard/shop")}
+	</th>
+	<th>
+	{"Total ex. VAT"|i18n("design/standard/shop")}
+	</th>
+	<th>
+	{"Total inc. VAT"|i18n("design/standard/shop")}
+	</th>
     <th>
-        </th>
+	</th>
 </tr>
 {section var=Order loop=$order_list sequence=array(bglight,bgdark)}
 {set currency = fetch( 'shop', 'currency', hash( 'code', $Order.item.productcollection.currency_code ) ) }
@@ -40,21 +40,21 @@
 {/if}
 
 <tr>
-        <td class="{$Order.sequence}">
-        {$Order.item.order_nr}
-        </td>
-        <td class="{$Order.sequence}">
-        {$Order.item.created|l10n(shortdatetime)}
-        </td>
-        <td class="{$Order.sequence}">
-        {$Order.item.total_ex_vat|l10n( 'currency', $locale, $symbol )}
-        </td>
-        <td class="{$Order.sequence}">
-        {$Order.item.total_inc_vat|l10n( 'currency', $locale, $symbol )}
-        </td>
-        <td class="{$Order.sequence}">
-        <a href={concat("/shop/orderview/",$Order.item.id,"/")|ezurl}>[ view ]</a>
-        </td>
+	<td class="{$Order.sequence}">
+	{$Order.item.order_nr}
+	</td>
+	<td class="{$Order.sequence}">
+	{$Order.item.created|l10n(shortdatetime)}
+	</td>
+	<td class="{$Order.sequence}">
+	{$Order.item.total_ex_vat|l10n( 'currency', $locale, $symbol )}
+	</td>
+	<td class="{$Order.sequence}">
+	{$Order.item.total_inc_vat|l10n( 'currency', $locale, $symbol )}
+	</td>
+	<td class="{$Order.sequence}">
+	<a href={concat("/shop/orderview/",$Order.item.id,"/")|ezurl}>[ view ]</a>
+	</td>
 </tr>
 {/section}
 </table>
@@ -68,18 +68,18 @@
 {section show=$product_list}
 <table class="list" width="100%" cellspacing="0" cellpadding="0" border="0">
 <tr>
-        <th>
-        {"Product"|i18n("design/standard/shop")}
-        </th>
+	<th>
+	{"Product"|i18n("design/standard/shop")}
+	</th>
     <th>
-        {"Amount"|i18n("design/standard/shop")}
-        </th>
-        <th>
-        {"Total ex. VAT"|i18n("design/standard/shop")}
-        </th>
-        <th>
-        {"Total inc. VAT"|i18n("design/standard/shop")}
-        </th>
+	{"Amount"|i18n("design/standard/shop")}
+	</th>
+	<th>
+	{"Total ex. VAT"|i18n("design/standard/shop")}
+	</th>
+	<th>
+	{"Total inc. VAT"|i18n("design/standard/shop")}
+	</th>
 </tr>
 
 {def $quantity_text = ''

@@ -43,11 +43,11 @@ function checkAll()
         <div class="message-feedback">
             <h2><span class="time">[{currentdate()|l10n( shortdatetime )}]</span> {"The sessions were successfully removed."|i18n( "design/standard/setup/session" )}</h2>
         </div>
-        {else}
+	{else}
       <div class="message-warning">
             <h2><span class="time">[{currentdate()|l10n( shortdatetime )}]</span> {"Not all timed out sessions were successfully removed."|i18n( "design/standard/setup/session" )}</h2>
             <p>
-                {"The operation were cut short in order to avoid execution timeout."|i18n( "design/standard/setup/session" )}<br />
+                {"The operation was cut short in order to avoid execution timeout."|i18n( "design/standard/setup/session" )}<br />
                 {"Your alternatives are to:"|i18n( "design/standard/setup/session" )}
             </p>
             <ul>

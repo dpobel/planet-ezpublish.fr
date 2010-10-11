@@ -6,25 +6,23 @@
 //
 // ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.3.0
+// SOFTWARE RELEASE: 4.4.0
 // COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
 //   modify it under the terms of version 2.0  of the GNU General
 //   Public License as published by the Free Software Foundation.
-//
+// 
 //   This program is distributed in the hope that it will be useful,
-//   but WITHOUT ANY WARRANTY; without even the implied warranty of
+//    but WITHOUT ANY WARRANTY; without even the implied warranty of
 //   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //   GNU General Public License for more details.
-//
+// 
 //   You should have received a copy of version 2.0 of the GNU General
 //   Public License along with this program; if not, write to the Free
 //   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 //   MA 02110-1301, USA.
-//
-//
 // ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
@@ -360,49 +358,11 @@ class eZContentClass extends eZPersistentObject
 
     function canInstantiateClasses()
     {
-        $ini = eZINI::instance();
-        $enableCaching = $ini->variable( 'RoleSettings', 'EnableCaching' );
-
-        if ( $enableCaching == 'true' )
-        {
-            $http = eZHTTPTool::instance();
-
-            eZExpiryHandler::registerShutdownFunction();
-            $handler = eZExpiryHandler::instance();
-            $expiredTimeStamp = 0;
-            if ( $handler->hasTimestamp( 'user-class-cache' ) )
-                $expiredTimeStamp = $handler->timestamp( 'user-class-cache' );
-
-            $classesCachedForUser = $http->sessionVariable( 'CanInstantiateClassesCachedForUser' );
-            $classesCachedTimestamp = $http->sessionVariable( 'ClassesCachedTimestamp' );
-            $user = eZUser::currentUser();
-            $userID = $user->id();
-
-            if ( ( $classesCachedTimestamp >= $expiredTimeStamp ) && $classesCachedForUser == $userID )
-            {
-                if ( $http->hasSessionVariable( 'CanInstantiateClasses' ) )
-                {
-                    return $http->sessionVariable( 'CanInstantiateClasses' );
-                }
-            }
-            else
-            {
-                // store cache
-                $http->setSessionVariable( 'CanInstantiateClassesCachedForUser', $userID );
-            }
-        }
-        $user = eZUser::currentUser();
-        $accessResult = $user->hasAccessTo( 'content' , 'create' );
-        $accessWord = $accessResult['accessWord'];
+        $accessResult = eZUser::currentUser()->hasAccessTo( 'content' , 'create' );
         $canInstantiateClasses = 1;
-        if ( $accessWord == 'no' )
+        if ( $accessResult['accessWord'] == 'no' )
         {
             $canInstantiateClasses = 0;
-        }
-
-        if ( $enableCaching == 'true' )
-        {
-            $http->setSessionVariable( 'CanInstantiateClasses', $canInstantiateClasses );
         }
         return $canInstantiateClasses;
     }
@@ -583,7 +543,7 @@ class eZContentClass extends eZPersistentObject
                 return $classList;
             }
 
-            $classIDCondition = $db->generateSQLInStatement( $classIDArray, 'cc.id' );
+            $classIDCondition = $db->generateSQLINStatement( $classIDArray, 'cc.id' );
             // If $asObject is true we fetch all fields in class
             $fields = $asObject ? "cc.*, $classNameFilter[nameField]" : "cc.id, $classNameFilter[nameField]";
             $rows = $db->arrayQuery( "SELECT DISTINCT $fields " .

@@ -27,15 +27,15 @@
     {/if}
   </div>
   {else}
-        {append-block variable=$right_blocks}
-        <div class="dashboard-item">
-            {if $block.template}
-                {include uri=concat( 'design:', $block.template )}
-            {else}
-                {include uri=concat( 'design:dashboard/', $block.identifier, '.tpl' )}
-            {/if}
-        </div>
-        {/append-block}
+	{append-block variable=$right_blocks}
+	<div class="dashboard-item">
+	    {if $block.template}
+	        {include uri=concat( 'design:', $block.template )}
+	    {else}
+	        {include uri=concat( 'design:dashboard/', $block.identifier, '.tpl' )}
+	    {/if}
+	</div>
+	{/append-block}
   {/if}
 {/foreach}
 </div>

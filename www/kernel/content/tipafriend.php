@@ -4,25 +4,23 @@
 //
 // ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.3.0
+// SOFTWARE RELEASE: 4.4.0
 // COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
 //   modify it under the terms of version 2.0  of the GNU General
 //   Public License as published by the Free Software Foundation.
-//
+// 
 //   This program is distributed in the hope that it will be useful,
-//   but WITHOUT ANY WARRANTY; without even the implied warranty of
+//    but WITHOUT ANY WARRANTY; without even the implied warranty of
 //   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //   GNU General Public License for more details.
-//
+// 
 //   You should have received a copy of version 2.0 of the GNU General
 //   Public License along with this program; if not, write to the Free
 //   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 //   MA 02110-1301, USA.
-//
-//
 // ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
@@ -120,7 +118,7 @@ if ( $http->hasPostVariable( 'SendButton' ) )
     if ( $http->hasSessionVariable('ezpContentTipafriendList') )
     {
         if ( strpos( $http->sessionVariable('ezpContentTipafriendList'), $NodeID . '|' . $receiversEmail ) !== false )
-            $error_strings[] = ezpI18n::tr( 'kernel/content', "You have already sent a tipafriend mail to this reciver regarding '$nodeName' content" );
+            $error_strings[] = ezpI18n::tr( 'kernel/content', "You have already sent a tipafriend mail to this receiver regarding '%1' content", null, array( $nodeName ) );
     }
 
     if ( !isset( $error_strings[0] ) && !eZTipafriendRequest::checkReceiver( $receiversEmail ) )
@@ -135,6 +133,8 @@ if ( $http->hasPostVariable( 'SendButton' ) )
         $mail->setSubject( $subject );
 
         // fetch
+        $sectionID = $object->attribute( 'section_id' );
+        $section = eZSection::fetch( $sectionID );
         $res = eZTemplateDesignResource::instance();
         $res->setKeys( array( array( 'object',           $object->attribute( 'id' ) ),
                               array( 'remote_id',        $object->attribute( 'remote_id' ) ),
@@ -143,6 +143,7 @@ if ( $http->hasPostVariable( 'SendButton' ) )
                               array( 'class_identifier', $object->attribute( 'class_identifier' ) ),
                               array( 'class_group',      $object->attribute( 'match_ingroup_id_list' ) ),
                               array( 'section',          $object->attribute( 'section_id' ) ),
+                              array( 'section_identifier', $section->attribute( 'identifier' ) ),
                               array( 'node',             $NodeID ),
                               array( 'parent_node',      $node->attribute( 'parent_node_id' ) ),
                               array( 'depth',            $node->attribute( 'depth' ) ),
@@ -206,6 +207,8 @@ else if ( $http->hasPostVariable( 'CancelButton' ) )
 
 if ( !$overrideKeysAreSet )
 {
+    $sectionID = $object->attribute( 'section_id' );
+    $section = eZSection::fetch( $sectionID );
     $res = eZTemplateDesignResource::instance();
     $res->setKeys( array( array( 'object',           $object->attribute( 'id' ) ),
                           array( 'remote_id',        $object->attribute( 'remote_id' ) ),
@@ -214,6 +217,7 @@ if ( !$overrideKeysAreSet )
                           array( 'class_identifier', $object->attribute( 'class_identifier' ) ),
                           array( 'class_group',      $object->attribute( 'match_ingroup_id_list' ) ),
                           array( 'section',          $object->attribute( 'section_id' ) ),
+                          array( 'section_identifier', $section->attribute( 'identifier' ) ),
                           array( 'node',             $NodeID ),
                           array( 'parent_node',      $node->attribute( 'parent_node_id' ) ),
                           array( 'depth',            $node->attribute( 'depth' ) ),

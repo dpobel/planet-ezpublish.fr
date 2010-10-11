@@ -3,8 +3,8 @@
  * Autoloader definition for eZ Publish Kernel files.
  *
  * @copyright Copyright (C) 1999-2010 eZ Systems AS. All rights reserved.
- * @license http://ez.no/licenses/gnu_gpl GNU GPL v2
- * @version 4.3.0
+ * @license http://ez.no/licenses/gnu_gpl GNU General Public License v2.0
+ * @version 4.4.0
  * @package kernel
  *
  */
@@ -110,6 +110,7 @@ return array(
       'eZDBException'                                      => 'kernel/private/classes/exceptions/database/exception.php',
       'eZDBFileHandler'                                    => 'kernel/classes/clusterfilehandlers/ezdbfilehandler.php',
       'eZDBFileHandlerMysqlBackend'                        => 'kernel/classes/clusterfilehandlers/dbbackends/mysql.php',
+      'eZDBFileHandlerMysqliBackend'                       => 'kernel/classes/clusterfilehandlers/dbbackends/mysqli.php',
       'eZDBGarbageCollector'                               => 'kernel/classes/ezdbgarbagecollector.php',
       'eZDBInterface'                                      => 'lib/ezdb/classes/ezdbinterface.php',
       'eZDBNoConnectionException'                          => 'kernel/private/classes/exceptions/database/noconnection.php',
@@ -119,6 +120,7 @@ return array(
       'eZDFSFileHandler'                                   => 'kernel/private/classes/clusterfilehandlers/ezdfsfilehandler.php',
       'eZDFSFileHandlerDFSBackend'                         => 'kernel/private/classes/clusterfilehandlers/dfsbackends/dfs.php',
       'eZDFSFileHandlerMySQLBackend'                       => 'kernel/private/classes/clusterfilehandlers/dfsbackends/mysql.php',
+      'eZDFSFileHandlerMySQLiBackend'                      => 'kernel/private/classes/clusterfilehandlers/dfsbackends/mysqli.php',
       'eZDFSFileHandlerNFSMountPointNotFoundException'     => 'kernel/private/classes/exceptions/cluster/mount_point_not_found.php',
       'eZDFSFileHandlerNFSMountPointNotWriteableException' => 'kernel/private/classes/exceptions/cluster/mount_point_not_writeable.php',
       'eZDFSFileHandlerTableNotFoundException'             => 'kernel/private/classes/exceptions/cluster/table_not_found.php',
@@ -258,6 +260,7 @@ return array(
       'eZMultiplexerType'                                  => 'kernel/classes/workflowtypes/event/ezmultiplexer/ezmultiplexertype.php',
       'eZMutex'                                            => 'lib/ezutils/classes/ezmutex.php',
       'eZMySQLBackendError'                                => 'kernel/classes/clusterfilehandlers/dbbackends/mysqlbackenderror.php',
+      'eZMySQLCharset'                                     => 'lib/ezdb/classes/ezmysqlcharset.php',
       'eZMySQLDB'                                          => 'lib/ezdb/classes/ezmysqldb.php',
       'eZMySQLiDB'                                         => 'lib/ezdb/classes/ezmysqlidb.php',
       'eZMysqlSchema'                                      => 'lib/ezdbschema/classes/ezmysqlschema.php',
@@ -308,6 +311,7 @@ return array(
       'eZPaymentGatewayType'                               => 'kernel/classes/workflowtypes/event/ezpaymentgateway/ezpaymentgatewaytype.php',
       'eZPaymentLogger'                                    => 'kernel/classes/workflowtypes/event/ezpaymentgateway/ezpaymentlogger.php',
       'eZPaymentObject'                                    => 'kernel/shop/classes/ezpaymentobject.php',
+      'eZPendingActions'                                   => 'kernel/classes/ezpendingactions.php',
       'eZPersistentObject'                                 => 'kernel/classes/ezpersistentobject.php',
       'eZPgsqlSchema'                                      => 'lib/ezdbschema/classes/ezpgsqlschema.php',
       'eZPlainTextParser'                                  => 'kernel/classes/datatypes/ezbinaryfile/plugins/ezplaintextparser.php',
@@ -364,7 +368,7 @@ return array(
       'eZSelectionType'                                    => 'kernel/classes/datatypes/ezselection/ezselectiontype.php',
       'eZSendmailTransport'                                => 'lib/ezutils/classes/ezsendmailtransport.php',
       'eZSerializedObjectNameList'                         => 'kernel/classes/ezserializedobjectnamelist.php',
-      'eZSession'                                          => 'lib/ezutils/classes/ezsession.php',
+      'eZSession'                                          => 'lib/ezsession/classes/ezsession.php',
       'eZSetupFunctionCollection'                          => 'kernel/setup/ezsetupfunctioncollection.php',
       'eZSetupSummary'                                     => 'kernel/setup/ezsetup_summary.php',
       'eZShippingManager'                                  => 'kernel/classes/ezshippingmanager.php',
@@ -381,6 +385,7 @@ return array(
       'eZSimplifiedXMLInput'                               => 'kernel/classes/datatypes/ezxmltext/handlers/input/ezsimplifiedxmlinput.php',
       'eZSimplifiedXMLInputParser'                         => 'kernel/classes/datatypes/ezxmltext/handlers/input/ezsimplifiedxmlinputparser.php',
       'eZSiteAccess'                                       => 'kernel/classes/ezsiteaccess.php',
+      'eZSiteData'                                         => 'kernel/classes/ezsitedata.php',
       'eZSiteInstaller'                                    => 'kernel/classes/ezsiteinstaller.php',
       'eZStaticCache'                                      => 'kernel/classes/ezstaticcache.php',
       'eZStepCreateSites'                                  => 'kernel/setup/steps/ezstep_create_sites.php',
@@ -548,12 +553,18 @@ return array(
       'ezpAutoloadGeneratorOptions'                        => 'kernel/private/options/ezpautoloadgeneratoroptions.php',
       'ezpAutoloadOutput'                                  => 'kernel/private/interfaces/ezpautoloadoutput.php',
       'ezpAutoloader'                                      => 'autoload.php',
+      'ezpExtension'                                       => 'kernel/private/classes/ezpextension.php',
       'ezpExtensionOptions'                                => 'kernel/private/options/ezpextensionoptions.php',
       'ezpI18n'                                            => 'kernel/common/ezpi18n.php',
       'ezpLanguageSwitcher'                                => 'kernel/private/classes/ezplanguageswitcher.php',
       'ezpLanguageSwitcherCapable'                         => 'kernel/private/interfaces/ezplanguageswitchercapable.php',
       'ezpLanguageSwitcherFunctionCollection'              => 'kernel/private/modules/switchlanguage/ezpLanguageSwitcherFunctionCollection.php',
       'ezpLanguageSwitcherOperator'                        => 'kernel/private/eztemplate/ezplanguageswitcheroperator.php',
+      'ezpSessionHandler'                                  => 'lib/ezsession/classes/ezpsessionhandler.php',
+      'ezpSessionHandlerDB'                                => 'lib/ezsession/classes/ezpsessionhandlerdb.php',
+      'ezpSessionHandlerPHP'                               => 'lib/ezsession/classes/ezpsessionhandlerphp.php',
+      'ezpTopologicalSort'                                 => 'kernel/private/classes/ezptopologicalsort.php',
+      'ezpTopologicalSortNode'                             => 'kernel/private/classes/ezptopologicalsortnode.php',
     );
 
 ?>

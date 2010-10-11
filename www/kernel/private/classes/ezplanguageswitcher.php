@@ -3,7 +3,7 @@
  * File containing the ezpLanguageSwitcher class
  *
  * @copyright Copyright (C) 1999-2010 eZ Systems AS. All rights reserved.
- * @license http://ez.no/licenses/gnu_gpl GNU GPLv2
+ * @license http://ez.no/licenses/gnu_gpl GNU General Public License v2.0
  *
  */
 
@@ -54,7 +54,7 @@ class ezpLanguageSwitcher implements ezpLanguageSwitcherCapable
     {
         if ( $this->destinationSiteAccessIni === null )
         {
-            $this->destinationSiteAccessIni = eZINI::getSiteAccessIni( $this->destinationSiteAccess, 'site.ini' );
+            $this->destinationSiteAccessIni = eZSiteAccess::getIni( $this->destinationSiteAccess, 'site.ini' );
         }
         return $this->destinationSiteAccessIni;
     }
@@ -155,7 +155,7 @@ class ezpLanguageSwitcher implements ezpLanguageSwitcherCapable
 
         $this->baseDestinationUrl = rtrim( $this->baseDestinationUrl, '/' );
 
-        if ( $GLOBALS['eZCurrentAccess']['type'] === EZ_ACCESS_TYPE_URI )
+        if ( $GLOBALS['eZCurrentAccess']['type'] === eZSiteAccess::TYPE_URI )
         {
             $finalUrl = $this->baseDestinationUrl . '/' . $this->destinationSiteAccess . '/' . $urlAlias;
         }
@@ -195,11 +195,11 @@ class ezpLanguageSwitcher implements ezpLanguageSwitcherCapable
         $indexFile = trim( eZSys::indexFile( false ), '/' );
         switch ( $GLOBALS['eZCurrentAccess']['type'] )
         {
-            case EZ_ACCESS_TYPE_URI:
+            case eZSiteAccess::TYPE_URI:
                 eZURI::transformURI( $host, true, 'full' );
                 break;
 
-            case EZ_ACCESS_TYPE_HTTP_HOST:
+            default:
                 $host = $saIni->variable( 'SiteSettings', 'SiteURL' );
                 $host = "http://{$host}/";
                 break;

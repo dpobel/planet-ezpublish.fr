@@ -6,25 +6,23 @@
 //
 // ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.3.0
+// SOFTWARE RELEASE: 4.4.0
 // COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
 //   modify it under the terms of version 2.0  of the GNU General
 //   Public License as published by the Free Software Foundation.
-//
+// 
 //   This program is distributed in the hope that it will be useful,
-//   but WITHOUT ANY WARRANTY; without even the implied warranty of
+//    but WITHOUT ANY WARRANTY; without even the implied warranty of
 //   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //   GNU General Public License for more details.
-//
+// 
 //   You should have received a copy of version 2.0 of the GNU General
 //   Public License along with this program; if not, write to the Free
 //   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 //   MA 02110-1301, USA.
-//
-//
 // ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
@@ -199,7 +197,7 @@ class eZContentOperationCollection
         /* Check if current class is the user class, and if so, clean up the user-policy cache */
         if ( in_array( $classID, eZUser::contentClassIDs() ) )
         {
-            eZUser::cleanupCache();
+            eZUser::purgeUserCacheByUserId( $object->attribute( 'id' ) );
         }
     }
 
@@ -532,9 +530,14 @@ class eZContentOperationCollection
         }
     }
 
-    /*!
-     \note Transaction unsafe. If you call several transaction unsafe methods you must enclose
-     the calls within a db transaction; thus within db->begin and db->commit.
+    /**
+     * Registers the object in search engine.
+     *
+     * @note Transaction unsafe. If you call several transaction unsafe methods you must enclose
+     *       the calls within a db transaction; thus within db->begin and db->commit.
+     *
+     * @param int $objectID Id of the object.
+     * @param int $versionNum Version of the object.
      */
     static public function registerSearchObject( $objectID, $versionNum )
     {
@@ -542,36 +545,35 @@ class eZContentOperationCollection
         eZDebug::createAccumulatorGroup( 'search_total', 'Search Total' );
 
         $ini = eZINI::instance( 'site.ini' );
-        $delayedIndexing = $ini->variable( 'SearchSettings', 'DelayedIndexing' );
+        $insertPendingAction = false;
+        $object = null;
 
-        if ( $delayedIndexing == 'enabled' )
+        switch ( $ini->variable( 'SearchSettings', 'DelayedIndexing' ) )
         {
-            $db = eZDB::instance();
-            $rows = $db->arrayQuery( "SELECT param FROM ezpending_actions WHERE action='index_object' AND param = '$objectID'" );
-            if ( count( $rows ) == 0 )
-            {
-                $db->query( "INSERT INTO ezpending_actions( action, param ) VALUES ( 'index_object', '$objectID' )" );
-            }
+            case 'enabled':
+                $insertPendingAction = true;
+                break;
+            case 'classbased':
+                $classList = $ini->variable( 'SearchSettings', 'DelayedIndexingClassList' );
+                $object = eZContentObject::fetch( $objectID );
+                if ( is_array( $classList ) && in_array( $object->attribute( 'class_identifier' ), $classList ) )
+                {
+                    $insertPendingAction = true;
+                }
+        }
+
+        if ( $insertPendingAction )
+        {
+            eZDB::instance()->query( "INSERT INTO ezpending_actions( action, param ) VALUES ( 'index_object', '$objectID' )" );
             return;
         }
-        elseif ( $delayedIndexing == 'classbased' )
-        {
-            $classList = $ini->variable( 'SearchSettings', 'DelayedIndexingClassList' );
-            $object = eZContentObject::fetch( $objectID );
-            $classIdentifier = $object->attribute( 'class_identifier' );
-            if ( is_array( $classList ) && in_array( $classIdentifier, $classList ) )
-            {
-                $db = eZDB::instance();
-                $db->query( "INSERT INTO ezpending_actions( action, param ) VALUES ( 'index_object', '$objectID' )" );
-                return;
-            }
-        }
 
-        $object = eZContentObject::fetch( $objectID );
+        if ( $object === null )
+            $object = eZContentObject::fetch( $objectID );
+
         // Register the object in the search engine.
         $needCommit = eZSearch::needCommit();
-        $doDeleteFirst = eZSearch::needRemoveWithUpdate();
-        if ($doDeleteFirst)
+        if ( eZSearch::needRemoveWithUpdate() )
         {
             eZDebug::accumulatorStart( 'remove_object', 'search_total', 'remove object' );
             eZSearch::removeObject( $object, $needCommit );
@@ -798,7 +800,7 @@ class eZContentOperationCollection
             // clear user policy cache if this was a user object
             if ( in_array( $object->attribute( 'contentclass_id' ), $userClassIDArray ) )
             {
-                eZUser::cleanupCache();
+                eZUser::purgeUserCacheByUserId( $object->attribute( 'id' ) );
             }
 
 
@@ -885,7 +887,7 @@ class eZContentOperationCollection
         // clear user policy cache if this was a user object
         if ( in_array( $object->attribute( 'contentclass_id' ), $userClassIDArray ) )
         {
-            eZUser::cleanupCache();
+            eZUser::purgeUserCacheByUserId( $object->attribute( 'id' ) );
         }
 
         // we don't clear template block cache here since it's cleared in eZContentObjectTreeNode::removeNode()
@@ -954,7 +956,7 @@ class eZContentOperationCollection
         $db->commit();
 
         //call appropriate method from search engine
-        eZSearchEngine::removeNodes( $removeNodeIdList );
+        eZSearch::removeNodes( $removeNodeIdList );
 
         $userClassIdList = eZUser::contentClassIDs();
         foreach ( $objectIdList as $objectId => $object )
@@ -964,7 +966,7 @@ class eZContentOperationCollection
             // clear user policy cache if this was a user object
             if ( in_array( $object->attribute( 'contentclass_id' ), $userClassIdList ) )
             {
-                eZUser::cleanupCache();
+                eZUser::purgeUserCacheByUserId( $object->attribute( 'id' ) );
             }
         }
 
@@ -1069,10 +1071,14 @@ class eZContentOperationCollection
         $selectedNode->store();
 
         // clear user policy cache if this was a user object
-        if ( in_array( $object->attribute( 'contentclass_id' ), $userClassIDArray ) or
-             in_array( $selectedObject->attribute( 'contentclass_id' ), $userClassIDArray ) )
+        if ( in_array( $object->attribute( 'contentclass_id' ), $userClassIDArray ) )
         {
-            eZUser::cleanupCache();
+            eZUser::purgeUserCacheByUserId( $object->attribute( 'id' ) );
+        }
+
+        if ( in_array( $selectedObject->attribute( 'contentclass_id' ), $userClassIDArray ) )
+        {
+            eZUser::purgeUserCacheByUserId( $selectedObject->attribute( 'id' ) );
         }
 
         // modify path string
@@ -1424,13 +1430,13 @@ class eZContentOperationCollection
             {
                 $feedObjectAttributeMap = $config->variable( $iniSection, 'FeedObjectAttributeMap' );
                 $subNodesMap = $config->hasVariable( $iniSection, 'Subnodes' ) ? $config->variable( $iniSection, 'Subnodes' ) : array();
-    
+
                 $rssExportItem = eZRSSExportItem::create( $rssExportID );
                 $rssExportItem->setAttribute( 'class_id', eZContentObjectTreeNode::classIDByIdentifier( $classIdentifier ) );
                 $rssExportItem->setAttribute( 'title', $feedObjectAttributeMap['title'] );
                 if ( isset( $feedObjectAttributeMap['description'] ) )
                     $rssExportItem->setAttribute( 'description', $feedObjectAttributeMap['description'] );
-        
+
                 if ( isset( $feedObjectAttributeMap['category'] ) )
                     $rssExportItem->setAttribute( 'category', $feedObjectAttributeMap['category'] );
 
@@ -1449,7 +1455,7 @@ class eZContentOperationCollection
         }
 
         $db->commit();
-        
+
         eZContentCacheManager::clearContentCacheIfNeeded( $objectID );
 
         return array( 'status' => true );

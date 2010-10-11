@@ -54,20 +54,20 @@
             {/if}
             <td>
                 <a href={concat('content/view/full/',$:item.node_id)|ezurl}>
-                <a href={concat('content/view/full/',$:item.node_id)|ezurl}>
-                {switch match=$:item.object.contentclass_id}
-                {case match=4}
-                    <img src={"user.gif"|ezimage} border="0" alt="{'User'|i18n('design/standard/node/view')}" />
-                {/case}
-                {case match=3}
-                    <img src={"usergroup.gif"|ezimage} border="0" alt="{'User group'|i18n('design/standard/node/view')}" />
-                {/case}
-                {case}
-                    <img src={"class_2.png"|ezimage} border="0" alt="{'Document'|i18n('design/standard/node/view')}" />
-                {/case}
-                {/switch}
-                &nbsp;
-                {$:item.name|wash}</a></a>
+		<a href={concat('content/view/full/',$:item.node_id)|ezurl}>
+		{switch match=$:item.object.contentclass_id}
+		{case match=4}
+		    <img src={"user.gif"|ezimage} border="0" alt="{'User'|i18n('design/standard/node/view')}" />
+		{/case}
+		{case match=3}
+		    <img src={"usergroup.gif"|ezimage} border="0" alt="{'User group'|i18n('design/standard/node/view')}" />
+		{/case}
+		{case}
+		    <img src={"class_2.png"|ezimage} border="0" alt="{'Document'|i18n('design/standard/node/view')}" />
+		{/case}
+		{/switch}
+		&nbsp;
+		{$:item.name|wash}</a></a>
             </td>
             <td>
                 {$:item.object.class_name|wash}

@@ -26,7 +26,7 @@
 {section-else}
 {* no attribute validation errors *}
 <div class="message-feedback">
-    <h2><span class="time">[{currentdate()|l10n( shortdatetime )}]</span> {'The class definition was successfully stored.'|i18n( 'design/admin/class/edit' )}</h2>
+    <h2><span class="time">[{currentdate()|l10n( shortdatetime )}]</span> {'The draft of the class definition was successfully stored.'|i18n( 'design/admin/class/edit' )}</h2>
 </div>
 {/section}
 
@@ -61,8 +61,8 @@
     <input class="button" type="submit" name="DiscardButton" value="{'Cancel'|i18n( 'design/admin/class/edit' )}" title="{'Discard all changes and exit from edit mode.'|i18n( 'design/admin/class/edit' )|wash}" />
 </div>
 <div class="element">
-        {include uri="design:class/datatypes.tpl" name='DataTypes' id_name='DataTypeStringTop' selection_name='DataTypeString' datatypes=$datatypes current=$datatype}
-        <input class="button" type="submit" name="NewButton" id="NewButtonTop" value="{'Add attribute'|i18n( 'design/admin/class/edit' )}" title="{'Add a new attribute to the class. Use the menu on the left to select the attribute type.'|i18n( 'design/admin/class/edit' )|wash}" />
+	{include uri="design:class/datatypes.tpl" name='DataTypes' id_name='DataTypeStringTop' selection_name='DataTypeString' datatypes=$datatypes current=$datatype}
+	<input class="button" type="submit" name="NewButton" id="NewButtonTop" value="{'Add attribute'|i18n( 'design/admin/class/edit' )}" title="{'Add a new attribute to the class. Use the menu on the left to select the attribute type.'|i18n( 'design/admin/class/edit' )|wash}" />
 </div>
 <div class="button-right">
     <a href="JavaScript:void(0);" onclick="jQuery('#page').toggleClass('main-column-only');" class="controlbar-top-full-screen-toggle" title="{'Toggle fullscreen editing!'|i18n( 'design/admin/content/edit' )}">&nbsp;</a>
@@ -76,7 +76,7 @@
 <div class="context-block">
 {* DESIGN: Header START *}<div class="box-header">
 
-<h1 class="context-title" title="{'Class name and number of objects'|i18n( 'design/admin/class/view' )}">{$class.identifier|class_icon( 'normal', $class.name|wash )}&nbsp;{'Edit <%class_name> (%object_count)'|i18n( 'design/admin/class/edit',, hash( '%class_name', $class.nameList[$language_code], '%object_count', $class.object_count ) )|wash}</h1>
+<h1 class="context-title" title="{'Class name and number of objects'|i18n( 'design/admin/class/view' )}">{$class.identifier|class_icon( 'normal', $class.name|wash )}&nbsp;{'Edit <%class_name> (%object_count objects)'|i18n( 'design/admin/class/edit',, hash( '%class_name', $class.nameList[$language_code], '%object_count', $class.object_count ) )|wash}</h1>
 
 {* DESIGN: Mainline *}<div class="header-mainline"></div>
 
@@ -303,20 +303,20 @@
 {* DESIGN: Control bar START *}<div class="box-bc">
 
 <div class="block">
-        {* Remove selected attributes button *}
-        <div class="button-left">
-        {if $attributes}
-        <input class="button" type="submit" name="RemoveButton" value="{'Remove selected attributes'|i18n( 'design/admin/class/edit' )}" title="{'Remove the selected attributes.'|i18n( 'design/admin/class/edit' )|wash}" />
-        {else}
-        <input class="button-disabled" type="submit" name="RemoveButton" value="{'Remove selected attributes'|i18n( 'design/admin/class/edit' )}" title="{'Remove the selected attributes.'|i18n( 'design/admin/class/edit' )|wash}" disabled="disabled" />
-        {/if}
-        </div>
-        
-        <div class="button-right">
-        {include uri="design:class/datatypes.tpl" name=DataTypes id_name=DataTypeString datatypes=$datatypes current=$datatype}
-        <input class="button" type="submit" name="NewButton" value="{'Add attribute'|i18n( 'design/admin/class/edit' )}" title="{'Add a new attribute to the class. Use the menu on the left to select the attribute type.'|i18n( 'design/admin/class/edit' )|wash}" />
-        </div>
-        <div class="float-break"></div>
+	{* Remove selected attributes button *}
+	<div class="button-left">
+	{if $attributes}
+	<input class="button" type="submit" name="RemoveButton" value="{'Remove selected attributes'|i18n( 'design/admin/class/edit' )}" title="{'Remove the selected attributes.'|i18n( 'design/admin/class/edit' )|wash}" />
+	{else}
+	<input class="button-disabled" type="submit" name="RemoveButton" value="{'Remove selected attributes'|i18n( 'design/admin/class/edit' )}" title="{'Remove the selected attributes.'|i18n( 'design/admin/class/edit' )|wash}" disabled="disabled" />
+	{/if}
+	</div>
+	
+	<div class="button-right">
+	{include uri="design:class/datatypes.tpl" name=DataTypes id_name=DataTypeString datatypes=$datatypes current=$datatype}
+	<input class="button" type="submit" name="NewButton" value="{'Add attribute'|i18n( 'design/admin/class/edit' )}" title="{'Add a new attribute to the class. Use the menu on the left to select the attribute type.'|i18n( 'design/admin/class/edit' )|wash}" />
+	</div>
+	<div class="float-break"></div>
 </div>
 
 <div class="block">
@@ -344,7 +344,7 @@ jQuery(function( $ )//called on document.ready
 {
     var el = $('#LastChangedID input[name^=ContentAttribute_name]');
     if ( !el.size() )
-        el = $('#className');
+    	el = $('#className');
     window.scrollTo(0, Math.max( el.offset().top - 180, 0 ));
     el.focus();
 
@@ -352,23 +352,23 @@ jQuery(function( $ )//called on document.ready
     var moveButtons = $('#ezcca-edit-list div.listbutton input[name^=Move]');
     moveButtons.click(function( e )
     {
-        e.preventDefault();
-        var tr = $(this).closest('tr.ezcca-edit-list-item'), param = this.name.split('_'), up = param[0] === 'MoveUp';
+    	e.preventDefault();
+    	var tr = $(this).closest('tr.ezcca-edit-list-item'), param = this.name.split('_'), up = param[0] === 'MoveUp';
 
-        // swap items in dom
-        if ( up )
-        {
+    	// swap items in dom
+    	if ( up )
+    	{
             var swap = tr.prev();
-                if ( !swap.size() )
+        	if ( !swap.size() )
                 return false;
-                swap.before( tr );
+        	swap.before( tr );
         }
-        else
-        {
+    	else
+    	{
             var swap = tr.next();
-                if ( !swap.size() )
+        	if ( !swap.size() )
                 return false;
-                swap.after( tr );
+        	swap.after( tr );
         }
 
         // swap priority number

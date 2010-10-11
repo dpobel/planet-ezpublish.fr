@@ -1804,12 +1804,6 @@ $schema = array (
         'not_null' => '1',
         'default' => 0,
       ),
-      'is_published' => 
-      array (
-        'length' => 11,
-        'type' => 'int',
-        'default' => NULL,
-      ),
       'language_mask' => 
       array (
         'length' => 11,
@@ -3334,12 +3328,36 @@ $schema = array (
           0 => 'id',
         ),
       ),
+      'ezinfocollection_attr_cca_id' => 
+      array (
+        'type' => 'non-unique',
+        'fields' => 
+        array (
+          0 => 'contentclass_attribute_id',
+        ),
+      ),
       'ezinfocollection_attr_co_id' => 
       array (
         'type' => 'non-unique',
         'fields' => 
         array (
           0 => 'contentobject_id',
+        ),
+      ),
+      'ezinfocollection_attr_coa_id' => 
+      array (
+        'type' => 'non-unique',
+        'fields' => 
+        array (
+          0 => 'contentobject_attribute_id',
+        ),
+      ),
+      'ezinfocollection_attr_ic_id' => 
+      array (
+        'type' => 'non-unique',
+        'fields' => 
+        array (
+          0 => 'informationcollection_id',
         ),
       ),
     ),
@@ -4933,6 +4951,13 @@ $schema = array (
         'type' => 'varchar',
         'default' => NULL,
       ),
+      'original_id' => 
+      array (
+        'length' => 11,
+        'type' => 'int',
+        'not_null' => '1',
+        'default' => 0,
+      ),
       'role_id' => 
       array (
         'length' => 11,
@@ -4948,6 +4973,14 @@ $schema = array (
         'fields' => 
         array (
           0 => 'id',
+        ),
+      ),
+      'ezpolicy_original_id' => 
+      array (
+        'type' => 'non-unique',
+        'fields' => 
+        array (
+          0 => 'original_id',
         ),
       ),
     ),
@@ -5064,9 +5097,8 @@ $schema = array (
       ),
       'value' => 
       array (
-        'length' => 100,
-        'type' => 'varchar',
-        'default' => NULL,
+        'type' => 'longtext',
+        'default' => false,
       ),
     ),
     'indexes' => 
@@ -6085,6 +6117,12 @@ $schema = array (
       array (
         'type' => 'auto_increment',
         'default' => false,
+      ),
+      'identifier' => 
+      array (
+        'length' => 255,
+        'type' => 'varchar',
+        'default' => NULL,
       ),
       'locale' => 
       array (

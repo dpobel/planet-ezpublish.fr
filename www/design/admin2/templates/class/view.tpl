@@ -16,7 +16,7 @@
 
 <div class="context-block">
 {* DESIGN: Header START *}<div class="box-header">
-<h1 class="context-title" title="{'Class name and number of objects'|i18n( 'design/admin/class/view' )}">{$class.identifier|class_icon( 'normal', $class.nameList[$language_code]|wash )}&nbsp;{$class.nameList[$language_code]|wash} [{$class.object_count}]</h1>
+<h1 class="context-title" title="{'Class name and number of objects'|i18n( 'design/admin/class/view' )}">{$class.identifier|class_icon( 'normal', $class.nameList[$language_code]|wash )}&nbsp;{$class.nameList[$language_code]|wash} [{$class.object_count} objects]</h1>
 
 {* DESIGN: Mainline *}<div class="header-mainline"></div>
 
@@ -129,9 +129,9 @@
     <td class="{$Attributes.sequence}">
         <div class="block">
             <h6>{'Category'|i18n( 'design/admin/class/view' )}:</h6>
-                {if $Attributes.item.category|not}
-                    <p>{'Default'|i18n( 'design/admin/class/edit' )} ({$attribute_categorys[ $attribute_default_category ]|wash})</p>
-                {elseif is_set( $attribute_categorys[ $Attributes.item.category ] )}
+	        {if $Attributes.item.category|not}
+	            <p>{'Default'|i18n( 'design/admin/class/edit' )} ({$attribute_categorys[ $attribute_default_category ]|wash})</p>
+	        {elseif is_set( $attribute_categorys[ $Attributes.item.category ] )}
                 <p>{$attribute_categorys[ $Attributes.item.category ]|wash}</p>
             {else}
                 <p>{$attribute_categorys[ $attribute_default_category ]|wash}</p>
@@ -148,9 +148,9 @@
 
     <td rowspan="2">
 
-                <div class="block">
-                  <h6>{'Flags'|i18n( 'design/admin/class/view' )}:</h6>
-                </div>
+		<div class="block">
+		  <h6>{'Flags'|i18n( 'design/admin/class/view' )}:</h6>
+		</div>
 
         <div class="block">
             <p>{if $Attributes.item.is_required}{'Is required'|i18n( 'design/admin/class/view' )}{else}{'Is not required'|i18n( 'design/admin/class/view' )}{/if}</p>

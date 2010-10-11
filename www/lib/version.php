@@ -4,25 +4,23 @@
 //
 // ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.3.0
+// SOFTWARE RELEASE: 4.4.0
 // COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
 //   modify it under the terms of version 2.0  of the GNU General
 //   Public License as published by the Free Software Foundation.
-//
+// 
 //   This program is distributed in the hope that it will be useful,
-//   but WITHOUT ANY WARRANTY; without even the implied warranty of
+//    but WITHOUT ANY WARRANTY; without even the implied warranty of
 //   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //   GNU General Public License for more details.
-//
+// 
 //   You should have received a copy of version 2.0 of the GNU General
 //   Public License along with this program; if not, write to the Free
 //   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 //   MA 02110-1301, USA.
-//
-//
 // ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
@@ -33,13 +31,11 @@
 class eZPublishSDK
 {
     const VERSION_MAJOR = 4;
-    const VERSION_MINOR = 3;
+    const VERSION_MINOR = 4;
     const VERSION_RELEASE = 0;
     const VERSION_STATE = '';
     const VERSION_DEVELOPMENT = false;
-    const VERSION_REVISION_STRING = '$Rev: 77777 $';
-    const VERSION_ALIAS = '4.3';
-    const VERSION_REVISION = 666666;
+    const VERSION_ALIAS = '4.4';
 
     /*!
       \return the SDK version as a string
@@ -58,7 +54,6 @@ class eZPublishSDK
         {
             $versionText = eZPublishSDK::majorVersion() . '.' . eZPublishSDK::minorVersion();
 //            $development = eZPublishSDK::developmentVersion();
-//            $revision = eZPublishSDK::revision();
 //            if ( $development !== false )
 //                $versionText .= '.' . $development;
             if ( $withRelease )
@@ -107,14 +102,6 @@ class eZPublishSDK
     static function release()
     {
         return eZPublishSDK::VERSION_RELEASE;
-    }
-
-    /*!
-     \return the SVN revision number
-    */
-    static function revision()
-    {
-        return eZPublishSDK::VERSION_REVISION;
     }
 
     /*!

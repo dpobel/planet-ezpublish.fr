@@ -6,25 +6,23 @@
 //
 // ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.3.0
+// SOFTWARE RELEASE: 4.4.0
 // COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
 //   modify it under the terms of version 2.0  of the GNU General
 //   Public License as published by the Free Software Foundation.
-//
+// 
 //   This program is distributed in the hope that it will be useful,
-//   but WITHOUT ANY WARRANTY; without even the implied warranty of
+//    but WITHOUT ANY WARRANTY; without even the implied warranty of
 //   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //   GNU General Public License for more details.
-//
+// 
 //   You should have received a copy of version 2.0 of the GNU General
 //   Public License along with this program; if not, write to the Free
 //   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 //   MA 02110-1301, USA.
-//
-//
 // ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
@@ -134,7 +132,7 @@ class eZPreferences
         $value = false;
         // If the user object is not the currently logged in user we cannot use the session values
         $http = eZHTTPTool::instance();
-        $useCache = ( $user->ContentObjectID == $http->sessionVariable( 'eZUserLoggedInID' ) );
+        $useCache = ( $user->ContentObjectID == $http->sessionVariable( 'eZUserLoggedInID', false ) );
         if ( $useCache and eZPreferences::isStoredInSession( $name ) )
             return eZPreferences::storedSessionValue( $name );
 
@@ -176,7 +174,7 @@ class eZPreferences
         {
             // If the user object is not the currently logged in user we cannot use the session values
             $http = eZHTTPTool::instance();
-            $useCache = ( $user->ContentObjectID == $http->sessionVariable( 'eZUserLoggedInID' ) );
+            $useCache = ( $user->ContentObjectID == $http->sessionVariable( 'eZUserLoggedInID', false ) );
 
             $returnArray = array();
             $userID = $user->attribute( 'contentobject_id' );
@@ -192,11 +190,9 @@ class eZPreferences
         }
         else
         {
-            // For the anonymous user we just return all values
+            // For the anonymous user we just return all values, or empty array if session is un-started / value undefined
             $http = eZHTTPTool::instance();
-            if ( $http->hasSessionVariable( eZPreferences::SESSION_NAME ) )
-                return $http->sessionVariable( eZPreferences::SESSION_NAME );
-            return array();
+            return $http->sessionVariable( eZPreferences::SESSION_NAME, array() );
         }
     }
 
@@ -231,7 +227,7 @@ class eZPreferences
     static function isStoredInSession( $name )
     {
         $http = eZHTTPTool::instance();
-        if ( !$http->hasSessionVariable( eZPreferences::SESSION_NAME ) )
+        if ( !$http->hasSessionVariable( eZPreferences::SESSION_NAME, false ) )
             return false;
         $preferencesInSession = $http->sessionVariable( eZPreferences::SESSION_NAME );
         return array_key_exists( $name, $preferencesInSession );

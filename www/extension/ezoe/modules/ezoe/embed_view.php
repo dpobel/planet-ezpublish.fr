@@ -4,25 +4,23 @@
 //
 // ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Online Editor extension for eZ Publish
-// SOFTWARE RELEASE: 4.3.0
+// SOFTWARE RELEASE: 4.4.0
 // COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
 //   modify it under the terms of version 2.0  of the GNU General
 //   Public License as published by the Free Software Foundation.
-//
+// 
 //   This program is distributed in the hope that it will be useful,
-//   but WITHOUT ANY WARRANTY; without even the implied warranty of
+//    but WITHOUT ANY WARRANTY; without even the implied warranty of
 //   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //   GNU General Public License for more details.
-//
+// 
 //   You should have received a copy of version 2.0 of the GNU General
 //   Public License along with this program; if not, write to the Free
 //   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 //   MA 02110-1301, USA.
-//
-//
 // ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
@@ -51,8 +49,8 @@ if ( isset( $Params['EmbedID'] )  && $Params['EmbedID'])
     if ( strcasecmp( $embedType  , 'eznode'  ) === 0 )
     {
         $embedNode   = eZContentObjectTreeNode::fetch( $embedId );
-        $embedObject = $node->object();
-        $tplSuffix   = '_node'; 
+        $embedObject = $embedNode->object();
+        $tplSuffix   = '_node';
         $idString    = 'eZNode_' . $embedId;
     }
     else
@@ -83,7 +81,7 @@ $className = '';
 $size  = 'medium';
 $view  = 'embed';
 $align = 'right';
-$style = '';//'text-align: left;';
+//$style = '';//'text-align: left;';
 
 if ( $http->hasPostVariable('inline') &&
      $http->postVariable('inline') === 'true' )
@@ -114,7 +112,7 @@ if ( $http->hasPostVariable('align') )
 }
 
 //if ( $align === 'left' || $align === 'right' )
-//    $style .= ' float: ' . $align . ';'; 
+//    $style .= ' float: ' . $align . ';';
 
 
 $res = eZTemplateDesignResource::instance();
@@ -134,9 +132,10 @@ if ( isset( $embedNode ) ) $tpl->setVariable( 'node', $embedNode );
 $templateOutput = $tpl->fetch( 'design:content/datatype/view/ezxmltags/' . $tagName . $tplSuffix . '.tpl' );
 //echo '<div id="' . $idString . '" title="' . $objectName . '"' . $style . '>' . $templateOutput . '</div>';
 
-echo "<!--\r\n";
-eZDebug::printReport( false, false );
-echo "-->\r\n" . $templateOutput;
+//echo "<!--\r\n";
+//eZDebug::printReport( false, false );
+//echo "-->\r\n";
+echo $templateOutput;
 
 
 

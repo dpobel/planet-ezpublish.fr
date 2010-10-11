@@ -8,14 +8,14 @@
          item_limit=$item_limit}
 {if and( ezini_hasvariable( 'AlphabeticalFilterSettings', 'ContentFilterList', 'content.ini' ),
          gt( count( ezini( 'AlphabeticalFilterSettings', 'ContentFilterList', 'content.ini' ) ), 0 )
-         )}
+	 )}
 
    {default children_count_by_letter=false()
             objectname_filter=false()
             alphabet=alphabet()
-            node_id=false()
-            page_uri_suffix=false()
-            page_count=int( ceil( div( $item_count, $item_limit ) ) )}
+	    node_id=false()
+	    page_uri_suffix=false()
+	    page_count=int( ceil( div( $item_count, $item_limit ) ) )}
 
    {* Create array of used letters. All unused letters will be disabled in alphabetical navigator. *}
    {if and( ne( $node_id, false() ), eq( ezini( 'AlphabeticalFilterSettings', 'EnableUnusedLetters', 'content.ini' ), 'true' ) )}
@@ -46,28 +46,28 @@
        <span class="pages">
             {if $:objectname_filter|eq( false() )}
                  <span class="current">*</span>
-            {else}
+	    {else}
                  <span class="other"><a href={concat( $page_uri, $page_uri_suffix )|ezurl}>*</a></span>
-            {/if}
+	    {/if}
 
-            {if $:objectname_filter|eq( 'others' )}
+	    {if $:objectname_filter|eq( 'others' )}
                  <span class="current">others</span>
-            {else}
-                 <span class="other">
-                 {if or( and( ne($children_count_by_letter, false() ), gt( $children_count_by_letter['others'], 0 ) ), eq( $children_count_by_letter, false() ) )}
-                     <a href={concat( $page_uri, '/(namefilter)/', 'others', $page_uri_suffix )|ezurl}>
+	    {else}
+	         <span class="other">
+		 {if or( and( ne($children_count_by_letter, false() ), gt( $children_count_by_letter['others'], 0 ) ), eq( $children_count_by_letter, false() ) )}
+		     <a href={concat( $page_uri, '/(namefilter)/', 'others', $page_uri_suffix )|ezurl}>
                  {else}
-                     <span class="disabled">
-                 {/if}
-                 others
-                 {if or( and( ne($children_count_by_letter, false() ), gt( $children_count_by_letter['others'], 0 ) ), eq( $children_count_by_letter, false() ) )}
-                     </a>
+		     <span class="disabled">
+		 {/if}
+		 others
+		 {if or( and( ne($children_count_by_letter, false() ), gt( $children_count_by_letter['others'], 0 ) ), eq( $children_count_by_letter, false() ) )}
+		     </a>
                  {else}
                      </span>
                  {/if}
-                
-                 </span>                
-            {/if}
+		
+                 </span>		
+	    {/if}
             {* Create alphabetical navigator *}
             {foreach $alphabet as $letter}
                  {if $letter|eq( $:objectname_filter )}
@@ -76,23 +76,23 @@
                       <span class="other">
                       {if or( and( ne( $children_count_by_letter, false() ), and( is_set( $children_count_by_letter[$letter] ), gt( $children_count_by_letter[$letter], 0 ) ) ), eq( $children_count_by_letter, false() ) )}
                          <a href={concat( $page_uri, '/(namefilter)/', $letter, $page_uri_suffix )|ezurl}>
-                      {else}
-                         <span class="disabled">
-                      {/if}
-                      {$letter}
+		      {else}
+		         <span class="disabled">
+		      {/if}
+		      {$letter}
                       {if or( and( ne( $children_count_by_letter, false() ), and( is_set( $children_count_by_letter[$letter] ), gt( $children_count_by_letter[$letter], 0 ) ) ), eq( $children_count_by_letter, false() ) )}
-                         </a>
-                      {else}
-                         </span>
-                      {/if}
-                      </span>
+		         </a>
+		      {else}
+		         </span>
+		      {/if}
+		      </span>
                  {/if}
-                
-                 {set $c=inc($:c)}
-                 {if $:c|gt(25)}
-                    {set $c=0}
-                    <br>
-                 {/if}          
+		
+	         {set $c=inc($:c)}
+	         {if $:c|gt(25)}
+	            {set $c=0}
+	            <br>
+                 {/if}		
             {/foreach}
        </span>
        {/let}

@@ -133,10 +133,10 @@ ul.tabs
 ul.tabs li a, ul.tabs li span.disabled
 {
     min-height: 16px;
-    min-width: 85px;
+    min-width: 80px;
 }
 
-#header-topmenu ul li.selected a, #header-topmenu ul li a:hover,
+#header-topmenu ul li.selected a, #header-topmenu ul li a:hover, #header-topmenu ul li.active a,
 ul.tabs li.selected a, ul.tabs li a:hover
 {
     margin-top: 0;
@@ -154,7 +154,7 @@ ul.tabs li.selected a, ul.tabs li a:hover
     margin-bottom: -1px;
 }
 
-#header-topmenu ul li span.disabled, span.disabled
+#header-topmenu ul li span.disabled, span.disabled, ul.tabs.disabled li a
 {
     color: #888;
 }
@@ -174,6 +174,11 @@ div.tab-content
     height: 20em;
     overflow-y: scroll;
     padding: 1em;
+}
+
+div.tabs-content.disabled div.tab-content
+{
+    display: none;
 }
 
 
@@ -232,7 +237,7 @@ div.tab-content
     margin-top: 5px;
 }
 
-div#columns.hide-rightmenu div#rightmenu    { display: none; }
+div#columns.hide-rightmenu div#rightmenu  { display: none; }
 div#columns.hide-rightmenu div#maincolumn { margin-right: 0; }
 
 
@@ -241,7 +246,7 @@ div#columns.hide-rightmenu div#maincolumn { margin-right: 0; }
 
 #rightmenu-design
 {
-    margin: 3.5em 1em 0 1.2em;
+    margin: 3.5em 1em 0 1.5em;
     position: relative;
 }
 
@@ -254,14 +259,9 @@ div#columns.hide-rightmenu div#maincolumn { margin-right: 0; }
 
 #rightmenu-design ul
 {
-    color: #aaa;
     margin-left: 1.5em;
 }
 
-#rightmenu-design #currentuserperferences ul li
-{
-    color: #333;
-}
 #rightmenu label { font-weight:normal; }
 
 
@@ -338,7 +338,7 @@ ul.leftmenu-items li.current a
 
 div#contentstructure
 {
-    overflow-x: auto;
+    overflow: hidden;
     padding-top: 0.5em;
 }
 
@@ -402,7 +402,6 @@ div#contentstructure li span.node-name-normal
 
 div#contentstructure li.currentnode > a.image-text span.node-name-normal, div#contentstructure li.currentnode > a.image-text span.node-name-hidden, div#contentstructure li.currentnode > a.image-text span.node-name-hiddenbyparent /* Highlighting of current node */
 {
-    font-weight: bold;
     color: #E24602;
     padding: 0 0.25em 0 0.2em;
 }
@@ -629,7 +628,6 @@ span.classattribute-description, p.class-description
 {
     font-weight: normal;
     white-space: normal;
-    padding-left: 1em;
     min-height: 15px;
 }
 
@@ -756,6 +754,12 @@ input.button, input.defaultbutton, input.button-disabled
 }
 
 /* SEARCH */
+
+.searchblock
+{
+    position: relative;
+}
+
 #searchtext
 {
     height: 18px;
@@ -771,8 +775,8 @@ input.button, input.defaultbutton, input.button-disabled
 {
     height: 17px;
     position: absolute;
-    right: 8px;
-    top: 22px;
+    right: 3px;
+    top: 3px;
     width: 17px;
 }
 
@@ -817,23 +821,4 @@ a.controlbar-top-full-screen-toggle
 div#page.main-column-only a.controlbar-top-full-screen-toggle
 {
     background-image: url('../images/2/exit-fullscreen.png');
-}
-
-
-/* CLASS ATTRIBUTE GROUPING */
-
-fieldset.ezcca-collapsible legend a
-{
-    text-decoration: none;
-}
-
-fieldset.ezcca-collapsible.ezcca-collapsed
-{
-    border-width: 1px 0 0 0;
-    height: 1em;
-}
-
-fieldset.ezcca-collapsible.ezcca-collapsed legend
-{
-    margin-left: 1px;
 }

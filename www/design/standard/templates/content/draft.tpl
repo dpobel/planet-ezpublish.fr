@@ -12,12 +12,12 @@ function checkAll()
         document.draftaction.selectall.value = "{'Deselect all'|i18n('design/standard/content/view')}";
 {literal}
         with (document.draftaction) 
-        {
+	{
             for (var i=0; i < elements.length; i++) 
-            {
+	    {
                 if (elements[i].type == 'checkbox' && elements[i].name == 'DeleteIDArray[]')
                      elements[i].checked = true;
-            }
+	    }
         }
      }
      else
@@ -26,12 +26,12 @@ function checkAll()
          document.draftaction.selectall.value = "{'Select all'|i18n('design/standard/content/view')}";
 {literal}
          with (document.draftaction) 
-         {
+	 {
             for (var i=0; i < elements.length; i++) 
-            {
+	    {
                 if (elements[i].type == 'checkbox' && elements[i].name == 'DeleteIDArray[]')
                      elements[i].checked = false;
-            }
+	    }
          }
      }
 }
@@ -102,7 +102,7 @@ function checkAll()
 <tr>
     <td colspan="3" align="left">
         <input type="image" name="RemoveButton" value="{'Remove'|i18n('design/standard/content/view')}" src={"trash.png"|ezimage} />
-        <input name="selectall" onclick=checkAll() type="button" value="{'Select all'|i18n('design/standard/content/view')}">
+	<input name="selectall" onclick=checkAll() type="button" value="{'Select all'|i18n('design/standard/content/view')}">
     </td>
     <td colspan="4">
     </td>

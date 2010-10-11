@@ -1,9 +1,9 @@
 eZ Publish: Comment / UGC system, Requirements, 4.3
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-$Author: ar $
-$Revision: 24420 $
-$Date: 2009-12-03 09:29:54 +0100 (Thu, 03 Dec 2009) $
+$Author$
+$Revision$
+$Date$
 :Status: Draft
 
 .. contents::

@@ -6,25 +6,23 @@
 //
 // ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.3.0
+// SOFTWARE RELEASE: 4.4.0
 // COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
 //   modify it under the terms of version 2.0  of the GNU General
 //   Public License as published by the Free Software Foundation.
-//
+// 
 //   This program is distributed in the hope that it will be useful,
-//   but WITHOUT ANY WARRANTY; without even the implied warranty of
+//    but WITHOUT ANY WARRANTY; without even the implied warranty of
 //   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //   GNU General Public License for more details.
-//
+// 
 //   You should have received a copy of version 2.0 of the GNU General
 //   Public License along with this program; if not, write to the Free
 //   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 //   MA 02110-1301, USA.
-//
-//
 // ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
@@ -126,10 +124,6 @@ class eZContentObject extends eZPersistentObject
                                                           'datatype' => 'string',
                                                           'default' => '',
                                                           'required' => true ),
-                                         "is_published" => array( 'name' => "IsPublished",
-                                                                  'datatype' => 'integer',
-                                                                  'default' => 0,
-                                                                  'required' => true ),
                                          "published" => array( 'name' => "Published",
                                                                'datatype' => 'integer',
                                                                'default' => 0,
@@ -522,24 +516,24 @@ class eZContentObject extends eZPersistentObject
     /**
      * Generates a map with all the content object attributes where the keys are
      * the attribute identifiers grouped by class attribute category.
-     * 
+     *
      * @note Result is not cached, so make sure you don't call this over and over.
-     * 
-     * @return array 
+     *
+     * @return array
      */
     public function groupedDataMap()
     {
         return self::createGroupedDataMap( $this->fetchDataMap() );
     }
-    
+
     /**
      * Generates a map with all the content object attributes where the keys are
      * the attribute identifiers grouped by class attribute category.
-     * 
+     *
      * @note Result is not cached, so make sure you don't call this over and over.
-     * 
+     *
      * @param array $contentObjectAttributes Array of eZContentObjectAttribute objects
-     * @return array 
+     * @return array
      */
     public static function createGroupedDataMap( $contentObjectAttributes )
     {
@@ -559,7 +553,7 @@ class eZContentObject extends eZPersistentObject
                 $groupedDataMap[ $attributeCategory ] = array();
 
             $groupedDataMap[ $attributeCategory ][$attributeIdentifier] = $attribute;
-            
+
         }
         return $groupedDataMap;
     }
@@ -1147,8 +1141,7 @@ class eZContentObject extends eZPersistentObject
             if ( !isset( $eZContentObjectVersionCache ) ) // prevent PHP warning below
                 $eZContentObjectVersionCache = array();
 
-            if ( array_key_exists( $this->ID, $eZContentObjectVersionCache ) &&
-                 array_key_exists( $version, $eZContentObjectVersionCache[$this->ID] ) )
+            if ( isset( $eZContentObjectVersionCache[$this->ID][$version] ) )
             {
                 return $eZContentObjectVersionCache[$this->ID][$version];
             }
@@ -1237,7 +1230,7 @@ class eZContentObject extends eZPersistentObject
             if ( $versionCount >= $versionlimit )
             {
                 // Remove oldest archived version
-                $params = array( 'conditions'=> array( 'status' => 3 ) );
+                $params = array( 'conditions'=> array( 'status' => eZContentObjectVersion::STATUS_ARCHIVED ) );
                 $versions = $this->versions( true, $params );
                 if ( count( $versions ) > 0 )
                 {
@@ -2901,8 +2894,40 @@ class eZContentObject extends eZPersistentObject
         {
             if ( isset( $params['SortBy'] ) )
             {
-                $sortingInfo = eZContentObjectTreeNode::createSortingSQLStrings( $params['SortBy'] );
-                $sortingString = ' ORDER BY ' . $sortingInfo['sortingFields'];
+                $validSortBy = array( 'class_identifier', 'class_name', 'modified', 'name', 'published', 'section' );
+                $sortByParam = array();
+                if ( is_array( $params['SortBy'] ) )
+                {
+                    // only one SortBy, as a simple array
+                    if ( !is_array( $params['SortBy'][0] ) )
+                    {
+                        if ( !in_array( $params['SortBy'][0], $validSortBy ) )
+                            eZDebug::writeWarning( "Unsupported sort_by parameter {$params['SortBy'][0]}; check the online documentation for the list of supported sort types", __METHOD__ );
+                        else
+                            $sortByParam[] = $params['SortBy'];
+                    }
+                    // multiple SortBy, check each of them one by one, and keep valid ones
+                    else
+                    {
+                        $invalidSortBy = array();
+                        foreach( $params['SortBy'] as $sortByTuple )
+                        {
+                            if ( !in_array( $sortByTuple[0], $validSortBy ) )
+                                $invalidSortBy[] = $sortByTuple[0];
+                            else
+                                $sortByParam[] = $sortByTuple;
+                        }
+                        if ( count( $invalidSortBy ) > 0 )
+                        {
+                            eZDebug::writeWarning( "Unsupported sort_by parameter(s) " . implode( ', ', $invalidSortBy ) . "; check the online documentation for the list of supported sort types", __METHOD__ );
+                        }
+                    }
+                }
+                if ( count( $sortByParam ) > 0 )
+                {
+                    $sortingInfo = eZContentObjectTreeNode::createSortingSQLStrings( $sortByParam );
+                    $sortingString = ' ORDER BY ' . $sortingInfo['sortingFields'];
+                }
             }
             if ( isset( $params['IgnoreVisibility'] ) )
             {
@@ -4522,7 +4547,7 @@ class eZContentObject extends eZPersistentObject
                 return $classList;
             }
 
-            $classIDCondition = $db->generateSQLInStatement( $classIDArray, 'cc.id' );
+            $classIDCondition = $db->generateSQLINStatement( $classIDArray, 'cc.id' );
             // If $asObject is true we fetch all fields in class
             $fields = $asObject ? "cc.*, $classNameFilter[nameField]" : "cc.id, $classNameFilter[nameField]";
             $rows = $db->arrayQuery( "SELECT DISTINCT $fields " .
@@ -4772,23 +4797,16 @@ class eZContentObject extends eZPersistentObject
         // Fetch content actions if not already fetched
         if ( $this->ContentActionList === false )
         {
-
-            $contentActionList = array();
             foreach ( $attributeList as $attribute )
             {
-                $contentActions = $attribute->contentActionList();
-                if ( count( $contentActions ) > 0 )
+                $contentActionList = $attribute->contentActionList();
+                if ( is_array( $contentActionList ) && !empty( $contentActionList ) )
                 {
-                    $contentActionList = $attribute->contentActionList();
-
-                    if ( is_array( $contentActionList ) )
+                    foreach ( $contentActionList as $action )
                     {
-                        foreach ( $contentActionList as $action )
+                        if ( !$this->hasContentAction( $action['action'] ) )
                         {
-                            if ( !$this->hasContentAction( $action['action'] ) )
-                            {
-                                $this->ContentActionList[] = $action;
-                            }
+                            $this->ContentActionList[] = $action;
                         }
                     }
                 }

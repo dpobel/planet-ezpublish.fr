@@ -4,25 +4,23 @@
 //
 // ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.3.0
+// SOFTWARE RELEASE: 4.4.0
 // COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
 //   modify it under the terms of version 2.0  of the GNU General
 //   Public License as published by the Free Software Foundation.
-//
+// 
 //   This program is distributed in the hope that it will be useful,
-//   but WITHOUT ANY WARRANTY; without even the implied warranty of
+//    but WITHOUT ANY WARRANTY; without even the implied warranty of
 //   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //   GNU General Public License for more details.
-//
+// 
 //   You should have received a copy of version 2.0 of the GNU General
 //   Public License along with this program; if not, write to the Free
 //   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 //   MA 02110-1301, USA.
-//
-//
 // ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
@@ -41,23 +39,14 @@ if ( $http->hasPostVariable( 'BackButton' )  )
         $http->removeSessionVariable( 'LastAccessesVersionURI' );
         return $Module->redirectTo( $redurectURI );
     }
-    if ( $http->hasSessionVariable( "LastAccessesURI" ) )
+    if ( $http->hasSessionVariable( "LastAccessesURI", false ) )
         $userRedirectURI = $http->sessionVariable( "LastAccessesURI" );
     return $Module->redirectTo( $userRedirectURI );
 }
 
-
-$tpl = eZTemplate::factory();
 // Will be sent from the content/edit page and should be kept
 // incase the user decides to continue editing.
 $FromLanguage = $Params['FromLanguage'];
-
-if ( $http->hasSessionVariable( 'LastAccessesVersionURI' ) )
-{
-    $tpl->setVariable( 'redirect_uri', $http->sessionVariable( 'LastAccessesVersionURI' ) );
-}
-
-$ini = eZINI::instance();
 
 $contentObject = eZContentObject::fetch( $ObjectID );
 if ( $contentObject === null )
@@ -142,8 +131,6 @@ foreach ( $nodeAssignments as $nodeAssignment )
     }
 }
 
-$contentINI = eZINI::instance( 'content.ini' );
-
 if ( $Module->isCurrentAction( 'ChangeSettings' ) )
 {
     if ( $Module->hasActionParameter( 'Language' ) )
@@ -174,8 +161,6 @@ else
     $assignment = false;
 }
 
-$ini = eZINI::instance();
-
 if ( $assignment )
 {
     $parentNodeObject = $assignment->attribute( 'parent_node_obj' );
@@ -185,7 +170,6 @@ $navigationPartIdentifier = false;
 if ( $sectionID !== false )
 {
     $designKeys[] = array( 'section', $sectionID ); // Section ID
-    eZSection::setGlobalID( $sectionID );
 
     $section = eZSection::fetch( $sectionID );
     if ( $section )
@@ -247,9 +231,9 @@ else
     return;
 }
 
-$contentINI = eZINI::instance( 'content.ini' );
 if ( !$siteAccess )
 {
+    $contentINI = eZINI::instance( 'content.ini' );
     if ( $contentINI->hasVariable( 'VersionView', 'DefaultPreviewDesign' ) )
     {
         $siteAccess = $contentINI->variable( 'VersionView', 'DefaultPreviewDesign' );
@@ -263,14 +247,12 @@ if ( !$siteAccess )
 $access = $GLOBALS['eZCurrentAccess'];
 $access['name'] = $siteAccess;
 
-if ( $access['type'] == EZ_ACCESS_TYPE_URI )
+if ( $access['type'] === eZSiteAccess::TYPE_URI )
 {
-    eZSys::clearAccessPath();
+    $access['uri_part'] = array( $siteAccess );
 }
-changeAccess( $access );
 
-// Load the siteaccess extensions
-eZExtension::activateExtensions( 'access' );
+eZSiteAccess::load( $access );
 
 // Change content object default language
 $GLOBALS['eZContentObjectDefaultLanguage'] = $LanguageCode;
@@ -280,9 +262,17 @@ eZContentLanguage::expireCache();
 
 $Module->setTitle( 'View ' . $class->attribute( 'name' ) . ' - ' . $contentObject->attribute( 'name' ) );
 
+$ini = eZINI::instance();
 $res = eZTemplateDesignResource::instance();
 $res->setDesignSetting( $ini->variable( 'DesignSettings', 'SiteDesign' ), 'site' );
 $res->setOverrideAccess( $siteAccess );
+
+$tpl = eZTemplate::factory();
+
+if ( $http->hasSessionVariable( 'LastAccessesVersionURI' ) )
+{
+    $tpl->setVariable( 'redirect_uri', $http->sessionVariable( 'LastAccessesVersionURI' ) );
+}
 
 $designKeys = array( array( 'object', $contentObject->attribute( 'id' ) ), // Object ID
                      array( 'node', $virtualNodeID ), // Node id
@@ -302,7 +292,7 @@ if ( $assignment )
 $res->setKeys( $designKeys );
 
 unset( $contentObject );
-$contentObject = $node->attribute( 'object' ); // do not remove &
+$contentObject = $node->attribute( 'object' );
 
 $Result = eZNodeviewfunctions::generateNodeViewData( $tpl, $node, $contentObject, $LanguageCode, 'full', 0, $viewParameters );
 

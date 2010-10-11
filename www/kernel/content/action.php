@@ -4,25 +4,23 @@
 //
 // ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.3.0
+// SOFTWARE RELEASE: 4.4.0
 // COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
 //   modify it under the terms of version 2.0  of the GNU General
 //   Public License as published by the Free Software Foundation.
-//
+// 
 //   This program is distributed in the hope that it will be useful,
-//   but WITHOUT ANY WARRANTY; without even the implied warranty of
+//    but WITHOUT ANY WARRANTY; without even the implied warranty of
 //   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //   GNU General Public License for more details.
-//
+// 
 //   You should have received a copy of version 2.0 of the GNU General
 //   Public License along with this program; if not, write to the Free
 //   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 //   MA 02110-1301, USA.
-//
-//
 // ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
@@ -930,7 +928,6 @@ else if ( $http->hasPostVariable( 'RemoveButton' ) )
             $object = eZContentObject::fetch( $contentObjectID );
             if ( $object instanceof eZContentObject )
             {
-                eZSection::setGlobalID( $object->attribute( 'section_id' ) );
                 $section = eZSection::fetch( $object->attribute( 'section_id' ) );
             }
             if ( isset($section) && $section )
@@ -1170,7 +1167,6 @@ else if ( $http->hasPostVariable( "ContentObjectID" )  )
             $module->setExitStatus( $shopModule->exitStatus() );
             $module->setRedirectURI( $shopModule->redirectURI() );
         }
-
     }
     else if ( $http->hasPostVariable( "ActionAddToWishList" ) )
     {
@@ -1223,7 +1219,6 @@ else if ( $http->hasPostVariable( "ContentObjectID" )  )
             $object = eZContentObject::fetchByNodeID( $contentNodeID );
             if ( $object instanceof eZContentObject )
             {
-                eZSection::setGlobalID( $object->attribute( 'section_id' ) );
                 $section = eZSection::fetch( $object->attribute( 'section_id' ) );
             }
             if ( isset($section) && $section )
@@ -1306,6 +1301,41 @@ else if ( $http->hasPostVariable( "ContentObjectID" )  )
     }
     else
     {
+        // Check if there are any custom actions to handle
+        $customActions = eZINI::instance( 'datatype.ini' )->variable( 'ViewSettings', 'CustomActionMap' );
+        foreach( $customActions as $customActionName => $customActionUrl )
+        {
+            if ( $http->hasPostVariable( $customActionName ) )
+            {
+                if ( strpos( $customActionUrl, '/' ) !== false )
+                {
+                    list( $customActionModuleName, $customActionViewName ) = explode( '/', $customActionUrl );
+                    $customActionModule = eZModule::exists( $customActionModuleName );
+                    if ( !$customActionModule instanceof eZModule )
+                    {
+                        eZDebug::writeError( "Could not load custom action module for: $customActionUrl", "kernel/content/action.php" );
+                    }
+
+                    $result = $customActionModule->run( $customActionViewName, array() );
+                    if ( isset( $result['content'] ) && $result['content'] )
+                    {
+                        return $result;
+                    }
+                    else
+                    {
+                        $module->setExitStatus( $customActionModule->exitStatus() );
+                        $module->setRedirectURI( $customActionModule->redirectURI() );
+                        return $result;
+                    }
+                }
+                else
+                {
+                    return $module->run( $customActionUrl );
+                }
+            }
+        }
+
+        // look for custom content action handlers
         $baseDirectory = eZExtension::baseDirectory();
         $contentINI = eZINI::instance( 'content.ini' );
         $extensionDirectories = $contentINI->variable( 'ActionSettings', 'ExtensionDirectories' );
@@ -1527,7 +1557,6 @@ else if ( !isset( $result ) )
 {
     return $module->handleError( eZError::KERNEL_NOT_AVAILABLE, 'kernel' );
 }
-
 
 // return module contents
 $Result = array();

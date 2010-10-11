@@ -13,18 +13,18 @@
 
     <label>{'Selected nodes'|i18n('design/standard/package')}</label>
     <table class="list" width="100%" cellpadding="0" cellspacing="0" border="0">
-        <tr>
-            <th>{"Node"|i18n("design/standard/package")}</th>
-            <th>{"Export type"|i18n("design/standard/package")}</th>
-            <th>{"Remove"|i18n("design/standard/package")}</th>
-        </tr>
+	<tr>
+	    <th>{"Node"|i18n("design/standard/package")}</th>
+	    <th>{"Export type"|i18n("design/standard/package")}</th>
+	    <th>{"Remove"|i18n("design/standard/package")}</th>
+	</tr>
         {section var=node loop=$node_list}
-            <tr>
-                <td class="{$node.sequence}">{fetch(content,node,hash(node_id,$node.item.id)).name|wash}</td>
-                <td class="{$node.sequence}">{$node.item.type}</td>
-                <td class="{$node.sequence}" width="1" align="right"><input type="checkbox" name="DeleteIDArray[]" value="{$node.item.id}"></td>
-            </tr>
-        {/section}
+	    <tr>
+	        <td class="{$node.sequence}">{fetch(content,node,hash(node_id,$node.item.id)).name|wash}</td>
+		<td class="{$node.sequence}">{$node.item.type}</td>
+		<td class="{$node.sequence}" width="1" align="right"><input type="checkbox" name="DeleteIDArray[]" value="{$node.item.id}"></td>
+	    </tr>
+	{/section}
     </table>
 
     <div class="block">

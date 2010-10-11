@@ -19,10 +19,10 @@
     <br/>
     <label>{"Site URL"|i18n("design/standard/rss/edit")}:</label><div class="labelbreak"></div>
     {*{include uri="design:gui/lineedit.tpl" id_name=url value=$rss_export.url}*}
-        <input class="halfbox" type="text" name="url" value="{$rss_export.url|wash}"/>
+	<input class="halfbox" type="text" name="url" value="{$rss_export.url|wash}"/>
     <div class="context-attributes">
     <p>{'Use this field to enter the base URL of your site. It is used to produce the URLs in the export, composed by the Site URL (e.g. "http://www.example.com/index.php") and the path to the object (e.g. "/articles/my_article"). The Site URL depends on your Web server and eZ Publish configuration.'|i18n( 'design/standard/rss/edit')}</p>
-        </div>
+	</div>
     <br/>
 
     <input type="hidden" name="RSSImageID" value="{$rss_export.image_id}" />
@@ -89,9 +89,9 @@
     <label>{"Active"|i18n("design/standard/rss/edit")}:</label><div class="labelbreak"></div>
     <input type="checkbox" name="active" {if $rss_export.active|eq(1)}checked="checked"{/if}></input>
     <br/>
-        <label>{'Main node only'|i18n( 'design/standard/rss/edit' )}:</label>
+	<label>{'Main node only'|i18n( 'design/standard/rss/edit' )}:</label>
     <input type="checkbox" name="MainNodeOnly" {if $rss_export.main_node_only|eq( 1 )}checked="checked"{/if}
-                title="{'Check if you want to only feed the object from the main node.'|i18n('design/standard/rss/edit')}"/>
+		title="{'Check if you want to only feed the object from the main node.'|i18n('design/standard/rss/edit')}"/>
 
     <label>{"Access URL"|i18n("design/standard/rss/edit")}:</label><div class="labelbreak"></div>
     rss/feed/ {include uri="design:gui/lineedit.tpl" id_name="Access_URL" value=$rss_export.access_url}
@@ -117,9 +117,9 @@
                 value="Browse"|i18n("design/standard/rss/edit")}
       <br/>
 
-           <label>{'Subnodes'|i18n( 'design/standard/rss/edit' )}:</label>
+	   <label>{'Subnodes'|i18n( 'design/standard/rss/edit' )}:</label>
        <input type="checkbox" name="Item_Subnodes_{$Source:index}" {if $Source:item.subnodes|wash|eq( 1 )}checked="checked"{/if}
-           title="{'Activate this checkbox if objects from the subnodes of the source should also be fed.'|i18n('design/standard/rss/edit')}"/>
+	   title="{'Activate this checkbox if objects from the subnodes of the source should also be fed.'|i18n('design/standard/rss/edit')}"/>
 
        <label>{"Class"|i18n("design/standard/rss/edit")}:</label><div class="labelbreak"></div>
        <select name="Item_Class_{$Source:index}">
@@ -148,7 +148,7 @@
          {/section}
          </select>
 
-             <br/>
+	     <br/>
 
          <label>{"Description"|i18n("design/standard/rss/edit")} ({"optional"|i18n("design/standard/rss/edit")}):</label><div class="labelbreak"></div>
          <select name="Item_Class_Attribute_Description_{$Source:index}">
@@ -161,7 +161,7 @@
          {/section}
          </select>
 
-             <br/>
+	     <br/>
 
          <label>{"Category"|i18n("design/standard/rss/edit")} ({"optional"|i18n("design/standard/rss/edit")}):</label><div class="labelbreak"></div>
          <select name="Item_Class_Attribute_Category_{$Source:index}">
@@ -174,7 +174,7 @@
          {/section}
          </select>
 
-             <br/>
+	     <br/>
 
          <label>{"Enclosure (media)"|i18n("design/standard/rss/edit")} ({"optional"|i18n("design/standard/rss/edit")}):</label><div class="labelbreak"></div>
          <select name="Item_Class_Attribute_Enclosure_{$Source:index}">

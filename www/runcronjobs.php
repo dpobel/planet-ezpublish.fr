@@ -5,39 +5,37 @@
 //
 // ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.3.0
+// SOFTWARE RELEASE: 4.4.0
 // COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
 //   modify it under the terms of version 2.0  of the GNU General
 //   Public License as published by the Free Software Foundation.
-//
+// 
 //   This program is distributed in the hope that it will be useful,
-//   but WITHOUT ANY WARRANTY; without even the implied warranty of
+//    but WITHOUT ANY WARRANTY; without even the implied warranty of
 //   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //   GNU General Public License for more details.
-//
+// 
 //   You should have received a copy of version 2.0 of the GNU General
 //   Public License along with this program; if not, write to the Free
 //   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 //   MA 02110-1301, USA.
-//
-//
 // ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
 
-// No more than one instance of a cronjob script can be run at any given time. If a script uses more
-// time than eZRunCronjobs_MaxScriptExecutionTime, the next instance of it will try to gracefully steal
-// the cronjob script mutex. If the process has been running for more than
-// two times the eZRunCronjobs_MaxScriptExecutionTime, the original process will be killed.
+/* No more than one instance of a cronjob script can be run at any given time.
+   If a script uses more time than the configured MaxScriptExecutionTime (see
+   cronjob.ini), the next instance of it will try to gracefully steal the
+   cronjob script mutex. If the process has been running for more than two
+   times MaxScriptExecutionTime, the original process will be killed.
+*/
 
-// Define maximum script execution time to 12 hours
-define( 'eZRunCronjobs_MaxScriptExecutionTime', 12*3600 );
-
-// Set a default time zone if none is given. The time zone can be overriden
-// in config.php or php.ini.
+/* Set a default time zone if none is given. The time zone can be overridden
+   in config.php or php.ini.
+*/
 if ( !ini_get( "date.timezone" ) )
 {
     date_default_timezone_set( "UTC" );

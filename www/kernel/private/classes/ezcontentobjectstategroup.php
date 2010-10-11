@@ -3,15 +3,15 @@
  * File containing the eZContentObjectStateGroup class.
  *
  * @copyright Copyright (C) 1999-2010 eZ Systems AS. All rights reserved.
- * @license http://ez.no/licenses/gnu_gpl GNU GPL v2
- * @version 4.3.0
+ * @license http://ez.no/licenses/gnu_gpl GNU General Public License v2.0
+ * @version 4.4.0
  * @package kernel
  */
 
 /**
  * Class respresenting a content object state group
  *
- * @version 4.3.0
+ * @version 4.4.0
  * @package kernel
  */
 class eZContentObjectStateGroup extends eZPersistentObject
@@ -542,7 +542,7 @@ class eZContentObjectStateGroup extends eZPersistentObject
         {
             if ( $newDefaultStateID )
             {
-                $contentObjectStateIDCondition = $removeIDListCount > 1 ? $db->generateSQLInStatement( $removeIDList, 'contentobject_state_id' ) :
+                $contentObjectStateIDCondition = $removeIDListCount > 1 ? $db->generateSQLINStatement( $removeIDList, 'contentobject_state_id' ) :
                                                                           "contentobject_state_id=$removeIDList[0]";
                 $db->query( "UPDATE ezcobj_state_link
                              SET contentobject_state_id=$newDefaultStateID

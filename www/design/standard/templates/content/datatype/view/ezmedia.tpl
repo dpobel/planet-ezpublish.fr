@@ -74,7 +74,7 @@
         </embed>
     </object>
     {/case}
-    
+
     {case match=silverlight}
     {literal}
     <script type="text/javascript">
@@ -82,7 +82,6 @@
         function onResizeHandler(sender, args) { }
     </script>
     {/literal}
-
     <div id="silverlightControlHost">
       <!-- Silverlight plug-in control -->
         <object data="data:application/x-silverlight," type="application/x-silverlight-2-b1" {if $attribute.content.width|gt( 0 )}width="{$attribute.content.width}"{/if} {if $attribute.content.height|gt( 0 )}height="{$attribute.content.height}"{/if}>
@@ -95,6 +94,28 @@
         </object>
         <iframe style="visibility: hidden; height: 0; width: 0; border: 0px;"></iframe>
     </div>
+    {/case}
+
+    {case match=html5_video}
+    <video src={concat("content/download/",$attribute.contentobject_id,"/",$attribute.content.contentobject_attribute_id,"/",$attribute.content.original_filename)|ezurl}
+               {if $attribute.content.width|gt( 0 )}width="{$attribute.content.width}"{/if}
+               {if $attribute.content.height|gt( 0 )}height="{$attribute.content.height}"{/if}
+               {if $attribute.content.is_autoplay}autoplay="autoplay"{/if}
+               {if $attribute.content.is_loop}loop="loop"{/if}
+               {if $attribute.content.has_controller}controls="controls"{/if}
+               preload="none">
+        {'Your browser does not support html5 video.'|i18n( 'design/standard/content/datatype' )}
+    </video>
+    {/case}
+
+    {case match=html5_audio}
+    <audio src={concat("content/download/",$attribute.contentobject_id,"/",$attribute.content.contentobject_attribute_id,"/",$attribute.content.original_filename)|ezurl}
+               {if $attribute.content.is_autoplay}autoplay="autoplay"{/if}
+               {if $attribute.content.is_loop}loop="loop"{/if}
+               {if $attribute.content.has_controller}controls="controls"{/if}
+               preload="none">
+        {'Your browser does not support html5 audio.'|i18n( 'design/standard/content/datatype' )}
+    </audio>
     {/case}
     {/switch}
 

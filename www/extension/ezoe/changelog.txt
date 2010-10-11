@@ -1,4 +1,56 @@
-eZ Online Editor 5.0 extension Changelog
+eZ Online Editor 5.x extension Changelog
+
+5.2.0beta3
+- Updated TinyMCE to 3.3.9
+
+5.2.0beta1
+- Fixed bug #016888: IE only : Custom tag do not save when first thing inserted in OE
+- Fixed bug #016842: in IE 8, have to edit attribute before entering literal tag
+- Fixed bug #016595: Issues with page break and embed objects
+- Fixed bug #015513: Custom attributes: checkbox problems
+- Fixed bug #017182: Underline is stripped away when saving after changing it with dialogs
+- Fixed bug #017163: unwanted &amp;nbsp; in enabling/disabling editor
+- Fixed bug #016844: newly created literal tag contains an nbsp
+- BC: 'tagAttributeEditor' callback now needs to return element as this is important if element is changed
+       All use of this callback has been changed to do that now so look to them for examples.
+
+5.2.0alpha6
+- Disable editor if user agent is Mobile Webkit (Iphone/Android) as they do not currently have caret support
+- Updated TinyMCE to 3.3.8
+
+5.2.0alpha5
+- Make it easier to override groups of editor Buttons by grouping them in settings
+- Add support for ',' as button separator in eZOEXMLInput::getEditorLayoutSettings() for button filtering  
+
+5.2.0alpha4
+- Updated TinyMCE to 3.3.7
+- Fixed bug #016952: IE6 OE 5.0.2 fullscreen mode has no button box
+
+5.2.0alpha3
+- Updated TinyMCE to 3.3.6
+
+
+5.2.0alpha2
+- Added extension.xml that replaces ezinfo.php and loading.php starting from eZ Publish 4.4
+- Updated TinyMCE to 3.3.4
+- Added emotions plugin support (as forked ezemotions plugin)
+- Fixed bug #16749: Custom tags layout disapear when switching to fullcreen mode
+  BC: All internal css classes for ezoe items using "mceItem" prefix has been changed to use "ezoeItem" prefix
+      and mceNonEditable is now ezoeItemNonEditable, this affects you if you have custom content.css code that
+      styles custom / embed tags!
+- Fixed bug #16732: tc-52:(Online Editor) - Underline format is not working
+- Fixed bug #16725: Check hasContent on image object attribute before it is used
+- Implemented enhancement #16703: Give better error feedback if image alias small (preview) and as defined in ezxmltext is missing
+- Implemented enhancement #16827: Better RTL support for the eZOE editor
+- Disable editor if user agent is Iz as they do not currently have caret support
+
+
+5.2.0alpha1
+- Implemented enhancement #016711: Making extension aware of the order/priority in which they need to be loaded
+- Fixed bug #16554: Applying table cell settings to row or column does not affect table headings
+- Fixed bug #16605: Online Editor adds a lot of Non Breaking spaces (nbsp)
+- Fixed bug #16271: Links containing special characters are not stored correctly
+- Upgraded TinyMCE to 3.3.2
 
 5.1.0
 * Fixed bug #16469: embedding objects in another language causes serious problems in following not-translateable attributes
@@ -9,11 +61,9 @@ eZ Online Editor 5.0 extension Changelog
 5.1.0beta2:
 * Fixed #16271: Links containing special characters are not stored correctly
 
-
 5.1.0beta1:
 * Fixed #15872: suggestions of spell checker have the wrong encoding
 * Added ezoe.ini setting for setting directionality
-
 
 5.1.0alpha1:
 * Fixed translation of anchor Name attribute
@@ -25,7 +75,7 @@ eZ Online Editor 5.0 extension Changelog
 * Fixed bug #14649: IE inserts hostname when protocol is wrong
 * Added jpn-JP translation
 * Fixed bug #14670: Embed relations are not removed when embed tag is
-  IMPORTANT: Apply update/database/5.0/dbupdate-5.0.0-to-5.0.1.sql to fix 
+  IMPORTANT: Apply update/database/5.0/dbupdate-5.0.0-to-5.0.1.sql to fix
   inconsistency in database (if you have used ezoe prior to version 5.0.1)
 * Updated Tango icons to v0.8.90
 * Added support for IsInline[<tag>]=image setting for custom tags with no content (or actual images)
@@ -126,7 +176,7 @@ eZ Online Editor 5.0 extension Changelog
 
 
 5.0rc9:
-* Implemented possibility to have same control over general attributes in gui as 
+* Implemented possibility to have same control over general attributes in gui as
   you have over custom attributes.
 * Fixed regression #14080: Custom tags broken in rev 3390?
 
@@ -223,7 +273,7 @@ eZ Online Editor 5.0 extension Changelog
 
 5.0rc:
 * Fixed #013320: (Development mode doesn't work fully)
-* Removed CustomAttributeStyleMap since it caused embed / embed-inline tags to be converted 
+* Removed CustomAttributeStyleMap since it caused embed / embed-inline tags to be converted
  to a font tag by the browser if you for instance used 'color' style for text-color.
 * Added CompatibilityMode in ezoe.ini to make editor behave like OE 4.x in respect to embed tags
   (attachment icons)
@@ -263,7 +313,7 @@ eZ Online Editor 5.0 extension Changelog
 * Disabled possibility to add link on embed object tags (since it dosn't work becuase it is a block tag)
 * Changed so blocktags are redered before a paragraph instead of inside to avoid lots of empty paragraphs
   Will hopefully fix reports on empty paragraphs
-* Fixed issue #013142: (Link URLs are rewritten) 
+* Fixed issue #013142: (Link URLs are rewritten)
 * Give warning if object id is invalid just like if node id / path is invalid
 * Fixed bug #013199: New paragraph when publish with Opera
 
@@ -376,7 +426,7 @@ eZ Online Editor 5.0 extension Changelog
 * added eZOEPacker ('ezoecss' and 'ezoescript' operators), to pack css and js
 * EditorCSSFileList support added, support for css from other locations
 * tinymce plugins from other locations (extensions/designs) now possible
-* fixed and enabled indenting / outdenting 
+* fixed and enabled indenting / outdenting
 * fixed class not working on p / header / tr / li tags
 * fixed change class list when td / th is changed
 

@@ -40,7 +40,7 @@
  * @author Ryan Grove <ryan@wonko.com>
  * @copyright 2002 Douglas Crockford <douglas@crockford.com> (jsmin.c)
  * @copyright 2008 Ryan Grove <ryan@wonko.com> (PHP port)
- * @license http://opensource.org/licenses/mit-license.php MIT License
+ * @license http://ez.no/licenses/gnu_gpl GNU General Public License v2.0
  * @version 1.1.1 (2008-03-02)
  * @link http://code.google.com/p/jsmin-php/
  */
@@ -138,7 +138,7 @@ class JSMin {
 
     if ($c === null) {
       if ($this->inputIndex < $this->inputLength) {
-        $c = $this->input[$this->inputIndex];
+        $c = substr( $this->input, $this->inputIndex, 1 );
         $this->inputIndex += 1;
       } else {
         $c = null;

@@ -26,7 +26,7 @@
 
 <div class="createblock">
     <label>{'Location'|i18n( 'design/standard/content/upload' )}</label>
-    <select     name="UploadLocationChoice" class="combobox locationchoice">
+    <select	name="UploadLocationChoice" class="combobox locationchoice">
         <option value="auto">{'Automatic'|i18n( 'design/standard/content/upload' )}</option>
 
 {def $root_node_value=ezini( 'LocationSettings', 'RootNode', 'upload.ini' )
@@ -51,7 +51,7 @@
         {/if}
 {/foreach}
 {undef $root_node_value $root_node $selection_list}
-        </select>
+  	</select>
 </div>
 
 <div class="createblock">

@@ -6,25 +6,23 @@
 //
 // ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.3.0
+// SOFTWARE RELEASE: 4.4.0
 // COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
 //   modify it under the terms of version 2.0  of the GNU General
 //   Public License as published by the Free Software Foundation.
-//
+// 
 //   This program is distributed in the hope that it will be useful,
-//   but WITHOUT ANY WARRANTY; without even the implied warranty of
+//    but WITHOUT ANY WARRANTY; without even the implied warranty of
 //   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //   GNU General Public License for more details.
-//
+// 
 //   You should have received a copy of version 2.0 of the GNU General
 //   Public License along with this program; if not, write to the Free
 //   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 //   MA 02110-1301, USA.
-//
-//
 // ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
@@ -782,7 +780,7 @@ class eZOrder extends eZPersistentObject
     static function discount( $userID, $object )
     {
         $user = eZUser::fetch( $userID );
-        $bestMatch = eZDiscount::discountPersent( $user, array( 'contentclass_id' => $object->attribute( 'contentclass_id'),
+        $bestMatch = eZDiscount::discountPercent( $user, array( 'contentclass_id' => $object->attribute( 'contentclass_id'),
                                                                 'contentobject_id' => $object->attribute( 'id' ),
                                                                 'section_id' => $object->attribute( 'section_id') ) );
         return $bestMatch;
@@ -1473,11 +1471,11 @@ class eZOrder extends eZPersistentObject
         {
             foreach ( $orderItems as $orderItem )
             {
-                $totalPriceExVat = $orderItem->attribute( 'price_ex_vat' );
-                $totalPriceIncVat & $orderItem->attribute( 'price_inc_vat' );
-                $totalPriceVat = $totalPriceIncVat - $totalPriceExVat;
-                $vatValue = $orderItem->attribute( 'vat_value' );
-                $type = $orderItem->attribute( 'type' );
+                $totalPriceExVat  = $orderItem->attribute( 'price_ex_vat' );
+                $totalPriceIncVat = $orderItem->attribute( 'price_inc_vat' );
+                $totalPriceVat    = $totalPriceIncVat - $totalPriceExVat;
+                $vatValue         = $orderItem->attribute( 'vat_value' );
+                $type             = $orderItem->attribute( 'type' );
 
                 if ( !isset( $returnArray['price_info']['items'][$vatValue]['total_price_ex_vat'] ) )
                 {

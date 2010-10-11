@@ -6,25 +6,23 @@
 //
 // ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.3.0
+// SOFTWARE RELEASE: 4.4.0
 // COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
 //   modify it under the terms of version 2.0  of the GNU General
 //   Public License as published by the Free Software Foundation.
-//
+// 
 //   This program is distributed in the hope that it will be useful,
-//   but WITHOUT ANY WARRANTY; without even the implied warranty of
+//    but WITHOUT ANY WARRANTY; without even the implied warranty of
 //   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //   GNU General Public License for more details.
-//
+// 
 //   You should have received a copy of version 2.0 of the GNU General
 //   Public License along with this program; if not, write to the Free
 //   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 //   MA 02110-1301, USA.
-//
-//
 // ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
@@ -1643,7 +1641,7 @@ class eZContentObjectVersion extends eZPersistentObject
                     ezcontentobject_version.contentobject_id='$objectID'
                 AND ( ezcontentobject_version.status in ( " .
                       eZContentObjectVersion::STATUS_DRAFT . ", " . eZContentObjectVersion::STATUS_PENDING . ", " . eZContentObjectVersion::STATUS_INTERNAL_DRAFT .
-                      " ) OR ( ezcontentobject_version.status = '1' AND ezcontentobject_version.version = '$version' ) )
+                      " ) OR ( ezcontentobject_version.status = '" . self::STATUS_PUBLISHED . "' AND ezcontentobject_version.version = '$version' ) )
                 AND ezcontentobject_attribute.contentobject_id=ezcontentobject_version.contentobject_id
                 AND ezcontentobject_attribute.version=ezcontentobject_version.version
                 AND ezcontentobject_attribute.language_id!='$initialLanguageID'

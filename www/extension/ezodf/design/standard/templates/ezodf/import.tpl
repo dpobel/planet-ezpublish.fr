@@ -41,7 +41,7 @@
 <div class="controlbar">
 {* DESIGN: Control bar START *}<div class="box-bc"><div class="box-ml"><div class="box-mr"><div class="box-tc"><div class="box-bl"><div class="box-br">
 <div class="block">
-        <input class="button" type="submit" name="StoreButton" value="{'Upload file'|i18n('extension/ezodf')}" />
+	<input class="button" type="submit" name="StoreButton" value="{'Upload file'|i18n('extension/ezodf')}" />
 </div>
 
 {section-else}
@@ -73,7 +73,7 @@ Images are placed in the media library so you can re-use them in other articles.
 <div class="controlbar">
 {* DESIGN: Control bar START *}<div class="box-bc"><div class="box-ml"><div class="box-mr"><div class="box-tc"><div class="box-bl"><div class="box-br">
 <div class="block">
-        <input class="button" type="submit" name="StoreButton" value="{'Upload file'|i18n('extension/ezodf')}" />
+	<input class="button" type="submit" name="StoreButton" value="{'Upload file'|i18n('extension/ezodf')}" />
 </div>
 
 {/section}

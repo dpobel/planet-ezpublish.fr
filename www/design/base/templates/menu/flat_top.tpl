@@ -27,7 +27,7 @@
     </ul>
     {/if}
     {/let}
-        <div class="break"></div>
+	<div class="break"></div>
     </div>
 </div>
 

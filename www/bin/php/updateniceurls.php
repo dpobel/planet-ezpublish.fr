@@ -7,25 +7,23 @@
 //
 // ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.3.0
+// SOFTWARE RELEASE: 4.4.0
 // COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
 //   modify it under the terms of version 2.0  of the GNU General
 //   Public License as published by the Free Software Foundation.
-//
+// 
 //   This program is distributed in the hope that it will be useful,
-//   but WITHOUT ANY WARRANTY; without even the implied warranty of
+//    but WITHOUT ANY WARRANTY; without even the implied warranty of
 //   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //   GNU General Public License for more details.
-//
+// 
 //   You should have received a copy of version 2.0 of the GNU General
 //   Public License along with this program; if not, write to the Free
 //   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 //   MA 02110-1301, USA.
-//
-//
 // ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
@@ -454,7 +452,7 @@ function fetchPathIdentificationStringCount()
 {
     $db = eZDB::instance();
     $sql = 'SELECT count(*) AS count
-            FROM ezcontentobject WHERE ezcontentobject.status = 1';
+            FROM ezcontentobject WHERE ezcontentobject.status = ' . eZContentObject::STATUS_PUBLISHED;
     $rows = $db->arrayQuery( $sql );
     if ( count( $rows ) > 0 )
         return $rows[0]['count'];
@@ -465,7 +463,7 @@ function fetchPathIdentificationStringChunk( $offset, $fetchLimit )
 {
     $db = eZDB::instance();
     $sql = 'SELECT id
-            FROM ezcontentobject WHERE ezcontentobject.status = 1';
+            FROM ezcontentobject WHERE ezcontentobject.status = ' . eZContentObject::STATUS_PUBLISHED;
     $rows = $db->arrayQuery( $sql,
                              array( 'offset' => $offset,
                                     'limit' => $fetchLimit ) );
@@ -758,7 +756,7 @@ if ( $urlCount > 0 )
                         list( $column, $counter ) = displayProgress( 's', $urlImportStartTime, $counter, $urlCount, $column );
                         continue;
                     }
-                    if ( $tmprows[0]['status'] != 1 )
+                    if ( $tmprows[0]['status'] != eZContentObject::STATUS_PUBLISHED )
                     {
                         logError( "Found the alias " . var_export( $source, true ) . " with ID {$row['id']} which points to " . var_export( $action, true ) . " but that content-object/node is not currently published (status is {$tmprows[0]['status']})" );
                         list( $column, $counter ) = displayProgress( 's', $urlImportStartTime, $counter, $urlCount, $column );

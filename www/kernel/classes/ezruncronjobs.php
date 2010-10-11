@@ -4,25 +4,23 @@
 //
 // ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.3.0
+// SOFTWARE RELEASE: 4.4.0
 // COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
 //   modify it under the terms of version 2.0  of the GNU General
 //   Public License as published by the Free Software Foundation.
-//
+// 
 //   This program is distributed in the hope that it will be useful,
-//   but WITHOUT ANY WARRANTY; without even the implied warranty of
+//    but WITHOUT ANY WARRANTY; without even the implied warranty of
 //   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //   GNU General Public License for more details.
-//
+// 
 //   You should have received a copy of version 2.0 of the GNU General
 //   Public License along with this program; if not, write to the Free
 //   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 //   MA 02110-1301, USA.
-//
-//
 // ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
@@ -40,6 +38,7 @@ class eZRunCronjobs
         $scriptMutex = new eZMutex( $scriptFile );
         $lockTS = $scriptMutex->lockTS();
         $runScript = false;
+        $maxTime = self::maxScriptExecutionTime();
         if ( $lockTS === false )
         {
             if ( $scriptMutex->lock() )
@@ -52,14 +51,14 @@ class eZRunCronjobs
                 $cli->error( 'Failed to aquire cronjob part lock: ' . $scriptFile );
             }
         }
-        // If the cronjob part has been blocked for  2 * eZRunCronjobs_MaxScriptExecutionTime,
+        // If the cronjob part has been blocked for  2 * self::maxScriptExecutionTime(),
         // force stealing of the cronjob part
-        else if ( $lockTS < time() - 2 * eZRunCronjobs_MaxScriptExecutionTime )
+        else if ( $lockTS < time() - 2 * $maxTime )
         {
             $cli->output( 'Forcing to steal the mutex lock: ' . $scriptFile );
             $runScript = eZRunCronjobs::stealMutex( $cli, $scriptMutex, true );
         }
-        else if ( $lockTS < time() - eZRunCronjobs_MaxScriptExecutionTime )
+        else if ( $lockTS < time() - $maxTime )
         {
             $cli->output( 'Trying to steal the mutex lock: ' . $scriptFile );
             $runScript = eZRunCronjobs::stealMutex( $cli, $scriptMutex );
@@ -76,6 +75,24 @@ class eZRunCronjobs
             include( $scriptFile );
             $scriptMutex->unlock();
         }
+    }
+
+    /**
+     * \static
+     * Returns the maximum permitted execution time for cronjobs.
+     * This may be different per cronjob part (see cronjob.ini).
+     * @return execution time in seconds
+     */
+    static function maxScriptExecutionTime()
+    {
+        global $cronPart;
+        $cronjobIni = eZINI::instance( 'cronjob.ini' );
+
+        $scriptGroup = "CronjobPart-$cronPart";
+        if ( $cronPart !== false and $cronjobIni->hasVariable( $scriptGroup, 'MaxScriptExecutionTime' ) )
+            return $cronjobIni->variable( $scriptGroup, 'MaxScriptExecutionTime' );
+        else
+            return $cronjobIni->variable( 'CronjobSettings', 'MaxScriptExecutionTime' );
     }
 
     /*!

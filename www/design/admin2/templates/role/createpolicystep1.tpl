@@ -49,17 +49,17 @@
 
 <div class="block">
 <div class="element">
-        <label class="inline" for="ezrole-createpolizy-function">{'Function'|i18n( 'design/admin/role/createpolicystep2' )}:</label>
-        <select id="ezrole-createpolizy-function" name="ModuleFunction" disabled="disabled">
-            <option value="*">{'Every function'|i18n( 'design/admin/role/createpolicystep1' )}</option>
-        </select>
+	<label class="inline" for="ezrole-createpolizy-function">{'Function'|i18n( 'design/admin/role/createpolicystep2' )}:</label>
+	<select id="ezrole-createpolizy-function" name="ModuleFunction" disabled="disabled">
+	    <option value="*">{'Every function'|i18n( 'design/admin/role/createpolicystep1' )}</option>
+	</select>
 </div>
 </div>
 
 <div class="break"></div>
 
 <div class="block">
-<input class="button button-module" type="submit" name="AddModule" value="{'Grant access to all functions'|i18n( 'design/admin/role/createpolicystep1' )}" />
+<input class="button" type="submit" name="AddModule" value="{'Grant access to all functions'|i18n( 'design/admin/role/createpolicystep1' )}" />
 <input class="button button-module" type="submit" name="CustomFunction" value="{'Grant access to one function'|i18n( 'design/admin/role/createpolicystep1' )}" />
 
 <input class="button-disabled button-function" disabled="disabled" type="submit" name="AddFunction" value="{'Grant full access'|i18n( 'design/admin/role/createpolicystep2' )}"  />
@@ -96,15 +96,15 @@ jQuery(function( $ )
     {
         if ( moduleList[ this.value ] && moduleList[ this.value ].length )
         {
-                setFunctionOptions( moduleList[ this.value ] );
-                $('#createpolicyform input.button-module').removeClass('button').addClass('button-disabled').attr('disabled', true);
-                $('#createpolicyform input.button-function').removeClass('button-disabled').addClass('button').attr('disabled', false);
+        	setFunctionOptions( moduleList[ this.value ] );
+        	$('#createpolicyform input.button-module').removeClass('button').addClass('button-disabled').attr('disabled', true);
+        	$('#createpolicyform input.button-function').removeClass('button-disabled').addClass('button').attr('disabled', false);
         }
         else
         {
-                setFunctionOptions( [everyFunction], true );
-                $('#createpolicyform input.button-function').removeClass('button').addClass('button-disabled').attr('disabled', true);
-                $('#createpolicyform input.button-module').removeClass('button-disabled').addClass('button').attr('disabled', false)
+        	setFunctionOptions( [everyFunction], true );
+        	$('#createpolicyform input.button-function').removeClass('button').addClass('button-disabled').attr('disabled', true);
+        	$('#createpolicyform input.button-module').removeClass('button-disabled').addClass('button').attr('disabled', false)
         }
     });
     function setFunctionOptions( list, disable )
@@ -113,7 +113,7 @@ jQuery(function( $ )
         {
             return '<option value="' + item + '">' + item + '</option>';
         } ).join() ).attr( 'disabled', disable === true ).val( disable === true ? '*' : list[0] );
-                                
+    			    	
     }
 });
 {/literal}

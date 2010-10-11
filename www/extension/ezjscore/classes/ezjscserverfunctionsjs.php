@@ -6,25 +6,23 @@
 //
 // ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ JSCore extension for eZ Publish
-// SOFTWARE RELEASE: 4.3.0
+// SOFTWARE RELEASE: 4.4.0
 // COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
 //   modify it under the terms of version 2.0  of the GNU General
 //   Public License as published by the Free Software Foundation.
-//
+// 
 //   This program is distributed in the hope that it will be useful,
-//   but WITHOUT ANY WARRANTY; without even the implied warranty of
+//    but WITHOUT ANY WARRANTY; without even the implied warranty of
 //   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //   GNU General Public License for more details.
-//
+// 
 //   You should have received a copy of version 2.0 of the GNU General
 //   Public License along with this program; if not, write to the Free
 //   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 //   MA 02110-1301, USA.
-//
-//
 // ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
@@ -257,11 +255,15 @@ YUI( YUI3_config ).add('io-ez', function( Y )
 (function($) {
     var _rootUrl = '$rootUrl', _serverUrl = _rootUrl + 'ezjscore/', _seperator = '@SEPERATOR$';
 
+// FIX: Ajax is broken on IE8 / IE7 on jQuery 1.4.x as it's trying to use the broken window.XMLHttpRequest object
+if ( window.XMLHttpRequest && window.ActiveXObject )
+    $.ajaxSettings.xhr = function() { try { return new window.ActiveXObject('Microsoft.XMLHTTP'); } catch(e) {} };
+
     // (static) jQuery.ez() uses jQuery.post() (Or jQuery.get() if post paramer is false)
     //
     // @param string callArgs
-    // @param object|array|false|undefined post Uses get request if false or undefined
-    // @param function|undefined callBack
+    // @param object|array|string|false post Optional post values, uses get request if false or undefined
+    // @param function Optional callBack
     function _ez( callArgs, post, callBack )
     {
         callArgs = callArgs.join !== undefined ? callArgs.join( _seperator ) : callArgs;
@@ -271,6 +273,8 @@ YUI( YUI3_config ).add('io-ez', function( Y )
             // support serializeArray() format
             if ( post.join !== undefined )
                 post.push( { 'name': 'ezjscServer_function_arguments', 'value': callArgs } );
+            else if ( typeof(post) === 'string' )
+                post += ( post !== '' ? '&' : '' ) + 'ezjscServer_function_arguments=' + callArgs;
             else
                 post['ezjscServer_function_arguments'] = callArgs;
             return $.post( url, post, callBack, 'json' );
@@ -301,8 +305,8 @@ YUI( YUI3_config ).add('io-ez', function( Y )
     }
 
     /**
-     * Returns search results based on given post params 
-     * 
+     * Returns search results based on given post params
+     *
      * @param mixed $args Only used if post parameter is not set
      *              0 => SearchStr
      *              1 => SearchOffset
@@ -392,16 +396,16 @@ YUI( YUI3_config ).add('io-ez', function( Y )
                 $params['SearchTimestamp'] = $params['SearchTimestamp'][0];
         }
 
-        if ( self::hasPostValue( $http, 'EnableSpellCheck' ) || self::hasPostValue( $http, 'enable-spellcheck' ) )
+        if ( self::hasPostValue( $http, 'EnableSpellCheck' ) || self::hasPostValue( $http, 'enable-spellcheck', '0' ) )
         {
             $params['SpellCheck'] = array( true );
         }
 
-        if ( self::hasPostValue( $http, 'GetFacets' ) || self::hasPostValue( $http, 'show-facets' ) )
+        if ( self::hasPostValue( $http, 'GetFacets' ) || self::hasPostValue( $http, 'show-facets', '0' ) )
         {
             $params['facet'] = eZFunctionHandler::execute( 'ezfind', 'getDefaultSearchFacets', array() );
         }
-        
+
         $result = array( 'SearchOffset' => $searchOffset,
                          'SearchLimit' => $searchLimit,
                          'SearchResultCount' => 0,
@@ -421,7 +425,7 @@ YUI( YUI3_config ).add('io-ez', function( Y )
             $searchList = eZSearch::search( $searchStr, $params );
 
             $result['SearchResultCount'] = $searchList['SearchResult'] !== false ? count( $searchList['SearchResult'] ) : 0;
-            $result['SearchCount'] = $searchList['SearchCount'];
+            $result['SearchCount'] = (int) $searchList['SearchCount'];
             $result['SearchResult'] = ezjscAjaxContent::nodeEncode( $searchList['SearchResult'], $encodeParams, false );
 
             // ezfind stuff
@@ -429,7 +433,7 @@ YUI( YUI3_config ).add('io-ez', function( Y )
             {
                 if ( isset( $params['SpellCheck'] ) )
                     $result['SearchExtras']['spellcheck'] = $searchList['SearchExtras']->attribute( 'spellcheck' );
-                    
+
 
                 if ( isset( $params['facet'] ) )
                 {
@@ -467,7 +471,7 @@ YUI( YUI3_config ).add('io-ez', function( Y )
     /**
      * Creates an array out of a post parameter, return empty array if post parameter is not set.
      * Splits string on ',' in case of comma seperated values.
-     * 
+     *
      * @param eZHTTPTool $http
      * @param string $key
      * @return array
@@ -489,14 +493,14 @@ YUI( YUI3_config ).add('io-ez', function( Y )
 
     /**
      * Checks if a post variable exitst and has a value
-     * 
+     *
      * @param eZHTTPTool $http
      * @param string $key
      * @return bool
      */
-    protected static function hasPostValue( eZHTTPTool $http, $key )
+    protected static function hasPostValue( eZHTTPTool $http, $key, $falseValue = '' )
     {
-        return $http->hasPostVariable( $key ) && $http->postVariable( $key ) !== '';
+        return $http->hasPostVariable( $key ) && $http->postVariable( $key ) !== $falseValue;
     }
 
     /**

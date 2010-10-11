@@ -6,25 +6,23 @@
 //
 // ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.3.0
+// SOFTWARE RELEASE: 4.4.0
 // COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
 //   modify it under the terms of version 2.0  of the GNU General
 //   Public License as published by the Free Software Foundation.
-//
+// 
 //   This program is distributed in the hope that it will be useful,
-//   but WITHOUT ANY WARRANTY; without even the implied warranty of
+//    but WITHOUT ANY WARRANTY; without even the implied warranty of
 //   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //   GNU General Public License for more details.
-//
+// 
 //   You should have received a copy of version 2.0 of the GNU General
 //   Public License along with this program; if not, write to the Free
 //   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 //   MA 02110-1301, USA.
-//
-//
 // ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
@@ -75,6 +73,7 @@ class eZObjectRelationListType extends eZDataType
         $contentClassAttribute = $contentObjectAttribute->contentClassAttribute();
 
         // Check if selection type is not browse
+        $classContent = $contentClassAttribute->content();
         if ( $classContent['selection_type'] != 0 )
         {
             $selectedObjectIDArray = $http->hasPostVariable( $postVariableName ) ? $http->postVariable( $postVariableName ) : false;
@@ -106,7 +105,9 @@ class eZObjectRelationListType extends eZDataType
                 $object = eZContentObject::fetch( $subObjectID );
                 if ( $object )
                 {
-                    $attributes = $object->contentObjectAttributes( true, $subObjectVersion );
+                    $attributes = $object->contentObjectAttributes( true,
+                                                                    $subObjectVersion,
+                                                                    $contentObjectAttribute->attribute( 'language_code' ) );
 
                     $validationResult = $object->validateInput( $attributes, $attributeBase,
                                                                 $inputParameters, $parameters );
@@ -455,33 +456,15 @@ class eZObjectRelationListType extends eZDataType
                 $subObjectVersion = $relationItem['contentobject_version'];
                 $object = eZContentObject::fetch( $subObjectID );
 
-                if ( $object )
-                {
-                    $class = $object->contentClass();
-                    $time = time();
+                $time = time();
 
-                    // Make the previous version archived
-                    $currentVersion = $object->currentVersion();
-                    $currentVersion->setAttribute( 'status', eZContentObjectVersion::STATUS_ARCHIVED );
-                    $currentVersion->setAttribute( 'modified', $time );
-                    $currentVersion->store();
+                $version = eZContentObjectVersion::fetchVersion( $subObjectVersion, $subObjectID );
+                $version->setAttribute( 'modified', $time );
+                $version->store();
 
-                    $version = eZContentObjectVersion::fetchVersion( $subObjectVersion, $subObjectID );
-                    $version->setAttribute( 'modified', $time );
-                    $version->setAttribute( 'status', eZContentObjectVersion::STATUS_PUBLISHED );
-                    $version->store();
-                    $object->setAttribute( 'status', eZContentObject::STATUS_PUBLISHED );
-                    if ( !$object->attribute( 'published' ) )
-                        $object->setAttribute( 'published', $time );
-                    $object->setAttribute( 'modified', $time );
-                    $object->setAttribute( 'current_version', $version->attribute( 'version' ) );
-                    $object->setAttribute( 'is_published', true );
-                    $objectName = $class->contentObjectName( $object, $version->attribute( 'version' ) );
-                    $object->setName( $objectName, $version->attribute( 'version' ) );
-                    $object->store();
-                }
                 if ( $relationItem['parent_node_id'] > 0 )
                 {
+                    // action 1: edit a normal object
                     if ( !eZNodeAssignment::fetch( $object->attribute( 'id' ), $object->attribute( 'current_version' ), $relationItem['parent_node_id'], false ) )
                     {
                         $nodeAssignment = eZNodeAssignment::create( array( 'contentobject_id' => $object->attribute( 'id' ),
@@ -493,12 +476,32 @@ class eZObjectRelationListType extends eZDataType
                         $nodeAssignment->store();
                     }
                     $operationResult = eZOperationHandler::execute( 'content', 'publish', array( 'object_id' => $object->attribute( 'id' ),
-                                                                                                 'version' => $object->attribute( 'current_version' ) ) );
+                                                                                                 'version' => $subObjectVersion ) );
                     $objectNodeID = $object->attribute( 'main_node_id' );
                     $content['relation_list'][$key]['node_id'] = $objectNodeID;
                 }
                 else
                 {
+                    // action 2: edit a nodeless object (or creating a new node
+                    // Make the previous version archived
+                    $currentVersion = $object->currentVersion();
+                    $currentVersion->setAttribute( 'status', eZContentObjectVersion::STATUS_ARCHIVED );
+                    $currentVersion->setAttribute( 'modified', $time );
+                    $currentVersion->store();
+
+                    $version->setAttribute( 'status', eZContentObjectVersion::STATUS_PUBLISHED );
+                    $version->store();
+
+                    $object->setAttribute( 'status', eZContentObject::STATUS_PUBLISHED );
+                    if ( !$object->attribute( 'published' ) )
+                        $object->setAttribute( 'published', $time );
+                    $object->setAttribute( 'modified', $time );
+                    $object->setAttribute( 'current_version', $subObjectVersion );
+                    $class = $object->contentClass();
+                    $objectName = $class->contentObjectName( $object, $version->attribute( 'version' ) );
+                    $object->setName( $objectName, $version->attribute( 'version' ) );
+                    $object->store();
+
                     if ( !eZNodeAssignment::fetch( $object->attribute( 'id' ), $object->attribute( 'current_version' ), $contentObject->attribute( 'main_node_id' ), false ) )
                     {
                         $nodeAssignment = eZNodeAssignment::create( array( 'contentobject_id' => $object->attribute( 'id' ),
@@ -936,7 +939,18 @@ class eZObjectRelationListType extends eZDataType
                         if ( $object->attribute( 'can_edit' ) )
                         {
                             $content['relation_list'][$key]['is_modified'] = true;
-                            $version = $object->createNewVersion();
+
+                            $translationSourceBase = $base . '_translation_source_' .
+                                                     $contentObjectAttribute->attribute( 'id' ) . '_' .
+                                                     $relationItem['contentobject_id'];
+                            $languageFrom = false;
+                            if( $http->hasPostVariable( $translationSourceBase ) &&
+                                    $http->postVariable( $translationSourceBase ) !== '' )
+                            {
+                                $languageFrom = $http->postVariable( $translationSourceBase );
+                            }
+
+                            $version = $object->createNewVersionIn( $contentObjectAttribute->attribute( 'language_code' ), $languageFrom );
                             $content['relation_list'][$key]['contentobject_version'] = $version->attribute( 'version' );
                         }
                     }
@@ -1030,37 +1044,39 @@ class eZObjectRelationListType extends eZDataType
                     if ( $content['relation_list'][$i]['priority'] > $priority )
                         $priority = $content['relation_list'][$i]['priority'];
                 }
-
-                foreach ( $selectedObjectIDArray as $objectID )
+                if( $selectedObjectIDArray !== null )
                 {
-                    // Check if the given object ID has a numeric value, if not go to the next object.
-                    if ( !is_numeric( $objectID ) )
+                    foreach ( $selectedObjectIDArray as $objectID )
                     {
-                        eZDebug::writeError( "Related object ID (objectID): '$objectID', is not a numeric value.", __METHOD__ );
-
-                        continue;
-                    }
-
-                    /* Here we check if current object is already in the related objects list.
-                     * If so, we don't add it again.
-                     * FIXME: Stupid linear search. Maybe there's some better way?
-                     */
-                    $found = false;
-                    foreach ( $content['relation_list'] as $i )
-                    {
-                        if ( $i['contentobject_id'] == $objectID )
+                        // Check if the given object ID has a numeric value, if not go to the next object.
+                        if ( !is_numeric( $objectID ) )
                         {
-                            $found = true;
-                            break;
-                        }
-                    }
-                    if ( $found )
-                        continue;
+                            eZDebug::writeError( "Related object ID (objectID): '$objectID', is not a numeric value.", __METHOD__ );
 
-                    ++$priority;
-                    $content['relation_list'][] = $this->appendObject( $objectID, $priority, $contentObjectAttribute );
-                    $contentObjectAttribute->setContent( $content );
-                    $contentObjectAttribute->store();
+                            continue;
+                        }
+
+                        /* Here we check if current object is already in the related objects list.
+                         * If so, we don't add it again.
+                         * FIXME: Stupid linear search. Maybe there's some better way?
+                         */
+                        $found = false;
+                        foreach ( $content['relation_list'] as $i )
+                        {
+                            if ( $i['contentobject_id'] == $objectID )
+                            {
+                                $found = true;
+                                break;
+                            }
+                        }
+                        if ( $found )
+                            continue;
+
+                        ++$priority;
+                        $content['relation_list'][] = $this->appendObject( $objectID, $priority, $contentObjectAttribute );
+                        $contentObjectAttribute->setContent( $content );
+                        $contentObjectAttribute->store();
+                    }
                 }
             }
         }
@@ -1114,9 +1130,9 @@ class eZObjectRelationListType extends eZDataType
      Removes the relation object \a $deletionItem if the item is owned solely by this
      version and is not published in the content tree.
     */
-    function removeRelationObject( $contentObjectAttribute, $deletionItem )
+    static function removeRelationObject( $contentObjectAttribute, $deletionItem )
     {
-        if ( $this->isItemPublished( $deletionItem ) )
+        if ( self::isItemPublished( $deletionItem ) )
         {
             return;
         }
@@ -1180,7 +1196,7 @@ class eZObjectRelationListType extends eZDataType
     {
         $currentObject = $contentObjectAttribute->attribute( 'object' );
         $sectionID = $currentObject->attribute( 'section_id' );
-        $object = $class->instantiate( false, $sectionID );
+        $object = $class->instantiate( false, $sectionID, false, $contentObjectAttribute->attribute( 'language_code' ) );
         if ( !is_numeric( $nodePlacement ) or $nodePlacement <= 0 )
             $nodePlacement = false;
         $object->sync();
@@ -1483,6 +1499,7 @@ class eZObjectRelationListType extends eZDataType
     {
         $metaDataArray = $attributes = array();
         $content = $contentObjectAttribute->content();
+        $language = $contentObjectAttribute->attribute( 'language_code' );
         foreach( $content['relation_list'] as $relationItem )
         {
             $subObjectID = $relationItem['contentobject_id'];
@@ -1501,7 +1518,7 @@ class eZObjectRelationListType extends eZDataType
                     {
                         continue;
                     }
-                    $attributes = $object->contentObjectAttributes( true, $subObjectVersion );
+                    $attributes = $object->contentObjectAttributes( true, $subObjectVersion, $language );
                 }
             }
 

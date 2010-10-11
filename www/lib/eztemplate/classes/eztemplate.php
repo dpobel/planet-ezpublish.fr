@@ -6,25 +6,23 @@
 //
 // ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.3.0
+// SOFTWARE RELEASE: 4.4.0
 // COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
 //   modify it under the terms of version 2.0  of the GNU General
 //   Public License as published by the Free Software Foundation.
-//
+// 
 //   This program is distributed in the hope that it will be useful,
-//   but WITHOUT ANY WARRANTY; without even the implied warranty of
+//    but WITHOUT ANY WARRANTY; without even the implied warranty of
 //   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //   GNU General Public License for more details.
-//
+// 
 //   You should have received a copy of version 2.0 of the GNU General
 //   Public License along with this program; if not, write to the Free
 //   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 //   MA 02110-1301, USA.
-//
-//
 // ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
@@ -531,7 +529,7 @@ class eZTemplate
                 $root =& $resourceData['root-node'];
         }
         eZDebug::accumulatorStop( 'template_load' );
-        if ( $resourceData['locales'] && count( $resourceData['locales'] ) )
+        if ( $resourceData['locales'] && !empty( $resourceData['locales'] ) )
         {
             $savedLocale = setlocale( LC_CTYPE, null );
             setlocale( LC_CTYPE, $resourceData['locales'] );
@@ -575,7 +573,7 @@ class eZTemplate
 
         eZDebug::accumulatorStop( 'template_total' );
 
-        if ( $resourceData['locales'] && count( $resourceData['locales'] ) )
+        if ( $resourceData['locales'] && !empty( $resourceData['locales'] ) )
         {
             setlocale( LC_CTYPE, $savedLocale );
         }
@@ -843,7 +841,7 @@ class eZTemplate
 
         $templateCompilationUsed = false;
 
-        if ( $resourceData['locales'] && count( $resourceData['locales'] ) )
+        if ( $resourceData['locales'] && !empty( $resourceData['locales'] ) )
         {
             $savedLocale = setlocale( LC_CTYPE, null );
             setlocale( LC_CTYPE, $resourceData['locales'] );
@@ -869,7 +867,7 @@ class eZTemplate
             $textElements[] = $text;
         }
 
-        if ( $resourceData['locales'] && count( $resourceData['locales'] ) )
+        if ( $resourceData['locales'] && !empty( $resourceData['locales'] ) )
         {
             setlocale( LC_CTYPE, $savedLocale );
         }
@@ -1023,7 +1021,7 @@ class eZTemplate
     function resourceFor( $uri, &$res, &$template )
     {
         $args = explode( ":", $uri );
-        if ( count( $args ) > 1 )
+        if ( isset( $args[1] ) )
         {
             $res = $args[0];
             $template = $args[1];
@@ -1420,7 +1418,7 @@ class eZTemplate
         if ( $namespace != "" )
             $txt .= "$namespace:";
         $txt .= $var;
-        if ( count( $attrs ) > 0 )
+        if ( !empty( $attrs ) )
             $txt .= "." . implode( ".", $attrs );
         return $txt;
     }
@@ -1499,53 +1497,64 @@ class eZTemplate
         }
     }
 
-    /*!
-     Sets the template variable $var to the value $val.
-     \sa setVariableRef
-    */
-    function setVariable( $var, $val, $namespace = "" )
+    /**
+     * Sets the template variable $var to the value $val.
+     *
+     * @param string $var
+     * @param string $val
+     * @param string $namespace (optional)
+     */
+    function setVariable( $var, $val, $namespace = '' )
     {
-        if ( array_key_exists( $namespace, $this->Variables ) and
-             array_key_exists( $var, $this->Variables[$namespace] ) )
-            unset( $this->Variables[$namespace][$var] );
         $this->Variables[$namespace][$var] = $val;
     }
 
-    /*!
-     Sets the template variable $var to the value $val.
-     \note This sets the variable using reference
-     \sa setVariable
-    */
-    function setVariableRef( $var, $val, $namespace = "" )
+    /**
+     * Sets the template variable $var to the value $val by ref
+     *
+     * @deprecated Since 4.4, have not used references since 3.10
+     * @uses eZTemplate::setVariable()
+     *
+     * @param string $var
+     * @param string $val
+     * @param string $namespace (optional)
+     */
+    function setVariableRef( $var, $val, $namespace = '' )
     {
-        if ( array_key_exists( $namespace, $this->Variables ) and
-             array_key_exists( $var, $this->Variables[$namespace] ) )
-            unset( $this->Variables[$namespace][$var] );
-        $this->Variables[$namespace][$var] = $val;
+        $this->setVariable( $var, $val, $namespace );
     }
 
-    /*!
-     Removes the template variable $var. If the variable does not exist an error is output.
-    */
-    function unsetVariable( $var, $namespace = "" )
+    /**
+     * Unsets the template variable $var.
+     *
+     * @param string $var
+     * @param string $namespace (optional)
+     */
+    function unsetVariable( $var, $namespace = '' )
     {
-        if ( array_key_exists( $namespace, $this->Variables ) and
+        if ( isset( $this->Variables[$namespace] ) &&
              array_key_exists( $var, $this->Variables[$namespace] ) )
             unset( $this->Variables[$namespace][$var] );
         else
             $this->warning( "unsetVariable()", "Undefined Variable: \$$namespace:$var, cannot unset" );
     }
 
-    /*!
-     Returns true if the variable $var is set in namespace $namespace,
-     if $attrs is supplied alle attributes must exist for the function to return true.
-    */
-    function hasVariable( $var, $namespace = "", $attrs = array() )
+    /**
+     * Returns true if the variable $var is set in namespace $namespace,
+     * if $attrs is supplied all attributes must exist for the function to return true.
+     *
+     * @param string $var
+     * @param string $namespace (optional)
+     * @param array $attrs (optional) Deprecated as of 4.4.
+     * @return bool
+     */
+    function hasVariable( $var, $namespace = '', $attrs = null )
     {
-        $exists = ( array_key_exists( $namespace, $this->Variables ) and
+        $exists = ( isset( $this->Variables[$namespace] ) &&
                     array_key_exists( $var, $this->Variables[$namespace] ) );
-        if ( $exists and count( $attrs ) > 0 )
+        if ( $exists && $attrs !== null && !empty( $attrs ) )
         {
+            eZDebug::writeStrict( '$attrs parameter is deprecated as of 4.4', __METHOD__ );
             $ptr =& $this->Variables[$namespace][$var];
             foreach( $attrs as $attr )
             {
@@ -1575,19 +1584,25 @@ class eZTemplate
         return $exists;
     }
 
-    /*!
-     Returns the content of the variable $var using namespace $namespace,
-     if $attrs is supplied the result of the attributes is returned.
-    */
-    function variable( $var, $namespace = "", $attrs = array() )
+    /**
+     * Returns the content of the variable $var using namespace $namespace,
+     * if $attrs is supplied the result of the attributes is returned.
+     *
+     * @param string $var
+     * @param string $namespace (optional)
+     * @param array $attrs (optional) Deprecated as of 4.4
+     * @return string|array
+     */
+    function variable( $var, $namespace = '', $attrs = null )
     {
         $val = null;
-        $exists = ( array_key_exists( $namespace, $this->Variables ) and
+        $exists = ( isset( $this->Variables[$namespace] ) &&
                     array_key_exists( $var, $this->Variables[$namespace] ) );
         if ( $exists )
         {
-            if ( count( $attrs ) > 0 )
+            if ( $attrs !== null && !empty( $attrs ) )
             {
+                eZDebug::writeStrict( '$attrs parameter is deprecated as of 4.4', __METHOD__ );
                 $element = $this->Variables[$namespace][$var];
                 foreach( $attrs as $attr )
                 {
@@ -1703,7 +1718,7 @@ class eZTemplate
                         $templateURI =& $templateData['uri'];
                         $templateVariableName =& $templateData['template_variable_name'];
                         $templateText = '';
-                        $this->setVariableRef( $templateVariableName, $item, $name );
+                        $this->setVariable( $templateVariableName, $item, $name );
                         eZTemplateIncludeFunction::handleInclude( $textElements, $templateURI, $this, $nspace, $name );
                         $hasTemplateData = true;
                     }
@@ -1726,6 +1741,10 @@ class eZTemplate
     function appendDebugNodes( &$root, &$resourceData )
     {
         $path = $resourceData['template-filename'];
+        // Do not ouput debug on pagelayout templates to avoid trigering
+        // browser quirks mode
+        if ( isset( $root[1][0][2] ) && strpos( $root[1][0][2], '<!DOCTYPE' ) === 0 )
+            return;
         $uri = $resourceData['uri'];
         $preText = "\n<!-- START: including template: $path ($uri) -->\n";
         if ( eZTemplate::isXHTMLCodeIncluded() )
@@ -1752,10 +1771,9 @@ class eZTemplate
 
     function registerAutoloadFunctions( $functionDefinition )
     {
-        if ( ( ( isset( $functionDefinition['function'] ) or
-                 ( isset( $functionDefinition['script'] ) and
-                   isset( $functionDefinition['class'] ) ) ) and
-               ( isset( $functionDefinition['function_names_function'] ) or
+        if ( ( ( isset( $functionDefinition['function'] ) ||
+                 isset( $functionDefinition['class'] ) ) &&
+               ( isset( $functionDefinition['function_names_function'] ) ||
                  isset( $functionDefinition['function_names'] ) ) ) )
         {
             if ( isset( $functionDefinition['function_names_function'] ) )
@@ -1793,16 +1811,17 @@ class eZTemplate
         if ( isset( $functionDefinition['function'] ) )
         {
             $function = $functionDefinition['function'];
-//             print( "loadAndRegisterFunction: $function<br/>" );
             if ( function_exists( $function ) )
                 $functionObject = $function();
         }
-        else if ( isset( $functionDefinition['script'] ) )
+        else
         {
-            $script = $functionDefinition['script'];
+            if ( !class_exists( $functionDefinition['class'], false )
+                    && isset( $functionDefinition['script'] ) )
+            {
+                include_once( $functionDefinition['script'] );
+            }
             $class = $functionDefinition['class'];
-//             print( "loadAndRegisterFunction: $script<br/>" );
-            include_once( $script );
             if ( class_exists( $class ) )
                 $functionObject = new $class();
         }
@@ -1878,10 +1897,9 @@ class eZTemplate
 
     function registerAutoloadOperators( $operatorDefinition )
     {
-        if ( ( ( isset( $operatorDefinition['function'] ) or
-                 ( isset( $operatorDefinition['script'] ) and
-                   isset( $operatorDefinition['class'] ) ) ) and
-               ( isset( $operatorDefinition['operator_names_function'] ) or
+        if ( ( ( isset( $operatorDefinition['function'] ) ||
+                 isset( $operatorDefinition['class'] ) ) &&
+               ( isset( $operatorDefinition['operator_names_function'] ) ||
                  isset( $operatorDefinition['operator_names'] ) ) ) )
         {
             if ( isset( $operatorDefinition['operator_names_function'] ) )
@@ -1911,16 +1929,16 @@ class eZTemplate
         if ( isset( $operatorDefinition['function'] ) )
         {
             $function = $operatorDefinition['function'];
-//             print( "loadAndRegisterOperator: $function<br/>" );
             if ( function_exists( $function ) )
                 $operatorObject = $function();
         }
-        else if ( isset( $operatorDefinition['script'] ) )
+        else
         {
-            $script = $operatorDefinition['script'];
             $class = $operatorDefinition['class'];
-//             print( "loadAndRegisterOperator: $script<br/>" );
-            include_once( $script );
+            if ( !class_exists( $class, false ) && isset( $operatorDefinition['script'] ) )
+            {
+                include_once( $operatorDefinition['script'] );
+            }
             if ( class_exists( $class ) )
             {
                 if ( isset( $operatorDefinition['class_parameter'] ) )
@@ -2349,25 +2367,24 @@ class eZTemplate
     {
         if ( self::$factory === false )
         {
-            // Make sure self::$instance is set
-            self::instance();
+            $instance = self::instance();
 
             $ini = eZINI::instance();
             if ( $ini->variable( 'TemplateSettings', 'Debug' ) == 'enabled' )
                 eZTemplate::setIsDebugEnabled( true );
 
             $compatAutoLoadPath = $ini->variableArray( 'TemplateSettings', 'AutoloadPath' );
-            $autoLoadPathList = $ini->variable( 'TemplateSettings', 'AutoloadPathList' );
+            $autoLoadPathList   = $ini->variable( 'TemplateSettings', 'AutoloadPathList' );
 
             $extensionAutoloadPath = $ini->variable( 'TemplateSettings', 'ExtensionAutoloadPath' );
-            $extensionPathList = eZExtension::expandedPathList( $extensionAutoloadPath, 'autoloads' );
+            $extensionPathList     = eZExtension::expandedPathList( $extensionAutoloadPath, 'autoloads' );
 
             $autoLoadPathList = array_unique( array_merge( $compatAutoLoadPath, $autoLoadPathList, $extensionPathList ) );
 
-            self::$instance->setAutoloadPathList( $autoLoadPathList );
-            self::$instance->autoload();
+            $instance->setAutoloadPathList( $autoLoadPathList );
+            $instance->autoload();
 
-            self::$instance->registerResource( eZTemplateDesignResource::instance() );
+            $instance->registerResource( eZTemplateDesignResource::instance() );
             self::$factory = true;
         }
         return self::instance();

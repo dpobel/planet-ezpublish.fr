@@ -360,7 +360,7 @@
     </message>
     <message>
         <source>Edit &lt;%class_name&gt; (%object_count)</source>
-        <translation>Bewerk &lt;%class_name&gt; (%object_count)</translation>
+        <translation type="obsolete">Bewerk &lt;%class_name&gt; (%object_count)</translation>
     </message>
     <message>
         <source>Description</source>
@@ -393,6 +393,14 @@
     <message>
         <source>Category</source>
         <translation>Categorie</translation>
+    </message>
+    <message>
+        <source>Edit &lt;%class_name&gt; (%object_count objects)</source>
+        <translation>Bewerk &lt;%class_name&gt; (%object_count objects)</translation>
+    </message>
+    <message>
+        <source>The draft of the class definition was successfully stored.</source>
+        <translation>Het concept van de klasse definitie is succesvol opgeslagen.</translation>
     </message>
 </context>
 <context>
@@ -1205,7 +1213,7 @@
     <name>design/admin/content/bookmark</name>
     <message>
         <source>My bookmarks [%bookmark_count]</source>
-        <translation>Mijn Favorieten [%bookmark_count]</translation>
+        <translation type="unfinished">Mijn favorieten [%bookmark_count]</translation>
     </message>
     <message>
         <source>Name</source>
@@ -1265,7 +1273,7 @@
     </message>
     <message>
         <source>My bookmarks (%bookmark_count)</source>
-        <translation>Mijn Favorieten (%bookmark_count)</translation>
+        <translation type="unfinished">Mijn favorieten (%bookmark_count)</translation>
     </message>
 </context>
 <context>
@@ -1617,6 +1625,26 @@
         <source>No media file is available.</source>
         <translation>Er is geen media bestand aanwezig.</translation>
     </message>
+    <message>
+        <source>Year</source>
+        <translation>Jaar</translation>
+    </message>
+    <message>
+        <source>Month</source>
+        <translation>Maand</translation>
+    </message>
+    <message>
+        <source>Day</source>
+        <translation>Dag</translation>
+    </message>
+    <message>
+        <source>Hour</source>
+        <translation>Uur</translation>
+    </message>
+    <message>
+        <source>Minute</source>
+        <translation>Minuut</translation>
+    </message>
 </context>
 <context>
     <name>design/admin/content/datatype/ezuser</name>
@@ -1899,7 +1927,7 @@
     </message>
     <message>
         <source>Translating content from %from_lang to %to_lang</source>
-        <translation type="unfinished"></translation>
+        <translation>Vertalen content van %from_lang naar %to_lang</translation>
     </message>
     <message>
         <source>Send for publishing</source>
@@ -1951,11 +1979,11 @@
     </message>
     <message>
         <source>Current visibility</source>
-        <translation type="unfinished"></translation>
+        <translation>Huidige zichtbaarheid</translation>
     </message>
     <message>
         <source>Visibility after publishing</source>
-        <translation type="unfinished"></translation>
+        <translation>Zichtbaarheid na publicatie</translation>
     </message>
     <message>
         <source>Main</source>
@@ -2103,7 +2131,7 @@
     </message>
     <message>
         <source>Top node</source>
-        <translation type="unfinished"></translation>
+        <translation>Hoofd knooppunt</translation>
     </message>
     <message>
         <source>Publish the contents of the draft that is being edited. The draft will become the published version of the object.</source>
@@ -2191,15 +2219,15 @@
     </message>
     <message>
         <source>Existing translations</source>
-        <translation type="unfinished"></translation>
+        <translation>Bestaande vertalingen</translation>
     </message>
     <message>
         <source>Base translation on</source>
-        <translation type="unfinished"></translation>
+        <translation>Baseer vertaling op</translation>
     </message>
     <message>
         <source>None</source>
-        <translation type="unfinished">Geen</translation>
+        <translation>Geen</translation>
     </message>
     <message>
         <source>Related objects (%related_objects)</source>
@@ -2281,7 +2309,7 @@
     </message>
     <message>
         <source>Possible edit conflict</source>
-        <translation type="unfinished"></translation>
+        <translation>Mogelijk bewerkings conflict</translation>
     </message>
     <message>
         <source>This object is already being edited by someone else. In addition, it is already being edited by you.</source>
@@ -2345,11 +2373,11 @@
     </message>
     <message>
         <source>View the contents of version #%version. Translation: %translation.</source>
-        <translation type="unfinished"></translation>
+        <translation>Bekijk de content met versie #%version. Vertaling: %translation.</translation>
     </message>
     <message>
         <source>The object has already been published by someone else.</source>
-        <translation type="unfinished"></translation>
+        <translation>Het object is reeds gepubliceerd door iemand anders.</translation>
     </message>
     <message>
         <source>Publish data as it is (and overwriting the published data).</source>
@@ -2365,11 +2393,11 @@
     </message>
     <message>
         <source>Show the published data</source>
-        <translation type="unfinished"></translation>
+        <translation>Toon de geplubiceerde data</translation>
     </message>
     <message>
         <source>Conflicting versions [%draft_count]</source>
-        <translation type="unfinished"></translation>
+        <translation>Conflicterende versies [%draft_count]</translation>
     </message>
     <message>
         <source>Create a new draft. The contents of the new draft will be copied from the published version.</source>
@@ -2385,7 +2413,7 @@
     </message>
     <message>
         <source>Conflicting versions (%draft_count)</source>
-        <translation type="unfinished"></translation>
+        <translation>Conflicterende versies (%draft_count)</translation>
     </message>
     <message>
         <source>Current drafts (%draft_count)</source>
@@ -2396,75 +2424,75 @@
     <name>design/admin/content/edit_languages</name>
     <message>
         <source>Object information</source>
-        <translation type="unfinished">Object informatie</translation>
+        <translation>Object informatie</translation>
     </message>
     <message>
         <source>ID</source>
-        <translation type="unfinished">ID</translation>
+        <translation>ID</translation>
     </message>
     <message>
         <source>Created</source>
-        <translation type="unfinished">Aangemaakt</translation>
+        <translation>Aangemaakt</translation>
     </message>
     <message>
         <source>Not yet published</source>
-        <translation type="unfinished">Nog te publiceren</translation>
+        <translation>Nog te publiceren</translation>
     </message>
     <message>
         <source>Modified</source>
-        <translation type="unfinished"></translation>
+        <translation>Aangepast</translation>
     </message>
     <message>
         <source>Published version</source>
-        <translation type="unfinished">Gepubliceerde versie</translation>
+        <translation>Gepubliceerde versie</translation>
     </message>
     <message>
         <source>Edit &lt;%object_name&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>Bewerk &lt;%object_name&gt;</translation>
     </message>
     <message>
         <source>Existing languages</source>
-        <translation type="unfinished">Bestaande talen</translation>
+        <translation>Bestaande talen</translation>
     </message>
     <message>
         <source>Select the language you want to edit</source>
-        <translation type="unfinished"></translation>
+        <translation>Selecteer de taal welke u wilt bewerken</translation>
     </message>
     <message>
         <source>New languages</source>
-        <translation type="unfinished">Nieuwe talen</translation>
+        <translation>Nieuwe talen</translation>
     </message>
     <message>
         <source>Select the language you want to add</source>
-        <translation type="unfinished">Selecteer de taal welke u wilt toevoegen</translation>
+        <translation>Selecteer de taal welke u wilt toevoegen</translation>
     </message>
     <message>
         <source>Select the language the added translation will be based on</source>
-        <translation type="unfinished">Selecteer de taal waarop de toegevoegde vertaling gebaseerd zal zijn</translation>
+        <translation>Selecteer de taal waarop de toegevoegde vertaling gebaseerd zal zijn</translation>
     </message>
     <message>
         <source>None</source>
-        <translation type="unfinished">Geen</translation>
+        <translation>Geen</translation>
     </message>
     <message>
         <source>You do not have permission to edit the object in any available languages.</source>
-        <translation type="unfinished">U heeft geen toestemming om het object in één van de beschikbare talen te bewerken.</translation>
+        <translation>U heeft geen toestemming om het object in één van de beschikbare talen te bewerken.</translation>
     </message>
     <message>
         <source>Edit</source>
-        <translation type="unfinished">Bewerken</translation>
+        <translation>Bewerken</translation>
     </message>
     <message>
         <source>OK</source>
-        <translation type="unfinished">OK</translation>
+        <translation>OK</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Annuleren</translation>
+        <translation>Annuleren</translation>
     </message>
     <message>
         <source>You do not have permission to create a translation in another language.</source>
-        <translation type="unfinished">U heeft geen toestemming om een vertaling in een andere taal aan te maken.</translation>
+        <translation>U heeft geen toestemming om een vertaling in een andere taal aan te maken.</translation>
     </message>
     <message>
         <source>However you can select one of the following languages for editing.</source>
@@ -2472,54 +2500,54 @@
     </message>
     <message>
         <source>Existing translations</source>
-        <translation type="unfinished"></translation>
+        <translation>Bestaande vertalingen</translation>
     </message>
     <message>
         <source>Select the translation you want to edit</source>
-        <translation type="unfinished"></translation>
+        <translation>Selecteer de vertaling welke u wilt bewerken</translation>
     </message>
     <message>
         <source>New translation</source>
-        <translation type="unfinished"></translation>
+        <translation>Nieuwe vertaling</translation>
     </message>
     <message>
         <source>Select the translation you want to add</source>
-        <translation type="unfinished"></translation>
+        <translation>Selecteer de vertaling welke u wilt toevoegen</translation>
     </message>
     <message>
         <source>Translate based on</source>
-        <translation type="unfinished"></translation>
+        <translation>Vertaal gebaseerd op</translation>
     </message>
 </context>
 <context>
     <name>design/admin/content/history</name>
     <message>
         <source>Object information</source>
-        <translation type="unfinished">Object informatie</translation>
+        <translation>Object informatie</translation>
     </message>
     <message>
         <source>ID</source>
-        <translation type="unfinished">ID</translation>
+        <translation>ID</translation>
     </message>
     <message>
         <source>Created</source>
-        <translation type="unfinished">Aangemaakt</translation>
+        <translation>Aangemaakt</translation>
     </message>
     <message>
         <source>Not yet published</source>
-        <translation type="unfinished">Nog te publiceren</translation>
+        <translation>Nog te publiceren</translation>
     </message>
     <message>
         <source>Modified</source>
-        <translation type="unfinished"></translation>
+        <translation>Aangepast</translation>
     </message>
     <message>
         <source>Published version</source>
-        <translation type="unfinished">Gepubliceerde versie</translation>
+        <translation>Gepubliceerde versie</translation>
     </message>
     <message>
         <source>Unable to create new version</source>
-        <translation type="unfinished">Het is onmogelijk om een nieuwe versie aan te maken</translation>
+        <translation>Het is onmogelijk om een nieuwe versie aan te maken</translation>
     </message>
     <message>
         <source>Version history limit has been exceeded and no archived version can be removed by the system.</source>
@@ -2531,147 +2559,147 @@
     </message>
     <message>
         <source>Versions for &lt;%object_name&gt; [%version_count]</source>
-        <translation type="unfinished">Versies voor &lt;%object_name&gt; [%version_count]</translation>
+        <translation>Versies voor &lt;%object_name&gt; [%version_count]</translation>
     </message>
     <message>
         <source>Version</source>
-        <translation type="unfinished"></translation>
+        <translation>Versie</translation>
     </message>
     <message>
         <source>Status</source>
-        <translation type="unfinished">Status</translation>
+        <translation>Status</translation>
     </message>
     <message>
         <source>Creator</source>
-        <translation type="unfinished">Auteur</translation>
+        <translation>Auteur</translation>
     </message>
     <message>
         <source>Select version #%version_number for removal.</source>
-        <translation type="unfinished">Selecteer te verwijderen versienr. %versie_number.</translation>
+        <translation>Selecteer te verwijderen versienr. %versie_number.</translation>
     </message>
     <message>
         <source>View the contents of version #%version_number. Translation: %translation.</source>
-        <translation type="unfinished">Bekijk de inhoud van versienr. %version_number. Vertaling: %translation.</translation>
+        <translation>Bekijk de inhoud van versienr. %version_number. Vertaling: %translation.</translation>
     </message>
     <message>
         <source>Draft</source>
-        <translation type="unfinished">Voorlopige versie</translation>
+        <translation>Voorlopige versie</translation>
     </message>
     <message>
         <source>Published</source>
-        <translation type="unfinished"></translation>
+        <translation>Gepubliceerd</translation>
     </message>
     <message>
         <source>Pending</source>
-        <translation type="unfinished">In wachtrij</translation>
+        <translation>In wachtrij</translation>
     </message>
     <message>
         <source>Archived</source>
-        <translation type="unfinished">Gearchiveerd</translation>
+        <translation>Gearchiveerd</translation>
     </message>
     <message>
         <source>Rejected</source>
-        <translation type="unfinished">Verworpen</translation>
+        <translation>Verworpen</translation>
     </message>
     <message>
         <source>Untouched draft</source>
-        <translation type="unfinished">Onaangeroerd concept</translation>
+        <translation>Onaangeroerd concept</translation>
     </message>
     <message>
         <source>Create a copy of version #%version_number.</source>
-        <translation type="unfinished">Maak een kopie van versie nr. %version_number.</translation>
+        <translation>Maak een kopie van versie nr. %version_number.</translation>
     </message>
     <message>
         <source>Edit the contents of version #%version_number.</source>
-        <translation type="unfinished">Bewerk versie nr. %version_number.</translation>
+        <translation>Bewerk versie nr. %version_number.</translation>
     </message>
     <message>
         <source>This object does not have any versions.</source>
-        <translation type="unfinished">Dit object heeft nog geen enkele versie.</translation>
+        <translation>Dit object heeft nog geen enkele versie.</translation>
     </message>
     <message>
         <source>Remove selected</source>
-        <translation type="unfinished">Verwijder selectie</translation>
+        <translation>Verwijder selectie</translation>
     </message>
     <message>
         <source>Remove the selected versions from the object.</source>
-        <translation type="unfinished">Verwijder de geselecteerde versies van het object.</translation>
+        <translation>Verwijder de geselecteerde versies van het object.</translation>
     </message>
     <message>
         <source>Show differences</source>
-        <translation type="unfinished"></translation>
+        <translation>Toon verschillen</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished">Terug</translation>
+        <translation>Terug</translation>
     </message>
     <message>
         <source>Translations</source>
-        <translation type="unfinished">Vertalingen</translation>
+        <translation>Vertalingen</translation>
     </message>
     <message>
         <source>New drafts [%newerDraftCount]</source>
-        <translation type="unfinished">Nieuwe concepten [%newerDraftCount]</translation>
+        <translation>Nieuwe concepten [%newerDraftCount]</translation>
     </message>
     <message>
         <source>This object does not have any drafts.</source>
-        <translation type="unfinished">Dit object heeft geen enkel concept.</translation>
+        <translation>Dit object heeft geen enkel concept.</translation>
     </message>
     <message>
         <source>Differences between versions %oldVersion and %newVersion</source>
-        <translation type="unfinished">Verschillen tussen versies %oldVersion en %newVersion</translation>
+        <translation>Verschillen tussen versies %oldVersion en %newVersion</translation>
     </message>
     <message>
         <source>Old version</source>
-        <translation type="unfinished">Oude versie</translation>
+        <translation>Oude versie</translation>
     </message>
     <message>
         <source>Inline changes</source>
-        <translation type="unfinished">Inline wijzigingen</translation>
+        <translation>Inline wijzigingen</translation>
     </message>
     <message>
         <source>Block changes</source>
-        <translation type="unfinished">Wijzigingen blokkeren</translation>
+        <translation>Wijzigingen blokkeren</translation>
     </message>
     <message>
         <source>New version</source>
-        <translation type="unfinished">Nieuwe versie</translation>
+        <translation>Nieuwe versie</translation>
     </message>
     <message>
         <source>Back to history</source>
-        <translation type="unfinished">Terug naar geschiedenis</translation>
+        <translation>Terug naar geschiedenis</translation>
     </message>
     <message>
         <source>Copy translation</source>
-        <translation type="unfinished">Vertaling kopiëren</translation>
+        <translation>Vertaling kopiëren</translation>
     </message>
     <message>
         <source>Version is not a draft</source>
-        <translation type="unfinished">De versie is geen concept</translation>
+        <translation>De versie is geen concept</translation>
     </message>
     <message>
         <source>Version %1 is not available for editing anymore. Only drafts can be edited.</source>
-        <translation type="unfinished">De versie %1 kan niet meer bewerkt worden. Enkel concepten kunnen bewerkt worden.</translation>
+        <translation>De versie %1 kan niet meer bewerkt worden. Enkel concepten kunnen bewerkt worden.</translation>
     </message>
     <message>
         <source>To edit this version, first create a copy of it.</source>
-        <translation type="unfinished">Om deze versie te bewerken, maak eerst een kopie ervan aan.</translation>
+        <translation>Maak eerst een kopie om deze versie te bewerken.</translation>
     </message>
     <message>
         <source>Version is not yours</source>
-        <translation type="unfinished">De versie is niet van u</translation>
+        <translation>De versie is niet van u</translation>
     </message>
     <message>
         <source>Version %1 was not created by you. You can only edit your own drafts.</source>
-        <translation type="unfinished">De versie %1 werd niet door u aangemaakt. U kunt enkel uw eigen concepten bewerken.</translation>
+        <translation>De versie %1 werd niet door u aangemaakt. U kunt enkel uw eigen concepten bewerken.</translation>
     </message>
     <message>
         <source>Modified translation</source>
-        <translation type="unfinished">Gewijzigde vertaling</translation>
+        <translation>Gewijzigde vertaling</translation>
     </message>
     <message>
         <source>Version #%version_number cannot be removed because it is either the published version of the object or because you do not have permission to remove it.</source>
-        <translation type="unfinished">Versienr. %version_number kan niet verwijderd worden omdat het ofwel de gepubliceerde versie van het object is of omdat u geen toestemming heeft om het te verwijderen.</translation>
+        <translation>Versienr. %version_number kan niet verwijderd worden omdat het ofwel de gepubliceerde versie van het object is of omdat u geen toestemming heeft om het te verwijderen.</translation>
     </message>
     <message>
         <source>There is no need to make copies of untouched drafts.</source>
@@ -5151,6 +5179,14 @@
         <source>The system will let you restore the object &lt;%name&gt;. Specify where you wish to restore it.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Pending sub-object</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Removal failed because there is pending sub object under the node. Please finish the relevant process then redo the removal.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>design/admin/node/view</name>
@@ -5897,10 +5933,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Tab is disabled, enable on dashboard.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Translations (%count)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5926,22 +5958,14 @@
     </message>
     <message>
         <source>Create</source>
-        <translation type="unfinished">Aanmaken</translation>
+        <translation type="obsolete">Aanmaken</translation>
     </message>
     <message>
         <source>in</source>
-        <translation type="unfinished">in</translation>
-    </message>
-    <message>
-        <source>Here</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">in</translation>
     </message>
     <message>
         <source>Published order</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>List of sub items of current node, with controlls to edit, remove and move them directly.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -5970,7 +5994,7 @@
     </message>
     <message>
         <source>New translation</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Nieuwe vertaling</translation>
     </message>
     <message>
         <source>Policy list and the Role that are assignet to current node.</source>
@@ -6010,10 +6034,94 @@
     </message>
     <message>
         <source>Existing translations</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Bestaande vertalingen</translation>
     </message>
     <message>
         <source>Language list of translations for current object.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tab is disabled, enable with toggler to the left of these tabs.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>View</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show simplified view of content.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ordering</source>
+        <translation type="unfinished">Volgorde</translation>
+    </message>
+    <message>
+        <source>Show published ordering overview.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Loading ...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Node remote ID</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Object remote ID</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Table options</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Number of items per page:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Visible table columns:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select</source>
+        <translation type="unfinished">Selecteren</translation>
+    </message>
+    <message>
+        <source>Select all visible</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select none</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Create new</source>
+        <translation type="unfinished">Nieuw aanmaken</translation>
+    </message>
+    <message>
+        <source>More actions</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use the checkboxes to select one or more items.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>first</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>prev</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>next</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>last</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -6133,19 +6241,19 @@
     </message>
     <message>
         <source>Add items</source>
-        <translation type="unfinished">Voeg items toe</translation>
+        <translation>Voeg items toe</translation>
     </message>
     <message>
         <source>Add items to your personal notification list.</source>
-        <translation type="unfinished"></translation>
+        <translation>Voeg items toe aan uw persoonlijke notificatielijst.</translation>
     </message>
     <message>
         <source>Unknown</source>
-        <translation type="unfinished">Onbekend</translation>
+        <translation>Onbekend</translation>
     </message>
     <message>
         <source>My item notifications (%notification_count)</source>
-        <translation type="unfinished"></translation>
+        <translation>Mijn item notificatie&apos;s (%notification_count)</translation>
     </message>
 </context>
 <context>
@@ -6433,51 +6541,51 @@ Het commentaar loopt door tot het volgende teken.</translation>
     </message>
     <message>
         <source>Uninstall package</source>
-        <translation type="unfinished">Deïnstalleer pakket</translation>
+        <translation>Deïnstalleer pakket</translation>
     </message>
     <message>
         <source>Uninstall items</source>
-        <translation type="unfinished">Deïnstalleer elementen</translation>
+        <translation>Deïnstalleer elementen</translation>
     </message>
     <message>
         <source>Skip uninstallation</source>
-        <translation type="unfinished">Sla deïnstallatie over</translation>
+        <translation>Sla deïnstallatie over</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Annuleren</translation>
+        <translation>Annuleren</translation>
     </message>
     <message>
         <source>Continue</source>
-        <translation type="unfinished">Ga verder</translation>
+        <translation>Ga verder</translation>
     </message>
     <message>
         <source>Email</source>
-        <translation type="unfinished">Email</translation>
+        <translation>Email</translation>
     </message>
     <message>
         <source>Send email to the maintainer</source>
-        <translation type="unfinished">Verzend een e-mail naar de maintainer</translation>
+        <translation>Verzend een e-mail naar de beheerder</translation>
     </message>
     <message>
         <source>Provide some basic information for your package.</source>
-        <translation type="unfinished">Geef wat basisinformatie op voor uw pakket.</translation>
+        <translation>Geef wat basisinformatie op voor uw pakket.</translation>
     </message>
     <message>
         <source>License</source>
-        <translation type="unfinished">Licentie</translation>
+        <translation>Licentie</translation>
     </message>
     <message>
         <source>Provide information about the maintainer of the package.</source>
-        <translation type="unfinished">Geef informatie op over de maintainer van het pakket.</translation>
+        <translation>Geef informatie op over de beheerder van het pakket.</translation>
     </message>
     <message>
         <source>Include templates related to exported objects.</source>
-        <translation type="unfinished">Includeer sjablonen gerelateerd aan geëxporteerde objecten.</translation>
+        <translation>Voeg sjablonen toe gerelateerd aan geëxporteerde objecten.</translation>
     </message>
     <message>
         <source>Choose the objects to include in the package.</source>
-        <translation type="unfinished">Kies de te includeren objecten in het pakket.</translation>
+        <translation>Kies de toe te voegen objecten voor het pakket.</translation>
     </message>
     <message>
         <source>There are currently no objects selected for export</source>
@@ -6508,7 +6616,7 @@ U kunt ook het pakket verwijderen zonder de installatie ongedaan te maken vanaf 
     </message>
     <message>
         <source>Regarding eZ Publish package &apos;%packagename&apos;</source>
-        <translation type="unfinished">Betreffende eZ Publish pakket &apos;%packagename&apos;</translation>
+        <translation>Betreffende eZ Publish pakket &apos;%packagename&apos;</translation>
     </message>
 </context>
 <context>
@@ -6607,22 +6715,22 @@ Let op: De installatie van de pakketten worden niet ongedaan gemaakt.</translati
     </message>
     <message>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation>Verwijderen</translation>
     </message>
 </context>
 <context>
     <name>design/admin/pagelayout</name>
     <message>
         <source>Content structure</source>
-        <translation type="unfinished">Contentstructuur</translation>
+        <translation>Contentstructuur</translation>
     </message>
     <message>
         <source>Media library</source>
-        <translation type="unfinished">Media bibliotheek</translation>
+        <translation>Mediabibliotheek</translation>
     </message>
     <message>
         <source>User accounts</source>
-        <translation type="unfinished">Gebruikersaccounts</translation>
+        <translation>Gebruikersaccounts</translation>
     </message>
     <message>
         <source>Search</source>
@@ -6646,11 +6754,11 @@ Let op: De installatie van de pakketten worden niet ongedaan gemaakt.</translati
     </message>
     <message>
         <source>Webshop</source>
-        <translation type="unfinished">Webshop</translation>
+        <translation>Webshop</translation>
     </message>
     <message>
         <source>Setup</source>
-        <translation type="unfinished">Set up</translation>
+        <translation>Configuratie</translation>
     </message>
     <message>
         <source>Design</source>
@@ -6698,7 +6806,7 @@ Let op: De installatie van de pakketten worden niet ongedaan gemaakt.</translati
     </message>
     <message>
         <source>Change password for &lt;%username&gt;.</source>
-        <translation type="unfinished"></translation>
+        <translation>Verander wachtwoord voor &lt;%username&gt;.</translation>
     </message>
     <message>
         <source>There is %basket_count item in the shopping basket.</source>
@@ -6714,27 +6822,27 @@ Let op: De installatie van de pakketten worden niet ongedaan gemaakt.</translati
     </message>
     <message>
         <source>Logout from the system.</source>
-        <translation type="unfinished"></translation>
+        <translation>Log out van het systeem.</translation>
     </message>
     <message>
         <source>Hide bookmarks.</source>
-        <translation type="unfinished"></translation>
+        <translation>Verberg favorieten.</translation>
     </message>
     <message>
         <source>Manage your personal bookmarks.</source>
-        <translation type="unfinished">Uw persoonlijke favorieten beheren.</translation>
+        <translation>Uw persoonlijke favorieten beheren.</translation>
     </message>
     <message>
         <source>Show bookmarks.</source>
-        <translation type="unfinished"></translation>
+        <translation>Toon favorieten.</translation>
     </message>
     <message>
         <source>Add to bookmarks</source>
-        <translation type="unfinished"></translation>
+        <translation>Voeg toe aan favorieten</translation>
     </message>
     <message>
         <source>Add the current item to your bookmarks.</source>
-        <translation type="unfinished">Voeg het huidige item toe aan uw favorieten.</translation>
+        <translation>Voeg het huidige item toe aan uw favorieten.</translation>
     </message>
     <message>
         <source>Hide clear cache menu.</source>
@@ -6777,10 +6885,6 @@ Let op: De installatie van de pakketten worden niet ongedaan gemaakt.</translati
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>User perferences</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Manage the main content structure of the site.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6806,29 +6910,33 @@ Let op: De installatie van de pakketten worden niet ongedaan gemaakt.</translati
     </message>
     <message>
         <source>Dashboard</source>
-        <translation type="unfinished">Dashboard</translation>
+        <translation>Dashboard</translation>
     </message>
     <message>
         <source>Manage items and settings that belong to your account.</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>User preferences</source>
+        <translation>Gebruikersvoorkeuren</translation>
     </message>
 </context>
 <context>
     <name>design/admin/pagelayout/path</name>
     <message>
         <source>You are here:</source>
-        <translation type="unfinished"></translation>
+        <translation>U ben hier:</translation>
     </message>
 </context>
 <context>
     <name>design/admin/pagelayout/rightmenu</name>
     <message>
         <source>Show / Hide rightmenu</source>
-        <translation type="unfinished"></translation>
+        <translation>Toon/Verberg rechtermenu</translation>
     </message>
     <message>
         <source>Hide / Show rightmenu</source>
-        <translation type="unfinished"></translation>
+        <translation>Verberg/Toon rechtermenu</translation>
     </message>
 </context>
 <context>
@@ -6879,14 +6987,14 @@ Let op: De installatie van de pakketten worden niet ongedaan gemaakt.</translati
     </message>
     <message>
         <source>Site structure</source>
-        <translation type="unfinished"></translation>
+        <translation>Site structuur</translation>
     </message>
 </context>
 <context>
     <name>design/admin/parts/media/menu</name>
     <message>
         <source>Media library</source>
-        <translation>Media bibliotheek</translation>
+        <translation>Mediabibliotheek</translation>
     </message>
     <message>
         <source>Trash</source>
@@ -6965,7 +7073,7 @@ Let op: De installatie van de pakketten worden niet ongedaan gemaakt.</translati
     </message>
     <message>
         <source>on</source>
-        <translation>op</translation>
+        <translation>aan</translation>
     </message>
     <message>
         <source>Disable location window when editing content.</source>
@@ -6973,7 +7081,7 @@ Let op: De installatie van de pakketten worden niet ongedaan gemaakt.</translati
     </message>
     <message>
         <source>off</source>
-        <translation type="unfinished"></translation>
+        <translation>uit</translation>
     </message>
     <message>
         <source>Enable location window when editing content.</source>
@@ -6981,11 +7089,11 @@ Let op: De installatie van de pakketten worden niet ongedaan gemaakt.</translati
     </message>
     <message>
         <source>Locations</source>
-        <translation type="unfinished">Locaties</translation>
+        <translation>Locaties</translation>
     </message>
     <message>
         <source>Re-edit</source>
-        <translation type="unfinished"></translation>
+        <translation>Opnieuw bewerken</translation>
     </message>
     <message>
         <source>Disable &amp;quot;Back to edit&amp;quot; checkbox when editing content.</source>
@@ -6997,22 +7105,26 @@ Let op: De installatie van de pakketten worden niet ongedaan gemaakt.</translati
     </message>
     <message>
         <source>Edit profile</source>
-        <translation type="unfinished">Bewerk profiel</translation>
+        <translation>Bewerk profiel</translation>
     </message>
     <message>
         <source>Dashboard</source>
-        <translation type="unfinished">Dashboard</translation>
+        <translation>Dashboard</translation>
     </message>
     <message>
-        <source>Preview tab</source>
+        <source>Enable &amp;quot;Tabs&amp;quot; by default  while browsing content.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Disable &amp;quot;Preview tab&amp;quot; while browsing content.</source>
+        <source>Disable &amp;quot;Tabs&amp;quot; by default  while browsing content.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Enable &amp;quot;Preview tab&amp;quot; while browsing content.</source>
+        <source>Enable &amp;quot;Tabs&amp;quot; by default while browsing content.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Disable &amp;quot;Tabs&amp;quot; by default while browsing content.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -7090,7 +7202,7 @@ Let op: De installatie van de pakketten worden niet ongedaan gemaakt.</translati
     </message>
     <message>
         <source>Setup</source>
-        <translation>Set up</translation>
+        <translation>Configuratie</translation>
     </message>
     <message>
         <source>Upgrade check</source>
@@ -7568,7 +7680,15 @@ Let op: De installatie van de pakketten worden niet ongedaan gemaakt.</translati
     </message>
     <message>
         <source>New translation</source>
+        <translation type="unfinished">Nieuwe vertaling</translation>
+    </message>
+    <message>
+        <source>Sitemap for subtree</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Preview</source>
+        <translation type="unfinished">Voorbeeld</translation>
     </message>
 </context>
 <context>
@@ -7622,6 +7742,10 @@ Let op: De installatie van de pakketten worden niet ongedaan gemaakt.</translati
     <message>
         <source>Your email address</source>
         <translation type="unfinished">Uw emailadres</translation>
+    </message>
+    <message>
+        <source>Your name</source>
+        <translation type="unfinished">Uw naam</translation>
     </message>
 </context>
 <context>
@@ -8967,6 +9091,26 @@ Let op: De installatie van de pakketten worden niet ongedaan gemaakt.</translati
         <source>Navigation part</source>
         <translation type="unfinished">Navigatiedeel</translation>
     </message>
+    <message>
+        <source>Identifier can not be empty</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Identifier should consist of letters, numbers or &apos;_&apos; with letter prefix.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The identifier has been used in another section.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Section edit error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Identifier</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>design/admin/section/list</name>
@@ -9036,6 +9180,10 @@ Let op: De installatie van de pakketten worden niet ongedaan gemaakt.</translati
     </message>
     <message>
         <source>Assign a subtree to the &lt;%section_name&gt; section.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Identifier</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -9119,6 +9267,10 @@ Let op: De installatie van de pakketten worden niet ongedaan gemaakt.</translati
     </message>
     <message>
         <source>Assign subtree of objects to this section</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Identifier</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -9598,7 +9750,15 @@ Let op: De installatie van de pakketten worden niet ongedaan gemaakt.</translati
     </message>
     <message>
         <source>Activate</source>
-        <translation type="unfinished">Activeer</translation>
+        <translation type="obsolete">Activeer</translation>
+    </message>
+    <message>
+        <source>Activate or deactivate extension. Use the &quot;Update&quot; button to apply the changes.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Update</source>
+        <translation type="unfinished">Actualiseren</translation>
     </message>
 </context>
 <context>
@@ -9783,7 +9943,7 @@ eZ Publish link</translation>
     <message>
         <source>SVN revision</source>
         <comment>eZ Publish version</comment>
-        <translation type="unfinished">eZ publish SVN versie</translation>
+        <translation type="obsolete">eZ publish SVN versie</translation>
     </message>
     <message>
         <source>Extensions</source>
@@ -10182,10 +10342,6 @@ Gegevenstype</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>The operation were cut short in order to avoid execution timeout.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Your alternatives are to:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -10199,6 +10355,10 @@ Gegevenstype</translation>
     </message>
     <message>
         <source>Install the session cleanup cronjob &apos;session_gc.php&apos; and run on nightly intervals (see cronjob.ini or doc for how)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The operation was cut short in order to avoid execution timeout.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -12008,15 +12168,15 @@ Gegevenstype</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Save changes to this states.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Cancel</source>
         <translation type="unfinished">Annuleren</translation>
     </message>
     <message>
         <source>Cancel saving any changes.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save changes to this state.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -12627,7 +12787,7 @@ uw account te activeren.</translation>
     <name>design/admin/user/password</name>
     <message>
         <source>Username</source>
-        <translation type="unfinished">Gebruikersnaam</translation>
+        <translation>Gebruikersnaam</translation>
     </message>
     <message>
         <source>Old password</source>
@@ -14199,23 +14359,23 @@ uw account te activeren.</translation>
     <name>design/ezwebin/content/datatype</name>
     <message>
         <source>Year</source>
-        <translation type="unfinished">Jaar</translation>
+        <translation type="obsolete">Jaar</translation>
     </message>
     <message>
         <source>Month</source>
-        <translation type="unfinished">Maand</translation>
+        <translation type="obsolete">Maand</translation>
     </message>
     <message>
         <source>Day</source>
-        <translation type="unfinished">Dag</translation>
+        <translation type="obsolete">Dag</translation>
     </message>
     <message>
         <source>Hour</source>
-        <translation type="unfinished">Uur</translation>
+        <translation type="obsolete">Uur</translation>
     </message>
     <message>
         <source>Minute</source>
-        <translation type="unfinished">Minuut</translation>
+        <translation type="obsolete">Minuut</translation>
     </message>
 </context>
 <context>
@@ -14883,7 +15043,7 @@ uw account te activeren.</translation>
     </message>
     <message>
         <source>seconds(s)</source>
-        <translation>seconde(n)</translation>
+        <translation type="obsolete">seconde(n)</translation>
     </message>
     <message>
         <source>Drop-down menu / multi select</source>
@@ -14903,7 +15063,19 @@ uw account te activeren.</translation>
     </message>
     <message>
         <source>Tag preset</source>
-        <translation type="unfinished"></translation>
+        <translation>Tag preset</translation>
+    </message>
+    <message>
+        <source>Html5 Video</source>
+        <translation>HTML5 Video</translation>
+    </message>
+    <message>
+        <source>Html5 Audio</source>
+        <translation>HTML5 Audio</translation>
+    </message>
+    <message>
+        <source>second(s)</source>
+        <translation>seconde(n)</translation>
     </message>
 </context>
 <context>
@@ -15077,7 +15249,7 @@ uw account te activeren.</translation>
     </message>
     <message>
         <source>Description</source>
-        <translation type="unfinished">Omschrijving</translation>
+        <translation>Omschrijving</translation>
     </message>
     <message>
         <source>Use this field to set the informal description of the class. The description field can contain whitespaces and special characters.</source>
@@ -15294,7 +15466,7 @@ uw account te activeren.</translation>
     </message>
     <message>
         <source>Description</source>
-        <translation type="unfinished">Omschrijving</translation>
+        <translation>Omschrijving</translation>
     </message>
 </context>
 <context>
@@ -16369,7 +16541,7 @@ Indien u commentaren naar de fiatteur wenst te sturen of de status wenst te zien
     </message>
     <message>
         <source>There are no related object.</source>
-        <translation type="unfinished"></translation>
+        <translation>Er zijn geen gerelateerde objecten.</translation>
     </message>
     <message>
         <source>Find object</source>
@@ -16378,6 +16550,30 @@ Indien u commentaren naar de fiatteur wenst te sturen of de status wenst te zien
     <message>
         <source>Find objects</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The related objects will be edited in the same language as this object. If such translations do not exist they will be created, based on the source language of your choice.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Translation base</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This object is already translated, the existing translation will be used.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This object is not translated, please select the language the new translation will be based on.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Your browser does not support html5 video.</source>
+        <translation>Uw browser ondersteund geen HTML5 video.</translation>
+    </message>
+    <message>
+        <source>Your browser does not support html5 audio.</source>
+        <translation>Uw broswer ondersteund geen HTML5 audio.</translation>
     </message>
 </context>
 <context>
@@ -20804,7 +21000,7 @@ eZ Publish versie</translation>
     <message>
         <source>SVN revision</source>
         <comment>eZ Publish version</comment>
-        <translation>SVN versie
+        <translation type="obsolete">SVN versie
 
 eZ publish versie</translation>
     </message>
@@ -21352,19 +21548,19 @@ Sjabloonoperator.</translation>
     </message>
     <message>
         <source>The database would not accept the connection, please review your settings and try again.</source>
-        <translation type="unfinished">Er kon geen verbinding worden gemaakt met de database. Controleer uw instellingen en probeer het nogmaals.</translation>
+        <translation>Er kon geen verbinding worden gemaakt met de database. Controleer uw instellingen en probeer het nogmaals.</translation>
     </message>
     <message>
         <source>Password entries did not match.</source>
-        <translation type="unfinished">De wachtwoorden kwamen niet overeen.</translation>
+        <translation>De wachtwoorden kwamen niet overeen.</translation>
     </message>
     <message>
         <source>The selected database was not empty, please choose from the alternatives below.</source>
-        <translation type="unfinished">De geselecteerde database was niet leeg, kies één van de onderstaande alternatieven.</translation>
+        <translation>De geselecteerde database was niet leeg, kies één van de onderstaande alternatieven.</translation>
     </message>
     <message>
         <source>Database initalization</source>
-        <translation type="unfinished">Database initialisatie</translation>
+        <translation>Database initialisatie</translation>
     </message>
     <message>
         <source>Email settings</source>
@@ -21376,11 +21572,11 @@ Sjabloonoperator.</translation>
     </message>
     <message>
         <source>Language options</source>
-        <translation type="unfinished">Taal opties</translation>
+        <translation>Taal opties</translation>
     </message>
     <message>
         <source>Registration</source>
-        <translation type="unfinished">Registratie</translation>
+        <translation>Registratie</translation>
     </message>
     <message>
         <source>Securing site</source>
@@ -21917,7 +22113,7 @@ It is possible to change these settings at a later time.</source>
     </message>
     <message>
         <source>Your database version %version does not fit the minimum requirement which is %req_version.</source>
-        <translation type="unfinished">Uw databaseversie %version voldoet niet aan de minimumeis van %req_version.</translation>
+        <translation>Uw databaseversie %version voldoet niet aan de minimumeis van %req_version.</translation>
     </message>
     <message>
         <source>The setup wizard was not able to complete the creation of your selected sites.</source>
@@ -21952,19 +22148,19 @@ Probeer opnieuw-knop in de installatie</translation>
     </message>
     <message>
         <source>Cannot write to file</source>
-        <translation type="unfinished">Kan niet naar bestand schrijven</translation>
+        <translation>Kan niet naar bestand schrijven</translation>
     </message>
     <message>
         <source>Download of package &apos;%pkg&apos; failed. You may upload the package manually.</source>
-        <translation type="unfinished">Download van pakket &apos;%pkg&apos; faalde. U kan het pakket handmatig uploaden.</translation>
+        <translation>Download van pakket &apos;%pkg&apos; faalde. U kunt het pakket handmatig uploaden.</translation>
     </message>
     <message>
         <source>Invalid package</source>
-        <translation type="unfinished">Ongeldig pakket</translation>
+        <translation>Ongeldig pakket</translation>
     </message>
     <message>
         <source>No package selected for upload</source>
-        <translation type="unfinished">Geen pakket geselecteerd voor upload</translation>
+        <translation>Geen pakket geselecteerd voor upload</translation>
     </message>
     <message>
         <source>Failed fetching upload package file</source>
@@ -22124,7 +22320,7 @@ Probeer opnieuw-knop in de installatie</translation>
     </message>
     <message>
         <source>Welcome to eZ Publish</source>
-        <translation type="unfinished">Welkom bij eZ Publish</translation>
+        <translation>Welkom bij eZ Publish</translation>
     </message>
     <message>
         <source>If you think you have fixed the errors you can try then click the &quot;Retry&quot; button.</source>
@@ -22510,10 +22706,6 @@ Deze functionaliteit is ook beschikbaar op een later tijdstip vanaf de beheerint
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>The operation were cut short in order to avoid execution timeout.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Your alternatives are to:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -22527,6 +22719,14 @@ Deze functionaliteit is ook beschikbaar op een later tijdstip vanaf de beheerint
     </message>
     <message>
         <source>Install the session cleanup cronjob &apos;session_gc.php&apos; and run on nightly intervals (see cronjob.ini or doc for how)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The operation was cut short in order to avoid execution timeout.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Your current session handler does not support session administration.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -23064,7 +23264,7 @@ Om dit te doen, moet u de %chown commando&apos;s bij de alternatieve shellcomman
     </message>
     <message>
         <source>Missing cURL extension</source>
-        <translation type="unfinished"></translation>
+        <translation>Ontbrekende cURL extensie</translation>
     </message>
     <message>
         <source>It is recommended to enable the PHP cURL extension, otherwise some features requiring a proxy or SSL will not work.</source>
@@ -23096,7 +23296,7 @@ Om dit te doen, moet u de %chown commando&apos;s bij de alternatieve shellcomman
     </message>
     <message>
         <source>Missing iconv extension</source>
-        <translation type="unfinished"></translation>
+        <translation>Ontbrekende iconv extensie</translation>
     </message>
     <message>
         <source>The iconv extension is not available to eZ Publish. Without it eZ Publish will not work.</source>
@@ -23124,7 +23324,7 @@ Om dit te doen, moet u de %chown commando&apos;s bij de alternatieve shellcomman
     </message>
     <message>
         <source>Example &lt;strong&gt;php.ini&lt;/strong&gt; configuration:</source>
-        <translation type="unfinished"></translation>
+        <translation>Voorbeeld &lt;strong&gt;php.ini&lt;/strong&gt; configuratie:</translation>
     </message>
     <message>
         <source>For a list of valid time zones see the &lt;a href=&quot;http://php.net/timezones&quot;&gt;List of Supported Time zones&lt;/a&gt; in the PHP documentation.</source>
@@ -23136,7 +23336,7 @@ Om dit te doen, moet u de %chown commando&apos;s bij de alternatieve shellcomman
     </message>
     <message>
         <source>Example &lt;strong&gt;config.php&lt;/strong&gt; configuration:</source>
-        <translation type="unfinished"></translation>
+        <translation>Voorbeeld &lt;strong&gt;config.php&lt;/strong&gt; configuratie:</translation>
     </message>
     <message>
         <source>If you want to keep UTC as your time zone, check &lt;strong&gt;Ignore this test&lt;/strong&gt; below to proceed.</source>
@@ -24524,9 +24724,7 @@ Om dit te doen, moet u de %chown commando&apos;s bij de alternatieve shellcomman
     <message>
         <source>Username</source>
         <comment>User name</comment>
-        <translation>Gebruikersnaam
-
-Gebruikersnaam</translation>
+        <translation>Gebruikersnaam</translation>
     </message>
     <message>
         <source>Unable to register new user</source>
@@ -24684,9 +24882,7 @@ uw account te activeren.</translation>
     <message>
         <source>Username</source>
         <comment>Login name</comment>
-        <translation>Gebruikersnaam
-
-Aanmeldingsnaam</translation>
+        <translation>Gebruikersnaam</translation>
     </message>
 </context>
 <context>
@@ -25473,6 +25669,14 @@ Aanmeldingsnaam</translation>
     </message>
     <message>
         <source>Design base cache</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Active extensions cache</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>TS Translation cache</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -26540,7 +26744,7 @@ indien u optie &quot;%3&quot; tot &quot;%4&quot; koos</translation>
         <translation type="unfinished">Dashboard</translation>
     </message>
     <message>
-        <source>You have already sent a tipafriend mail to this reciver regarding &apos;$nodeName&apos; content</source>
+        <source>You have already sent a tipafriend mail to this receiver regarding &apos;%1&apos; content</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -26548,7 +26752,7 @@ indien u optie &quot;%3&quot; tot &quot;%4&quot; koos</translation>
     <name>kernel/content/copysubtree</name>
     <message>
         <source>Cannot publish object (ID = %1).</source>
-        <translation type="unfinished">Kan object (ID= %1) niet publiceren.</translation>
+        <translation type="obsolete">Kan object (ID= %1) niet publiceren.</translation>
     </message>
     <message>
         <source>Fatal error: cannot get subtree main node (ID = %1).</source>
@@ -26605,6 +26809,10 @@ indien u optie &quot;%3&quot; tot &quot;%4&quot; koos</translation>
     <message>
         <source>Successfully DONE.</source>
         <translation type="unfinished">Met succes KLAAR.</translation>
+    </message>
+    <message>
+        <source>Cannot publish object (Name: %1, ID: %2).</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

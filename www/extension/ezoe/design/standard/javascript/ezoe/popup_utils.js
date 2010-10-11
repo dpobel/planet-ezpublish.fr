@@ -9,8 +9,6 @@
 
 
 var eZOEPopupUtils = {
-    ajax: ez.ajax( { 'charset': 'UTF-8' } ),
-    ajaxLoadResponse: '',
     embedObject: {},
 
     settings: {
@@ -63,10 +61,14 @@ var eZOEPopupUtils = {
         // Title text to set on tilte tag and h2#tag-edit-title tag in tag edit / create dialogs
         tagEditTitleText: ''
     },
-    
+
+    /**
+     * Initialize page with values from current editor element or if not defined; default values and settings
+     *
+     * @param {Object} settings Hash with settings, is saved to eZOEPopupUtils.settings for the rest of the execution.
+     */
     init: function( settings )
     {
-        // Initialize page with default values and settings
         eZOEPopupUtils.settings = jQuery.extend( false, eZOEPopupUtils.settings, settings );
 
         var ed = tinyMCEPopup.editor, el = tinyMCEPopup.getWindowArg('selected_node'), s = eZOEPopupUtils.settings;
@@ -146,9 +148,15 @@ var eZOEPopupUtils = {
             } );
     },
 
+    /**
+     * Save changes from form values to editor element attributes but first:
+     * - validate values according to class names and stop if not valid
+     * - create editor element if it does not exist either using callbacks or defaults
+     * - or call optional edit callback to edit/fixup existing element
+     * - Set attributes from form values using callback if set or default TinyMCE handler
+     */
     save: function()
     {
-        // save changes from form values to element attributes
         var ed = tinyMCEPopup.editor, s = eZOEPopupUtils.settings, n, arr, tmp, f = document.forms[0];
 
         if ( s.tagSelector && s.tagSelector.size() && s.tagSelector[0].value )
@@ -204,7 +212,7 @@ var eZOEPopupUtils = {
                 ed.execCommand('mceInsertLink', false, args, {skip_undo : 1} );
                 s.editorElement = ed.dom.get('__mce_tmp');
                 // fixup if we are inside embed tag
-                if ( tmp = eZOEPopupUtils.getParentByTag( s.editorElement, 'div,span', 'mceNonEditable' ) )
+                if ( tmp = eZOEPopupUtils.getParentByTag( s.editorElement, 'div,span', 'ezoeItemNonEditable' ) )
                 {
                     var span = document.createElement("span");
                     span.innerHTML = s.editorElement.innerHTML;
@@ -233,17 +241,28 @@ var eZOEPopupUtils = {
             if ( n && n.nodeName )
                 s.editorElement = n;
         }
-    
+
         if ( s.editorElement )
         {
             if ( s.tagAttributeEditor )
-                s.tagAttributeEditor.call( eZOEPopupUtils, ed, s.editorElement, args );
+            {
+                n = s.tagAttributeEditor.call( eZOEPopupUtils, ed, s.editorElement, args );
+                if ( n && n.nodeName )
+                    s.editorElement = n;
+            }
             else
                 ed.dom.setAttribs( s.editorElement, args );
 
             if ( args['id'] === undefined )
                 ed.dom.setAttrib( s.editorElement, 'id', '' );
-            //ed.selection.select( s.editorElement );
+
+            if ( 'TABLE'.indexOf( s.editorElement.tagName ) === 0 )
+                ed.selection.select( jQuery( s.editorElement ).find( "tr:first-child > *:first-child" ).get(0), true );
+            else if ( 'DIV'.indexOf( s.editorElement.tagName ) === 0 )
+                ed.selection.select( s.editorElement );
+            else
+                ed.selection.select( s.editorElement, true );
+            ed.nodeChanged();
         }
         ed.execCommand('mceEndUndoLevel');
     
@@ -252,12 +271,17 @@ var eZOEPopupUtils = {
         return false;
     },
 
-    /*
+    /**
      * Insert raw html and tries to cleanup any issues that might happen (related to paragraphs and block tags)
+     * makes sure block nodes do not break the html structure they are inserted into
+     *
+     * @param ed TinyMCE editor instance
+     * @param {String} html
+     * @param {String} id
+     * @return HtmlElement
      */
     insertHTMLCleanly: function( ed, html, id )
     {
-        // makes sure block nodes do not break the html structure they are inserted into
         var paragraphCleanup = false, newElement;
         if ( html.indexOf( '<div' ) === 0 || html.indexOf( '<pre' ) === 0 )
         {
@@ -276,8 +300,14 @@ var eZOEPopupUtils = {
         return newElement;
     },
 
-    /*
+    /**
      * Only for use for block tags ( appends or prepends tag relative to current tag )
+     *
+     * @param ed TinyMCE editor instance
+     * @param {String} tag Tag Name
+     * @param {String} content Inner content of tag, can be html, but only tested with plain text
+     * @param {Array} args Optional parameter that is passed as second parameter to ed.dom.setAttribs() if set.
+     * @return HtmlElement
      */
     insertTagCleanly: function( ed, tag, content, args )
     {
@@ -285,41 +315,53 @@ var eZOEPopupUtils = {
         if ( tag !== 'img' ) newElement.innerHTML = content;
 
         if ( edCurrentNode.nextSibling )
-                edCurrentNode.parentNode.insertBefore( newElement, edCurrentNode.nextSibling );
+            edCurrentNode.parentNode.insertBefore( newElement, edCurrentNode.nextSibling );
+        else if ( edCurrentNode.nodeName === 'BODY' )// IE when editor is empty
+            edCurrentNode.appendChild( newElement );
         else
-                edCurrentNode.parentNode.appendChild( newElement );
+            edCurrentNode.parentNode.appendChild( newElement );
 
         if ( (tag === 'div' || tag === 'pre') && edCurrentNode && edCurrentNode.nodeName.toLowerCase() === 'p' )
         {
-                this.paragraphCleanup( ed, newElement );
+            this.paragraphCleanup( ed, newElement );
         }
 
         if ( args ) ed.dom.setAttribs( newElement, args );
 
         return newElement;
     },
-    
+
+    /**
+     * Cleanup broken paragraphs after inserting block tags into paragraphs
+     *
+     * @param ed TinyMCE editor instance
+     * @param {HtmlElement} el
+     */
     paragraphCleanup: function( ed, el )
     {
         var emptyContent = [ '', '<br>', '<BR>', '&nbsp;', ' ', " " ];
-        // cleanup broken paragraphs after inserting block tags into paragraphs
         if ( el.previousSibling
-             && el.previousSibling.nodeName.toLowerCase() === 'p'
-             && ( !el.previousSibling.hasChildNodes() || jQuery.inArray( el.previousSibling.innerHTML, emptyContent ) !== -1 ))
+          && el.previousSibling.nodeName.toLowerCase() === 'p'
+          && ( !el.previousSibling.hasChildNodes() || jQuery.inArray( el.previousSibling.innerHTML, emptyContent ) !== -1 ))
         {
-                el.parentNode.removeChild( el.previousSibling );
+            el.parentNode.removeChild( el.previousSibling );
         }
         if ( el.nextSibling
-                && el.nextSibling.nodeName.toLowerCase() === 'p'
-                && ( !el.nextSibling.hasChildNodes() || jQuery.inArray( el.nextSibling.innerHTML, emptyContent ) !== -1 ))
+          && el.nextSibling.nodeName.toLowerCase() === 'p'
+          && ( !el.nextSibling.hasChildNodes() || jQuery.inArray( el.nextSibling.innerHTML, emptyContent ) !== -1 ))
        {
-                el.parentNode.removeChild( el.nextSibling );
+            el.parentNode.removeChild( el.nextSibling );
        }
     },
 
+    /**
+     * Removes some unwanted stuff from attribute values
+     *
+     * @param {String} value
+     * @return {String}
+     */
     safeHtml: function( value )
     {
-        // removes some unwanted stuff from attribute values
         value = value.replace(/&/g, '&amp;');
         value = value.replace(/\"/g, '&quot;');
         value = value.replace(/</g, '&lt;');
@@ -339,9 +381,14 @@ var eZOEPopupUtils = {
         tinyMCEPopup.close();
     },
 
+    /**
+     * Removes all children of a node safly (especially needed to clear select options and table data)
+     * Also disables tag if it was an select
+     *
+     * @param {HtmlElement} node
+     */
     removeChildren: function( node )
     {
-        // removes all children of a node
         if ( !node  ) return;
         while ( node.hasChildNodes() )
         {
@@ -350,12 +397,18 @@ var eZOEPopupUtils = {
         if ( node.nodeName === 'SELECT' ) node.disabled = true;
     },
 
+    /**
+     * Adds options to a selection based on object with name / value pairs or array
+     * and disables select tag if no options where added.
+     *
+     * @param {HtmlElement} node
+     * @param {Object|Array} o
+     */
     addSelectOptions: function( node, o )
     {
-        // ads options to a selection based on object with name / value pairs or array
         if ( !node || node.nodeName !== 'SELECT'  ) return;
         var opt, c = 0, i;
-        if (  o.constructor.toString().indexOf('Array') === -1 )
+        if ( o.constructor.toString().indexOf('Array') === -1 )
         {
             for ( key in o )
             {
@@ -368,7 +421,7 @@ var eZOEPopupUtils = {
         }
         else
         {
-            for ( i = 0, c = o.length; i<c; i++ )
+            for ( i = 0, c = o.length; i < c; i++ )
             {
                 opt = document.createElement("option");
                 opt.value = opt.innerHTML = o[i];
@@ -378,10 +431,14 @@ var eZOEPopupUtils = {
         node.disabled = c === 0;
     },
 
+    /**
+     * Get custom attribute value from form values and map them to style value as well
+     *
+     * @param {HtmlElement} node
+     * @return {Object} Hash of attributes and their values for use on editor elements
+     */
     getCustomAttributeArgs: function( node )
     {
-        // creates custom attribute value from form values
-        // global objects: ez
         var args = {
             'customattributes': '',
             'style': ''
@@ -389,12 +446,15 @@ var eZOEPopupUtils = {
         var customArr = [];
         jQuery( '#' + node + ' input,#' + node + ' select' ).each(function( i, el )
         {
-            var o = jQuery( el ), name = el.name, value = o[0].value, style;
-                if ( o.hasClass('mceItemSkip') || !name ) return;
+            var o = jQuery( el ), name = o.attr("name"), value, style;
+            if ( o.hasClass('mceItemSkip') || !name ) return;
+            if ( o.attr("type") === 'checkbox' && !o.attr("checked") ) return;
 
             // see if there is a save hander that needs to do some work on the value
             if ( handler[el.id] !== undefined && handler[el.id].call !== undefined )
-                value = handler[el.id].call( o, el, value );
+                value = handler[el.id].call( o, el, o.val() );
+            else
+                value = o.val()
 
             // add to styles if custom attibute is defined in customAttributeStyleMap
             if ( value !== '' && s.customAttributeStyleMap && s.customAttributeStyleMap[name] !== undefined  )
@@ -410,22 +470,39 @@ var eZOEPopupUtils = {
         return args;
     },
 
+    /**
+     * Get general attributes for tag from form values
+     *
+     * @param {HtmlElement} node
+     * @return {Object} Hash of attributes and their values for use on editor elements
+     */
     getGeneralAttributeArgs: function( node )
     {
         var args = {}, handler = eZOEPopupUtils.settings.customAttributeSaveHandler;
-        // set general attributes for tag
         jQuery( '#' + node + ' input,#' + node + ' select' ).each(function( i, el )
         {
-                var o = jQuery( el ), name = el.name;
-                if ( o.hasClass('mceItemSkip') || !name ) return;
-            args[name] = el.value;
+            var o = jQuery( el ), name = o.attr("name");
+            if ( o.hasClass('mceItemSkip') || !name ) return;
+            if ( o.attr("type") === 'checkbox' && !o.attr("checked") ) return;
             // see if there is a save hander that needs to do some work on the value
             if ( handler[el.id] !== undefined && handler[el.id].call !== undefined )
-                args[name] = handler[el.id].call( o, el, args[name] );
+                args[name] = handler[el.id].call( o, el, o.val() );
+            else
+                args[name] = o.val()
        });
        return args;
     },
 
+    /**
+     * Get parent tag by tag name with optional class name and type check
+     *
+     * @param {HtmlElement} n
+     * @param {String} tag
+     * @param {String} className
+     * @param {String} type
+     * @param {Boolean} checkElement Checks n as well if true
+     * @return {HtmlElement|False}
+     */
     getParentByTag: function( n, tag, className, type, checkElement )
     {
         if ( className ) className = ' ' + className + ' ';
@@ -452,7 +529,7 @@ var eZOEPopupUtils = {
             node = jQuery( this );
 
         jQuery('table.custom_attributes').each(function( i, el ){
-                el = jQuery( el );
+            el = jQuery( el );
             if ( el.attr('id') === node[0].value + '_customattributes' )
                 el.show();
             else
@@ -474,8 +551,8 @@ var eZOEPopupUtils = {
         }
         jQuery( '#' + node + ' input,#' + node + ' select' ).each(function( i, el )
         {
-                var o = jQuery( el ), name = el.name;
-                if ( o.hasClass('mceItemSkip') || !name )
+            var o = jQuery( el ), name = el.name;
+            if ( o.hasClass('mceItemSkip') || !name )
                 return;
             if ( values[name] !== undefined )
             {
@@ -506,13 +583,21 @@ var eZOEPopupUtils = {
     initGeneralmAttributes: function( node, editorElement )
     {
         // init general attributes form values from tinymce element values
-        var handler = eZOEPopupUtils.settings.customAttributeInitHandler;
+        var handler = eZOEPopupUtils.settings.customAttributeInitHandler, cssReplace = function( s ){
+            s = s.replace(/(webkit-[\w\-]+|Apple-[\w\-]+|mceItem\w+|ezoeItem\w+|mceVisualAid)/g, '');
+            if ( !eZOEPopupUtils.settings.cssClass )
+                return s;
+            jQuery.each(eZOEPopupUtils.settings.cssClass.split(' '), function(index, value){
+                s = s.replace( value, '' );
+            });
+            return s;
+        };
         jQuery( '#' + node + ' input,#' + node + ' select' ).each(function( i, el )
         {
-                var o = jQuery( el ), name = el.name;
-                if ( o.hasClass('mceItemSkip') ) return;
+            var o = jQuery( el ), name = el.name;
+            if ( o.hasClass('mceItemSkip') ) return;
             if ( name === 'class' )
-                var v = jQuery.trim( editorElement.className.replace(/(webkit-[\w\-]+|Apple-[\w\-]+|mceItem\w+|mceVisualAid|mceNonEditable)/g, '').replace( /eZOEPopupUtils.settings.cssClass.replace(' ', '|')/, '' ) );
+                var v = jQuery.trim( cssReplace( editorElement.className ) );
             else 
                 var v = tinyMCEPopup.editor.dom.getAttrib( editorElement, name );//editorElement.getAttribute( name );
             if ( v !== false && v !== null && v !== undefined )
@@ -523,7 +608,7 @@ var eZOEPopupUtils = {
                     el.checked = v == el.value;
                 else if ( el.type === 'select-one' )
                 {
-                    // Make sure selecion has value before we set it (#014986)
+                    // Make sure selection has value before we set it (#014986)
                     for( var i = 0, l = el.options.length; i < l; i++ )
                     {
                         if ( el.options[i].value == v ) el.value = v;
@@ -620,38 +705,36 @@ var eZOEPopupUtils = {
     browse: function( nodeId, offset )
     {
         // browse for a specific node id and a offset on the child elements
-        eZOEPopupUtils.ajax.load( tinyMCEPopup.editor.settings.ez_extension_url + '/expand/' + nodeId + '/' + (offset || 0), '', eZOEPopupUtils.browseCallBack  );
+        var postData = jQuery('#browse_box input, #browse_box select').serializeArray(), o = offset ? offset : 0;
+        jQuery.ez('ezoe::browse::' + nodeId + '::' + o, postData, function( data ){ eZOEPopupUtils.browseCallBack( data, 'browse' ) } );
         jQuery('#browse_progress' ).show();
     },
 
     search: function( offset )
     {
         // serach for nodes with input and select form elements inside a 'search_box' container element
-        // global objects: ez
-        var postData = jQuery('#search_box input, #search_box select').serialize(), o = offset || 0;    
-        var url = tinyMCEPopup.editor.settings.ez_extension_url + '/search/x/'+ o +'/10';
         if ( jQuery.trim( jQuery('#SearchText').val() ) )
         {
-            eZOEPopupUtils.ajax.load( url, postData, eZOEPopupUtils.searchCallBack );
+            var postData = jQuery('#search_box input, #search_box select').serializeArray(), o = offset ? offset : 0;
+            jQuery.ez('ezjsc::search::x::' + o, postData, eZOEPopupUtils.searchCallBack );
             jQuery('#search_progress' ).show();
         }
     },
 
-    browseCallBack: function( r, mode, emptyCallBack )
+    browseCallBack: function( data, mode, emptyCallBack )
     {
         // call back function for the browse() ajax call, generates the html markup with paging and path header (if defined)
-        mode = mode || 'browse';
+        mode = mode ? mode : 'browse';
         jQuery('#' + mode + '_progress' ).hide();
-        ez.script( 'eZOEPopupUtils.ajaxLoadResponse=' + r.responseText );
         var ed = tinyMCEPopup.editor, tbody = jQuery('#' + mode + '_box_prev tbody')[0], thead = jQuery('#' + mode + '_box_prev thead')[0], tfoot = jQuery('#' + mode + '_box_prev tfoot')[0], tr, td, tag, hasImage, emptyList = true;
         eZOEPopupUtils.removeChildren( tbody );
         eZOEPopupUtils.removeChildren( thead );
         eZOEPopupUtils.removeChildren( tfoot );
-        if ( eZOEPopupUtils.ajaxLoadResponse )
+        if ( data && data.content !== ''  )
         {
-            var data = eZOEPopupUtils.ajaxLoadResponse, fn = mode + ( mode === 'browse' ? '('+ data['node']['node_id'] + ',' : '(' );
+            var fn = mode + ( mode === 'browse' ? '('+ data.content['node']['node_id'] + ',' : '(' );
             var classGenerator = eZOEPopupUtils.settings.browseClassGenerator, linkGenerator = eZOEPopupUtils.settings.browseLinkGenerator;
-            if ( data['node'] && data['node']['name'] )
+            if ( data.content['node'] && data.content['node']['name'] )
             {
                 tr = document.createElement("tr"), td = document.createElement("td");
                 tr.className = 'browse-path-list';
@@ -659,11 +742,11 @@ var eZOEPopupUtils = {
                 tr.appendChild( td );
                 td = document.createElement("td")
                 td.setAttribute('colspan', '3');
-                if ( data['node']['path'] !== false && data['node']['node_id'] != 1 )
+                if ( data.content['node']['path'] !== false && data.content['node']['node_id'] != 1 )
                 {
                     // Prepend root node so you can browse to the root of the installation
-                    data['node']['path'].splice(0,0,{'node_id':1, 'name': ed.getLang('ez.root_node_name'), 'class_name': 'Folder'});
-                    jQuery.each( data['node']['path'], function( i, n )
+                    data.content['node']['path'].splice(0,0,{'node_id':1, 'name': ed.getLang('ez.root_node_name'), 'class_name': 'Folder'});
+                    jQuery.each( data.content['node']['path'], function( i, n )
                     {
                         tag = document.createElement("a");
                         tag.setAttribute('href', 'JavaScript:eZOEPopupUtils.' + mode + '(' + n.node_id + ');');
@@ -677,16 +760,16 @@ var eZOEPopupUtils = {
                 }
 
                 tag = document.createElement("span");
-                tag.innerHTML = data['node']['name'];
+                tag.innerHTML = data.content['node']['name'];
                 td.appendChild( tag );
 
                 tr.appendChild( td );
                 thead.appendChild( tr );
             }
 
-            if ( data['list'] )
+            if ( data.content['list'] )
             {
-               jQuery.each( data['list'], function( i, n )
+               jQuery.each( data.content['list'], function( i, n )
                {
                    tr = document.createElement("tr"), td = document.createElement("td"), tag = document.createElement("input"), isImage = false;
                    tag.setAttribute('type', 'radio');
@@ -744,20 +827,20 @@ var eZOEPopupUtils = {
 
             tr = document.createElement("tr"), td = document.createElement("td");
             tr.appendChild( document.createElement("td") );
-            if ( data['offset'] !== 0 )
+            if ( data.content['offset'] > 0 )
             {
                 tag = document.createElement("a");
-                tag.setAttribute('href', 'JavaScript:eZOEPopupUtils.' + fn + (data['offset'] - data['limit']) + ');');
+                tag.setAttribute('href', 'JavaScript:eZOEPopupUtils.' + fn + (data.content['offset'] - data.content['limit']) + ');');
                 tag.innerHTML = '&lt;&lt; ' + ed.getLang('advanced.previous');
                 td.appendChild( tag );
             }
             tr.appendChild( td );
             td = document.createElement("td");
             td.setAttribute('colspan', '2');
-            if ( (data['offset'] + data['limit']) < data['total_count'] )
+            if ( (data.content['offset'] + data.content['limit']) < data.content['total_count'] )
             {
                 tag = document.createElement("a");
-                tag.setAttribute('href', 'JavaScript:eZOEPopupUtils.' + fn + (data['offset'] + data['limit']) + ');');
+                tag.setAttribute('href', 'JavaScript:eZOEPopupUtils.' + fn + (data.content['offset'] + data.content['limit']) + ');');
                 tag.innerHTML = ed.getLang('advanced.next') + ' &gt;&gt;';
                 td.appendChild( tag );
             }
@@ -771,10 +854,21 @@ var eZOEPopupUtils = {
         return false;
     },
 
-    searchCallBack : function( r )
+    searchCallBack : function( searchData )
     {
         // wrapper function for browseCallBack, called by ajax call in search()
-        return eZOEPopupUtils.browseCallBack( r, 'search', function( tbody, mode, ed ){
+        var data = { 'content': '' };
+        if ( searchData && searchData.content !== '' )
+        {
+            data['content'] = {
+                    'limit': searchData.content.SearchLimit,
+                    'offset': searchData.content.SearchOffset,
+                    'total_count': searchData.content.SearchCount,
+                    'list': searchData.content.SearchResult
+            };
+        }
+        return eZOEPopupUtils.browseCallBack( data, 'search', function( tbody, mode, ed ){
+            // callback for use when result is empty
             var tr = document.createElement("tr"), td = document.createElement("td"), tag = document.createElement("span");
             tr.appendChild( document.createElement("td") );
             tr.className = 'search-result-empty';
@@ -784,5 +878,28 @@ var eZOEPopupUtils = {
             tr.appendChild( td );
             tbody.appendChild( tr );
         } );
+    },
+
+    // some reusable functions from ezcore
+    ie65: /MSIE [56]/.test( navigator.userAgent ),
+    Int: function(value, fallBack)
+    {
+        // Checks if value is a int, if not fallBack or 0 is returned
+        value = parseInt( value );
+        return isNaN( value ) ? ( fallBack !== undefined ? fallBack : 0 ) : value;
+    },
+    Float: function(value, fallBack)
+    {
+        // Checks if value is float, if not fallBack or 0 is returned
+        value = parseFloat( value );
+        return isNaN( value ) ? ( fallBack !== undefined ? fallBack : 0 ) : value;
+    },
+    min: function()
+    {
+       // Returns the lowest number, or null if none
+       var min = null;
+       for (var i = 0, a = arguments, l = a.length; i < l; i++)
+               if (min === null || min > a[i]) min = a[i];
+       return min;
     }
 };

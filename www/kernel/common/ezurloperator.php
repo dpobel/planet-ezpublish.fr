@@ -6,25 +6,23 @@
 //
 // ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.3.0
+// SOFTWARE RELEASE: 4.4.0
 // COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
 //   modify it under the terms of version 2.0  of the GNU General
 //   Public License as published by the Free Software Foundation.
-//
+// 
 //   This program is distributed in the hope that it will be useful,
-//   but WITHOUT ANY WARRANTY; without even the implied warranty of
+//    but WITHOUT ANY WARRANTY; without even the implied warranty of
 //   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //   GNU General Public License for more details.
-//
+// 
 //   You should have received a copy of version 2.0 of the GNU General
 //   Public License along with this program; if not, write to the Free
 //   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 //   MA 02110-1301, USA.
-//
-//
 // ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
@@ -40,6 +38,7 @@ class eZURLOperator
     const HTTP_OPERATOR_TYPE_POST = 1;
     const HTTP_OPERATOR_TYPE_GET = 2;
     const HTTP_OPERATOR_TYPE_SESSION = 3;
+    const HTTP_OPERATOR_TYPE_COOKIE = 4;
 
     /*!
      Initializes the image operator with the operator name $name.
@@ -133,7 +132,7 @@ class eZURLOperator
     function iniTrans( $operatorName, &$node, $tpl, &$resourceData,
                        $element, $lastElement, $elementList, $elementTree, &$parameters )
     {
-        if ( count ( $parameters ) < 2 )
+        if ( !isset( $parameters[1] ) )
             return false;
 
         if ( eZTemplateNodeTool::isStaticElement( $parameters[0] ) &&
@@ -162,43 +161,48 @@ class eZURLOperator
                                   : false;
             }
 
-            if ( count( $parameters ) > 4 )
+            if ( isset( $parameters[4] ) )
             {
-                $inCache = eZTemplateNodeTool::elementStaticValue( $parameters[4] );
-                // Check if we should put implementaion of parsing ini variable to compiled php file
-                if ( $inCache === true )
-                {
-                    $values = array();
-                    $values[] = $parameters[0];
-                    $values[] = $parameters[1];
-
-                    $code = "//include_once( 'lib/ezutils/classes/ezini.php' );\n";
-
-                    if ( $iniPath !== false )
-                    {
-                        $values[] = $parameters[2];
-                        $values[] = $parameters[3];
-                        $code .= '%tmp1% = eZINI::instance( %3%, %4%, null, null, null, true );' . "\n";
-                    }
-                    elseif ( $iniName !== false )
-                    {
-                        $values[] = $parameters[2];
-                        $code .= '%tmp1% = eZINI::instance( %3% );' . "\n";
-                    }
-                    else
-                        $code .= '%tmp1% = eZINI::instance();' . "\n";
-
-                    $checkExist = $checkExistence ? 'true' : 'false';
-
-                    $code .= 'if ( %tmp1%->hasVariable( %1%, %2% ) )' . "\n" .
-                        '    %output% = ' . "!$checkExist" . ' ? %tmp1%->variable( %1%, %2% ) : true;' . "\n" .
-                        "else\n" .
-                        "    %output% = $checkExist ? false : '';\n";
-
-
-                    return array( eZTemplateNodeTool::createCodePieceElement( $code, $values, false, 1 ) );
-                }
+                $dynamic = eZTemplateNodeTool::elementStaticValue( $parameters[4] );
             }
+            else
+            {
+                $ini = eZINI::instance();
+                $dynamic = $ini->variable( 'eZINISettings', 'DynamicTemplateMode' ) === 'enabled';
+            }
+
+            // Check if we should put implementation of parsing ini variable to compiled php file
+            if ( $dynamic === true )
+            {
+                $values = array();
+                $values[] = $parameters[0];
+                $values[] = $parameters[1];
+
+                if ( $iniPath !== false )
+                {
+                    $values[] = $parameters[2];
+                    $values[] = $parameters[3];
+                    $code = '%tmp1% = eZINI::instance( %3%, %4%, null, null, null, true );' . "\n";
+                }
+                elseif ( $iniName !== false )
+                {
+                    $values[] = $parameters[2];
+                    $code = '%tmp1% = eZINI::instance( %3% );' . "\n";
+                }
+                else
+                    $code = '%tmp1% = eZINI::instance();' . "\n";
+
+                $checkExist = $checkExistence ? 'true' : 'false';
+
+                $code .= 'if ( %tmp1%->hasVariable( %1%, %2% ) )' . "\n" .
+                    '    %output% = ' . "!$checkExist" . ' ? %tmp1%->variable( %1%, %2% ) : true;' . "\n" .
+                    "else\n" .
+                    "    %output% = $checkExist ? false : '';\n";
+
+
+                return array( eZTemplateNodeTool::createCodePieceElement( $code, $values, false, 1 ) );
+            }
+
             if ( $iniPath !== false )
                 $ini = eZINI::instance( $iniName, $iniPath, null, null, null, true );
             elseif ( $iniName !== false )
@@ -719,14 +723,22 @@ CODEPIECE;
                     if ( count( $operatorParameters ) > 1 )
                     {
                         $httpTypeName = strtolower( $tpl->elementValue( $operatorParameters[1], $rootNamespace, $currentNamespace ) );
-                        if ( $httpTypeName == 'post' )
-                            $httpType = eZURLOperator::HTTP_OPERATOR_TYPE_POST;
-                        else if ( $httpTypeName == 'get' )
-                            $httpType = eZURLOperator::HTTP_OPERATOR_TYPE_GET;
-                        else if ( $httpTypeName == 'session' )
-                            $httpType = eZURLOperator::HTTP_OPERATOR_TYPE_SESSION;
-                        else
+
+                        $availableTypeList = array(
+                            'post'    => eZURLOperator::HTTP_OPERATOR_TYPE_POST,
+                            'get'     => eZURLOperator::HTTP_OPERATOR_TYPE_GET,
+                            'session' => eZURLOperator::HTTP_OPERATOR_TYPE_SESSION,
+                            'cookie'  => eZURLOperator::HTTP_OPERATOR_TYPE_COOKIE,
+                        );
+
+                        if( !isset( $availableTypeList[$httpTypeName] ) )
+                        {
                             $tpl->warning( $operatorName, "Unknown http type '$httpTypeName'" );
+                        }
+                        else
+                        {
+                            $httpType = $availableTypeList[$httpTypeName];
+                        }
                     }
 
                     // If we should check for existence of http variable
@@ -787,6 +799,20 @@ CODEPIECE;
                                     return;
                                 }
                                 $tpl->error( $operatorName, "Unknown session variable '$httpName'" );
+                            }
+                        } break;
+                        case eZURLOperator::HTTP_OPERATOR_TYPE_COOKIE:
+                        {
+                            if ( array_key_exists( $httpName, $_COOKIE ) )
+                                $operatorValue = !$checkExistence ? $_COOKIE[$httpName] : true;
+                            else
+                            {
+                                if ( $checkExistence )
+                                {
+                                    $operatorValue = false;
+                                    return;
+                                }
+                                $tpl->error( $operatorName, "Unknown cookie variable '$httpName'" );
                             }
                         } break;
                     }

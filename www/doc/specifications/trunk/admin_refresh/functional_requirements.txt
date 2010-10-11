@@ -1,9 +1,9 @@
 eZ Publish: Admin Interface, Requirements, 4.3
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-$Author: ar $
-$Revision: 24757 $
-$Date: 2010-01-29 13:29:47 +0100 (Fri, 29 Jan 2010) $
+$Author$
+$Revision$
+$Date$
 :Status: Draft
 
 .. contents::

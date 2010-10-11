@@ -42,23 +42,23 @@
 
 <table class="list" width="100%" cellspacing="0" cellpadding="0" border="0">
 <tr>
-        <th colspan="2">
-        {"Version"|i18n("design/standard/content/version")}:
-        </th>
-        <th>
-        {"Status"|i18n("design/standard/content/version")}:
-        </th>
-        <th>
-        {"Translations"|i18n("design/standard/content/version")}:
-        </th>
-        <th>
-        {"Creator"|i18n("design/standard/content/version")}:
-        </th>
-        {if $can_edit}
-        <th colspan="2">
-        {"Modified"|i18n("design/standard/content/version")}:
-        </th>
-        {/if}
+	<th colspan="2">
+	{"Version"|i18n("design/standard/content/version")}:
+	</th>
+	<th>
+	{"Status"|i18n("design/standard/content/version")}:
+	</th>
+	<th>
+	{"Translations"|i18n("design/standard/content/version")}:
+	</th>
+	<th>
+	{"Creator"|i18n("design/standard/content/version")}:
+	</th>
+	{if $can_edit}
+	<th colspan="2">
+	{"Modified"|i18n("design/standard/content/version")}:
+	</th>
+	{/if}
 </tr>
 {if $list_count}
     {section name=Version loop=fetch( 'content', 'version_list', hash( contentobject, $object, limit, $page_limit, offset, $view_parameters.offset ) )

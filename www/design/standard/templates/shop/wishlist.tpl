@@ -9,67 +9,67 @@
 
 <table class="list" width="100%" cellspacing="0" cellpadding="0" border="0">
 <tr>
-        <th>
-        {"Product"|i18n("design/standard/shop")}
-        </th>
-        <th>
-        {"Count"|i18n("design/standard/shop")}
-        </th>
-        <th>
-        {"VAT"|i18n("design/standard/shop")}
-        </th>
-        <th>
-        {"Price ex. VAT"|i18n("design/standard/shop")}
-        </th>
-        <th>
-        {"Price inc. VAT"|i18n("design/standard/shop")}
-        </th>
-        <th>
-        {"Discount"|i18n("design/standard/shop")}
-        </th>
-        <th>
-        {"Total price ex. VAT"|i18n("design/standard/shop")}
-        </th>
-        <th>
-        {"Total price inc. VAT"|i18n("design/standard/shop")}
-        </th>
-        <th>
+	<th>
+	{"Product"|i18n("design/standard/shop")}
+	</th>
+	<th>
+	{"Count"|i18n("design/standard/shop")}
+	</th>
+	<th>
+	{"VAT"|i18n("design/standard/shop")}
+	</th>
+	<th>
+	{"Price ex. VAT"|i18n("design/standard/shop")}
+	</th>
+	<th>
+	{"Price inc. VAT"|i18n("design/standard/shop")}
+	</th>
+	<th>
+	{"Discount"|i18n("design/standard/shop")}
+	</th>
+	<th>
+	{"Total price ex. VAT"|i18n("design/standard/shop")}
+	</th>
+	<th>
+	{"Total price inc. VAT"|i18n("design/standard/shop")}
+	</th>
+	<th>
     &nbsp;
-        </th>
+	</th>
 </tr>
 {section name=ProductItem loop=$wish_list.items sequence=array(bglight,bgdark)}
 <tr>
-        <td class="{$ProductItem:sequence}">
-        <input type="hidden" name="ProductItemIDList[]" value="{$ProductItem:item.id}" />
-        {$ProductItem:item.id} - 
-        <a href={concat("/content/view/full/",$ProductItem:item.node_id,"/")|ezurl}>{$ProductItem:item.object_name}</a>
-        </td>
-        <td class="{$ProductItem:sequence}">
+	<td class="{$ProductItem:sequence}">
+	<input type="hidden" name="ProductItemIDList[]" value="{$ProductItem:item.id}" />
+	{$ProductItem:item.id} - 
+	<a href={concat("/content/view/full/",$ProductItem:item.node_id,"/")|ezurl}>{$ProductItem:item.object_name}</a>
+	</td>
+	<td class="{$ProductItem:sequence}">
 
-        <input type="text" name="ProductItemCountList[]" value="{$ProductItem:item.item_count}" size="5" />
+	<input type="text" name="ProductItemCountList[]" value="{$ProductItem:item.item_count}" size="5" />
 
-        </td>
-        <td class="{$ProductItem:sequence}">
-        {$ProductItem:item.vat_value}%
-        </td>
-        <td class="{$ProductItem:sequence}">
-        {$ProductItem:item.price_ex_vat|l10n(currency)}
-        </td>
-        <td class="{$ProductItem:sequence}">
-        {$ProductItem:item.price_inc_vat|l10n(currency)}
-        </td>
-        <td class="{$ProductItem:sequence}">
-        {$ProductItem:item.discount_percent}%
-        </td>
-        <td class="{$ProductItem:sequence}">
-        {$ProductItem:item.total_price_ex_vat|l10n(currency)}
-        </td>
-        <td class="{$ProductItem:sequence}">
-        {$ProductItem:item.total_price_inc_vat|l10n(currency)}
-        </td>
-        <td>
-        <input type="checkbox" name="RemoveProductItemDeleteList[]" value="{$ProductItem:item.id}" />
-        </td>
+	</td>
+	<td class="{$ProductItem:sequence}">
+	{$ProductItem:item.vat_value}%
+	</td>
+	<td class="{$ProductItem:sequence}">
+	{$ProductItem:item.price_ex_vat|l10n(currency)}
+	</td>
+	<td class="{$ProductItem:sequence}">
+	{$ProductItem:item.price_inc_vat|l10n(currency)}
+	</td>
+	<td class="{$ProductItem:sequence}">
+	{$ProductItem:item.discount_percent}%
+	</td>
+	<td class="{$ProductItem:sequence}">
+	{$ProductItem:item.total_price_ex_vat|l10n(currency)}
+	</td>
+	<td class="{$ProductItem:sequence}">
+	{$ProductItem:item.total_price_inc_vat|l10n(currency)}
+	</td>
+	<td>
+	<input type="checkbox" name="RemoveProductItemDeleteList[]" value="{$ProductItem:item.id}" />
+	</td>
 </tr>
 
 {section show=$ProductItem:item.item_object.option_list}

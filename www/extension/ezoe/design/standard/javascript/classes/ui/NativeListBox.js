@@ -1,8 +1,11 @@
 /**
- * $Id$
+ * NativeListBox.js
  *
- * @author Moxiecode
- * @copyright Copyright � 2004-2008, Moxiecode Systems AB, All rights reserved.
+ * Copyright 2009, Moxiecode Systems AB
+ * Released under LGPL License.
+ *
+ * License: http://tinymce.moxiecode.com/license
+ * Contributing: http://tinymce.moxiecode.com/contributing
  */
 
 (function(tinymce) {
@@ -134,7 +137,7 @@
                  * @method getLength
                  */
                 getLength : function() {
-                        return DOM.get(this.id).options.length - 1;
+                        return this.items.length;
                 },
 
                 /**

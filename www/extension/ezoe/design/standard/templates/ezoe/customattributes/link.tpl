@@ -39,17 +39,17 @@ eZOEPopupUtils.settings.onInitDoneArray.push( function( editorElement )
         var lid = ezoeLinkAttribute.id, input = document.getElementById( lid+'_source' );
         if ( this.value === 'ezobject://' )
         {
-                input.value = this.value + ezoeLinkAttribute.node['contentobject_id'];
+        	input.value = this.value + ezoeLinkAttribute.node['contentobject_id'];
             ezoeLinkAttribute.namePreview( ezoeLinkAttribute.node['name'] );
         }
         else if ( this.value === 'eznode://' )
         {
-                input.value = this.value + ezoeLinkAttribute.node['node_id'];
+        	input.value = this.value + ezoeLinkAttribute.node['node_id'];
             ezoeLinkAttribute.namePreview( ezoeLinkAttribute.node['name'] );
         }
         else
         {
-                input.value = this.value;
+        	input.value = this.value;
             ezoeLinkAttribute.namePreview( undefined );
         }
     });
@@ -68,7 +68,7 @@ eZOEPopupUtils.settings.onInitDoneArray.push( function( editorElement )
 
         if ( this.value.indexOf( '://' ) === -1 ) return true;
 
-        var url = this.value.split('://'), id = ez.num( url[1], 0, 'int' );
+        var url = this.value.split('://'), id = eZOEPopupUtils.Int( url[1] );
 
         if ( id === 0 || ( url[0] !== 'eznode' && url[0] !== 'ezobject' ) ) return true;
 
@@ -78,7 +78,7 @@ eZOEPopupUtils.settings.onInitDoneArray.push( function( editorElement )
 
     if ( inp.val().indexOf( '://' ) !== -1 )
     {
-        var url = inp.val().split('://'), id = ez.num( url[1], 0, 'int' );
+        var url = inp.val().split('://'), id = eZOEPopupUtils.Int( url[1] );
         if ( id !== 0 && ( url[0] === 'eznode' || url[0] === 'ezobject' ) )
             ezoeLinkAttribute.ajaxCheck( url[0] + '_' + id );
     }
@@ -117,7 +117,7 @@ eZOEPopupUtils.selectByEmbedId = function( object_id, node_id, name )
     if ( drop.val() === 'ezobject://' )
         inp.val( 'ezobject://' + object_id );
     else
-        inp.val( 'eznode://' + node_id );
+    	inp.val( 'eznode://' + node_id );
     ezoeLinkAttribute.typeSet( inp, drop );
     ezoeLinkAttribute.namePreview( name, info );
     ezoeLinkAttribute.slides.accordionGoto.call( ezoeLinkAttribute.slides, 0 );

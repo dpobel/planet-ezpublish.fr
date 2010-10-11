@@ -7,14 +7,14 @@
 {* Messages *}
 {if $sessions_removed}
     {if $gc_sessions_completed}
-                <div class="message-feedback">
-                    <h2><span class="time">[{currentdate()|l10n( shortdatetime )}]</span> {"The sessions were successfully removed."|i18n( "design/admin/setup/session" )}</h2>
-                </div>
+		<div class="message-feedback">
+		    <h2><span class="time">[{currentdate()|l10n( shortdatetime )}]</span> {"The sessions were successfully removed."|i18n( "design/admin/setup/session" )}</h2>
+		</div>
     {else}
       <div class="message-warning">
             <h2><span class="time">[{currentdate()|l10n( shortdatetime )}]</span> {"Not all timed out sessions were successfully removed."|i18n( "design/admin/setup/session" )}</h2>
             <p>
-                {"The operation were cut short in order to avoid execution timeout."|i18n( "design/admin/setup/session" )}<br />
+                {"The operation was cut short in order to avoid execution timeout."|i18n( "design/admin/setup/session" )}<br />
                 {"Your alternatives are to:"|i18n( "design/admin/setup/session" )}
             </p>
             <ul>

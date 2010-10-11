@@ -6,25 +6,23 @@
 //
 // ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.3.0
+// SOFTWARE RELEASE: 4.4.0
 // COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
 //   modify it under the terms of version 2.0  of the GNU General
 //   Public License as published by the Free Software Foundation.
-//
+// 
 //   This program is distributed in the hope that it will be useful,
-//   but WITHOUT ANY WARRANTY; without even the implied warranty of
+//    but WITHOUT ANY WARRANTY; without even the implied warranty of
 //   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //   GNU General Public License for more details.
-//
+// 
 //   You should have received a copy of version 2.0 of the GNU General
 //   Public License along with this program; if not, write to the Free
 //   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 //   MA 02110-1301, USA.
-//
-//
 // ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
@@ -62,13 +60,13 @@ class eZDFSFileHandlerMySQLBackend
      **/
     public function _connect()
     {
+        $siteINI = eZINI::instance( 'site.ini' );
         // DB Connection setup
         // This part is not actually required since _connect will only be called
         // once, but it is useful to run the unit tests. So be it.
         // @todo refactor this using eZINI::setVariable in unit tests
         if ( self::$dbparams === null )
         {
-            $siteINI = eZINI::instance( 'site.ini' );
             $fileINI = eZINI::instance( 'file.ini' );
 
             self::$dbparams = array();
@@ -111,6 +109,20 @@ class eZDFSFileHandlerMySQLBackend
         if ( $this->dfsbackend === null )
         {
             $this->dfsbackend = new eZDFSFileHandlerDFSBackend();
+        }
+
+        $charset = trim( $siteINI->variable( 'DatabaseSettings', 'Charset' ) );
+        if ( $charset === '' )
+        {
+            $charset = eZTextCodec::internalCharset();
+        }
+
+        if ( $charset )
+        {
+            if ( !mysql_query( "SET NAMES '" . eZMySQLCharset::mapTo( $charset ) . "'", $this->db ) )
+            {
+                $this->_fail( "Failed to set Database charset to $charset." );
+            }
         }
     }
 
@@ -1647,20 +1659,20 @@ class eZDFSFileHandlerMySQLBackend
     }
 
     /**
-     * Returns the list of expired binary files (images + binaries)
-     * 
+     * Returns the list of expired files
+     *
      * @param array $scopes Array of scopes to consider. At least one.
      * @param int $limit Max number of items. Set to false for unlimited.
-     * 
+     *
      * @return array(filepath)
-     * 
+     *
      * @since 4.3
      */
     public function expiredFilesList( $scopes, $limit = array( 0, 100 ) )
     {
         if ( count( $scopes ) == 0 )
             throw new ezcBaseValueException( 'scopes', $scopes, "array of scopes", "parameter" );
-        
+
         $scopeString = $this->_sqlList( $scopes );
         $query = "SELECT name FROM " . self::TABLE_METADATA . " WHERE expired = 1 AND scope IN( $scopeString )";
         if ( $limit !== false )

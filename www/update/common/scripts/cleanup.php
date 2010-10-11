@@ -5,25 +5,23 @@
 //
 // ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.3.0
+// SOFTWARE RELEASE: 4.4.0
 // COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
 //   modify it under the terms of version 2.0  of the GNU General
 //   Public License as published by the Free Software Foundation.
-//
+// 
 //   This program is distributed in the hope that it will be useful,
-//   but WITHOUT ANY WARRANTY; without even the implied warranty of
+//    but WITHOUT ANY WARRANTY; without even the implied warranty of
 //   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //   GNU General Public License for more details.
-//
+// 
 //   You should have received a copy of version 2.0 of the GNU General
 //   Public License along with this program; if not, write to the Free
 //   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 //   MA 02110-1301, USA.
-//
-//
 // ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
@@ -164,16 +162,30 @@ $db->setIsSQLOutputEnabled( $showSQL );
 
 if ( $clean['session'] )
 {
-    $cli->output( "Removing all sessions" );
-    eZSession::cleanup();
+    if ( !eZSession::getHandlerInstance()->usesDatabaseTable() )
+    {
+        $cli->output( "Could not remove sessions, current session handler does not support session cleanup (not backend based)." );
+    }
+    else
+    {
+        $cli->output( "Removing all sessions" );
+        eZSession::cleanup();
+    }
 }
 
 if ( $clean['expired_session'] )
 {
-    $cli->output( "Removing expired sessions,", false );
-    eZSession::garbageCollector();
-    $activeCount = eZSession::countActive();
-    $cli->output( " " . $cli->stylize( 'emphasize', $activeCount ) . " left" );
+    if ( !eZSession::getHandlerInstance()->usesDatabaseTable() )
+    {
+        $cli->output( "Could not remove expired sessions, current session handler does not support session garbage collection (not backend based)." );
+    }
+    else
+    {
+        $cli->output( "Removing expired sessions,", false );
+        eZSession::garbageCollector();
+        $activeCount = eZSession::countActive();
+        $cli->output( " " . $cli->stylize( 'emphasize', $activeCount ) . " left" );
+    }
 }
 
 if ( $clean['preferences'] )

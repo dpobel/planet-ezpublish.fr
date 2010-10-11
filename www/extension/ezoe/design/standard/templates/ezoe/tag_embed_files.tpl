@@ -21,7 +21,7 @@ tinyMCEPopup.onInit.add( eZOEPopupUtils.BIND( eZOEPopupUtils.init, window, {
     tagName: 'embed',
     form: 'EditForm',
     cancelButton: 'CancelButton',
-    cssClass: compatibilityMode !== 'enabled' ? 'mceNonEditable mceItemContentTypeFiles' : '',
+    cssClass: compatibilityMode !== 'enabled' ? 'ezoeItemNonEditable ezoeItemContentTypeFiles' : '',
     onInitDone: function( el, tag, ed )
     {        
         var selectors = ez.$('embed_size_source', 'embed_align_source', 'embed_class_source', 'embed_view_source', 'embed_inline_source');
@@ -31,7 +31,7 @@ tinyMCEPopup.onInit.add( eZOEPopupUtils.BIND( eZOEPopupUtils.init, window, {
         var align = el ? el.getAttribute('align') || '' : def['align']  || '';
         if ( align === 'center' ) align = 'middle';
 
-        ez.$('embed_preview').addClass('object_preview float-break').setStyles( ez.ie56 ? {'margin': '0 5px 5px 5px'} : {});
+        jQuery('#embed_preview').addClass('object_preview float-break').css( eZOEPopupUtils.ie56 ? {'margin': '0 5px 5px 5px'} : {});
         selectors[1].el.value = align;
         selectors.callEach('addEvent', 'change', loadEmbedPreview );
 
@@ -46,7 +46,7 @@ tinyMCEPopup.onInit.add( eZOEPopupUtils.BIND( eZOEPopupUtils.init, window, {
     tagGenerator: function( tag, customTag )
     {
         if ( contentType === 'images' || compatibilityMode === 'enabled' )
-            return '<img id="__mce_tmp" src="javascript:void(0);" />';
+            return '<img id="__mce_tmp" src="JavaScript:void(0);" />';
         if ( jQuery('#embed_inline_source').attr( 'checked' ) )
            return '<span id="__mce_tmp"></span>';
         return '<div id="__mce_tmp"></div>';
@@ -67,7 +67,7 @@ tinyMCEPopup.onInit.add( eZOEPopupUtils.BIND( eZOEPopupUtils.init, window, {
         && edBody.childNodes.length <= (jQuery.inArray( el, edBody.childNodes ) +1) )
         {
             var p = doc.createElement('p');
-            p.innerHTML = ed.isIE ? '&nbsp;' : '<br />';
+            p.innerHTML = ed.isIE ? '&nbsp;' : '<br \/>';
             edBody.appendChild( p );
         }
     },
@@ -87,6 +87,7 @@ tinyMCEPopup.onInit.add( eZOEPopupUtils.BIND( eZOEPopupUtils.init, window, {
         }
         args['title']   = eZOEPopupUtils.safeHtml( eZOEPopupUtils.embedObject['name'] );
         ed.dom.setAttribs( el, args );
+        return el;
     }
 }));
 
@@ -110,7 +111,7 @@ function inlineSelectorChange( e, el )
     if ( editorEl )
     {
         var viewValue = editorEl.getAttribute('view');
-        var classValue = jQuery.trim( editorEl.className.replace(/(webkit-[\w\-]+|Apple-[\w\-]+|mceItem\w+|mceVisualAid|mceNonEditable)/g, '') );
+        var classValue = jQuery.trim( editorEl.className.replace(/(webkit-[\w\-]+|Apple-[\w\-]+|mceItem\w+|ezoeItem\w+|mceVisualAid)/g, '') );
     }
 
     if ( viewValue && viewListData[ tag ].join !== undefined && (' ' + viewListData[ tag ].join(' ') + ' ').indexOf( ' ' + viewValue + ' ' ) !== -1 )
@@ -136,12 +137,11 @@ function setEmbedAlign( e, el )
 function loadEmbedPreview( )
 {
     // Dynamically loads embed preview when attributes change
-    // global objects: ez         
     var url = tinyMCEPopup.editor.settings.ez_extension_url + '/embed_view/' + eZOEPopupUtils.embedObject['contentobject_id'];
     var postData = jQuery('#embed_attributes input, #embed_attributes select').serialize();
-    eZOEPopupUtils.ajax.load( url, postData, function( r )
+    jQuery.post( url, postData, function( data )
     {
-        jQuery('#embed_preview').html( r.responseText );
+        jQuery('#embed_preview').html( data );
     });
 }
 

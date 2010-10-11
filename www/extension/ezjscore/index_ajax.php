@@ -2,25 +2,23 @@
 //
 // ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ JSCore
-// SOFTWARE RELEASE: 4.3.0
+// SOFTWARE RELEASE: 4.4.0
 // COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
 //   modify it under the terms of version 2.0  of the GNU General
 //   Public License as published by the Free Software Foundation.
-//
+// 
 //   This program is distributed in the hope that it will be useful,
-//   but WITHOUT ANY WARRANTY; without even the implied warranty of
+//    but WITHOUT ANY WARRANTY; without even the implied warranty of
 //   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //   GNU General Public License for more details.
-//
+// 
 //   You should have received a copy of version 2.0 of the GNU General
 //   Public License along with this program; if not, write to the Free
 //   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 //   MA 02110-1301, USA.
-//
-//
 // ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
@@ -32,7 +30,6 @@ if ( !ini_get( 'date.timezone' ) )
 }
 
 require 'autoload.php';
-include_once( 'lib/ezutils/classes/ezsession.php' );
 include_once( 'kernel/common/ezincludefunctions.php' );
 
 // Tweaks ini filetime checks if not defined!
@@ -115,8 +112,10 @@ error_reporting ( E_ALL );
     - http://www.php.net/manual/en/function.session-set-save-handler.php
     - http://bugs.php.net/bug.php?id=33635
     - http://bugs.php.net/bug.php?id=33772
+   Only needed on 4.0, 4.1+ handles this in eZExecution
 */
-register_shutdown_function( 'session_write_close' );
+if ( !class_exists( 'eZSession' ) )
+    register_shutdown_function( 'eZSessionStop' );
 
 // register fatal error & debug handler
 eZExecution::addFatalErrorHandler( 'eZFatalError' );
@@ -155,8 +154,8 @@ $access = accessType( $uri,
                       eZSys::indexFile() );
 $access = changeAccess( $access );
 
-// Check for new extension loaded by siteaccess ( disabled for performance reasons )
-//eZExtension::activateExtensions( 'access' );
+// Check for new extension loaded by siteaccess
+eZExtension::activateExtensions( 'access' );
 
 // check module name
 $moduleName = $uri->element();
@@ -168,7 +167,7 @@ if ( strpos( $moduleName, 'index.php' ) !== false  )
 
 if ( $moduleName === '' )
 {
-    exitWithInternalError( 'Did not find module info in url. (165)' );
+    exitWithInternalError( 'Did not find module info in url. (171)' );
 }
 
 // check db connection
@@ -176,9 +175,14 @@ $db = eZDB::instance();
 if ( $db->isConnected() )
 {
     if ( class_exists( 'eZSession' ) )
+    {
         eZSession::start();
+    }
     else
+    {
+        include_once( 'lib/ezutils/classes/ezsession.php' );
         eZSessionStart();
+    }
 }
 else
 {

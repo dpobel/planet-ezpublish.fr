@@ -4,34 +4,30 @@
 //
 // ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.3.0
+// SOFTWARE RELEASE: 4.4.0
 // COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
 //   modify it under the terms of version 2.0  of the GNU General
 //   Public License as published by the Free Software Foundation.
-//
+// 
 //   This program is distributed in the hope that it will be useful,
-//   but WITHOUT ANY WARRANTY; without even the implied warranty of
+//    but WITHOUT ANY WARRANTY; without even the implied warranty of
 //   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //   GNU General Public License for more details.
-//
+// 
 //   You should have received a copy of version 2.0 of the GNU General
 //   Public License along with this program; if not, write to the Free
 //   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 //   MA 02110-1301, USA.
-//
-//
 // ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
 
+$tpl    = eZTemplate::factory();
+$http   = eZHTTPTool::instance();
 
-$tpl = eZTemplate::factory();
-$http = eZHTTPTool::instance();
-
-$browse = new eZContentBrowse();
 
 $Offset = $Params['Offset'];
 
@@ -39,6 +35,25 @@ if ( !is_numeric( $Offset ) )
     $Offset = 0;
 
 $parents = array();
+
+// Make sure user has session (if not, then this can't possible be a valid browse request)
+if ( !eZSession::userHasSessionCookie() )
+{
+    return $Module->handleError( eZError::KERNEL_ACCESS_DENIED, 'kernel' );
+}
+
+// Check that Browse parameters exists
+if ( !$http->hasSessionVariable( 'BrowseParameters' ) )
+{
+    return $Module->handleError( eZError::KERNEL_NOT_FOUND, 'kernel' );
+}
+
+// Check if node parameters exist
+$browse = new eZContentBrowse();
+if ( !isset( $Params['NodeID'] ) && !isset( $Params['NodeList'] ) && !$browse->hasAttribute( 'start_node' ) )
+{
+    return $Module->handleError( eZError::KERNEL_NOT_FOUND, 'kernel' );
+}
 
 // We get node list when browse is execiuted from search engine ( "search in browse" functionality )
 if ( isset( $Params['NodeList'] ) )
@@ -96,6 +111,7 @@ if ( $cancelAction == trim( $browse->attribute( 'from_page' ) ) )
     $cancelAction = false;
 }
 
+//setting keys for override
 $res = eZTemplateDesignResource::instance();
 
 $keyArray = array();
@@ -151,10 +167,6 @@ if (isset( $GLOBALS['eZDesignKeys']['section'] ))
     $globalSectionID = $GLOBALS['eZDesignKeys']['section'];
     unset($GLOBALS['eZDesignKeys']['section']);
 }
-
-
-//setting keys for override
-$res = eZTemplateDesignResource::instance();
 
 $Result = array();
 $Result['view_parameters'] = $viewParameters;

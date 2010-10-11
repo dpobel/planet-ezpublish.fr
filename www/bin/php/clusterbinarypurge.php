@@ -3,7 +3,7 @@
  * Cluster binary files purge script
  *
  * @copyright Copyright (C) 1999-2010 eZ Systems AS. All rights reserved.
- * @license http://ez.no/licenses/gnu_gpl GNU GPLv2
+ * @license http://ez.no/licenses/gnu_gpl GNU General Public License v2.0
  */
 
 require 'autoload.php';
@@ -46,14 +46,14 @@ if ( $options['iteration-sleep'] )
     $purgeHandler->optIterationSleep = (int)( $options['iteration-sleep'] * 1000000 );
 }
 
-if ( $options['iteration-max'] )
+if ( $options['iteration-limit'] )
 {
     $purgeHandler->optIterationLimit = (int)$options['iteration-limit'];
 }
 
 if ( $options['memory-monitoring'] )
 {
-    $purgeHandler->opt = true;
+    $purgeHandler->optMemoryMonitoring = true;
 }
 
 $purgeHandler->run();

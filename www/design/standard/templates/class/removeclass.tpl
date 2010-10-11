@@ -18,7 +18,7 @@
 
 <ul>
 {section name=Result loop=$DeleteResult}
-        <li>{"Removing class %1 will remove %2!"|i18n("design/standard/class/edit",,array($Result:item.className|wash,$Result:item.objectCount))}</li>
+	<li>{"Removing class %1 will remove %2!"|i18n("design/standard/class/edit",,array($Result:item.className|wash,$Result:item.objectCount))}</li>
 {/section}
 </ul>
 </div>

@@ -6,25 +6,23 @@
 //
 // ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.3.0
+// SOFTWARE RELEASE: 4.4.0
 // COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
 //   modify it under the terms of version 2.0  of the GNU General
 //   Public License as published by the Free Software Foundation.
-//
+// 
 //   This program is distributed in the hope that it will be useful,
-//   but WITHOUT ANY WARRANTY; without even the implied warranty of
+//    but WITHOUT ANY WARRANTY; without even the implied warranty of
 //   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //   GNU General Public License for more details.
-//
+// 
 //   You should have received a copy of version 2.0 of the GNU General
 //   Public License along with this program; if not, write to the Free
 //   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 //   MA 02110-1301, USA.
-//
-//
 // ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
@@ -93,12 +91,13 @@ class eZDFSFileHandler implements eZClusterFileHandlerInterface
         {
             $filePath = eZDBFileHandler::cleanPath( $filePath );
             eZDebugSetting::writeDebug( 'kernel-clustering', "dfs::ctor( '$filePath' )" );
-            $this->filePath = $filePath;
         }
         else
         {
             eZDebugSetting::writeDebug( 'kernel-clustering', "dfs::ctor()" );
         }
+
+        $this->filePath = $filePath;
     }
 
     /**
@@ -816,6 +815,7 @@ class eZDFSFileHandler implements eZClusterFileHandlerInterface
         {
             eZDebugSetting::writeDebug( 'kernel-clustering',
                 "Not storing this cache", __METHOD__ );
+            $this->abortCacheGeneration();
             return $result;
         }
 
@@ -1284,6 +1284,7 @@ class eZDFSFileHandler implements eZClusterFileHandlerInterface
         // generation granted
         if ( $ret['result'] == 'ok' )
         {
+            eZClusterFileHandler::addGeneratingFile( $this );
             $this->realFilePath = $this->filePath;
             $this->filePath = $generatingFilePath;
             $this->generationStartTimestamp = $ret['mtime'];
@@ -1312,6 +1313,7 @@ class eZDFSFileHandler implements eZClusterFileHandlerInterface
         {
             $this->filePath = $this->realFilePath;
             $this->realFilePath = null;
+            eZClusterFileHandler::removeGeneratingFile( $this );
             return true;
         }
         else
@@ -1332,6 +1334,7 @@ class eZDFSFileHandler implements eZClusterFileHandlerInterface
         self::$dbbackend->_abortCacheGeneration( $this->filePath );
         $this->filePath = $this->realFilePath;
         $this->realFilePath = null;
+        eZClusterFileHandler::removeGeneratingFile( $this );
     }
 
     /**
@@ -1402,7 +1405,7 @@ class eZDFSFileHandler implements eZClusterFileHandlerInterface
      * eZDFS does require binary purge.
      * It does store files in DB + on NFS, and therefore doesn't remove files
      * in real time
-     * 
+     *
      * @since 4.3
      */
     public function requiresBinaryPurge()
@@ -1412,9 +1415,9 @@ class eZDFSFileHandler implements eZClusterFileHandlerInterface
 
     /**
      * Fetches the first $limit expired binary items from the DB
-     * 
+     *
      * @param array $limit A 2 items array( offset, limit )
-     * 
+     *
      * @return array(filepath)
      * @since 4.3.0
      */

@@ -6,30 +6,28 @@
 //
 // ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ JSCore extension for eZ Publish
-// SOFTWARE RELEASE: 4.3.0
+// SOFTWARE RELEASE: 4.4.0
 // COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
 //   modify it under the terms of version 2.0  of the GNU General
 //   Public License as published by the Free Software Foundation.
-//
+// 
 //   This program is distributed in the hope that it will be useful,
-//   but WITHOUT ANY WARRANTY; without even the implied warranty of
+//    but WITHOUT ANY WARRANTY; without even the implied warranty of
 //   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //   GNU General Public License for more details.
-//
+// 
 //   You should have received a copy of version 2.0 of the GNU General
 //   Public License along with this program; if not, write to the Free
 //   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 //   MA 02110-1301, USA.
-//
-//
 // ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
 /*
-  Perfoms calls to custom functions or templates depending on arguments and ini settings 
+  Perfoms calls to custom functions or templates depending on arguments and ini settings
 */
 
 
@@ -58,10 +56,10 @@ class ezjscServerRouter
      */
     public static function getInstance( $arguments, $requireIniGroupe = true, $checkFunctionExistence = false )
     {
-        if ( !is_array( $arguments ) || count( $arguments ) < 2 )
+        if ( !is_array( $arguments ) || !isset( $arguments[1] ) )
         {
-            // returns null if argumenst are invalid
-            return null;   
+            // return null if arguments are invalid
+            return null;
         }
 
         $className = $callClassName = array_shift( $arguments );
@@ -73,7 +71,7 @@ class ezjscServerRouter
 
         if ( $ezjscoreIni->hasGroup( 'ezjscServer_' . $callClassName ) )
         {
-           // load file if defined, else use autoload 
+           // load file if defined, else use autoload
            if ( $ezjscoreIni->hasVariable( 'ezjscServer_' . $callClassName, 'File' ) )
                 include_once( $ezjscoreIni->variable( 'ezjscServer_' . $callClassName, 'File' ) );
 
@@ -94,7 +92,7 @@ class ezjscServerRouter
         }
         else if ( $requireIniGroupe )
         {
-            // return null if ini is not defined as a safty messure
+            // return null if ini is not defined as a safety measure
             // to avoid letting user call all eZ Publish classes
             return null;
         }
@@ -171,7 +169,7 @@ class ezjscServerRouter
             }
             $limitationList[] = $permissionName;
         }
-        return ezjscAccessTemplateFunctions::hasAccessToLimitation( 'ezjscore', 'call', array( 'FunctionList', $limitationList ) );
+        return ezjscAccessTemplateFunctions::hasAccessToLimitation( 'ezjscore', 'call', array( 'FunctionList' => $limitationList ) );
     }
 
     /**
@@ -193,7 +191,7 @@ class ezjscServerRouter
     {
         if ( $isTemplateFunction )
         {
-            return true;//todo: find a way to look for templates
+            return true;//@todo: find a way to look for templates
         }
         else
         {
@@ -222,7 +220,7 @@ class ezjscServerRouter
             return call_user_func_array( array( $this->className, $this->functionName ), array( $this->functionArguments, &$environmentArguments, $isPackeStage ) );
         }
     }
-    
+
 }
 
 ?>

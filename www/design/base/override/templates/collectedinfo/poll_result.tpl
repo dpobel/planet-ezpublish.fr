@@ -23,8 +23,8 @@
 
         {section loop=$object.contentobject_attributes}
             {section show=$:item.contentclass_attribute.is_information_collector}
-                {let  attribute=$:item
-                      contentobject_attribute_id=cond( $attribute|get_class|eq( 'ezinformationcollectionattribute' ),$attribute.contentobject_attribute_id,
+        	{let  attribute=$:item
+        	      contentobject_attribute_id=cond( $attribute|get_class|eq( 'ezinformationcollectionattribute' ),$attribute.contentobject_attribute_id,
                                                    $attribute|get_class|eq( 'ezcontentobjectattribute' ),$attribute.id )
                   contentobject_attribute=cond( $attribute|get_class|eq( 'ezinformationcollectionattribute' ),$attribute.contentobject_attribute,
                                                 $attribute|get_class|eq( 'ezcontentobjectattribute' ),$attribute )

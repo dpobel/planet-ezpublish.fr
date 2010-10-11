@@ -6,25 +6,23 @@
 //
 // ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.3.0
+// SOFTWARE RELEASE: 4.4.0
 // COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
 //   modify it under the terms of version 2.0  of the GNU General
 //   Public License as published by the Free Software Foundation.
-//
+// 
 //   This program is distributed in the hope that it will be useful,
-//   but WITHOUT ANY WARRANTY; without even the implied warranty of
+//    but WITHOUT ANY WARRANTY; without even the implied warranty of
 //   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //   GNU General Public License for more details.
-//
+// 
 //   You should have received a copy of version 2.0 of the GNU General
 //   Public License along with this program; if not, write to the Free
 //   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 //   MA 02110-1301, USA.
-//
-//
 // ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
@@ -321,13 +319,7 @@ class eZTemplateDesignResource extends eZTemplateFileResource
         else
         {
             $template = "/" . $path;
-            // TODO add correct memory cache
-//            $matchFileArray = false;
-            if ( empty( $GLOBALS['eZTemplateOverrideArray_' . $this->OverrideSiteAccess] ) )
-            {
-                $GLOBALS['eZTemplateOverrideArray_' . $this->OverrideSiteAccess] = eZTemplateDesignResource::overrideArray( $this->OverrideSiteAccess );
-            }
-            $matchFileArray = $GLOBALS['eZTemplateOverrideArray_' . $this->OverrideSiteAccess];
+            $matchFileArray = eZTemplateDesignResource::overrideArray( $this->OverrideSiteAccess );
 
             $matchFile = $matchFileArray[$template];
 
@@ -596,15 +588,13 @@ class eZTemplateDesignResource extends eZTemplateFileResource
         if ( $siteAccess )
         {
             // Get the design resources
-            $ini = eZINI::instance( 'site.ini', 'settings', null, null, true );
-            $ini->prependOverrideDir( "siteaccess/$siteAccess", false, 'siteaccess' );
-            eZExtension::prependExtensionSiteAccesses( $siteAccess, $ini, false, 'siteaccess' );
-            $ini->loadCache();
+            $ini = eZSiteAccess::getIni( $siteAccess, 'site.ini' );
 
             $overrideINI = eZINI::instance( 'override.ini', 'settings', null, null, true );
-            $overrideINI->prependOverrideDir( "siteaccess/$siteAccess", false, 'siteaccess' );
-            eZExtension::prependExtensionSiteAccesses( $siteAccess, $overrideINI, false, 'siteaccess', false );
-            $overrideINI->loadCache();
+
+            // overwrite overrideDirs from siteIni instance
+            $overrideINI->setOverrideDirs( $ini->overrideDirs( false ) );
+            $overrideINI->load();
 
             $standardBase = $ini->variable( "DesignSettings", "StandardDesign" );
             $keys[] = "siteaccess/$siteAccess";
@@ -617,17 +607,13 @@ class eZTemplateDesignResource extends eZTemplateFileResource
             $ini = eZINI::instance();
             if ( $this->OverrideSiteAccess != false )
             {
-                $overrideINI = eZINI::instance( 'override.ini', 'settings', null, null, true );
-                eZExtension::prependExtensionSiteAccesses( $siteAccess, $overrideINI, false, 'siteaccess' );
-                $overrideINI->prependOverrideDir( "siteaccess/$this->OverrideSiteAccess", false, 'siteaccess', false );
-                $overrideINI->loadCache();
+                $overrideINI = eZSiteAccess::getIni( $siteAccess, 'override.ini' );
                 $keys[] = "siteaccess/$this->OverrideSiteAccess";
             }
             else
             {
                 $overrideINI = eZINI::instance( 'override.ini' );
-                $currentAccess = $GLOBALS['eZCurrentAccess'];
-                $siteAccess = $currentAccess['name'];
+                $siteAccess = $GLOBALS['eZCurrentAccess']['name'];
                 $keys[] = "siteaccess/$siteAccess";
             }
 
@@ -766,10 +752,7 @@ class eZTemplateDesignResource extends eZTemplateFileResource
     {
         if( $siteAccess )
         {
-            $ini = eZINI::instance( 'site.ini', 'settings', null, null, true );
-            $ini->prependOverrideDir( "siteaccess/$siteAccess", false, 'siteaccess' );
-            eZExtension::prependExtensionSiteAccesses( $siteAccess, $ini, false, 'siteaccess' );
-            $ini->loadCache();
+            $ini = eZSiteAccess::getIni( $siteAccess, 'site.ini' );
 
             $standardDesign = $ini->variable( 'DesignSettings', 'StandardDesign' );
             $siteDesign     = $ini->variable( 'DesignSettings', 'SiteDesign' );
@@ -872,16 +855,13 @@ class eZTemplateDesignResource extends eZTemplateFileResource
         {
             return self::$overrideArrayCache;
         }
-        
+
         $bases = eZTemplateDesignResource::allDesignBases( $siteAccess );
 
         // fetch the override array from a specific siteacces
         if ( $siteAccess )
         {
-            $overrideINI = eZINI::instance( 'override.ini', 'settings', null, null, true );
-            $overrideINI->prependOverrideDir( "siteaccess/$siteAccess", false, 'siteaccess' );
-            eZExtension::prependExtensionSiteAccesses( $siteAccess, $overrideINI, false, 'siteaccess', false );
-            $overrideINI->loadCache();
+            $overrideINI = eZSiteAccess::getIni( $siteAccess, 'override.ini' );
         }
         else
         {
@@ -977,6 +957,19 @@ class eZTemplateDesignResource extends eZTemplateFileResource
     static public function clearInMemoryOverrideArray( )
     {
         self::$overrideArrayCache = null;
+        unset( $GLOBALS['eZOverrideTemplateCacheMap'] );
+    }
+
+    /**
+     * Clear in memory cache (design settings and override cache)
+     *
+     * @static
+     * @since 4.4
+     */
+    static public function clearInMemoryCache( )
+    {
+        $GLOBALS['eZTemplateDesignSetting'] = array();
+        self::clearInMemoryOverrideArray();
     }
 
     /*!

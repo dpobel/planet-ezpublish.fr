@@ -62,17 +62,17 @@
                                                 hash( access, $browse.permission.access,
                                                       contentobject, $main_node ) ) ) ),
                                $browse.ignore_nodes_select|contains( $main_node.node_id )|not() )}
-              {if is_array($browse.class_array)}
-                {if $browse.class_array|contains($main_node.object.content_class.identifier)}
-                  <input type="{$select_type}" name="{$select_name}[]" value="{$main_node[$select_attribute]}" {if eq($browse.selection,'single')}checked="checked"{/if} />
-                {else}
-                    &nbsp;
-                {/if}
-              {else}
-                <input type="{$select_type}" name="{$select_name}[]" value="{$main_node[$select_attribute]}" {if eq($browse.selection,'single')}checked="checked"{/if} />
-              {/if}
-            {else}
-                &nbsp;
+	      {if is_array($browse.class_array)}
+	        {if $browse.class_array|contains($main_node.object.content_class.identifier)}
+		  <input type="{$select_type}" name="{$select_name}[]" value="{$main_node[$select_attribute]}" {if eq($browse.selection,'single')}checked="checked"{/if} />
+		{else}
+		    &nbsp;
+		{/if}
+	      {else}
+	        <input type="{$select_type}" name="{$select_name}[]" value="{$main_node[$select_attribute]}" {if eq($browse.selection,'single')}checked="checked"{/if} />
+	      {/if}
+	    {else}
+	        &nbsp;
             {/if}
             </td>
 
@@ -339,15 +339,15 @@
         </tr>
         <tr class="bgdark">
         <td colspan="2" align="left">
-        <select name="ClassID" class="classcreate">
-            {section name=Classes loop=$main_node.object.can_create_class_list}
-            <option value="{$Classes:item.id}">{$Classes:item.name}</option>
-            {/section}
-        </select>
-        <input class="menubutton" type="submit" name="NewButton" value="{'New'|i18n('design/standard/content/browse')}" />
-        <input class="menubutton" type="hidden" name="RedirectURIAfterPublish" value="/content/browse/" />
-        <input class="menubutton" type="hidden" name="NodeID" value="{$main_node.node_id}" />
-        </td>
+	<select	name="ClassID" class="classcreate">
+	    {section name=Classes loop=$main_node.object.can_create_class_list}
+	    <option value="{$Classes:item.id}">{$Classes:item.name}</option>
+	    {/section}
+	</select>
+	<input class="menubutton" type="submit" name="NewButton" value="{'New'|i18n('design/standard/content/browse')}" />
+	<input class="menubutton" type="hidden" name="RedirectURIAfterPublish" value="/content/browse/" />
+	<input class="menubutton" type="hidden" name="NodeID" value="{$main_node.node_id}" />
+	</td>
         </tr>
 </table>
 </form>

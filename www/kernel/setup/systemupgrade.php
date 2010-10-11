@@ -4,32 +4,28 @@
 //
 // ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.3.0
+// SOFTWARE RELEASE: 4.4.0
 // COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
 //   modify it under the terms of version 2.0  of the GNU General
 //   Public License as published by the Free Software Foundation.
-//
+// 
 //   This program is distributed in the hope that it will be useful,
-//   but WITHOUT ANY WARRANTY; without even the implied warranty of
+//    but WITHOUT ANY WARRANTY; without even the implied warranty of
 //   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //   GNU General Public License for more details.
-//
+// 
 //   You should have received a copy of version 2.0 of the GNU General
 //   Public License along with this program; if not, write to the Free
 //   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 //   MA 02110-1301, USA.
-//
-//
 // ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
 $Module = $Params['Module'];
 
-
-define( 'MD5_SUM_LIST_FILE', 'share/filelist.md5' );
 
 $tpl = eZTemplate::factory();
 
@@ -38,17 +34,27 @@ $tpl->setVariable( 'upgrade_sql', false );
 
 if ( $Module->isCurrentAction( 'MD5Check' ) )
 {
-    if ( !file_exists( MD5_SUM_LIST_FILE ) )
+    if ( !file_exists( eZMD5::CHECK_SUM_LIST_FILE ) )
     {
         $tpl->setVariable( 'md5_result', 'failed' );
         $tpl->setVariable( 'failure_reason',
                            ezpI18n::tr( 'kernel/setup', 'File %1 does not exist. '.
                                     'You should copy it from the recent eZ Publish distribution.',
-                                    null, array( MD5_SUM_LIST_FILE ) ) );
+                                    null, array( eZMD5::CHECK_SUM_LIST_FILE ) ) );
     }
     else
     {
-        $checkResult = eZMD5::checkMD5Sums( 'share/filelist.md5' );
+        $checkResult = eZMD5::checkMD5Sums( eZMD5::CHECK_SUM_LIST_FILE );
+
+        $extensionsDir = eZExtension::baseDirectory();
+        foreach( eZextension::activeExtensions() as $activeExtension )
+        {
+            $extensionPath = "$extensionsDir/$activeExtension/";
+            if ( file_exists( $extensionPath . eZMD5::CHECK_SUM_LIST_FILE ) )
+            {
+                $checkResult = array_merge( $checkResult, eZMD5::checkMD5Sums( $extensionPath . eZMD5::CHECK_SUM_LIST_FILE, $extensionPath ) );
+            }
+        }
 
         if ( count( $checkResult ) == 0 )
         {
@@ -70,7 +76,7 @@ if ( $Module->isCurrentAction( 'DBCheck' ) )
 
     // merge schemas from all active extensions that declare some db schema
     $extensionsdir = eZExtension::baseDirectory();
-    foreach( eZextension::activeExtensions() as $activeextension )
+    foreach( eZExtension::activeExtensions() as $activeextension )
     {
         if ( file_exists( $extensionsdir . '/' . $activeextension . '/share/db_schema.dba' ) )
         {

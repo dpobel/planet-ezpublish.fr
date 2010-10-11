@@ -6,11 +6,11 @@
     {if and( ne( $ui_context, 'edit' ), ne( $ui_context, 'browse' ) )}
         <h4>{'Clear cache'|i18n( 'design/admin/pagelayout' )}</h4>
     {else}
-            {if eq( $ui_context, 'edit' )}
-               <h4><span class="disabled">{'Clear cache'|i18n( 'design/admin/pagelayout' )}</span></h4>
-            {else}
-               <h4>{'Clear cache'|i18n( 'design/admin/pagelayout' )}</h4>
-            {/if}
+	    {if eq( $ui_context, 'edit' )}
+	       <h4><span class="disabled">{'Clear cache'|i18n( 'design/admin/pagelayout' )}</span></h4>
+	    {else}
+	       <h4>{'Clear cache'|i18n( 'design/admin/pagelayout' )}</h4>
+	    {/if}
     {/if}
     
 {* DESIGN: Header END *}</div></div>

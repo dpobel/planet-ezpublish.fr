@@ -12,12 +12,12 @@ function checkAll()
         document.fullview.selectall.value = "{'Deselect all'|i18n('design/standard/node/view')}";
 {literal}
         with (document.fullview)
-        {
+	{
             for (var i=0; i < elements.length; i++)
-            {
+	    {
                 if (elements[i].type == 'checkbox' && elements[i].name == 'DeleteIDArray[]')
                      elements[i].checked = true;
-            }
+	    }
         }
      }
      else
@@ -26,12 +26,12 @@ function checkAll()
          document.fullview.selectall.value = "{'Select all'|i18n('design/standard/node/view')}";
 {literal}
          with (document.fullview)
-         {
+	 {
             for (var i=0; i < elements.length; i++)
-            {
+	    {
                 if (elements[i].type == 'checkbox' && elements[i].name == 'DeleteIDArray[]')
                      elements[i].checked = false;
-            }
+	    }
          }
      }
 }
@@ -42,7 +42,7 @@ function checkAll()
 {* Default object admin view template *}
 {default with_children=true()
          is_editable=true()
-         is_standalone=true()}
+	 is_standalone=true()}
 {let page_limit=15
      list_count=and($with_children,fetch('content','list_count',hash(parent_node_id,$node.node_id,depth_operator,eq)))}
 {default content_object=$node.object
@@ -71,7 +71,7 @@ function checkAll()
     {section name=ContentObjectAttribute loop=$content_version.contentobject_attributes}
     <div class="block">
         <label>{$ContentObjectAttribute:item.contentclass_attribute.name|wash}</label>
-        <p class="box">{attribute_view_gui attribute=$ContentObjectAttribute:item}</p>
+    	<p class="box">{attribute_view_gui attribute=$ContentObjectAttribute:item}</p>
     </div>
     {/section}
 
@@ -121,9 +121,9 @@ function checkAll()
 {section show=$content_object.can_create}
          <input type="hidden" name="NodeID" value="{$node.node_id}" />
          <select name="ClassID">
-              {section name=Classes loop=$content_object.can_create_class_list}
-              <option value="{$:item.id}">{$:item.name|wash}</option>
-              {/section}
+	      {section name=Classes loop=$content_object.can_create_class_list}
+	      <option value="{$:item.id}">{$:item.name|wash}</option>
+	      {/section}
          </select>
          <input class="button" type="submit" name="NewButton" value="{'Create here'|i18n('design/standard/node/view')}" />
 {/section}
@@ -194,27 +194,27 @@ function checkAll()
 {section loop=$:children sequence=array(bglight,bgdark)}
 <tr class="{$Child:sequence}">
         {if $:can_remove}
-        <td align="right" width="1">
-        {if $:item.object.can_remove}
+	<td align="right" width="1">
+	{if $:item.object.can_remove}
              <input type="checkbox" name="DeleteIDArray[]" value="{$Child:item.node_id}" />
         {/if}
-        </td>
+	</td>
         {/if}
-        <td>
+	<td>
         <a href={$:item.url_alias|ezurl}>{node_view_gui view=line content_node=$:item}</a>
-        </td>
+	</td>
     <td>
         {$Child:item.object.class_name|wash}
-        </td>
+	</td>
     <td>
         {$Child:item.object.section_id}
-        </td>
-        {if eq($node.sort_array[0][0],'priority')}
-        <td width="40" align="left">
-            <input type="text" name="Priority[]" size="2" value="{$Child:item.priority}">
+	</td>
+	{if eq($node.sort_array[0][0],'priority')}
+	<td width="40" align="left">
+	    <input type="text" name="Priority[]" size="2" value="{$Child:item.priority}">
         <input type="hidden" name="PriorityID[]" value="{$Child:item.node_id}">
-        </td>
-        {/if}
+	</td>
+	{/if}
 
         {if $:can_edit}
             <td width="1">
@@ -245,7 +245,7 @@ function checkAll()
     {if $:can_remove}
     {if $list_count}
             <input type="submit" name="RemoveButton" value="{'Remove'|i18n('design/standard/node/view')}" />
-                <input name="selectall" onclick=checkAll() type="button" value="{'Select all'|i18n('design/standard/node/view')}">
+		<input name="selectall" onclick=checkAll() type="button" value="{'Select all'|i18n('design/standard/node/view')}">
     {/if}
     {/if}
 

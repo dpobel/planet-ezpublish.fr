@@ -12,9 +12,9 @@
 
     <td>
          <select name="ClassID">
-              {section name=Classes loop=$classlist}
-              <option value="{$Classes:item.id}">{$Classes:item.name}</option>
-              {/section}
+	      {section name=Classes loop=$classlist}
+	      <option value="{$Classes:item.id}">{$Classes:item.name}</option>
+	      {/section}
          </select>
      </td>
      <td>

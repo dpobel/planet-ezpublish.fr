@@ -9,9 +9,9 @@
     {section name=ContentObjectAttribute loop=$object.contentobject_attributes}
 
     <tr>
-        <td>
-        <i>{$ContentObjectAttribute:item.contentclass_attribute.name|wash}</i>
-        </td>
+	<td>
+	<i>{$ContentObjectAttribute:item.contentclass_attribute.name|wash}</i>
+	</td>
     </tr>
     <tr><td>
 
@@ -31,9 +31,9 @@
         <table width="100%" cellspacing="0">
         {section name=Object loop=$related sequence=array(bglight,bgdark)}
         <tr>
-          <td class="{$Object:sequence}">
+    	  <td class="{$Object:sequence}">
             {content_view_gui view=line content_object=$Object:item}
-          </td>
+    	  </td>
         </tr>
         {section-else}
         <tr>

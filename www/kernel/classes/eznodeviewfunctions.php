@@ -6,25 +6,23 @@
 //
 // ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.3.0
+// SOFTWARE RELEASE: 4.4.0
 // COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
 //   modify it under the terms of version 2.0  of the GNU General
 //   Public License as published by the Free Software Foundation.
-//
+// 
 //   This program is distributed in the hope that it will be useful,
-//   but WITHOUT ANY WARRANTY; without even the implied warranty of
+//    but WITHOUT ANY WARRANTY; without even the implied warranty of
 //   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //   GNU General Public License for more details.
-//
+// 
 //   You should have received a copy of version 2.0 of the GNU General
 //   Public License along with this program; if not, write to the Free
 //   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 //   MA 02110-1301, USA.
-//
-//
 // ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
@@ -83,13 +81,17 @@ class eZNodeviewfunctions
                                           $viewParameters = array( 'offset' => 0, 'year' => false, 'month' => false, 'day' => false ),
                                           $collectionAttributes = false, $validation = false )
     {
-        eZSection::setGlobalID( $object->attribute( 'section_id' ) );
-
         $section = eZSection::fetch( $object->attribute( 'section_id' ) );
         if ( $section )
+        {
             $navigationPartIdentifier = $section->attribute( 'navigation_part_identifier' );
+            $sectionIdentifier = $section->attribute( 'identifier' );
+        }
         else
+        {
             $navigationPartIdentifier = null;
+            $sectionIdentifier = null;
+        }
 
         $keyArray = array( array( 'object', $object->attribute( 'id' ) ),
                            array( 'node', $node->attribute( 'node_id' ) ),
@@ -105,7 +107,9 @@ class eZNodeviewfunctions
                            array( 'url_alias', $node->attribute( 'url_alias' ) ),
                            array( 'class_group', $object->attribute( 'match_ingroup_id_list' ) ),
                            array( 'state', $object->attribute( 'state_id_array' ) ),
-                           array( 'state_identifier', $object->attribute( 'state_identifier_array' ) ) );
+                           array( 'state_identifier', $object->attribute( 'state_identifier_array' ) ),
+                           array( 'section', $object->attribute( 'section_id' ) ),
+                           array( 'section_identifier', $sectionIdentifier ) );
 
         $parentClassID = false;
         $parentClassIdentifier = false;
@@ -295,10 +299,10 @@ class eZNodeviewfunctions
 
         $cacheHashArray[] = eZSys::indexFile();
 
-        // add access type to cache hash if current access is uri type (so uri and host doesn't share cache)
-        if ( strpos( $viewCacheTweak, 'ignore_siteaccess_type' ) === false && $GLOBALS['eZCurrentAccess']['type'] === EZ_ACCESS_TYPE_URI )
+        // Add access type to cache hash if current access is uri type (so uri and host doesn't share cache)
+        if ( strpos( $viewCacheTweak, 'ignore_siteaccess_type' ) === false && $GLOBALS['eZCurrentAccess']['type'] === eZSiteAccess::TYPE_URI )
         {
-            $cacheHashArray[] = EZ_ACCESS_TYPE_URI;
+            $cacheHashArray[] = eZSiteAccess::TYPE_URI;
         }
 
         // Make the cache unique for every logged in user
@@ -432,16 +436,14 @@ class eZNodeviewfunctions
                                    array( 'parent_class_id', $Result['content_info']['parent_class_id'] ),
                                    array( 'parent_class_identifier', $Result['content_info']['parent_class_identifier'] ),
                                    array( 'state', $Result['content_info']['state'] ),
-                                   array( 'state_identifier', $Result['content_info']['state_identifier'] ) );
+                                   array( 'state_identifier', $Result['content_info']['state_identifier'] ),
+                                   array( 'section', $Result['section_id'] ) );
 
                 if ( isset( $Result['content_info']['class_identifier'] ) )
                     $keyArray[] = array( 'class_identifier', $Result['content_info']['class_identifier'] );
 
                 $res = eZTemplateDesignResource::instance();
                 $res->setKeys( $keyArray );
-
-                // set section id
-                eZSection::setGlobalID( $Result['section_id'] );
 
                 return $Result;
             }

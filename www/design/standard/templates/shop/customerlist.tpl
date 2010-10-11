@@ -7,18 +7,18 @@
 {section show=$customer_list}
 <table class="list" width="100%" cellspacing="0" cellpadding="0" border="0">
 <tr>
-        <th>
-        {"Customer"|i18n("design/standard/shop")}
-        </th>
-        <th>
-        {"Number of orders"|i18n("design/standard/shop")}
-        </th>
-        <th>
-        {"Total ex. VAT"|i18n("design/standard/shop")}
-        </th>
-        <th>
-        {"Total inc. VAT"|i18n("design/standard/shop")}
-        </th>
+	<th>
+	{"Customer"|i18n("design/standard/shop")}
+	</th>
+	<th>
+	{"Number of orders"|i18n("design/standard/shop")}
+	</th>
+	<th>
+	{"Total ex. VAT"|i18n("design/standard/shop")}
+	</th>
+	<th>
+	{"Total inc. VAT"|i18n("design/standard/shop")}
+	</th>
 </tr>
 
 {def $currency = false()

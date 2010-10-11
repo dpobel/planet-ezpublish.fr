@@ -11,10 +11,10 @@
     <p>
     {section name=Handlers loop=$handlers}
         {*Handler: {$Handlers:item.name}*}
-        {if  not( $Handlers:item.id_string|eq("ezcollaboration") ) }
-                {include handler=$Handlers:item uri=concat( "design:notification/handler/",$Handlers:item.id_string,"/settings/edit.tpl")}
-                {delimiter}<br/>{/delimiter}
-        {/if}
+	{if  not( $Handlers:item.id_string|eq("ezcollaboration") ) }
+		{include handler=$Handlers:item uri=concat( "design:notification/handler/",$Handlers:item.id_string,"/settings/edit.tpl")}
+		{delimiter}<br/>{/delimiter}
+	{/if}
     {/section}
     </p>
 {/let}

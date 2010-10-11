@@ -4,25 +4,23 @@
 //
 // ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Online Editor extension for eZ Publish
-// SOFTWARE RELEASE: 4.3.0
+// SOFTWARE RELEASE: 4.4.0
 // COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
 //   modify it under the terms of version 2.0  of the GNU General
 //   Public License as published by the Free Software Foundation.
-//
+// 
 //   This program is distributed in the hope that it will be useful,
-//   but WITHOUT ANY WARRANTY; without even the implied warranty of
+//    but WITHOUT ANY WARRANTY; without even the implied warranty of
 //   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //   GNU General Public License for more details.
-//
+// 
 //   You should have received a copy of version 2.0 of the GNU General
 //   Public License along with this program; if not, write to the Free
 //   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 //   MA 02110-1301, USA.
-//
-//
 // ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
@@ -40,7 +38,6 @@ class ezoeServerFunctions extends ezjscServerFunctions
      * i18n
      * Provides all i18n strings for use by TinyMCE and other javascript dialogs.
      * 
-     * @static
      * @param array $args
      * @param string $fileExtension
      * @return string returns json string with translation data
@@ -121,7 +118,7 @@ class ezoeServerFunctions extends ezjscServerFunctions
             'nonbreaking' => array(
                 'nonbreaking_desc' => ezi18n( 'design/standard/ezoe', "Insert non-breaking space character")
             ),
-            /*'iespell' => array(
+            'iespell' => array(
                 'iespell_desc' => ezi18n( 'design/standard/ezoe', "Run spell checking"),
                 'download' => ezi18n( 'design/standard/ezoe', "ieSpell not detected. Do you want to install it now?")
             ),
@@ -130,7 +127,27 @@ class ezoeServerFunctions extends ezjscServerFunctions
             ),
             'emotions' => array(
                 'emotions_desc' => ezi18n( 'design/standard/ezoe', "Emotions")
-            ),*/
+            ),
+            'emotions_dlg' => array(
+                'title' => ezi18n( 'design/standard/ezoe', "Insert emotion"),
+                'desc' => ezi18n( 'design/standard/ezoe', "Emotions"),
+                'cool' => ezi18n( 'design/standard/ezoe', "Cool"),
+                'cry' => ezi18n( 'design/standard/ezoe', "Cry"),
+                'embarassed' => ezi18n( 'design/standard/ezoe', "Embarassed"),
+                'foot_in_mouth' => ezi18n( 'design/standard/ezoe', "Foot in mouth"),
+                'frown' => ezi18n( 'design/standard/ezoe', "Frown"),
+                'innocent' => ezi18n( 'design/standard/ezoe', "Innocent"),
+                'kiss' => ezi18n( 'design/standard/ezoe', "Kiss"),
+                'laughing' => ezi18n( 'design/standard/ezoe', "Laughing"),
+                'money_mouth' => ezi18n( 'design/standard/ezoe', "Money mouth"),
+                'sealed' => ezi18n( 'design/standard/ezoe', "Sealed"),
+                'smile' => ezi18n( 'design/standard/ezoe', "Smile"),
+                'surprised' => ezi18n( 'design/standard/ezoe', "Surprised"),
+                'tongue_out' => ezi18n( 'design/standard/ezoe', "Tongue out"),
+                'undecided' => ezi18n( 'design/standard/ezoe', "Undecided"),
+                'wink' => ezi18n( 'design/standard/ezoe', "Wink"),
+                'yell' => ezi18n( 'design/standard/ezoe', "Yell"),
+            ),
             'searchreplace' => array(
                 'search_desc' => ezi18n( 'design/standard/ezoe', "Find"),
                 'replace_desc' => ezi18n( 'design/standard/ezoe', "Find/Replace")
@@ -155,7 +172,9 @@ class ezoeServerFunctions extends ezjscServerFunctions
             'paste' => array(
                 'paste_text_desc' => ezi18n( 'design/standard/ezoe', "Paste as Plain Text"),
                 'paste_word_desc' => ezi18n( 'design/standard/ezoe', "Paste from Word"),
-                'selectall_desc' => ezi18n( 'design/standard/ezoe', "Select All")
+                'selectall_desc' => ezi18n( 'design/standard/ezoe', "Select All"),
+                'plaintext_mode_sticky' => ezi18n( 'design/standard/ezoe', "Paste is now in plain text mode. Click again to toggle back to regular paste mode. After you paste something you will be returned to regular paste mode."),
+                'plaintext_mode' => ezi18n( 'design/standard/ezoe', "Paste is now in plain text mode. Click again to toggle back to regular paste mode."),
             ),
             'paste_dlg' => array(
                 'text_title' => ezi18n( 'design/standard/ezoe', "Use CTRL+V on your keyboard to paste the text into the window."),
@@ -271,7 +290,7 @@ class ezoeServerFunctions extends ezjscServerFunctions
                 'code_desc' => ezi18n( 'design/standard/ezoe', "Edit HTML Source"),
                 'sub_desc' => ezi18n( 'design/standard/ezoe', "Subscript"),
                 'sup_desc' => ezi18n( 'design/standard/ezoe', "Superscript"),
-                //'hr_desc' => ezi18n( 'design/standard/ezoe', "Insert horizontal ruler"),
+                'hr_desc' => ezi18n( 'design/standard/ezoe', "Insert horizontal ruler"),
                 'removeformat_desc' => ezi18n( 'design/standard/ezoe', "Remove formatting"),
                 'custom1_desc' => ezi18n( 'design/standard/ezoe', "Your custom description here"),
                 //'forecolor_desc' => ezi18n( 'design/standard/ezoe', "Select text color"),
@@ -372,6 +391,141 @@ class ezoeServerFunctions extends ezjscServerFunctions
         $i18nString = json_encode( $i18nArray );
 
         return 'tinyMCE.addI18n( ' . $i18nString . ' );';
+    }
+
+    /**
+     * Gets current users bookmarks by offset and limit
+     * 
+     * @param array $args  0 => offset:0, 1 => limit:10
+     * @return hash
+    */
+    public static function bookmarks( $args )
+    {
+        $offset = (int) isset( $args[0] ) ? $args[0] : 0;
+        $limit  = (int) isset( $args[1] ) ? $args[1] : 10;
+        $http   = eZHTTPTool::instance();
+        $user   = eZUser::currentUser();
+        $sort   = 'desc';
+
+        if ( !$user instanceOf eZUser )
+        {
+            throw new ezcBaseFunctionalityNotSupportedException( 'Bookmarks retrival', 'current user object is not of type eZUser' );
+        }
+
+        $userID = $user->attribute('contentobject_id');
+        if ( $http->hasPostVariable( 'SortBy' ) && $http->postVariable( 'SortBy' ) !== 'asc' )
+        {
+            $sort = 'asc';
+        }
+
+        // fetch bookmarks
+        $count = eZPersistentObject::count( eZContentBrowseBookmark::definition(), array( 'user_id' => $userID ) );
+        if ( $count )
+        {
+            $objectList = eZPersistentObject::fetchObjectList( eZContentBrowseBookmark::definition(),
+                                                            null,
+                                                            array( 'user_id' => $userID ),
+                                                            array( 'id' => $sort ),
+                                                            array( 'offset' => $offset, 'length' => $limit ),
+                                                            true );
+        }
+        else
+        {
+            $objectList = false;
+        }
+
+        // Simplify node list so it can be encoded
+        if ( $objectList )
+        {
+            $list = ezjscAjaxContent::nodeEncode( $objectList, array( 'loadImages' => true, 'fetchNodeFunction' => 'fetchNode', 'fetchChildrenCount' => true ), 'raw' );
+        }
+        else
+        {
+            $list = array();
+        }
+
+        return array(
+            'list' => $list,
+            'count' => count( $objectList ),
+            'total_count' => (int) $count,
+            'offset' => $offset,
+            'limit' => $limit,
+        );
+    }
+
+    /**
+     * Gets current users bookmarks by offset and limit
+     * 
+     * @param array $args  0 => node id:1, 1 => offset:0, 2 => limit:10
+     * @return hash
+    */
+    public static function browse( $args )
+    {
+        $nodeID = (int) isset( $args[0] ) ? $args[0] : 1;
+        $offset = (int) isset( $args[1] ) ? $args[1] : 0;
+        $limit  = (int) isset( $args[2] ) ? $args[2] : 10;
+        $http   = eZHTTPTool::instance();
+
+        if ( !$nodeID )
+        {
+            throw new ezcBaseFunctionalityNotSupportedException( 'Browse node list', 'Parent node id is not valid' );
+        }
+
+        $node = eZContentObjectTreeNode::fetch( $nodeID );
+        if ( !$node instanceOf eZContentObjectTreeNode )
+        {
+            throw new ezcBaseFunctionalityNotSupportedException( 'Browse node list', "Parent node '$nodeID' is not valid" );
+        }
+
+        $params = array( 'Depth' => 1,
+                'Limit'            => $limit,
+                'Offset'           => $offset,
+                'SortBy'           => $node->attribute( 'sort_array' ),
+                'DepthOperator'    => 'eq',
+                'AsObject'         => true
+        );
+
+        // Look for some (class filter and sort by) post params to use as fetch params
+        if ( $http->hasPostVariable( 'ClassFilterArray' ) && $http->postVariable( 'ClassFilterArray' ) !== '' )
+        {
+            $params['ClassFilterType']  = 'include';
+            $params['ClassFilterArray'] = $http->postVariable( 'ClassFilterArray' );
+        }
+
+        if ( $http->hasPostVariable( 'SortBy' ) && $http->postVariable( 'SortBy' ) !== '' )
+        {
+            $params['SortBy'] = $http->postVariable( 'SortBy' );
+        }
+
+        // fetch nodes and total node count
+        $count = $node->subTreeCount( $params );
+        if ( $count )
+        {
+            $nodeArray = $node->subTree( $params );
+        }
+        else
+        {
+            $nodeArray = false;
+        }
+
+        // generate json response from node list
+        if ( $nodeArray )
+        {
+            $list = ezjscAjaxContent::nodeEncode( $nodeArray, array( 'fetchChildrenCount' => true, 'loadImages' => true ), 'raw' );
+        }
+        else
+        {
+            $list = array();
+        }
+
+        return array(
+            'list' => $list,
+            'count' => count( $nodeArray ),
+            'total_count' => (int) $count,
+            'node' => ezjscAjaxContent::nodeEncode( $node, array('fetchPath' => true ), 'raw' ),
+            'offset' => $offset,
+            'limit' => $limit,
+        );
     }
 
     /**

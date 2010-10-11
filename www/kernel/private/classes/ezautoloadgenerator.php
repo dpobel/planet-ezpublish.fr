@@ -3,8 +3,8 @@
  * File containing the eZAutoloadGenerator class.
  *
  * @copyright Copyright (C) 1999-2010 eZ Systems AS. All rights reserved.
- * @license http://ez.no/licenses/gnu_gpl GNU GPL v2
- * @version 4.3.0
+ * @license http://ez.no/licenses/gnu_gpl GNU General Public License v2.0
+ * @version 4.4.0
  * @package kernel
  */
 
@@ -719,8 +719,8 @@ class eZAutoloadGenerator
  * Autoloader definition for eZ Publish $description files.
  *
  * @copyright Copyright (C) 1999-2010 eZ Systems AS. All rights reserved.
- * @license http://ez.no/licenses/gnu_gpl GNU GPL v2
- * @version 4.3.0
+ * @license http://ez.no/licenses/gnu_gpl GNU General Public License v2.0
+ * @version 4.4.0
  * @package kernel
  *
  */
@@ -741,6 +741,7 @@ ENDL;
     );
 
 ?>
+
 END;
     }
 

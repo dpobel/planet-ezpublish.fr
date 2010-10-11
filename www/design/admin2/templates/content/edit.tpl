@@ -157,14 +157,14 @@ jQuery(function( $ )//called on document.ready
     var docScrollTop = 0, el = $('#editform input:text:enabled:first');
 
     if ( document.body.scrollTop !== undefined ) 
-        docScrollTop = document.body.scrollTop;// DOM compliant
+    	docScrollTop = document.body.scrollTop;// DOM compliant
     else if ( document.documentElement.scrollTop  !== undefined )
-        docScrollTop = document.documentElement.scrollTop;// IE6 standards mode;
+    	docScrollTop = document.documentElement.scrollTop;// IE6 standards mode;
 
     // Do not set focus if user has scrolled
     if ( docScrollTop < 10 )
     {
-        window.scrollTo(0, Math.max( el.offset().top - 180, 0 ));
+    	window.scrollTo(0, Math.max( el.offset().top - 180, 0 ));
         el.focus();
     }
 });

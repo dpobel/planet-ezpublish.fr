@@ -13,9 +13,6 @@
         <td><p><b>{'Version'|i18n('design/standard/setup','eZ Publish version')}</b></p></td><td><p>{$ezpublish_version}</p></td>
     </tr>
     <tr>
-        <td><p><b>{'SVN revision'|i18n('design/standard/setup','eZ Publish version')}</b></p></td><td><p>{$ezpublish_revision}</p></td>
-    </tr>
-    <tr>
         <td><p><b>{'Extensions'|i18n('design/standard/setup','eZ Publish extensions')}</b></p></td>
         <td>
             <p>
@@ -136,29 +133,29 @@
     <table width="500">
     <tr>
         <td width="1"><p><b>{'Type'|i18n('design/standard/setup','Database type')}</b></p></td>
-                <td><p>{$database_info}</p></td>
+		<td><p>{$database_info}</p></td>
     </tr>
     <tr>
         <td width="1"><p><b>{'Server'|i18n('design/standard/setup','Database server')}</b></p></td>
-                <td><p>{$database_object.database_server}</p></td>
+		<td><p>{$database_object.database_server}</p></td>
     </tr>
-        {if $database_object.database_socket_path}
+	{if $database_object.database_socket_path}
     <tr>
         <td width="1"><p><b>{'Socket path'|i18n('design/standard/setup','Database socket path')}</b></p></td>
-                <td><p>{$database_object.database_socket_path}</p></td>
+		<td><p>{$database_object.database_socket_path}</p></td>
     </tr>
-        {/if}
+	{/if}
     <tr>
         <td width="1"><p><b>{'Database'|i18n('design/standard/setup','Database name')}</b></p></td>
-                <td><p>{$database_object.database_name}</p></td>
+		<td><p>{$database_object.database_name}</p></td>
     </tr>
     <tr>
         <td width="1"><p><b>{'Connection retry count'|i18n('design/standard/setup','Database retry count')}</b></p></td>
-                <td><p>{$database_object.retry_count}</p></td>
+		<td><p>{$database_object.retry_count}</p></td>
     </tr>
     <tr>
         <td width="1"><p><b>{'Charset'|i18n('design/standard/setup','Database charset')}</b></p></td>
-                <td><p>{$database_charset|wash}{if $database_object.is_internal_charset} ({'Internal'|i18n('design/standard/setup')}){/if}</p></td>
+		<td><p>{$database_charset|wash}{if $database_object.is_internal_charset} ({'Internal'|i18n('design/standard/setup')}){/if}</p></td>
     </tr>
     </table>
 </div>
@@ -171,11 +168,11 @@
     <table width="500">
     <tr>
         <td width="1"><p><b>{'CPU'|i18n('design/standard/setup','Database type')}</b></p></td>
-                <td><p>{$system_info.cpu_type} {$system_info.cpu_speed} {$system_info.cpu_unit}</p></td>
+		<td><p>{$system_info.cpu_type} {$system_info.cpu_speed} {$system_info.cpu_unit}</p></td>
     </tr>
     <tr>
         <td width="1"><p><b>{'Memory'|i18n('design/standard/setup','Database server')}</b></p></td>
-                <td><p>{$system_info.memory_size|si( byte )}</p></td>
+		<td><p>{$system_info.memory_size|si( byte )}</p></td>
     </tr>
     </table>
     {else}
@@ -191,13 +188,13 @@
     <table width="500">
     <tr>
         <td width="1"><p><b>{'Server'|i18n('design/standard/setup','Database server')}</b></p></td>
-                <td><p>{$database_object.slave_database_server}</p></td>
+		<td><p>{$database_object.slave_database_server}</p></td>
     </tr>
     <tr>
         <td width="1"><p><b>{'Database'|i18n('design/standard/setup','Database name')}</b></p></td>
-                <td><p>{$database_object.slave_database_name}</p></td>
+		<td><p>{$database_object.slave_database_name}</p></td>
     </tr>
-        </table>
+	</table>
 </div>
 {/if}
 

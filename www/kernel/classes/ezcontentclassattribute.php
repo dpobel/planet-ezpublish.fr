@@ -6,25 +6,23 @@
 //
 // ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.3.0
+// SOFTWARE RELEASE: 4.4.0
 // COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
 //   modify it under the terms of version 2.0  of the GNU General
 //   Public License as published by the Free Software Foundation.
-//
+// 
 //   This program is distributed in the hope that it will be useful,
-//   but WITHOUT ANY WARRANTY; without even the implied warranty of
+//    but WITHOUT ANY WARRANTY; without even the implied warranty of
 //   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //   GNU General Public License for more details.
-//
+// 
 //   You should have received a copy of version 2.0 of the GNU General
 //   Public License along with this program; if not, write to the Free
 //   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 //   MA 02110-1301, USA.
-//
-//
 // ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
@@ -62,6 +60,21 @@ class eZContentClassAttribute extends eZPersistentObject
             $this->DataTextI18nList->initFromSerializedList( $row['serialized_data_text'] );
         else
             $this->DataTextI18nList->initDefault();
+
+        // Make sure datatype gets final say if attribute should be translatable
+        if ( isset( $row['can_translate'] ) && $row['can_translate'] )
+        {
+            $datatype = $this->dataType();
+            if ( $datatype instanceof eZDataType )
+            {
+                if ( !$datatype->isTranslatable() )
+                    $this->setAttribute('can_translate', 0);
+            }
+            else
+            {
+                eZDebug::writeError( 'Could not get instance of datatype: ' . $row['data_type_string'], __METHOD__ );
+            }
+        }
     }
 
     static function definition()
@@ -321,7 +334,7 @@ class eZContentClassAttribute extends eZPersistentObject
 
     /**
      * Store the content class in the specified version status.
-     * 
+     *
      * @note Transaction unsafe. If you call several transaction unsafe methods you must enclose
      *       the calls within a db transaction; thus within db->begin and db->commit.
      *
@@ -696,7 +709,7 @@ class eZContentClassAttribute extends eZPersistentObject
 
     /**
      * Returns name from serialized string, can be used for serialized description and data_text as well.
-     * 
+     *
      * @param string $serializedNameList
      * @param string|false $languageLocale Uses AlwaysAvailable language if false
      * @return string
@@ -708,7 +721,7 @@ class eZContentClassAttribute extends eZPersistentObject
 
     /**
      * Returns name of attribute based on serialized_name_list
-     * 
+     *
      * @param string|false $languageLocale Uses AlwaysAvailable language if false
      * @return string
      */
@@ -719,7 +732,7 @@ class eZContentClassAttribute extends eZPersistentObject
 
     /**
      * Sets name of attribute, store() will take care of writing back to serialized_name_list
-     * 
+     *
      * @param string $name
      * @param string|false $languageLocale Uses AlwaysAvailable language if false
      * @return string Return old value
@@ -731,7 +744,7 @@ class eZContentClassAttribute extends eZPersistentObject
 
     /**
      * Returns name list for all locales for attribute
-     * 
+     *
      * @return array
      */
     function nameList()
@@ -741,7 +754,7 @@ class eZContentClassAttribute extends eZPersistentObject
 
     /**
      * Returns description of attribute based on serialized_description_list
-     * 
+     *
      * @param string|false $languageLocale Uses AlwaysAvailable language if false
      * @return string
      */
@@ -752,7 +765,7 @@ class eZContentClassAttribute extends eZPersistentObject
 
     /**
      * Sets description of attribute, store() will take care of writing back to serialized_description_list
-     * 
+     *
      * @param string $description
      * @param string|false $languageLocale Uses AlwaysAvailable language if false
      * @return string Return old value
@@ -764,7 +777,7 @@ class eZContentClassAttribute extends eZPersistentObject
 
     /**
      * Returns description list for all locales for attribute
-     * 
+     *
      * @return array
      */
     function descriptionList()
@@ -774,7 +787,7 @@ class eZContentClassAttribute extends eZPersistentObject
 
     /**
      * Returns data_text_i18n of attribute based on serialized_data_text
-     * 
+     *
      * @param string|false $languageLocale Uses AlwaysAvailable language if false
      * @return string
      */
@@ -785,7 +798,7 @@ class eZContentClassAttribute extends eZPersistentObject
 
     /**
      * Sets data_text_i18n of attribute, store() will take care of writing back to serialized_data_text
-     * 
+     *
      * @param string $string
      * @param string|false $languageLocale Uses AlwaysAvailable language if false
      * @return string Return old value
@@ -797,7 +810,7 @@ class eZContentClassAttribute extends eZPersistentObject
 
     /**
      * Returns data_text_i18n list for all locales for attribute
-     * 
+     *
      * @return array
      */
     function dataTextI18nList()
@@ -807,7 +820,7 @@ class eZContentClassAttribute extends eZPersistentObject
 
     /**
      * Returns locale code as set with {@link self::setEditLocale()}
-     * 
+     *
      * @return string|false
      */
     function editLocale()
@@ -817,7 +830,7 @@ class eZContentClassAttribute extends eZPersistentObject
 
     /**
      * Sets locale code of attribute for use by datatypes in class/edit storing process.
-     * 
+     *
      * @param string|false $languageLocale Uses AlwaysAvailable language if false
      */
     function setEditLocale( $languageLocale = false )
@@ -827,7 +840,7 @@ class eZContentClassAttribute extends eZPersistentObject
 
     /**
      * Specify AlwaysAvailableLanguage (for name, description or data_text_i18n)
-     * 
+     *
      * @param string|false $languageLocale
      */
     function setAlwaysAvailableLanguage( $languageLocale )
@@ -848,7 +861,7 @@ class eZContentClassAttribute extends eZPersistentObject
 
     /**
      * Removes an translation (as in the serilized strings for name, description or data_text_i18n)
-     * 
+     *
      * @param string $languageLocale
      */
     function removeTranslation( $languageLocale )

@@ -6,25 +6,23 @@
 //
 // ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.3.0
+// SOFTWARE RELEASE: 4.4.0
 // COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
 //   modify it under the terms of version 2.0  of the GNU General
 //   Public License as published by the Free Software Foundation.
-//
+// 
 //   This program is distributed in the hope that it will be useful,
-//   but WITHOUT ANY WARRANTY; without even the implied warranty of
+//    but WITHOUT ANY WARRANTY; without even the implied warranty of
 //   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //   GNU General Public License for more details.
-//
+// 
 //   You should have received a copy of version 2.0 of the GNU General
 //   Public License along with this program; if not, write to the Free
 //   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 //   MA 02110-1301, USA.
-//
-//
 // ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
@@ -197,7 +195,7 @@ class eZHTTPTool
             return $_GET;
         if ( $attr == "session" )
         {
-            return $_SESSION;
+            return eZSession::get();
         }
         $retValue = null;
         return $retValue;
@@ -215,34 +213,38 @@ class eZHTTPTool
         {
             $GLOBALS["eZHTTPToolInstance"] = new eZHTTPTool();
             $GLOBALS["eZHTTPToolInstance"]->createPostVarsFromImageButtons();
-            eZSession::start();
         }
 
         return $GLOBALS["eZHTTPToolInstance"];
     }
 
-    /*!
-     \static
-
-     Sends a http request to the specified host. Using https:// requires PHP 4.3.0, and compiled in OpenSSL support.
-
-     \param uri http/https address, only path to send request to eZ Publish.
-            examples: http://ez.no, https://secure.ez.no, ssl://secure.ez.no, content/view/full/2
-     \param port which port to connect to, default 80
-     \param postParameters post parameters array (optional), if no post parameters are present, a get request will be send.
-     \param userAgent user agent, default will be eZ Publish
-     \param passthrough will send result directly to client, default true
-
-     \return result if http request, or return false if an error occurs.
-             If pipetrough, program will end here.
-
+    /**
+     * Sends a http request to the specified host. Using https:// requires compiled in OpenSSL support.
+     *
+     * @param string $uri http/https address or only path to send request to current eZ Publish instance
+     *        examples: http://ez.no, https://secure.ez.no or content/view/full/2
+     * @param int|false $port Which port to connect to, default 80, uses port in $uri if present when $port = false
+     * @param array|false $postParameters Optional post parameters array, if no post parameters are present, a GET request will be sent
+     * @param string $userAgent User agent string, default will be 'eZ Publish'
+     * @param bool $passthrough Will send result directly to client, default: true
+     * @param array $cookies Optional hash of cookie name => values to add to http header
+     * @return string|false String if http request, or false if an error occurs.
+     *         If $passthrough = true, program will end here and send result directly to client.
     */
-    static function sendHTTPRequest( $uri, $port = 80, $postParameters = false, $userAgent = 'eZ Publish', $passthrough = true )
+    static function sendHTTPRequest( $uri, $port = false, $postParameters = false, $userAgent = 'eZ Publish', $passthrough = true, array $cookies = array() )
     {
-        preg_match( "/^((http[s]?:\/\/)([a-zA-Z0-9_.]+))?([\/]?[~]?(\.?[^.]+[~]?)*)/i", $uri, $matches );
+        preg_match( "/^((http[s]?:\/\/)([a-zA-Z0-9_.-]+)(\:(d+))?)?([\/]?[~]?(\.?[^.]+[~]?)*)/i", $uri, $matches );
         $protocol = $matches[2];
-        $host = $matches[3];
-        $path = $matches[4];
+        $host     = $matches[3];
+        $uriPort  = $matches[5];
+        $path     = $matches[6];
+
+        // Use port from uri if  set and port parameter evaluates to false
+        if ( $uriPort && !$port )
+            $port = $uriPort;
+        else if ( !$port )
+            $port = 80;
+
         if ( !$path )
         {
             $path = '/';
@@ -252,22 +254,20 @@ class eZHTTPTool
         if ( $postParameters )
         {
             $method = 'POST';
-            $dataCount = 0;
-            foreach( array_keys( $postParameters ) as $paramName )
+            foreach( $postParameters as $paramName => $paramData )
             {
-                if ( $dataCount > 0 )
+                if ( !is_array( $paramData) )
                 {
-                    $data .= '&';
-                }
-                ++$dataCount;
-                if ( !is_array( $postParameters[$paramName] ) )
-                {
-                    $data .= urlencode( $paramName ) . '=' . urlencode( $postParameters[$paramName] );
+                    if ( $data !== '' )
+                        $data .= '&';
+                    $data .= urlencode( $paramName ) . '=' . urlencode( $paramData );
                 }
                 else
                 {
-                    foreach( $postParameters[$paramName] as $value )
+                    foreach( $paramData as $value )
                     {
+                        if ( $data !== '' )
+                            $data .= '&';
                         $data .= urlencode( $paramName ) . '[]=' . urlencode( $value );
                     }
                 }
@@ -291,7 +291,8 @@ class eZHTTPTool
                 $path = $_SERVER['SCRIPT_NAME'] . $path;
             }
         }
-        else{
+        else
+        {
             if ( !$protocol || $protocol == 'https://' )
             {
                 $filename = 'ssl://' . $host;
@@ -306,7 +307,7 @@ class eZHTTPTool
         $parsedUrl = parse_url( $filename );
         $ip = isset( $parsedUrl[ 'host' ] ) ? gethostbyname( $parsedUrl[ 'host' ] ) : '';
         $checkIP = ip2long( $ip );
-        if ( $checkIP == -1 or $checkIP === false )
+        if ( $checkIP == -1 || $checkIP === false )
         {
             return false;
         }
@@ -320,11 +321,22 @@ class eZHTTPTool
             return false;
         }
 
+        $cookieStr = '';
+        foreach ( $cookies as $name => $value )
+        {
+            if ( $cookieStr === '' )
+                $cookieStr = "Cookie: $name=$value";
+            else
+                $cookieStr .= "; $name=$value";
+        }
+
+        $usePort = ( $port != 80 && $protocol === 'http://' ) && ( $port != 443 && $protocol === 'https://' );
         $request = $method . ' ' . $path . ' ' . 'HTTP/1.1' . "\r\n" .
-             "Host: $host\r\n" .
+             "Host: $host" . ( $usePort ? ":$port": '' ) . "\r\n" .
              "Accept: */*\r\n" .
              "Content-type: application/x-www-form-urlencoded\r\n" .
              "Content-length: " . strlen( $data ) . "\r\n" .
+             $cookieStr .
              "User-Agent: $userAgent\r\n" .
              "Pragma: no-cache\r\n" .
              "Connection: close\r\n\r\n";
@@ -368,7 +380,7 @@ class eZHTTPTool
                 header( $buffer );
             }
 
-            header( 'Content-Location: ' . $uri );
+            header( 'Content-Location: ' . $protocol . $host . ( $usePort ? ":$port": '' ) . $path );
 
             fpassthru( $fp );
             eZExecution::cleanExit();
@@ -706,54 +718,95 @@ class eZHTTPTool
         }
     }
 
-    /*!
-     Sets the session variable $name to value $value.
-    */
+    /**
+     * Return the session id
+     *
+     * @deprecated Since 4.4, use ->sessionID instead!
+     * @return string
+     */
     function getSessionKey()
     {
         return session_id();
     }
 
+    /**
+     * Sets a new session id
+     *
+     * @deprecated Since 4.4, use ->setSessionID instead!
+     * @param string $sessionKey Allowed characters in the range a-z A-Z 0-9 , (comma) and - (minus)
+     * @return string Current(old) session id
+    */
     function setSessionKey( $sessionKey )
     {
         return session_id( $sessionKey );
     }
 
+    /**
+     * Sets the session variable $name to value $value.
+     *
+     * @param string $name
+     * @param mixed $value
+    */
     function setSessionVariable( $name, $value )
     {
-        $_SESSION[$name] =& $value;
+        eZSession::set( $name, $value );
     }
 
-    /*!
-     Removes the session variable $name.
-    */
+    /**
+     * Unset the session variable $name
+     *
+     * @param string $name
+     * @return bool
+     */
     function removeSessionVariable( $name )
     {
-        unset( $_SESSION[$name] );
+        return eZSession::unsetkey( $name );
     }
 
-    /*!
-     \return true if the session variable $name exist.
-    */
-    function hasSessionVariable( $name )
+    /**
+     * Check if session variable $name exists
+     *
+     * @param string $name
+     * @param bool $forceStart Force session start if true (default)
+     * @return bool|null Null if session has not started and $forceStart is false
+     */
+    function hasSessionVariable( $name, $forceStart = true )
     {
-        return isset( $_SESSION[$name] );
+        return eZSession::issetkey( $name, $forceStart );
     }
 
-    /*!
-     \return the session variable $name.
-    */
-    function &sessionVariable( $name )
+    /**
+     * Get session variable $name
+     *
+     * @param string $name
+     * @param mixed $fallbackValue Return this if session has not started OR name is undefined
+     *              if null(default), then force start session and return null if undefined.
+     * @return mixed ByRef
+     */
+    function &sessionVariable( $name, $fallbackValue = null )
     {
-        return $_SESSION[$name];
+        return eZSession::get( $name, $fallbackValue );
     }
 
-    /*!
-     \return the session id
-    */
+    /**
+     * Return the session id
+     *
+     * @return string
+     */
     function sessionID()
     {
         return session_id();
+    }
+
+    /**
+     * Sets a new session id
+     *
+     * @param string $sessionKey Allowed characters in the range a-z A-Z 0-9 , (comma) and - (minus)
+     * @return string Current(old) session id
+    */
+    function setSessionID( $sessionKey )
+    {
+        return session_id( $sessionKey );
     }
 
     /*!
@@ -770,6 +823,7 @@ class eZHTTPTool
             $ch = curl_init( $url );
             if ( $justCheckURL )
             {
+                curl_setopt( $ch, CURLOPT_CONNECTTIMEOUT, 2 );
                 curl_setopt( $ch, CURLOPT_TIMEOUT, 15 );
                 curl_setopt( $ch, CURLOPT_FAILONERROR, 1 );
                 curl_setopt( $ch, CURLOPT_NOBODY, 1 );

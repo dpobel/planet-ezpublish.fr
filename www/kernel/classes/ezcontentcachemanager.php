@@ -6,25 +6,23 @@
 //
 // ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.3.0
+// SOFTWARE RELEASE: 4.4.0
 // COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
 //   modify it under the terms of version 2.0  of the GNU General
 //   Public License as published by the Free Software Foundation.
-//
+// 
 //   This program is distributed in the hope that it will be useful,
-//   but WITHOUT ANY WARRANTY; without even the implied warranty of
+//    but WITHOUT ANY WARRANTY; without even the implied warranty of
 //   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //   GNU General Public License for more details.
-//
+// 
 //   You should have received a copy of version 2.0 of the GNU General
 //   Public License along with this program; if not, write to the Free
 //   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 //   MA 02110-1301, USA.
-//
-//
 // ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
@@ -43,8 +41,6 @@
   The manager uses special rules in 'viewcache.ini' to figure relationships.
   \sa eZContentCache
 */
-
-require_once( 'access.php' );
 
 class eZContentCacheManager
 {
@@ -790,7 +786,7 @@ class eZContentCacheManager
         {
             $preCacheSiteaccessArray = $ini->variable( 'ContentSettings', 'PreCacheSiteaccessArray' );
 
-            $currentSiteAccess = $GLOBALS['eZCurrentAccess']['name'];
+            $currentSiteAccess = $GLOBALS['eZCurrentAccess'];
 
             // This is the default view parameters for content/view
             $viewParameters = array( 'offset' => 0,
@@ -802,30 +798,20 @@ class eZContentCacheManager
             {
                 foreach ( $preCacheSiteaccessArray as $changeToSiteAccess )
                 {
-                    $GLOBALS['eZCurrentAccess']['name'] = $changeToSiteAccess;
-    
-                    if ( $GLOBALS['eZCurrentAccess']['type'] == EZ_ACCESS_TYPE_URI )
-                    {
-                        eZSys::clearAccessPath();
-                        eZSys::addAccessPath( $changeToSiteAccess );
-                    }
+                    $newSiteAccess = $currentSiteAccess;
+                    $newSiteAccess['name'] = $changeToSiteAccess;
+                    unset( $newSiteAccess['uri_part'] );//eZSiteAccess::load() will take care of setting correct one
+                    eZSiteAccess::load( $newSiteAccess );
 
                     $tpl = eZTemplate::factory();
-                    $res = eZTemplateDesignResource::instance();
 
                     // Get the sitedesign and cached view preferences for this siteaccess
-                    $siteini = eZINI::instance( 'site.ini', 'settings', null, null, false );
-                    $siteini->prependOverrideDir( "siteaccess/$changeToSiteAccess", false, 'siteaccess' );
-                    $siteini->loadCache();
-                    $designSetting = $siteini->variable( "DesignSettings", "SiteDesign" );
+                    $siteini = eZINI::instance( 'site.ini');
                     $cachedViewPreferences = $siteini->variable( 'ContentSettings', 'CachedViewPreferences' );
-                    $res->setDesignSetting( $designSetting, 'site' );
-    
-                    $res->setOverrideAccess( $changeToSiteAccess );
-    
+
                     $language = false; // Needs to be specified if you want to generate the cache for a specific language
                     $viewMode = 'full';
-    
+
                     $assignedNodes = $object->assignedNodes();
                     foreach ( $assignedNodes as $node )
                     {
@@ -849,15 +835,15 @@ class eZContentCacheManager
                             }
                             if ( !$previewCacheUser )
                                 continue;
-    
+
                             // Before we generate the view cache we must change the currently logged in user to $previewCacheUser
                             // If not the templates might read in wrong personalized data (preferences etc.)
-                            $previewCacheUser->setCurrentlyLoggedInUser( $previewCacheUser, $previewCacheUser->attribute( 'contentobject_id' ) );
-    
+                            eZUser::setCurrentlyLoggedInUser( $previewCacheUser, $previewCacheUser->attribute( 'contentobject_id' ) );
+
                             // Cache the current node
                             $cacheFileArray = eZNodeviewfunctions::generateViewCacheFile( $previewCacheUser, $node->attribute( 'node_id' ), 0, false, $language, $viewMode, $viewParameters, $cachedViewPreferences );
                             $tmpRes = eZNodeviewfunctions::generateNodeView( $tpl, $node, $node->attribute( 'object' ), $language, $viewMode, 0, $cacheFileArray['cache_dir'], $cacheFileArray['cache_path'], true, $viewParameters );
-    
+
                             // Cache the parent node
                             $parentNode = $node->attribute( 'parent' );
                             $objectID = $parentNode->attribute( 'contentobject_id' );
@@ -871,17 +857,10 @@ class eZContentCacheManager
                     }
                 }
                 // Restore the old user as the current one
-                $user->setCurrentlyLoggedInUser( $user, $user->attribute( 'contentobject_id' ) );
-    
-                $GLOBALS['eZCurrentAccess']['name'] = $currentSiteAccess;
-                $res->setDesignSetting( $currentSiteAccess, 'site' );
-                $res->setOverrideAccess( false );
-    
-                if ( $GLOBALS['eZCurrentAccess']['type'] == EZ_ACCESS_TYPE_URI )
-                {
-                    eZSys::clearAccessPath();
-                    eZSys::addAccessPath( $currentSiteAccess );
-                }
+                eZUser::setCurrentlyLoggedInUser( $user, $user->attribute( 'contentobject_id' ) );
+
+                // restore siteaccess
+                eZSiteAccess::load( $currentSiteAccess );
             }
         }
 

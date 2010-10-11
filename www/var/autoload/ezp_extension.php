@@ -3,8 +3,8 @@
  * Autoloader definition for eZ Publish Extension files.
  *
  * @copyright Copyright (C) 1999-2010 eZ Systems AS. All rights reserved.
- * @license http://ez.no/licenses/gnu_gpl GNU GPL v2
- * @version 4.3.0
+ * @license http://ez.no/licenses/gnu_gpl GNU General Public License v2.0
+ * @version 4.4.0
  * @package kernel
  *
  */
@@ -251,6 +251,24 @@ return array(
       'autostatusType'                                   => 'extension/autostatus/eventtypes/event/autostatus/autostatustype.php',
       'cssmin'                                           => 'extension/planete/classes/cssmin-v1.0.1.b3.php',
       'eZContentClassEditDeferredHandler'                => 'extension/ezscriptmonitor/classes/ezcontentclasseditdeferredhandler.php',
+      'eZIEEzcConversions'                               => 'extension/ezie/classes/interfaces/conversions.php',
+      'eZIEEzcGDHandler'                                 => 'extension/ezie/classes/handlers/gd.php',
+      'eZIEEzcImageMagickHandler'                        => 'extension/ezie/classes/handlers/magick.php',
+      'eZIEImageAction'                                  => 'extension/ezie/classes/image_action.php',
+      'eZIEImageAnalyzer'                                => 'extension/ezie/classes/image_analyzer.php',
+      'eZIEImageFilterBW'                                => 'extension/ezie/classes/image_filter_bw.php',
+      'eZIEImageFilterBrightness'                        => 'extension/ezie/classes/image_filter_brightness.php',
+      'eZIEImageFilterContrast'                          => 'extension/ezie/classes/image_filter_contrast.php',
+      'eZIEImageFilterSepia'                             => 'extension/ezie/classes/image_filter_sepia.php',
+      'eZIEImagePreAction'                               => 'extension/ezie/classes/image_pre_action.php',
+      'eZIEImageToolCrop'                                => 'extension/ezie/classes/image_tool_crop.php',
+      'eZIEImageToolFlipHorizontally'                    => 'extension/ezie/classes/image_tool_flip_horizontally.php',
+      'eZIEImageToolFlipVertically'                      => 'extension/ezie/classes/image_tool_flip_vertically.php',
+      'eZIEImageToolPixelate'                            => 'extension/ezie/classes/image_tool_pixelate.php',
+      'eZIEImageToolResize'                              => 'extension/ezie/classes/image_tool_resize.php',
+      'eZIEImageToolRotation'                            => 'extension/ezie/classes/image_tool_rotation.php',
+      'eZIEImageToolWatermark'                           => 'extension/ezie/classes/image_tool_watermark.php',
+      'eZIEezcImageConverter'                            => 'extension/ezie/classes/image_converter.php',
       'eZOEInputParser'                                  => 'extension/ezoe/ezxmltext/handlers/input/ezoeinputparser.php',
       'eZOETemplateUtils'                                => 'extension/ezoe/autoloads/ezoetemplateutils.php',
       'eZOEXMLInput'                                     => 'extension/ezoe/ezxmltext/handlers/input/ezoexmlinput.php',
@@ -270,6 +288,7 @@ return array(
       'ezjscPackerTemplateFunctions'                     => 'extension/ezjscore/autoloads/ezjscpackertemplatefunctions.php',
       'ezjscServerFunctions'                             => 'extension/ezjscore/classes/ezjscserverfunctions.php',
       'ezjscServerFunctionsJs'                           => 'extension/ezjscore/classes/ezjscserverfunctionsjs.php',
+      'ezjscServerFunctionsNode'                         => 'extension/ezjscore/classes/ezjscserverfunctionsnode.php',
       'ezjscServerRouter'                                => 'extension/ezjscore/classes/ezjscserverrouter.php',
       'ezjscoreInfo'                                     => 'extension/ezjscore/ezinfo.php',
       'ezodfInfo'                                        => 'extension/ezodf/ezinfo.php',

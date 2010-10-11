@@ -4,25 +4,23 @@
 //
 // ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.3.0
+// SOFTWARE RELEASE: 4.4.0
 // COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
 //   modify it under the terms of version 2.0  of the GNU General
 //   Public License as published by the Free Software Foundation.
-//
+// 
 //   This program is distributed in the hope that it will be useful,
-//   but WITHOUT ANY WARRANTY; without even the implied warranty of
+//    but WITHOUT ANY WARRANTY; without even the implied warranty of
 //   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //   GNU General Public License for more details.
-//
+// 
 //   You should have received a copy of version 2.0 of the GNU General
 //   Public License along with this program; if not, write to the Free
 //   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 //   MA 02110-1301, USA.
-//
-//
 // ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
@@ -156,10 +154,8 @@ if ( $Module->hasActionParameter( 'SiteAccess' ) )
 // Find ContentObjectLocale for all site accesses in RelatedSiteAccessList
 foreach ( $ini->variable( 'SiteAccessSettings', 'RelatedSiteAccessList' ) as $relatedSA )
 {
-    $relatedSAINI = eZINI::getSiteAccessIni( $relatedSA, 'site.ini' );
-    $siteaccessLocaleMap[$relatedSA] = $relatedSAINI->variable( 'RegionalSettings', 'ContentObjectLocale' );
+    $siteaccessLocaleMap[$relatedSA] = eZSiteAccess::getIni( $relatedSA, 'site.ini' )->variable( 'RegionalSettings', 'ContentObjectLocale' );
 }
-
 
 // Try to find a version that has the language we want, by going backwards in the version history
 // Also, gether unique list of translations in all versions up until this one
@@ -200,6 +196,13 @@ if ( $LanguageCode )
     $oldObjectLanguageCode = $contentObject->currentLanguage();
     $node->setCurrentLanguage( $LanguageCode );
     $contentObject->setCurrentLanguage( $LanguageCode );
+}
+
+$tpl = eZTemplate::factory();
+
+if ( $http->hasSessionVariable( 'LastAccessesVersionURI' ) )
+{
+    $tpl->setVariable( 'redirect_uri', $http->sessionVariable( 'LastAccessesVersionURI' ) );
 }
 
 $tpl->setVariable( 'site_access_locale_map', $siteaccessLocaleMap );

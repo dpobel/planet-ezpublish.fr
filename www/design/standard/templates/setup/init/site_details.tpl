@@ -17,17 +17,17 @@
         <h2>{"Warning"|i18n("design/standard/setup/init")}</h2>
         <p>
         {switch match=$site_type.access_type}
-            {case match='url'}
-                {"'User path' and 'Admin path' should only contain letters ('a-zA-Z'), digits ('0-9') and underscores ('_'). The access values must not be named 'admin' or 'user' and each value must be unique. Please change invalid values on site indicated by *"|i18n("design/standard/setup/init")}
-            {/case}
-            {case match='port'}
-                {"'User port' and 'Admin port' should only contain digits ('0-9'). Please change invalid values on site indicated by *"|i18n("design/standard/setup/init")}
-            {/case}
-            {case match='hostname'}
-                <p>{"'User hostname' and 'Admin hostname' should only contain letters ('a-zA-Z'), digits ('0-9'), dashes ('-'), dots ('.') and colons (':'). Please change invalid values on site indicated by *"|i18n("design/standard/setup/init")}</p>
-            {/case}
-            {case/}
-        {/switch}
+	    {case match='url'}
+		{"'User path' and 'Admin path' should only contain letters ('a-zA-Z'), digits ('0-9') and underscores ('_'). The access values must not be named 'admin' or 'user' and each value must be unique. Please change invalid values on site indicated by *"|i18n("design/standard/setup/init")}
+	    {/case}
+	    {case match='port'}
+		{"'User port' and 'Admin port' should only contain digits ('0-9'). Please change invalid values on site indicated by *"|i18n("design/standard/setup/init")}
+	    {/case}
+	    {case match='hostname'}
+		<p>{"'User hostname' and 'Admin hostname' should only contain letters ('a-zA-Z'), digits ('0-9'), dashes ('-'), dots ('.') and colons (':'). Please change invalid values on site indicated by *"|i18n("design/standard/setup/init")}</p>
+	    {/case}
+	    {case/}
+	{/switch}
         </p>
     </blockquote>
 {/if}

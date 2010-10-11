@@ -6,25 +6,23 @@
 //
 // ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.3.0
+// SOFTWARE RELEASE: 4.4.0
 // COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
 //   modify it under the terms of version 2.0  of the GNU General
 //   Public License as published by the Free Software Foundation.
-//
+// 
 //   This program is distributed in the hope that it will be useful,
-//   but WITHOUT ANY WARRANTY; without even the implied warranty of
+//    but WITHOUT ANY WARRANTY; without even the implied warranty of
 //   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //   GNU General Public License for more details.
-//
+// 
 //   You should have received a copy of version 2.0 of the GNU General
 //   Public License along with this program; if not, write to the Free
 //   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 //   MA 02110-1301, USA.
-//
-//
 // ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
@@ -190,6 +188,10 @@ class eZContentClassPackageHandler extends eZPackageHandler
         }
         $classNameList->validate( );
 
+        $serializedDescriptionListNode = $content->getElementsByTagName( 'serialized-description-list' )->item( 0 );
+        $serializedDescriptionList = $serializedDescriptionListNode ? $serializedDescriptionListNode->textContent : false;
+        $classDescriptionList = new eZSerializedObjectNameList( $serializedDescriptionList );
+
         $classIdentifier = $content->getElementsByTagName( 'identifier' )->item( 0 )->textContent;
         $classRemoteID = $content->getElementsByTagName( 'remote-id' )->item( 0 )->textContent;
         $classObjectNamePattern = $content->getElementsByTagName( 'object-name-pattern' )->item( 0 )->textContent;
@@ -295,6 +297,7 @@ class eZContentClassPackageHandler extends eZPackageHandler
 
         $values = array( 'version' => 0,
                          'serialized_name_list' => $classNameList->serializeNames(),
+                         'serialized_description_list' => $classDescriptionList->serializeNames(),
                          'create_lang_if_not_exist' => true,
                          'identifier' => $classIdentifier,
                          'remote_id' => $classRemoteID,
@@ -367,6 +370,18 @@ class eZContentClassPackageHandler extends eZPackageHandler
             if ( $attributeSerializedNameList->isEmpty() )
                 $attributeSerializedNameList->initFromString( $classAttributeNode->getElementsByTagName( 'name' )->item( 0 )->textContent ); // for backward compatibility( <= 3.8 )
             $attributeSerializedNameList->validate( );
+
+            $attributeSerializedDescriptionListNode = $classAttributeNode->getElementsByTagName( 'serialized-description-list' )->item( 0 );
+            $attributeSerializedDescriptionListContent = $attributeSerializedDescriptionListNode ? $attributeSerializedDescriptionListNode->textContent : false;
+            $attributeSerializedDescriptionList = new eZSerializedObjectNameList( $attributeSerializedDescriptionListContent );
+
+            $attributeCategoryNode = $classAttributeNode->getElementsByTagName( 'category' )->item( 0 );
+            $attributeCategory = $attributeCategoryNode ? $attributeCategoryNode->textContent : '';
+
+            $attributeSerializedDataTextNode = $classAttributeNode->getElementsByTagName( 'serialized-description-text' )->item( 0 );
+            $attributeSerializedDataTextContent = $attributeSerializedDataTextNode ? $attributeSerializedDataTextNode->textContent : false;
+            $attributeSerializedDataText = new eZSerializedObjectNameList( $attributeSerializedDataTextContent );
+
             $attributeIdentifier = $classAttributeNode->getElementsByTagName( 'identifier' )->item( 0 )->textContent;
             $attributePlacement = $classAttributeNode->getElementsByTagName( 'placement' )->item( 0 )->textContent;
             $attributeDatatypeParameterNode = $classAttributeNode->getElementsByTagName( 'datatype-parameters' )->item( 0 );
@@ -379,6 +394,9 @@ class eZContentClassPackageHandler extends eZPackageHandler
                                                                    array( 'version' => 0,
                                                                           'identifier' => $attributeIdentifier,
                                                                           'serialized_name_list' => $attributeSerializedNameList->serializeNames(),
+                                                                          'serialized_description_list' => $attributeSerializedDescriptionList->serializeNames(),
+                                                                          'category' => $attributeCategory,
+                                                                          'serialized_data_text' => $attributeSerializedDataText->serializeNames(),
                                                                           'is_required' => $attributeIsRequired,
                                                                           'is_searchable' => $attributeIsSearchable,
                                                                           'is_information_collector' => $attributeIsInformationCollector,
@@ -546,21 +564,31 @@ class eZContentClassPackageHandler extends eZPackageHandler
         $dom = new DOMDocument( '1.0', 'utf-8' );
         $classNode = $dom->createElement( 'content-class' );
         $dom->appendChild( $classNode );
+
         $serializedNameListNode = $dom->createElement( 'serialized-name-list' );
         $serializedNameListNode->appendChild( $dom->createTextNode( $class->attribute( 'serialized_name_list' ) ) );
         $classNode->appendChild( $serializedNameListNode );
+
         $identifierNode = $dom->createElement( 'identifier' );
         $identifierNode->appendChild( $dom->createTextNode( $class->attribute( 'identifier' ) ) );
         $classNode->appendChild( $identifierNode );
+
+        $serializedDescriptionListNode = $dom->createElement( 'serialized-description-list' );
+        $serializedDescriptionListNode->appendChild( $dom->createTextNode( $class->attribute( 'serialized_description_list' ) ) );
+        $classNode->appendChild( $serializedDescriptionListNode );
+
         $remoteIDNode = $dom->createElement( 'remote-id' );
         $remoteIDNode->appendChild( $dom->createTextNode( $class->attribute( 'remote_id' ) ) );
         $classNode->appendChild( $remoteIDNode );
+
         $objectNamePatternNode = $dom->createElement( 'object-name-pattern' );
         $objectNamePatternNode->appendChild( $dom->createTextNode( $class->attribute( 'contentobject_name' ) ) );
         $classNode->appendChild( $objectNamePatternNode );
+
         $urlAliasPatternNode = $dom->createElement( 'url-alias-pattern' );
         $urlAliasPatternNode->appendChild( $dom->createTextNode( $class->attribute( 'url_alias_name' ) ) );
         $classNode->appendChild( $urlAliasPatternNode );
+
         $isContainer = $class->attribute( 'is_container' ) ? 'true' : 'false';
         $classNode->setAttribute( 'is-container', $isContainer );
         $classNode->setAttribute( 'always-available', $class->attribute( 'always_available' ) ? 'true' : 'false' );
@@ -671,6 +699,18 @@ class eZContentClassPackageHandler extends eZPackageHandler
             $attributeIdentifierNode = $dom->createElement( 'identifier' );
             $attributeIdentifierNode->appendChild( $dom->createTextNode( $attribute->attribute( 'identifier' ) ) );
             $attributeNode->appendChild( $attributeIdentifierNode );
+
+            $attributeSerializedDescriptionListNode = $dom->createElement( 'serialized-description-list' );
+            $attributeSerializedDescriptionListNode->appendChild( $dom->createTextNode( $attribute->attribute( 'serialized_description_list' ) ) );
+            $attributeNode->appendChild( $attributeSerializedDescriptionListNode );
+
+            $attributeCategoryNode = $dom->createElement( 'category' );
+            $attributeCategoryNode->appendChild( $dom->createTextNode( $attribute->attribute( 'category' ) ) );
+            $attributeNode->appendChild( $attributeCategoryNode );
+
+            $attributeSerializedDataTextNode = $dom->createElement( 'serialized-data-text' );
+            $attributeSerializedDataTextNode->appendChild( $dom->createTextNode( $attribute->attribute( 'serialized_data_text' ) ) );
+            $attributeNode->appendChild( $attributeSerializedDataTextNode );
 
             $attributePlacementNode = $dom->createElement( 'placement' );
             $attributePlacementNode->appendChild( $dom->createTextNode( $attribute->attribute( 'placement' ) ) );

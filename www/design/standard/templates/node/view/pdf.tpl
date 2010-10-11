@@ -13,8 +13,8 @@
 
 {pdf(header, hash( level, 1,
                    text, $node_name|wash(pdf),
-                   size, 26,
-                   align, left ) )}
+		   size, 26,
+		   align, left ) )}
 
 {section name=ContentObjectAttribute loop=$content_version.contentobject_attributes}
   {attribute_pdf_gui attribute=$ContentObjectAttribute:item}
@@ -43,12 +43,12 @@
 {if $show_frontpage|eq(1)}
   {pdf(frontpage, hash( text, $intro_text|wash(pdf),
                         align, center,
-                        size, 20,
-                        top_margin, 200 ) )}
+		 	size, 20,
+			top_margin, 200 ) )}
   {pdf(frontpage, hash( text, $sub_intro_text|wash(pdf),
-                        align, center,
-                        size, 14,
-                        top_margin, 400 ) )}
+	                align, center,
+		 	size, 14,
+			top_margin, 400 ) )}
 {/if}
 
 {* generate_toc variable is only set in namespace of first instance of pdf.tpl called *}

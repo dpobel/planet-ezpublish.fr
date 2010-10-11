@@ -18,12 +18,12 @@
 
     <input class="checkbox" type="checkbox" Name="IncludeTemplates" value="1" {if $options.include_templates}checked="checked"{/if} />
         {"Include templates related to exported objects."|i18n("design/standard/package/creators/ezcontentobject")}<br />
-        {"Select templates from the following siteaccesses"|i18n("design/standard/package/creators/ezcontentobject")}<br />
-        <select size="3" name="SiteAccesses[]" multiple="multiple">
-            {section loop=$available_site_accesses}
-                <option value="{$:item}" {if $options.site_access_array|contains($:item)}selected="selected"{/if}>{$:item}</option>
-            {/section}
-        </select><br />
+	{"Select templates from the following siteaccesses"|i18n("design/standard/package/creators/ezcontentobject")}<br />
+	<select size="3" name="SiteAccesses[]" multiple="multiple">
+	    {section loop=$available_site_accesses}
+	        <option value="{$:item}" {if $options.site_access_array|contains($:item)}selected="selected"{/if}>{$:item}</option>
+	    {/section}
+	</select><br />
 
 
     <label>{"Versions"|i18n("design/standard/package/creators/ezcontentobject")}</label>
@@ -39,9 +39,9 @@
 
     {"Select languages to export"|i18n("design/standard/package/creators/ezcontentobject")}<br />
     <select size="5" name="Languages[]" multiple="multiple">
-        {section loop=$available_languages}
-            <option value="{$:item.locale|wash}" {if $options.language_array|contains($:item.locale)}selected="selected"{/if}>{$:item.name|wash}</option>
-        {/section}
+	{section loop=$available_languages}
+	    <option value="{$:item.locale|wash}" {if $options.language_array|contains($:item.locale)}selected="selected"{/if}>{$:item.name|wash}</option>
+	{/section}
     </select><br />
 
 
@@ -52,7 +52,7 @@
 
     <input class="radio" type="radio" Name="NodeAssignment" value="main" {if $options.node_assignment|eq("main")}checked="checked"{/if} />
         {"Main only"|i18n("design/standard/package/creators/ezcontentobject")}<br />
-        
+	
 
     <label>{"Related objects"|i18n("design/standard/package/creators/ezcontentobject")}</label>
 

@@ -19,61 +19,61 @@
 <b>{"Product items"|i18n("design/standard/shop")}</b>
 <table class="list" width="100%" cellspacing="0" cellpadding="0" border="0">
 <tr>
-        <th>
-        {"Product"|i18n("design/standard/shop")}
-        </th>
-        <th>
-        {"Count"|i18n("design/standard/shop")}
-        </th>
-        <th>
-        {"VAT"|i18n("design/standard/shop")}
-        </th>
-        <th>
-        {"Price ex. VAT"|i18n("design/standard/shop")}
-        </th>
-        <th>
-        {"Price inc. VAT"|i18n("design/standard/shop")}
-        </th>
-        <th>
-        {"Discount"|i18n("design/standard/shop")}
-        </th>
-        <th>
-        {"Total price ex. VAT"|i18n("design/standard/shop")}
-        </th>
-        <th>
-        {"Total price inc. VAT"|i18n("design/standard/shop")}
-        </th>
-        <th>
-        &nbsp;
-        </th>
+	<th>
+	{"Product"|i18n("design/standard/shop")}
+	</th>
+	<th>
+	{"Count"|i18n("design/standard/shop")}
+	</th>
+	<th>
+	{"VAT"|i18n("design/standard/shop")}
+	</th>
+	<th>
+	{"Price ex. VAT"|i18n("design/standard/shop")}
+	</th>
+	<th>
+	{"Price inc. VAT"|i18n("design/standard/shop")}
+	</th>
+	<th>
+	{"Discount"|i18n("design/standard/shop")}
+	</th>
+	<th>
+	{"Total price ex. VAT"|i18n("design/standard/shop")}
+	</th>
+	<th>
+	{"Total price inc. VAT"|i18n("design/standard/shop")}
+	</th>
+	<th>
+	&nbsp;
+	</th>
 </tr>
 {section name=ProductItem loop=$order.product_items show=$order.product_items sequence=array(bglight,bgdark)}
 <tr>
-        <td class="{$ProductItem:sequence}">
-        <input type="hidden" name="ProductItemIDList[]" value="{$ProductItem:item.id}" />
-        <a href={concat("/content/view/full/",$ProductItem:item.node_id,"/")|ezurl}>{$ProductItem:item.object_name}</a>
-        </td>
-        <td class="{$ProductItem:sequence}">
-        {$ProductItem:item.item_count}
-        </td>
-        <td class="{$ProductItem:sequence}">
-        {$ProductItem:item.vat_value} %
-        </td>
-        <td class="{$ProductItem:sequence}">
-        {$ProductItem:item.price_ex_vat|l10n( 'currency', $locale, $symbol )}
-        </td>
-        <td class="{$ProductItem:sequence}">
-        {$ProductItem:item.price_inc_vat|l10n( 'currency', $locale, $symbol )}
-        </td>
-        <td class="{$ProductItem:sequence}">
-        {$ProductItem:item.discount_percent}%
-        </td>
-        <td class="{$ProductItem:sequence}">
-        {$ProductItem:item.total_price_ex_vat|l10n( 'currency', $locale, $symbol )}
-        </td>
-        <td class="{$ProductItem:sequence}">
-        {$ProductItem:item.total_price_inc_vat|l10n( 'currency', $locale, $symbol )}
-        </td>
+	<td class="{$ProductItem:sequence}">
+	<input type="hidden" name="ProductItemIDList[]" value="{$ProductItem:item.id}" />
+	<a href={concat("/content/view/full/",$ProductItem:item.node_id,"/")|ezurl}>{$ProductItem:item.object_name}</a>
+	</td>
+	<td class="{$ProductItem:sequence}">
+	{$ProductItem:item.item_count}
+	</td>
+	<td class="{$ProductItem:sequence}">
+	{$ProductItem:item.vat_value} %
+	</td>
+	<td class="{$ProductItem:sequence}">
+	{$ProductItem:item.price_ex_vat|l10n( 'currency', $locale, $symbol )}
+	</td>
+	<td class="{$ProductItem:sequence}">
+	{$ProductItem:item.price_inc_vat|l10n( 'currency', $locale, $symbol )}
+	</td>
+	<td class="{$ProductItem:sequence}">
+	{$ProductItem:item.discount_percent}%
+	</td>
+	<td class="{$ProductItem:sequence}">
+	{$ProductItem:item.total_price_ex_vat|l10n( 'currency', $locale, $symbol )}
+	</td>
+	<td class="{$ProductItem:sequence}">
+	{$ProductItem:item.total_price_inc_vat|l10n( 'currency', $locale, $symbol )}
+	</td>
 </tr>
 {section show=$ProductItem:item.item_object.option_list}
 <tr>
@@ -120,15 +120,15 @@
 
 {section name=OrderItem loop=$order.order_items show=$order.order_items sequence=array(bglight,bgdark)}
 <tr>
-        <td class="{$OrderItem:sequence}">
-        {$OrderItem:item.description}:
-        </td>
-        <td class="{$OrderItem:sequence}">
-        {$OrderItem:item.price_ex_vat|l10n( 'currency', $locale, $symbol )}
-        </td>
-        <td class="{$OrderItem:sequence}">
-        {$OrderItem:item.price_inc_vat|l10n( 'currency', $locale, $symbol )}
-        </td>
+	<td class="{$OrderItem:sequence}">
+	{$OrderItem:item.description}:
+	</td>
+	<td class="{$OrderItem:sequence}">
+	{$OrderItem:item.price_ex_vat|l10n( 'currency', $locale, $symbol )}
+	</td>
+	<td class="{$OrderItem:sequence}">
+	{$OrderItem:item.price_inc_vat|l10n( 'currency', $locale, $symbol )}
+	</td>
 </tr>
 {/section}
 <tr>

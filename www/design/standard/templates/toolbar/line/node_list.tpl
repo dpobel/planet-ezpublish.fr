@@ -5,19 +5,19 @@
 {default limit=5}
 {if $sort_by|count|eq( 0 )}{set sort_by='published'}{/if}
 {let node_list=cond( $treelist_check|eq( 'yes' ),
-                                                 fetch( content, tree, hash( parent_node_id, $parent_node,
-                                                                limit, $limit,
-                                                                class_filter_type, exclude,
-                                                                class_filter_array, array( 'folder' ),
-                                                                sort_by, array( $sort_by, false() ) ) ),
-                                         fetch( content, list, hash( parent_node_id, $parent_node,
-                                                        limit, $limit,
-                                                        class_filter_type, exclude,
-                                                        class_filter_array, array( 'folder' ),
-                                                        sort_by, array( $sort_by, false() ) ) ) )}
+						 fetch( content, tree, hash( parent_node_id, $parent_node,
+								limit, $limit,
+								class_filter_type, exclude,
+								class_filter_array, array( 'folder' ),
+								sort_by, array( $sort_by, false() ) ) ),
+					 fetch( content, list, hash( parent_node_id, $parent_node,
+							limit, $limit,
+							class_filter_type, exclude,
+							class_filter_array, array( 'folder' ),
+							sort_by, array( $sort_by, false() ) ) ) )}
 <b>{$title}:</b>
 {section name=Node loop=$node_list}
-        {node_view_gui view=toolline content_node=$Node:item}
+	{node_view_gui view=toolline content_node=$Node:item}
 {/section}
 <br />
 

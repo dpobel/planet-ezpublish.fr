@@ -1527,7 +1527,6 @@ CREATE TABLE ezcontentobject (
     current_version integer,
     id integer DEFAULT nextval('ezcontentobject_s'::text) NOT NULL,
     initial_language_id integer DEFAULT 0 NOT NULL,
-    is_published integer,
     language_mask integer DEFAULT 0 NOT NULL,
     modified integer DEFAULT 0 NOT NULL,
     name character varying(255),
@@ -2174,6 +2173,7 @@ CREATE TABLE ezpolicy (
     function_name character varying(255),
     id integer DEFAULT nextval('ezpolicy_s'::text) NOT NULL,
     module_name character varying(255),
+    original_id integer DEFAULT 0 NOT NULL,
     role_id integer
 );
 
@@ -2211,7 +2211,7 @@ CREATE TABLE ezpreferences (
     id integer DEFAULT nextval('ezpreferences_s'::text) NOT NULL,
     name character varying(100),
     user_id integer DEFAULT 0 NOT NULL,
-    value character varying(100)
+    value text
 );
 
 
@@ -2439,6 +2439,7 @@ CREATE TABLE ezsearch_word (
 
 CREATE TABLE ezsection (
     id integer DEFAULT nextval('ezsection_s'::text) NOT NULL,
+    identifier character varying(255),
     locale character varying(255),
     name character varying(255),
     navigation_part_identifier character varying(100) DEFAULT 'ezcontentnavigationpart'::character varying
@@ -3320,7 +3321,31 @@ CREATE INDEX ezinfocollection_co_id_created ON ezinfocollection USING btree (con
 
 
 
+CREATE INDEX ezinfocollection_attr_cca_id ON ezinfocollection_attribute USING btree (contentclass_attribute_id);
+
+
+
+
+
+
+
 CREATE INDEX ezinfocollection_attr_co_id ON ezinfocollection_attribute USING btree (contentobject_id);
+
+
+
+
+
+
+
+CREATE INDEX ezinfocollection_attr_coa_id ON ezinfocollection_attribute USING btree (contentobject_attribute_id);
+
+
+
+
+
+
+
+CREATE INDEX ezinfocollection_attr_ic_id ON ezinfocollection_attribute USING btree (informationcollection_id);
 
 
 
@@ -3537,6 +3562,14 @@ CREATE INDEX ezpending_actions_action ON ezpending_actions USING btree ("action"
 
 
 CREATE INDEX ezpending_actions_created ON ezpending_actions USING btree (created);
+
+
+
+
+
+
+
+CREATE INDEX ezpolicy_original_id ON ezpolicy USING btree (original_id);
 
 
 

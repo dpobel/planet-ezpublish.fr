@@ -6,25 +6,23 @@
 //
 // ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.3.0
+// SOFTWARE RELEASE: 4.4.0
 // COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
 //   modify it under the terms of version 2.0  of the GNU General
 //   Public License as published by the Free Software Foundation.
-//
+// 
 //   This program is distributed in the hope that it will be useful,
-//   but WITHOUT ANY WARRANTY; without even the implied warranty of
+//    but WITHOUT ANY WARRANTY; without even the implied warranty of
 //   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //   GNU General Public License for more details.
-//
+// 
 //   You should have received a copy of version 2.0 of the GNU General
 //   Public License along with this program; if not, write to the Free
 //   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 //   MA 02110-1301, USA.
-//
-//
 // ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
@@ -359,122 +357,6 @@ class eZCharTransform
     static function varExport( $value )
     {
         return var_export( $value, true );
-    }
-
-    /*!
-     \private
-     \static
-     Creates a text representation of the value \a $value which can
-     be placed in files and be read back by a PHP parser as it was.
-     Meant as a replacement for PHP versions with broken var_export.
-
-     \param $column Determines the starting column in which the text will be placed.
-                    This is used for expanding arrays and objects which can span multiple lines.
-     \param $iteration The current iteration, starts at 0 and increases with 1 for each recursive call
-    */
-    static function varExportInternal( $value, $column = 0, $iteration = 0 )
-    {
-
-        if ( $value === true )
-            $text = 'true';
-        else if ( $value === false )
-            $text = 'false';
-        else if ( $value === null )
-            $text = 'null';
-        else if ( is_string( $value ) )
-        {
-            $valueText = str_replace( array( "\\",
-                                             "\"",
-                                             "\$",
-                                             "\n" ),
-                                      array( "\\\\",
-                                             "\\\"",
-                                             "\\$",
-                                             "\\n" ),
-                                      $value );
-            $text = "\"$valueText\"";
-        }
-        else if ( is_numeric( $value ) )
-            $text = $value;
-        else if ( is_object( $value ) )
-        {
-            $text = '';
-            if ( method_exists( $value, 'serializedata' ) )
-            {
-                $serializeData = $value->serializeData();
-                $className = $serializeData['class_name'];
-                $text = "new $className(";
-
-                $column += strlen( $text );
-                $parameters = $serializeData['parameters'];
-                $variables = $serializeData['variables'];
-
-                $i = 0;
-                foreach ( $parameters as $parameter )
-                {
-                    if ( $i > 0 )
-                    {
-                        $text .= ",\n" . str_repeat( ' ', $column );
-                    }
-                    $variableName = $variables[$parameter];
-                    $variableValue = $value->$variableName;
-                    $keyText = " ";
-                    $text .= $keyText . eZCharTransform::varExportInternal( $variableValue, $column + strlen( $keyText  ), $iteration + 1 );
-                    ++$i;
-                }
-                if ( $i > 0 )
-                    $text .= ' ';
-
-                $text .= ')';
-            }
-        }
-        else if ( is_array( $value ) )
-        {
-            $text = 'array(';
-            $column += strlen( $text );
-            $valueKeys = array_keys( $value );
-            $isIndexed = true;
-            for ( $i = 0; $i < count( $valueKeys ); ++$i )
-            {
-                if ( $i !== $valueKeys[$i] )
-                {
-                    $isIndexed = false;
-                    break;
-                }
-            }
-            $i = 0;
-            foreach ( $valueKeys as $key )
-            {
-                if ( $i > 0 )
-                {
-                    $text .= ",\n" . str_repeat( ' ', $column );
-                }
-                $element =& $value[$key];
-                $keyText = ' ';
-                if ( !$isIndexed )
-                {
-                    if ( is_int( $key ) )
-                        $keyText = $key;
-                    else
-                        $keyText = "\"" . str_replace( array( "\\",
-                                                              "\"",
-                                                              "\n" ),
-                                                       array( "\\\\",
-                                                              "\\\"",
-                                                              "\\n" ),
-                                                       $key ) . "\"";
-                    $keyText = " $keyText => ";
-                }
-                $text .= $keyText . eZCharTransform::varExportInternal( $element, $column + strlen( $keyText  ), $iteration + 1 );
-                ++$i;
-            }
-            if ( $i > 0 )
-                $text .= ' ';
-            $text .= ')';
-        }
-        else
-            $text = 'null';
-        return $text;
     }
 
     /*!

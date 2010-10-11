@@ -3,7 +3,7 @@
 <h2>{"Are you sure you want to remove these class groups?"|i18n("design/standard/class/edit")}</h2>
 <ul>
 {section name=Result loop=$DeleteResult}
-        <li>{"Removing class group %1 will remove the classes %2!"|i18n("design/standard/class/edit",,array($Result:item.groupName,$Result:item.deletedClassName))}</li>
+	<li>{"Removing class group %1 will remove the classes %2!"|i18n("design/standard/class/edit",,array($Result:item.groupName,$Result:item.deletedClassName))}</li>
 {/section}
 </ul>
 </div>

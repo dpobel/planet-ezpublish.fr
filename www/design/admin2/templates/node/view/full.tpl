@@ -1,3 +1,6 @@
+<div class="content-view-full">
+ <div class="class-{$node.class_identifier}">
+
 {include uri='design:infocollection_validation.tpl'}
 
 <div class="content-navigation">
@@ -45,7 +48,7 @@
 <div class="break"></div>
 </div>
 
-<div class="tab-block">
+<div id="window-controls" class="tab-block">
 
 {include uri='design:window_controls.tpl'}
 
@@ -105,19 +108,10 @@
 </div>
 
 <div class="button-right">
-        <p class='versions'>
+	<p class='versions'>
     {* Link to manage versions *}
     <a href={concat("content/history/", $node.contentobject_id )|ezurl} title="{'View and manage (copy, delete, etc.) the versions of this object.'|i18n( 'design/admin/content/edit' )}">{'Manage versions'|i18n( 'design/admin/content/edit' )}</a>
     </p>
-</div>
-
-<div class="button-right">
-<div class="block">
-    {* Custom content action buttons. *}
-    {section var=ContentActions loop=$node.object.content_action_list}
-        <input class="button" type="submit" name="{$ContentActions.item.action}" value="{$ContentActions.item.name}" />
-    {/section}
-</div>
 </div>
 
 <div class="float-break"></div>
@@ -129,10 +123,15 @@
 </div>
 
 {* Children window.*}
+<div id="content-view-children">
 {if $node.is_container}
     {include uri='design:children.tpl'}
 {else}
     {include uri='design:no_children.tpl'}
 {/if}
+</div>
 
+</div>
+
+ </div>
 </div>

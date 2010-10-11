@@ -52,9 +52,9 @@
 <div class="element">
     <label>{'Current account status:'|i18n( 'design/standard/content/datatype' )}
     {if $attribute.content.is_enabled}
-        <span class="userstatus-enabled">{'enabled'|i18n( 'design/standard/content/datatype' )}</span>
+	<span class="userstatus-enabled">{'enabled'|i18n( 'design/standard/content/datatype' )}</span>
     {else}
-        <span class="userstatus-disabled"> {'disabled'|i18n( 'design/standard/content/datatype' )}</span>
+	<span class="userstatus-disabled"> {'disabled'|i18n( 'design/standard/content/datatype' )}</span>
     {/if}
     </label>
 </div>

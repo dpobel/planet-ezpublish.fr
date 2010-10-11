@@ -16,20 +16,20 @@
     <div class="content-basket">
     <table cellspacing="0">
     <tr>
-            <th>
+	    <th>
         {"Quantity"|i18n("design/base/shop")}
         </th>
         <th>
         {"VAT"|i18n("design/base/shop")}
         </th>
         <th>
-        {"Price"|i18n("design/base/shop")}
+    	{"Price"|i18n("design/base/shop")}
         </th>
         <th>
-            {"Discount"|i18n("design/base/shop")}
+	    {"Discount"|i18n("design/base/shop")}
         </th>
         <th>
-        {"Total price"|i18n("design/base/shop")}
+     	{"Total price"|i18n("design/base/shop")}
         </th>
     </tr>
     {section var=product_item loop=$order.product_items sequence=array(bglight,bgdark)}
@@ -41,19 +41,19 @@
     <tr>
         <td class="{$product_item.sequence} product-details">
             {$product_item.item_count}
-        </td>
-            <td class="{$product_item.sequence} product-details">
+    	</td>
+	    <td class="{$product_item.sequence} product-details">
         {$product_item.vat_value} %
-        </td>
+    	</td>
         <td class="{$product_item.sequence} product-details">
         {$product_item.price_inc_vat|l10n( 'currency', $locale, $symbol )}
-        </td>
-            <td class="{$product_item.sequence} product-details">
+    	</td>
+	    <td class="{$product_item.sequence} product-details">
         {$product_item.discount_percent}%
         </td>
-            <td class="{$product_item.sequence} product-details product-price">
+	    <td class="{$product_item.sequence} product-details product-price">
         {$product_item.total_price_inc_vat|l10n( 'currency', $locale, $symbol )}
-            </td>
+	    </td>
      </tr>
      {section show=$product_item.item.item_object.option_list}
      <tr>
@@ -137,12 +137,12 @@
            sequence array(bglight, bgdark) as $sequence}
 {if $order_info.total_price_vat|gt(0)}
 <tr>
-        <td class="{$sequence} product-subtotal">
+	<td class="{$sequence} product-subtotal">
 {"Total VAT"|i18n("design/base/shop")} ({$vat_value}%)
-        </td>
-        <td class="{$sequence} product-subtotal">
-        {$order_info.total_price_vat|l10n( 'currency', $locale, $symbol )}
-        </td>
+	</td>
+	<td class="{$sequence} product-subtotal">
+	{$order_info.total_price_vat|l10n( 'currency', $locale, $symbol )}
+	</td>
 </tr>
 {/if}
 {/foreach}
@@ -164,7 +164,7 @@
     {section var=history loop=$order_status_history sequence=array(bglight,bgdark)}
     <tr>
         <td class="{$history.sequence} date">{$sel_pre}{$history.modified|l10n( shortdatetime )}</td>
-        <td class="{$history.sequence}">{$history.status_name|wash}</td>
+    	<td class="{$history.sequence}">{$history.status_name|wash}</td>
     </tr>
     {/section}
     {/let}

@@ -1,35 +1,22 @@
 <?php
-//
-// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-// SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.3.0
-// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
-// SOFTWARE LICENSE: GNU General Public License v2.0
-// NOTICE: >
-//   This program is free software; you can redistribute it and/or
-//   modify it under the terms of version 2.0  of the GNU General
-//   Public License as published by the Free Software Foundation.
-//
-//   This program is distributed in the hope that it will be useful,
-//   but WITHOUT ANY WARRANTY; without even the implied warranty of
-//   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//   GNU General Public License for more details.
-//
-//   You should have received a copy of version 2.0 of the GNU General
-//   Public License along with this program; if not, write to the Free
-//   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
-//   MA 02110-1301, USA.
-//
-//
-// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-//
+/**
+ * File containing pre check functions as used to validate request
+ *
+ * @copyright Copyright (C) 1999-2010 eZ Systems AS. All rights reserved.
+ * @license http://ez.no/licenses/gnu_gpl GNU General Public License v2.0
+ * @version 4.4.0
+ * @package index
+ */
 
-/*!
- Checks if the installation is valid and returns a module redirect if required.
- If CheckValidity in SiteAccessSettings is false then no check is done.
-*/
-
-function eZCheckValidity( &$siteBasics, &$uri )
+/**
+ * Checks if the installation is valid and returns a module redirect if required.
+ * If CheckValidity in SiteAccessSettings is false then no check is done.
+ *
+ * @deprecated As of 4.4, moved to index.php for now
+ * @param array $siteBasics
+ * @param eZURI $uri
+ */
+function eZCheckValidity( array &$siteBasics, eZURI $uri )
 {
     $ini = eZINI::instance();
     $checkValidity = ( $ini->variable( "SiteAccessSettings", "CheckValidity" ) == "true" );
@@ -50,46 +37,56 @@ function eZCheckValidity( &$siteBasics, &$uri )
         $siteBasics['no-cache-adviced'] = false;
         $siteBasics['site-design-override'] = $ini->variable( 'SetupSettings', 'OverrideSiteDesign' );
         $access = array( 'name' => 'setup',
-                         'type' => EZ_ACCESS_TYPE_URI );
-        $access = changeAccess( $access );
+                         'type' => eZSiteAccess::TYPE_URI );
+        $access = eZSiteAccess::change( $access );
 
         eZTranslatorManager::enableDynamicTranslations();
     }
     return $check;
 }
 
-/*!
- \return an array with items to run a check on, each items
- is an associative array. The item must contain:
- - function - name of the function to run
-*/
+/**
+ * List of functions that should be checked by key identifier
+ *
+ * @deprecated As of 4.4, since SitePrecheckRules setting is not used or documented anywhere
+ *             (documentation above was added when it was deprecated)
+ *             Also validity checks needs to be done before session init and user check after..
+ * @return array An associative array with items to run a check on, each items
+ * is an associative array. The item must contain: function -> name of the function
+ */
 function eZCheckList()
 {
     $checks = array();
-    $checks["validity"] = array( "function" => "eZCheckValidity" );
-    $checks["user"] = array( "function" => "eZCheckUser" );
+    $checks['validity'] = array( 'function' => 'eZCheckValidity' );
+    $checks['user'] = array( 'function' => 'eZCheckUser' );
     return $checks;
 }
 
-/*!
- Check if user login is required. If so, use login handler to redirect user.
-*/
-function eZCheckUser( &$siteBasics, &$uri )
+/**
+ * Check if user login is required. If so, use login handler to redirect user.
+ *
+ * @deprecated As of 4.4, moved to {@link eZUserLoginHandler::preCheck()}
+ * @param array $siteBasics
+ * @param eZURI $uri
+ * @return array|true|false|null An associative array on redirect with 'module' and 'function' keys, true on successful
+ *                               and false/null on #fail.
+ */
+function eZCheckUser( array &$siteBasics, eZURI $uri )
 {
     if ( !$siteBasics['user-object-required'] )
     {
         return null;
     }
 
-    // if( !include_once( 'kernel/classes/datatypes/ezuser/ezuserloginhandler.php' ) )
-    //     return null;
-
-    $http = eZHTTPTool::instance();
     $ini = eZINI::instance();
-    $requireUserLogin = ( $ini->variable( "SiteAccessSettings", "RequireUserLogin" ) == "true" );
-    $forceLogin = $http->hasSessionVariable( eZUserLoginHandler::FORCE_LOGIN );
-    if ( !$requireUserLogin &&
-         !$forceLogin )
+    $requireUserLogin = ( $ini->variable( 'SiteAccessSettings', 'RequireUserLogin' ) == 'true' );
+    $forceLogin = false;
+    if ( eZSession::hasStarted() )
+    {
+        $http = eZHTTPTool::instance();
+        $forceLogin = $http->hasSessionVariable( eZUserLoginHandler::FORCE_LOGIN );
+    }
+    if ( !$requireUserLogin && !$forceLogin )
     {
         return null;
     }
@@ -97,20 +94,30 @@ function eZCheckUser( &$siteBasics, &$uri )
     return eZUserLoginHandler::checkUser( $siteBasics, $uri );
 }
 
-/*!
- \return an array with check items in the order they should be checked.
-*/
+/**
+ * Return the order that prechecks should be checked
+ *
+ * @deprecated As of 4.4, since SitePrecheckRules setting is not used or documented anywhere
+ *             (documentation above was added when it was deprecated)
+ *             Also validity checks needs to be done before session init and user check after..
+ * @return array
+ */
 function eZCheckOrder()
 {
-    $checkOrder = array( 'validity', 'user' );
-    return $checkOrder;
+    return array( 'validity', 'user' );
 }
 
-/*!
- Does pre checks and returns a structure with redirection information,
- returns null if nothing should be done.
-*/
-function eZHandlePreChecks( &$siteBasics, &$uri )
+/**
+ * Executes pre checks
+ *
+ * @deprecated As of 4.4, since SitePrecheckRules setting is not used or documented anywhere
+ *             (documentation above was added when it was deprecated)
+ *             Also validity checks needs to be done before session init and user check after..
+ * @param array $siteBasics
+ * @param eZURI $uri
+ * @return array|null A structure with redirection information or null if nothing should be done.
+ */
+function eZHandlePreChecks( array &$siteBasics, eZURI $uri )
 {
     $checks = eZCheckList();
     $checks = precheckAllowed( $checks );
@@ -120,9 +127,9 @@ function eZHandlePreChecks( &$siteBasics, &$uri )
         if ( !isset( $checks[$checkItem] ) )
             continue;
         $check = $checks[$checkItem];
-        if ( !isset( $check["allow"] ) or $check["allow"] )
+        if ( !isset( $check['allow'] ) || $check['allow'] )
         {
-            $func = $check["function"];
+            $func = $check['function'];
             $check = $func( $siteBasics, $uri );
             if ( $check !== null )
                 return $check;
@@ -131,5 +138,64 @@ function eZHandlePreChecks( &$siteBasics, &$uri )
     return null;
 }
 
+/**
+ * Uses [SitePrecheckRules] to check if a precheck is allowed or not.
+ * Setting seems to be able to be defined like this (site.ini):
+ *  [SitePrecheckRules]
+ *  Rules[]
+ *  # access can be enabled or disabled, and will affect the later
+ *  Rules[]=access;enabled
+ *  # precheckall can be true (makes prior access rule affect all prechecks)
+ *  Rules[]=precheckall;true
+ *  # precheck needs to be set to the same key as the precheck you want to allow / disallow
+ *  Rules[]=precheck;validity
+ *
+ * @deprecated As of 4.4, since SitePrecheckRules setting is not used or documented anywhere
+ *             (documentation above was added when it was deprecated)
+ * @param array $prechecks
+ * @return array The same $prechecks array but adjusted according to the SitePrecheckRules rules
+ */
+function precheckAllowed( array $prechecks )
+{
+    $ini = eZINI::instance();
+
+    if ( !$ini->hasGroup( 'SitePrecheckRules' ) )
+        return $prechecks;
+
+    $tmp_allow = true;
+    $items     = $ini->variableArray( 'SitePrecheckRules', 'Rules' );
+    foreach( $items as $item )
+    {
+        $name  = strtolower( $item[0] );
+        $value = $item[1];
+        switch( $name )
+        {
+            case 'access':
+            {
+                $tmp_allow = ($value === 'enable');
+            } break;
+            case 'precheckall':
+            {
+                if ( $value === 'true' )
+                {
+                    foreach( $prechecks as $key => $value )
+                    {
+                        $prechecks[$key]['allow'] = $tmp_allow;
+                    }
+                }
+            } break;
+            case 'precheck':
+            {
+                if ( isset( $prechecks[$value] ) )
+                    $prechecks[$value]['allow'] = $tmp_allow;
+            } break;
+            default:
+            {
+                eZDebug::writeError( "Unknown precheck rule: $name=$value", 'Access' );
+            } break;
+        }
+    }
+    return $prechecks;
+}
 
 ?>

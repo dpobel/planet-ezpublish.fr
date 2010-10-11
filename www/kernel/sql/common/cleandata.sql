@@ -963,7 +963,7 @@ INSERT INTO ezcontentclass_attribute (
   serialized_name_list,
   version
 ) VALUES (
-  1,
+  0,
   '',
   4,
   0,
@@ -3808,7 +3808,6 @@ INSERT INTO ezcontentobject (
   current_version,
   id,
   initial_language_id,
-  is_published,
   language_mask,
   modified,
   name,
@@ -3822,7 +3821,6 @@ INSERT INTO ezcontentobject (
   3,
   1,
   2,
-  0,
   3,
   1101387881,
   'eZ Publish',
@@ -3837,7 +3835,6 @@ INSERT INTO ezcontentobject (
   current_version,
   id,
   initial_language_id,
-  is_published,
   language_mask,
   modified,
   name,
@@ -3851,7 +3848,6 @@ INSERT INTO ezcontentobject (
   1,
   4,
   2,
-  0,
   3,
   1033917596,
   'Users',
@@ -3866,7 +3862,6 @@ INSERT INTO ezcontentobject (
   current_version,
   id,
   initial_language_id,
-  is_published,
   language_mask,
   modified,
   name,
@@ -3880,7 +3875,6 @@ INSERT INTO ezcontentobject (
   2,
   10,
   2,
-  0,
   3,
   1072180405,
   'Anonymous User',
@@ -3895,7 +3889,6 @@ INSERT INTO ezcontentobject (
   current_version,
   id,
   initial_language_id,
-  is_published,
   language_mask,
   modified,
   name,
@@ -3909,7 +3902,6 @@ INSERT INTO ezcontentobject (
   1,
   11,
   2,
-  0,
   3,
   1033920746,
   'Guest accounts',
@@ -3924,7 +3916,6 @@ INSERT INTO ezcontentobject (
   current_version,
   id,
   initial_language_id,
-  is_published,
   language_mask,
   modified,
   name,
@@ -3938,7 +3929,6 @@ INSERT INTO ezcontentobject (
   1,
   12,
   2,
-  0,
   3,
   1033920775,
   'Administrator users',
@@ -3953,7 +3943,6 @@ INSERT INTO ezcontentobject (
   current_version,
   id,
   initial_language_id,
-  is_published,
   language_mask,
   modified,
   name,
@@ -3967,7 +3956,6 @@ INSERT INTO ezcontentobject (
   1,
   13,
   2,
-  0,
   3,
   1033920794,
   'Editors',
@@ -3982,7 +3970,6 @@ INSERT INTO ezcontentobject (
   current_version,
   id,
   initial_language_id,
-  is_published,
   language_mask,
   modified,
   name,
@@ -3996,7 +3983,6 @@ INSERT INTO ezcontentobject (
   1,
   14,
   2,
-  0,
   3,
   1033920830,
   'Administrator User',
@@ -4011,7 +3997,6 @@ INSERT INTO ezcontentobject (
   current_version,
   id,
   initial_language_id,
-  is_published,
   language_mask,
   modified,
   name,
@@ -4025,7 +4010,6 @@ INSERT INTO ezcontentobject (
   1,
   41,
   2,
-  0,
   3,
   1060695457,
   'Media',
@@ -4040,7 +4024,6 @@ INSERT INTO ezcontentobject (
   current_version,
   id,
   initial_language_id,
-  is_published,
   language_mask,
   modified,
   name,
@@ -4054,7 +4037,6 @@ INSERT INTO ezcontentobject (
   1,
   42,
   2,
-  0,
   3,
   1072180330,
   'Anonymous Users',
@@ -4069,7 +4051,6 @@ INSERT INTO ezcontentobject (
   current_version,
   id,
   initial_language_id,
-  is_published,
   language_mask,
   modified,
   name,
@@ -4083,7 +4064,6 @@ INSERT INTO ezcontentobject (
   1,
   45,
   2,
-  0,
   3,
   1079684190,
   'Setup',
@@ -4098,7 +4078,6 @@ INSERT INTO ezcontentobject (
   current_version,
   id,
   initial_language_id,
-  is_published,
   language_mask,
   modified,
   name,
@@ -4112,7 +4091,6 @@ INSERT INTO ezcontentobject (
   1,
   49,
   2,
-  0,
   3,
   1080220197,
   'Images',
@@ -4127,7 +4105,6 @@ INSERT INTO ezcontentobject (
   current_version,
   id,
   initial_language_id,
-  is_published,
   language_mask,
   modified,
   name,
@@ -4141,7 +4118,6 @@ INSERT INTO ezcontentobject (
   1,
   50,
   2,
-  0,
   3,
   1080220220,
   'Files',
@@ -4156,7 +4132,6 @@ INSERT INTO ezcontentobject (
   current_version,
   id,
   initial_language_id,
-  is_published,
   language_mask,
   modified,
   name,
@@ -4170,7 +4145,6 @@ INSERT INTO ezcontentobject (
   1,
   51,
   2,
-  0,
   3,
   1080220233,
   'Multimedia',
@@ -4185,7 +4159,6 @@ INSERT INTO ezcontentobject (
   current_version,
   id,
   initial_language_id,
-  is_published,
   language_mask,
   modified,
   name,
@@ -4199,7 +4172,6 @@ INSERT INTO ezcontentobject (
   1,
   52,
   2,
-  0,
   2,
   1082016591,
   'Common INI settings',
@@ -4214,7 +4186,6 @@ INSERT INTO ezcontentobject (
   current_version,
   id,
   initial_language_id,
-  is_published,
   language_mask,
   modified,
   name,
@@ -4228,7 +4199,6 @@ INSERT INTO ezcontentobject (
   1,
   54,
   2,
-  0,
   2,
   1082016652,
   'eZ Publish',
@@ -4243,7 +4213,6 @@ INSERT INTO ezcontentobject (
   current_version,
   id,
   initial_language_id,
-  is_published,
   language_mask,
   modified,
   name,
@@ -4257,7 +4226,6 @@ INSERT INTO ezcontentobject (
   1,
   56,
   2,
-  0,
   3,
   1103023132,
   'Design',
@@ -8156,66 +8124,78 @@ INSERT INTO ezpolicy (
   function_name,
   id,
   module_name,
+  original_id,
   role_id
 ) VALUES (
   '*',
   308,
   '*',
+  0,
   2
 );
 INSERT INTO ezpolicy (
   function_name,
   id,
   module_name,
+  original_id,
   role_id
 ) VALUES (
   '*',
   317,
   'content',
+  0,
   3
 );
 INSERT INTO ezpolicy (
   function_name,
   id,
   module_name,
+  original_id,
   role_id
 ) VALUES (
   'login',
   319,
   'user',
+  0,
   3
 );
 INSERT INTO ezpolicy (
   function_name,
   id,
   module_name,
+  original_id,
   role_id
 ) VALUES (
   'login',
   327,
   'user',
+  0,
   1
 );
 INSERT INTO ezpolicy (
   function_name,
   id,
   module_name,
+  original_id,
   role_id
 ) VALUES (
   'read',
   328,
   'content',
+  0,
   1
 );
 INSERT INTO ezpolicy (
   function_name,
   id,
   module_name,
+  original_id,
   role_id
 ) VALUES (
   'pdf',
   329,
   'content',
+  0,
   1
 );
 
@@ -22740,55 +22720,65 @@ INSERT INTO ezsearch_word (
 
 INSERT INTO ezsection (
   id,
+  identifier,
   locale,
   name,
   navigation_part_identifier
 ) VALUES (
   1,
+  'standard',
   '',
   'Standard',
   'ezcontentnavigationpart'
 );
 INSERT INTO ezsection (
   id,
+  identifier,
   locale,
   name,
   navigation_part_identifier
 ) VALUES (
   2,
+  'users',
   '',
   'Users',
   'ezusernavigationpart'
 );
 INSERT INTO ezsection (
   id,
+  identifier,
   locale,
   name,
   navigation_part_identifier
 ) VALUES (
   3,
+  'media',
   '',
   'Media',
   'ezmedianavigationpart'
 );
 INSERT INTO ezsection (
   id,
+  identifier,
   locale,
   name,
   navigation_part_identifier
 ) VALUES (
   4,
+  'setup',
   '',
   'Setup',
   'ezsetupnavigationpart'
 );
 INSERT INTO ezsection (
   id,
+  identifier,
   locale,
   name,
   navigation_part_identifier
 ) VALUES (
   5,
+  'design',
   '',
   'Design',
   'ezvisualnavigationpart'
@@ -22806,7 +22796,7 @@ INSERT INTO ezsite_data (
   value
 ) VALUES (
   'ezpublish-version',
-  '4.3.0'
+  '4.4.0'
 );
 
 INSERT INTO ezurl (

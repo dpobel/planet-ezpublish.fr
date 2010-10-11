@@ -3,7 +3,7 @@
  * Autoloader definition for eZ Publish
  *
  * @copyright Copyright (C) 1999-2010 eZ Systems AS. All rights reserved.
- * @license http://ez.no/licenses/gnu_gpl GNU GPLv2
+ * @license http://ez.no/licenses/gnu_gpl GNU General Public License v2.0
  *
  */
 
@@ -96,7 +96,7 @@ class ezpAutoloader
             }
         }
 
-        if ( array_key_exists( $className, self::$ezpClasses ) )
+        if ( isset( self::$ezpClasses[$className] ) )
         {
             require( self::$ezpClasses[$className] );
         }

@@ -4,7 +4,7 @@
 //
 // ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ JSCore extension for eZ Publish
-// SOFTWARE RELEASE: 4.3.0
+// SOFTWARE RELEASE: 4.4.0
 // COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
@@ -13,7 +13,7 @@
 //   Public License as published by the Free Software Foundation.
 // 
 //   This program is distributed in the hope that it will be useful,
-//   but WITHOUT ANY WARRANTY; without even the implied warranty of
+//    but WITHOUT ANY WARRANTY; without even the implied warranty of
 //   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //   GNU General Public License for more details.
 // 
@@ -21,8 +21,6 @@
 //   Public License along with this program; if not, write to the Free
 //   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 //   MA 02110-1301, USA.
-// 
-// 
 // ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
@@ -65,9 +63,14 @@ if ( $contentType === 'xml' )
 {
     header('Content-Type: text/xml; charset=utf-8');
 }
+else if ( $contentType === 'javascript' )
+{
+    $contentType = 'json';
+    header('Content-Type: text/javascript; charset=utf-8');
+}
 else if ( $contentType === 'json' )
 {
-    header('Content-Type: text/javascript; charset=utf-8');
+    header('Content-Type: application/json; charset=utf-8');
 }
 
 // abort if no calls where found

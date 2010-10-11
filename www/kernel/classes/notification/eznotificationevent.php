@@ -6,25 +6,23 @@
 //
 // ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.3.0
+// SOFTWARE RELEASE: 4.4.0
 // COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
 //   modify it under the terms of version 2.0  of the GNU General
 //   Public License as published by the Free Software Foundation.
-//
+// 
 //   This program is distributed in the hope that it will be useful,
-//   but WITHOUT ANY WARRANTY; without even the implied warranty of
+//    but WITHOUT ANY WARRANTY; without even the implied warranty of
 //   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //   GNU General Public License for more details.
-//
+// 
 //   You should have received a copy of version 2.0 of the GNU General
 //   Public License along with this program; if not, write to the Free
 //   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 //   MA 02110-1301, USA.
-//
-//
 // ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
@@ -161,10 +159,22 @@ class eZNotificationEvent extends eZPersistentObject
         $this->Content = $content;
     }
 
-    static function fetchList()
+    /**
+     * Fetches notification events as objects, and returns them in an array.
+     *
+     * The optional $limit can be used to set an offset and a limit for the fetch. It is
+     * passed to {@link eZPersistentObject::fetchObjectList()} and should be used in the same way.
+     *
+     * @static
+     * @param array $limit An associative array with limitiations, can contain
+     *                     - offset - Numerical value defining the start offset for the fetch
+     *                     - length - Numerical value defining the max number of items to return
+     * @return array An array of eZNotificationEvent objects
+     */
+    static function fetchList( $limit = null )
     {
         return eZPersistentObject::fetchObjectList( eZNotificationEvent::definition(),
-                                                    null,  null, null,null,
+                                                    null,  null, null, $limit,
                                                     true );
     }
 
@@ -175,10 +185,22 @@ class eZNotificationEvent extends eZPersistentObject
                                                 array( 'id' => $eventID ) );
     }
 
-    static function fetchUnhandledList()
+    /**
+     * Fetches unhandled notification events as objects, and returns them in an array.
+     *
+     * The optional $limit can be used to set an offset and a limit for the fetch. It is
+     * passed to {@link eZPersistentObject::fetchObjectList()} and should be used in the same way.
+     *
+     * @static
+     * @param array $limit An associative array with limitiations, can contain
+     *                     - offset - Numerical value defining the start offset for the fetch
+     *                     - length - Numerical value defining the max number of items to return
+     * @return array An array of eZNotificationEvent objects
+     */
+    static function fetchUnhandledList( $limit = null )
     {
         return eZPersistentObject::fetchObjectList( eZNotificationEvent::definition(),
-                                                    null, array( 'status' => self::STATUS_CREATED ), null,null,
+                                                    null, array( 'status' => self::STATUS_CREATED ), null, $limit,
                                                     true );
     }
 

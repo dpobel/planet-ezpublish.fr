@@ -6,25 +6,23 @@
 //
 // ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.3.0
+// SOFTWARE RELEASE: 4.4.0
 // COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
 //   modify it under the terms of version 2.0  of the GNU General
 //   Public License as published by the Free Software Foundation.
-//
+// 
 //   This program is distributed in the hope that it will be useful,
-//   but WITHOUT ANY WARRANTY; without even the implied warranty of
+//    but WITHOUT ANY WARRANTY; without even the implied warranty of
 //   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //   GNU General Public License for more details.
-//
+// 
 //   You should have received a copy of version 2.0 of the GNU General
 //   Public License along with this program; if not, write to the Free
 //   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 //   MA 02110-1301, USA.
-//
-//
 // ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 // Portions are modifications on patches by Andreas B�ckler and Francis Nart
@@ -115,7 +113,8 @@ class eZSys
             eZSys::removeMagicQuotes();
         }
 
-        $this->AccessPath = array();
+        $this->AccessPath = array( 'siteaccess' => array( 'name' => '', 'url' => array() ),
+                                   'path'       => array( 'name' => '', 'url' => array() ) );
     }
 
     function removeMagicQuotes()
@@ -525,45 +524,42 @@ class eZSys
      \static
      \sa indexFileName
     */
-    static function indexFile( $withAccessList = true )
+    static function indexFile( $withAccessPath = true )
     {
-        $instance = eZSys::instance();
-        $text = $instance->IndexFile;
+        $sys  = eZSys::instance();
+        $text = $sys->IndexFile;
 
-        $ini = eZINI::instance();
-        if ( $ini->variable( 'SiteAccessSettings', 'RemoveSiteAccessIfDefaultAccess' ) == 'enabled' )
+        if ( $withAccessPath && ( isset( $sys->AccessPath['siteaccess']['url'][0] ) || isset( $sys->AccessPath['path']['url'][0] ) ) )
         {
-            $defaultAccess = $ini->variable( 'SiteSettings', 'DefaultAccess' );
-            if ( count( $instance->AccessPath ) > 0 and $instance->AccessPath[0] == $defaultAccess )
+            $ini = eZINI::instance();
+            if ( isset( $sys->AccessPath['siteaccess']['url'][0] ) &&
+                 $ini->variable( 'SiteAccessSettings', 'RemoveSiteAccessIfDefaultAccess' ) === 'enabled' )
             {
-                $accessPathArray = $instance->AccessPath;
-                array_shift( $accessPathArray ); //remove first element from accessPath as this is siteaccess name.
-                $accessPath = implode( '/', $accessPathArray );
-                $text .= '/' . $accessPath;
-
-                // Make sure we never return just a single '/'.
-                if ( $text == "/" )
-                    $text = "";
-
-                return $text;
+                $defaultAccess = $ini->variable( 'SiteSettings', 'DefaultAccess' );
+                // 1st is proper match where code has used updated api as of 4.4, do not use siteaccess
+                if ( $sys->AccessPath['siteaccess']['name'] === $defaultAccess )
+                    $accessPath = implode( '/', $sys->AccessPath['path']['url'] );
+                // 2nd is for compatability with older code that used eZSys api withouth defining scopes, shift default siteaccess path
+                elseif ( $sys->AccessPath['siteaccess']['name'] === 'undefined' && $sys->AccessPath['siteaccess']['url'][0] === $defaultAccess )
+                {
+                    $accessPathArray = $sys->AccessPath;
+                    array_shift( $accessPathArray['siteaccess']['url'] ); //remove default siteaccess
+                    $accessPath = implode( '/', array_merge( $accessPathArray['siteaccess']['url'], $accessPathArray['path']['url'] ) );
+                }
+                // In case there is no default siteaccess match use full url
+                else
+                    $accessPath = implode( '/', array_merge( $sys->AccessPath['siteaccess']['url'], $sys->AccessPath['path']['url'] ) );
             }
-        }
-
-        if ( $withAccessList and count( $instance->AccessPath ) > 0 )
-        {
-            $accessPath = implode( '/', $instance->AccessPath );
-
-            require_once( 'access.php' );
-            if ( isset( $GLOBALS['eZCurrentAccess'] ) &&
-                 isset( $GLOBALS['eZCurrentAccess']['type'] ) &&
-                 $GLOBALS['eZCurrentAccess']['type'] == EZ_ACCESS_TYPE_URI &&
-                 isset( $GLOBALS['eZCurrentAccess']['access_alias'] ) )
+            else
             {
-                $accessPathArray = $instance->AccessPath;
-                $accessPathArray[0] = $GLOBALS['eZCurrentAccess']['access_alias'];
-                $accessPath = implode( '/', $accessPathArray );
+                $accessPath = implode( '/', array_merge( $sys->AccessPath['siteaccess']['url'], $sys->AccessPath['path']['url'] ) );
             }
+
             $text .= '/' . $accessPath;
+
+            // Make sure we never return just a single '/' in case where siteaccess was shifted
+            if ( $text === '/' )
+                $text = '';
         }
         return $text;
     }
@@ -806,26 +802,92 @@ class eZSys
         return null;
     }
 
-    /*!
-     \static
-     Sets the access path which is appended to the index file.
-     \sa indexFile
-    */
-    static function addAccessPath( $path )
+    /**
+     * Appends the access path (parts of url that identifies siteaccess), used by {@link eZSys::indexFile()}
+     * NOTE: Does not make sense to use for siteaccess, as you would want to clear current path and set new one
+     *       normally, so preferably use {@link eZSys::setAccessPath()} in this case.
+     *
+     * @param array|string $path
+     * @param string $name An identifer of the name of the path provided {@link $AccessPath}
+     * @param bool $siteaccess Hints if path is siteaccess related or not, needed in case subsequesnt code suddenly
+     *                         changes siteaccess and needs to clear siteaccess scope
+     */
+    static function addAccessPath( $path, $name = 'undefined', $siteaccess = true )
     {
         $instance = eZSys::instance();
         if ( !is_array( $path ) )
             $path = array( $path );
-        $instance->AccessPath = array_merge( $instance->AccessPath, $path );
+
+        if ( $siteaccess )
+        {
+            $instance->AccessPath['siteaccess']['name'] = $name;
+            if ( isset($instance->AccessPath['siteaccess']['url'][0]) )
+                $instance->AccessPath['siteaccess']['url'] = array_merge( $instance->AccessPath['siteaccess']['url'], $path );
+            else
+                $instance->AccessPath['siteaccess']['url'] = $path;
+        }
+        else
+        {
+            $instance->AccessPath['path']['name'] = $name;
+            if ( isset($instance->AccessPath['path']['url'][0]) )
+                $instance->AccessPath['path']['url'] = array_merge( $instance->AccessPath['path']['url'], $path );
+            else
+                $instance->AccessPath['path']['url'] = $path;
+        }
     }
 
-    /*!
-     \static
-     Empties the access path.
-    */
-    static function clearAccessPath()
+    /**
+     * Set access path (parts of url that identifies siteaccess), used by {@link eZSys::indexFile()}
+     *
+     * @param array $path
+     * @param string $name An identifer of the name of the path provided {@link $AccessPath}
+     * @param bool $siteaccess Hints if path is siteaccess related or not, needed in case subsequesnt code suddenly
+     *                         changes siteaccess and needs to clear siteaccess scope
+     */
+    static function setAccessPath( array $path = array(), $name = 'undefined', $siteaccess = true  )
     {
-        eZSys::instance()->AccessPath = array();
+        if ( $siteaccess )
+            eZSys::instance()->AccessPath['siteaccess'] = array( 'name' => $name, 'url' => $path );
+        else
+            eZSys::instance()->AccessPath['path'] = array( 'name' => $name, 'url' => $path );
+    }
+
+    /**
+     * Clears the access path, used by {@link eZSys::indexFile()}
+     */
+    static function clearAccessPath( $siteaccess = true )
+    {
+        if ( $siteaccess )
+            eZSys::instance()->AccessPath['siteaccess'] = array( 'name' => '', 'url' => array() );
+        else
+            eZSys::instance()->AccessPath['path'] = array( 'name' => '', 'url' => array() );
+    }
+
+    /**
+     * Magic function to get access readonly properties (protected)
+     *
+     * @param string $name
+     * @return mixed
+     * @throws ezcBasePropertyNotFoundException
+     */
+    public function __get( $propertyName )
+    {
+        if ( $propertyName === 'AccessPath' )
+            return $this->AccessPath;
+
+        throw new ezcBasePropertyNotFoundException( $propertyName );
+    }
+
+    /**
+     * Magic function to see if readonly properties (protected) exists
+     *
+     * @param string $propertyName Option name to check for.
+     * @return bool Whether the option exists.
+     * @ignore
+     */
+    public function __isset( $propertyName )
+    {
+        return $propertyName === 'AccessPath';
     }
 
     /*!
@@ -1019,7 +1081,8 @@ class eZSys
             }
         }
 
-        $instance->AccessPath = array();
+        $instance->AccessPath = array( 'siteaccess' => array( 'name' => '', 'url' => array() ),
+                                       'path'       => array( 'name' => '', 'url' => array() ) );
         $instance->SiteDir = $siteDir;
         $instance->WWWDir = $wwwDir;
         $instance->IndexFile = $index;
@@ -1159,29 +1222,82 @@ class eZSys
        return $result;
     }
 
-
-    /// The line separator used in files
+    /**
+     * The line separator used in files, "\n" / "\n\r" / "\r"
+     * @var string
+     */
     public $LineSeparator;
-    /// The directory separator used for files
+
+   /**
+    * The directory separator used for files, '/' or '\'
+    * @var string
+    */
     public $FileSeparator;
-    /// The list separator used for env variables
+
+    /**
+     * The list separator used for env variables (':' or ';')
+     * @var string
+     */
     public $EnvSeparator;
-    /// The absolute path to the root directory.
+
+    /**
+     * The absolute path to the root directory.
+     * @var string
+     */
     public $RootDir;
-    /// The path to where all the code resides
+
+    /**
+     * The system path to where all the code resides
+     * @var string
+     */
     public $SiteDir;
-    /// The access path of the current site view
-    public $AccessPath;
-    /// The relative directory path of the vhless setup
+
+    /**
+     * The access path of the current site view, associated array of associated arrays.
+     *
+     * On first level key is 'siteaccess' and 'path' to distinguish between siteaccess
+     * and general path. On second level you have (string)'name' and (array)'url',
+     * where url is the path and name is the name of the source (used to match siteaccess
+     * in {@link eZSys::indexFile()} for RemoveSiteAccessIfDefaultAccess matching) .
+     *
+     * @var array
+     */
+    protected $AccessPath;
+
+    /**
+     * The relative directory path of the vhless setup
+     * @var string
+     */
     public $WWWDir;
-    /// The filepath for the index
+
+    /**
+     * The indef file name (eg: 'index.php')
+     * @var string
+     */
     public $IndexFile;
-    /// The uri which is used for parsing module/view information from, may differ from $_SERVER['REQUEST_URI']
+
+    /**
+     * The uri which is used for parsing module/view information from, may differ from $_SERVER['REQUEST_URI']
+     * @var string
+     */
     public $RequestURI;
-    /// The type of filesystem, is either win32 or unix. This often used to determine os specific paths.
+
+    /**
+     * The type of filesystem, is either win32 or unix. This often used to determine OS specific paths.
+     * @var string
+     */
     public $FileSystemType;
-    /// The character to be used in shell escaping, this character is OS specific
+
+    /**
+     * The character to be used in shell escaping, this character is OS specific
+     * @var stringt
+     */
     public $ShellEscapeCharacter;
+
+    /**
+     * The type of OS, is either win32, mac or unix.
+     * @var string
+     */
     public $OSType;
 }
 

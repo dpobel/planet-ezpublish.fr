@@ -64,17 +64,17 @@
     {let parent_node=$Node:item.parent_node_obj}
     <tr>
         <td class="{$Node:sequence}">
-        {switch match=$Node:parent_node.node_id}
-        {case match=1}
-        Top node
-        {/case}
-        {case}
+	{switch match=$Node:parent_node.node_id}
+	{case match=1}
+	Top node
+	{/case}
+	{case}
         {section name=Path loop=$Node:parent_node.path}
-        {$Node:Path:item.name|wash} /
-        {/section}
+	{$Node:Path:item.name|wash} /
+	{/section}
         {$Node:parent_node.name|wash}
-        {/case}
-        {/switch} / {$object.name|wash}
+	{/case}
+	{/switch} / {$object.name|wash}
         </td>
         <td class="{$Node:sequence}">
           <select name="SortFieldMap[{$Node:item.id}]">
@@ -84,10 +84,10 @@
           </select>
         </td>
         <td class="{$Node:sequence}" width="25">
-        <nobr><img src={"asc-transp.gif"|ezimage} alt="Ascending" /><input type="radio" name="SortOrderMap[{$Node:item.id}]" value="1" {if eq($Node:item.sort_order,1)}checked="checked"{/if} /></nobr>
-        </td>
+	<nobr><img src={"asc-transp.gif"|ezimage} alt="Ascending" /><input type="radio" name="SortOrderMap[{$Node:item.id}]" value="1" {if eq($Node:item.sort_order,1)}checked="checked"{/if} /></nobr>
+	</td>
         <td class="{$Node:sequence}" width="25">
-        <nobr><img src={"desc-transp.gif"|ezimage} alt="Descending" /><input type="radio" name="SortOrderMap[{$Node:item.id}]" value="0" {if eq($Node:item.sort_order,0)}checked="checked"{/if} /></nobr>
+	<nobr><img src={"desc-transp.gif"|ezimage} alt="Descending" /><input type="radio" name="SortOrderMap[{$Node:item.id}]" value="0" {if eq($Node:item.sort_order,0)}checked="checked"{/if} /></nobr>
         </td>
 
         {if $:has_top_levels|not}

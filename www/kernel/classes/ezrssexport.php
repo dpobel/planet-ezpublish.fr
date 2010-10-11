@@ -6,25 +6,23 @@
 //
 // ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.3.0
+// SOFTWARE RELEASE: 4.4.0
 // COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
 //   modify it under the terms of version 2.0  of the GNU General
 //   Public License as published by the Free Software Foundation.
-//
+// 
 //   This program is distributed in the hope that it will be useful,
-//   but WITHOUT ANY WARRANTY; without even the implied warranty of
+//    but WITHOUT ANY WARRANTY; without even the implied warranty of
 //   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //   GNU General Public License for more details.
-//
+// 
 //   You should have received a copy of version 2.0 of the GNU General
 //   Public License along with this program; if not, write to the Free
 //   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 //   MA 02110-1301, USA.
-//
-//
 // ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
@@ -160,7 +158,7 @@ class eZRSSExport extends eZPersistentObject
                       'modified' => $dateTime,
                       'creator_id' => $user_id,
                       'created' => $dateTime,
-                      'status' => 0,
+                      'status' => self::STATUS_DRAFT,
                       'url' => 'http://'. $config->variable( 'SiteSettings', 'SiteURL' ),
                       'description' => '',
                       'image_id' => 0,
@@ -247,7 +245,7 @@ class eZRSSExport extends eZPersistentObject
                                                 null,
                                                 array( 'access_url' => $access_url,
                                                        'active' => 1,
-                                                       'status' => 1 ),
+                                                       'status' => self::STATUS_VALID ),
                                                 $asObject );
     }
 
@@ -258,7 +256,7 @@ class eZRSSExport extends eZPersistentObject
     static function fetchList( $asObject = true )
     {
         return eZPersistentObject::fetchObjectList( eZRSSExport::definition(),
-                                                    null, array( 'status' => 1 ), null, null,
+                                                    null, array( 'status' => self::STATUS_VALID ), null, null,
                                                     $asObject );
     }
 
@@ -915,6 +913,11 @@ class eZRSSExport extends eZPersistentObject
 
             foreach ( $nodeArray as $node )
             {
+                if ( $node->attribute('is_hidden') && !eZContentObjectTreeNode::showInvisibleNodes() )
+                {
+                    // if the node is hidden skip past it and don't add it to the RSS export
+                    continue;
+                }
                 $object = $node->attribute( 'object' );
                 $dataMap = $object->dataMap();
                 if ( $useURLAlias === true )
@@ -995,7 +998,7 @@ class eZRSSExport extends eZPersistentObject
                     if ( $descContent instanceof eZXMLText )
                     {
                         $outputHandler =  $descContent->attribute( 'output' );
-                        $itemDescriptionText = $outputHandler->attribute( 'output_text' );
+                        $itemDescriptionText = str_replace( '&nbsp;', '&amp;nbsp;', $outputHandler->attribute( 'output_text' ) );
                     }
                     else if ( $descContent instanceof eZImageAliasHandler )
                     {
@@ -1041,7 +1044,7 @@ class eZRSSExport extends eZPersistentObject
                         $cat->term = $itemCategoryText;
                     }
                 }
-                
+
                 // enclosure RSS element with respective class attribute content
                 if ( $enclosure )
                 {

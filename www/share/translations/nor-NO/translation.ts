@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0">
+<TS version="2.0" language="nb_NO" sourcelanguage="en_GB">
 <context>
     <name>contentstructuremenu/show_content_structure</name>
     <message>
@@ -127,7 +127,7 @@
     </message>
     <message>
         <source>List of classes inside %group_name class group (%class_count)</source>
-        <translation type="unfinished"></translation>
+        <translation>Liste over klasser i klassegruppen %group_name (%class_count)</translation>
     </message>
 </context>
 <context>
@@ -360,39 +360,47 @@
     </message>
     <message>
         <source>Edit &lt;%class_name&gt; (%object_count)</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Rediger &lt;%class_name&gt; (%object_count)</translation>
     </message>
     <message>
         <source>Description</source>
-        <translation type="unfinished">Beskrivelse</translation>
+        <translation>Beskrivelse</translation>
     </message>
     <message>
         <source>Use this field to set the informal description of the class. The description field can contain whitespaces and special characters.</source>
-        <translation type="unfinished"></translation>
+        <translation>I dette feltet kan du legge inn en beskrivelse av klassen. Feltet kan inneholde mellomrom og spesialtegn.</translation>
     </message>
     <message>
         <source>List of class attributes</source>
-        <translation type="unfinished"></translation>
+        <translation>Liste over klasseattributter</translation>
     </message>
     <message>
         <source>Class attribute item</source>
-        <translation type="unfinished"></translation>
+        <translation>Klasseattributt</translation>
     </message>
     <message>
         <source>Use this field to set the informal description of the attribute. This field can contain whitespaces and special characters.</source>
-        <translation type="unfinished"></translation>
+        <translation>I dette feltet kan du legge inn en beskrivelse av attributten. Feltet kan inneholde mellomrom og spesialtegn.</translation>
     </message>
     <message>
         <source>Use this category to group attributes together in edit interface, some categories might also be hidden in full view if they are for instance only meta attributes.</source>
-        <translation type="unfinished"></translation>
+        <translation>Bruk denne kategorien til å gruppere attributter sammen. Noen kategorier kan skjules i fullvisning, for eksempel hvis de bare inneholder metaattributter.</translation>
     </message>
     <message>
         <source>Default</source>
-        <translation type="unfinished">Standard</translation>
+        <translation>Standard</translation>
     </message>
     <message>
         <source>Category</source>
-        <translation type="unfinished">Kategori</translation>
+        <translation>Kategori</translation>
+    </message>
+    <message>
+        <source>Edit &lt;%class_name&gt; (%object_count objects)</source>
+        <translation>Rediger &lt;%class_name&gt; (%object_count objects)</translation>
+    </message>
+    <message>
+        <source>The draft of the class definition was successfully stored.</source>
+        <translation>Utkastet til klassedefinisjonen ble lagret.</translation>
     </message>
 </context>
 <context>
@@ -548,15 +556,15 @@
     </message>
     <message>
         <source>List of class groups</source>
-        <translation type="unfinished"></translation>
+        <translation>Liste over klassegrupper</translation>
     </message>
     <message>
         <source>List of recently modified classes</source>
-        <translation type="unfinished"></translation>
+        <translation>Liste over nylig endrede klasser</translation>
     </message>
     <message>
         <source>Objects</source>
-        <translation type="unfinished">Objekter</translation>
+        <translation>Objekter</translation>
     </message>
 </context>
 <context>
@@ -982,19 +990,19 @@
     </message>
     <message>
         <source>Class storing deferred</source>
-        <translation type="unfinished"></translation>
+        <translation>Lagring av klassen er utsatt</translation>
     </message>
     <message>
         <source>The storing of the class has been deferred because existing objects need to be updated. The process has been scheduled to run in the background and will be started automatically. Please do not edit the class again until the process has finished. You can monitor the progress of the background process here:</source>
-        <translation type="unfinished"></translation>
+        <translation>Lagring av klassen er utsatt fordi eksisterende objekter må oppdateres. Denne prosessen vil startes automatisk og kjøre i bakgrunnen. Vennligst ikke rediger klassen igjen fram til prosessen har fullført. Du kan se status på prosessen her:</translation>
     </message>
     <message>
         <source>Background process monitor</source>
-        <translation type="unfinished"></translation>
+        <translation>Oversikt over bakgrunnsprosesser</translation>
     </message>
     <message>
         <source>Class name and number of objects</source>
-        <translation type="unfinished"></translation>
+        <translation>Klassenavn og antall objekter</translation>
     </message>
     <message>
         <source>Member of class groups (%group_count)</source>
@@ -1010,11 +1018,11 @@
     </message>
     <message>
         <source>Description</source>
-        <translation type="unfinished">Beskrivelse</translation>
+        <translation>Beskrivelse</translation>
     </message>
     <message>
         <source>Category</source>
-        <translation type="unfinished">Kategori</translation>
+        <translation>Kategori</translation>
     </message>
 </context>
 <context>
@@ -1608,7 +1616,7 @@
     <name>design/admin/content/dashboard</name>
     <message>
         <source>Dashboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Oversikt</translation>
     </message>
 </context>
 <context>
@@ -1616,6 +1624,26 @@
     <message>
         <source>No media file is available.</source>
         <translation>Ingen tilgjengelig mediafil.</translation>
+    </message>
+    <message>
+        <source>Year</source>
+        <translation>År</translation>
+    </message>
+    <message>
+        <source>Month</source>
+        <translation>Måned</translation>
+    </message>
+    <message>
+        <source>Day</source>
+        <translation>Dag</translation>
+    </message>
+    <message>
+        <source>Hour</source>
+        <translation>Time</translation>
+    </message>
+    <message>
+        <source>Minute</source>
+        <translation>Minutt</translation>
     </message>
 </context>
 <context>
@@ -2167,15 +2195,15 @@
     </message>
     <message>
         <source>Toggle fullscreen editing!</source>
-        <translation type="unfinished"></translation>
+        <translation>(De)aktiver fullskjermsredigering!</translation>
     </message>
     <message>
         <source>Store draft and exit</source>
-        <translation type="unfinished"></translation>
+        <translation>Lagre utkast og avslutt</translation>
     </message>
     <message>
         <source>Store the draft that is being edited and exit from edit mode. Use when you need to exit your work and return later to continue.</source>
-        <translation type="unfinished"></translation>
+        <translation>Lagre innholdet av utkastet du redigerer, og avslutt redigering. Bruk denne knappen når du må avslutte, men utkastet ikke er klart for publisering.</translation>
     </message>
     <message>
         <source>Edit &lt;%object_name&gt; (%class_name)</source>
@@ -2187,19 +2215,19 @@
     </message>
     <message>
         <source>Preview</source>
-        <translation type="unfinished">Forhåndsvis</translation>
+        <translation>Forhåndsvis</translation>
     </message>
     <message>
         <source>Existing translations</source>
-        <translation type="unfinished"></translation>
+        <translation>Eksisterende oversettelser</translation>
     </message>
     <message>
         <source>Base translation on</source>
-        <translation type="unfinished"></translation>
+        <translation>Baser oversettelsen på</translation>
     </message>
     <message>
         <source>None</source>
-        <translation type="unfinished">Ingen</translation>
+        <translation>Ingen</translation>
     </message>
     <message>
         <source>Related objects (%related_objects)</source>
@@ -2472,23 +2500,23 @@
     </message>
     <message>
         <source>Existing translations</source>
-        <translation type="unfinished"></translation>
+        <translation>Eksisterende oversettelser</translation>
     </message>
     <message>
         <source>Select the translation you want to edit</source>
-        <translation type="unfinished"></translation>
+        <translation>Velg oversettelsen du vil redigere</translation>
     </message>
     <message>
         <source>New translation</source>
-        <translation type="unfinished"></translation>
+        <translation>Ny oversettelse</translation>
     </message>
     <message>
         <source>Select the translation you want to add</source>
-        <translation type="unfinished"></translation>
+        <translation>Velg oversettelsen du vil legge til</translation>
     </message>
     <message>
         <source>Translate based on</source>
-        <translation type="unfinished"></translation>
+        <translation>Oversett basert på</translation>
     </message>
 </context>
 <context>
@@ -3232,7 +3260,7 @@
     </message>
     <message>
         <source>Toggle all.</source>
-        <translation type="unfinished"></translation>
+        <translation>Bytt alle valg.</translation>
     </message>
 </context>
 <context>
@@ -4383,11 +4411,11 @@
     </message>
     <message>
         <source>Back to edit</source>
-        <translation type="unfinished">Tilbake til redigering</translation>
+        <translation>Tilbake til redigering</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished">Tilbake</translation>
+        <translation>Tilbake</translation>
     </message>
 </context>
 <context>
@@ -4438,173 +4466,173 @@
     </message>
     <message>
         <source>Object ID</source>
-        <translation type="unfinished">Objekt-ID</translation>
+        <translation>Objekt-ID</translation>
     </message>
 </context>
 <context>
     <name>design/admin/dashboard/all_latest_content</name>
     <message>
         <source>All latest content</source>
-        <translation type="unfinished"></translation>
+        <translation>Siste oppdateringer</translation>
     </message>
     <message>
         <source>Name</source>
-        <translation type="unfinished">Navn</translation>
+        <translation>Navn</translation>
     </message>
     <message>
         <source>Type</source>
-        <translation type="unfinished">Type</translation>
+        <translation>Type</translation>
     </message>
     <message>
         <source>Published</source>
-        <translation type="unfinished">Publisert</translation>
+        <translation>Publisert</translation>
     </message>
     <message>
         <source>Author</source>
-        <translation type="unfinished">Forfatter</translation>
+        <translation>Forfatter</translation>
     </message>
     <message>
         <source>Edit</source>
-        <translation type="unfinished">Rediger</translation>
+        <translation>Rediger</translation>
     </message>
     <message>
         <source>Edit &lt;%child_name&gt;.</source>
-        <translation type="unfinished">Rediger &lt;%child_name&gt;.</translation>
+        <translation>Rediger &lt;%child_name&gt;.</translation>
     </message>
     <message>
         <source>You do not have permission to edit &lt;%child_name&gt;.</source>
-        <translation type="unfinished">Du har ikke tilgang til å redigere &lt;%child_name&gt;.</translation>
+        <translation>Du har ikke tilgang til å redigere &lt;%child_name&gt;.</translation>
     </message>
     <message>
         <source>Latest content list is empty.</source>
-        <translation type="unfinished"></translation>
+        <translation>Listen over siste oppdateringer er tom.</translation>
     </message>
 </context>
 <context>
     <name>design/admin/dashboard/drafts</name>
     <message>
         <source>My drafts</source>
-        <translation type="unfinished">Mine utkast</translation>
+        <translation>Mine utkast</translation>
     </message>
     <message>
         <source>Name</source>
-        <translation type="unfinished">Navn</translation>
+        <translation>Navn</translation>
     </message>
     <message>
         <source>Type</source>
-        <translation type="unfinished">Type</translation>
+        <translation>Type</translation>
     </message>
     <message>
         <source>Version</source>
-        <translation type="unfinished">Versjon</translation>
+        <translation>Versjon</translation>
     </message>
     <message>
         <source>Modified</source>
-        <translation type="unfinished">Endringstidspunkt</translation>
+        <translation>Endringstidspunkt</translation>
     </message>
     <message>
         <source>Edit &lt;%draft_name&gt;.</source>
-        <translation type="unfinished">Rediger &lt;%draft_name&gt;.</translation>
+        <translation>Rediger &lt;%draft_name&gt;.</translation>
     </message>
     <message>
         <source>Edit</source>
-        <translation type="unfinished">Rediger</translation>
+        <translation>Rediger</translation>
     </message>
     <message>
         <source>Currently you do not have any drafts available.</source>
-        <translation type="unfinished"></translation>
+        <translation>Du har ingen tilgjengelige utkast.</translation>
     </message>
 </context>
 <context>
     <name>design/admin/dashboard/latest_content</name>
     <message>
         <source>My latest content</source>
-        <translation type="unfinished"></translation>
+        <translation>Mine siste oppdateringer</translation>
     </message>
     <message>
         <source>Name</source>
-        <translation type="unfinished">Navn</translation>
+        <translation>Navn</translation>
     </message>
     <message>
         <source>Type</source>
-        <translation type="unfinished">Type</translation>
+        <translation>Type</translation>
     </message>
     <message>
         <source>Modified</source>
-        <translation type="unfinished">Endringstidspunkt</translation>
+        <translation>Endringstidspunkt</translation>
     </message>
     <message>
         <source>Edit</source>
-        <translation type="unfinished">Rediger</translation>
+        <translation>Rediger</translation>
     </message>
     <message>
         <source>Edit &lt;%child_name&gt;.</source>
-        <translation type="unfinished">Rediger &lt;%child_name&gt;.</translation>
+        <translation>Rediger &lt;%child_name&gt;.</translation>
     </message>
     <message>
         <source>You do not have permission to edit &lt;%child_name&gt;.</source>
-        <translation type="unfinished">Du har ikke tilgang til å redigere &lt;%child_name&gt;.</translation>
+        <translation>Du har ikke tilgang til å redigere &lt;%child_name&gt;.</translation>
     </message>
     <message>
         <source>Your latest content list is empty.</source>
-        <translation type="unfinished"></translation>
+        <translation>Listen over dine siste oppdateringer er tom.</translation>
     </message>
 </context>
 <context>
     <name>design/admin/dashboard/maintenance</name>
     <message>
         <source>Software update and Maintenance</source>
-        <translation type="unfinished"></translation>
+        <translation>Softwareoppdateringer og vedlikehold</translation>
     </message>
     <message>
         <source>Your installation: &lt;span id=&quot;ez-version&quot;&gt;%1&lt;/span&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>Din installasjon: &lt;span id=&quot;ez-version&quot;&gt;%1&lt;/span&gt;</translation>
     </message>
     <message>
         <source>If your installation is not running eZ Publish Premium, it might not be up to date with the latest maintenance service packs. Contact eZ Systems.</source>
-        <translation type="unfinished"></translation>
+        <translation>Hvis installasjonen din ikke kjører eZ Publish Premium får den ikke vedlikeholdsoppdateringer. Kontakt eZ Systems.</translation>
     </message>
 </context>
 <context>
     <name>design/admin/dashboard/pending_list</name>
     <message>
         <source>My pending items</source>
-        <translation type="unfinished">Mine utestående elementer</translation>
+        <translation>Mine utestående elementer</translation>
     </message>
     <message>
         <source>Name</source>
-        <translation type="unfinished">Navn</translation>
+        <translation>Navn</translation>
     </message>
     <message>
         <source>Type</source>
-        <translation type="unfinished">Type</translation>
+        <translation>Type</translation>
     </message>
     <message>
         <source>Modified</source>
-        <translation type="unfinished">Endringstidspunkt</translation>
+        <translation>Endringstidspunkt</translation>
     </message>
     <message>
         <source>Currently you do not have any pending items available.</source>
-        <translation type="unfinished"></translation>
+        <translation>Du har ingen utestående elementer.</translation>
     </message>
 </context>
 <context>
     <name>design/admin/dashboard/wishlist</name>
     <message>
         <source>Wish list</source>
-        <translation type="unfinished">Ønskeliste</translation>
+        <translation>Ønskeliste</translation>
     </message>
     <message>
         <source>Name</source>
-        <translation type="unfinished">Navn</translation>
+        <translation>Navn</translation>
     </message>
     <message>
         <source>Type</source>
-        <translation type="unfinished">Type</translation>
+        <translation>Type</translation>
     </message>
     <message>
         <source>Currently you do not have any products on your wish list.</source>
-        <translation type="unfinished"></translation>
+        <translation>Du har ingen produkter på ønskelisten din.</translation>
     </message>
 </context>
 <context>
@@ -5152,6 +5180,14 @@
         <source>The lines marked with red contain more than the maximum possible nodes for subtree removal and will not be deleted. You can remove this subtree using the ezsubtreeremove.php script.</source>
         <translation>Linjene som er merket med rødt inneholder flere noder en det som er mulig å fjerne på en gang, så de vil ikke fjernet. Du kan fjerne slike undertrær med skriptet for fjernering av undertrær.</translation>
     </message>
+    <message>
+        <source>Pending sub-object</source>
+        <translation>Venter på underobjekt</translation>
+    </message>
+    <message>
+        <source>Removal failed because there is pending sub object under the node. Please finish the relevant process then redo the removal.</source>
+        <translation>Objektet kan ikke fjernes fordi det er satt status &quot;Venter på underobjekt&quot; på noden. Fullfør den ventende prosessen og forsøk å fjerne på nytt.</translation>
+    </message>
 </context>
 <context>
     <name>design/admin/node/view</name>
@@ -5419,7 +5455,7 @@
     </message>
     <message>
         <source>all functions</source>
-        <translation>All funksjoner</translation>
+        <translation>alle funksjoner</translation>
     </message>
     <message>
         <source>There are no available policies.</source>
@@ -5899,27 +5935,27 @@
     </message>
     <message>
         <source>Tab is disabled, enable on dashboard.</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Fanen er deaktivert, kan aktiveres på oversiktssiden.</translation>
     </message>
     <message>
         <source>Translations (%count)</source>
-        <translation type="unfinished"></translation>
+        <translation>Oversettelser (%count)</translation>
     </message>
     <message>
         <source>Locations (%count)</source>
-        <translation type="unfinished"></translation>
+        <translation>Plasseringer (%count)</translation>
     </message>
     <message>
         <source>Relations (%count)</source>
-        <translation type="unfinished"></translation>
+        <translation>Relasjoner (%count)</translation>
     </message>
     <message>
         <source>Roles (%count)</source>
-        <translation type="unfinished"></translation>
+        <translation>Roller (%count)</translation>
     </message>
     <message>
         <source>Policies (%count)</source>
-        <translation type="unfinished"></translation>
+        <translation>Tilgangsregler (%count)</translation>
     </message>
     <message>
         <source>Sub items (%children_count)</source>
@@ -5927,67 +5963,67 @@
     </message>
     <message>
         <source>Create</source>
-        <translation type="unfinished">Lag</translation>
+        <translation type="obsolete">Lag</translation>
     </message>
     <message>
         <source>in</source>
-        <translation type="unfinished">i</translation>
+        <translation type="obsolete">i</translation>
     </message>
     <message>
         <source>Here</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Her</translation>
     </message>
     <message>
         <source>Published order</source>
-        <translation type="unfinished"></translation>
+        <translation>Publisert rekkefølge</translation>
     </message>
     <message>
         <source>List of sub items of current node, with controlls to edit, remove and move them directly.</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Liste over nodens underelementer, med kontroller for å redigere, slette og flytte dem.</translation>
     </message>
     <message>
         <source>Node and object details like creator, when it was created, section it belongs to, number of versions and translations, Node ID and Object ID.</source>
-        <translation type="unfinished"></translation>
+        <translation>Node- og objektdetaljer som forfatter, tidspunkt, seksjon, antall versjoner og oversettelser, node-ID og objekt-ID.</translation>
     </message>
     <message>
         <source>Content state</source>
-        <translation type="unfinished"></translation>
+        <translation>Innholdstilstand</translation>
     </message>
     <message>
         <source>States and their states groups for current object.</source>
-        <translation type="unfinished"></translation>
+        <translation>Tilstander og tilstandsgrupper for objektet.</translation>
     </message>
     <message>
         <source>State group</source>
-        <translation type="unfinished"></translation>
+        <translation>Tilstandsgruppe</translation>
     </message>
     <message>
         <source>No content object state is configured. This can be done %urlstart here%urlend.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ingen tilstander er definert. Det kan gjøres %urlstart her%urlend.</translation>
     </message>
     <message>
         <source>Locations (aka Nodes) for current object.</source>
-        <translation type="unfinished"></translation>
+        <translation>Plasseringer (noder) for objektet.</translation>
     </message>
     <message>
         <source>New translation</source>
-        <translation type="unfinished"></translation>
+        <translation>Ny oversettelse</translation>
     </message>
     <message>
         <source>Policy list and the Role that are assignet to current node.</source>
-        <translation type="unfinished"></translation>
+        <translation>Roller og tilgangsregler som er tilordnet noden.</translation>
     </message>
     <message>
         <source>Limited to</source>
-        <translation type="unfinished"></translation>
+        <translation>Begrenset til</translation>
     </message>
     <message>
         <source>%limitation_identifier %limitation_value</source>
-        <translation type="unfinished"></translation>
+        <translation>%limitation_identifier %limitation_value</translation>
     </message>
     <message>
         <source>Object relation list from current object.</source>
-        <translation type="unfinished"></translation>
+        <translation>Relasjonsliste for objektet.</translation>
     </message>
     <message>
         <source>Related objects (%related_objects_count)</source>
@@ -5995,7 +6031,7 @@
     </message>
     <message>
         <source>Reverse object relation list to current object.</source>
-        <translation type="unfinished"></translation>
+        <translation>Omvendt relasjonsliste for objektet.</translation>
     </message>
     <message>
         <source>Reverse related objects (%related_objects_count)</source>
@@ -6003,7 +6039,7 @@
     </message>
     <message>
         <source>List of roles assigned with and without limitations for current node.</source>
-        <translation type="unfinished"></translation>
+        <translation>Liste over roller tilordnet noden, med og uten begrensninger.</translation>
     </message>
     <message>
         <source>Translations (%translations)</source>
@@ -6011,11 +6047,95 @@
     </message>
     <message>
         <source>Existing translations</source>
-        <translation type="unfinished"></translation>
+        <translation>Eksisterende oversettelser</translation>
     </message>
     <message>
         <source>Language list of translations for current object.</source>
-        <translation type="unfinished"></translation>
+        <translation>Liste over objektets oversettelser.</translation>
+    </message>
+    <message>
+        <source>Tab is disabled, enable with toggler to the left of these tabs.</source>
+        <translation>Tab er slått av. Aktiver med bryter til venstre for aktuelle tabs.</translation>
+    </message>
+    <message>
+        <source>View</source>
+        <translation>Vis</translation>
+    </message>
+    <message>
+        <source>Show simplified view of content.</source>
+        <translation>Forenklet innholdsvisning.</translation>
+    </message>
+    <message>
+        <source>Ordering</source>
+        <translation>Rekkefølge</translation>
+    </message>
+    <message>
+        <source>Show published ordering overview.</source>
+        <translation>Vis publisert rekkefølge.</translation>
+    </message>
+    <message>
+        <source>Loading ...</source>
+        <translation>Laster...</translation>
+    </message>
+    <message>
+        <source>Node remote ID</source>
+        <translation>Node remote ID</translation>
+    </message>
+    <message>
+        <source>Object remote ID</source>
+        <translation>Objekt remote ID</translation>
+    </message>
+    <message>
+        <source>Table options</source>
+        <translation>Valg for tabell</translation>
+    </message>
+    <message>
+        <source>Number of items per page:</source>
+        <translation>Antall elementer pr side:</translation>
+    </message>
+    <message>
+        <source>Visible table columns:</source>
+        <translation>Synlige tabellkolonner:</translation>
+    </message>
+    <message>
+        <source>Select</source>
+        <translation>Velg</translation>
+    </message>
+    <message>
+        <source>Select all visible</source>
+        <translation>Velg alle synlige</translation>
+    </message>
+    <message>
+        <source>Select none</source>
+        <translation>Velg ingen</translation>
+    </message>
+    <message>
+        <source>Create new</source>
+        <translation>Lag ny</translation>
+    </message>
+    <message>
+        <source>More actions</source>
+        <translation>Flere valg</translation>
+    </message>
+    <message>
+        <source>Use the checkboxes to select one or more items.</source>
+        <translation>Kryss av i boksene for å velge en eller flere elementer.</translation>
+    </message>
+    <message>
+        <source>first</source>
+        <translation>første</translation>
+    </message>
+    <message>
+        <source>prev</source>
+        <translation>forrige</translation>
+    </message>
+    <message>
+        <source>next</source>
+        <translation>neste</translation>
+    </message>
+    <message>
+        <source>last</source>
+        <translation>siste</translation>
     </message>
 </context>
 <context>
@@ -6605,7 +6725,7 @@ Note: The packages will not be uninstalled.</source>
     </message>
     <message>
         <source>Remove</source>
-        <translation type="unfinished">Fjern</translation>
+        <translation>Fjern</translation>
     </message>
 </context>
 <context>
@@ -6632,27 +6752,27 @@ Note: The packages will not be uninstalled.</source>
     </message>
     <message>
         <source>Content structure</source>
-        <translation type="unfinished">Innholdsstruktur</translation>
+        <translation>Innholdsstruktur</translation>
     </message>
     <message>
         <source>Media library</source>
-        <translation type="unfinished">Mediabibliotek</translation>
+        <translation>Mediabibliotek</translation>
     </message>
     <message>
         <source>User accounts</source>
-        <translation type="unfinished">Brukerkontoer</translation>
+        <translation>Brukerkontoer</translation>
     </message>
     <message>
         <source>Webshop</source>
-        <translation type="unfinished">Nettbutikk</translation>
+        <translation>Nettbutikk</translation>
     </message>
     <message>
         <source>Setup</source>
-        <translation type="unfinished">Oppsett</translation>
+        <translation>Oppsett</translation>
     </message>
     <message>
         <source>Design</source>
-        <translation type="unfinished">Design</translation>
+        <translation>Design</translation>
     </message>
     <message>
         <source>My account</source>
@@ -6696,31 +6816,31 @@ Note: The packages will not be uninstalled.</source>
     </message>
     <message>
         <source>Manage the main content structure of the site.</source>
-        <translation type="unfinished">Håndter innholdet på nettstedet.</translation>
+        <translation>Håndter innholdet på nettstedet.</translation>
     </message>
     <message>
         <source>Manage images, files, documents, etc.</source>
-        <translation type="unfinished">Håndter bilder, filer, dokumenter, etc.</translation>
+        <translation>Håndter bilder, filer, dokumenter, etc.</translation>
     </message>
     <message>
         <source>Manage users, user groups and permission settings.</source>
-        <translation type="unfinished">Håndter brukere, brukergrupper og tilgangsinnstillinger.</translation>
+        <translation>Håndter brukere, brukergrupper og tilgangsinnstillinger.</translation>
     </message>
     <message>
         <source>Manage customers, orders, discounts and VAT types; view sales statistics.</source>
-        <translation type="unfinished">Håndter kunder, ordre, rabatter og MVA typer; se salgsstatistikker.</translation>
+        <translation>Håndter kunder, ordre, rabatter og MVA typer; se salgsstatistikker.</translation>
     </message>
     <message>
         <source>Manage templates, menus, toolbars and other things related to appearence.</source>
-        <translation type="unfinished">Håndter maler, menyer, verktøylinjer og andre ting relatert til grensesnittet.</translation>
+        <translation>Håndter maler, menyer, verktøylinjer og andre ting relatert til grensesnittet.</translation>
     </message>
     <message>
         <source>Configure settings and manage advanced functionality.</source>
-        <translation type="unfinished">Konfigurer innstillinger og håndter avansert funksjonalitet.</translation>
+        <translation>Konfigurer innstillinger og håndter avansert funksjonalitet.</translation>
     </message>
     <message>
         <source>Manage items and settings that belong to your account.</source>
-        <translation type="unfinished">Håndter innstillinger relatert til din brukerkonto.</translation>
+        <translation>Håndter innstillinger relatert til din brukerkonto.</translation>
     </message>
     <message>
         <source>Change password for &lt;%username&gt;.</source>
@@ -6796,37 +6916,41 @@ Note: The packages will not be uninstalled.</source>
     </message>
     <message>
         <source>Search in all content</source>
-        <translation type="unfinished"></translation>
+        <translation>Søk i alt innhold</translation>
     </message>
     <message>
         <source>Search in &apos;%node&apos;</source>
-        <translation type="unfinished"></translation>
+        <translation>Søk i &apos;%node&apos;</translation>
     </message>
     <message>
         <source>User perferences</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Brukerinnstillinger</translation>
     </message>
     <message>
         <source>Dashboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Oversikt</translation>
+    </message>
+    <message>
+        <source>User preferences</source>
+        <translation>Brukerinnstillinger</translation>
     </message>
 </context>
 <context>
     <name>design/admin/pagelayout/path</name>
     <message>
         <source>You are here:</source>
-        <translation type="unfinished"></translation>
+        <translation>Du er her:</translation>
     </message>
 </context>
 <context>
     <name>design/admin/pagelayout/rightmenu</name>
     <message>
         <source>Show / Hide rightmenu</source>
-        <translation type="unfinished"></translation>
+        <translation>Vis/skjul høyremenyen</translation>
     </message>
     <message>
         <source>Hide / Show rightmenu</source>
-        <translation type="unfinished"></translation>
+        <translation>Vis/skjul høyremenyen</translation>
     </message>
 </context>
 <context>
@@ -6877,7 +7001,7 @@ Note: The packages will not be uninstalled.</source>
     </message>
     <message>
         <source>Site structure</source>
-        <translation type="unfinished"></translation>
+        <translation>Nettstedsstruktur</translation>
     </message>
 </context>
 <context>
@@ -6995,23 +7119,39 @@ Note: The packages will not be uninstalled.</source>
     </message>
     <message>
         <source>Edit profile</source>
-        <translation type="unfinished">Rediger profil</translation>
+        <translation>Rediger profil</translation>
     </message>
     <message>
         <source>Dashboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Oversikt</translation>
     </message>
     <message>
         <source>Preview tab</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Forhåndsvisningsfane</translation>
     </message>
     <message>
         <source>Disable &amp;quot;Preview tab&amp;quot; while browsing content.</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Deaktiver &amp;quot;forhåndsvisningsfanen&amp;quot; mens du blar igjennom objekter.</translation>
     </message>
     <message>
         <source>Enable &amp;quot;Preview tab&amp;quot; while browsing content.</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Aktiver &amp;quot;forhåndsvisningsfanen&amp;quot; mens du blar igjennom objekter.</translation>
+    </message>
+    <message>
+        <source>Enable &amp;quot;Tabs&amp;quot; by default  while browsing content.</source>
+        <translation>Aktiver &amp;quot;Tabs&amp;quot; (som standard) når man blar igjennom innhold.</translation>
+    </message>
+    <message>
+        <source>Disable &amp;quot;Tabs&amp;quot; by default  while browsing content.</source>
+        <translation>Deaktiver &amp;quot;Tabs&amp;quot; (som standard) når man blar igjennom innhold.</translation>
+    </message>
+    <message>
+        <source>Enable &amp;quot;Tabs&amp;quot; by default while browsing content.</source>
+        <translation>Aktiver &amp;quot;Tab&amp;quot; (som standard) når man blar igjennom innhold.</translation>
+    </message>
+    <message>
+        <source>Disable &amp;quot;Tabs&amp;quot; by default while browsing content.</source>
+        <translation>Deaktiver &amp;quot;Tabs&amp;quot; (som standard) når man blar igjennom innhold.</translation>
     </message>
 </context>
 <context>
@@ -7562,15 +7702,23 @@ Note: The packages will not be uninstalled.</source>
     </message>
     <message>
         <source>Create RSS/ATOM feed</source>
-        <translation type="unfinished"></translation>
+        <translation>Opprett RSS/ATOM-eksport</translation>
     </message>
     <message>
         <source>Remove RSS/ATOM feed</source>
-        <translation type="unfinished"></translation>
+        <translation>Slett RSS/ATOM-eksport</translation>
     </message>
     <message>
         <source>New translation</source>
-        <translation type="unfinished"></translation>
+        <translation>Ny oversettelse</translation>
+    </message>
+    <message>
+        <source>Sitemap for subtree</source>
+        <translation>Nettstedskart for undertre</translation>
+    </message>
+    <message>
+        <source>Preview</source>
+        <translation>Forhåndsvis</translation>
     </message>
 </context>
 <context>
@@ -7624,6 +7772,10 @@ Note: The packages will not be uninstalled.</source>
     <message>
         <source>Your email address</source>
         <translation>Din e-postadresse</translation>
+    </message>
+    <message>
+        <source>Your name</source>
+        <translation>Ditt navn</translation>
     </message>
 </context>
 <context>
@@ -7753,7 +7905,7 @@ Note: The packages will not be uninstalled.</source>
     </message>
     <message>
         <source>Every function</source>
-        <translation type="unfinished"></translation>
+        <translation>Alle funksjoner</translation>
     </message>
 </context>
 <context>
@@ -7951,7 +8103,7 @@ Note: The packages will not be uninstalled.</source>
     </message>
     <message>
         <source>Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>Egenskaper</translation>
     </message>
     <message>
         <source>Nodes (%node_count)</source>
@@ -8026,7 +8178,7 @@ Note: The packages will not be uninstalled.</source>
     </message>
     <message>
         <source>all functions</source>
-        <translation>All funksjoner</translation>
+        <translation>alle funksjoner</translation>
     </message>
     <message>
         <source>Edit the policy&apos;s function limitations.</source>
@@ -8050,11 +8202,11 @@ Note: The packages will not be uninstalled.</source>
     </message>
     <message>
         <source>Save</source>
-        <translation type="unfinished">Lagre</translation>
+        <translation>Lagre</translation>
     </message>
     <message>
         <source>Save policy changes to this role</source>
-        <translation type="unfinished"></translation>
+        <translation>Lagre tilgangsendringer for denne rollen</translation>
     </message>
 </context>
 <context>
@@ -8211,7 +8363,7 @@ Note: The packages will not be uninstalled.</source>
     </message>
     <message>
         <source>all functions</source>
-        <translation>All funksjoner</translation>
+        <translation>alle funksjoner</translation>
     </message>
     <message>
         <source>Role</source>
@@ -8319,7 +8471,7 @@ Note: The packages will not be uninstalled.</source>
     </message>
     <message>
         <source>Path: &apos;/%path_string&apos;, Class identifier: &apos;%class_identifier&apos;</source>
-        <translation type="unfinished"></translation>
+        <translation>Sti: &apos;/%path_string&apos;, Klasseidentifikator: &apos;%class_identifier&apos;</translation>
     </message>
     <message>
         <source>Users and groups using the &lt;%role_name&gt; role (%users_count)</source>
@@ -8586,15 +8738,15 @@ Note: The packages will not be uninstalled.</source>
     </message>
     <message>
         <source>Enclosure (media)</source>
-        <translation type="unfinished"></translation>
+        <translation>Innpakking (media)</translation>
     </message>
     <message>
         <source>Use this drop-down to select the attribute that should be exported as the enclosure of the RSS export entry, enclosures are direct link to a media file, so use a media/image/file datatype .</source>
-        <translation type="unfinished"></translation>
+        <translation>Bruk denne rullegardinmenyen for å velge attributten som skal eksporteres som innpakking av RSS-eksportelementet. Dette skal være en direkte lenke til en mediefil, så bruk en attributt av type media, bilde eller fil.</translation>
     </message>
     <message>
         <source>Field data</source>
-        <translation type="unfinished"></translation>
+        <translation>Feltdata</translation>
     </message>
 </context>
 <context>
@@ -8969,6 +9121,26 @@ Note: The packages will not be uninstalled.</source>
         <source>Navigation part</source>
         <translation>Navigasjonsdel</translation>
     </message>
+    <message>
+        <source>Identifier can not be empty</source>
+        <translation>Identifikator kan ikke være tom</translation>
+    </message>
+    <message>
+        <source>Identifier should consist of letters, numbers or &apos;_&apos; with letter prefix.</source>
+        <translation>Identifikator kan bestå av bokstaver, tall eller &apos;_&apos; med bokstav prefix.</translation>
+    </message>
+    <message>
+        <source>The identifier has been used in another section.</source>
+        <translation>Identifikatoren har blitt brukt i en annen seksjon.</translation>
+    </message>
+    <message>
+        <source>Section edit error</source>
+        <translation>Feil ved redigering av seksjon</translation>
+    </message>
+    <message>
+        <source>Identifier</source>
+        <translation>Identifikator</translation>
+    </message>
 </context>
 <context>
     <name>design/admin/section/list</name>
@@ -9038,7 +9210,11 @@ Note: The packages will not be uninstalled.</source>
     </message>
     <message>
         <source>Assign a subtree to the &lt;%section_name&gt; section.</source>
-        <translation type="unfinished"></translation>
+        <translation>Tilordne et subtre til seksjonen &lt;%section_name&gt;.</translation>
+    </message>
+    <message>
+        <source>Identifier</source>
+        <translation>Identifikator</translation>
     </message>
 </context>
 <context>
@@ -9117,11 +9293,15 @@ Note: The packages will not be uninstalled.</source>
     </message>
     <message>
         <source>Assign subtree</source>
-        <translation type="unfinished"></translation>
+        <translation>Tilordne subtre</translation>
     </message>
     <message>
         <source>Assign subtree of objects to this section</source>
-        <translation type="unfinished"></translation>
+        <translation>Tilordne et subtre til denne seksjonen</translation>
+    </message>
+    <message>
+        <source>Identifier</source>
+        <translation>Identifikator</translation>
     </message>
 </context>
 <context>
@@ -9534,7 +9714,7 @@ Note: The packages will not be uninstalled.</source>
     </message>
     <message>
         <source>Categories</source>
-        <translation type="unfinished"></translation>
+        <translation>Kategorier</translation>
     </message>
     <message>
         <source></source>
@@ -9596,11 +9776,19 @@ Note: The packages will not be uninstalled.</source>
     </message>
     <message>
         <source>Invert selection.</source>
-        <translation type="unfinished">Speilvend utvalg.</translation>
+        <translation>Speilvend utvalg.</translation>
     </message>
     <message>
         <source>Activate</source>
-        <translation type="unfinished">Aktiver</translation>
+        <translation type="obsolete">Aktiver</translation>
+    </message>
+    <message>
+        <source>Activate or deactivate extension. Use the &quot;Update&quot; button to apply the changes.</source>
+        <translation>Aktiver eller deaktiver utvidelsen. Bruk &quot;Aktiver endringer&quot; knappen for å aktivere endringene.</translation>
+    </message>
+    <message>
+        <source>Update</source>
+        <translation>Oppdater</translation>
     </message>
 </context>
 <context>
@@ -9783,7 +9971,7 @@ Note: The packages will not be uninstalled.</source>
     <message>
         <source>SVN revision</source>
         <comment>eZ Publish version</comment>
-        <translation>SVN revisjon</translation>
+        <translation type="obsolete">SVN revisjon</translation>
     </message>
     <message>
         <source>Extensions</source>
@@ -10177,27 +10365,31 @@ Note: The packages will not be uninstalled.</source>
     </message>
     <message>
         <source>Not all timed out sessions were successfully removed.</source>
-        <translation type="unfinished"></translation>
+        <translation>Alle utgåtte sesjoner ble ikke fjernet.</translation>
     </message>
     <message>
         <source>The operation were cut short in order to avoid execution timeout.</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Operasjonen ble stoppet for å unngå timeout.</translation>
     </message>
     <message>
         <source>Your alternatives are to:</source>
-        <translation type="unfinished"></translation>
+        <translation>Dine alternativer er:</translation>
     </message>
     <message>
         <source>Repeat the operation several times to complete it.</source>
-        <translation type="unfinished"></translation>
+        <translation>Repeter operasjonen flere ganger til den er fullført.</translation>
     </message>
     <message>
         <source>Clear the timed out session data from command-line using: &amp;gt;php bin/php/ezsessiongc.php</source>
-        <translation type="unfinished"></translation>
+        <translation>Slett utgåtte sesjoner fra kommandolinje slik: &amp;gt;php bin/php/ezsessiongc.php</translation>
     </message>
     <message>
         <source>Install the session cleanup cronjob &apos;session_gc.php&apos; and run on nightly intervals (see cronjob.ini or doc for how)</source>
-        <translation type="unfinished"></translation>
+        <translation>Installer cronjobben &apos;session_gc.php&apos; og la den kjøre om natten (se cronjob.ini og dokumentasjonen)</translation>
+    </message>
+    <message>
+        <source>The operation was cut short in order to avoid execution timeout.</source>
+        <translation>Operasjonen ble avsluttet før tiden for å unngå tidsavbrudd.</translation>
     </message>
 </context>
 <context>
@@ -10941,7 +11133,7 @@ Note: The packages will not be uninstalled.</source>
     </message>
     <message>
         <source>Customers (users and user groups) (%customer_count)</source>
-        <translation type="unfinished"></translation>
+        <translation>Kunder (brukere og brukergrupper) (%customer_count)</translation>
     </message>
 </context>
 <context>
@@ -10972,7 +11164,7 @@ Note: The packages will not be uninstalled.</source>
     </message>
     <message>
         <source>New discount rule</source>
-        <translation type="unfinished">Ny tilgangsregel</translation>
+        <translation>Ny tilbudsregel</translation>
     </message>
     <message>
         <source>Product types</source>
@@ -11960,7 +12152,7 @@ Note: The packages will not be uninstalled.</source>
     </message>
     <message>
         <source>My wish list (%item_count)</source>
-        <translation type="unfinished"></translation>
+        <translation>Min ønskeliste (%item_count)</translation>
     </message>
 </context>
 <context>
@@ -11987,7 +12179,7 @@ Note: The packages will not be uninstalled.</source>
     </message>
     <message>
         <source>Save changes to this states.</source>
-        <translation>Lagre endringer av disse tilstandene.</translation>
+        <translation type="obsolete">Lagre endringer av disse tilstandene.</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -12016,6 +12208,10 @@ Note: The packages will not be uninstalled.</source>
     <message>
         <source>Description:</source>
         <translation>Beskrivelse:</translation>
+    </message>
+    <message>
+        <source>Save changes to this state.</source>
+        <translation>Lagre endringer av denne tilstanden.</translation>
     </message>
 </context>
 <context>
@@ -14193,23 +14389,23 @@ your account.</source>
     <name>design/ezwebin/content/datatype</name>
     <message>
         <source>Year</source>
-        <translation type="unfinished">År</translation>
+        <translation type="obsolete">År</translation>
     </message>
     <message>
         <source>Month</source>
-        <translation type="unfinished">Måned</translation>
+        <translation type="obsolete">Måned</translation>
     </message>
     <message>
         <source>Day</source>
-        <translation type="unfinished">Dag</translation>
+        <translation type="obsolete">Dag</translation>
     </message>
     <message>
         <source>Hour</source>
-        <translation type="unfinished">Time</translation>
+        <translation type="obsolete">Time</translation>
     </message>
     <message>
         <source>Minute</source>
-        <translation type="unfinished">Minutt</translation>
+        <translation type="obsolete">Minutt</translation>
     </message>
 </context>
 <context>
@@ -14893,11 +15089,24 @@ your account.</source>
     </message>
     <message>
         <source>seconds(s)</source>
-        <translation>sekund(er)</translation>
+        <translation type="obsolete">sekund(er)</translation>
     </message>
     <message>
         <source>Tag preset</source>
         <translation>Tagg-begrensning</translation>
+    </message>
+    <message>
+        <source>Html5 Video</source>
+        <translatorcomment>Html5 Audio</translatorcomment>
+        <translation>Html5 Video</translation>
+    </message>
+    <message>
+        <source>Html5 Audio</source>
+        <translation>Html5 Audio</translation>
+    </message>
+    <message>
+        <source>second(s)</source>
+        <translation>sekund(er)</translation>
     </message>
 </context>
 <context>
@@ -15071,58 +15280,58 @@ your account.</source>
     </message>
     <message>
         <source>Description</source>
-        <translation type="unfinished">Beskrivelse</translation>
+        <translation>Beskrivelse</translation>
     </message>
     <message>
         <source>Use this field to set the informal description of the class. The description field can contain whitespaces and special characters.</source>
-        <translation type="unfinished"></translation>
+        <translation>I dette feltet kan du legge inn en beskrivelse av klassen. Feltet kan inneholde mellomrom og spesialtegn.</translation>
     </message>
 </context>
 <context>
     <name>design/standard/class/edit_locked</name>
     <message>
         <source>Class locked</source>
-        <translation type="unfinished"></translation>
+        <translation>Klassen er låst</translation>
     </message>
     <message>
         <source>This class has pending modifications defered to cronjob and thus it cannot be edited.</source>
-        <translation type="unfinished"></translation>
+        <translation>Klassen kan ikke redigeres før oppdateringsprosessen som kjører i bakgrunnen er fullført.</translation>
     </message>
     <message>
         <source>Wait until the script is finished. You might see the status in the %urlstart script monitor%urlend&lt;/a&gt;.</source>
-        <translation type="unfinished"></translation>
+        <translation>Vent til skriptet fullfører. Du kan følge statusen i %urlstart skriptmonitor%urlend&lt;/a&gt;.</translation>
     </message>
     <message>
         <source>To force the modification of the class you may run the following command</source>
-        <translation type="unfinished"></translation>
+        <translation>For å overstyre så du kan endre klassen, bruk følgende kommando</translation>
     </message>
     <message>
         <source>Edit &lt;%class_name&gt; [Class]</source>
-        <translation type="unfinished">Rediger &lt;%class_name&gt; [Klasse]</translation>
+        <translation>Rediger &lt;%class_name&gt; [Klasse]</translation>
     </message>
     <message>
         <source>Class</source>
-        <translation type="unfinished">Klasse</translation>
+        <translation>Klasse</translation>
     </message>
     <message>
         <source>Last modifier</source>
-        <translation type="unfinished"></translation>
+        <translation>Sist endret av</translation>
     </message>
     <message>
         <source>Last modified on</source>
-        <translation type="unfinished"></translation>
+        <translation>Sist endret</translation>
     </message>
     <message>
         <source>The class will be available for editing after the script has been run by the cronjob.</source>
-        <translation type="unfinished"></translation>
+        <translation>Klassen kan redigeres etter at skriptet er fullført.</translation>
     </message>
     <message>
         <source>Retry</source>
-        <translation type="unfinished">Prøv igjen</translation>
+        <translation>Prøv igjen</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Avbryt</translation>
+        <translation>Avbryt</translation>
     </message>
 </context>
 <context>
@@ -15288,7 +15497,7 @@ your account.</source>
     </message>
     <message>
         <source>Description</source>
-        <translation type="unfinished">Beskrivelse</translation>
+        <translation>Beskrivelse</translation>
     </message>
 </context>
 <context>
@@ -16361,15 +16570,39 @@ Hvis du vil sende en kommentar til den som skal godkjenne, eller se på status, 
     </message>
     <message>
         <source>There are no related object.</source>
-        <translation type="unfinished"></translation>
+        <translation>Det er ingen relaterte objekter.</translation>
     </message>
     <message>
         <source>Find object</source>
-        <translation type="unfinished"></translation>
+        <translation>Finn objekt</translation>
     </message>
     <message>
         <source>Find objects</source>
-        <translation type="unfinished"></translation>
+        <translation>Finn objekter</translation>
+    </message>
+    <message>
+        <source>The related objects will be edited in the same language as this object. If such translations do not exist they will be created, based on the source language of your choice.</source>
+        <translation>Relaterte objekter vil bli redigert på samme språk som dette objektet. Dersom oversettelsene ikke finnes vil de bli opprettet, basert på ditt valgte kildespråk.</translation>
+    </message>
+    <message>
+        <source>Translation base</source>
+        <translation>Basis for oversettelse</translation>
+    </message>
+    <message>
+        <source>This object is already translated, the existing translation will be used.</source>
+        <translation>Dette objektet er allerede oversatt, eksisterende oversettelse vil benyttes.</translation>
+    </message>
+    <message>
+        <source>This object is not translated, please select the language the new translation will be based on.</source>
+        <translation>Dette objektet er ikke oversatt, vennligst velg hvilket språk den nye oversettelsen vil baseres på.</translation>
+    </message>
+    <message>
+        <source>Your browser does not support html5 video.</source>
+        <translation>Din nettleser støtter ikke html5 video.</translation>
+    </message>
+    <message>
+        <source>Your browser does not support html5 audio.</source>
+        <translation>Din nettleser støtter ikke html5 audio.</translation>
     </message>
 </context>
 <context>
@@ -19813,7 +20046,7 @@ menyen på toppen.</translation>
     </message>
     <message>
         <source>Enclosure (media)</source>
-        <translation type="unfinished"></translation>
+        <translation>Innpakking (media)</translation>
     </message>
 </context>
 <context>
@@ -20707,7 +20940,7 @@ Ved å bruke %operatorname kan du ...</translation>
     <message>
         <source>SVN revision</source>
         <comment>eZ Publish version</comment>
-        <translation>SVN revisjon</translation>
+        <translation type="obsolete">SVN revisjon</translation>
     </message>
     <message>
         <source>Extensions</source>
@@ -20791,15 +21024,15 @@ Standardkoden ble laget på grunnlag av parameterne du valgte.</translation>
     <name>design/standard/setup/db</name>
     <message>
         <source>If you are having problems connecting to your database you should take a look at</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Hvos du har problemer med tilkoblingen til din database burde du se på</translation>
     </message>
     <message>
         <source>at</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">på</translation>
     </message>
     <message>
         <source>MySQL</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">MySQL</translation>
     </message>
     <message>
         <source>Introduction</source>
@@ -20807,15 +21040,15 @@ Standardkoden ble laget på grunnlag av parameterne du valgte.</translation>
     </message>
     <message>
         <source>MySQL is a database management system created by MySQL AB.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">MySQL er et databasesystem utviklet av MySQL AB.</translation>
     </message>
     <message>
         <source>MySQL is the world&apos;s most popular Open Source Database, designed for speed, power and precision in mission critical, heavy load use.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">MySQL er verdens mest populære database basert på åpen kildekode, designet for hastighet, kraft og presisjon i forretningskritiske og krevende bruksområder.</translation>
     </message>
     <message>
         <source>More information can be found on</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Mer informasjon finnes på</translation>
     </message>
     <message>
         <source>Details</source>
@@ -20823,11 +21056,11 @@ Standardkoden ble laget på grunnlag av parameterne du valgte.</translation>
     </message>
     <message>
         <source>Installation</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Installasjon</translation>
     </message>
     <message>
         <source>By using the</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ved å bruke</translation>
     </message>
     <message>
         <source>configuration option you enable PHP to access MySQL databases. If you use this option without specifying the path to MySQL, PHP will use the built-in MySQL client libraries.</source>
@@ -22402,27 +22635,35 @@ This functionality is also available at a later time from the Administration Int
     </message>
     <message>
         <source>Not all timed out sessions were successfully removed.</source>
-        <translation type="unfinished"></translation>
+        <translation>Alle utgåtte sesjoner ble ikke fjernet.</translation>
     </message>
     <message>
         <source>The operation were cut short in order to avoid execution timeout.</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Operasjonen ble stoppet for å unngå timeout.</translation>
     </message>
     <message>
         <source>Your alternatives are to:</source>
-        <translation type="unfinished"></translation>
+        <translation>Dine alternativer er:</translation>
     </message>
     <message>
         <source>Repeat the operation several times to complete it.</source>
-        <translation type="unfinished"></translation>
+        <translation>Repeter operasjonen flere ganger til den er fullført.</translation>
     </message>
     <message>
         <source>Clear the timed out session data from command-line using: &amp;gt;php bin/php/ezsessiongc.php</source>
-        <translation type="unfinished"></translation>
+        <translation>Slett utgåtte sesjoner fra kommandolinje slik: &amp;gt;php bin/php/ezsessiongc.php</translation>
     </message>
     <message>
         <source>Install the session cleanup cronjob &apos;session_gc.php&apos; and run on nightly intervals (see cronjob.ini or doc for how)</source>
-        <translation type="unfinished"></translation>
+        <translation>Installer cronjobben &apos;session_gc.php&apos; og la den kjøre om natten (se cronjob.ini og dokumentasjonen)</translation>
+    </message>
+    <message>
+        <source>The operation was cut short in order to avoid execution timeout.</source>
+        <translation>Operasjonen ble avsluttet før tiden for å unngå tidsavbrudd.</translation>
+    </message>
+    <message>
+        <source>Your current session handler does not support session administration.</source>
+        <translation>Din nåværende sesjonshåndterer støtter ikke sesjonsadministrasjon.</translation>
     </message>
 </context>
 <context>
@@ -22493,7 +22734,7 @@ This functionality is also available at a later time from the Administration Int
     </message>
     <message>
         <source>Installation</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Installasjon</translation>
     </message>
     <message>
         <source>ImageMagick may be downloaded from</source>
@@ -23938,7 +24179,7 @@ To do this you need to change the %chown commands under Alternative shell comman
     <name>design/standard/toolbar</name>
     <message>
         <source>Toolbar management</source>
-        <translation type="unfinished">Verktøylinjehåndtering</translation>
+        <translation>Verktøylinjehåndtering</translation>
     </message>
     <message>
         <source>There are %logged_in_count registered and %anonymous_count anonymous users online.</source>
@@ -24408,7 +24649,7 @@ To do this you need to change the %chown commands under Alternative shell comman
     </message>
     <message>
         <source>The node (%1) specified in [UserSettings].DefaultUserPlacement setting in site.ini does not exist!</source>
-        <translation type="unfinished">Noden (%1) som er spesifisert i [UserSettings].DefaultUserPlacement i site.ini eksisterer ikke!</translation>
+        <translation>Noden (%1) som er spesifisert i [UserSettings].DefaultUserPlacement i site.ini eksisterer ikke!</translation>
     </message>
     <message>
         <source>Email</source>
@@ -24443,7 +24684,7 @@ Følg veiledningen i den e-posten for å aktivere kontoen din.</translation>
     </message>
     <message>
         <source>The new password must be at least %1 characters long. Please retype your new password.</source>
-        <translation type="unfinished">Det nye passordet må være minst %1 tegn langt. Vennligst oppgi et nytt passord.</translation>
+        <translation>Det nye passordet må være minst %1 tegn langt. Vennligst oppgi et nytt passord.</translation>
     </message>
 </context>
 <context>
@@ -25272,98 +25513,106 @@ Følg veiledningen i den e-posten for å aktivere kontoen din.</translation>
     <name>kernel/cache</name>
     <message>
         <source>Content view cache</source>
-        <translation type="unfinished">Cache for innholdsvisning</translation>
+        <translation>Cache for innholdsvisning</translation>
     </message>
     <message>
         <source>Global INI cache</source>
-        <translation type="unfinished">Cache for INI-filer, global</translation>
+        <translation>Cache for INI-filer, global</translation>
     </message>
     <message>
         <source>INI cache</source>
-        <translation type="unfinished">Cache for INI-filer</translation>
+        <translation>Cache for INI-filer</translation>
     </message>
     <message>
         <source>Codepage cache</source>
-        <translation type="unfinished">Cache for kodesider</translation>
+        <translation>Cache for kodesider</translation>
     </message>
     <message>
         <source>Class identifier cache</source>
-        <translation type="unfinished">Cache for klasseidentifikatorer</translation>
+        <translation>Cache for klasseidentifikatorer</translation>
     </message>
     <message>
         <source>Sort key cache</source>
-        <translation type="unfinished">Cache for sorteringsnøkler</translation>
+        <translation>Cache for sorteringsnøkler</translation>
     </message>
     <message>
         <source>URL alias cache</source>
-        <translation type="unfinished">Cache for URL alias</translation>
+        <translation>Cache for URL alias</translation>
     </message>
     <message>
         <source>Image alias</source>
-        <translation type="unfinished">Cache for bildealias</translation>
+        <translation>Cache for bildealias</translation>
     </message>
     <message>
         <source>Template cache</source>
-        <translation type="unfinished">Cache for maler</translation>
+        <translation>Cache for maler</translation>
     </message>
     <message>
         <source>Template block cache</source>
-        <translation type="unfinished">Cache for malblokker</translation>
+        <translation>Cache for malblokker</translation>
     </message>
     <message>
         <source>Template override cache</source>
-        <translation type="unfinished">Cache for overstyring av maler</translation>
+        <translation>Cache for overstyring av maler</translation>
     </message>
     <message>
         <source>RSS cache</source>
-        <translation type="unfinished">Cache for RSS</translation>
+        <translation>Cache for RSS</translation>
     </message>
     <message>
         <source>Character transformation cache</source>
-        <translation type="unfinished">Cache for tegnomforming</translation>
+        <translation>Cache for tegnomforming</translation>
     </message>
     <message>
         <source>User info cache</source>
-        <translation type="unfinished">Cache for brukerinformasjon</translation>
+        <translation>Cache for brukerinformasjon</translation>
     </message>
     <message>
         <source>Content tree menu (browser cache)</source>
-        <translation type="unfinished">Menu for innholdstre (nettleser cache)</translation>
+        <translation>Meny for innholdstre (nettlesercache)</translation>
     </message>
     <message>
         <source>State limitations cache</source>
-        <translation type="unfinished">Cache for tilstandsbegrensninger</translation>
+        <translation>Cache for tilstandsbegrensninger</translation>
     </message>
     <message>
         <source>Text to image cache</source>
-        <translation type="unfinished">Cache for tekst-til-bilde</translation>
+        <translation>Cache for tekst-til-bilde</translation>
     </message>
     <message>
         <source>Design base cache</source>
-        <translation type="unfinished"></translation>
+        <translation>Cache for designbase</translation>
+    </message>
+    <message>
+        <source>Active extensions cache</source>
+        <translation>Aktiv cache for utvidelser</translation>
+    </message>
+    <message>
+        <source>TS Translation cache</source>
+        <translation>TS oversettelsescache</translation>
     </message>
 </context>
 <context>
     <name>kernel/class</name>
     <message>
         <source>Class list of group</source>
-        <translation type="unfinished">Klasseliste av gruppen</translation>
+        <translation>Klasseliste av gruppen</translation>
     </message>
     <message>
         <source>Class group list</source>
-        <translation type="unfinished">Klassegruppeliste</translation>
+        <translation>Klassegruppeliste</translation>
     </message>
     <message>
         <source>Class list</source>
-        <translation type="unfinished">Klasseliste</translation>
+        <translation>Klasseliste</translation>
     </message>
     <message>
         <source>(no classes)</source>
-        <translation type="unfinished">(ingen klasser)</translation>
+        <translation>(ingen klasser)</translation>
     </message>
     <message>
         <source>Remove class groups</source>
-        <translation type="unfinished">Fjern klassegrupper</translation>
+        <translation>Fjern klassegrupper</translation>
     </message>
     <message>
         <source>Classes</source>
@@ -25375,1072 +25624,1080 @@ Følg veiledningen i den e-posten for å aktivere kontoen din.</translation>
     </message>
     <message>
         <source>Remove class</source>
-        <translation type="unfinished">Fjern klasse</translation>
+        <translation>Fjern klasse</translation>
     </message>
     <message>
         <source>You have to have at least one group that the class belongs to!</source>
-        <translation type="unfinished">Klassen må høre til minst en gruppe!</translation>
+        <translation>Klassen må høre til minst en gruppe!</translation>
     </message>
     <message>
         <source>Remove classes %class_id</source>
-        <translation type="unfinished">Fjern klassene %class_id</translation>
+        <translation>Fjern klassene %class_id</translation>
     </message>
     <message>
         <source>Copy of %class_name</source>
-        <translation type="unfinished">Kopi av %class_name</translation>
+        <translation>Kopi av %class_name</translation>
     </message>
     <message>
         <source>The class should have nonempty &apos;Name&apos; attribute.</source>
-        <translation type="unfinished">Klassen kan ikke ha et tomt &quot;Navn&quot; attributt.</translation>
+        <translation>Klassen kan ikke ha et tomt &quot;Navn&quot;-attributt.</translation>
     </message>
     <message>
         <source>The class should have at least one attribute.</source>
-        <translation type="unfinished">Klassen må ha minst en attributt.</translation>
+        <translation>Klassen må ha minst en attributt.</translation>
     </message>
     <message>
         <source>There is a class already having the same identifier.</source>
-        <translation type="unfinished">Det finnes allerede en klasse med denne ID-en.</translation>
+        <translation>Det finnes allerede en klasse med denne ID-en.</translation>
     </message>
     <message>
         <source>Remove translation</source>
-        <translation type="unfinished">Fjern oversettelse</translation>
+        <translation>Fjern oversettelse</translation>
     </message>
     <message>
         <source>Could not load datatype: </source>
-        <translation type="unfinished">Kunne ikke laste datatypen: </translation>
+        <translation>Kunne ikke laste datatypen: </translation>
     </message>
     <message>
         <source>Editing this content class may cause data corruption in your system.</source>
-        <translation type="unfinished">Redigering av dette innholdet kan forårsake innholdsfeil i systemet.</translation>
+        <translation>Redigering av dette innholdet kan forårsake innholdsfeil i systemet.</translation>
     </message>
     <message>
         <source>duplicate attribute placement</source>
-        <translation type="unfinished">dobbel attributtplassering</translation>
+        <translation>dobbel attributtplassering</translation>
     </message>
     <message>
         <source>duplicate attribute identifier</source>
-        <translation type="unfinished">dobbel attributtidentifikator</translation>
+        <translation>dobbel attributtidentifikator</translation>
     </message>
     <message>
         <source>Press &quot;Cancel&quot; to safely exit this operation.</source>
-        <translation type="unfinished">Trykk &quot;Avbryt&quot; for å avslutte denne operasjonen uten å sette systemet i fare.</translation>
+        <translation>Trykk &quot;Avbryt&quot; for å avslutte denne operasjonen uten å sette systemet i fare.</translation>
     </message>
     <message>
         <source>Please contact your eZ Publish administrator to solve this problem.</source>
-        <translation type="unfinished">Vennligst kontakt din eZ Publish-administrator for å løse dette problemet.</translation>
+        <translation>Vennligst kontakt din eZ Publish-administrator for å løse dette problemet.</translation>
     </message>
     <message>
         <source>Class groups</source>
-        <translation type="unfinished">Klassegrupper</translation>
+        <translation>Klassegrupper</translation>
     </message>
     <message>
         <source>Remove classes</source>
-        <translation type="unfinished"></translation>
+        <translation>Fjern klasser</translation>
     </message>
 </context>
 <context>
     <name>kernel/class/edit</name>
     <message>
         <source>New Class</source>
-        <translation type="unfinished">Ny klasse</translation>
+        <translation>Ny klasse</translation>
     </message>
     <message>
         <source>new attribute</source>
-        <translation type="unfinished">ny attributt</translation>
+        <translation>ny attributt</translation>
     </message>
 </context>
 <context>
     <name>kernel/class/groupedit</name>
     <message>
         <source>New Group</source>
-        <translation type="unfinished">Ny gruppe</translation>
+        <translation>Ny gruppe</translation>
     </message>
 </context>
 <context>
     <name>kernel/classes</name>
     <message>
         <source>Approval</source>
-        <translation type="unfinished">Godkjenning</translation>
+        <translation>Godkjenning</translation>
     </message>
     <message>
         <source>Standard</source>
-        <translation type="unfinished">Standard</translation>
+        <translation>Standard</translation>
     </message>
     <message>
         <source>Observer</source>
-        <translation type="unfinished">Observatør</translation>
+        <translation>Observatør</translation>
     </message>
     <message>
         <source>Owner</source>
-        <translation type="unfinished">Eier</translation>
+        <translation>Eier</translation>
     </message>
     <message>
         <source>Approver</source>
-        <translation type="unfinished">Godkjennes av</translation>
+        <translation>Godkjennes av</translation>
     </message>
     <message>
         <source>Author</source>
-        <translation type="unfinished">Forfatter</translation>
+        <translation>Forfatter</translation>
     </message>
     <message>
         <source>Inbox</source>
-        <translation type="unfinished">Innboks</translation>
+        <translation>Innboks</translation>
     </message>
     <message>
         <source>No state yet</source>
-        <translation type="unfinished">Ingen status ennå</translation>
+        <translation>Ingen status ennå</translation>
     </message>
     <message>
         <source>Workflow running</source>
-        <translation type="unfinished">Arbeidsflyt kjører</translation>
+        <translation>Arbeidsflyt kjører</translation>
     </message>
     <message>
         <source>Workflow done</source>
-        <translation type="unfinished">Arbeidsflyt er ferdig</translation>
+        <translation>Arbeidsflyt er ferdig</translation>
     </message>
     <message>
         <source>Workflow failed an event</source>
-        <translation type="unfinished">Arbeidsflyt ble ikke kjørt ved en hendelse</translation>
+        <translation>Arbeidsflyt ble ikke kjørt ved en hendelse</translation>
     </message>
     <message>
         <source>Workflow event deferred to cron job</source>
-        <translation type="unfinished">Arbeidsflyt ble sendt til cron jobb</translation>
+        <translation>Arbeidsflyt ble sendt til cron jobb</translation>
     </message>
     <message>
         <source>Workflow was reset for reuse</source>
-        <translation type="unfinished">Arbeidsflyt ble nullstilt for senere bruk</translation>
+        <translation>Arbeidsflyt ble nullstilt for senere bruk</translation>
     </message>
     <message>
         <source>Accepted event</source>
-        <translation type="unfinished">Aksepterte hendelsen</translation>
+        <translation>Aksepterte hendelsen</translation>
     </message>
     <message>
         <source>Rejected event</source>
-        <translation type="unfinished">Avviste hendelsen</translation>
+        <translation>Avviste hendelsen</translation>
     </message>
     <message>
         <source>Event deferred to cron job</source>
-        <translation type="unfinished">Hendelsen ble sendt til cron jobb</translation>
+        <translation>Hendelsen ble sendt til cron jobb</translation>
     </message>
     <message>
         <source>Event deferred to cron job, event will be rerun</source>
-        <translation type="unfinished">Hendelsen ble sendt til cron jobb, den vil bli kjørt om igjen</translation>
+        <translation>Hendelsen ble sendt til cron jobb, den vil bli kjørt om igjen</translation>
     </message>
     <message>
         <source>Event runs a sub event</source>
-        <translation type="unfinished">Hendelsen kjører en under-hendelse</translation>
+        <translation>Hendelsen kjører en under-hendelse</translation>
     </message>
     <message>
         <source>Workflow fetches template</source>
-        <translation type="unfinished">Arbeidsflyt henter mal</translation>
+        <translation>Arbeidsflyt henter mal</translation>
     </message>
     <message>
         <source>Workflow redirects user view</source>
-        <translation type="unfinished">Arbeidsflyt videresender brukervisning</translation>
+        <translation>Arbeidsflyt videresender brukervisning</translation>
     </message>
     <message>
         <source>New RSS Export</source>
-        <translation type="unfinished">Ny RSS-eksport</translation>
+        <translation>Ny RSS-eksport</translation>
     </message>
     <message>
         <source>Workflow was canceled</source>
-        <translation type="unfinished">Arbeidsflyten ble avbrutt</translation>
+        <translation>Arbeidsflyten ble avbrutt</translation>
     </message>
     <message>
         <source>Canceled whole workflow</source>
-        <translation type="unfinished">Avbrøt hele arbeidsflyten</translation>
+        <translation>Avbrøt hele arbeidsflyten</translation>
     </message>
     <message>
         <source>Replace existing object</source>
-        <translation type="unfinished">Erstatt eksisterende objekt</translation>
+        <translation>Erstatt eksisterende objekt</translation>
     </message>
     <message>
         <source>Skip object</source>
-        <translation type="unfinished">Hopp over objekt</translation>
+        <translation>Hopp over objekt</translation>
     </message>
     <message>
         <source>Keep existing and create a new one</source>
-        <translation type="unfinished">Behold eksisterende klasse, og lag en ny</translation>
+        <translation>Behold eksisterende klasse, og lag en ny</translation>
     </message>
     <message>
         <source>Update existing object</source>
-        <translation type="unfinished">Oppdaterer eksisterende objekt</translation>
+        <translation>Oppdaterer eksisterende objekt</translation>
     </message>
 </context>
 <context>
     <name>kernel/classes/datatypes</name>
     <message>
         <source>At least one author is required.</source>
-        <translation type="unfinished">Oppgi minst en forfatter.</translation>
+        <translation>Oppgi minst en forfatter.</translation>
     </message>
     <message>
         <source>A valid file is required.</source>
-        <translation type="unfinished">Oppgi en gyldig fil.</translation>
+        <translation>Oppgi en gyldig fil.</translation>
     </message>
     <message>
         <source>At least one option is required.</source>
-        <translation type="unfinished">Oppgi minst et valg.</translation>
+        <translation>Oppgi minst et valg.</translation>
     </message>
     <message>
         <source>Add to basket</source>
-        <translation type="unfinished">Legg til i handlekurv</translation>
+        <translation>Legg til i handlekurv</translation>
     </message>
     <message>
         <source>Add to wish list</source>
-        <translation type="unfinished">Legg til i ønskeliste</translation>
+        <translation>Legg til i ønskeliste</translation>
     </message>
     <message>
         <source>A user with this email already exists.</source>
-        <translation type="unfinished">Det er allerede registrert en bruker med denne e-postadressen.</translation>
+        <translation>Det er allerede registrert en bruker med denne e-postadressen.</translation>
     </message>
     <message>
         <source>Checkbox</source>
         <comment>Datatype name</comment>
-        <translation type="unfinished">Avkryssingsboks</translation>
+        <translation>Avkryssingsboks</translation>
     </message>
     <message>
         <source>Enum</source>
         <comment>Datatype name</comment>
-        <translation type="unfinished">Enum</translation>
+        <translation>Enum</translation>
     </message>
     <message>
         <source>Float</source>
         <comment>Datatype name</comment>
-        <translation type="unfinished">Flyttall</translation>
+        <translation>Flyttall</translation>
     </message>
     <message>
         <source>Image</source>
         <comment>Datatype name</comment>
-        <translation type="unfinished">Bilde</translation>
+        <translation>Bilde</translation>
     </message>
     <message>
         <source>Integer</source>
         <comment>Datatype name</comment>
-        <translation type="unfinished">Heltall</translation>
+        <translation>Heltall</translation>
     </message>
     <message>
         <source>ISBN</source>
         <comment>Datatype name</comment>
-        <translation type="unfinished">ISBN</translation>
+        <translation>ISBN</translation>
     </message>
     <message>
         <source>Matrix</source>
         <comment>Datatype name</comment>
-        <translation type="unfinished">Matrise</translation>
+        <translation>Matrise</translation>
     </message>
     <message>
         <source>Media</source>
         <comment>Datatype name</comment>
-        <translation type="unfinished">Media</translation>
+        <translation>Media</translation>
     </message>
     <message>
         <source>Object relation</source>
         <comment>Datatype name</comment>
-        <translation type="unfinished">Objektrelasjon</translation>
+        <translation>Objektrelasjon</translation>
     </message>
     <message>
         <source>Option</source>
         <comment>Datatype name</comment>
-        <translation type="unfinished">Valg</translation>
+        <translation>Valg</translation>
     </message>
     <message>
         <source>Price</source>
         <comment>Datatype name</comment>
-        <translation type="unfinished">Pris</translation>
+        <translation>Pris</translation>
     </message>
     <message>
         <source>Range option</source>
         <comment>Datatype name</comment>
-        <translation type="unfinished">Valg område</translation>
+        <translation>Valg område</translation>
     </message>
     <message>
         <source>Selection</source>
         <comment>Datatype name</comment>
-        <translation type="unfinished">Utvalg</translation>
+        <translation>Utvalg</translation>
     </message>
     <message>
         <source>Text line</source>
         <comment>Datatype name</comment>
-        <translation type="unfinished">Tekstlinje</translation>
+        <translation>Tekstlinje</translation>
     </message>
     <message>
         <source>Subtree subscription</source>
         <comment>Datatype name</comment>
-        <translation type="unfinished">Subtre abonnement</translation>
+        <translation>Subtre abonnement</translation>
     </message>
     <message>
         <source>URL</source>
         <comment>Datatype name</comment>
-        <translation type="unfinished">URL</translation>
+        <translation>URL</translation>
     </message>
     <message>
         <source>User account</source>
         <comment>Datatype name</comment>
-        <translation type="unfinished">Brukerkonto</translation>
+        <translation>Brukerkonto</translation>
     </message>
     <message>
         <source>Identifier</source>
         <comment>Datatype name</comment>
-        <translation type="unfinished">Identifikator</translation>
+        <translation>Identifikator</translation>
     </message>
     <message>
         <source>image</source>
         <comment>Default image name</comment>
-        <translation type="unfinished">bilde</translation>
+        <translation>bilde</translation>
     </message>
     <message>
         <source>Ini Setting</source>
         <comment>Datatype name</comment>
-        <translation type="unfinished">INI-innstilling</translation>
+        <translation>INI-innstilling</translation>
     </message>
     <message>
         <source>Package</source>
         <comment>Datatype name</comment>
-        <translation type="unfinished">Pakke</translation>
+        <translation>Pakke</translation>
     </message>
     <message>
         <source>Send</source>
         <comment>Datatype information collector action</comment>
-        <translation type="unfinished">Send</translation>
+        <translation>Send</translation>
     </message>
     <message>
         <source>Missing objectrelation input.</source>
-        <translation type="unfinished">Mangler informasjon om objektrelasjon.</translation>
+        <translation>Mangler informasjon om objektrelasjon.</translation>
     </message>
     <message>
         <source>Invalid time.</source>
-        <translation type="unfinished">Ugyldig klokkeslett.</translation>
+        <translation>Ugyldig klokkeslett.</translation>
     </message>
     <message>
         <source>The author name must be provided.</source>
-        <translation type="unfinished">Navnet på forfatteren må oppgis.</translation>
+        <translation>Navnet på forfatteren må oppgis.</translation>
     </message>
     <message>
         <source>The email address is not valid.</source>
-        <translation type="unfinished">E-postadressen er ikke gyldig.</translation>
+        <translation>E-postadressen er ikke gyldig.</translation>
     </message>
     <message>
         <source>File uploading is not enabled. Please contact the site administrator to enable it.</source>
-        <translation type="unfinished">Filopplasting er ikke aktivert. For å aktivere det, kontakt administratoren av nettstedet.</translation>
+        <translation>Filopplasting er ikke aktivert. For å aktivere det, kontakt administratoren av nettstedet.</translation>
     </message>
     <message>
         <source>The size of the uploaded file exceeds the limit set by the upload_max_filesize directive in php.ini.</source>
-        <translation type="unfinished">Filen du lastet opp er større enn grensen som er gitt av &quot;upload_max_filesize&quot;-innstilingen i php.ini.</translation>
+        <translation>Filen du lastet opp er større enn grensen som er gitt av &quot;upload_max_filesize&quot;-innstilingen i php.ini.</translation>
     </message>
     <message>
         <source>The size of the uploaded file exceeds the maximum upload size: %1 bytes.</source>
-        <translation type="unfinished">Den opplastede filen er større enn %1 byte, som er maksimum størrelse for opplastede filer.</translation>
+        <translation>Den opplastede filen er større enn %1 bytes, som er maksimum størrelse for opplastede filer.</translation>
     </message>
     <message>
         <source>The email address is empty.</source>
-        <translation type="unfinished">E-postadressen er ikke oppgitt.</translation>
+        <translation>E-postadressen er ikke oppgitt.</translation>
     </message>
     <message>
         <source>The given input is not a floating point number.</source>
-        <translation type="unfinished">Den oppgitte verdien er ikke et desimaltall.</translation>
+        <translation>Den oppgitte verdien er ikke et desimaltall.</translation>
     </message>
     <message>
         <source>The input must be greater than %1</source>
-        <translation type="unfinished">Den oppgitte verdien må være større enn %1</translation>
+        <translation>Den oppgitte verdien må være større enn %1</translation>
     </message>
     <message>
         <source>The input must be less than %1</source>
-        <translation type="unfinished">Den oppgitte verdien må være mindre enn %1</translation>
+        <translation>Den oppgitte verdien må være mindre enn %1</translation>
     </message>
     <message>
         <source>The input is not in defined range %1 - %2</source>
-        <translation type="unfinished">Den oppgitte verdien er ikke innenfor det definerte området %1 - %2</translation>
+        <translation>Den oppgitte verdien er ikke innenfor det definerte området %1 - %2</translation>
     </message>
     <message>
         <source>A valid image file is required.</source>
-        <translation type="unfinished">Oppgi en gyldig bildefil.</translation>
+        <translation>Oppgi en gyldig bildefil.</translation>
     </message>
     <message>
         <source>The size of the uploaded image exceeds limit set by upload_max_filesize directive in php.ini. Please contact the site administrator.</source>
-        <translation type="unfinished">Bildefilen du lastet opp er større enn grensen som er gitt av &quot;upload_max_filesize&quot;-innstilingen i php.ini. Vennligst kontakt nettstedsadministratoren.</translation>
+        <translation>Bildefilen du lastet opp er større enn grensen som er gitt av &quot;upload_max_filesize&quot;-innstilingen i php.ini. Vennligst kontakt nettstedsadministratoren.</translation>
     </message>
     <message>
         <source>The size of the uploaded file exceeds the limit set for this site: %1 bytes.</source>
-        <translation type="unfinished">Den opplastede filen er større enn %1 byte, som er maksimum størrelse for opplastede filer.</translation>
+        <translation>Den opplastede filen er større enn %1 bytes, som er maksimum størrelse for opplastede filer.</translation>
     </message>
     <message>
         <source>Could not locate the ini file.</source>
-        <translation type="unfinished">Fant ikke INI-filen.</translation>
+        <translation>Fant ikke INI-filen.</translation>
     </message>
     <message>
         <source>The input is not a valid integer.</source>
-        <translation type="unfinished">Den oppgitte verdien er ikke et gyldig heltall.</translation>
+        <translation>Den oppgitte verdien er ikke et gyldig heltall.</translation>
     </message>
     <message>
         <source>The number must be greater than %1</source>
-        <translation type="unfinished">Det oppgitte nummeret må være større enn %1</translation>
+        <translation>Det oppgitte nummeret må være større enn %1</translation>
     </message>
     <message>
         <source>The number must be less than %1</source>
-        <translation type="unfinished">Det oppgitte nummeret må være mindre enn %1</translation>
+        <translation>Det oppgitte nummeret må være mindre enn %1</translation>
     </message>
     <message>
         <source>The number is not within the required range %1 - %2</source>
-        <translation type="unfinished">Det oppgitte nummeret er ikke innenfor det definerte området %1 - %2</translation>
+        <translation>Det oppgitte nummeret er ikke innenfor det definerte området %1 - %2</translation>
     </message>
     <message>
         <source>The ISBN number is not correct. Please check the input for mistakes.</source>
-        <translation type="unfinished">ISBN-nummeret er ikke korrekt. Vennligst rett opp alle feil.</translation>
+        <translation>ISBN-nummeret er ikke korrekt. Vennligst rett opp alle feil.</translation>
     </message>
     <message>
         <source>A valid media file is required.</source>
-        <translation type="unfinished">Oppgi en gyldig mediefil.</translation>
+        <translation>Oppgi en gyldig mediefil.</translation>
     </message>
     <message>
         <source>The size of the uploaded file exceeds the limit set by upload_max_filesize directive in php.ini. Please contact the site administrator.</source>
-        <translation type="unfinished">Filen du lastet opp er større enn grensen som er gitt av &quot;upload_max_filesize&quot;-innstilingen i php.ini. Vennligst kontakt nettstedsadministratoren.</translation>
+        <translation>Filen du lastet opp er større enn grensen som er gitt av &quot;upload_max_filesize&quot;-innstilingen i php.ini. Vennligst kontakt nettstedsadministratoren.</translation>
     </message>
     <message>
         <source>The size of the uploaded file exceeds site maximum: %1 bytes.</source>
-        <translation type="unfinished">Den opplastede filen er større enn %1 byte, som er maksimum størrelse for opplastede filer.</translation>
+        <translation>Den opplastede filen er større enn %1 bytes, som er maksimum størrelse for opplastede filer.</translation>
     </message>
     <message>
         <source>The option value must be provided.</source>
-        <translation type="unfinished">Du må oppgi opsjonsverdien.</translation>
+        <translation>Du må oppgi opsjonsverdien.</translation>
     </message>
     <message>
         <source>The additional price for the multioption value is not valid.</source>
-        <translation type="unfinished">Ekstraprisen for flervalgsverdien er ikke gyldig.</translation>
+        <translation>Ekstraprisen for flervalgsverdien er ikke gyldig.</translation>
     </message>
     <message>
         <source>The Additional price value is not valid.</source>
-        <translation type="unfinished">Ekstraprisen er ikke gyldig.</translation>
+        <translation>Ekstraprisen er ikke gyldig.</translation>
     </message>
     <message>
         <source>Input required.</source>
-        <translation type="unfinished">Innhold er påkrevet.</translation>
+        <translation>Innhold er påkrevet.</translation>
     </message>
     <message>
         <source>The input text is too long. The maximum number of characters allowed is %1.</source>
-        <translation type="unfinished">Den oppgitte teksten er for lang. Maksimalt antall tegn er %1.</translation>
+        <translation>Den oppgitte teksten er for lang. Maksimalt antall tegn er %1.</translation>
     </message>
     <message>
         <source>Time input required.</source>
-        <translation type="unfinished">Du må oppgi et klokkeslett.</translation>
+        <translation>Du må oppgi et klokkeslett.</translation>
     </message>
     <message>
         <source>The username must be specified.</source>
-        <translation type="unfinished">Brukernavnet må oppgis.</translation>
+        <translation>Brukernavnet må oppgis.</translation>
     </message>
     <message>
         <source>The username already exists, please choose another one.</source>
-        <translation type="unfinished">Det oppgitte brukernavnet er allerede i bruk, vennligst oppgi et annet brukernavn.</translation>
+        <translation>Det oppgitte brukernavnet er allerede i bruk, vennligst oppgi et annet brukernavn.</translation>
     </message>
     <message>
         <source>The passwords do not match.</source>
         <comment>eZUserType</comment>
-        <translation type="unfinished">Passordene stemmer ikke overens.</translation>
+        <translation>Passordene stemmer ikke overens.</translation>
     </message>
     <message>
         <source>Cannot remove the account:</source>
-        <translation type="unfinished">Kan ikke fjerne brukerkontoen:</translation>
+        <translation>Kan ikke fjerne brukerkontoen:</translation>
     </message>
     <message>
         <source>The account owner is currently logged in.</source>
-        <translation type="unfinished">Eieren av brukerkontoen er logget inn.</translation>
+        <translation>Eieren av brukerkontoen er logget inn.</translation>
     </message>
     <message>
         <source>The account is currently used by the anonymous user.</source>
-        <translation type="unfinished">Brukerkontoen tilhører den anonyme brukeren.</translation>
+        <translation>Brukerkontoen tilhører den anonyme brukeren.</translation>
     </message>
     <message>
         <source>Multi-option</source>
         <comment>Datatype name</comment>
-        <translation type="unfinished">Flervalg</translation>
+        <translation>Flervalg</translation>
     </message>
     <message>
         <source>Authors</source>
         <comment>Datatype name</comment>
-        <translation type="unfinished">Forfattere</translation>
+        <translation>Forfattere</translation>
     </message>
     <message>
         <source>File</source>
         <comment>Datatype name</comment>
-        <translation type="unfinished">Fil</translation>
+        <translation>Fil</translation>
     </message>
     <message>
         <source>Date</source>
         <comment>Datatype name</comment>
-        <translation type="unfinished">Dato</translation>
+        <translation>Dato</translation>
     </message>
     <message>
         <source>Missing date input.</source>
-        <translation type="unfinished">Mangler dato.</translation>
+        <translation>Mangler dato.</translation>
     </message>
     <message>
         <source>Date and time</source>
         <comment>Datatype name</comment>
-        <translation type="unfinished">Dato og tid</translation>
+        <translation>Dato og tid</translation>
     </message>
     <message>
         <source>Missing datetime input.</source>
-        <translation type="unfinished">Mangler dato og tid.</translation>
+        <translation>Mangler dato og tid.</translation>
     </message>
     <message>
         <source>At least one field should be chosen.</source>
-        <translation type="unfinished">Du må velge minst ett felt.</translation>
+        <translation>Du må velge minst ett felt.</translation>
     </message>
     <message>
         <source>Keywords</source>
         <comment>Datatype name</comment>
-        <translation type="unfinished">Nøkkelord</translation>
+        <translation>Nøkkelord</translation>
     </message>
     <message>
         <source>Object relations</source>
         <comment>Datatype name</comment>
-        <translation type="unfinished">Objektrelasjoner</translation>
+        <translation>Objektrelasjoner</translation>
     </message>
     <message>
         <source>Text block</source>
         <comment>Datatype name</comment>
-        <translation type="unfinished">Tekstblokk</translation>
+        <translation>Tekstblokk</translation>
     </message>
     <message>
         <source>Time</source>
         <comment>Datatype name</comment>
-        <translation type="unfinished">Tid</translation>
+        <translation>Tid</translation>
     </message>
     <message>
         <source>XML block</source>
         <comment>Datatype name</comment>
-        <translation type="unfinished">XML blokk</translation>
+        <translation>XML blokk</translation>
     </message>
     <message>
         <source>Object %1 can not be embeded to itself.</source>
-        <translation type="unfinished">Objekt %1 kan ikke vises inni seg selv.</translation>
+        <translation>Objekt %1 kan ikke vises inne i seg selv.</translation>
     </message>
     <message>
         <source>Country</source>
         <comment>Datatype name</comment>
-        <translation type="unfinished">Land</translation>
+        <translation>Land</translation>
     </message>
     <message>
         <source>Date is not valid.</source>
-        <translation type="unfinished">Datoen er ikke gyldig.</translation>
+        <translation>Datoen er ikke gyldig.</translation>
     </message>
     <message>
         <source>Time is not valid.</source>
-        <translation type="unfinished">Klokkeslettet er ikke gyldig.</translation>
+        <translation>Klokkeslettet er ikke gyldig.</translation>
     </message>
     <message>
         <source>The image file must have non-zero size.</source>
-        <translation type="unfinished">Størrelsen på bildefilen må være mer enn null.</translation>
+        <translation>Størrelsen på bildefilen må være mer enn null.</translation>
     </message>
     <message>
         <source>Wrong text field value.</source>
-        <translation type="unfinished">Feil verdi i tekstfeltet.</translation>
+        <translation>Feil verdi i tekstfeltet.</translation>
     </message>
     <message>
         <source>Missing matrix input.</source>
-        <translation type="unfinished">Mangler verdi i matrisen.</translation>
+        <translation>Mangler verdi i matrisen.</translation>
     </message>
     <message>
         <source>Multi-price</source>
         <comment>Datatype name</comment>
-        <translation type="unfinished">Multipris</translation>
+        <translation>Multipris</translation>
     </message>
     <message>
         <source>Invalid price for &apos;%currencyCode&apos; currency </source>
-        <translation type="unfinished">Ugyldig pris for valutaen &apos;%currencyCode&apos; </translation>
+        <translation>Ugyldig pris for valutaen &apos;%currencyCode&apos; </translation>
     </message>
     <message>
         <source>Missing objectrelation list input.</source>
-        <translation type="unfinished">Mangler objektrelasjon.</translation>
+        <translation>Mangler objektrelasjon.</translation>
     </message>
     <message>
         <source>NAME is required.</source>
-        <translation type="unfinished">NAME er påkrevet.</translation>
+        <translation>NAME er påkrevet.</translation>
     </message>
     <message>
         <source>Invalid price.</source>
-        <translation type="unfinished">Ugyldig pris.</translation>
+        <translation>Ugyldig pris.</translation>
     </message>
     <message>
         <source>Product category</source>
         <comment>Datatype name</comment>
-        <translation type="unfinished">Produktkategori</translation>
+        <translation>Produktkategori</translation>
     </message>
     <message>
         <source>Content required</source>
-        <translation type="unfinished">Innhold er påkrevet</translation>
+        <translation>Innhold er påkrevet</translation>
     </message>
     <message>
         <source>Dynamic VAT cannot be included.</source>
-        <translation type="unfinished">Dynamisk MVA kan ikke inkluderes.</translation>
+        <translation>Dynamisk MVA kan ikke inkluderes.</translation>
     </message>
     <message>
         <source>Missing range option input.</source>
-        <translation type="unfinished">Mangler opsjonsverdi.</translation>
+        <translation>Mangler opsjonsverdi.</translation>
     </message>
     <message>
         <source>Option set name is required.</source>
-        <translation type="unfinished">Du må oppgi et opsjonsnavn.</translation>
+        <translation>Du må oppgi et opsjonsnavn.</translation>
     </message>
     <message>
         <source>The password must be at least %1 characters long.</source>
-        <translation type="unfinished">Passordet må være minst %1 tegn langt.</translation>
+        <translation>Passordet må være minst %1 tegn langt.</translation>
     </message>
     <message>
         <source>Invalid reference in &amp;lt;embed&amp;gt; tag. Note that &lt;embed&gt; tag supports only &apos;eznode&apos; and &apos;ezobject&apos; protocols.</source>
-        <translation type="unfinished">Ugyldig referanse i &amp;lt;embed&amp;gt;-tagg. Merk at &lt;embed&gt;-taggen støtter kun protokollene &apos;eznode&apos; og &apos;ezobject&apos;.</translation>
+        <translation>Ugyldig referanse i &amp;lt;embed&amp;gt;-tagg. Merk at &lt;embed&gt;-taggen støtter kun protokollene &apos;eznode&apos; og &apos;ezobject&apos;.</translation>
     </message>
     <message>
         <source>The ISBN number is not correct. </source>
-        <translation type="unfinished">ISBN-nummeret er ugyldig. </translation>
+        <translation>ISBN-nummeret er ugyldig. </translation>
     </message>
     <message>
         <source>13 digit ISBN must start with 978 or 979</source>
-        <translation type="unfinished">ISBN-nummer på 13 tegn må starte med 978 eller 979</translation>
+        <translation>ISBN-nummer på 13 tegn må starte med 978 eller 979</translation>
     </message>
     <message>
         <source>ISBN length is invalid</source>
-        <translation type="unfinished">Ugyldig lengde på ISBN</translation>
+        <translation>Ugyldig lengde på ISBN</translation>
     </message>
     <message>
         <source>The registrant element of the ISBN number does not exist.</source>
-        <translation type="unfinished">Registrantelementet av ISBN-nummeret mangler.</translation>
+        <translation>Registrantelementet av ISBN-nummeret mangler.</translation>
     </message>
     <message>
         <source>The ISBN number has a incorrect registration group number.</source>
-        <translation type="unfinished">ISBN-nummeret har feil registreringsgruppenummer.</translation>
+        <translation>ISBN-nummeret har feil registreringsgruppenummer.</translation>
     </message>
     <message>
         <source>The group element of the ISBN number does not exist.</source>
-        <translation type="unfinished">Gruppeelementet av ISBN-nummeret mangler.</translation>
+        <translation>Gruppeelementet av ISBN-nummeret mangler.</translation>
     </message>
     <message>
         <source>%1 is not a valid prefix of the ISBN number.</source>
-        <translation type="unfinished">%1 er ikke et gyldig prefiks for ISBN-nummeret.</translation>
+        <translation>%1 er ikke et gyldig prefiks for ISBN-nummeret.</translation>
     </message>
     <message>
         <source>All ISBN 13 characters need to be numeric</source>
-        <translation type="unfinished">Alle ISBN13-tegn må være tall</translation>
+        <translation>Alle ISBN13-tegn må være tall</translation>
     </message>
     <message>
         <source>Bad checksum, last digit should be %1</source>
-        <translation type="unfinished">Feil sjekksum, siste siffer skal være %1</translation>
+        <translation>Feil sjekksum, siste siffer skal være %1</translation>
     </message>
     <message>
         <source>The ISBN number should be ISBN13, but seems to be ISBN10.</source>
-        <translation type="unfinished">ISBN-nummeret må være ISBN13, men ser ut til å være ISBN10.</translation>
+        <translation>ISBN-nummeret må være ISBN13, men ser ut til å være ISBN10.</translation>
     </message>
     <message>
         <source>Multi-option2</source>
         <comment>Datatype name</comment>
-        <translation type="unfinished">Flervalg 2</translation>
+        <translation>Flervalg 2</translation>
     </message>
     <message>
         <source>Email</source>
         <comment>Datatype name</comment>
-        <translation type="unfinished">E-post</translation>
+        <translation>E-post</translation>
     </message>
     <message>
         <source>You cannot choose option value &quot;%1&quot; from &quot;%2&quot; because it is unselectable </source>
-        <translation type="unfinished">Du kan ikke velge opsjonsverdien  &quot;%1&quot; fra &quot;%2&quot; fordi den ikke er valgbar </translation>
+        <translation>Du kan ikke velge opsjonsverdien  &quot;%1&quot; fra &quot;%2&quot; fordi den ikke er valgbar </translation>
     </message>
     <message>
         <source>You cannot choose option value &quot;%1&quot; from &quot;%2&quot;  
  if you selected option &quot;%3&quot; from &quot;%4&quot; </source>
-        <translation type="unfinished">Du kan ikke velge opsjonsverdien &quot;%1&quot; fra &quot;%2&quot;   hvis du har valgt &quot;%3&quot; fra &quot;%4&quot; </translation>
+        <translation>Du kan ikke velge opsjonsverdien &quot;%1&quot; fra &quot;%2&quot;   hvis du har valgt &quot;%3&quot; fra &quot;%4&quot; </translation>
     </message>
     <message>
         <source>The password must not be &quot;password&quot;.</source>
-        <translation type="unfinished">Passordet kan ikke være &quot;password&quot;.</translation>
+        <translation>Passordet kan ikke være &quot;password&quot;.</translation>
     </message>
     <message>
         <source>The account is currently used the administrator user.</source>
-        <translation type="unfinished">Brukerkontoen tilhører administratorbrukeren.</translation>
+        <translation>Brukerkontoen tilhører administratorbrukeren.</translation>
     </message>
     <message>
         <source>You cannot remove the last class holding user accounts.</source>
-        <translation type="unfinished">Du kan ikke fjerne klassen som inneholder brukerkontoene.</translation>
+        <translation>Du kan ikke fjerne klassen som inneholder brukerkontoene.</translation>
     </message>
     <message>
         <source>Missing email input.</source>
-        <translation type="unfinished">Mangler e-post.</translation>
+        <translation>Mangler e-post.</translation>
     </message>
     <message>
         <source>Input required</source>
-        <translation type="unfinished">Innhold er påkrevet</translation>
+        <translation>Innhold er påkrevet</translation>
     </message>
     <message>
         <source>The password cannot be empty.</source>
         <comment>eZUserType</comment>
-        <translation type="unfinished"></translation>
+        <translation>Du må oppgi et passord.</translation>
     </message>
 </context>
 <context>
     <name>kernel/classes/datatypes/ezbinaryfile</name>
     <message>
         <source>Failed to store file %filename. Please contact the site administrator.</source>
-        <translation type="unfinished">Kunne ikke lagre filen %filename. Vennligst kontakt administratoren av nettstedet.</translation>
+        <translation>Kunne ikke lagre filen %filename. Vennligst kontakt administratoren av nettstedet.</translation>
     </message>
 </context>
 <context>
     <name>kernel/classes/datatypes/ezimage</name>
     <message>
         <source>Failed to fetch Image Handler. Please contact the site administrator.</source>
-        <translation type="unfinished">Kunne ikke hente bildehåndterer. Vennligst kontakt administratoren av nettstedet.</translation>
+        <translation>Kunne ikke hente bildehåndterer. Vennligst kontakt administratoren av nettstedet.</translation>
     </message>
 </context>
 <context>
     <name>kernel/classes/datatypes/ezmedia</name>
     <message>
         <source>Failed to store media file %filename. Please contact the site administrator.</source>
-        <translation type="unfinished">Kunne ikke lagre mediefilen %filename. Vennligst kontakt administratoren av nettstedet.</translation>
+        <translation>Kunne ikke lagre mediefilen %filename. Vennligst kontakt administratoren av nettstedet.</translation>
     </message>
 </context>
 <context>
     <name>kernel/classes/datatypes/ezxmltext</name>
     <message>
         <source>Wrong closing tag</source>
-        <translation type="unfinished">Feil slutt-tag</translation>
+        <translation>Feil slutt-tag</translation>
     </message>
     <message>
         <source>Wrong closing tag : &amp;lt;/%1&amp;gt;.</source>
-        <translation type="unfinished">Feil slutt-tag: &amp;lt;/%1&amp;gt;.</translation>
+        <translation>Feil slutt-tag: &amp;lt;/%1&amp;gt;.</translation>
     </message>
     <message>
         <source>Wrong opening tag</source>
-        <translation type="unfinished">Feil start-tag</translation>
+        <translation>Feil start-tag</translation>
     </message>
     <message>
         <source>Unknown tag: &amp;lt;%1&amp;gt;.</source>
-        <translation type="unfinished">Ukjent tag: &amp;lt;%1&amp;gt;.</translation>
+        <translation>Ukjent tag: &amp;lt;%1&amp;gt;.</translation>
     </message>
     <message>
         <source>Can&apos;t convert tag&apos;s name: &amp;lt;%1&amp;gt;.</source>
-        <translation type="unfinished">Kan ikke konvertere tagnavn: &amp;lt;%1&amp;gt;.</translation>
+        <translation>Kan ikke konvertere tagnavn: &amp;lt;%1&amp;gt;.</translation>
     </message>
     <message>
         <source>Class &apos;%1&apos; is not allowed for element &amp;lt;%2&amp;gt; (check content.ini).</source>
-        <translation type="unfinished">Klassen &apos;%1&apos; er ikke tillatt for elementet &amp;lt;%2&amp;gt; (sjekk content.ini).</translation>
+        <translation>Klassen &apos;%1&apos; er ikke tillatt for elementet &amp;lt;%2&amp;gt; (sjekk content.ini).</translation>
     </message>
     <message>
         <source>Required attribute &apos;%1&apos; is not presented in tag &amp;lt;%2&amp;gt;.</source>
-        <translation type="unfinished">Obligatorisk attributt &apos;%1&apos; mangler i tag &amp;lt;%2&amp;gt;.</translation>
+        <translation>Obligatorisk attributt &apos;%1&apos; mangler i tag &amp;lt;%2&amp;gt;.</translation>
     </message>
     <message>
         <source>Custom tag &apos;%1&apos; is not allowed.</source>
-        <translation type="unfinished">Spesial-tag &apos;%1&apos; er ikke tillatt.</translation>
+        <translation>Spesial-tag &apos;%1&apos; er ikke tillatt.</translation>
     </message>
     <message>
         <source>&amp;lt;%1&amp;gt; tag can&apos;t be empty.</source>
-        <translation type="unfinished">Tag-en &amp;lt;%1&amp;gt; kan ikke være tom.</translation>
+        <translation>Tag-en &amp;lt;%1&amp;gt; kan ikke være tom.</translation>
     </message>
     <message>
         <source>%1 is not allowed to be a child of &amp;lt;%2&amp;gt;.</source>
-        <translation type="unfinished">%1 kan ikke plasseres under &amp;lt;%2&amp;gt;.</translation>
+        <translation>%1 kan ikke plasseres under &amp;lt;%2&amp;gt;.</translation>
     </message>
     <message>
         <source>Attribute &apos;%1&apos; is not allowed in &amp;lt;%2&amp;gt; element.</source>
-        <translation type="unfinished">Attributten &apos;%1&apos; er ikke tillatt i elementet &amp;lt;%2&amp;gt;.</translation>
+        <translation>Attributten &apos;%1&apos; er ikke tillatt i elementet &amp;lt;%2&amp;gt;.</translation>
     </message>
     <message>
         <source>Incorrect headers nesting</source>
-        <translation type="unfinished">Ugyldig nesting av headere</translation>
+        <translation>Ugyldig nesting av headere</translation>
     </message>
     <message>
         <source>Node &apos;%1&apos; does not exist.</source>
-        <translation type="unfinished">Noden &apos;%1&apos; eksisterer ikke.</translation>
+        <translation>Noden &apos;%1&apos; eksisterer ikke.</translation>
     </message>
     <message>
         <source>Using scripts in links is not allowed, link &apos;%1&apos; has been removed</source>
-        <translation type="unfinished">Bruk av skript i lenker er ikke tillatt, lenken &apos;%1&apos; er fjernet</translation>
+        <translation>Bruk av skript i lenker er ikke tillatt, lenken &apos;%1&apos; er fjernet</translation>
     </message>
     <message>
         <source>Invalid e-mail address: &apos;%1&apos;</source>
-        <translation type="unfinished">Ugyldig e-postadresse: &apos;%1&apos;</translation>
+        <translation>Ugyldig e-postadresse: &apos;%1&apos;</translation>
     </message>
     <message>
         <source>Object %1 can not be embeded to itself.</source>
-        <translation type="unfinished">Objekt %1 kan ikke vises inni seg selv.</translation>
+        <translation>Objekt %1 kan ikke vises inne i seg selv.</translation>
     </message>
 </context>
 <context>
     <name>kernel/collaboration</name>
     <message>
         <source>Collaboration custom action</source>
-        <translation type="unfinished">Spesialhandling</translation>
+        <translation>Spesialhandling</translation>
     </message>
     <message>
         <source>Collaboration</source>
-        <translation type="unfinished">Samarbeid</translation>
+        <translation>Samarbeid</translation>
     </message>
 </context>
 <context>
     <name>kernel/content</name>
     <message>
         <source>Remove object</source>
-        <translation type="unfinished">Fjern objekt</translation>
+        <translation>Fjern objekt</translation>
     </message>
     <message>
         <source>My drafts</source>
-        <translation type="unfinished">Mine utkast</translation>
+        <translation>Mine utkast</translation>
     </message>
     <message>
         <source>Translation</source>
-        <translation type="unfinished">Oversettelse</translation>
+        <translation>Oversettelse</translation>
     </message>
     <message>
         <source>Content translations</source>
-        <translation type="unfinished">Innholdsoversettelser</translation>
+        <translation>Innholdsoversettelser</translation>
     </message>
     <message>
         <source>Trash</source>
-        <translation type="unfinished">Papirkurv</translation>
+        <translation>Papirkurv</translation>
     </message>
     <message>
         <source>Search</source>
-        <translation type="unfinished">Søk</translation>
+        <translation>Søk</translation>
     </message>
     <message>
         <source>Advanced</source>
-        <translation type="unfinished">Avansert</translation>
+        <translation>Avansert</translation>
     </message>
     <message>
         <source>Content</source>
-        <translation type="unfinished">Innhold</translation>
+        <translation>Innhold</translation>
     </message>
     <message>
         <source>Copy</source>
-        <translation type="unfinished">Kopier</translation>
+        <translation>Kopier</translation>
     </message>
     <message>
         <source>Remove editing version</source>
-        <translation type="unfinished">Fjern redigeringsversjon</translation>
+        <translation>Fjern redigeringsversjon</translation>
     </message>
     <message>
         <source>Versions</source>
-        <translation type="unfinished">Versjoner</translation>
+        <translation>Versjoner</translation>
     </message>
     <message>
         <source>No main node selected, please select one.</source>
-        <translation type="unfinished">Ingen hovednode er valgt, vennligst velg en hovednode.</translation>
+        <translation>Ingen hovednode er valgt, vennligst velg en hovednode.</translation>
     </message>
     <message>
         <source>Tip from %1: %2</source>
-        <translation type="unfinished">Tips fra %1: %2</translation>
+        <translation>Tips fra %1: %2</translation>
     </message>
     <message>
         <source>The email address of the sender is not valid</source>
-        <translation type="unfinished">Avsenderadressen er ikke gyldig</translation>
+        <translation>Avsenderadressen er ikke gyldig</translation>
     </message>
     <message>
         <source>The email address of the receiver is not valid</source>
-        <translation type="unfinished">Mottakeradressen er ikke gyldig</translation>
+        <translation>Mottakeradressen er ikke gyldig</translation>
     </message>
     <message>
         <source>Tip a friend</source>
-        <translation type="unfinished">Tips en venn</translation>
+        <translation>Tips en venn</translation>
     </message>
     <message>
         <source>My bookmarks</source>
-        <translation type="unfinished">Mine bokmerker</translation>
+        <translation>Mine bokmerker</translation>
     </message>
     <message>
         <source>My pending list</source>
-        <translation type="unfinished">Publiseringskø</translation>
+        <translation>Publiseringskø</translation>
     </message>
     <message>
         <source>Keywords</source>
-        <translation type="unfinished">Nøkkelord</translation>
+        <translation>Nøkkelord</translation>
     </message>
     <message>
         <source>Remove location</source>
-        <translation type="unfinished">Fjern plassering</translation>
+        <translation>Fjern plassering</translation>
     </message>
     <message>
         <source>Media</source>
-        <translation type="unfinished">Media</translation>
+        <translation>Media</translation>
     </message>
     <message>
         <source>New content</source>
-        <translation type="unfinished">Nytt innhold</translation>
+        <translation>Nytt innhold</translation>
     </message>
     <message>
         <source>You are not allowed to place this object under: %1</source>
-        <translation type="unfinished">Du har ikke tilgang til å plassere dette objekter i: %1</translation>
+        <translation>Du har ikke tilgang til å plassere dette objekter i: %1</translation>
     </message>
     <message>
         <source>Top Level Nodes</source>
-        <translation type="unfinished">Toppnivånoder</translation>
+        <translation>Toppnivånoder</translation>
     </message>
     <message>
         <source>Hidden</source>
-        <translation type="unfinished">Skjult</translation>
+        <translation>Skjult</translation>
     </message>
     <message>
         <source>Hidden by superior</source>
-        <translation type="unfinished">Skjult av overordnet</translation>
+        <translation>Skjult av overordnet</translation>
     </message>
     <message>
         <source>Visible</source>
-        <translation type="unfinished">Synlig</translation>
+        <translation>Synlig</translation>
     </message>
     <message>
         <source>A node in the node assignment list has been deleted.</source>
-        <translation type="unfinished">En node i nodelisten har blitt slettet.</translation>
+        <translation>En node i nodelisten har blitt slettet.</translation>
     </message>
     <message>
         <source>&quot;$contentObjectName&quot;: Sub items that are used by other objects</source>
-        <translation type="unfinished">&quot;$contentObjectName&quot;: Undernoder som brukes av andre objekter</translation>
+        <translation>&quot;$contentObjectName&quot;: Undernoder som brukes av andre objekter</translation>
     </message>
     <message>
         <source>Differences</source>
-        <translation type="unfinished">Forskjeller</translation>
+        <translation>Forskjeller</translation>
     </message>
     <message>
         <source>Edit</source>
-        <translation type="unfinished">Rediger</translation>
+        <translation>Rediger</translation>
     </message>
     <message>
         <source>Remove translation</source>
-        <translation type="unfinished">Fjern oversettelse</translation>
+        <translation>Fjern oversettelse</translation>
     </message>
     <message>
         <source>Languages</source>
-        <translation type="unfinished">Språk</translation>
+        <translation>Språk</translation>
     </message>
     <message>
         <source>Class identifier</source>
-        <translation type="unfinished">Klasseidentifikator</translation>
+        <translation>Klasseidentifikator</translation>
     </message>
     <message>
         <source>Class name</source>
-        <translation type="unfinished">Klassenavn</translation>
+        <translation>Klassenavn</translation>
     </message>
     <message>
         <source>Depth</source>
-        <translation type="unfinished">Dybde</translation>
+        <translation>Dybde</translation>
     </message>
     <message>
         <source>Modified</source>
-        <translation type="unfinished">Endringstidspunkt</translation>
+        <translation>Endringstidspunkt</translation>
     </message>
     <message>
         <source>Name</source>
-        <translation type="unfinished">Navn</translation>
+        <translation>Navn</translation>
     </message>
     <message>
         <source>Path String</source>
-        <translation type="unfinished">Sti</translation>
+        <translation>Sti</translation>
     </message>
     <message>
         <source>Priority</source>
-        <translation type="unfinished">Prioritet</translation>
+        <translation>Prioritet</translation>
     </message>
     <message>
         <source>Published</source>
-        <translation type="unfinished">Publisert</translation>
+        <translation>Publisert</translation>
     </message>
     <message>
         <source>Section</source>
-        <translation type="unfinished">Seksjon</translation>
+        <translation>Seksjon</translation>
     </message>
     <message>
         <source>History</source>
-        <translation type="unfinished">Historie</translation>
+        <translation>Historie</translation>
     </message>
     <message>
         <source>Version preview</source>
-        <translation type="unfinished">Forhåndsvisning av versjon</translation>
+        <translation>Forhåndsvisning av versjon</translation>
     </message>
     <message>
         <source>You do not have enough rights to access the requested node</source>
-        <translation type="unfinished">Du har ikke tilgang til den angitte noden</translation>
+        <translation>Du har ikke tilgang til den angitte noden</translation>
     </message>
     <message>
         <source>Copy subtree</source>
-        <translation type="unfinished">Kopier subtre</translation>
+        <translation>Kopier subtre</translation>
     </message>
     <message>
         <source>The receiver has already received the maximum number of tipafriend mails the last hours</source>
-        <translation type="unfinished">Mottakeren har allerede mottatt maksimalt tillatt antall &quot;Tips en venn&quot;-mailer de siste timene</translation>
+        <translation>Mottakeren har allerede mottatt maksimalt tillatt antall &quot;Tips en venn&quot;-e-poster de siste timene</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation type="unfinished">Feil</translation>
+        <translation>Feil</translation>
     </message>
     <message>
         <source>The request sent to the server was too big to be accepted. This probably means that you uploaded a file which was too big. The maximum allowed request size is %max_size_string.</source>
-        <translation type="unfinished">Du har sendt en forspørsel som er for stor til at serveren kan akseptere den. Dette betyr vanligvis at du har forsøkt å laste opp en fil som er for stor. Forespørsler kan ikke være større enn %max_size_string.</translation>
+        <translation>Du har sendt en forspørsel som er for stor til at serveren kan akseptere den. Dette betyr vanligvis at du har forsøkt å laste opp en fil som er for stor. Forespørsler kan ikke være større enn %max_size_string.</translation>
     </message>
     <message>
-        <source>You have already sent a tipafriend mail to this reciver regarding &apos;$nodeName&apos; content</source>
-        <translation type="unfinished">Du har allerede sendt en &quot;Tips en venn&quot;-e-post om &apos;$nodeName&apos; til denne mottakeren</translation>
+        <source>You have already sent a tipafriend mail to this receiver regarding &apos;$nodeName&apos; content</source>
+        <translation type="obsolete">Du har allerede sendt en &quot;Tips en venn&quot;-e-post om &apos;$nodeName&apos; til denne mottakeren</translation>
     </message>
     <message>
         <source>Dashboard</source>
-        <translation type="unfinished"></translation>
+        <translation>Oversikt</translation>
+    </message>
+    <message>
+        <source>You have already sent a tipafriend mail to this receiver regarding &apos;%1&apos; content</source>
+        <translation>Du har allerede sendt en &quot;Tips en venn&quot;-e-post til denne mottakeren angående innholdet &apos;%1&apos;</translation>
     </message>
 </context>
 <context>
     <name>kernel/content/copysubtree</name>
     <message>
         <source>Cannot publish object (ID = %1).</source>
-        <translation type="unfinished">Kan ikke publisere objekt (ID = %1).</translation>
+        <translation type="obsolete">Kan ikke publisere objekt (ID = %1).</translation>
     </message>
     <message>
         <source>Fatal error: cannot get subtree main node (ID = %1).</source>
-        <translation type="unfinished">Fatal feil: kunne ikke finne hovedplasseringen til noden (ID = %1).</translation>
+        <translation>Fatal feil: kunne ikke finne hovedplasseringen til noden (ID = %1).</translation>
     </message>
     <message>
         <source>Fatal error: cannot get destination node (ID = %1).</source>
-        <translation type="unfinished">Fatal feil: kunne ikke finne mottakernoden (ID = %1).</translation>
+        <translation>Fatal feil: kunne ikke finne mottakernoden (ID = %1).</translation>
     </message>
     <message>
         <source>Number of nodes of source subtree - %1</source>
-        <translation type="unfinished">Antall noder i kildetreet - %1</translation>
+        <translation>Antall noder i kildetreet - %1</translation>
     </message>
     <message>
         <source>Subtree was not copied.</source>
-        <translation type="unfinished">Subtreet ble kopiert.</translation>
+        <translation>Subtreet ble kopiert.</translation>
     </message>
     <message>
         <source>Number of copied nodes - %1</source>
-        <translation type="unfinished">Antall kopierte noder - %1</translation>
+        <translation>Antall kopierte noder - %1</translation>
     </message>
     <message>
         <source>Number of copied contentobjects - %1</source>
-        <translation type="unfinished">Antall kopierte objekter - %1</translation>
+        <translation>Antall kopierte objekter - %1</translation>
     </message>
     <message>
         <source>Cannot create instance of eZDB to fix local links (related objects).</source>
-        <translation type="unfinished">Kunne ikke oppdatere interne linker p.g.a en databasefeil.</translation>
+        <translation>Kunne ikke oppdatere interne linker pga. en databasefeil.</translation>
     </message>
     <message>
         <source>You are trying to copy a subtree that contains more than the maximum possible nodes for subtree copying. You can copy this subtree using Subtree Copy script.</source>
-        <translation type="unfinished">Du kan ikke kopiere dette subtreet fordi det har flere noder enn det som er tillatt for subtrekopiering. Du kan kopiere dette subtreet med subtre kopi scriptet.</translation>
+        <translation>Du kan ikke kopiere dette subtreet fordi det har flere noder enn det som er tillatt for subtrekopiering. Du kan i stedet kopiere subtreet med skriptet bin/php/ezsubtreecopy.php.</translation>
     </message>
     <message>
         <source>Object (ID = %1) was not copied: you do not have permission to read the object.</source>
-        <translation type="unfinished">Objekt (ID = %1) ble ikke kopiert: du har ikke rettigheter til å lese objektet.</translation>
+        <translation>Objekt (ID = %1) ble ikke kopiert: du har ikke rettigheter til å lese objektet.</translation>
     </message>
     <message>
         <source>Node (ID = %1) was not copied: you do not have permission to read object (ID = %2).</source>
-        <translation type="unfinished">Node (ID = %1) ble ikke kopiert: du har ikke rettigheter til å lese objekt (ID = %2).</translation>
+        <translation>Node (ID = %1) ble ikke kopiert: du har ikke rettigheter til å lese objekt (ID = %2).</translation>
     </message>
     <message>
         <source>Node (ID = %1) was not copied: parent node (ID = %2) was not copied.</source>
-        <translation type="unfinished">Objekt (ID = %1) ble ikke kopiert: noden over objektet (ID = %2) ble ikke kopiert.</translation>
+        <translation>Objekt (ID = %1) ble ikke kopiert: noden over objektet (ID = %2) ble ikke kopiert.</translation>
     </message>
     <message>
         <source>Node (ID = %1) was not copied: you do not have permission to create.</source>
-        <translation type="unfinished">Objekt (ID = %1) ble ikke kopiert: du har ikke rettigheter til å lage nye noder på det valgte stedet.</translation>
+        <translation>Objekt (ID = %1) ble ikke kopiert: du har ikke rettigheter til å lage nye noder på det valgte stedet.</translation>
     </message>
     <message>
         <source>Object (ID = %1) was not copied: no one nodes of object was not copied.</source>
-        <translation type="unfinished">Object (ID = %1) ble ikke kopiert: ingen av nodene ble kopiert.</translation>
+        <translation>Object (ID = %1) ble ikke kopiert: ingen av nodene ble kopiert.</translation>
     </message>
     <message>
         <source>Successfully DONE.</source>
-        <translation type="unfinished">Fullført.</translation>
+        <translation>Fullført.</translation>
+    </message>
+    <message>
+        <source>Cannot publish object (Name: %1, ID: %2).</source>
+        <translation>Kan ikke publisere objekt (Navn: %1, ID: %2).</translation>
     </message>
 </context>
 <context>
@@ -26448,172 +26705,172 @@ Følg veiledningen i den e-posten for å aktivere kontoen din.</translation>
     <message>
         <source>child</source>
         <comment>1 child</comment>
-        <translation type="unfinished">barn</translation>
+        <translation>barn</translation>
     </message>
     <message>
         <source>children</source>
         <comment>several children</comment>
-        <translation type="unfinished">barn</translation>
+        <translation>barn</translation>
     </message>
 </context>
 <context>
     <name>kernel/content/restore</name>
     <message>
         <source>Restore object</source>
-        <translation type="unfinished">Gjenopprett objekt</translation>
+        <translation>Gjenopprett objekt</translation>
     </message>
 </context>
 <context>
     <name>kernel/content/upload</name>
     <message>
         <source>A file is required for upload, no file were found.</source>
-        <translation type="unfinished">Trenger en fil for opplasting, ingen fil ble funnet.</translation>
+        <translation>Trenger en fil for opplasting, ingen fil ble funnet.</translation>
     </message>
     <message>
         <source>Expected a eZHTTPFile object but got nothing.</source>
-        <translation type="unfinished">Forventet et eZHTTPFile-objekt men fikk ingenting.</translation>
+        <translation>Forventet et eZHTTPFile-objekt men fikk ingenting.</translation>
     </message>
     <message>
         <source>No matching class identifier found.</source>
-        <translation type="unfinished">Ingen passende klasseidentifikator funnet.</translation>
+        <translation>Ingen passende klasseidentifikator funnet.</translation>
     </message>
     <message>
         <source>Was not able to figure out placement of object.</source>
-        <translation type="unfinished">Kunne ikke finne plasseringen til objektet.</translation>
+        <translation>Kunne ikke finne plasseringen til objektet.</translation>
     </message>
     <message>
         <source>The class %class_identifier does not exist.</source>
-        <translation type="unfinished">Klassen %class_identifier eksisterer ikke.</translation>
+        <translation>Klassen %class_identifier eksisterer ikke.</translation>
     </message>
     <message>
         <source>No configuration group in upload.ini for class identifier %class_identifier.</source>
-        <translation type="unfinished">Det er ingen konfigurasjonsgruppe i upload.ini for klasseidentifikatoren %class_identifier.</translation>
+        <translation>Det er ingen konfigurasjonsgruppe i upload.ini for klasseidentifikatoren %class_identifier.</translation>
     </message>
     <message>
         <source>No matching file attribute found, cannot create content object without this.</source>
-        <translation type="unfinished">Fant ingen passende filattributt, kan ikke lage innholdsobjektet uten denne.</translation>
+        <translation>Fant ingen passende filattributt, kan ikke lage innholdsobjektet uten denne.</translation>
     </message>
     <message>
         <source>No matching name attribute found, cannot create content object without this.</source>
-        <translation type="unfinished">Fant ingen passende navneattributt, kan ikke lage innholdsobjektet uten denne.</translation>
+        <translation>Fant ingen passende navneattributt, kan ikke lage innholdsobjektet uten denne.</translation>
     </message>
     <message>
         <source>The attribute %class_identifier does not support HTTP file storage.</source>
-        <translation type="unfinished">Attributten %class_identifier støtter ikke lagring som HTTP-fil.</translation>
+        <translation>Attributten %class_identifier støtter ikke lagring som HTTP-fil.</translation>
     </message>
     <message>
         <source>The attribute %class_identifier does not support simple string storage.</source>
-        <translation type="unfinished">Attributten %class_identifier støtter ikke lagring som enkel tekststreng.</translation>
+        <translation>Attributten %class_identifier støtter ikke lagring som enkel tekststreng.</translation>
     </message>
     <message>
         <source>Publishing of content object was halted.</source>
-        <translation type="unfinished">Publisering av innholdsobjektet ble avbrutt.</translation>
+        <translation>Publisering av innholdsobjektet ble avbrutt.</translation>
     </message>
     <message>
         <source>Publish process was cancelled.</source>
-        <translation type="unfinished">Publiseringsprosessen ble avbrutt.</translation>
+        <translation>Publiseringsprosessen ble avbrutt.</translation>
     </message>
     <message>
         <source>The file %filename does not exist, cannot insert file.</source>
-        <translation type="unfinished">Filen %filename finnes ikke, kan ikke sette inn filen.</translation>
+        <translation>Filen %filename finnes ikke, kan ikke sette inn filen.</translation>
     </message>
     <message>
         <source>The attribute %class_identifier does not support regular file storage.</source>
-        <translation type="unfinished">Attributten %class_identifier støtter ikke ikke lagring som vanlig fil.</translation>
+        <translation>Attributten %class_identifier støtter ikke ikke lagring som vanlig fil.</translation>
     </message>
     <message>
         <source>No HTTP file found, cannot fetch uploaded file.</source>
-        <translation type="unfinished">Fant ikke HTTP-fil, kan ikke hente opplastet fil.</translation>
+        <translation>Fant ikke HTTP-fil, kan ikke hente opplastet fil.</translation>
     </message>
     <message>
         <source>Permission denied</source>
-        <translation type="unfinished">Tilgang påkrevet</translation>
+        <translation>Tilgang påkrevet</translation>
     </message>
     <message>
         <source>There was an error trying to instantiate content upload handler.</source>
-        <translation type="unfinished">Det oppsto en feil under opplastingen. Vennligst prøv igjen.</translation>
+        <translation>Det oppsto en feil under opplastingen. Vennligst prøv igjen.</translation>
     </message>
     <message>
         <source>Could not find content upload handler &apos;%handler_name&apos;</source>
-        <translation type="unfinished">Kunne ikke finne upload handleren &apos;%handler_name&apos;</translation>
+        <translation>Kunne ikke finne upload handleren &apos;%handler_name&apos;</translation>
     </message>
     <message>
         <source>The size of the uploaded file exceeds the limit set for this site: %1 bytes.</source>
-        <translation type="unfinished">Den opplastede filen er større enn %1 bytes, som er maksimum størrelse for opplastede filer.</translation>
+        <translation>Den opplastede filen er større enn %1 bytes, som er maksimum størrelse for opplastede filer.</translation>
     </message>
 </context>
 <context>
     <name>kernel/content/urlalias_global</name>
     <message>
         <source>Global URL aliases</source>
-        <translation type="unfinished">Globale URL-aliaser</translation>
+        <translation>Globale URL-aliaser</translation>
     </message>
 </context>
 <context>
     <name>kernel/content/urlalias_wildcard</name>
     <message>
         <source>URL wildcard aliases</source>
-        <translation type="unfinished">URL-aliaser med jokertegn</translation>
+        <translation>URL-aliaser med jokertegn</translation>
     </message>
 </context>
 <context>
     <name>kernel/contentclass</name>
     <message>
         <source>New %1</source>
-        <translation type="unfinished">Ny %1</translation>
+        <translation>Ny %1</translation>
     </message>
     <message>
         <source>Cannot remove class &apos;%class_name&apos;:</source>
-        <translation type="unfinished">Kan ikke fjerne klassen &apos;%class_name&apos;:</translation>
+        <translation>Kan ikke fjerne klassen &apos;%class_name&apos;:</translation>
     </message>
     <message>
         <source>The class is used by a top-level node and cannot be removed.</source>
-        <translation type="unfinished">Klassen er brukt av en node på toppnivå, og kan derfor ikke fjernes.</translation>
+        <translation>Klassen er brukt av en node på toppnivå, og kan derfor ikke fjernes.</translation>
     </message>
 </context>
 <context>
     <name>kernel/design</name>
     <message>
         <source>Template list</source>
-        <translation type="unfinished">Malliste</translation>
+        <translation>Malliste</translation>
     </message>
     <message>
         <source>Template view</source>
-        <translation type="unfinished">Malvisning</translation>
+        <translation>Malvisning</translation>
     </message>
     <message>
         <source>Create new template</source>
-        <translation type="unfinished">Lag ny mal</translation>
+        <translation>Lag ny mal</translation>
     </message>
     <message>
         <source>Template edit</source>
-        <translation type="unfinished">Malredigering</translation>
+        <translation>Malredigering</translation>
     </message>
     <message>
         <source>Toolbar list</source>
-        <translation type="unfinished">Liste over verktøylinjer</translation>
+        <translation>Liste over verktøylinjer</translation>
     </message>
 </context>
 <context>
     <name>kernel/error</name>
     <message>
         <source>Error</source>
-        <translation type="unfinished">Feil</translation>
+        <translation>Feil</translation>
     </message>
 </context>
 <context>
     <name>kernel/ezinfo</name>
     <message>
         <source>Info</source>
-        <translation type="unfinished">Info</translation>
+        <translation>Info</translation>
     </message>
     <message>
         <source>About</source>
-        <translation type="unfinished">Om</translation>
+        <translation>Om</translation>
     </message>
     <message>
         <source>Copyright</source>
-        <translation type="unfinished">Copyright</translation>
+        <translation>Copyright</translation>
     </message>
 </context>
 <context>
@@ -26627,7 +26884,7 @@ Følg veiledningen i den e-posten for å aktivere kontoen din.</translation>
     <name>kernel/infocollector</name>
     <message>
         <source>Collected information</source>
-        <translation type="unfinished">Innhentet informasjon</translation>
+        <translation>Innhentet informasjon</translation>
     </message>
 </context>
 <context>
@@ -26635,468 +26892,468 @@ Følg veiledningen i den e-posten for å aktivere kontoen din.</translation>
     <message>
         <source>Content structure</source>
         <comment>Navigation part</comment>
-        <translation type="unfinished">Innholdsstruktur</translation>
+        <translation>Innholdsstruktur</translation>
     </message>
     <message>
         <source>Media library</source>
         <comment>Navigation part</comment>
-        <translation type="unfinished">Mediabibliotek</translation>
+        <translation>Mediabibliotek</translation>
     </message>
     <message>
         <source>User accounts</source>
         <comment>Navigation part</comment>
-        <translation type="unfinished">Brukerkontoer</translation>
+        <translation>Brukerkontoer</translation>
     </message>
     <message>
         <source>Webshop</source>
         <comment>Navigation part</comment>
-        <translation type="unfinished">Nettbutikk</translation>
+        <translation>Nettbutikk</translation>
     </message>
     <message>
         <source>Design</source>
         <comment>Navigation part</comment>
-        <translation type="unfinished">Design</translation>
+        <translation>Design</translation>
     </message>
     <message>
         <source>Setup</source>
         <comment>Navigation part</comment>
-        <translation type="unfinished">Oppsett</translation>
+        <translation>Oppsett</translation>
     </message>
     <message>
         <source>My account</source>
         <comment>Navigation part</comment>
-        <translation type="unfinished">Min konto</translation>
+        <translation>Min konto</translation>
     </message>
 </context>
 <context>
     <name>kernel/notification</name>
     <message>
         <source>Notification settings</source>
-        <translation type="unfinished">Meldingsinnstillinger</translation>
+        <translation>Meldingsinnstillinger</translation>
     </message>
 </context>
 <context>
     <name>kernel/package</name>
     <message>
         <source>Packages</source>
-        <translation type="unfinished">Pakker</translation>
+        <translation>Pakker</translation>
     </message>
     <message>
         <source>Upload</source>
-        <translation type="unfinished">Last opp</translation>
+        <translation>Last opp</translation>
     </message>
     <message>
         <source>Package information</source>
-        <translation type="unfinished">Pakkeinformasjon</translation>
+        <translation>Pakkeinformasjon</translation>
     </message>
     <message>
         <source>Package maintainer</source>
-        <translation type="unfinished">Vedlikeholder av pakken</translation>
+        <translation>Vedlikeholder av pakken</translation>
     </message>
     <message>
         <source>Package changelog</source>
-        <translation type="unfinished">Endringslogg for pakken</translation>
+        <translation>Endringslogg for pakken</translation>
     </message>
     <message>
         <source>Package thumbnail</source>
-        <translation type="unfinished">Miniatyrbilde for pakken</translation>
+        <translation>Miniatyrbilde for pakken</translation>
     </message>
     <message>
         <source>Package name</source>
-        <translation type="unfinished">Pakkenavn</translation>
+        <translation>Pakkenavn</translation>
     </message>
     <message>
         <source>Package name is missing</source>
-        <translation type="unfinished">Pakkenavnet mangler</translation>
+        <translation>Pakkenavnet mangler</translation>
     </message>
     <message>
         <source>A package named %packagename already exists, please give another name</source>
-        <translation type="unfinished">En pakke med navnet %packagename finnes allerede, gi pakken et annet navn</translation>
+        <translation>En pakke med navnet %packagename finnes allerede, gi pakken et annet navn</translation>
     </message>
     <message>
         <source>Summary</source>
-        <translation type="unfinished">Sammendrag</translation>
+        <translation>Sammendrag</translation>
     </message>
     <message>
         <source>Summary is missing</source>
-        <translation type="unfinished">Sammendraget mangler</translation>
+        <translation>Sammendraget mangler</translation>
     </message>
     <message>
         <source>Version</source>
-        <translation type="unfinished">Versjon</translation>
+        <translation>Versjon</translation>
     </message>
     <message>
         <source>Name</source>
-        <translation type="unfinished">Navn</translation>
+        <translation>Navn</translation>
     </message>
     <message>
         <source>You must enter a name for the changelog</source>
-        <translation type="unfinished">Du må oppgi et navn for endringsloggen</translation>
+        <translation>Du må oppgi et navn for endringsloggen</translation>
     </message>
     <message>
         <source>Changelog</source>
-        <translation type="unfinished">Endringslogg</translation>
+        <translation>Endringslogg</translation>
     </message>
     <message>
         <source>You must supply some text for the changelog entry</source>
-        <translation type="unfinished">Du må oppgi en tekst for endringsloggen</translation>
+        <translation>Du må oppgi en tekst for endringsloggen</translation>
     </message>
     <message>
         <source>You must enter a name of the maintainer</source>
-        <translation type="unfinished">Du må oppgi navnet til vedlikeholderen av pakken</translation>
+        <translation>Du må oppgi navnet til vedlikeholderen av pakken</translation>
     </message>
     <message>
         <source>Content classes to include</source>
-        <translation type="unfinished">Innholdsklasser som skal inkluderes</translation>
+        <translation>Innholdsklasser som skal inkluderes</translation>
     </message>
     <message>
         <source>Content class export</source>
-        <translation type="unfinished">Eksport av innholdsklasser</translation>
+        <translation>Eksport av innholdsklasser</translation>
     </message>
     <message>
         <source>Class list</source>
-        <translation type="unfinished">Klasseliste</translation>
+        <translation>Klasseliste</translation>
     </message>
     <message>
         <source>You must select at least one class for inclusion</source>
-        <translation type="unfinished">Du må velge minst en klasse</translation>
+        <translation>Du må velge minst en klasse</translation>
     </message>
     <message>
         <source>CSS file</source>
-        <translation type="unfinished">CSS-fil</translation>
+        <translation>CSS-fil</translation>
     </message>
     <message>
         <source>Image files</source>
-        <translation type="unfinished">Bildefiler</translation>
+        <translation>Bildefiler</translation>
     </message>
     <message>
         <source>Site style</source>
-        <translation type="unfinished">Nettstedsstil</translation>
+        <translation>Nettstedsstil</translation>
     </message>
     <message>
         <source>File did not have a .css suffix, this is most likely not a CSS file</source>
-        <translation type="unfinished">Filnavnet slutter ikke med .css, dette ser ikke ut som en CSS-fil</translation>
+        <translation>Filnavnet slutter ikke med .css, dette ser ikke ut som en CSS-fil</translation>
     </message>
     <message>
         <source>Create package</source>
-        <translation type="unfinished">Lag pakke</translation>
+        <translation>Lag pakke</translation>
     </message>
     <message>
         <source>Install</source>
-        <translation type="unfinished">Installer</translation>
+        <translation>Installer</translation>
     </message>
     <message>
         <source>Uninstall</source>
-        <translation type="unfinished">Avinstaller</translation>
+        <translation>Avinstaller</translation>
     </message>
     <message>
         <source>Package %packagename already exists, cannot import the package</source>
-        <translation type="unfinished">Pakken %packagename finnes allerede, kan ikke importere pakken</translation>
+        <translation>Pakken %packagename finnes allerede, kan ikke importere pakken</translation>
     </message>
     <message>
         <source>Local</source>
-        <translation type="unfinished">Lokal</translation>
+        <translation>Lokal</translation>
     </message>
     <message>
         <source>The version must only contain numbers (optionally followed by text) and must be delimited by dots (.), e.g. 1.0, 3.4.0beta1</source>
-        <translation type="unfinished">Versjonsnummeret kan bare inneholde tall (evt. etterfulgt av tekst) og må være separert med punktum, f.eks. 1.0 eller 3.4.0beta1</translation>
+        <translation>Versjonsnummeret kan bare inneholde tall (evt. etterfulgt av tekst) og må være separert med punktum, f.eks. 1.0 eller 3.4.0beta1</translation>
     </message>
     <message>
         <source>Content objects to include</source>
-        <translation type="unfinished">Innholdsobjekter som skal inkluderes</translation>
+        <translation>Innholdsobjekter som skal inkluderes</translation>
     </message>
     <message>
         <source>Content object limits</source>
-        <translation type="unfinished">Begrensninger for innholdsobjekter</translation>
+        <translation>Begrensninger for innholdsobjekter</translation>
     </message>
     <message>
         <source>Content object export</source>
-        <translation type="unfinished">Eksport av innholdsobjekter</translation>
+        <translation>Eksport av innholdsobjekter</translation>
     </message>
     <message>
         <source>Selected nodes</source>
-        <translation type="unfinished">Valgte noder</translation>
+        <translation>Valgte noder</translation>
     </message>
     <message>
         <source>You must select one or more node(s)/subtree(s) for export.</source>
-        <translation type="unfinished">Du må velge en eller flere noder eller undertrær for eksport.</translation>
+        <translation>Du må velge en eller flere noder eller undertrær for eksport.</translation>
     </message>
     <message>
         <source>You must choose one or more languages.</source>
-        <translation type="unfinished">Du må velge ett eller flere språk.</translation>
+        <translation>Du må velge ett eller flere språk.</translation>
     </message>
     <message>
         <source>You must choose one or more site access.</source>
-        <translation type="unfinished">Du må velge en eller flere nettstedstilganger.</translation>
+        <translation>Du må velge en eller flere nettstedstilganger.</translation>
     </message>
     <message>
         <source>CSS files</source>
-        <translation type="unfinished">CSS-filer</translation>
+        <translation>CSS-filer</translation>
     </message>
     <message>
         <source>You must upload both CSS files</source>
-        <translation type="unfinished">Du må laste opp begge CSS-filene</translation>
+        <translation>Du må laste opp begge CSS-filene</translation>
     </message>
     <message>
         <source>Content object %objectname</source>
-        <translation type="unfinished">Innholdsobjekt %objectname</translation>
+        <translation>Innholdsobjekt %objectname</translation>
     </message>
     <message>
         <source>Site access mapping</source>
-        <translation type="unfinished">Tilordning av nettstedstilgang</translation>
+        <translation>Tilordning av nettstedstilgang</translation>
     </message>
     <message>
         <source>Top node placements</source>
-        <translation type="unfinished">Toppnodeplasseringer</translation>
+        <translation>Toppnodeplasseringer</translation>
     </message>
     <message>
         <source>Content object import</source>
-        <translation type="unfinished">Import av innholdsobjekter</translation>
+        <translation>Import av innholdsobjekter</translation>
     </message>
     <message>
         <source>Select parent nodes</source>
-        <translation type="unfinished">Velg foreldrenoder</translation>
+        <translation>Velg foreldrenoder</translation>
     </message>
     <message>
         <source>You must assign all nodes to new parent nodes.</source>
-        <translation type="unfinished">Du må tilordne alle nodene til nye foreldrenoder.</translation>
+        <translation>Du må tilordne alle nodene til nye foreldrenoder.</translation>
     </message>
     <message>
         <source>Lead</source>
-        <translation type="unfinished">Leder</translation>
+        <translation>Leder</translation>
     </message>
     <message>
         <source>Developer</source>
-        <translation type="unfinished">Utvikler</translation>
+        <translation>Utvikler</translation>
     </message>
     <message>
         <source>Designer</source>
-        <translation type="unfinished">Designer</translation>
+        <translation>Designer</translation>
     </message>
     <message>
         <source>Contributor</source>
-        <translation type="unfinished">Bidragsyter</translation>
+        <translation>Bidragsyter</translation>
     </message>
     <message>
         <source>Tester</source>
-        <translation type="unfinished">Tester</translation>
+        <translation>Tester</translation>
     </message>
     <message>
         <source>The package name %packagename is not valid, it can only contain characters in the range a-z, 0-9 and underscore.</source>
-        <translation type="unfinished">Pakkenavnet %packagename er ikke gyldig. Navnet kan kun inneholde bokstavene a-z, A-Z, 0-9 og understrek (_).</translation>
+        <translation>Pakkenavnet %packagename er ikke gyldig. Navnet kan kun inneholde bokstavene a-z, A-Z, 0-9 og understrek (_).</translation>
     </message>
     <message>
         <source>Extension export</source>
-        <translation type="unfinished">Eksport av utvidelser</translation>
+        <translation>Eksport av utvidelser</translation>
     </message>
     <message>
         <source>%number content objects</source>
-        <translation type="unfinished">%number innholdsobjekter</translation>
+        <translation>%number innholdsobjekter</translation>
     </message>
     <message>
         <source>Extension &apos;%extensionname&apos;</source>
-        <translation type="unfinished">Utvidelse &apos;%extensionname&apos;</translation>
+        <translation>Utvidelse &apos;%extensionname&apos;</translation>
     </message>
     <message>
         <source>Removing class &apos;%classname&apos; will result in the removal of %objectscount object(s) of this class and all their sub-items. Are you sure you want to uninstall it?</source>
-        <translation type="unfinished">Hvis du fjerner klassen &apos;%classname&apos; vil %objectscount objekt(er) av denne klassen, og alle undernoder, bli fjernet.. Er du sikker på at du vil fjerne den?</translation>
+        <translation>Hvis du fjerner klassen &apos;%classname&apos; vil %objectscount objekt(er) av denne klassen, og alle undernoder, bli fjernet.. Er du sikker på at du vil fjerne den?</translation>
     </message>
     <message>
         <source>Class &apos;%classname&apos; already exists.</source>
-        <translation type="unfinished">Klassen &apos;%classname&apos; eksisterer i systemet fra før.</translation>
+        <translation>Klassen &apos;%classname&apos; eksisterer i systemet fra før.</translation>
     </message>
     <message>
         <source>Replace existing class</source>
-        <translation type="unfinished">Erstatt eksisterende klasse</translation>
+        <translation>Erstatt eksisterende klasse</translation>
     </message>
     <message>
         <source>(Warning! $objectsCount content object(s) and their sub-items will be removed)</source>
-        <translation type="unfinished">(Advarsel! $objectsCount innholdsobjekt(er) og deres undernoder vil bli fjernet)</translation>
+        <translation>(Advarsel! $objectsCount innholdsobjekt(er) og deres undernoder vil bli fjernet)</translation>
     </message>
     <message>
         <source>Skip installing this class</source>
-        <translation type="unfinished">Hopp over installering av denne klassen</translation>
+        <translation>Hopp over installering av denne klassen</translation>
     </message>
     <message>
         <source>Keep existing and create a new one</source>
-        <translation type="unfinished">Behold eksisterende klasse, og lag en ny</translation>
+        <translation>Behold eksisterende klasse, og lag en ny</translation>
     </message>
     <message>
         <source>Object &apos;%objectname&apos; has been modified since installation. Are you sure you want to remove it?</source>
-        <translation type="unfinished">Objektet &apos;%objectname&apos; har blitt endret siden installasjonen. Er du sikker på at du vil fjerne det?</translation>
+        <translation>Objektet &apos;%objectname&apos; har blitt endret siden installasjonen. Er du sikker på at du vil fjerne det?</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation type="unfinished">Fjern</translation>
+        <translation>Fjern</translation>
     </message>
     <message>
         <source>Keep object</source>
-        <translation type="unfinished">Behold objekt</translation>
+        <translation>Behold objekt</translation>
     </message>
     <message>
         <source>Object &apos;%objectname&apos; has %childrencount sub-item(s) that will be removed.</source>
-        <translation type="unfinished">Objektet &apos;%objectname&apos; har %childrencount undernode(r) som vil bli fjernet.</translation>
+        <translation>Objektet &apos;%objectname&apos; har %childrencount undernode(r) som vil bli fjernet.</translation>
     </message>
     <message>
         <source>Extension &apos;%extensionname&apos; already exists.</source>
-        <translation type="unfinished">Utvidelsen &apos;%extensionname&apos; eksisterer i systemet fra før.</translation>
+        <translation>Utvidelsen &apos;%extensionname&apos; eksisterer i systemet fra før.</translation>
     </message>
     <message>
         <source>Replace extension</source>
-        <translation type="unfinished">Erstatt utvidelse</translation>
+        <translation>Erstatt utvidelse</translation>
     </message>
     <message>
         <source>Skip</source>
-        <translation type="unfinished">Hopp over</translation>
+        <translation>Hopp over</translation>
     </message>
     <message>
         <source>Install script: %description</source>
-        <translation type="unfinished">Installer skript: %description</translation>
+        <translation>Installer skript: %description</translation>
     </message>
     <message>
         <source>Content class &apos;%classname&apos; (%classidentifier)</source>
-        <translation type="unfinished">Innholdsklasse &apos;%classname&apos; (%classidentifier)</translation>
+        <translation>Innholdsklasse &apos;%classname&apos; (%classidentifier)</translation>
     </message>
     <message>
         <source>Email</source>
-        <translation type="unfinished">E-post</translation>
+        <translation>E-post</translation>
     </message>
     <message>
         <source>You must enter an email for the changelog</source>
-        <translation type="unfinished">Du må oppgi en e-postadresse for endringsloggen</translation>
+        <translation>Du må oppgi en e-postadresse for endringsloggen</translation>
     </message>
     <message>
         <source>You must enter an email address of the maintainer</source>
-        <translation type="unfinished">Du må oppgi en e-postadresse for vedlikeholderen av pakken</translation>
+        <translation>Du må oppgi en e-postadresse for vedlikeholderen av pakken</translation>
     </message>
     <message>
         <source>Remove object and its sub-item(s)</source>
-        <translation type="unfinished">Fjern objektet og eventuelle undernoder</translation>
+        <translation>Fjern objektet og eventuelle undernoder</translation>
     </message>
     <message>
         <source>Extensions to include</source>
-        <translation type="unfinished">Utvidelser som skal inkluderes</translation>
+        <translation>Utvidelser som skal inkluderes</translation>
     </message>
     <message>
         <source>Extension list</source>
-        <translation type="unfinished">Utvidelsesliste</translation>
+        <translation>Utvidelsesliste</translation>
     </message>
     <message>
         <source>You must select at least one extension</source>
-        <translation type="unfinished">Du må velge minst en utvidelse</translation>
+        <translation>Du må velge minst en utvidelse</translation>
     </message>
     <message>
         <source>Advanced options</source>
-        <translation type="unfinished">Avanserte valg</translation>
+        <translation>Avanserte valg</translation>
     </message>
     <message>
         <source>Package contains an invalid extension name: %extensionname</source>
-        <translation type="unfinished">Pakken inneholder et ugyldig navn på en utvidelse: %extensionname</translation>
+        <translation>Pakken inneholder et ugyldig navn på en utvidelse: %extensionname</translation>
     </message>
     <message>
         <source>The package name %packagename is invalid, cannot import the package</source>
-        <translation type="unfinished">Pakkenavnet %packagename er ugyldig, kan ikke importere pakken</translation>
+        <translation>Pakkenavnet %packagename er ugyldig, kan ikke importere pakken</translation>
     </message>
 </context>
 <context>
     <name>kernel/pdf</name>
     <message>
         <source>PDF Export</source>
-        <translation type="unfinished">PDF-eksport</translation>
+        <translation>PDF-eksport</translation>
     </message>
     <message>
         <source>An export with such filename already exists.</source>
-        <translation type="unfinished">Det finnes allerede en eksport med dette filnavnet.</translation>
+        <translation>Det finnes allerede en eksport med dette filnavnet.</translation>
     </message>
 </context>
 <context>
     <name>kernel/pdfexport</name>
     <message>
         <source>New PDF Export</source>
-        <translation type="unfinished">Ny PDF-eksport</translation>
+        <translation>Ny PDF-eksport</translation>
     </message>
 </context>
 <context>
     <name>kernel/role</name>
     <message>
         <source>Role list</source>
-        <translation type="unfinished">Rolleliste</translation>
+        <translation>Rolleliste</translation>
     </message>
     <message>
         <source>Editing policy</source>
-        <translation type="unfinished">Redigerer rolleregel</translation>
+        <translation>Redigerer rolleregel</translation>
     </message>
     <message>
         <source>Limit on section</source>
-        <translation type="unfinished">Begrensning på seksjon</translation>
+        <translation>Begrensning på seksjon</translation>
     </message>
     <message>
         <source>Create new policy, step 2: select function</source>
-        <translation type="unfinished">Lag rolleregel - steg 2 - Velg funksjon</translation>
+        <translation>Lag rolleregel - steg 2 - Velg funksjon</translation>
     </message>
     <message>
         <source>Create new policy, step three: set function limitations</source>
-        <translation type="unfinished">Lag rolleregel - steg 3 - Sett begrensninger for funksjon</translation>
+        <translation>Lag rolleregel - steg 3 - Sett begrensninger for funksjon</translation>
     </message>
     <message>
         <source>Create new policy, step two: select function</source>
-        <translation type="unfinished">Lag rolleregel - steg 2 - Velg funksjon</translation>
+        <translation>Lag rolleregel - steg 2 - Velg funksjon</translation>
     </message>
     <message>
         <source>Create new policy, step one: select module</source>
-        <translation type="unfinished">Lag rolleregel - steg 1 - Velg modul</translation>
+        <translation>Lag rolleregel - steg 1 - Velg modul</translation>
     </message>
 </context>
 <context>
     <name>kernel/role/edit</name>
     <message>
         <source>New role</source>
-        <translation type="unfinished">Ny rolle</translation>
+        <translation>Ny rolle</translation>
     </message>
     <message>
         <source>Copy of %rolename</source>
-        <translation type="unfinished">Kopi av %rolename</translation>
+        <translation>Kopi av %rolename</translation>
     </message>
 </context>
 <context>
     <name>kernel/rss</name>
     <message>
         <source>Really Simple Syndication</source>
-        <translation type="unfinished">Really Simple Syndication (enkel distribusjon av innhold)</translation>
+        <translation>Really Simple Syndication (enkel distribusjon av innhold)</translation>
     </message>
     <message>
         <source>New RSS Export</source>
-        <translation type="unfinished">Ny RSS-eksport</translation>
+        <translation>Ny RSS-eksport</translation>
     </message>
     <message>
         <source>New RSS Import</source>
-        <translation type="unfinished">Ny RSS-import</translation>
+        <translation>Ny RSS-import</translation>
     </message>
 </context>
 <context>
     <name>kernel/rss/edit_export</name>
     <message>
         <source>Invalid selection for title class %1 does not have attribute &quot;%2&quot;</source>
-        <translation type="unfinished">Ugyldig valg for tittelen. Klassen %1 har ingen attributt  &quot;%2&quot;</translation>
+        <translation>Ugyldig valg for tittelen. Klassen %1 har ingen attributt  &quot;%2&quot;</translation>
     </message>
     <message>
         <source>Invalid selection for description class %1 does not have attribute &quot;%2&quot;</source>
-        <translation type="unfinished">Ugyldig valg for beskrivelsen. Klassen %1 har ingen attributt  &quot;%2&quot;</translation>
+        <translation>Ugyldig valg for beskrivelsen. Klassen %1 har ingen attributt  &quot;%2&quot;</translation>
     </message>
     <message>
         <source>Selected class does not exist</source>
-        <translation type="unfinished">Valgt klasse eksisterer ikke</translation>
+        <translation>Valgt klasse eksisterer ikke</translation>
     </message>
     <message>
         <source>Invalid selection for category class %1 does not have attribute &quot;%2&quot;</source>
-        <translation type="unfinished">Ugyldig valg for kategori. Klassen %1 har ingen attributt  &quot;%2&quot;</translation>
+        <translation>Ugyldig valg for kategori. Klassen %1 har ingen attributt  &quot;%2&quot;</translation>
     </message>
 </context>
 <context>
     <name>kernel/search</name>
     <message>
         <source>Search stats</source>
-        <translation type="unfinished">Søkestatistikk</translation>
+        <translation>Søkestatistikk</translation>
     </message>
 </context>
 <context>
@@ -27107,7 +27364,7 @@ Følg veiledningen i den e-posten for å aktivere kontoen din.</translation>
     </message>
     <message>
         <source>Sections</source>
-        <translation type="unfinished">Seksjoner</translation>
+        <translation>Seksjoner</translation>
     </message>
     <message>
         <source>View section</source>
@@ -27115,624 +27372,624 @@ Følg veiledningen i den e-posten for å aktivere kontoen din.</translation>
     </message>
     <message>
         <source>New section</source>
-        <translation type="unfinished">Ny seksjon</translation>
+        <translation>Ny seksjon</translation>
     </message>
     <message>
         <source>Assign section</source>
-        <translation type="unfinished">Tilordne seksjon</translation>
+        <translation>Tilordne seksjon</translation>
     </message>
 </context>
 <context>
     <name>kernel/setup</name>
     <message>
         <source>Cache admin</source>
-        <translation type="unfinished">Cache administrering</translation>
+        <translation>Cache administrering</translation>
     </message>
     <message>
         <source>System information</source>
-        <translation type="unfinished">Systeminformasjon</translation>
+        <translation>Systeminformasjon</translation>
     </message>
     <message>
         <source>Rapid Application Development</source>
-        <translation type="unfinished">Rapid Application Development</translation>
+        <translation>Rapid Application Development</translation>
     </message>
     <message>
         <source>Template operator wizard</source>
-        <translation type="unfinished">Veiviser for maloperator</translation>
+        <translation>Veiviser for maloperator</translation>
     </message>
     <message>
         <source>Extension configuration</source>
-        <translation type="unfinished">Utvidelsesinnstillinger</translation>
+        <translation>Utvidelsesinnstillinger</translation>
     </message>
     <message>
         <source>Setup menu</source>
-        <translation type="unfinished">Oppsettsmeny</translation>
+        <translation>Oppsettsmeny</translation>
     </message>
     <message>
         <source>System Upgrade</source>
-        <translation type="unfinished">Systemoppgradering</translation>
+        <translation>Systemoppgradering</translation>
     </message>
     <message>
         <source>Session admin</source>
-        <translation type="unfinished">Sesjonsadministrasjon</translation>
+        <translation>Sesjonsadministrasjon</translation>
     </message>
     <message>
         <source>File %1 does not exist. You should copy it from the recent eZ Publish distribution.</source>
-        <translation type="unfinished">Filen %1 finnes ikke. Du bør kopiere den fra en nyere eZ Publish-distribusjon.</translation>
+        <translation>Filen %1 finnes ikke. Du bør kopiere den fra en nyere eZ Publish-distribusjon.</translation>
     </message>
     <message>
         <source>Datatype wizard</source>
-        <translation type="unfinished">Veiviser for datatype</translation>
+        <translation>Veiviser for datatype</translation>
     </message>
 </context>
 <context>
     <name>kernel/shop</name>
     <message>
         <source>Basket</source>
-        <translation type="unfinished">Handlekurv</translation>
+        <translation>Handlekurv</translation>
     </message>
     <message>
         <source>Confirm order</source>
-        <translation type="unfinished">Bekreft ordre</translation>
+        <translation>Bekreft ordre</translation>
     </message>
     <message>
         <source>Discount group</source>
-        <translation type="unfinished">Tilbudsgruppe</translation>
+        <translation>Tilbudsgruppe</translation>
     </message>
     <message>
         <source>Group view of discount rule</source>
-        <translation type="unfinished">Gruppevisning av tilbudsregel</translation>
+        <translation>Gruppevisning av tilbudsregel</translation>
     </message>
     <message>
         <source>Editing rule</source>
-        <translation type="unfinished">Redigerer regel</translation>
+        <translation>Redigerer regel</translation>
     </message>
     <message>
         <source>Order list</source>
-        <translation type="unfinished">Ordreliste</translation>
+        <translation>Ordreliste</translation>
     </message>
     <message>
         <source>Enter account information</source>
-        <translation type="unfinished">Oppgi kontoinformasjon</translation>
+        <translation>Oppgi kontoinformasjon</translation>
     </message>
     <message>
         <source>VAT types</source>
-        <translation type="unfinished">MVA-typer</translation>
+        <translation>MVA-typer</translation>
     </message>
     <message>
         <source>Checkout</source>
-        <translation type="unfinished">Gå til kassen</translation>
+        <translation>Gå til kassen</translation>
     </message>
     <message>
         <source>Customer list</source>
-        <translation type="unfinished">Kundeliste</translation>
+        <translation>Kundeliste</translation>
     </message>
     <message>
         <source>Remove order</source>
-        <translation type="unfinished">Fjern ordre</translation>
+        <translation>Fjern ordre</translation>
     </message>
     <message>
         <source>VAT type</source>
-        <translation type="unfinished">MVA-type</translation>
+        <translation>MVA-type</translation>
     </message>
     <message>
         <source>Classes</source>
-        <translation type="unfinished">Klasser</translation>
+        <translation>Klasser</translation>
     </message>
     <message>
         <source>Any class</source>
-        <translation type="unfinished">Alle klasser</translation>
+        <translation>Alle klasser</translation>
     </message>
     <message>
         <source>in sections</source>
-        <translation type="unfinished">i seksjoner</translation>
+        <translation>i seksjoner</translation>
     </message>
     <message>
         <source>in any section</source>
-        <translation type="unfinished">i alle seksjoner</translation>
+        <translation>i alle seksjoner</translation>
     </message>
     <message>
         <source>Products</source>
-        <translation type="unfinished">Produkter</translation>
+        <translation>Produkter</translation>
     </message>
     <message>
         <source>Any product</source>
-        <translation type="unfinished">Alle produkter</translation>
+        <translation>Alle produkter</translation>
     </message>
     <message>
         <source>Order status</source>
-        <translation type="unfinished">Ordrestatus</translation>
+        <translation>Ordrestatus</translation>
     </message>
     <message>
         <source>Undefined</source>
-        <translation type="unfinished">Udefinert</translation>
+        <translation>Udefinert</translation>
     </message>
     <message>
         <source>The confirm order operation was canceled. Try to checkout again.</source>
-        <translation type="unfinished">Ordrebekreftelsen ble avbrutt. Vennligst prøv igjen.</translation>
+        <translation>Ordrebekreftelsen ble avbrutt. Vennligst prøv igjen.</translation>
     </message>
     <message>
         <source>Order #%order_id</source>
-        <translation type="unfinished">Ordre #%order_id</translation>
+        <translation>Ordre #%order_id</translation>
     </message>
     <message>
         <source>New order status was successfully added.</source>
-        <translation type="unfinished">Den nye ordrestatusen ble satt.</translation>
+        <translation>Den nye ordrestatusen ble satt.</translation>
     </message>
     <message>
         <source>Changes to order status were successfully stored.</source>
-        <translation type="unfinished">Den nye ordrestatusen ble satt.</translation>
+        <translation>Den nye ordrestatusen ble satt.</translation>
     </message>
     <message>
         <source>Selected order statuses were successfully removed.</source>
-        <translation type="unfinished">De valgte ordrestatusene ble fjernet.</translation>
+        <translation>De valgte ordrestatusene ble fjernet.</translation>
     </message>
     <message>
         <source>Internal orders cannot be removed.</source>
-        <translation type="unfinished">Interne ordre kan ikke slettes.</translation>
+        <translation>Interne ordre kan ikke slettes.</translation>
     </message>
     <message>
         <source>Status</source>
-        <translation type="unfinished">Status</translation>
+        <translation>Status</translation>
     </message>
     <message>
         <source>Customer order view</source>
-        <translation type="unfinished">Visning av kundeordrer</translation>
+        <translation>Visning av kundeordrer</translation>
     </message>
     <message>
         <source>Any</source>
-        <translation type="unfinished">Alle</translation>
+        <translation>Alle</translation>
     </message>
     <message>
         <source>Available currency list</source>
-        <translation type="unfinished">Liste over tilgjengelige valutaer</translation>
+        <translation>Liste over tilgjengelige valutaer</translation>
     </message>
     <message>
         <source>Edit currency</source>
-        <translation type="unfinished">Rediger valuta</translation>
+        <translation>Rediger valuta</translation>
     </message>
     <message>
         <source>Create new currency</source>
-        <translation type="unfinished">Lag ny valuta</translation>
+        <translation>Lag ny valuta</translation>
     </message>
     <message>
         <source>Preferred currency</source>
-        <translation type="unfinished">Foretrukket valuta</translation>
+        <translation>Foretrukket valuta</translation>
     </message>
     <message>
         <source>Products overview</source>
-        <translation type="unfinished">Produktoversikt</translation>
+        <translation>Produktoversikt</translation>
     </message>
     <message>
         <source>None</source>
-        <translation type="unfinished">Ingen</translation>
+        <translation>Ingen</translation>
     </message>
     <message>
         <source>Error checking out</source>
-        <translation type="unfinished">Feil i handleprosessen</translation>
+        <translation>Feil i handleprosessen</translation>
     </message>
     <message>
         <source>Unable to calculate VAT percentage because your country is unknown. You can either fill country manually in your account information (if you are a registered user) or contact site administrator.</source>
-        <translation type="unfinished">Kan ikke beregne MVA-prosent, fordi landet ditt er ukjent. Du kan fylle inn landet manuelt i kontoinformasjonen din (hvis du er en registrert bruker), eller kontakte administratoren av nettstedet.</translation>
+        <translation>Kan ikke beregne MVA-prosent, fordi landet ditt er ukjent. Du kan fylle inn landet manuelt i kontoinformasjonen din (hvis du er en registrert bruker), eller kontakte administratoren av nettstedet.</translation>
     </message>
     <message>
         <source>Wishlist</source>
-        <translation type="unfinished">Ønskeliste</translation>
+        <translation>Ønskeliste</translation>
     </message>
     <message>
         <source>&apos;Autorates&apos; were retrieved successfully</source>
-        <translation type="unfinished">Automatisk kursinformasjon ble hentet uten feil</translation>
+        <translation>Automatisk kursinformasjon ble hentet uten feil</translation>
     </message>
     <message>
         <source>Unknown body format in HTTP response. Expected &apos;text/xml&apos;</source>
-        <translation type="unfinished">Ukjent body format i HTTP respons. Forventet &apos;text/xml&apos;</translation>
+        <translation>Ukjent body format i HTTP-respons. Forventet &apos;text/xml&apos;</translation>
     </message>
     <message>
         <source>Invalid HTTP response</source>
-        <translation type="unfinished">Ugyldig HTTP respons</translation>
+        <translation>Ugyldig HTTP-respons</translation>
     </message>
     <message>
         <source>Unable to send http request: %1:%2/%3</source>
-        <translation type="unfinished">Kunne ikke sende HTTP forespørsel: %1:%2/%3</translation>
+        <translation>Kunne ikke sende HTTP-forespørsel: %1:%2/%3</translation>
     </message>
     <message>
         <source>eZExchangeRatesUpdateHandler: you should reimplement &apos;requestRates&apos; method</source>
-        <translation type="unfinished">eZExchangeRatesUpdateHandler: du bør implementere metoden &apos;requestRates&apos;</translation>
+        <translation>eZExchangeRatesUpdateHandler: du må implementere metoden &apos;requestRates&apos;</translation>
     </message>
     <message>
         <source>&apos;Auto&apos; prices were updated successfully.</source>
-        <translation type="unfinished">Automatisk prisinformasjon ble hentet uten feil.</translation>
+        <translation>Automatisk prisinformasjon ble hentet uten feil.</translation>
     </message>
     <message>
         <source>&apos;Auto&apos; rates were updated successfully.</source>
-        <translation type="unfinished">Automatisk kursinformasjon ble oppdatert uten feil.</translation>
+        <translation>Automatisk kursinformasjon ble oppdatert uten feil.</translation>
     </message>
     <message>
         <source>Unable to calculate cross-rate for currency-pair &apos;%1&apos;/&apos;%2&apos;</source>
-        <translation type="unfinished">Kunne ikke beregne vekslekurs for valutaparet &apos;%1&apos;/&apos;%2&apos;</translation>
+        <translation>Kunne ikke beregne vekslekurs for valutaparet &apos;%1&apos;/&apos;%2&apos;</translation>
     </message>
     <message>
         <source>Unable to determine currency for retrieved rates.</source>
-        <translation type="unfinished">Kunne ikke avgjøre valuta for mottatte kurser.</translation>
+        <translation>Kunne ikke avgjøre valuta for mottatte kurser.</translation>
     </message>
     <message>
         <source>Retrieved empty list of rates.</source>
-        <translation type="unfinished">Mottok tom liste over kurser.</translation>
+        <translation>Mottok tom liste over kurser.</translation>
     </message>
     <message>
         <source>Unable to create handler to update auto rates.</source>
-        <translation type="unfinished">Kunne ikke opprette modul for å oppdatere automatiske kurser.</translation>
+        <translation>Kunne ikke opprette modul for å oppdatere automatiske kurser.</translation>
     </message>
     <message>
         <source>Changes were stored successfully.</source>
-        <translation type="unfinished">Endringene ble lagret.</translation>
+        <translation>Endringene ble lagret.</translation>
     </message>
     <message>
         <source>Statistics</source>
-        <translation type="unfinished">Statistikk</translation>
+        <translation>Statistikk</translation>
     </message>
     <message>
         <source>&apos;%value&apos; is not a valid custom rate value (positive number expected)</source>
-        <translation type="unfinished">&apos;%value&apos; er ikke en gyldig kursverdi (forventet et positivt tall)</translation>
+        <translation>&apos;%value&apos; er ikke en gyldig kursverdi (forventet et positivt tall)</translation>
     </message>
     <message>
         <source>&apos;%value&apos; is not a valid rate_factor value (positive number expected)</source>
-        <translation type="unfinished">&apos;%value&apos; er ikke en gyldig verdi for kursfaktor (forventet et positivt tall)</translation>
+        <translation>&apos;%value&apos; er ikke en gyldig verdi for kursfaktor (forventet et positivt tall)</translation>
     </message>
 </context>
 <context>
     <name>kernel/shop/classes/ezcurrencydata</name>
     <message>
         <source>Invalid characters in currency code.</source>
-        <translation type="unfinished">Ugyldige tegn i valutakoden.</translation>
+        <translation>Ugyldige tegn i valutakoden.</translation>
     </message>
     <message>
         <source>Currency already exists.</source>
-        <translation type="unfinished">Valutaen eksisterer i systemet fra før.</translation>
+        <translation>Valutaen eksisterer i systemet fra før.</translation>
     </message>
     <message>
         <source>Unknown error.</source>
-        <translation type="unfinished">Ukjent feil.</translation>
+        <translation>Ukjent feil.</translation>
     </message>
 </context>
 <context>
     <name>kernel/shop/discountgroup</name>
     <message>
         <source>New discount group</source>
-        <translation type="unfinished">Ny tilbudsgruppe</translation>
+        <translation>Ny tilbudsgruppe</translation>
     </message>
     <message>
         <source>New Discount Rule</source>
-        <translation type="unfinished">Ny tilbudsregel</translation>
+        <translation>Ny tilbudsregel</translation>
     </message>
 </context>
 <context>
     <name>kernel/shop/editvatrule</name>
     <message>
         <source>Choose a country.</source>
-        <translation type="unfinished">Velg et land.</translation>
+        <translation>Velg et land.</translation>
     </message>
     <message>
         <source>Choose a VAT type.</source>
-        <translation type="unfinished">Velg en MVA-type.</translation>
+        <translation>Velg en MVA-type.</translation>
     </message>
     <message>
         <source>Rule not found</source>
-        <translation type="unfinished">Regel ikke funnet</translation>
+        <translation>Regel ikke funnet</translation>
     </message>
     <message>
         <source>Edit VAT charging rule</source>
-        <translation type="unfinished">Rediger MVA-regel</translation>
+        <translation>Rediger MVA-regel</translation>
     </message>
     <message>
         <source>Create new VAT charging rule</source>
-        <translation type="unfinished">Lag ny MVA-regel</translation>
+        <translation>Lag ny MVA-regel</translation>
     </message>
     <message>
         <source>Invalid data entered</source>
-        <translation type="unfinished">Ugyldig data lagt inn</translation>
+        <translation>Ugyldig data lagt inn</translation>
     </message>
     <message>
         <source>Conflicting rule</source>
-        <translation type="unfinished">Regelkonflikt</translation>
+        <translation>Regelkonflikt</translation>
     </message>
     <message>
         <source>Default rule for any country already exists.</source>
-        <translation type="unfinished">Standardregel for alle land eksisterer i systemet fra før.</translation>
+        <translation>Standardregel for alle land eksisterer i systemet fra før.</translation>
     </message>
 </context>
 <context>
     <name>kernel/shop/productcategories</name>
     <message>
         <source>Product categories</source>
-        <translation type="unfinished">Produktkategorier</translation>
+        <translation>Produktkategorier</translation>
     </message>
     <message>
         <source>Product category</source>
-        <translation type="unfinished">Produktkategori</translation>
+        <translation>Produktkategori</translation>
     </message>
     <message>
         <source>Empty category names are not allowed (corrected).</source>
-        <translation type="unfinished">Tomme kategorinavn er ikke tillatt (rettet).</translation>
+        <translation>Tomme kategorinavn er ikke tillatt (rettet).</translation>
     </message>
 </context>
 <context>
     <name>kernel/shop/vatrules</name>
     <message>
         <source>No default rule found. Please add rule having &quot;Any&quot; country and &quot;Any&quot; category.</source>
-        <translation type="unfinished">Ingen standardregel funnet. Vennligst legg til en regel for &quot;Alle&quot; land og &quot;Alle&quot; kategorier.</translation>
+        <translation>Ingen standardregel funnet. Vennligst legg til en regel for &quot;Alle&quot; land og &quot;Alle&quot; kategorier.</translation>
     </message>
     <message>
         <source>VAT rules</source>
-        <translation type="unfinished">MVA-regler</translation>
+        <translation>MVA-regler</translation>
     </message>
 </context>
 <context>
     <name>kernel/shop/vattype</name>
     <message>
         <source>Empty VAT type names are not allowed (corrected).</source>
-        <translation type="unfinished">Tomme MVA-typenavn er ikke tillatt (rettet).</translation>
+        <translation>Tomme MVA-typenavn er ikke tillatt (rettet).</translation>
     </message>
     <message>
         <source>Wrong VAT percentage (corrected).</source>
-        <translation type="unfinished">Feil MVA-prosent (rettet).</translation>
+        <translation>Feil MVA-prosent (rettet).</translation>
     </message>
 </context>
 <context>
     <name>kernel/state</name>
     <message>
         <source>State</source>
-        <translation type="unfinished">Tilstand</translation>
+        <translation>Tilstand</translation>
     </message>
     <message>
         <source>Edit</source>
-        <translation type="unfinished">Rediger</translation>
+        <translation>Rediger</translation>
     </message>
     <message>
         <source>Groups</source>
-        <translation type="unfinished">Grupper</translation>
+        <translation>Grupper</translation>
     </message>
     <message>
         <source>Group edit</source>
-        <translation type="unfinished">Grupperedigering</translation>
+        <translation>Grupperedigering</translation>
     </message>
     <message>
         <source>New</source>
-        <translation type="unfinished">Ny</translation>
+        <translation>Ny</translation>
     </message>
     <message>
         <source>New group</source>
-        <translation type="unfinished">Ny gruppe</translation>
+        <translation>Ny gruppe</translation>
     </message>
     <message>
         <source>Assign</source>
-        <translation type="unfinished">Tilordne</translation>
+        <translation>Tilordne</translation>
     </message>
 </context>
 <context>
     <name>kernel/state/edit</name>
     <message>
         <source>Identifier: input required</source>
-        <translation type="unfinished">Identifikator: Innhold er påkrevet</translation>
+        <translation>Identifikator: Innhold er påkrevet</translation>
     </message>
     <message>
         <source>Identifier: invalid, it can only consist of characters in the range a-z, 0-9 and underscore.</source>
-        <translation type="unfinished">Identifikator: Ugyldig, den kan bare inneholde bokstavene a-z, tallene 0-9, og understreking (underscore).</translation>
+        <translation>Identifikator: Ugyldig, den kan bare inneholde bokstavene a-z, tallene 0-9, og understreking (underscore).</translation>
     </message>
     <message>
         <source>Identifier: invalid, maximum %max characters allowed.</source>
-        <translation type="unfinished">Identifikator: Ugyldig, ikke tillatt med mer enn %max characters tegn.</translation>
+        <translation>Identifikator: Ugyldig, ikke tillatt med mer enn %max tegn.</translation>
     </message>
     <message>
         <source>Identifier: a content object state group with this identifier already exists, please give another identifier</source>
-        <translation type="unfinished">Identifikator: Det finnes allerede en tilstandsgruppe med denne identifikatoren, vennligst velg en annen identifikator</translation>
+        <translation>Identifikator: Det finnes allerede en tilstandsgruppe med denne identifikatoren, vennligst velg en annen identifikator</translation>
     </message>
     <message>
         <source>%language_name: this language is the default but neither name or description were provided for this language</source>
-        <translation type="unfinished">%language_name: Dette språket er standard, men hverken navn eller beskrivelse er oppgitt for det</translation>
+        <translation>%language_name: Dette språket er standard, men hverken navn eller beskrivelse er oppgitt for det</translation>
     </message>
     <message>
         <source>Translations: you need to add at least one localization</source>
-        <translation type="unfinished">Oversettelser: Du må legge til minst ett språk</translation>
+        <translation>Oversettelser: Du må legge til minst ett språk</translation>
     </message>
     <message>
         <source>Translations: there are multiple localizations but you did not specify which is the default one</source>
-        <translation type="unfinished">Oversettelser: Det er flere språk,.men du har ikke spesifisert hvilket av dem som er standard</translation>
+        <translation>Oversettelser: Det er flere språk,.men du har ikke spesifisert hvilket av dem som er standard</translation>
     </message>
     <message>
         <source>Name in %language_name is too long. Maximum 45 characters allowed.</source>
-        <translation type="unfinished">Navnet for %language_name er for langt. Maksimalt antall tegn er 45.</translation>
+        <translation>Navnet for %language_name er for langt. Maksimalt antall tegn er 45.</translation>
     </message>
     <message>
         <source>Name in %language_name: input required</source>
-        <translation type="unfinished">Navnet for %language_name: Innhold er påkrevet</translation>
+        <translation>Navnet for %language_name: Innhold er påkrevet</translation>
     </message>
     <message>
         <source>Identifier: identifiers starting with &quot;ez&quot; are reserved.</source>
-        <translation type="unfinished">Identifikator: Identifikatorer som begynner med &quot;ez&quot; er reservert og kan ikke brukes.</translation>
+        <translation>Identifikator: Identifikatorer som begynner med &quot;ez&quot; er reservert og kan ikke brukes.</translation>
     </message>
 </context>
 <context>
     <name>kernel/trigger</name>
     <message>
         <source>Trigger</source>
-        <translation type="unfinished">Utløser</translation>
+        <translation>Utløser</translation>
     </message>
     <message>
         <source>List</source>
-        <translation type="unfinished">Liste</translation>
+        <translation>Liste</translation>
     </message>
 </context>
 <context>
     <name>kernel/url</name>
     <message>
         <source>URL</source>
-        <translation type="unfinished">URL</translation>
+        <translation>URL</translation>
     </message>
     <message>
         <source>List</source>
-        <translation type="unfinished">Liste</translation>
+        <translation>Liste</translation>
     </message>
     <message>
         <source>View</source>
-        <translation type="unfinished">Visning</translation>
+        <translation>Visning</translation>
     </message>
     <message>
         <source>URL edit</source>
-        <translation type="unfinished">URL-redigering</translation>
+        <translation>URL-redigering</translation>
     </message>
 </context>
 <context>
     <name>kernel/user</name>
     <message>
         <source>User</source>
-        <translation type="unfinished">Bruker</translation>
+        <translation>Bruker</translation>
     </message>
     <message>
         <source>Register</source>
-        <translation type="unfinished">Registrer</translation>
+        <translation>Registrer</translation>
     </message>
     <message>
         <source>Login</source>
-        <translation type="unfinished">Logg inn</translation>
+        <translation>Logg inn</translation>
     </message>
     <message>
         <source>Change password</source>
-        <translation type="unfinished">Bytt passord</translation>
+        <translation>Bytt passord</translation>
     </message>
     <message>
         <source>Forgot password</source>
-        <translation type="unfinished">Glemt passord</translation>
+        <translation>Glemt passord</translation>
     </message>
     <message>
         <source>User profile</source>
-        <translation type="unfinished">Brukerprofil</translation>
+        <translation>Brukerprofil</translation>
     </message>
     <message>
         <source>Setting</source>
-        <translation type="unfinished">Innstilling</translation>
+        <translation>Innstilling</translation>
     </message>
     <message>
         <source>Activate</source>
-        <translation type="unfinished">Aktiver</translation>
+        <translation>Aktiver</translation>
     </message>
     <message>
         <source>Success</source>
-        <translation type="unfinished">Suksess</translation>
+        <translation>Suksess</translation>
     </message>
 </context>
 <context>
     <name>kernel/user/register</name>
     <message>
         <source>Registration info</source>
-        <translation type="unfinished">Registreringsinformasjon</translation>
+        <translation>Registreringsinformasjon</translation>
     </message>
     <message>
         <source>New user registered</source>
-        <translation type="unfinished">Ny bruker registrert</translation>
+        <translation>Ny bruker registrert</translation>
     </message>
 </context>
 <context>
     <name>kernel/workflow</name>
     <message>
         <source>Edit workflow</source>
-        <translation type="unfinished">Rediger arbeidsflyt</translation>
+        <translation>Rediger arbeidsflyt</translation>
     </message>
     <message>
         <source>Workflow</source>
-        <translation type="unfinished">Arbeidsflyt</translation>
+        <translation>Arbeidsflyt</translation>
     </message>
     <message>
         <source>Edit</source>
-        <translation type="unfinished">Rediger</translation>
+        <translation>Rediger</translation>
     </message>
     <message>
         <source>Edit workflow group</source>
-        <translation type="unfinished">Rediger arbeidsflytgruppe</translation>
+        <translation>Rediger arbeidsflytgruppe</translation>
     </message>
     <message>
         <source>Group edit</source>
-        <translation type="unfinished">Grupperedigering</translation>
+        <translation>Grupperedigering</translation>
     </message>
     <message>
         <source>Workflow group list</source>
-        <translation type="unfinished">Liste over arbeidsflytgrupper</translation>
+        <translation>Liste over arbeidsflytgrupper</translation>
     </message>
     <message>
         <source>Group list</source>
-        <translation type="unfinished">Gruppeliste</translation>
+        <translation>Gruppeliste</translation>
     </message>
     <message>
         <source>Workflow list of group</source>
-        <translation type="unfinished">Liste over arbeidsflytgrupper</translation>
+        <translation>Liste over arbeidsflytgrupper</translation>
     </message>
     <message>
         <source>List</source>
-        <translation type="unfinished">Liste</translation>
+        <translation>Liste</translation>
     </message>
     <message>
         <source>Workflow list</source>
-        <translation type="unfinished">Arbeidsflytliste</translation>
+        <translation>Arbeidsflytliste</translation>
     </message>
     <message>
         <source>View</source>
-        <translation type="unfinished">Vis</translation>
+        <translation>Vis</translation>
     </message>
     <message>
         <source>You have to have at least one group that the workflow belongs to!</source>
-        <translation type="unfinished">Arbeidsflyten må høre til minst en gruppe!</translation>
+        <translation>Arbeidsflyten må høre til minst en gruppe!</translation>
     </message>
     <message>
         <source>Process list</source>
-        <translation type="unfinished">Dersom du har problemer med databaseforbindelsen, bør du se på</translation>
+        <translation>Prosessliste</translation>
     </message>
 </context>
 <context>
     <name>kernel/workflow/edit</name>
     <message>
         <source>New Workflow</source>
-        <translation type="unfinished">Ny arbeidsflyt</translation>
+        <translation>Ny arbeidsflyt</translation>
     </message>
 </context>
 <context>
     <name>kernel/workflow/event</name>
     <message>
         <source>Event</source>
-        <translation type="unfinished">Hendelse</translation>
+        <translation>Hendelse</translation>
     </message>
     <message>
         <source>Approve</source>
-        <translation type="unfinished">Godkjenn</translation>
+        <translation>Godkjenn</translation>
     </message>
     <message>
         <source>Multiplexer</source>
-        <translation type="unfinished">Multiplekser</translation>
+        <translation>Multiplekser</translation>
     </message>
     <message>
         <source>Simple shipping</source>
-        <translation type="unfinished">Enkel sending</translation>
+        <translation>Enkel frakt</translation>
     </message>
     <message>
         <source>Wait until date</source>
-        <translation type="unfinished">Vent til dato</translation>
+        <translation>Vent til dato</translation>
     </message>
     <message>
         <source>Payment Gateway</source>
-        <translation type="unfinished">Betalingsportal</translation>
+        <translation>Betalingsportal</translation>
     </message>
 </context>
 <context>
     <name>kernel/workflow/group</name>
     <message>
         <source>Group</source>
-        <translation type="unfinished">Gruppe</translation>
+        <translation>Gruppe</translation>
     </message>
 </context>
 <context>
     <name>kernel/workflow/groupedit</name>
     <message>
         <source>New WorkflowGroup</source>
-        <translation type="unfinished">Ny arbeidsflytgruppe</translation>
+        <translation>Ny arbeidsflytgruppe</translation>
     </message>
 </context>
 <context>
@@ -27740,62 +27997,62 @@ Følg veiledningen i den e-posten for å aktivere kontoen din.</translation>
     <message>
         <source>Contents</source>
         <comment>Table of contents</comment>
-        <translation type="unfinished">Innholdsfortegnelse</translation>
+        <translation>Innholdsfortegnelse</translation>
     </message>
     <message>
         <source>Index</source>
         <comment>Keyword index name</comment>
-        <translation type="unfinished">Indeks</translation>
+        <translation>Indeks</translation>
     </message>
 </context>
 <context>
     <name>lib/eztemplate</name>
     <message>
         <source>Some template errors occurred, see debug for more information.</source>
-        <translation type="unfinished">Det har oppstått mal-feil, se debug for mer informasjon.</translation>
+        <translation>Det har oppstått malfeil, se debug for mer informasjon.</translation>
     </message>
 </context>
 <context>
     <name>lib/template</name>
     <message>
         <source>The maximum nesting level of %max has been reached. The execution is stopped to avoid infinite recursion.</source>
-        <translation type="unfinished">Det maksimale antallet nøstede nivåer (%max) er nådd. Programmet ble avbrutt for å unngå uendelig rekursjon.</translation>
+        <translation>Det maksimale antallet nøstede nivåer (%max) er nådd. Programmet ble avbrutt for å unngå uendelig rekursjon.</translation>
     </message>
 </context>
 <context>
     <name>pdf/edit</name>
     <message>
         <source>PDF Export</source>
-        <translation type="unfinished">PDF-eksport</translation>
+        <translation>PDF-eksport</translation>
     </message>
 </context>
 <context>
     <name>settings/edit</name>
     <message>
         <source>Settings</source>
-        <translation type="unfinished">Innstillinger</translation>
+        <translation>Innstillinger</translation>
     </message>
     <message>
         <source>Edit</source>
-        <translation type="unfinished">Rediger</translation>
+        <translation>Rediger</translation>
     </message>
 </context>
 <context>
     <name>settings/view</name>
     <message>
         <source>Settings</source>
-        <translation type="unfinished">Innstillinger</translation>
+        <translation>Innstillinger</translation>
     </message>
     <message>
         <source>View</source>
-        <translation type="unfinished">Visning</translation>
+        <translation>Visning</translation>
     </message>
 </context>
 <context>
     <name>shop</name>
     <message>
         <source>Remove orders</source>
-        <translation type="unfinished">Fjern ordre</translation>
+        <translation>Fjern ordre</translation>
     </message>
 </context>
 <context>

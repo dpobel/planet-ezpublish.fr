@@ -4,25 +4,23 @@
 //
 // ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Online Editor extension for eZ Publish
-// SOFTWARE RELEASE: 4.3.0
+// SOFTWARE RELEASE: 4.4.0
 // COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
 //   modify it under the terms of version 2.0  of the GNU General
 //   Public License as published by the Free Software Foundation.
-//
+// 
 //   This program is distributed in the hope that it will be useful,
-//   but WITHOUT ANY WARRANTY; without even the implied warranty of
+//    but WITHOUT ANY WARRANTY; without even the implied warranty of
 //   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //   GNU General Public License for more details.
-//
+// 
 //   You should have received a copy of version 2.0 of the GNU General
 //   Public License along with this program; if not, write to the Free
 //   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 //   MA 02110-1301, USA.
-//
-//
 // ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
@@ -41,7 +39,7 @@ if ( isset( $Params['ContentType'] ) && $Params['ContentType'] !== '' )
     $contentType   = $Params['ContentType'];
 }
 
-    
+
 if ( $objectID === 0  || $objectVersion === 0 )
 {
    echo ezi18n( 'design/standard/ezoe', 'Invalid or missing parameter: %parameter', null, array( '%parameter' => 'ObjectID/ObjectVersion' ) );
@@ -85,7 +83,6 @@ if ( !$object )
 // allowed size set in max_post_size in php.ini
 if ( $http->hasPostVariable( 'uploadButton' ) || $forcedUpload )
 {
-    //include_once( 'kernel/classes/ezcontentupload.php' );
     $upload = new eZContentUpload();
 
     $location = false;
@@ -151,7 +148,6 @@ if ( $http->hasPostVariable( 'uploadButton' ) || $forcedUpload )
                         break;
                     case 'ezxmltext':
                         $text = trim( $http->postVariable( $base ) );
-                        include_once( 'extension/ezoe/ezxmltext/handlers/input/ezoeinputparser.php' );
                         $parser = new eZOEInputParser();
                         $document = $parser->process( $text );
                         $xmlString = eZXMLTextType::domString( $document );
@@ -221,19 +217,27 @@ foreach ( $relatedObjects as $relatedObjectKey => $relatedObject )
     
     if ( $groupName === 'images' )
     {
-        $contentObjectAttributes = $relatedObject->contentObjectAttributes();
-        
-        foreach ( $contentObjectAttributes as $contentObjectAttribute )
+        $objectAttributes = $relatedObject->contentObjectAttributes();
+        foreach ( $objectAttributes as $objectAttribute )
         {
-            $classAttribute = $contentObjectAttribute->contentClassAttribute();
-            if ( in_array ( $classAttribute->attribute( 'data_type_string' ), $imageDatatypeArray ) )
+            $classAttribute = $objectAttribute->contentClassAttribute();
+            $dataTypeString = $classAttribute->attribute( 'data_type_string' );
+            if ( in_array ( $dataTypeString, $imageDatatypeArray ) && $objectAttribute->hasContent() )
             {
-                $content = $contentObjectAttribute->content();
-                if ( $content != null )
+                $content = $objectAttribute->content();
+                if ( $content == null )
+                    continue;
+
+                if ( $content->hasAttribute( 'small' ) )
                 {
                     $srcString = $content->imageAlias( 'small' );
                     $imageAttribute = $classAttribute->attribute('identifier');
                     break;
+                }
+                else
+                {
+                    eZDebug::writeError( "Image alias does not exist: small, missing from image.ini?",
+                        __METHOD__ );
                 }
             }
         }

@@ -8,7 +8,7 @@
         <div class="object_header">
             <h1>{"Edit %1 - %2"|i18n("design/base",,array($class.name|wash,$object.name|wash))}</h1>
         </div>
-            <input type="hidden" name="MainNodeID" value="{$main_node_id}" />
+	    <input type="hidden" name="MainNodeID" value="{$main_node_id}" />
 
         {include uri="design:content/edit_validation.tpl"}
 

@@ -6,33 +6,33 @@
 //
 // ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.3.0
+// SOFTWARE RELEASE: 4.4.0
 // COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
 //   modify it under the terms of version 2.0  of the GNU General
 //   Public License as published by the Free Software Foundation.
-//
+// 
 //   This program is distributed in the hope that it will be useful,
-//   but WITHOUT ANY WARRANTY; without even the implied warranty of
+//    but WITHOUT ANY WARRANTY; without even the implied warranty of
 //   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //   GNU General Public License for more details.
-//
+// 
 //   You should have received a copy of version 2.0 of the GNU General
 //   Public License along with this program; if not, write to the Free
 //   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 //   MA 02110-1301, USA.
-//
-//
 // ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
 /*! \file
 */
 
-define( 'TABLE_METADATA',     'ezdbfile' );
-define( 'TABLE_DATA',         'ezdbfile_data' );
+if ( !defined( 'TABLE_METADATA' ) )
+    define( 'TABLE_METADATA', 'ezdbfile' );
+if ( !defined( 'TABLE_DATA' ) )
+    define( 'TABLE_DATA', 'ezdbfile_data' );
 
 /*
 CREATE TABLE ezdbfile (
@@ -65,9 +65,9 @@ class eZDBFileHandlerMysqlBackend
 {
     function _connect( $newLink = false )
     {
+        $siteINI = eZINI::instance( 'site.ini' );
         if ( !isset( $GLOBALS['eZDBFileHandlerMysqlBackend_dbparams'] ) )
         {
-            $siteINI = eZINI::instance( 'site.ini' );
             $fileINI = eZINI::instance( 'file.ini' );
 
             $params['host']       = $fileINI->variable( 'ClusteringSettings', 'DBHost' );
@@ -110,6 +110,20 @@ class eZDBFileHandlerMysqlBackend
 
         if ( !mysql_select_db( $params['dbname'], $this->db ) )
             return $this->_die( "Unable to select database {$params['dbname']}" );
+
+        $charset = trim( $siteINI->variable( 'DatabaseSettings', 'Charset' ) );
+        if ( $charset === '' )
+        {
+            $charset = eZTextCodec::internalCharset();
+        }
+
+        if ( $charset )
+        {
+            if ( !mysql_query( "SET NAMES '" . eZMySQLCharset::mapTo( $charset ) . "'", $this->db ) )
+            {
+                return $this->_die( "Failed to set Database charset to $charset." );
+            }
+        }
     }
 
     function _copy( $srcFilePath, $dstFilePath, $fname = false )
@@ -1392,7 +1406,6 @@ class eZDBFileHandlerMysqlBackend
                              'expired' => 0 );
         $query = 'INSERT INTO ' . TABLE_METADATA . ' ( '. implode(', ', array_keys( $insertData ) ) . ' ) ' .
                  "VALUES(" . implode( ', ', $insertData ) . ")";
-
         if ( !$this->_query( $query, "_startCacheGeneration( $filePath )", false ) )
         {
             $errno = mysql_errno();
@@ -1486,7 +1499,6 @@ class eZDBFileHandlerMysqlBackend
                 return false;
             }
             $generatingMetaData = mysql_fetch_assoc( $res );
-
             $res = $this->_query( "SELECT * FROM " . TABLE_METADATA . " WHERE name_hash=MD5('$filePath') FOR UPDATE", $fname, false );
             // the original file does not exist: we move the generating file
             if ( mysql_num_rows( $res ) == 0 )
@@ -1494,6 +1506,7 @@ class eZDBFileHandlerMysqlBackend
                 $metaData = $generatingMetaData;
                 $metaData['name'] = $filePath;
                 $metaData['name_hash'] = md5( $filePath );
+                // $metaData['scope'] = '';
                 $metaData['name_trunk'] = $this->nameTrunk( $filePath, $metaData['scope'] );
                 $insertSQL = "INSERT INTO " . TABLE_METADATA . " ( " . implode( ', ', array_keys( $metaData ) ) . " ) " .
                              "VALUES( " . $this->_sqlList( $metaData ) . ")";
@@ -1663,22 +1676,22 @@ class eZDBFileHandlerMysqlBackend
 
         return ( $row[0] + $this->dbparams['cache_generation_timeout'] ) - time();
     }
-    
+
     /**
      * Returns the list of expired binary files (images + binaries)
-     * 
+     *
      * @param array $scopes Array of scopes to consider. At least one.
      * @param int $limit Max number of items. Set to false for unlimited.
-     * 
+     *
      * @return array(filepath)
-     * 
+     *
      * @since 4.3
      */
     public function expiredFilesList( $scopes, $limit = array( 0, 100 ) )
     {
         if ( count( $scopes ) == 0 )
             throw new ezcBaseValueException( 'scopes', $scopes, "array of scopes", "parameter" );
-        
+
         $scopeString = $this->_sqlList( $scopes );
         $query = "SELECT name FROM " . TABLE_METADATA . " WHERE expired = 1 AND scope IN( $scopeString )";
         if ( $limit !== false )

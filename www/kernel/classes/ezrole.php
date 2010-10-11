@@ -6,25 +6,23 @@
 //
 // ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.3.0
+// SOFTWARE RELEASE: 4.4.0
 // COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
 //   modify it under the terms of version 2.0  of the GNU General
 //   Public License as published by the Free Software Foundation.
-//
+// 
 //   This program is distributed in the hope that it will be useful,
-//   but WITHOUT ANY WARRANTY; without even the implied warranty of
+//    but WITHOUT ANY WARRANTY; without even the implied warranty of
 //   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //   GNU General Public License for more details.
-//
+// 
 //   You should have received a copy of version 2.0 of the GNU General
 //   Public License along with this program; if not, write to the Free
 //   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 //   MA 02110-1301, USA.
-//
-//
 // ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
@@ -287,7 +285,6 @@ class eZRole extends eZPersistentObject
         // Expire role cache
         eZExpiryHandler::registerShutdownFunction();
         $handler = eZExpiryHandler::instance();
-        $handler->setTimestamp( 'user-access-cache', time() );
         $handler->setTimestamp( 'user-info-cache', time() );
         $handler->setTimestamp( 'user-class-cache', time() );
         $handler->store();
@@ -481,10 +478,10 @@ class eZRole extends eZPersistentObject
     /**
      * Returns the roles matching the given users' eZContentObject ID array
      *
-     * @param array $idArray Array of eZContentObject IDs, either groups or users
+     * @param array $idArray Array of eZContentObject IDs, either groups + user id or user id's only
+     *                       If only user id's, then remember to set $recursive to true
      * @param bool $recursive
-     *        If true, roles will be looked up for each given object's main node
-     *        path_array
+     *        If true, roles will be looked up for all nodes of the id's and it's parents
      *
      * @return array(eZRole)
      **/
@@ -560,29 +557,24 @@ class eZRole extends eZPersistentObject
     {
         $http = eZHTTPTool::instance();
 
-        $http->removeSessionVariable( 'UserPolicies' );
-        $http->removeSessionVariable( 'UserLimitations' );
-        $http->removeSessionVariable( 'UserLimitationValues' );
-        $http->removeSessionVariable( 'CanInstantiateClassesCachedForUser' );
         $http->removeSessionVariable( 'CanInstantiateClassList' );
         $http->removeSessionVariable( 'ClassesCachedForUser' );
 
-        // Expire role cache
-        eZExpiryHandler::registerShutdownFunction();
-        $handler = eZExpiryHandler::instance();
-        $handler->setTimestamp( 'user-access-cache', time() );
-        $handler->store();
+        // Expire user (role) cache
+        eZUser::cleanupCache();
     }
 
-    /*!
-      \static
-      \param user id
-      \return array containing complete access limitation description
-       Returns newly generated access array which corresponds to the array of user/group ids list.
-    */
-    static function accessArrayByUserID( $userIDArray )
+    /**
+     * Return access array by passing in list of groups user belongs to and his user id
+     *
+     * @param array $idArray Array of eZContentObject IDs, either groups + user id or user id's only
+     *                       If only user id's, then remember to set $recursive to true
+     * @param bool $recursive See {@link eZRole::fetchByUser()}
+     * @return array Hash with complete access limitation description
+     */
+    static function accessArrayByUserID( $idArray, $recursive = false )
     {
-        $roles = eZRole::fetchByUser( $userIDArray );
+        $roles = eZRole::fetchByUser( $idArray, $recursive );
         $userLimitation = false;
 
         $accessArray = array();
@@ -640,9 +632,11 @@ class eZRole extends eZPersistentObject
     {
         if ( !isset( $this->Policies ) )
         {
-            $policies = eZPersistentObject::fetchObjectList( eZPolicy::definition(),
-                                                              null, array( 'role_id' => $this->attribute( 'id') ), null, null,
-                                                              true );
+            $policies = eZPersistentObject::fetchObjectList(
+                eZPolicy::definition(),
+                null,
+                array( 'role_id' => $this->attribute( 'id' ), 'original_id' => 0 ),
+                null, null, true );
 
             if ( $this->LimitIdentifier )
             {

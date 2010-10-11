@@ -6,25 +6,23 @@
 //
 // ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.3.0
+// SOFTWARE RELEASE: 4.4.0
 // COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
 //   modify it under the terms of version 2.0  of the GNU General
 //   Public License as published by the Free Software Foundation.
-//
+// 
 //   This program is distributed in the hope that it will be useful,
-//   but WITHOUT ANY WARRANTY; without even the implied warranty of
+//    but WITHOUT ANY WARRANTY; without even the implied warranty of
 //   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //   GNU General Public License for more details.
-//
+// 
 //   You should have received a copy of version 2.0 of the GNU General
 //   Public License along with this program; if not, write to the Free
 //   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 //   MA 02110-1301, USA.
-//
-//
 // ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
@@ -770,7 +768,7 @@ class eZObjectForwarder
 
             $sub_text = "";
             $setVariableArray = array();
-            $tpl->setVariableRef( $rule["output_name"], $input_var, $outCurrentNamespace );
+            $tpl->setVariable( $rule["output_name"], $input_var, $outCurrentNamespace );
             $setVariableArray[] = $rule["output_name"];
             // Set design keys
             $tpl->setVariable( 'used', $designUsedKeys, $designKeyNamespace );
@@ -784,7 +782,7 @@ class eZObjectForwarder
                     continue;
                 }
                 $paramValue = $tpl->elementValue( $params[$paramName], $old_nspace, $currentNamespace, $functionPlacement );
-                $tpl->setVariableRef( $paramName, $paramValue, $outCurrentNamespace );
+                $tpl->setVariable( $paramName, $paramValue, $outCurrentNamespace );
                 $setVariableArray[] = $paramName;
             }
             // Set constant variables
@@ -796,7 +794,7 @@ class eZObjectForwarder
                          $constantTemplateVariableKey == $view_var or
                          $tpl->hasVariable( $constantTemplateVariableKey, $currentNamespace ) )
                         continue;
-                    $tpl->setVariableRef( $constantTemplateVariableKey, $constantTemplateVariableValue, $outCurrentNamespace );
+                    $tpl->setVariable( $constantTemplateVariableKey, $constantTemplateVariableValue, $outCurrentNamespace );
                     $setVariableArray[] = $constantTemplateVariableKey;
                 }
             }

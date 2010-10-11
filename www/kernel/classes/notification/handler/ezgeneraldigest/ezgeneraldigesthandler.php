@@ -6,25 +6,23 @@
 //
 // ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.3.0
+// SOFTWARE RELEASE: 4.4.0
 // COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
 //   modify it under the terms of version 2.0  of the GNU General
 //   Public License as published by the Free Software Foundation.
-//
+// 
 //   This program is distributed in the hope that it will be useful,
-//   but WITHOUT ANY WARRANTY; without even the implied warranty of
+//    but WITHOUT ANY WARRANTY; without even the implied warranty of
 //   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //   GNU General Public License for more details.
-//
+// 
 //   You should have received a copy of version 2.0 of the GNU General
 //   Public License along with this program; if not, write to the Free
 //   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 //   MA 02110-1301, USA.
-//
-//
 // ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
@@ -141,8 +139,13 @@ class eZGeneralDigestHandler extends eZNotificationEventHandler
                 $tpl->setVariable( 'address', $address['address'] );
                 $result = $tpl->fetch( 'design:notification/handler/ezgeneraldigest/view/plain.tpl' );
                 $subject = $tpl->variable( 'subject' );
+
+                $parameters = array();
+                if ( $tpl->hasVariable( 'content_type' ) )
+                    $parameters['content_type'] = $tpl->variable( 'content_type' );
+
                 $transport = eZNotificationTransport::instance( 'ezmail' );
-                $transport->send( $address, $subject, $result);
+                $transport->send( $address, $subject, $result, null, $parameters );
                 eZDebugSetting::writeDebug( 'kernel-notification', $result, "digest result" );
             }
 
@@ -178,7 +181,7 @@ class eZGeneralDigestHandler extends eZNotificationEventHandler
 
     }
 
-    function fetchHandlersForUser( $time, $address )
+    static function fetchHandlersForUser( $time, $address )
     {
         $db = eZDB::instance();
 
@@ -202,7 +205,7 @@ class eZGeneralDigestHandler extends eZNotificationEventHandler
         return $handlers;
     }
 
-    function fetchItemsForUser( $time, $address, $handler )
+    static function fetchItemsForUser( $time, $address, $handler )
     {
         $db = eZDB::instance();
 

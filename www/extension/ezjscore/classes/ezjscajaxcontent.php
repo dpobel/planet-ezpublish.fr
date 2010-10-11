@@ -6,25 +6,23 @@
 //
 // ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ JSCore extension for eZ Publish
-// SOFTWARE RELEASE: 4.3.0
+// SOFTWARE RELEASE: 4.4.0
 // COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
 //   modify it under the terms of version 2.0  of the GNU General
 //   Public License as published by the Free Software Foundation.
-//
+// 
 //   This program is distributed in the hope that it will be useful,
-//   but WITHOUT ANY WARRANTY; without even the implied warranty of
+//    but WITHOUT ANY WARRANTY; without even the implied warranty of
 //   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //   GNU General Public License for more details.
-//
+// 
 //   You should have received a copy of version 2.0 of the GNU General
 //   Public License along with this program; if not, write to the Free
 //   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 //   MA 02110-1301, USA.
-//
-//
 // ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
@@ -60,7 +58,11 @@ class ezjscAjaxContent
      * @param array $aliasList
      * @return string
      */
-    public static function getHttpAccept( $default = 'xhtml', $aliasList = array( 'html' => 'xhtml', 'json' => 'json', 'javascript' => 'json', 'xml' => 'xml', 'text' => 'text' ) )
+    public static function getHttpAccept( $default = 'xhtml', $aliasList = array( 'html' => 'xhtml',
+                                                                                  'json' => 'json',
+                                                                                  'javascript' => 'json',
+                                                                                  'xml' => 'xml',
+                                                                                  'text' => 'text' ) )
     {
         if ( isset($_POST['http_accept']) )
             $acceptList = explode( ',', $_POST['http_accept'] );
@@ -90,7 +92,7 @@ class ezjscAjaxContent
     /**
      * Encodes the content based on http accept values, more on
      * this on the getHttpAccept function.
-     * Will simply implode the return value if array and not xml or 
+     * Will simply implode the return value if array and not xml or
      * json is prefered return type.
      *
      * @param mixed $ret
@@ -127,7 +129,7 @@ class ezjscAjaxContent
     /**
      * Function for encoding content object(s) or node(s) to simplified
      * json objects, xml or array hash
-     * 
+     *
      * @param mixed $obj
      * @param array $params
      * @param string $type
@@ -174,14 +176,14 @@ class ezjscAjaxContent
             $node          = $obj->attribute( 'main_node' );
             $contentObject = $obj;
         }
-        else if ( $obj instanceof eZContentObjectTreeNode || $obj instanceof eZFindResultNode ) 
+        else if ( $obj instanceof eZContentObjectTreeNode || $obj instanceof eZFindResultNode )
         {
             $node          = $obj;
             $contentObject = $obj->attribute( 'object' );
         }
         else if( isset( $params['fetchNodeFunction'] ) && method_exists( $obj, $params['fetchNodeFunction'] ) )
         {
-            // You can supply fetchNodeFunction parameter to be able to support other node related classes 
+            // You can supply fetchNodeFunction parameter to be able to support other node related classes
             $node = call_user_func( array( $obj, $params['fetchNodeFunction'] ) );
             if ( !$node instanceof eZContentObjectTreeNode )
             {
@@ -217,27 +219,85 @@ class ezjscAjaxContent
 
         if ( $params['imageSizes'] === null || !isset( $params['imageSizes'][0] ) )
             $params['imageSizes'] = array();
-            
+
         if (  !isset( $params['imageDataTypes'] ) )
             $params['imageDataTypes'] = $ini->variable( 'ImageDataTypeSettings', 'AvailableImageDataTypes' );
 
-        $ret                     = array();
-        $attrtibuteArray         = array();
-        $ret['name']             = $contentObject->attribute( 'name' );
-        $ret['contentobject_id'] = $ret['id'] = (int) $contentObject->attribute( 'id' );
-        $ret['main_node_id']     = (int)$contentObject->attribute( 'main_node_id' );
-        $ret['modified']         = $contentObject->attribute( 'modified' );
-        $ret['published']        = $contentObject->attribute( 'published' );
-        $ret['section_id']       = (int) $contentObject->attribute( 'section_id' );
-        $ret['current_language'] = $contentObject->attribute( 'current_language' );
-        $ret['owner_id']         = (int) $contentObject->attribute( 'owner_id' );
-        $ret['class_id']         = (int) $contentObject->attribute( 'contentclass_id' );
-        $ret['class_name']       = $contentObject->attribute( 'class_name' );
+        $ret                            = array();
+        $attrtibuteArray                = array();
+        $ret['name']                    = $contentObject->attribute( 'name' );
+        $ret['contentobject_id']        = $ret['id'] = (int) $contentObject->attribute( 'id' );
+        $ret['contentobject_remote_id'] = $contentObject->attribute( 'remote_id' );
+        $ret['main_node_id']            = (int)$contentObject->attribute( 'main_node_id' );
+        $ret['version']                 = (int)$contentObject->attribute( 'current_version' );
+        $ret['modified']                = $contentObject->attribute( 'modified' );
+        $ret['published']               = $contentObject->attribute( 'published' );
+        $ret['section_id']              = (int) $contentObject->attribute( 'section_id' );
+        $ret['current_language']        = $contentObject->attribute( 'current_language' );
+        $ret['owner_id']                = (int) $contentObject->attribute( 'owner_id' );
+        $ret['class_id']                = (int) $contentObject->attribute( 'contentclass_id' );
+        $ret['class_name']              = $contentObject->attribute( 'class_name' );
+        $ret['translations']            = eZContentLanguage::decodeLanguageMask($contentObject->attribute( 'language_mask' ), true);
+        $ret['can_edit']                = $contentObject->attribute( 'can_edit' );
 
         if ( isset( $params['formatDate'] ) )
         {
             $ret['modified_date'] = self::formatLocaleDate( $contentObject->attribute( 'modified' ), $params['formatDate'] );
             $ret['published_date'] = self::formatLocaleDate( $contentObject->attribute( 'published' ), $params['formatDate'] );
+        }
+
+        if ( isset( $params['fetchCreator'] ) )
+        {
+            $creator = $contentObject->attribute( 'current' )->attribute('creator');
+            $ret['creator'] = array( 'id' => $creator->attribute( 'id' ),
+                                     'name' => $creator->attribute('name') );
+        }
+
+        if ( isset( $params['fetchClassIcon'] ) )
+        {
+            $operator = new eZWordToImageOperator();
+            $tpl = eZTemplate::instance();
+
+            $operatorValue = $contentObject->attribute( 'class_identifier' );
+
+            $operatorParameters = array( array( array( 1, 'small' ) ) );
+            $namedParameters = array();
+
+            $operatorName = 'class_icon';
+
+            $operator->modify( $tpl, $operatorName, $operatorParameters, '', '', $operatorValue, $namedParameters );
+
+            $ret['class_icon'] = $operatorValue;
+        }
+
+        if ( isset( $params['fetchThumbPreview'] ) )
+        {
+            $thumbUrl = '';
+            $thumbDataType = isset( $params['thumbDataType'] ) ? $params['thumbDataType'] : 'ezimage';
+            $thumbImageSize = isset( $params['thumbImageSize'] ) ? $params['thumbImageSize'] : 'small';
+
+            foreach( $contentObject->attribute( 'data_map' ) as $key => $atr )
+            {
+                if ( $atr->attribute( 'data_type_string' ) == $thumbDataType )
+                {
+                    $imageContent = $atr->attribute( 'content' );
+
+                    if ( $imageContent->hasAttribute( $thumbImageSize ) )
+                        $imageAlias = $imageContent->attribute( $thumbImageSize );
+                    else
+                        eZDebug::writeError( "Image alias does not exist: '{$thumbImageSize}', missing from image.ini?",
+                            __METHOD__ );
+
+                    $thumbUrl = isset( $imageAlias['full_path'] ) ? $imageAlias['full_path'] : '';
+
+                    if ( $thumbUrl !== '' )
+                        eZURI::transformURI( $thumbUrl, true );
+
+                    break;
+                }
+            }
+
+            $ret['thumbnail_url'] = $thumbUrl;
         }
 
         if ( $params['fetchSection'] )
@@ -272,11 +332,20 @@ class ezjscAjaxContent
                 $ret['class_identifier'] = $class->attribute( 'identifier' );
                 $ret['is_container']     = (int) $class->attribute( 'is_container' );
             }
-            
-            $ret['node_id']        = (int) $node->attribute( 'node_id' );
-            $ret['parent_node_id'] = (int) $node->attribute( 'parent_node_id' );
-            $ret['url_alias']      = $node->attribute( 'url_alias' );
-            $ret['depth']          = (int) $node->attribute( 'depth' );
+
+            $ret['node_id']              = (int) $node->attribute( 'node_id' );
+            $ret['parent_node_id']       = (int) $node->attribute( 'parent_node_id' );
+            $ret['node_remote_id']       = $node->attribute( 'remote_id' );
+            $ret['url_alias']            = $node->attribute( 'url_alias' );
+            $ret['url']                  = $node->url();
+            // force system url on empty urls (root node)
+            if ( $ret['url'] === '' )
+                $ret['url'] = 'content/view/full/' . $node->attribute( 'node_id' );
+            eZURI::transformURI( $ret['url'] );
+
+            $ret['depth']                = (int) $node->attribute( 'depth' );
+            $ret['priority']             = (int) $node->attribute( 'priority' );
+            $ret['hidden_status_string'] = $node->attribute( 'hidden_status_string' );
 
             if ( $params['fetchPath'] )
             {
@@ -320,15 +389,18 @@ class ezjscAjaxContent
                 if ( !in_array( 'all' ,$params['dataMap'], true )
                    && !in_array( $key ,$params['dataMap'], true )
                    && !in_array( $dataTypeString, $params['dataMapType'], true )
-                   && !( $params['loadImages'] && in_array( $dataTypeString, $params['imageDataTypes'], true ) )
-                   ) continue;
+                   && !( $params['loadImages'] && in_array( $dataTypeString, $params['imageDataTypes'], true ) ) )
+                {
+                    continue;
+                }
+
                 $attrtibuteArray[ $key ]['id']         = $atr->attribute( 'id' );
                 $attrtibuteArray[ $key ]['type']       = $dataTypeString;
                 $attrtibuteArray[ $key ]['identifier'] = $key;
                 $attrtibuteArray[ $key ]['content']    = $atr->toString();
 
                 // images
-                if ( in_array( $dataTypeString, $params['imageDataTypes'], true) !== false )
+                if ( in_array( $dataTypeString, $params['imageDataTypes'], true) && $atr->hasContent() )
                 {
                     $content    = $atr->attribute( 'content' );
                     $imageArray = array();
@@ -337,14 +409,21 @@ class ezjscAjaxContent
                         foreach( $params['imageSizes'] as $size )
                         {
                             $imageArray[ $size ] = false;
-                            if ( in_array( $size, $params['imagePreGenerateSizes'] )
-                                && $content->hasAttribute( $size ) )
-                                $imageArray[ $size ] = $content->attribute( $size );
+                            if ( in_array( $size, $params['imagePreGenerateSizes'], true ) )
+                            {
+                                if ( $content->hasAttribute( $size ) )
+                                    $imageArray[ $size ] = $content->attribute( $size );
+                                else
+                                    eZDebug::writeError( "Image alias does not exist: '$size', missing from image.ini?",
+                                        __METHOD__ );
+                            }
                         }
                         $ret['image_attributes'][] = $key;
                     }
 
-                    $imageArray['original']             = array( 'url' => $attrtibuteArray[ $key ]['content'] );
+                    if ( !isset( $imageArray['original'] ) )
+                        $imageArray['original'] = $content->attribute( 'original' );
+
                     $attrtibuteArray[ $key ]['content'] = $imageArray;
                 }
             }
@@ -355,7 +434,7 @@ class ezjscAjaxContent
 
     /**
      * Encodes simple multilevel array and hash values to valid xml string
-     * 
+     *
      * @param mixed $hash
      * @param string $childName
      * @return string
@@ -366,17 +445,17 @@ class ezjscAjaxContent
         $xml->openMemory();
         $xml->startDocument('1.0', 'UTF-8');
         $xml->startElement('root');
-        
+
         self::xmlWrite( $xml, $hash, $childName );
-        
+
         $xml->endElement();
         return $xml->outputMemory( true );
-    
+
     }
 
     /**
      * Recursive xmlWriter function called by xmlEncode
-     * 
+     *
      * @param XMLWriter $xml
      * @param mixed $hash
      * @param string $childName
@@ -415,7 +494,7 @@ class ezjscAjaxContent
      * - shortdate
      * - datetime
      * - shortdatetime
-     * 
+     *
      * @param integer $timestamp
      * @param string $type
      * @return string

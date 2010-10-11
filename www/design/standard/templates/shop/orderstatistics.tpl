@@ -33,18 +33,18 @@
 
 <table class="list" width="100%" cellspacing="0" cellpadding="0" border="0">
 <tr>
-        <th>
-        {"Product"|i18n("design/standard/shop")}
-        </th>
-        <th>
-        {"Amount"|i18n("design/standard/shop")}
-        </th>
-        <th>
-        {"Total ex. VAT"|i18n("design/standard/shop")}
-        </th>
-        <th>
-        {"Total inc. VAT"|i18n("design/standard/shop")}
-        </th>
+	<th>
+	{"Product"|i18n("design/standard/shop")}
+	</th>
+	<th>
+	{"Amount"|i18n("design/standard/shop")}
+	</th>
+	<th>
+	{"Total ex. VAT"|i18n("design/standard/shop")}
+	</th>
+	<th>
+	{"Total inc. VAT"|i18n("design/standard/shop")}
+	</th>
 </tr>
 
 {section var=Product loop=$statistic_result[0].product_list sequence=array(bglight,bgdark)}
@@ -118,10 +118,10 @@
 {/foreach}
 
 <tr>
-        <td class="bgdark"><h2>{"SUM:"|i18n("design/standard/shop")}</h2></td>
+  	<td class="bgdark"><h2>{"SUM:"|i18n("design/standard/shop")}</h2></td>
     <td class="bgdark"></td>
-        <td class="bgdark"><b>{$sum_ex_vat_text}</b></td>
-        <td class="bgdark"><b>{$sum_inc_vat_text}</b></td>
+	<td class="bgdark"><b>{$sum_ex_vat_text}</b></td>
+	<td class="bgdark"><b>{$sum_inc_vat_text}</b></td>
 </tr>
 
 </table>

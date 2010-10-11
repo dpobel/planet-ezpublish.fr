@@ -3,7 +3,7 @@
  * File containing the {@link eZCache} class
  *
  * @copyright Copyright (C) 1999-2010 eZ Systems AS. All rights reserved.
- * @license http://ez.no/licenses/gnu_gpl GNU GPLv2
+ * @license http://ez.no/licenses/gnu_gpl GNU General Public License v2.0
  * @package kernel
  *
  */
@@ -134,7 +134,7 @@ class eZCache
                                        'id' => 'user_info_cache',
                                        'is-clustered' => true,
                                        'tag' => array( 'user' ),
-                                       'expiry-key' => 'user-access-cache',
+                                       'expiry-key' => 'user-info-cache',
                                        'enabled' => true,
                                        'path' => 'user-info',
                                        'function' => array( 'eZCache', 'clearUserInfoCache' ) ),
@@ -157,8 +157,28 @@ class eZCache
                                        'tag' => array( 'template' ),
                                        'enabled' => true,
                                        'path' => false,
-                                       'function' => array( 'eZCache', 'clearDesignBaseCache' ) )
-                                );
+                                       'function' => array( 'eZCache', 'clearDesignBaseCache' ) ),
+                                /**
+                                 * caches the list of active extensions (per siteaccess and global)
+                                 * @see eZExtension::activeExtensions()
+                                 */
+                                array( 'name' => ezpI18n::tr( 'kernel/cache', 'Active extensions cache' ),
+                                       'id' => 'active_extensions',
+                                       'tag' => array( 'ini' ),
+                                       'expiry-key' => 'active-extensions-cache',
+                                       'enabled' => true,
+                                       'path' => false,
+                                       'function' => array( 'eZCache', 'clearActiveExtensions' ) ),
+
+                                array( 'name' => ezpI18n::tr( 'kernel/cache', 'TS Translation cache' ),
+                                       'id' => 'translation',
+                                       'tag' => array( 'i18n' ),
+                                       'enabled' => true,
+                                       'expiry-key' => 'ts-translation-cache',
+                                       'path' => 'translation',
+                                       'function' => array( 'eZCache', 'clearTSTranslationCache' )
+                                ),
+            );
 
             // Append cache items defined (in ini) by extensions, see site.ini[Cache] for details
             foreach ( $ini->variable( 'Cache', 'CacheItems' ) as $cacheItemKey )
@@ -432,7 +452,7 @@ class eZCache
         $cacheItem['iterationMax']   = $iterationMax;
         $cacheItem['expiry']         = $expiry;
         $functionName = 'function';
-        if ( $purge )
+        if ( $purge && isset( $cacheItem['purge-function'] ) )
             $functionName = 'purge-function';
         if ( isset( $cacheItem[$functionName] ) )
         {
@@ -444,6 +464,12 @@ class eZCache
         }
         else
         {
+            if ( !isset( $cacheItem['path'] ) || strlen( $cacheItem['path'] ) < 1 )
+            {
+                eZDebug::writeError( "No path specified for cache item '$cacheItem[name]', can not clear cache.", __METHOD__ );
+                return;
+            }
+
             $cachePath = eZSys::cacheDirectory() . "/" . $cacheItem['path'];
 
             if ( isset( $cacheItem['is-clustered'] ) )
@@ -548,13 +574,13 @@ class eZCache
     }
 
     /**
-     * Clears all user-info caches by setting a new expiry value for the key *user-access-cache*.
+     * Clears all user-info caches by setting a new expiry value for the key *user-info-cache*.
      */
     static function clearUserInfoCache( $cacheItem )
     {
         eZExpiryHandler::registerShutdownFunction();
         $handler = eZExpiryHandler::instance();
-        $handler->setTimestamp( 'user-access-cache', time() );
+        $handler->setTimestamp( 'user-info-cache', time() );
         $handler->store();
     }
 
@@ -607,6 +633,20 @@ class eZCache
     }
 
     /**
+     * Clears active extensions list cache
+     */
+    static function clearActiveExtensions( $cacheItem )
+    {
+        eZExpiryHandler::registerShutdownFunction();
+
+        $handler = eZExpiryHandler::instance();
+        $handler->setTimestamp( $cacheItem['expiry-key'], time() );
+        $handler->store();
+
+        eZExtension::clearActiveExtensionsMemoryCache();
+    }
+
+    /**
      * Clears the design base cache
      *
      * @param $cacheItem array the cache item that describes the cache tag/id
@@ -617,6 +657,16 @@ class eZCache
 
         $fileHandler = eZClusterFileHandler::instance();
         $fileHandler->fileDeleteByWildcard( $cachePath . '/' . eZTemplateDesignResource::DESIGN_BASE_CACHE_NAME . '*' );
+    }
+
+    /**
+     * Clears the .ts translation cache
+     * @param array $cacheItem
+     * @return void
+     */
+    public static function clearTSTranslationCache( $cacheItem )
+    {
+        eZTSTranslator::expireCache();
     }
 }
 

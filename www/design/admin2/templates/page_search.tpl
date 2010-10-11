@@ -30,13 +30,13 @@
 <!--
 {literal}
 (function($) {
-        if ( document.getElementById('searchbuttonfield') ) {
+	if ( document.getElementById('searchbuttonfield') ) {
 
-                jQuery('#searchbuttonfield').click(function() {
+		jQuery('#searchbuttonfield').click(function() {
             if ( jQuery('#searchtext').val() === jQuery('#searchtext').attr('title') ) 
                 return;
             
-                jQuery('#searchbutton').click();
+        	jQuery('#searchbutton').click();
         });
     }
 })( jQuery );

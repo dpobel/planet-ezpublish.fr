@@ -12,18 +12,18 @@
 
 <h2>{"Step 1"|i18n("design/standard/role")}</h2>
 <div class="block">
-        <div class="element">
-        <label>{"Module"|i18n("design/standard/role")}</label><div class="labelbreak"></div>
+   	<div class="element">
+	<label>{"Module"|i18n("design/standard/role")}</label><div class="labelbreak"></div>
     <p class="box">{$current_module}</p>
     </div>
-        <div class="element">
-        <label>{"Access"|i18n("design/standard/role")}</label><div class="labelbreak"></div>
+   	<div class="element">
+	<label>{"Access"|i18n("design/standard/role")}</label><div class="labelbreak"></div>
     <p class="box">{"Limited"|i18n("design/standard/role")}</p>
     </div>
     <div class="break"></div>
 </div>
 <div class="buttonblock">
-        <input class="button" type="submit" name="Step1" value="{'Go back to step 1'|i18n('design/standard/role')}" />
+  	<input class="button" type="submit" name="Step1" value="{'Go back to step 1'|i18n('design/standard/role')}" />
 </div>
 
   </td>
@@ -31,18 +31,18 @@
 
 <h2>{"Step 2"|i18n("design/standard/role")}</h2>
 <div class="block">
-        <div class="element">
-        <label>{"Function"|i18n("design/standard/role")}</label><div class="labelbreak"></div>
+   	<div class="element">
+	<label>{"Function"|i18n("design/standard/role")}</label><div class="labelbreak"></div>
     <p class="box">{$current_function}</p>
     </div>
-        <div class="element">
-        <label>{"Access"|i18n("design/standard/role")}</label><div class="labelbreak"></div>
+   	<div class="element">
+	<label>{"Access"|i18n("design/standard/role")}</label><div class="labelbreak"></div>
     <p class="box">{"Limited"|i18n("design/standard/role")}</p>
     </div>
     <div class="break"></div>
 </div>
 <div class="buttonblock">
-        <input class="button" type="submit" name="Step2" value="{'Go back to step 2'|i18n('design/standard/role')}" />
+  	<input class="button" type="submit" name="Step2" value="{'Go back to step 2'|i18n('design/standard/role')}" />
 </div>
 
   </td>

@@ -68,7 +68,7 @@ function ContentStructureMenu( path, persistent )
     this.context = "{$ui_context}";
     this.hideNodes = [{$hide_node_list|implode(',')}];
 
-{cache-block keys=array( $filter_type, $root_node_id|gt( 1 ) ) expiry=0 ignore_content_expiry}
+{cache-block keys=array( $root_node_id|gt( 1 ), $access_type ) expiry=0 ignore_content_expiry}
     this.languages = {*
         *}{ldelim}{*
             *}{foreach fetch('content','translation_list') as $language}{*
@@ -78,7 +78,7 @@ function ContentStructureMenu( path, persistent )
         *}{rdelim};
     this.classes = {*
         *}{ldelim}{*
-            *}{foreach fetch('class','list_by_groups',hash('group_filter',$filter_groups,'group_filter_type',$filter_type)) as $class}{*
+            *}{foreach fetch('class','list') as $class}{*
                 *}"{$class.id}":{ldelim}name:"{$class.name|wash(javascript)}",identifier:"{$class.identifier|wash(javascript)}"{rdelim}{*
                 *}{delimiter},{/delimiter}{*
             *}{/foreach}{*
@@ -133,7 +133,7 @@ function ContentStructureMenu( path, persistent )
 
     function _delCookie( name )
     {
-        _setCookie( name, '', ( new Date() - 86400000 ) );
+    	_setCookie( name, '', ( new Date() - 86400000 ) );
     }
 
     this.setOpen = function( nodeID )
@@ -148,10 +148,10 @@ function ContentStructureMenu( path, persistent )
 
     this.setClosed = function( nodeID )
     {
-        var openIndex = jQuery.inArray( '' + nodeID, this.open );
+    	var openIndex = jQuery.inArray( '' + nodeID, this.open );
         if ( openIndex !== -1 )
         {
-                this.open.splice( openIndex, 1 );
+        	this.open.splice( openIndex, 1 );
             this.updateCookie();
         }
     };
@@ -395,7 +395,7 @@ function ContentStructureMenu( path, persistent )
                 {
                     if ( jQuery.inArray( data.children[i].node_id, thisThis.hideNodes ) === -1 )
                     {
-                        items.push( data.children[i] );
+                    	items.push( data.children[i] );
                     }
                 }
                 // Generate html content
@@ -543,7 +543,7 @@ var treeMenu;
     var persistence  = {if $menu_persistence}true{else}false{/if};
     treeMenu         = new ContentStructureMenu( path, persistence );
 
-{cache-block keys=$root_node_id expiry=0}
+{cache-block keys=array( $root_node_id, $access_type ) expiry=0}
     {def $root_node_url = $root_node.url}
     {if $root_node_url|eq('')}
         {set $root_node_url = concat( 'content/view/full/', $root_node_id )}

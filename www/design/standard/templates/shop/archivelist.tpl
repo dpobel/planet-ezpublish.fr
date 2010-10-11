@@ -19,47 +19,47 @@
     <th width="1">
     &nbsp;
     </th>
-        <th>
-        {"ID"|i18n("design/standard/shop")}
-        </th>
-        <th>
-        {"Date"|i18n("design/standard/shop")}
-        </th>
-        <th>
-        {"Customer"|i18n("design/standard/shop")}
-        </th>
-        <th>
-        {"Total ex. VAT"|i18n("design/standard/shop")}
-        </th>
-        <th>
-        {"Total inc. VAT"|i18n("design/standard/shop")}
-        </th>
+	<th>
+	{"ID"|i18n("design/standard/shop")}
+	</th>
+	<th>
+	{"Date"|i18n("design/standard/shop")}
+	</th>
+	<th>
+	{"Customer"|i18n("design/standard/shop")}
+	</th>
+	<th>
+	{"Total ex. VAT"|i18n("design/standard/shop")}
+	</th>
+	<th>
+	{"Total inc. VAT"|i18n("design/standard/shop")}
+	</th>
     <th>
-        </th>
+	</th>
 </tr>
 {section name="Order" loop=$archive_list sequence=array(bglight,bgdark)}
 <tr>
     <td class="{$Order:sequence}">
-        <input type="checkbox" name="OrderIDArray[]" value="{$Order:item.id}" />
-        </td>
-        <td class="{$Order:sequence}">
-        {$Order:item.order_nr}
-        </td>
-        <td class="{$Order:sequence}">
-        {$Order:item.created|l10n(shortdatetime)}
-        </td>
-        <td class="{$Order:sequence}">
+	<input type="checkbox" name="OrderIDArray[]" value="{$Order:item.id}" />
+	</td>
+	<td class="{$Order:sequence}">
+	{$Order:item.order_nr}
+	</td>
+	<td class="{$Order:sequence}">
+	{$Order:item.created|l10n(shortdatetime)}
+	</td>
+	<td class="{$Order:sequence}">
     <a href={concat("/shop/customerorderview/",$Order:item.user_id,"/",$Order:item.account_email)|ezurl}>{$Order:item.account_name}</a>
-        </td>
-        <td class="{$Order:sequence}">
-        {$Order:item.total_ex_vat|l10n(currency)}
-        </td>
-        <td class="{$Order:sequence}">
-        {$Order:item.total_inc_vat|l10n(currency)}
-        </td>
-        <td class="{$Order:sequence}">
-        <a href={concat("/shop/orderview/",$Order:item.id,"/")|ezurl}>[ view ]</a>
-        </td>
+	</td>
+	<td class="{$Order:sequence}">
+	{$Order:item.total_ex_vat|l10n(currency)}
+	</td>
+	<td class="{$Order:sequence}">
+	{$Order:item.total_inc_vat|l10n(currency)}
+	</td>
+	<td class="{$Order:sequence}">
+	<a href={concat("/shop/orderview/",$Order:item.id,"/")|ezurl}>[ view ]</a>
+	</td>
 </tr>
 {/section}
 </table>

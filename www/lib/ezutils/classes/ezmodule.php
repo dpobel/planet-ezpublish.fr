@@ -6,25 +6,23 @@
 //
 // ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.3.0
+// SOFTWARE RELEASE: 4.4.0
 // COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
 //   modify it under the terms of version 2.0  of the GNU General
 //   Public License as published by the Free Software Foundation.
-//
+// 
 //   This program is distributed in the hope that it will be useful,
-//   but WITHOUT ANY WARRANTY; without even the implied warranty of
+//    but WITHOUT ANY WARRANTY; without even the implied warranty of
 //   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //   GNU General Public License for more details.
-//
+// 
 //   You should have received a copy of version 2.0 of the GNU General
 //   Public License along with this program; if not, write to the Free
 //   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 //   MA 02110-1301, USA.
-//
-//
 // ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
@@ -57,31 +55,31 @@ class eZModule
     /**
      * Module execution status: IDLE
      * @var int
-     */    
+     */
     const STATUS_IDLE = 0;
-    
+
     /**
      * Module execution status: OK
      * @var int
-     */    
+     */
     const STATUS_OK = 1;
-    
+
     /**
      * Module execution status: FAILED
      * @var int
-     */    
+     */
     const STATUS_FAILED = 2;
-    
+
     /**
      * Module execution status: REDIRECT
      * @var int
-     */    
+     */
     const STATUS_REDIRECT = 3;
 
     /**
      * Module execution status: RERUN
      * @var int
-     */    
+     */
     const STATUS_RERUN = 4;
 
     /**
@@ -131,8 +129,6 @@ class eZModule
      *        The module name (content, user...)
      * @param bool $checkFileExistence
      *        Wether or not $file's existence should be checked
-     * 
-     * @todo Check if it can be marked as private
      * @return void
      */
     function initialize( $path, $file, $moduleName, $checkFileExistence = true )
@@ -456,10 +452,8 @@ class eZModule
                                    'eZModule::handleError' );
             $errorType = 'kernel';
         }
-        // @todo Make this non static
-        $errorModule = eZModule::errorModule();
-        
-        // @todo Does this need to be static ?
+        $errorModule = $this->errorModule();
+
         $module = eZModule::findModule( $errorModule['module'], $this );
 
         if ( $module === null )
@@ -806,8 +800,6 @@ class eZModule
      * Sets the URI which will be redirected to when the function exits
      * 
      * @param string $uri The redirection URI
-     * 
-     * @deprecated 4.3 Not used ANYWHERE in the kernel
      * 
      * @return void
      **/
@@ -1566,7 +1558,6 @@ class eZModule
         $this->ExitStatus = eZModule::STATUS_OK;
 //        eZDebug::writeNotice( $params, 'module parameters1' );
 
-
         $currentView =& $GLOBALS['eZModuleCurrentView'];
         $viewStack =& $GLOBALS['eZModuleViewStack'];
         if ( !isset( $currentView ) )
@@ -1854,13 +1845,88 @@ class eZModule
     }
 
     /**
+     * Checks if access is allowed to a module/view based on site.ini[SiteAccessRules]Rules[] settings
+     *
+     * @since 4.4
+     * @param eZURI $uri
+     * @return array An associative array with:
+     *   'result'       => bool   Indicates if access is allowed
+     *   'module'       => string Module name
+     *   'view'         => string View name
+     *   'view_checked' => bool   Indicates if view access has been checked
+     */
+    public static function accessAllowed( eZURI $uri )
+    {
+        $moduleName = $uri->element();
+        $viewName = $uri->element( 1 );
+        $check = array( 'result' => true,
+                        'module' => $moduleName,
+                        'view' => $viewName,
+                        'view_checked' => false );
+
+        $ini = eZINI::instance();
+
+        $access = true;
+        $currentAccess = true;
+        if ( !$ini->hasGroup( 'SiteAccessRules' ) )
+            return $check;
+        $items = $ini->variableArray( 'SiteAccessRules', 'Rules' );
+        foreach( $items as $item )
+        {
+            $name = strtolower( $item[0] );
+            if ( isset ( $item[1] ) )
+                $value = $item[1];
+            else
+                $value = null;
+            switch( $name )
+            {
+                case 'access':
+                {
+                    $currentAccess = ( $value == 'enable' );
+                } break;
+                case 'moduleall':
+                {
+                    $access = $currentAccess;
+                } break;
+                case 'module':
+                {
+                    if ( preg_match( "#([a-zA-Z0-9_]+)/([a-zA-Z0-9_]+)#", $value, $matches ) )
+                    {
+                        if ( $matches[1] == $moduleName and
+                             $matches[2] == $viewName )
+                        {
+                            $check['view_checked'] = true;
+                            $access = $currentAccess;
+                        }
+                    }
+                    else
+                    {
+                        if ( $value == $moduleName )
+                        {
+                            $access = $currentAccess;
+                            $check['view_checked'] = false;
+                        }
+                    }
+                } break;
+                default:
+                {
+                    eZDebug::writeError( "Unknown access rule: $name=$value", 'Access' );
+                } break;
+            }
+        }
+
+        $check['result'] = $access;
+        return $check;
+    }
+
+    /**
      * List of defined views for the module, as defined in the $ViewList variable
      * in module.php
      * @var array
      * @private
      */
     public $Functions;
-    
+
     /**
      * Array of module information.
      * Available keys:
@@ -1872,20 +1938,20 @@ class eZModule
      * @private
      */
     public $Module;
-    
+
     /**
      * The module name
      * @var string
      */
     public $Name;
-    
+
     /**
      * The module's path, without the module name and module.php
      * Examples: kernel, extension/mymoduleextension/modules
      * @var string
      */
     public $Path;
-    
+
     /**
      * The last execution's exit status.
      * Accepts one of the STATUS_ constants.
@@ -1894,42 +1960,42 @@ class eZModule
      * @var int
      */
     public $ExitStatus;
-    
+
     /**
      * The last execution's error code, if an error occured
      * @see errorCode(), setErrorCode()
      * @var int
      */
     public $ErrorCode;
-    
+
     /**
      * The redirection URI that will be used to redirect after execution has ended.
      * @see redirectURI(), setRedirectURI(), redirectTo(), STATUS_REDIRECT
      * @var string
      */
     public $RedirectURI;
-    
+
     /**
      * The redirection HTTP status
      * @see setRedirectStatus(), redirectStatus(), STATUS_REDIRECT
      * @var string
      */
     public $RedirectStatus;
-    
+
     /**
      * The last execution's result title
      * @var string
      * @see title(), setTitle()
      */
     public $Title;
-    
+
     /**
      * The hook list for this module
      * @see addHook(), runHooks()
      * @var array
      */
     public $HookList;
-    
+
     /**
      * Current action per view, as an associative array.
      * Each key is a view name, and the value the current action
@@ -1937,49 +2003,49 @@ class eZModule
      * @see viewAction(), setCurrentAction(), isCurrentAction()
      */
     public $ViewActions;
-    
+
     /**
      * The last execution view result, as an array
      * Common keys: content, title, url...
      * @var array
      */
     public $ViewResult;
-    
+
     /**
      * Ordered view parameters values
      * @var array
      * @private
      */
     public $ViewParameters;
-    
+
     /**
      * Original parameters, before they're mapped to view/unordered/user
      * @var array
      * @private
      */
     public $OriginalParameters;
-    
+
     /**
      * View parameters values
      * @var array
      * @private
      */
     public $OriginalViewParameters;
-    
+
     /**
      * Named parameters, indexed by name
      * @var array
      * @private
      */
     public $NamedParameters;
-    
+
     /**
      * Unordered parameters
      * @var array
      * @private
      */
     public $OriginalUnorderedParameters;
-    
+
     /**
      * User parameters (customized ones, as the content/view "view" parameters)
      * @var array
@@ -1994,7 +2060,7 @@ class eZModule
      * @private
      */
     public $UIContext;
-    
+
     /**
      * The current UI context
      * By default the current module but can be changed depending on module or PHP code
@@ -2002,7 +2068,7 @@ class eZModule
      * @private
      */
     public $UIComponent;
-    
+
     /**
     * Controls at which level UI component matching is done:
     * either 'module' which uses module name or 'view' which uses view name
