@@ -2,10 +2,10 @@
 //
 // Created on: <25-Nov-2002 15:40:10 wy>
 //
+// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.2.0
-// BUILD VERSION: 24182
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 4.3.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -23,11 +23,13 @@
 //   MA 02110-1301, USA.
 //
 //
+// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
+//
 
 // TODO: it was not in the original code, but we may consider to add support for "folder with products",
 //       not only products (i.e. objects with attribute of the ezprice datatype).
 
-require_once( 'kernel/common/template.php' );
+
 $module = $Params['Module'];
 
 if ( !isset( $Params['DiscountGroupID'] ) )
@@ -157,7 +159,7 @@ else
     else
     {
         // does not exist => create new one, but do not store...
-        $discountRuleName = ezi18n( 'design/admin/shop/discountruleedit', 'New discount rule' );
+        $discountRuleName = ezpI18n::tr( 'design/admin/shop/discountruleedit', 'New discount rule' );
         $discountRulePercent = 0.0;
         $discountRuleSelectedClasses = array( -1 );
         $discountRuleSelectedSections = array( -1 );
@@ -277,7 +279,7 @@ foreach ( $classList as $class )
 
 $sectionList = eZSection::fetchList();
 
-$tpl = templateInit();
+$tpl = eZTemplate::factory();
 
 $tpl->setVariable( 'module', $module );
 $tpl->setVariable( 'discountgroup_id', $discountGroupID );
@@ -296,6 +298,6 @@ $tpl->setVariable( 'section_any_selected', in_array( -1, $discountRuleSelectedSe
 $Result = array();
 $Result['content'] = $tpl->fetch( 'design:shop/discountruleedit.tpl' );
 $Result['path'] = array( array( 'url' => false,
-                                'text' => ezi18n( 'kernel/shop', 'Editing rule' ) ) );
+                                'text' => ezpI18n::tr( 'kernel/shop', 'Editing rule' ) ) );
 
 ?>

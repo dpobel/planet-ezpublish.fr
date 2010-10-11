@@ -4,10 +4,10 @@
 //
 // Created on: <16-Apr-2004 10:53:35 amos>
 //
+// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.2.0
-// BUILD VERSION: 24182
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 4.3.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -25,8 +25,10 @@
 //   MA 02110-1301, USA.
 //
 //
+// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
+//
 
-require_once( "kernel/common/i18n.php" );
+
 
 /*!
   \class eZStepSitePackages ezstep_site_packages.php
@@ -63,7 +65,7 @@ class eZStepSitePackages extends eZStepInstaller
         }
         else
         {
-            $this->ErrorMsg = ezi18n( 'design/standard/setup/init',
+            $this->ErrorMsg = ezpI18n::tr( 'design/standard/setup/init',
                                       'No packages chosen.' );
             return false;
         }
@@ -156,7 +158,7 @@ class eZStepSitePackages extends eZStepInstaller
         $result = array();
         // Display template
         $result['content'] = $this->Tpl->fetch( 'design:setup/init/site_packages.tpl' );
-        $result['path'] = array( array( 'text' => ezi18n( 'design/standard/setup/init',
+        $result['path'] = array( array( 'text' => ezpI18n::tr( 'design/standard/setup/init',
                                                           'Site functionality' ),
                                         'url' => false ) );
         return $result;

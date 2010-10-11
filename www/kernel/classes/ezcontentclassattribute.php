@@ -4,10 +4,10 @@
 //
 // Created on: <16-Apr-2002 11:08:14 amos>
 //
+// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.2.0
-// BUILD VERSION: 24182
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 4.3.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -24,6 +24,8 @@
 //   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 //   MA 02110-1301, USA.
 //
+//
+// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
 /*!
@@ -43,11 +45,23 @@ class eZContentClassAttribute extends eZPersistentObject
         $this->DisplayInfo = null;
         $this->Module = null;
 
-        $this->NameList = new eZContentClassNameList();
+        $this->NameList = new eZSerializedObjectNameList();
         if ( isset( $row['serialized_name_list'] ) )
-            $this->NameList = new eZContentClassAttributeNameList( $row['serialized_name_list'] );
+            $this->NameList->initFromSerializedList( $row['serialized_name_list'] );
         else
             $this->NameList->initDefault();
+
+        $this->DescriptionList = new eZSerializedObjectNameList();
+        if ( isset( $row['serialized_description_list'] ) )
+            $this->DescriptionList->initFromSerializedList( $row['serialized_description_list'] );
+        else
+            $this->DescriptionList->initDefault();
+
+        $this->DataTextI18nList = new eZSerializedObjectNameList();
+        if ( isset( $row['serialized_data_text'] ) )
+            $this->DataTextI18nList->initFromSerializedList( $row['serialized_data_text'] );
+        else
+            $this->DataTextI18nList->initDefault();
     }
 
     static function definition()
@@ -57,6 +71,10 @@ class eZContentClassAttribute extends eZPersistentObject
                                                         'default' => 0,
                                                         'required' => true ),
                                          'serialized_name_list' => array( 'name' => 'SerializedNameList',
+                                                                          'datatype' => 'string',
+                                                                          'default' => '',
+                                                                          'required' => true ),
+                                         'serialized_description_list' => array( 'name' => 'SerializedDescriptionList',
                                                                           'datatype' => 'string',
                                                                           'default' => '',
                                                                           'required' => true ),
@@ -150,15 +168,29 @@ class eZContentClassAttribute extends eZPersistentObject
                                          'data_text5' => array( 'name' => 'DataText5',
                                                                 'datatype' => 'text',
                                                                 'default' => '',
-                                                                'required' => true ) ),
+                                                                'required' => true ),
+                                         'serialized_data_text' => array( 'name' => 'SerializedDataText',
+                                                                          'datatype' => 'string',
+                                                                          'default' => '',
+                                                                          'required' => true ),
+                                         'category' => array( 'name' => 'Category',
+                                                               'datatype' => 'text',
+                                                               'default' => '',
+                                                               'required' => true )),
                       'keys' => array( 'id', 'version' ),
                       "function_attributes" => array( "content" => "content",
                                                       'temporary_object_attribute' => 'instantiateTemporary',
                                                       'data_type' => 'dataType',
                                                       'display_info' => 'displayInfo',
                                                       'name' => 'name',
-                                                      'nameList' => 'nameList' ),
-                      'set_functions' => array( 'name' => 'setName' ),
+                                                      'nameList' => 'nameList',
+                                                      'description' => 'description',
+                                                      'descriptionList' => 'descriptionList',
+                                                      'data_text_i18n' => 'dataTextI18n',
+                                                      'data_text_i18n_list' => 'dataTextI18nList' ),
+                      'set_functions' => array( 'name' => 'setName',
+                                                'description' => 'setDescription',
+                                                'data_text_i18n' => 'setDataTextI18n' ),
                       'increment_key' => 'id',
                       'sort' => array( 'placement' => 'asc' ),
                       'class_name' => 'eZContentClassAttribute',
@@ -192,7 +224,7 @@ class eZContentClassAttribute extends eZPersistentObject
     */
     static function create( $class_id, $data_type_string, $optionalValues = array(), $languageLocale = false )
     {
-        $nameList = new eZContentClassAttributeNameList();
+        $nameList = new eZSerializedObjectNameList();
         if ( isset( $optionalValues['serialized_name_list'] ) )
             $nameList->initFromSerializedList( $optionalValues['serialized_name_list'] );
         else if ( isset( $optionalValues['name'] ) )
@@ -200,12 +232,27 @@ class eZContentClassAttribute extends eZPersistentObject
         else
             $nameList->initFromString( '', $languageLocale );
 
+        $descriptionList = new eZSerializedObjectNameList();
+        if ( isset( $optionalValues['serialized_description_list'] ) )
+            $descriptionList->initFromSerializedList( $optionalValues['serialized_description_list'] );
+        else if ( isset( $optionalValues['description'] ) )
+            $descriptionList->initFromString( $optionalValues['description'], $languageLocale );
+        else
+            $descriptionList->initFromString( '', $languageLocale );
+
+        if ( isset( $optionalValues['data_text_i18n'] ) )
+        {
+            $dataTextI18nList = new eZSerializedObjectNameList( $optionalValues['data_text_i18n'] );
+            $optionalValues['serialized_data_text'] = $dataTextI18nList->serializeNames();
+        }
+
         $row = array(
             'id' => null,
             'version' => eZContentClass::VERSION_STATUS_TEMPORARY,
             'contentclass_id' => $class_id,
             'identifier' => '',
             'serialized_name_list' => $nameList->serializeNames(),
+            'serialized_description_list' => $descriptionList->serializeNames(),
             'is_searchable' => 1,
             'is_required' => 0,
             'can_translate' => 1,
@@ -247,6 +294,8 @@ class eZContentClassAttribute extends eZPersistentObject
         $dataType->preStoreClassAttribute( $this, $this->attribute( 'version' ) );
 
         $this->setAttribute( 'serialized_name_list', $this->NameList->serializeNames() );
+        $this->setAttribute( 'serialized_description_list', $this->DescriptionList->serializeNames() );
+        $this->setAttribute( 'serialized_data_text', $this->DataTextI18nList->serializeNames() );
 
         $stored = eZPersistentObject::store( $fieldFilters );
 
@@ -257,11 +306,30 @@ class eZContentClassAttribute extends eZPersistentObject
         return $stored;
     }
 
-    /*!
-     \note Transaction unsafe. If you call several transaction unsafe methods you must enclose
-     the calls within a db transaction; thus within db->begin and db->commit.
+    /**
+     * Store the content class in the version status "defined".
+     *
+     * @note Transaction unsafe. If you call several transaction unsafe methods you must enclose
+     *       the calls within a db transaction; thus within db->begin and db->commit.
+     *
+     * @return null|false false if the operation failed
      */
     function storeDefined()
+    {
+        return $this->storeVersioned( eZContentClass::VERSION_STATUS_DEFINED );
+    }
+
+    /**
+     * Store the content class in the specified version status.
+     * 
+     * @note Transaction unsafe. If you call several transaction unsafe methods you must enclose
+     *       the calls within a db transaction; thus within db->begin and db->commit.
+     *
+     * @param int $version version status
+     * @since Version 4.3
+     * @return null|false false if the operation failed
+     */
+    function storeVersioned( $version )
     {
         $dataType = $this->dataType();
         if ( !$dataType )
@@ -273,18 +341,18 @@ class eZContentClassAttribute extends eZPersistentObject
 
         $db = eZDB::instance();
         $db->begin();
-        $dataType->preStoreDefinedClassAttribute( $this );
+        $dataType->preStoreVersionedClassAttribute( $this, $version );
 
         $this->setAttribute( 'serialized_name_list', $this->NameList->serializeNames() );
+        $this->setAttribute( 'serialized_description_list', $this->DescriptionList->serializeNames() );
+        $this->setAttribute( 'serialized_data_text', $this->DataTextI18nList->serializeNames() );
 
-        $stored = eZPersistentObject::store();
+        eZPersistentObject::store();
 
         // store the content data for this attribute
         $info = $dataType->attribute( "information" );
-        $dataType->storeDefinedClassAttribute( $this );
+        $dataType->storeVersionedClassAttribute( $this, $version );
         $db->commit();
-
-        return $stored;
     }
 
     /*!
@@ -626,44 +694,168 @@ class eZContentClassAttribute extends eZPersistentObject
         return $result;
     }
 
-    /*!
-     \static
-    */
+    /**
+     * Returns name from serialized string, can be used for serialized description and data_text as well.
+     * 
+     * @param string $serializedNameList
+     * @param string|false $languageLocale Uses AlwaysAvailable language if false
+     * @return string
+     */
     static function nameFromSerializedString( $serializedNameList, $languageLocale = false )
     {
-        return eZContentClassAttributeNameList::nameFromSerializedString( $serializedNameList, $languageLocale );
+        return eZSerializedObjectNameList::nameFromSerializedString( $serializedNameList, $languageLocale );
     }
 
+    /**
+     * Returns name of attribute based on serialized_name_list
+     * 
+     * @param string|false $languageLocale Uses AlwaysAvailable language if false
+     * @return string
+     */
     function name( $languageLocale = false )
     {
         return $this->NameList->name( $languageLocale );
     }
 
+    /**
+     * Sets name of attribute, store() will take care of writing back to serialized_name_list
+     * 
+     * @param string $name
+     * @param string|false $languageLocale Uses AlwaysAvailable language if false
+     * @return string Return old value
+     */
     function setName( $name, $languageLocale = false )
     {
-        $this->NameList->setName( $name, $languageLocale );
+        return $this->NameList->setName( $name, $languageLocale );
     }
 
+    /**
+     * Returns name list for all locales for attribute
+     * 
+     * @return array
+     */
     function nameList()
     {
         return $this->NameList->nameList();
     }
 
+    /**
+     * Returns description of attribute based on serialized_description_list
+     * 
+     * @param string|false $languageLocale Uses AlwaysAvailable language if false
+     * @return string
+     */
+    function description( $languageLocale = false )
+    {
+        return $this->DescriptionList->name( $languageLocale );
+    }
+
+    /**
+     * Sets description of attribute, store() will take care of writing back to serialized_description_list
+     * 
+     * @param string $description
+     * @param string|false $languageLocale Uses AlwaysAvailable language if false
+     * @return string Return old value
+     */
+    function setDescription( $description, $languageLocale = false )
+    {
+        return $this->DescriptionList->setName( $description, $languageLocale );
+    }
+
+    /**
+     * Returns description list for all locales for attribute
+     * 
+     * @return array
+     */
+    function descriptionList()
+    {
+        return $this->DescriptionList->nameList();
+    }
+
+    /**
+     * Returns data_text_i18n of attribute based on serialized_data_text
+     * 
+     * @param string|false $languageLocale Uses AlwaysAvailable language if false
+     * @return string
+     */
+    function dataTextI18n( $languageLocale = false )
+    {
+        return $this->DataTextI18nList->name( $languageLocale );
+    }
+
+    /**
+     * Sets data_text_i18n of attribute, store() will take care of writing back to serialized_data_text
+     * 
+     * @param string $string
+     * @param string|false $languageLocale Uses AlwaysAvailable language if false
+     * @return string Return old value
+     */
+    function setDataTextI18n( $string, $languageLocale = false )
+    {
+        return $this->DataTextI18nList->setName( $string, $languageLocale );
+    }
+
+    /**
+     * Returns data_text_i18n list for all locales for attribute
+     * 
+     * @return array
+     */
+    function dataTextI18nList()
+    {
+        return $this->DataTextI18nList->nameList();
+    }
+
+    /**
+     * Returns locale code as set with {@link self::setEditLocale()}
+     * 
+     * @return string|false
+     */
+    function editLocale()
+    {
+        return $this->EditLocale;
+    }
+
+    /**
+     * Sets locale code of attribute for use by datatypes in class/edit storing process.
+     * 
+     * @param string|false $languageLocale Uses AlwaysAvailable language if false
+     */
+    function setEditLocale( $languageLocale = false )
+    {
+        $this->EditLocale = $languageLocale;
+    }
+
+    /**
+     * Specify AlwaysAvailableLanguage (for name, description or data_text_i18n)
+     * 
+     * @param string|false $languageLocale
+     */
     function setAlwaysAvailableLanguage( $languageLocale )
     {
         if ( $languageLocale )
         {
             $this->NameList->setAlwaysAvailableLanguage( $languageLocale );
+            $this->DescriptionList->setAlwaysAvailableLanguage( $languageLocale );
+            $this->DataTextI18nList->setAlwaysAvailableLanguage( $languageLocale );
         }
         else
         {
             $this->NameList->setAlwaysAvailableLanguage( false );
+            $this->DescriptionList->setAlwaysAvailableLanguage( false );
+            $this->DataTextI18nList->setAlwaysAvailableLanguage( false );
         }
     }
 
+    /**
+     * Removes an translation (as in the serilized strings for name, description or data_text_i18n)
+     * 
+     * @param string $languageLocale
+     */
     function removeTranslation( $languageLocale )
     {
         $this->NameList->removeName( $languageLocale );
+        $this->DescriptionList->removeName( $languageLocale );
+        $this->DataTextI18nList->removeName( $languageLocale );
     }
 
     /**
@@ -725,7 +917,7 @@ class eZContentClassAttribute extends eZPersistentObject
             $phpCache = new eZPHPCreator( $cacheDir,
                                           'classattributeidentifiers_' . $dbName . '.php',
                                           '',
-                                          array( 'clustering' => 'classattributeidentifiers' ) );
+                                          array( 'clustering' => 'classattridentifiers' ) );
 
             eZExpiryHandler::registerShutdownFunction();
             $handler = eZExpiryHandler::instance();
@@ -881,12 +1073,16 @@ class eZContentClassAttribute extends eZPersistentObject
     public $SerializedNameList;
     // unserialized attribute names
     public $NameList;
+    // unserialized attribute description
+    public $DescriptionList;
     public $DataTypeString;
     public $Position;
     public $IsSearchable;
     public $IsRequired;
     public $IsInformationCollector;
     public $Module;
+    // Used locale for use by datatypes in class/edit when storing data
+    protected $EditLocale = false;
 
     /**
      * In-memory cache for class attributes identifiers / id matching

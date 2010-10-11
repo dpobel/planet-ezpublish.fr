@@ -4,10 +4,10 @@
 //
 // Created on: <14-May-2003 16:30:26 sp>
 //
+// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.2.0
-// BUILD VERSION: 24182
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 4.3.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -25,11 +25,13 @@
 //   MA 02110-1301, USA.
 //
 //
+// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
+//
 
 /*! \file
 */
 
-require_once( 'kernel/common/template.php' );
+
 $http = eZHTTPTool::instance();
 
 $Module = $Params['Module'];
@@ -58,14 +60,14 @@ $db->commit();
 
 $viewParameters = array( 'offset' => $Params['Offset'] );
 
-$tpl = templateInit();
+$tpl = eZTemplate::factory();
 $tpl->setVariable( 'user', $user );
 $tpl->setVariable( 'view_parameters', $viewParameters );
 
 $Result = array();
 $Result['content'] = $tpl->fetch( 'design:notification/settings.tpl' );
 $Result['path'] = array( array( 'url' => false,
-                                'text' => ezi18n( 'kernel/notification', 'Notification settings' ) ) );
+                                'text' => ezpI18n::tr( 'kernel/notification', 'Notification settings' ) ) );
 
 
 ?>

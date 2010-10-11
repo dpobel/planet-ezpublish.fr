@@ -2,10 +2,10 @@
 //
 // Created on: <16-Apr-2002 11:00:12 amos>
 //
+// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.2.0
-// BUILD VERSION: 24182
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 4.3.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -22,6 +22,8 @@
 //   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 //   MA 02110-1301, USA.
 //
+//
+// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
 function removeSelectedGroups( $http, &$groups, $base )
@@ -95,9 +97,8 @@ if ( !isset( $TemplateData ) or !is_array( $TemplateData ) )
                                                    "type" => "class" ) ) );
 }
 
-$Module->setTitle( ezi18n( 'kernel/workflow', 'Workflow group list' ) );
-require_once( "kernel/common/template.php" );
-$tpl = templateInit();
+$Module->setTitle( ezpI18n::tr( 'kernel/workflow', 'Workflow group list' ) );
+$tpl = eZTemplate::factory();
 
 $user = eZUser::currentUser();
 foreach( $TemplateData as $tpldata )
@@ -116,9 +117,9 @@ $tpl->setVariable( "module", $Module );
 
 $Result = array();
 $Result['content'] = $tpl->fetch( "design:workflow/grouplist.tpl" );
-$Result['path'] = array( array( 'text' => ezi18n( 'kernel/workflow', 'Workflow' ),
+$Result['path'] = array( array( 'text' => ezpI18n::tr( 'kernel/workflow', 'Workflow' ),
                                 'url' => false ),
-                         array( 'text' => ezi18n( 'kernel/workflow', 'Group list' ),
+                         array( 'text' => ezpI18n::tr( 'kernel/workflow', 'Group list' ),
                                 'url' => false ) );
 
 

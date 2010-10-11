@@ -4,10 +4,10 @@
 //
 // Created on: <07-Jul-2007 15:52:24 sp>
 //
+// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.2.0
-// BUILD VERSION: 24182
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 4.3.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -24,6 +24,8 @@
 //   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 //   MA 02110-1301, USA.
 //
+//
+// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
 /*!
@@ -58,7 +60,7 @@ class eZMultiOption2Type extends eZDataType
     */
     function eZMultiOption2Type()
     {
-        $this->eZDataType( self::DATA_TYPE_STRING, ezi18n( 'kernel/classes/datatypes', "Multi-option2", 'Datatype name' ),
+        $this->eZDataType( self::DATA_TYPE_STRING, ezpI18n::tr( 'kernel/classes/datatypes', "Multi-option2", 'Datatype name' ),
                            array( 'serialize_supported' => true ) );
     }
 
@@ -566,7 +568,7 @@ class eZMultiOption2Type extends eZDataType
             $failedOption = $optiongroup->findOption( $failedMultiOption, $selectedItem );
             if ( $failedOption['is_selectable'] != 1 )
             {
-                $objectAttribute->setValidationError( ezi18n( 'kernel/classes/datatypes',
+                $objectAttribute->setValidationError( ezpI18n::tr( 'kernel/classes/datatypes',
                                                               "You cannot choose option value \"%1\" from \"%2\" because it is unselectable " ),
                                                       $failedOption['value'],
                                                       $failedMultiOption['name'] );
@@ -591,7 +593,7 @@ class eZMultiOption2Type extends eZDataType
                         $wrongParentOptionID = $data[$ruleKey];
                         $wrongParentOption =  $optiongroup->findOption( $wrongParentMultiOption, $wrongParentOptionID );
 
-                        $objectAttribute->setValidationError( ezi18n( 'kernel/classes/datatypes',
+                        $objectAttribute->setValidationError( ezpI18n::tr( 'kernel/classes/datatypes',
                                                                       "You cannot choose option value \"%1\" from \"%2\"  \n if you selected option \"%3\" from \"%4\" " ),
                                                               $failedOption['value'],
                                                               $failedMultiOption['name'],

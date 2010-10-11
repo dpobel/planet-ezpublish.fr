@@ -2,10 +2,10 @@
 //
 // Created on: <11-Aug-2003 13:10:28 bf>
 //
+// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.2.0
-// BUILD VERSION: 24182
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 4.3.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -23,12 +23,27 @@
 //   MA 02110-1301, USA.
 //
 //
+// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
+//
 
 $module = $Params['Module'];
 $http = eZHTTPTool::instance();
-$function = $Params['Function'];
-$key = $Params['Key'];
-$value = $Params['Value'];
+
+if ( $http->hasPostVariable( 'Function' ) )
+    $function = $http->postVariable( 'Function' );
+else
+    $function = $Params['Function'];
+
+if ( $http->hasPostVariable( 'Key' ) )
+    $key = $http->postVariable( 'Key' );
+else
+    $key = $Params['Key'];
+
+    
+if ( $http->hasPostVariable( 'Value' ) )
+    $value = $http->postVariable( 'Value' );
+else
+    $value = $Params['Value'];
 
 // Set user preferences
 if ( eZOperationHandler::operationIsAvailable( 'user_preferences' ) )
@@ -42,15 +57,29 @@ else
     eZPreferences::setValue( $key, $value );
 }
 
-// Extract URL to redirect to from user parameters.
-$urlArray = array_splice( $Params['Parameters'], 3 );
-foreach ( $urlArray as $key => $val ) // remove all the array elements that don't seem like URL parts
+// For use by ajax calls
+if ( $function === 'set_and_exit' )
 {
-    if ( !is_numeric( $key ) )
-        unset( $urlArray[$key] );
+    eZDB::checkTransactionCounter();
+    eZExecution::cleanExit();
 }
-$url = implode( '/', $urlArray );
-unset( $urlArray );
+
+if ( $http->hasPostVariable( 'RedirectURIAfterSet' ) )
+{
+    $url = $http->hasPostVariable( 'RedirectURIAfterSet' );
+}
+else
+{
+    // Extract URL to redirect to from user parameters.
+    $urlArray = array_splice( $Params['Parameters'], 3 );
+    foreach ( $urlArray as $key => $val ) // remove all the array elements that don't seem like URL parts
+    {
+        if ( !is_numeric( $key ) )
+            unset( $urlArray[$key] );
+    }
+    $url = implode( '/', $urlArray );
+    unset( $urlArray );
+}
 
 if ( $url )
 {
@@ -62,9 +91,9 @@ if ( $url )
     }
     $module->redirectTo( '/'.$url );
 }
-else
+else if ( isset( $_SERVER['HTTP_REFERER'] ) )
 {
-    $preferredRedirectionURI = isset( $_SERVER['HTTP_REFERER'] ) ? eZURI::decodeURL( $_SERVER['HTTP_REFERER'] ) : false;
+    $preferredRedirectionURI = eZURI::decodeURL( $_SERVER['HTTP_REFERER'] );
 
     // We should exclude OFFSET from $preferredRedirectionURI
     $exploded = explode( '/', $preferredRedirectionURI );
@@ -78,8 +107,20 @@ else
         }
     }
     $redirectURI = implode( '/', $exploded );
-    eZRedirectManager::redirectTo( $module, /* $default = */ false, /* $view = */ true, /* $disallowed = */ false, $redirectURI );
+
+    // Protect against redirect loop
+    if ( strpos( $redirectURI, '/user/preferences/set'  ) !== false )
+        $module->redirectTo( '/' );
+    else
+        eZRedirectManager::redirectTo( $module, /* $default = */ false, /* $view = */ true, /* $disallowed = */ false, $redirectURI );
     return;
+}
+else
+{
+    if ( $http->hasSessionVariable( 'LastAccessesURI' ) )
+        $module->redirectTo( $http->sessionVariable( 'LastAccessesURI' ) );
+    else
+        $module->redirectTo( '/' );
 }
 
 ?>

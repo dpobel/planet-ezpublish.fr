@@ -41,38 +41,38 @@ void applySameTextHeuristic( MetaTranslator *tor, bool verbose )
     int inserted = 0;
 
     for ( it = all.begin(); it != all.end(); ++it ) {
-	if ( (*it).type() == MetaTranslatorMessage::Unfinished ) {
-	    if ( (*it).translation().isEmpty() )
-		untranslated.append( *it );
-	} else {
-	    QCString key = (*it).sourceText();
-	    t = translated.find( key );
-	    if ( t != translated.end() ) {
-		/*
-		  The same source text is translated at least two
-		  different ways. Do nothing then.
-		*/
-		if ( (*t).translation() != (*it).translation() ) {
-		    translated.remove( key );
-		    avoid.insert( key, *it );
-		}
-	    } else if ( !avoid.contains(key) ) {
-		translated.insert( key, *it );
-	    }
-	}
+        if ( (*it).type() == MetaTranslatorMessage::Unfinished ) {
+            if ( (*it).translation().isEmpty() )
+                untranslated.append( *it );
+        } else {
+            QCString key = (*it).sourceText();
+            t = translated.find( key );
+            if ( t != translated.end() ) {
+                /*
+                  The same source text is translated at least two
+                  different ways. Do nothing then.
+                */
+                if ( (*t).translation() != (*it).translation() ) {
+                    translated.remove( key );
+                    avoid.insert( key, *it );
+                }
+            } else if ( !avoid.contains(key) ) {
+                translated.insert( key, *it );
+            }
+        }
     }
 
     for ( u = untranslated.begin(); u != untranslated.end(); ++u ) {
-	QCString key = (*u).sourceText();
-	t = translated.find( key );
-	if ( t != translated.end() ) {
-	    MetaTranslatorMessage m( *u );
-	    m.setTranslation( (*t).translation() );
-	    tor->insert( m );
-	    inserted++;
-	}
+        QCString key = (*u).sourceText();
+        t = translated.find( key );
+        if ( t != translated.end() ) {
+            MetaTranslatorMessage m( *u );
+            m.setTranslation( (*t).translation() );
+            tor->insert( m );
+            inserted++;
+        }
     }
     if ( verbose && inserted != 0 )
-	qWarning( " same-text heuristic provided %d translation%s",
-		  inserted, inserted == 1 ? "" : "s" );
+        qWarning( " same-text heuristic provided %d translation%s",
+                  inserted, inserted == 1 ? "" : "s" );
 }

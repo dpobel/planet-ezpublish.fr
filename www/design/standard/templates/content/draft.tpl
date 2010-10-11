@@ -12,12 +12,12 @@ function checkAll()
         document.draftaction.selectall.value = "{'Deselect all'|i18n('design/standard/content/view')}";
 {literal}
         with (document.draftaction) 
-	{
+        {
             for (var i=0; i < elements.length; i++) 
-	    {
+            {
                 if (elements[i].type == 'checkbox' && elements[i].name == 'DeleteIDArray[]')
                      elements[i].checked = true;
-	    }
+            }
         }
      }
      else
@@ -26,12 +26,12 @@ function checkAll()
          document.draftaction.selectall.value = "{'Select all'|i18n('design/standard/content/view')}";
 {literal}
          with (document.draftaction) 
-	 {
+         {
             for (var i=0; i < elements.length; i++) 
-	    {
+            {
                 if (elements[i].type == 'checkbox' && elements[i].name == 'DeleteIDArray[]')
                      elements[i].checked = false;
-	    }
+            }
          }
      }
 }
@@ -47,9 +47,7 @@ function checkAll()
 <h1>{"My drafts"|i18n("design/standard/content/view")}</h1>
 </div>
 
-{let draft_list=fetch('content','draft_version_list',hash(limit,$page_limit,offset,$view_parameters.offset))}
-
-{section show=$draft_list}
+{if $list_count}
 
 <div class="buttonblock">
 <input type="submit" name="EmptyButton" value="{'Empty Draft'|i18n('design/standard/content/view')}" />
@@ -72,7 +70,8 @@ function checkAll()
     <th>{"Edit"|i18n("design/standard/content/view")}</th>
 </tr>
 
-{section name=Draft loop=$draft_list sequence=array(bglight,bgdark)}
+{section name=Draft loop=fetch( 'content', 'draft_version_list', hash( limit, $page_limit, offset, $view_parameters.offset ) )
+         sequence=array(bglight,bgdark)}
 <tr class="{$Draft:sequence}">
     <td align="left" width="1">
         <input type="checkbox" name="DeleteIDArray[]" value="{$Draft:item.id}" />
@@ -103,7 +102,7 @@ function checkAll()
 <tr>
     <td colspan="3" align="left">
         <input type="image" name="RemoveButton" value="{'Remove'|i18n('design/standard/content/view')}" src={"trash.png"|ezimage} />
-	<input name="selectall" onclick=checkAll() type="button" value="{'Select all'|i18n('design/standard/content/view')}">
+        <input name="selectall" onclick=checkAll() type="button" value="{'Select all'|i18n('design/standard/content/view')}">
     </td>
     <td colspan="4">
     </td>
@@ -116,12 +115,11 @@ function checkAll()
          view_parameters=$view_parameters
          item_limit=$page_limit}
 
-{section-else}
+{else}
 
 <div class="feedback">
 <h2>{"You have no drafts"|i18n("design/standard/content/view")}</h2>
 </div>
 
-{/section}
-{/let}
+{/if}
 {/let}

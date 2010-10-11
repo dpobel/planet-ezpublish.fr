@@ -4,10 +4,10 @@
 //
 // Created on: <16-Oct-2003 09:34:25 bf>
 //
+// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.2.0
-// BUILD VERSION: 24182
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 4.3.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -24,6 +24,8 @@
 //   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 //   MA 02110-1301, USA.
 //
+//
+// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
 /*!
@@ -78,8 +80,7 @@ class eZImageAliasHandler
     */
     function attributes()
     {
-        require_once( 'kernel/common/image.php' );
-        $imageManager = imageInit();
+        $imageManager = eZImageManager::factory();
         $aliasList = $imageManager->aliasList();
         return array_merge( array( 'alternative_text',
                                    'original_filename',
@@ -98,8 +99,8 @@ class eZImageAliasHandler
                               'original_filename',
                               'is_valid' ) ) )
             return true;
-        require_once( 'kernel/common/image.php' );
-        $imageManager = imageInit();
+
+        $imageManager = eZImageManager::factory();
         if ( $imageManager->hasAlias( $attributeName ) )
             return true;
         return false;
@@ -283,7 +284,7 @@ class eZImageAliasHandler
                 $objectName = $this->attribute( 'alternative_text' );
                 if ( !$objectName )
                 {
-                    $objectName = ezi18n( 'kernel/classes/datatypes', 'image', 'Default image name' );
+                    $objectName = ezpI18n::tr( 'kernel/classes/datatypes', 'image', 'Default image name' );
                 }
             }
         }
@@ -319,7 +320,7 @@ class eZImageAliasHandler
             $objectName = $this->attribute( 'alternative_text' );
             if ( !$objectName )
             {
-                $objectName = ezi18n( 'kernel/classes/datatypes', 'image', 'Default image name' );
+                $objectName = ezpI18n::tr( 'kernel/classes/datatypes', 'image', 'Default image name' );
             }
         }
         $objectName = eZImageAliasHandler::normalizeImageName( $objectName );
@@ -412,8 +413,7 @@ class eZImageAliasHandler
     */
     function imageAlias( $aliasName )
     {
-        require_once( 'kernel/common/image.php' );
-        $imageManager = imageInit();
+        $imageManager = eZImageManager::factory();
         if ( !$imageManager->hasAlias( $aliasName ) )
         {
             return null;
@@ -426,7 +426,7 @@ class eZImageAliasHandler
         }
         else
         {
-            $imageManager = imageInit();
+            $imageManager = eZImageManager::factory();
             if ( $imageManager->hasAlias( $aliasName ) )
             {
                 $original = $aliasList['original'];
@@ -650,8 +650,7 @@ class eZImageAliasHandler
                         $aliasEntry['filesize'] = $aliasFile->size();
                 }
 
-                require_once( 'kernel/common/image.php' );
-                $imageManager = imageInit();
+                $imageManager = eZImageManager::factory();
                 if ( $imageManager->isImageAliasValid( $aliasEntry ) )
                 {
                     $aliasList[$aliasEntry['name']] = $aliasEntry;
@@ -890,8 +889,7 @@ class eZImageAliasHandler
         $originalNode = $doc->createElement( "original" );
         $imageNode->appendChild( $originalNode );
 
-        require_once( 'kernel/common/image.php' );
-        $imageManager = imageInit();
+        $imageManager = eZImageManager::factory();
 
         $aliasName = 'original';
 
@@ -1138,8 +1136,21 @@ class eZImageAliasHandler
     {
         if ( !file_exists( $filename ) )
         {
-            eZDebug::writeError( "The image '$filename' does not exist, cannot initialize image attribute with it",
-                                 'eZImageAliasHandler::initializeFromFile' );
+            $contentObjectID = isset( $this->ContentObjectAttributeData['contentobject_id'] ) ? $this->ContentObjectAttributeData['contentobject_id'] : 0;
+            $contentObjectAttributeID = isset( $this->ContentObjectAttributeData['id'] ) ? $this->ContentObjectAttributeData['id'] : 0;
+            $version = isset( $this->ContentObjectAttributeData['version'] ) ? $this->ContentObjectAttributeData['version'] : 0;
+            $contentObject = eZContentObject::fetch( $contentObjectID );
+            $contentObjectAttribute = eZContentObjectAttribute::fetch( $contentObjectAttributeID, $version );
+            $contentObjectAttributeName = '';
+            $contentObjectName = '';
+            
+            if ( $contentObject instanceof eZContentObject )
+                $contentObjectName = $contentObject->attribute('name');
+            
+            if ( $contentObjectAttribute instanceof eZContentObjectAttribute )
+                $contentObjectAttributeName = $contentObjectAttribute->attribute( 'contentclass_attribute_name' );
+            
+            eZDebug::writeError( "The image '$filename' does not exist, cannot initialize image attribute: '$contentObjectAttributeName' (id: $contentObjectAttributeID) for content object: '$contentObjectName' (id: $contentObjectID)", __METHOD__ );
             return false;
         }
 
@@ -1185,8 +1196,7 @@ class eZImageAliasHandler
     */
     function initialize( $mimeData, $originalFilename, $imageAltText = false )
     {
-        require_once( 'kernel/common/image.php' );
-        $imageManager = imageInit();
+        $imageManager = eZImageManager::factory();
 
         $this->setOriginalAttributeDataValues( $this->ContentObjectAttributeData['id'],
                                                $this->ContentObjectAttributeData['version'],
@@ -1626,8 +1636,7 @@ class eZImageAliasHandler
 
         $fileName = false;
 
-        require_once( 'kernel/common/image.php' );
-        $imageManager = imageInit();
+        $imageManager = eZImageManager::factory();
 
         $mimeData = eZMimeType::findByFileContents( $fileName );
         $imageManager->analyzeImage( $mimeData );

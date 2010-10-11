@@ -2,10 +2,10 @@
 //
 // Created on: <01-Jun-2007 15:00:00 dl>
 //
+// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.2.0
-// BUILD VERSION: 24182
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 4.3.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -22,6 +22,8 @@
 //   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 //   MA 02110-1301, USA.
 //
+//
+// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
 /*! \file
@@ -1349,7 +1351,7 @@ class eZSiteInstaller
     */
     function setRSSExport( $params )
     {
-        require_once( 'kernel/common/i18n.php' );
+        
 
         // Create default rssExport object to use
         $rssExport = eZRSSExport::create( $params['creator'] );
@@ -1372,6 +1374,10 @@ class eZSiteInstaller
             $rssExportItem->setAttribute( 'source_node_id', $item['source_node_id'] );
             $rssExportItem->setAttribute( 'status', $item['status'] );
             $rssExportItem->setAttribute( 'title', $item['title'] );
+            if ( isset( $item['enclosure'] ) )
+            {
+                $rssExportItem->setAttribute( 'enclosure', $item['enclosure'] );
+            }
             $rssExportItem->store();
         }
     }

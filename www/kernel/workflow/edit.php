@@ -2,10 +2,10 @@
 //
 // Created on: <16-Apr-2002 11:00:12 amos>
 //
+// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.2.0
-// BUILD VERSION: 24182
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 4.3.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -22,6 +22,8 @@
 //   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 //   MA 02110-1301, USA.
 //
+//
+// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
 $Module = $Params['Module'];
@@ -111,7 +113,7 @@ else
     $workflow = eZWorkflow::create( $user_id );
     $workflowCount = eZWorkflow::fetchListCount();
     ++$workflowCount;
-    $workflow->setAttribute( "name", ezi18n( 'kernel/workflow/edit', "New Workflow" ) . "$workflowCount" );
+    $workflow->setAttribute( "name", ezpI18n::tr( 'kernel/workflow/edit', "New Workflow" ) . "$workflowCount" );
 
     $db = eZDB::instance();
     $db->begin();
@@ -165,7 +167,7 @@ if ( $http->hasPostVariable( "DeleteGroupButton" ) && $http->hasPostVariable( "g
     $selectedGroup = $http->postVariable( "group_id_checked" );
     if ( !eZWorkflowFunctions::removeGroup( $WorkflowID, $WorkflowVersion, $selectedGroup ) )
     {
-        $validation['groups'][] = array( 'text' => ezi18n( 'kernel/workflow', 'You have to have at least one group that the workflow belongs to!' ) );
+        $validation['groups'][] = array( 'text' => ezpI18n::tr( 'kernel/workflow', 'You have to have at least one group that the workflow belongs to!' ) );
         $validation['processed'] = true;
     }
 }
@@ -333,11 +335,11 @@ else if ( $canStore )
     $workflow->store( $event_list );
 }
 
-$Module->setTitle( ezi18n( 'kernel/workflow', 'Edit workflow' ) . ' ' . $workflow->attribute( "name" ) );
+$Module->setTitle( ezpI18n::tr( 'kernel/workflow', 'Edit workflow' ) . ' ' . $workflow->attribute( "name" ) );
 
 // Template handling
-require_once( "kernel/common/template.php" );
-$tpl = templateInit();
+
+$tpl = eZTemplate::factory();
 
 $res = eZTemplateDesignResource::instance();
 
@@ -362,9 +364,9 @@ if ( isset( $GroupID ) )
 
 $Result = array();
 $Result['content'] = $tpl->fetch( "design:workflow/edit.tpl" );
-$Result['path'] = array( array( 'text' => ezi18n( 'kernel/workflow', 'Workflow' ),
+$Result['path'] = array( array( 'text' => ezpI18n::tr( 'kernel/workflow', 'Workflow' ),
                                 'url' => false ),
-                         array( 'text' => ezi18n( 'kernel/workflow', 'Edit' ),
+                         array( 'text' => ezpI18n::tr( 'kernel/workflow', 'Edit' ),
                                 'url' => false ) );
 
 ?>

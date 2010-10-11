@@ -18,28 +18,28 @@
     {section name=SiteTemplate loop=$site_templates}
     
       <td class="setup_site_templates">
-            {section show=$:item.image_file_name}
+            {if $:item.image_file_name}
               <img src={$:item.image_file_name|ezroot} alt="{$:item.name|wash}" />
               <input type="hidden" name="eZSetup_site_templates[{$:index}][image]" value="{$:item.image_file_name}" />
-            {section-else}
+            {else}
               <img src={"design/standard/images/setup/eZ_setup_template_default.png"|ezroot} alt="{$:item.name|wash}" />
               <input type="hidden" name="eZSetup_site_templates[{$:index}][image]" value="" />
-            {/section}
+            {/if}
       </td>
     {delimiter modulo=4}
       </tr>
       <tr>
       </tr>
-	  <td colspan="4">
-	    &nbsp;
-	  </td>
+          <td colspan="4">
+            &nbsp;
+          </td>
       <tr>
       {section name=SiteTemplateInner loop=$site_templates max=4}
-	  <td align="bottom" class="normal">
-	    <input type="checkbox" name="eZSetup_site_templates[{$:index}][checked]" value="{$:item.identifier}">{$:item.name}</input>
+          <td valign="bottom" class="normal">
+            <input type="checkbox" name="eZSetup_site_templates[{$:index}][checked]" value="{$:item.identifier}">{$:item.name}</input>
             <input type="hidden" name="eZSetup_site_templates[{$:index}][identifier]" value="{$:item.identifier}" />
             <input type="hidden" name="eZSetup_site_templates[{$:index}][name]" value="{$:item.name}" />
-	  </td>
+          </td>
       {/section}
       </tr>
       <tr>   
@@ -50,11 +50,11 @@
     {section show=count($site_templates)|gt(4)}
     <tr>
         {section name=SiteTemplateInner loop=$site_templates offset=4 max=4}
-	  <td align="bottom" class="normal">
-	    <input type="checkbox" name="eZSetup_site_templates[{sum(4, $:index)}][checked]" value="{$:item.identifier}">{$:item.name}</input>
+          <td valign="bottom" class="normal">
+            <input type="checkbox" name="eZSetup_site_templates[{sum(4, $:index)}][checked]" value="{$:item.identifier}">{$:item.name}</input>
             <input type="hidden" name="eZSetup_site_templates[{sum(4, $:index)}][identifier]" value="{$:item.identifier}" />
             <input type="hidden" name="eZSetup_site_templates[{sum(4, $:index)}][name]" value="{$:item.name}" />
-	  </td>
+          </td>
         {/section}
     </tr>
     {/section}
@@ -62,11 +62,11 @@
     {section show=count($site_templates)|le(4)}
     <tr>
         {section name=SiteTemplateInner loop=$site_templates max=4}
-	  <td align="bottom" class="normal">
-	    <input type="checkbox" name="eZSetup_site_templates[{$:index}][checked]" value="{$:item.identifier}">{$:item.name}</input>
+          <td valign="bottom" class="normal">
+            <input type="checkbox" name="eZSetup_site_templates[{$:index}][checked]" value="{$:item.identifier}">{$:item.name}</input>
             <input type="hidden" name="eZSetup_site_templates[{$:index}][identifier]" value="{$:item.identifier}" />
             <input type="hidden" name="eZSetup_site_templates[{$:index}][name]" value="{$:item.name}" />
-	  </td>
+          </td>
         {/section}
     </tr>
     {/section}

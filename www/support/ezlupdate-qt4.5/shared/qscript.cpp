@@ -2130,7 +2130,7 @@ static inline QScriptParser::Location location(QScript::Lexer *lexer)
 
 bool QScriptParser::parse(QScript::Lexer *lexer,
                     const QString &fileName,
-     	            Translator *translator)
+                    Translator *translator)
 {
   const int INITIAL_STATE = 0;
 

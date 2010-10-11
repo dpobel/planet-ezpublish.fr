@@ -2,10 +2,10 @@
 //
 // Created on: <09-May-2003 10:44:02 bf>
 //
+// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.2.0
-// BUILD VERSION: 24182
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 4.3.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -23,6 +23,8 @@
 //   MA 02110-1301, USA.
 //
 //
+// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
+//
 
 $http = eZHTTPTool::instance();
 $module = $Params['Module'];
@@ -31,9 +33,9 @@ $parameters = $Params["Parameters"];
 $overrideKeys = array( 'nodeID' => $Params['NodeID'],
                        'classID' => $Params['ClassID'] );
 
-require_once( "kernel/common/template.php" );
+
 $ini = eZINI::instance();
-$tpl = templateInit();
+$tpl = eZTemplate::factory();
 
 // Todo: read from siteaccess settings
 $siteAccess = $Params['SiteAccess'];
@@ -475,9 +477,9 @@ $tpl->setVariable( 'design_extension', $designExtension );
 $Result = array();
 $Result['content'] = $tpl->fetch( "design:visual/templatecreate.tpl" );
 $Result['path'] = array( array( 'url' => "/visual/templatelist/",
-                                'text' => ezi18n( 'kernel/design', 'Template list' ) ),
+                                'text' => ezpI18n::tr( 'kernel/design', 'Template list' ) ),
                          array( 'url' => "/visual/templateview". $template,
-                                'text' => ezi18n( 'kernel/design', 'Template view' ) ),
+                                'text' => ezpI18n::tr( 'kernel/design', 'Template view' ) ),
                          array( 'url' => false,
-                                'text' => ezi18n( 'kernel/design', 'Create new template' ) ) );
+                                'text' => ezpI18n::tr( 'kernel/design', 'Create new template' ) ) );
 ?>

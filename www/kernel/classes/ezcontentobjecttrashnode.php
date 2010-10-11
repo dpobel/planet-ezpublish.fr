@@ -4,10 +4,10 @@
 //
 // Created on: <20-Sep-2006 00:00:00 rl>
 //
+// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.2.0
-// BUILD VERSION: 24182
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 4.3.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -24,6 +24,8 @@
 //   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 //   MA 02110-1301, USA.
 //
+//
+// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
 /*! \file
@@ -163,6 +165,21 @@ class eZContentObjectTrashNode extends eZContentObjectTreeNode
     function storeToTrash()
     {
         $this->store();
+
+        $db = eZDB::instance();
+        $db->begin();
+
+        $contentObject = $this->attribute( 'object' );
+        $contentobjectAttributes = $contentObject->allContentObjectAttributes( $contentObject->attribute( 'id' ) );
+        foreach ( $contentobjectAttributes as $contentobjectAttribute )
+        {
+            $dataType = $contentobjectAttribute->dataType();
+            if ( !$dataType )
+                continue;
+            $dataType->trashStoredObjectAttribute( $contentobjectAttribute );
+        }
+
+        $db->commit();
     }
 
     static function purgeForObject( $contentObjectID )
@@ -230,7 +247,7 @@ class eZContentObjectTrashNode extends eZContentObjectTreeNode
 
         if ( $asCount )
         {
-            $query = "SELECT count(*) as count \n";
+            $query = "SELECT count(*) as count ";
         }
         else
         {
@@ -240,7 +257,7 @@ class eZContentObjectTrashNode extends eZContentObjectTreeNode
                         ezcontentclass.serialized_name_list as class_serialized_name_list,
                         ezcontentclass.identifier as class_identifier
                         $versionNameTargets
-                        $sortingInfo[attributeTargetSQL] \n";
+                        $sortingInfo[attributeTargetSQL] ";
         }
         $query .= "FROM
                         ezcontentobject_trash ezcot,
@@ -261,7 +278,7 @@ class eZContentObjectTrashNode extends eZContentObjectTreeNode
                         $objectNameFilterSQL
                         $languageFilter
                         ";
-        if ( $sortingInfo['sortingFields'] && strlen( $sortingInfo['sortingFields'] ) > 5  )
+        if ( !$asCount && $sortingInfo['sortingFields'] && strlen( $sortingInfo['sortingFields'] ) > 5  )
             $query .= " ORDER BY $sortingInfo[sortingFields]";
 
         $db = eZDB::instance();
@@ -301,26 +318,28 @@ class eZContentObjectTrashNode extends eZContentObjectTreeNode
 
     function originalParent()
     {
-        $parent = eZContentObjectTreeNode::fetch( $this->attribute( 'parent_node_id' ) );
-        $thisPathArray = $this->attribute( 'path_array' );
+        if ( $this->originalNodeParent === 0 )
+            $this->originalNodeParent = eZContentObjectTreeNode::fetch( $this->attribute( 'parent_node_id' ) );
 
-        if ( is_object( $parent ) and count( $thisPathArray ) > 0 )
+        if ( $this->pathArray === 0 && $this->originalNodeParent instanceof eZContentObjectTreeNode )
+            $this->pathArray = $this->attribute( 'path_array' );
+
+        if ( $this->pathArray && count( $this->pathArray ) > 0 )
         {
-            $realParentPathArray = $parent->attribute( 'path_array' );
+            $realParentPathArray = $this->originalNodeParent->attribute( 'path_array' );
             $realParentPath = implode( '/', $realParentPathArray );
 
-            array_pop( $thisPathArray );
-            $thisParentPath = implode( '/', $thisPathArray );
+            array_pop( $this->pathArray );
+            $thisParentPath = implode( '/', $this->pathArray );
 
             if ( $thisParentPath == $realParentPath )
             {
                 // original parent exists at the same placement
-                return $parent;
+                return $this->originalNodeParent;
             }
         }
         // original parent was moved or deleted
-        $ret = null;
-        return $ret;
+        return null;
     }
 
     function originalParentPathIdentificationString()
@@ -335,6 +354,9 @@ class eZContentObjectTrashNode extends eZContentObjectTreeNode
         $path = substr( $path, 0, strrpos( $path, '/') );
         return $path;
     }
+
+    protected $originalNodeParent = 0;
+    protected $pathArray = 0;
 }
 
 ?>

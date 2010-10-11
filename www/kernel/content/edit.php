@@ -2,10 +2,10 @@
 //
 // Created on: <17-Apr-2002 10:34:48 bf>
 //
+// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.2.0
-// BUILD VERSION: 24182
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 4.3.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -22,6 +22,8 @@
 //   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 //   MA 02110-1301, USA.
 //
+//
+// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
 $Module = $Params['Module'];
@@ -324,10 +326,7 @@ if ( $EditLanguage == false )
         }
 
         // No version found, ask the user.
-        require_once( 'kernel/common/template.php' );
-
-        $tpl = templateInit();
-
+        $tpl = eZTemplate::factory();
         $res = eZTemplateDesignResource::instance();
         $res->setKeys( array( array( 'object', $obj->attribute( 'id' ) ),
                               array( 'remote_id', $obj->attribute( 'remote_id' ) )
@@ -338,9 +337,9 @@ if ( $EditLanguage == false )
 
         $Result = array();
         $Result['content'] = $tpl->fetch( 'design:content/edit_languages.tpl' );
-        $Result['path'] = array( array( 'text' => ezi18n( 'kernel/content', 'Content' ),
+        $Result['path'] = array( array( 'text' => ezpI18n::tr( 'kernel/content', 'Content' ),
                                  'url' => false ),
-                          array( 'text' => ezi18n( 'kernel/content', 'Edit' ),
+                          array( 'text' => ezpI18n::tr( 'kernel/content', 'Edit' ),
                                  'url' => false ) );
         $section = eZSection::fetch( $obj->attribute( 'section_id' ) );
         if ( $section )
@@ -392,9 +391,7 @@ if ( !is_numeric( $EditVersion ) )
                 }
             }
 
-            require_once( 'kernel/common/template.php' );
-            $tpl = templateInit();
-
+            $tpl = eZTemplate::factory();
             $res = eZTemplateDesignResource::instance();
             $res->setKeys( array( array( 'object', $obj->attribute( 'id' ) ),
                                 array( 'remote_id', $obj->attribute( 'remote_id' ) ),
@@ -436,10 +433,9 @@ if ( !is_numeric( $EditVersion ) )
                     $mostRecentDraft = $currentDraft;
                 }
             }
-            require_once( 'kernel/common/template.php' );
-            $tpl = templateInit();
 
-                $res = eZTemplateDesignResource::instance();
+            $tpl = eZTemplate::factory();
+            $res = eZTemplateDesignResource::instance();
             $res->setKeys( array( array( 'object', $obj->attribute( 'id' ) ),
                                 array( 'remote_id', $obj->attribute( 'remote_id' ) ),
                                 array( 'class', $class->attribute( 'id' ) ),
@@ -671,9 +667,7 @@ if ( !function_exists( 'checkContentActions' ) )
                 $conflictingVersions = $version->hasConflicts( $EditLanguage );
                 if ( $conflictingVersions )
                 {
-                    require_once( 'kernel/common/template.php' );
-                    $tpl = templateInit();
-
+                    $tpl = eZTemplate::factory();
                     $res = eZTemplateDesignResource::instance();
                     $res->setKeys( array( array( 'object', $object->attribute( 'id' ) ),
                                         array( 'remote_id', $object->attribute( 'remote_id' ) ),
@@ -702,6 +696,11 @@ if ( !function_exists( 'checkContentActions' ) )
             {
                 switch( $operationResult['status'] )
                 {
+                    case eZModuleOperationInfo::STATUS_REPEAT:
+                    {
+                        eZContentOperationCollection::setVersionStatus( $object->attribute( 'id' ),
+                            $version->attribute( 'version' ), eZContentObjectVersion::STATUS_REPEAT );
+                    }
                     case eZModuleOperationInfo::STATUS_HALTED:
                     {
                         if ( isset( $operationResult['redirect_url'] ) )

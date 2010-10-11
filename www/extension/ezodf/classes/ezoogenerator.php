@@ -4,10 +4,10 @@
 //
 // Created on: <17-Nov-2004 10:11:05 bf>
 //
+// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.2.0
-// BUILD VERSION: 24182
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 4.3.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS.
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -24,6 +24,8 @@
 //   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 //   MA 02110-1301, USA.
 //
+//
+// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
 /*! \file ezoogenerator.php
@@ -277,6 +279,13 @@ class eZOOGenerator
         // Clean up
         eZDir::recursiveDelete( $this->OOExportDir );
         eZDir::recursiveDelete( $this->OOTemplateDir);
+
+        // Clean up temporary image files if any
+        $fileHandler = eZClusterFileHandler::instance();
+
+        foreach ( $this->SourceImageArray as $sourceImageFile )
+            $fileHandler->fileDeleteLocal( $sourceImageFile );
+
         return $fileName;
     }
 
@@ -790,6 +799,7 @@ class eZOOGenerator
                     $sizeArray = getimagesize( $destFile );
 
                     $this->ImageFileArray[] = $relativeFile;
+                    $this->SourceImageArray[] = $fileName;
                     $widthRatio = ( $element['DisplayWidth'] / 580 ) * 100;
 
                     // If image is larger than 300 px make it full page, or pixelsize
@@ -937,6 +947,7 @@ class eZOOGenerator
     var $DocumentArray = array();
 
     var $ImageFileArray = array();
+    var $SourceImageArray = array();
 
     var $OORootDir = "var/cache/ezodf/";
     var $OOExportDir = "var/cache/ezodf/export/";

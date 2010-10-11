@@ -1,4 +1,6 @@
-<!DOCTYPE TS><TS>
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE TS>
+<TS version="2.0" language="ja_JP">
 <context>
     <name>contentstructuremenu/show_content_structure</name>
     <message>
@@ -41,8 +43,7 @@
     </message>
     <message>
         <source>Classes inside &lt;%group_name&gt; [%class_count]</source>
-        <translation>含まれるクラス &lt;%group_name&gt; 
-[%class_count]</translation>
+        <translation>含まれるクラス &lt;%group_name&gt; [%class_count]</translation>
     </message>
     <message>
         <source>Invert selection.</source>
@@ -120,6 +121,14 @@
         <source>Use this menu to select the language you to want use then click the &quot;New class&quot; button. The item will be created within the current location.</source>
         <translation>使用したい言語をこのメニューで選択し、&quot;新しいクラス&quot;ボタンをクリックしてください。現在の配置先にアイテムが作成されます。</translation>
     </message>
+    <message>
+        <source>Classes inside &lt;%group_name&gt; (%class_count)</source>
+        <translation type="unfinished">&lt;%group_name&gt;に含まれたクラス(%class_count)</translation>
+    </message>
+    <message>
+        <source>List of classes inside %group_name class group (%class_count)</source>
+        <translation type="unfinished">%group_nameに入ってるクラスのリスト(%class_count)</translation>
+    </message>
 </context>
 <context>
     <name>design/admin/class/datatype/browse_objectrelation_placement</name>
@@ -159,7 +168,7 @@
     </message>
     <message>
         <source>The following information is either missing or invalid</source>
-        <translation>以下の情報が未定義または不正です。</translation>
+        <translation type="unfinished">以下の情報が未定義または不正です</translation>
     </message>
     <message>
         <source>The class definition was successfully stored.</source>
@@ -259,7 +268,7 @@
     </message>
     <message>
         <source>Remove the selected attributes.</source>
-        <translation>選択した属性を削除</translation>
+        <translation type="unfinished">選択した属性を削除。</translation>
     </message>
     <message>
         <source>Add a new attribute to the class. Use the menu on the left to select the attribute type.</source>
@@ -348,6 +357,42 @@
     <message>
         <source>The &lt;%datatype_name&gt; datatype cannot be used as an information collector.</source>
         <translation>&lt;%datatype_name&gt;データタイプは情報コレクター機能で利用することはできません。</translation>
+    </message>
+    <message>
+        <source>Edit &lt;%class_name&gt; (%object_count)</source>
+        <translation type="unfinished">&lt;%class_name&gt;編集(%object_count)</translation>
+    </message>
+    <message>
+        <source>Description</source>
+        <translation type="unfinished">説明</translation>
+    </message>
+    <message>
+        <source>Use this field to set the informal description of the class. The description field can contain whitespaces and special characters.</source>
+        <translation type="unfinished">このフィールドにクラスの概要を入力してください。概要は空白と特別文字を含めることができます。</translation>
+    </message>
+    <message>
+        <source>List of class attributes</source>
+        <translation type="unfinished">クラス属性のリスト</translation>
+    </message>
+    <message>
+        <source>Class attribute item</source>
+        <translation type="unfinished">クラス属性アイテム</translation>
+    </message>
+    <message>
+        <source>Use this field to set the informal description of the attribute. This field can contain whitespaces and special characters.</source>
+        <translation type="unfinished">このフィールドに属性の概要を入力してください。概要は空白と特別文字を含めることができます。</translation>
+    </message>
+    <message>
+        <source>Use this category to group attributes together in edit interface, some categories might also be hidden in full view if they are for instance only meta attributes.</source>
+        <translation type="unfinished">編集インターフェイスで属性をグループするようにこのカテゴリーを選択してください。カテゴリーによって、フールビューで隠されることもあります（メタ情報しか含めない場合など）。</translation>
+    </message>
+    <message>
+        <source>Default</source>
+        <translation type="unfinished">デフォルト設定</translation>
+    </message>
+    <message>
+        <source>Category</source>
+        <translation type="unfinished">カテゴリ</translation>
     </message>
 </context>
 <context>
@@ -439,7 +484,7 @@
     </message>
     <message>
         <source>Invert selection.</source>
-        <translation>選択の反転</translation>
+        <translation type="unfinished">選択の反転。</translation>
     </message>
     <message>
         <source>Name</source>
@@ -455,7 +500,7 @@
     </message>
     <message>
         <source>Select class group for removal.</source>
-        <translation>削除するクラスカテゴリを選択</translation>
+        <translation type="unfinished">削除するクラスカテゴリを選択。</translation>
     </message>
     <message>
         <source>Edit</source>
@@ -463,7 +508,7 @@
     </message>
     <message>
         <source>Edit the &lt;%class_group_name&gt; class group.</source>
-        <translation>&lt;%class_group_name&gt; クラスカテゴリを編集</translation>
+        <translation type="unfinished">&lt;%class_group_name&gt; クラスカテゴリを編集。</translation>
     </message>
     <message>
         <source>Remove selected</source>
@@ -479,7 +524,7 @@
     </message>
     <message>
         <source>Create a new class group.</source>
-        <translation>新しいクラスカテゴリを作成</translation>
+        <translation type="unfinished">新しいクラスカテゴリを作成。</translation>
     </message>
     <message>
         <source>Recently modified classes</source>
@@ -495,7 +540,23 @@
     </message>
     <message>
         <source>Edit the &lt;%class_name&gt; class.</source>
-        <translation>&lt;%class_name&gt; クラスを編集</translation>
+        <translation type="unfinished">&lt;%class_name&gt; クラスを編集。</translation>
+    </message>
+    <message>
+        <source>Class groups (%group_count)</source>
+        <translation>クラスカテゴリ (%group_count)</translation>
+    </message>
+    <message>
+        <source>List of class groups</source>
+        <translation type="unfinished">クラスグループのリスト</translation>
+    </message>
+    <message>
+        <source>List of recently modified classes</source>
+        <translation type="unfinished">債権変更されたクラスのリスト</translation>
+    </message>
+    <message>
+        <source>Objects</source>
+        <translation type="unfinished">オブジェクト数</translation>
     </message>
 </context>
 <context>
@@ -921,6 +982,42 @@
         <source>Use this menu to select the language you want to use for editing then click the &quot;Edit&quot; button.</source>
         <translation>このメニューを使って編集に使う言語を選択して下さい。”編集”ボタンをクリックして、編集をスタートします。</translation>
     </message>
+    <message>
+        <source>Class storing deferred</source>
+        <translation type="unfinished">クラスの保存は繰り延べられた</translation>
+    </message>
+    <message>
+        <source>The storing of the class has been deferred because existing objects need to be updated. The process has been scheduled to run in the background and will be started automatically. Please do not edit the class again until the process has finished. You can monitor the progress of the background process here:</source>
+        <translation type="unfinished">存在するオブジェクトを変更する必要がありますので、クラスの保存は延期されました。プロセスはバックグラウンド化されまして、自動的に実行されます。プロセスが完了されるまでにクラスを変更しないでください。次のリンクでプロセスの状況を確認できます:</translation>
+    </message>
+    <message>
+        <source>Background process monitor</source>
+        <translation type="unfinished">プロセスモニターをバックグラウンドに</translation>
+    </message>
+    <message>
+        <source>Class name and number of objects</source>
+        <translation type="unfinished">クラス名とオブジェクト数</translation>
+    </message>
+    <message>
+        <source>Member of class groups (%group_count)</source>
+        <translation type="unfinished">クラスグループの数(%group_count)</translation>
+    </message>
+    <message>
+        <source>Override templates (%1)</source>
+        <translation type="unfinished">オーバーライドテンプレート(%1)</translation>
+    </message>
+    <message>
+        <source>Translations (%translations)</source>
+        <translation>翻訳 (%translations)</translation>
+    </message>
+    <message>
+        <source>Description</source>
+        <translation type="unfinished">概要</translation>
+    </message>
+    <message>
+        <source>Category</source>
+        <translation type="unfinished">カテゴリ</translation>
+    </message>
 </context>
 <context>
     <name>design/admin/collaboration</name>
@@ -1168,6 +1265,10 @@
         <source>You do not have permission to edit the contents of &lt;%bookmark_name&gt;.</source>
         <translation>&lt;%bookmark_name&gt;を編集する権限がありません。</translation>
     </message>
+    <message>
+        <source>My bookmarks (%bookmark_count)</source>
+        <translation>ブックマーク (%bookmark_count)</translation>
+    </message>
 </context>
 <context>
     <name>design/admin/content/browse</name>
@@ -1361,7 +1462,7 @@
     </message>
     <message>
         <source>Choose objects that you want to relate to &lt;%version_name&gt;</source>
-        <translation>&lt;%version_name&gt;と関連づけたいオブジェクトを選択して下さい。</translation>
+        <translation type="unfinished">&lt;%version_name&gt;と関連づけたいオブジェクトを選択して下さい</translation>
     </message>
     <message>
         <source>Use the checkboxes to choose the objects that you want to relate to &lt;%version_name&gt;.</source>
@@ -1376,7 +1477,7 @@
     </message>
     <message>
         <source>Choose the node to exchange for &lt;%object_name&gt;</source>
-        <translation>&lt;%object_name&gt;と入れ替えるノードを選択して下さい。</translation>
+        <translation type="unfinished">&lt;%object_name&gt;と入れ替えるノードを選択して下さい</translation>
     </message>
     <message>
         <source>Use the radio buttons to choose the node that you want to swap with &lt;%object_name&gt;.</source>
@@ -1506,6 +1607,13 @@
     </message>
 </context>
 <context>
+    <name>design/admin/content/dashboard</name>
+    <message>
+        <source>Dashboard</source>
+        <translation type="unfinished">ダッシュボード</translation>
+    </message>
+</context>
+<context>
     <name>design/admin/content/datatype</name>
     <message>
         <source>No media file is available.</source>
@@ -1593,6 +1701,10 @@
         <source>New version</source>
         <translation>新バージョン</translation>
     </message>
+    <message>
+        <source>Versions for &lt;%object_name&gt; (%version_count)</source>
+        <translation>&lt;%object_name&gt; (%version_count) のバージョン</translation>
+    </message>
 </context>
 <context>
     <name>design/admin/content/draft</name>
@@ -1663,6 +1775,10 @@
     <message>
         <source>Language</source>
         <translation>言語</translation>
+    </message>
+    <message>
+        <source>My drafts (%draft_count)</source>
+        <translation>下書き (%draft_count)</translation>
     </message>
 </context>
 <context>
@@ -2051,6 +2167,58 @@
         <source>The following data is invalid according to the custom validation rules</source>
         <translation>以下のデータはカスタムルールに従っておらず、不正です。</translation>
     </message>
+    <message>
+        <source>Toggle fullscreen editing!</source>
+        <translation type="unfinished">フールスクリーン編集を切り替える!</translation>
+    </message>
+    <message>
+        <source>Store draft and exit</source>
+        <translation type="unfinished">ドラフトを保存して、編集モードを終了します</translation>
+    </message>
+    <message>
+        <source>Store the draft that is being edited and exit from edit mode. Use when you need to exit your work and return later to continue.</source>
+        <translation type="unfinished">フトを保存して、編集モードを終了します。作業を終わらせて、後から続く場合に選択してください。</translation>
+    </message>
+    <message>
+        <source>Edit &lt;%object_name&gt; (%class_name)</source>
+        <translation>&lt;%object_name&gt; (%class_name) の編集</translation>
+    </message>
+    <message>
+        <source>Locations (%locations)</source>
+        <translation>配置先 (%locations)</translation>
+    </message>
+    <message>
+        <source>Preview</source>
+        <translation type="unfinished">プレビュー</translation>
+    </message>
+    <message>
+        <source>Existing translations</source>
+        <translation type="unfinished">存在する翻訳</translation>
+    </message>
+    <message>
+        <source>Base translation on</source>
+        <translation type="unfinished">翻訳のベースになる言語</translation>
+    </message>
+    <message>
+        <source>None</source>
+        <translation type="unfinished">なし</translation>
+    </message>
+    <message>
+        <source>Related objects (%related_objects)</source>
+        <translation>関連付けしたオブジェクト (%related_objects)</translation>
+    </message>
+    <message>
+        <source>Related images (%related_images)</source>
+        <translation>関連付けした画像 (%related_images)</translation>
+    </message>
+    <message>
+        <source>Related files (%related_files)</source>
+        <translation>関連付けしたファイル (%related_files)</translation>
+    </message>
+    <message>
+        <source>Related content (%related_objects)</source>
+        <translation>関連付けしたコンテンツ (%related_objects)</translation>
+    </message>
 </context>
 <context>
     <name>design/admin/content/edit_attribute</name>
@@ -2217,6 +2385,14 @@
         <source>You cannot edit any of the drafts because none of them belong to you. You can create a new draft, select it and then edit it.</source>
         <translation>下書きの所有者ではないため、編集はできません。新しい下書きを作成し、編集して下さい。</translation>
     </message>
+    <message>
+        <source>Conflicting versions (%draft_count)</source>
+        <translation>同時編集の可能性があるバージョン (%draft_count)</translation>
+    </message>
+    <message>
+        <source>Current drafts (%draft_count)</source>
+        <translation>編集状態の下書き (%draft_count)</translation>
+    </message>
 </context>
 <context>
     <name>design/admin/content/edit_languages</name>
@@ -2274,7 +2450,7 @@
     </message>
     <message>
         <source>You do not have permission to edit the object in any available languages.</source>
-        <translation>他の言語で翻訳を作成する権限がありません</translation>
+        <translation type="unfinished">他の言語で翻訳を作成する権限がありません。</translation>
     </message>
     <message>
         <source>Edit</source>
@@ -2295,6 +2471,26 @@
     <message>
         <source>However you can select one of the following languages for editing.</source>
         <translation>言語の一つを選んで、編集することはできます。</translation>
+    </message>
+    <message>
+        <source>Existing translations</source>
+        <translation type="unfinished">存在する翻訳</translation>
+    </message>
+    <message>
+        <source>Select the translation you want to edit</source>
+        <translation type="unfinished">編集する翻訳を選択してください</translation>
+    </message>
+    <message>
+        <source>New translation</source>
+        <translation type="unfinished">新規翻訳</translation>
+    </message>
+    <message>
+        <source>Select the translation you want to add</source>
+        <translation type="unfinished">追加する翻訳を選択してください</translation>
+    </message>
+    <message>
+        <source>Translate based on</source>
+        <translation type="unfinished">翻訳の元となる言語</translation>
     </message>
 </context>
 <context>
@@ -2491,6 +2687,14 @@
         <source>You cannot edit the contents of version #%version_number either because it is not a draft or because you do not have permission to edit the object.</source>
         <translation>下書きではないか、編集権限がないため、バージョン#%version_numberの編集はできません。</translation>
     </message>
+    <message>
+        <source>Versions for &lt;%object_name&gt; (%version_count)</source>
+        <translation>&lt;%object_name&gt; のバージョン (%version_count)</translation>
+    </message>
+    <message>
+        <source>New drafts (%newerDraftCount)</source>
+        <translation>新規下書き (%newerDraftCount)</translation>
+    </message>
 </context>
 <context>
     <name>design/admin/content/pendinglist</name>
@@ -2521,6 +2725,10 @@
     <message>
         <source>Unknown</source>
         <translation>不明</translation>
+    </message>
+    <message>
+        <source>My pending items (%pending_count)</source>
+        <translation>保留アイテム (%pending_count)</translation>
     </message>
 </context>
 <context>
@@ -2708,11 +2916,11 @@
     </message>
     <message>
         <source>Select a location.</source>
-        <translation>配置先の選択</translation>
+        <translation type="unfinished">配置先の選択。</translation>
     </message>
     <message>
         <source>Restore at original location (unavailable).</source>
-        <translation>元の配置先に保存（利用不可）</translation>
+        <translation type="unfinished">元の配置先に保存（利用不可）。</translation>
     </message>
     <message>
         <source>OK</source>
@@ -2720,7 +2928,7 @@
     </message>
     <message>
         <source>Continue restoring &lt;%name&gt;.</source>
-        <translation>&lt;%name&gt; の保存を継続</translation>
+        <translation type="unfinished">&lt;%name&gt; の保存を継続。</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -2773,6 +2981,10 @@
         <source>This subtree/item has no external relations.</source>
         <translation>このサブツリー/アイテムは外部との関連がありません。</translation>
     </message>
+    <message>
+        <source>&quot;%contentObjectName&quot; (%children_count): Sub items that are used by other objects </source>
+        <translation>&quot;%contentObjectName&quot; (%children_count): 他のオブジェクトによって使用されているサブアイテム</translation>
+    </message>
 </context>
 <context>
     <name>design/admin/content/search</name>
@@ -2791,6 +3003,11 @@
     <message>
         <source>The same location</source>
         <translation>同じ配置先</translation>
+    </message>
+    <message>
+        <source>For more options try the %1fd search%2.</source>
+        <comment>The parameters are link start and end tags.</comment>
+        <translation type="obsolete">その他のオプションは %1検索オプション%2を試して見て下さい。</translation>
     </message>
     <message>
         <source>No results were found while searching for &lt;%1&gt;</source>
@@ -3015,6 +3232,14 @@
         <source>The language cannot be removed because it is in use.</source>
         <translation>現在使用されているため、言語を削除することはできません。</translation>
     </message>
+    <message>
+        <source>Available languages for translation of content (%translations_count)</source>
+        <translation>コンテンツ翻訳に利用可能な言語 (%translations_count)</translation>
+    </message>
+    <message>
+        <source>Toggle all.</source>
+        <translation type="unfinished">すべて反転。</translation>
+    </message>
 </context>
 <context>
     <name>design/admin/content/translationview</name>
@@ -3225,6 +3450,10 @@
         <source>Use these checkboxes to mark items for removal. Click the &quot;Remove selected&quot; button to remove the selected items.</source>
         <translation>このチェックボックスを使って、削除したい項目を選択してください。選択した項目を削除するには、”選択した項目の削除”ボタンをクリックしてください。</translation>
     </message>
+    <message>
+        <source>Trash (%list_count)</source>
+        <translation>ゴミ箱 (%list_count)</translation>
+    </message>
 </context>
 <context>
     <name>design/admin/content/upload</name>
@@ -3286,7 +3515,7 @@
     </message>
     <message>
         <source>The location where the uploaded file should be placed.</source>
-        <translation>アップロードするファイルの配置先を選択</translation>
+        <translation type="unfinished">アップロードするファイルの配置先を選択。</translation>
     </message>
     <message>
         <source>Automatic</source>
@@ -3302,7 +3531,7 @@
     </message>
     <message>
         <source>Proceed with uploading the selected file.</source>
-        <translation>選択したファイルのアップロードを実行</translation>
+        <translation type="unfinished">選択したファイルのアップロードを実行。</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -3542,6 +3771,14 @@
         <source>&lt;em&gt;Un-check&lt;/em&gt; to create the new alias under %link. Leave it checked and the new alias will be created on &lt;em&gt;&lt;a href=&apos;/&apos;&gt;%siteroot&lt;/a&gt;&lt;/em&gt;.</source>
         <translation>%linkで新しいエイリアスを作成するには&lt;em&gt;チェックを外して下さい&lt;/em&gt;。チェックされた状態では、新しいエイリアスは&lt;em&gt;&lt;a href=&apos;/&apos;&gt;%siteroot&lt;/a&gt;&lt;/em&gt;に作成されます。</translation>
     </message>
+    <message>
+        <source>URL aliases for &lt;%node_name&gt; (%alias_count)</source>
+        <translation>&lt;%node_name&gt; (%alias_count)のエイリアス</translation>
+    </message>
+    <message>
+        <source>Generated aliases (%count)</source>
+        <translation>(%count)エイリアスを生成しました</translation>
+    </message>
 </context>
 <context>
     <name>design/admin/content/urlalias_global</name>
@@ -3575,7 +3812,7 @@
     </message>
     <message>
         <source>The specified destination URL %url does not exist in the system, cannot create alias for it</source>
-        <translation>指定したURL: %urlはシステムに存在しません。そのためエイリアスを作成することは出来ません。</translation>
+        <translation type="unfinished">指定したURL: %urlはシステムに存在しません。そのためエイリアスを作成することは出来ません</translation>
     </message>
     <message>
         <source>Ensure that the destination points to a valid entry, one of:</source>
@@ -3682,6 +3919,10 @@
         <translation>新しいエイリアスのURLを入力してください。サブエントリーはスラッシュ（/）を使って作成してください。</translation>
     </message>
     <message>
+        <source>Destination (path to existing funtionality or resource)</source>
+        <translation type="obsolete">対象（機能かリソースへのパス）</translation>
+    </message>
+    <message>
         <source>Enter the destination URL for the new alias. Use forward slashes (/) to create subentries.</source>
         <translation>新しいエイリアスの対象を入力してください。サブエントリーはスラッシュ（/）を使って作成してください。</translation>
     </message>
@@ -3720,6 +3961,10 @@
     <message>
         <source>Destination (path to existing functionality or resource)</source>
         <translation>対象（機能かリソースへのパス）</translation>
+    </message>
+    <message>
+        <source>Globally defined URL aliases (%alias_count)</source>
+        <translation>グローバル指定のURLエイリアス: (%alias_count)</translation>
     </message>
 </context>
 <context>
@@ -3829,6 +4074,14 @@
         <translation>新しいURLワイルドカード</translation>
     </message>
     <message>
+        <source>Enter the URL for the new wildcard. Example: /developer/*</source>
+        <translation type="obsolete">新しいワイルドカードのURLを入力してください。例えば: /developer/*</translation>
+    </message>
+    <message>
+        <source>Enter the destination URL for the new wildcard. Example: /dev/{1\}</source>
+        <translation type="obsolete">新しいワイルドカードの対象URLを入力してください。例えば: /dev/{1\}</translation>
+    </message>
+    <message>
         <source>Perform redirecting.</source>
         <translation>リダイレクトを実行</translation>
     </message>
@@ -3847,6 +4100,10 @@
     <message>
         <source>Enter the destination URL for the new wildcard. Example: dev/{1\}</source>
         <translation>新しいワイルドカードの対象URLを入力してください。例えば: /dev/{1\}</translation>
+    </message>
+    <message>
+        <source>Defined URL aliases with wildcard(%wildcard_count)</source>
+        <translation>ワイルドカード: (%wildcard_count)のURLエイリアスを定義しました</translation>
     </message>
 </context>
 <context>
@@ -4007,6 +4264,10 @@
         <source>You cannot edit the contents of version #%version_number either because it is not a draft or because you do not have permission to edit the object.</source>
         <translation>下書きではないか、編集権限がないため、バージョン#%version_numberの編集はできません。</translation>
     </message>
+    <message>
+        <source>Versions for &lt;%object_name&gt; (%version_count)</source>
+        <translation>&lt;%object_name&gt; のバージョン (%version_count)</translation>
+    </message>
 </context>
 <context>
     <name>design/admin/content/view/versionview</name>
@@ -4132,11 +4393,19 @@
     </message>
     <message>
         <source>Translation mismatch</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">翻訳の不具合</translation>
     </message>
     <message>
         <source>Your selected translation does not match the language of your selected siteaccess. This may lead to unexpected results in the preview, however it may also be what you intended.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">選択した翻訳は選択されたサイトアクセスと不一致します。プレビューの際に予想外な結果が表示される可能性があります。</translation>
+    </message>
+    <message>
+        <source>Back to edit</source>
+        <translation type="unfinished">編集へ戻る</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished">戻る</translation>
     </message>
 </context>
 <context>
@@ -4184,6 +4453,176 @@
     <message>
         <source>[%classname] Click on the icon to display a context-sensitive menu.</source>
         <translation>[%classname] コンテキストメニューを表示するにはアイコンをクリックしてください。</translation>
+    </message>
+    <message>
+        <source>Object ID</source>
+        <translation type="unfinished">オブジェクトID</translation>
+    </message>
+</context>
+<context>
+    <name>design/admin/dashboard/all_latest_content</name>
+    <message>
+        <source>All latest content</source>
+        <translation type="unfinished">最新コンテント</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation type="unfinished">名前</translation>
+    </message>
+    <message>
+        <source>Type</source>
+        <translation type="unfinished">種類</translation>
+    </message>
+    <message>
+        <source>Published</source>
+        <translation type="unfinished">公開日時</translation>
+    </message>
+    <message>
+        <source>Author</source>
+        <translation type="unfinished">作成者</translation>
+    </message>
+    <message>
+        <source>Edit</source>
+        <translation type="unfinished">編集</translation>
+    </message>
+    <message>
+        <source>Edit &lt;%child_name&gt;.</source>
+        <translation type="unfinished">&lt;%child_name&gt;を編集。</translation>
+    </message>
+    <message>
+        <source>You do not have permission to edit &lt;%child_name&gt;.</source>
+        <translation type="unfinished">&lt;%child_name&gt;を編集する権限を持っていません。</translation>
+    </message>
+    <message>
+        <source>Latest content list is empty.</source>
+        <translation type="unfinished">最新コンテントがありません。</translation>
+    </message>
+</context>
+<context>
+    <name>design/admin/dashboard/drafts</name>
+    <message>
+        <source>My drafts</source>
+        <translation type="unfinished">下書き</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation type="unfinished">名前</translation>
+    </message>
+    <message>
+        <source>Type</source>
+        <translation type="unfinished">種類</translation>
+    </message>
+    <message>
+        <source>Version</source>
+        <translation type="unfinished">バージョン</translation>
+    </message>
+    <message>
+        <source>Modified</source>
+        <translation type="unfinished">修正日時</translation>
+    </message>
+    <message>
+        <source>Edit &lt;%draft_name&gt;.</source>
+        <translation type="unfinished">&lt;%draft_name&gt; を編集。</translation>
+    </message>
+    <message>
+        <source>Edit</source>
+        <translation type="unfinished">編集</translation>
+    </message>
+    <message>
+        <source>Currently you do not have any drafts available.</source>
+        <translation type="unfinished">現在に下書きがありません。</translation>
+    </message>
+</context>
+<context>
+    <name>design/admin/dashboard/latest_content</name>
+    <message>
+        <source>My latest content</source>
+        <translation type="unfinished">自作の最新コンテント</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation type="unfinished">名前</translation>
+    </message>
+    <message>
+        <source>Type</source>
+        <translation type="unfinished">種類</translation>
+    </message>
+    <message>
+        <source>Modified</source>
+        <translation type="unfinished">修正日時</translation>
+    </message>
+    <message>
+        <source>Edit</source>
+        <translation type="unfinished">編集</translation>
+    </message>
+    <message>
+        <source>Edit &lt;%child_name&gt;.</source>
+        <translation type="unfinished">&lt;%child_name&gt;を編集。</translation>
+    </message>
+    <message>
+        <source>You do not have permission to edit &lt;%child_name&gt;.</source>
+        <translation type="unfinished">&lt;%child_name&gt;を編集する権限を持っていません。</translation>
+    </message>
+    <message>
+        <source>Your latest content list is empty.</source>
+        <translation type="unfinished">自作の最新コンテントがありません。</translation>
+    </message>
+</context>
+<context>
+    <name>design/admin/dashboard/maintenance</name>
+    <message>
+        <source>Software update and Maintenance</source>
+        <translation type="unfinished">ソフトウェアのアップデートとメンテナンス</translation>
+    </message>
+    <message>
+        <source>Your installation: &lt;span id=&quot;ez-version&quot;&gt;%1&lt;/span&gt;</source>
+        <translation type="unfinished">お使いのインストレーション: &lt;span id=&quot;ez-version&quot;&gt;%1&lt;/span&gt;</translation>
+    </message>
+    <message>
+        <source>If your installation is not running eZ Publish Premium, it might not be up to date with the latest maintenance service packs. Contact eZ Systems.</source>
+        <translation type="unfinished">インストレーションにeZ Publishプレミアムが付いていません、最新のサービスパックがインストールされていません可能性があります。eZ Systemsにお問い合わせください。</translation>
+    </message>
+</context>
+<context>
+    <name>design/admin/dashboard/pending_list</name>
+    <message>
+        <source>My pending items</source>
+        <translation type="unfinished">保留アイテム</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation type="unfinished">名前</translation>
+    </message>
+    <message>
+        <source>Type</source>
+        <translation type="unfinished">種類</translation>
+    </message>
+    <message>
+        <source>Modified</source>
+        <translation type="unfinished">修正日時</translation>
+    </message>
+    <message>
+        <source>Currently you do not have any pending items available.</source>
+        <translation type="unfinished">現在、保留中のアイテムはありません。</translation>
+    </message>
+</context>
+<context>
+    <name>design/admin/dashboard/wishlist</name>
+    <message>
+        <source>Wish list</source>
+        <translation type="unfinished">ウイッシュリスト</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation type="unfinished">ウイッシュリスト名</translation>
+    </message>
+    <message>
+        <source>Type</source>
+        <translation type="unfinished">種類</translation>
+    </message>
+    <message>
+        <source>Currently you do not have any products on your wish list.</source>
+        <translation type="unfinished">現在、ウイッシュリストに入ってる商品はありません。</translation>
     </message>
 </context>
 <context>
@@ -4462,6 +4901,10 @@
         <source>Unknown user</source>
         <translation>不明なユーザ</translation>
     </message>
+    <message>
+        <source>Information collected by &lt;%object_name&gt; (%collection_count)</source>
+        <translation>&lt;%object_name&gt;で収集された情報 (%collection_count)</translation>
+    </message>
 </context>
 <context>
     <name>design/admin/infocollector/confirmremoval</name>
@@ -4539,6 +4982,10 @@
     <message>
         <source>Remove all information that was collected by the selected objects.</source>
         <translation>選択したすべてのデータを削除します。</translation>
+    </message>
+    <message>
+        <source>Objects that have collected information (%object_count)</source>
+        <translation>データを収集したオブジェクト: (%object_count)</translation>
     </message>
 </context>
 <context>
@@ -5468,6 +5915,126 @@
         <source>Show state assignment widget.</source>
         <translation>ステート割当ウィジェットを表示する。</translation>
     </message>
+    <message>
+        <source>Tab is disabled, enable on dashboard.</source>
+        <translation type="unfinished">タブは無効となっています、ダッシュボードで有効にしてください。</translation>
+    </message>
+    <message>
+        <source>Translations (%count)</source>
+        <translation type="unfinished">翻訳(%count)</translation>
+    </message>
+    <message>
+        <source>Locations (%count)</source>
+        <translation type="unfinished">ロケーション(%count)</translation>
+    </message>
+    <message>
+        <source>Relations (%count)</source>
+        <translation type="unfinished">関連(%count)</translation>
+    </message>
+    <message>
+        <source>Roles (%count)</source>
+        <translation type="unfinished">ロール(%count)</translation>
+    </message>
+    <message>
+        <source>Policies (%count)</source>
+        <translation type="unfinished">ポリシー(%count)</translation>
+    </message>
+    <message>
+        <source>Sub items (%children_count)</source>
+        <translation>子アイテム (%children_count)</translation>
+    </message>
+    <message>
+        <source>Create</source>
+        <translation type="unfinished">作成</translation>
+    </message>
+    <message>
+        <source>in</source>
+        <translation type="unfinished">言語</translation>
+    </message>
+    <message>
+        <source>Here</source>
+        <translation type="unfinished">ここ</translation>
+    </message>
+    <message>
+        <source>Published order</source>
+        <translation type="unfinished">公開順番</translation>
+    </message>
+    <message>
+        <source>List of sub items of current node, with controlls to edit, remove and move them directly.</source>
+        <translation type="unfinished">現在のノードのサブアイテムのリストを表示します。直接編集、削除と移動をすることができます。</translation>
+    </message>
+    <message>
+        <source>Node and object details like creator, when it was created, section it belongs to, number of versions and translations, Node ID and Object ID.</source>
+        <translation type="unfinished">作成者、セクション、バージョン、翻訳、ノードID、オブジェクトIDなどのノードとオブジェクトの詳細情報。</translation>
+    </message>
+    <message>
+        <source>Content state</source>
+        <translation type="unfinished">コンテントステート</translation>
+    </message>
+    <message>
+        <source>States and their states groups for current object.</source>
+        <translation type="unfinished">現在のオブジェクトのステートとステートグループ。</translation>
+    </message>
+    <message>
+        <source>State group</source>
+        <translation type="unfinished">ステートグループ</translation>
+    </message>
+    <message>
+        <source>No content object state is configured. This can be done %urlstart here%urlend.</source>
+        <translation type="unfinished">コンテントオブジェクトステートは設定されています。%urlstartここ%urlendで設定できます。</translation>
+    </message>
+    <message>
+        <source>Locations (aka Nodes) for current object.</source>
+        <translation type="unfinished">現在のオブジェクトの配置先（ノード）。</translation>
+    </message>
+    <message>
+        <source>New translation</source>
+        <translation type="unfinished">新しい翻訳</translation>
+    </message>
+    <message>
+        <source>Policy list and the Role that are assignet to current node.</source>
+        <translation type="unfinished">現在のノードにアサインされているポリシーとロール。</translation>
+    </message>
+    <message>
+        <source>Limited to</source>
+        <translation type="unfinished">に制限された</translation>
+    </message>
+    <message>
+        <source>%limitation_identifier %limitation_value</source>
+        <translation type="unfinished">%limitation_identifier %limitation_value</translation>
+    </message>
+    <message>
+        <source>Object relation list from current object.</source>
+        <translation type="unfinished">現在のオブジェクトの関連オブジェクトリスト。</translation>
+    </message>
+    <message>
+        <source>Related objects (%related_objects_count)</source>
+        <translation>関連付けしたオブジェクト: (%related_objects_count)</translation>
+    </message>
+    <message>
+        <source>Reverse object relation list to current object.</source>
+        <translation type="unfinished">現在のオブジェクトの逆関連オブジェクトリスト。</translation>
+    </message>
+    <message>
+        <source>Reverse related objects (%related_objects_count)</source>
+        <translation>関連付けしたオブジェクト (%related_objects_count) を反転</translation>
+    </message>
+    <message>
+        <source>List of roles assigned with and without limitations for current node.</source>
+        <translation type="unfinished">現在のノードに割り当てられたロールをリストします。</translation>
+    </message>
+    <message>
+        <source>Translations (%translations)</source>
+        <translation>翻訳 (%translations)</translation>
+    </message>
+    <message>
+        <source>Existing translations</source>
+        <translation type="unfinished">存在する翻訳</translation>
+    </message>
+    <message>
+        <source>Language list of translations for current object.</source>
+        <translation type="unfinished">現在のオブジェクト翻訳の言語リスト。</translation>
+    </message>
 </context>
 <context>
     <name>design/admin/node/view/line</name>
@@ -5593,6 +6160,10 @@
     <message>
         <source>Unknown</source>
         <translation>不明</translation>
+    </message>
+    <message>
+        <source>My item notifications (%notification_count)</source>
+        <translation>通知アイテム (%notification_count)</translation>
     </message>
 </context>
 <context>
@@ -6051,6 +6622,10 @@ Note: The packages will not be uninstalled.</source>
 パッケージは完全に削除されます。
 注意：パッケージはアンインストールされません。</translation>
     </message>
+    <message>
+        <source>Remove</source>
+        <translation type="unfinished">削除</translation>
+    </message>
 </context>
 <context>
     <name>design/admin/pagelayout</name>
@@ -6076,31 +6651,31 @@ Note: The packages will not be uninstalled.</source>
     </message>
     <message>
         <source>Content structure</source>
-        <translation>コンテンツツリー</translation>
+        <translation type="unfinished">コンテンツツリー</translation>
     </message>
     <message>
         <source>Media library</source>
-        <translation>メディアリソース</translation>
+        <translation type="unfinished">メディアリソース</translation>
     </message>
     <message>
         <source>User accounts</source>
-        <translation>ユーザ管理</translation>
+        <translation type="unfinished">ユーザ管理</translation>
     </message>
     <message>
         <source>Webshop</source>
-        <translation>ウエブショップ</translation>
+        <translation type="unfinished">ウエブショップ</translation>
     </message>
     <message>
         <source>Setup</source>
-        <translation>システム設定</translation>
+        <translation type="unfinished">システム設定</translation>
     </message>
     <message>
         <source>Design</source>
-        <translation>デザイン</translation>
+        <translation type="unfinished">デザイン</translation>
     </message>
     <message>
         <source>My account</source>
-        <translation>Myデスク</translation>
+        <translation type="obsolete">Myデスク</translation>
     </message>
     <message>
         <source>Current user</source>
@@ -6140,31 +6715,31 @@ Note: The packages will not be uninstalled.</source>
     </message>
     <message>
         <source>Manage the main content structure of the site.</source>
-        <translation>サイトコンテンツの管理</translation>
+        <translation type="unfinished">サイトコンテンツの管理</translation>
     </message>
     <message>
         <source>Manage images, files, documents, etc.</source>
-        <translation>画像やメディアファイルの管理</translation>
+        <translation type="unfinished">画像やメディアファイルの管理</translation>
     </message>
     <message>
         <source>Manage users, user groups and permission settings.</source>
-        <translation>ユーザとグループ、その権限設定の管理</translation>
+        <translation type="unfinished">ユーザとグループ、その権限設定の管理</translation>
     </message>
     <message>
         <source>Manage customers, orders, discounts and VAT types; view sales statistics.</source>
-        <translation>顧客、注文、割引設定、消費税の管理と売上統計の管理。</translation>
+        <translation type="unfinished">顧客、注文、割引設定、消費税の管理と売上統計の管理。</translation>
     </message>
     <message>
         <source>Manage templates, menus, toolbars and other things related to appearence.</source>
-        <translation>テンプレート、メニュー、ツールバー、その他表示に関連する事項の管理.</translation>
+        <translation type="unfinished">テンプレート、メニュー、ツールバー、その他表示に関連する事項の管理.</translation>
     </message>
     <message>
         <source>Configure settings and manage advanced functionality.</source>
-        <translation>システム構成の設定、エクステンションの管理</translation>
+        <translation type="unfinished">システム構成の設定、エクステンションの管理</translation>
     </message>
     <message>
         <source>Manage items and settings that belong to your account.</source>
-        <translation>ログインユーザの関係アイテムの管理と設定</translation>
+        <translation type="unfinished">ログインユーザの関係アイテムの管理と設定</translation>
     </message>
     <message>
         <source>Change password for &lt;%username&gt;.</source>
@@ -6238,6 +6813,40 @@ Note: The packages will not be uninstalled.</source>
         <source>[%classname] Click on the icon to display a context-sensitive menu.</source>
         <translation>[%classname] コンテキストメニューを表示するにはアイコンをクリックしてください。</translation>
     </message>
+    <message>
+        <source>Search in all content</source>
+        <translation type="unfinished">すべてのコンテントで検索</translation>
+    </message>
+    <message>
+        <source>Search in &apos;%node&apos;</source>
+        <translation type="unfinished">&apos;%node&apos;に検索</translation>
+    </message>
+    <message>
+        <source>User perferences</source>
+        <translation type="unfinished">ユーザ設定</translation>
+    </message>
+    <message>
+        <source>Dashboard</source>
+        <translation type="unfinished">ダッシュボード</translation>
+    </message>
+</context>
+<context>
+    <name>design/admin/pagelayout/path</name>
+    <message>
+        <source>You are here:</source>
+        <translation type="unfinished">位置:</translation>
+    </message>
+</context>
+<context>
+    <name>design/admin/pagelayout/rightmenu</name>
+    <message>
+        <source>Show / Hide rightmenu</source>
+        <translation>右メニューの表示/非表示</translation>
+    </message>
+    <message>
+        <source>Hide / Show rightmenu</source>
+        <translation>右メニューの非表示/表示</translation>
+    </message>
 </context>
 <context>
     <name>design/admin/parts/content/menu</name>
@@ -6284,6 +6893,10 @@ Note: The packages will not be uninstalled.</source>
     <message>
         <source>Show content structure.</source>
         <translation>コンテンツツリーを表示</translation>
+    </message>
+    <message>
+        <source>Site structure</source>
+        <translation type="unfinished">サイト構造</translation>
     </message>
 </context>
 <context>
@@ -6398,6 +7011,26 @@ Note: The packages will not be uninstalled.</source>
     <message>
         <source>Enable &amp;quot;Back to edit&amp;quot; checkbox when editing content.</source>
         <translation>コンテンツの編集中に&amp;quot;編集へ戻る&amp;quot;チェックボックスを有効にします。</translation>
+    </message>
+    <message>
+        <source>Edit profile</source>
+        <translation type="unfinished">プロフィールの編集</translation>
+    </message>
+    <message>
+        <source>Dashboard</source>
+        <translation type="unfinished">ダッシュボード</translation>
+    </message>
+    <message>
+        <source>Preview tab</source>
+        <translation type="unfinished">プレビュー達部</translation>
+    </message>
+    <message>
+        <source>Disable &amp;quot;Preview tab&amp;quot; while browsing content.</source>
+        <translation type="unfinished">コンテントブラウスの際に&amp;quot;プレビュータブ&amp;quot;を無効にします。</translation>
+    </message>
+    <message>
+        <source>Enable &amp;quot;Preview tab&amp;quot; while browsing content.</source>
+        <translation type="unfinished">コンテントブラウスの際に&amp;quot;プレビュータブ&amp;quot;を有効にします。</translation>
     </message>
 </context>
 <context>
@@ -6588,7 +7221,7 @@ Note: The packages will not be uninstalled.</source>
     </message>
     <message>
         <source>Manage permission settings.</source>
-        <translation>権限設定の管理</translation>
+        <translation type="obsolete">権限設定の管理</translation>
     </message>
     <message>
         <source>Roles and policies</source>
@@ -6815,6 +7448,10 @@ Note: The packages will not be uninstalled.</source>
         <source>PDF exports [%export_count]</source>
         <translation>PDFエクスポート [%export_count]</translation>
     </message>
+    <message>
+        <source>PDF exports (%export_count)</source>
+        <translation>PDFエクスポート (%export_count)</translation>
+    </message>
 </context>
 <context>
     <name>design/admin/popupmenu</name>
@@ -6941,6 +7578,18 @@ Note: The packages will not be uninstalled.</source>
     <message>
         <source>Choose siteaccess</source>
         <translation>サイトアクセスの選択</translation>
+    </message>
+    <message>
+        <source>Create RSS/ATOM feed</source>
+        <translation type="unfinished">RSS/ATOMフィードを作成</translation>
+    </message>
+    <message>
+        <source>Remove RSS/ATOM feed</source>
+        <translation type="unfinished">RSS/ATOMフィードを削除</translation>
+    </message>
+    <message>
+        <source>New translation</source>
+        <translation type="unfinished">新規翻訳</translation>
     </message>
 </context>
 <context>
@@ -7120,6 +7769,10 @@ Note: The packages will not be uninstalled.</source>
     <message>
         <source>Use the drop-down menu to select the module that you want to grant access to.</source>
         <translation>ドロップダウンメニューを使って、アクセスを与えたいモジュールを選択</translation>
+    </message>
+    <message>
+        <source>Every function</source>
+        <translation type="unfinished">すべてのファンクション</translation>
     </message>
 </context>
 <context>
@@ -7315,6 +7968,18 @@ Note: The packages will not be uninstalled.</source>
         <source>Welcome to the policy wizard. This three-step wizard will help you set up a new policy. The policy will be added to the role that is currently being edited. The wizard can be aborted at any stage by using the &quot;Cancel&quot; button.</source>
         <translation>ポリシーウィザードへようこそ。この３ステップウィザードは新しいポリシーのセットアップをお手伝いします。現在編集されているロールにポリシーを追加します。”キャンセル”ボタンをクリックすると、いつでもウィザードを取り消すことが出来ます。</translation>
     </message>
+    <message>
+        <source>Properties</source>
+        <translation type="unfinished">属性</translation>
+    </message>
+    <message>
+        <source>Nodes (%node_count)</source>
+        <translation>ノード (%node_count)</translation>
+    </message>
+    <message>
+        <source>Subtrees (%subtree_count)</source>
+        <translation>サブツリー (%subtree_count)</translation>
+    </message>
 </context>
 <context>
     <name>design/admin/role/edit</name>
@@ -7332,7 +7997,7 @@ Note: The packages will not be uninstalled.</source>
     </message>
     <message>
         <source>Invert selection.</source>
-        <translation>選択の反転</translation>
+        <translation type="unfinished">選択の反転。</translation>
     </message>
     <message>
         <source>Module</source>
@@ -7372,7 +8037,7 @@ Note: The packages will not be uninstalled.</source>
     </message>
     <message>
         <source>Select policy for removal.</source>
-        <translation>削除するポリシーを選択</translation>
+        <translation type="unfinished">削除するポリシーを選択。</translation>
     </message>
     <message>
         <source>all modules</source>
@@ -7384,7 +8049,7 @@ Note: The packages will not be uninstalled.</source>
     </message>
     <message>
         <source>Edit the policy&apos;s function limitations.</source>
-        <translation>ポリシーのファンクション制限を編集</translation>
+        <translation type="unfinished">ポリシーのファンクション制限を編集。</translation>
     </message>
     <message>
         <source>There are no policies set up for this role.</source>
@@ -7392,7 +8057,7 @@ Note: The packages will not be uninstalled.</source>
     </message>
     <message>
         <source>Remove selected policies.</source>
-        <translation>選択したポリシーを削除</translation>
+        <translation type="unfinished">選択したポリシーを削除。</translation>
     </message>
     <message>
         <source>New policy</source>
@@ -7400,7 +8065,15 @@ Note: The packages will not be uninstalled.</source>
     </message>
     <message>
         <source>Create a new policy.</source>
-        <translation>新しいポリシーの作成</translation>
+        <translation type="unfinished">新しいポリシーの作成。</translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation type="unfinished">保存</translation>
+    </message>
+    <message>
+        <source>Save policy changes to this role</source>
+        <translation type="unfinished">ポリシーの変更をロールに保存します</translation>
     </message>
 </context>
 <context>
@@ -7464,6 +8137,10 @@ Note: The packages will not be uninstalled.</source>
     <message>
         <source>Copy the &lt;%role_name&gt; role.</source>
         <translation>&lt;%role_name&gt; ロールを複製</translation>
+    </message>
+    <message>
+        <source>Roles (%role_count)</source>
+        <translation>ロール (%role_count)</translation>
     </message>
 </context>
 <context>
@@ -7535,6 +8212,14 @@ Note: The packages will not be uninstalled.</source>
     <message>
         <source>The function limitations of this policy cannot be edited. This is either because the function does not support limitations or because the function was assigned without limitations when the policy was created.</source>
         <translation>このポリシーのファンクション制限を編集することはできません。このポリシーの作成時にファンクション無制限で設定されてあるか、ファンクションが制限をサポートしていないからです。</translation>
+    </message>
+    <message>
+        <source>Nodes (%node_count)</source>
+        <translation>ノード (%node_count)</translation>
+    </message>
+    <message>
+        <source>Subtrees (%subtree_count)</source>
+        <translation>サブツリー (%subtree_count)</translation>
     </message>
 </context>
 <context>
@@ -7646,6 +8331,18 @@ Note: The packages will not be uninstalled.</source>
     <message>
         <source>Name</source>
         <translation>名前</translation>
+    </message>
+    <message>
+        <source>Policies (%policies_count)</source>
+        <translation>ポリシー (%policies_count)</translation>
+    </message>
+    <message>
+        <source>Path: &apos;/%path_string&apos;, Class identifier: &apos;%class_identifier&apos;</source>
+        <translation type="unfinished">パス: &apos;/%path_string&apos;, クラス識別子: &apos;%class_identifier&apos;</translation>
+    </message>
+    <message>
+        <source>Users and groups using the &lt;%role_name&gt; role (%users_count)</source>
+        <translation>&lt;%role_name&gt; ロール割り当て済みユーザ/グループ (%users_count)</translation>
     </message>
 </context>
 <context>
@@ -7859,6 +8556,10 @@ Note: The packages will not be uninstalled.</source>
         <translation>このフィールドを使って、サイトのベースURLを入力してください。サイトURL (e.g. &quot;http://www.example.com/index.php&quot;)とオブジェクトのパス (e.g. &quot;/articles/my_article&quot;)を使ってエクスポートURLの作成行います。サイトURLはサーバとeZ Publishの設定次第で決定されます。</translation>
     </message>
     <message>
+        <source>Leave this field emty if you want system automaticaly detect the URL of your site from the URL you access feed with</source>
+        <translation type="obsolete">システムがアクセスしたURLを参考にして、自動にサイトのURLを検出させる場合、空欄のままにして下さい。</translation>
+    </message>
+    <message>
         <source>Use this drop-down to select the maximum number of objects included in the RSS feed.</source>
         <translation>このドロップダウンメニューを使って、RSSフィードのオブジェクトの最高数を設定してください。</translation>
     </message>
@@ -7905,6 +8606,18 @@ Note: The packages will not be uninstalled.</source>
     <message>
         <source>Skip</source>
         <translation>スキップする</translation>
+    </message>
+    <message>
+        <source>Enclosure (media)</source>
+        <translation type="unfinished">メディアのダイレクトリンク</translation>
+    </message>
+    <message>
+        <source>Use this drop-down to select the attribute that should be exported as the enclosure of the RSS export entry, enclosures are direct link to a media file, so use a media/image/file datatype .</source>
+        <translation type="unfinished">このドロップダウンを使って、メディアのダイレクトリンクとエクスポートする属を選択してください。メディアのダイレクトリンクには画像/メディア/ファイルデータタイプを選択してください。</translation>
+    </message>
+    <message>
+        <source>Field data</source>
+        <translation type="unfinished">フィールドデータ</translation>
     </message>
 </context>
 <context>
@@ -8128,6 +8841,14 @@ Note: The packages will not be uninstalled.</source>
         <source>Create a new RSS import.</source>
         <translation>新規RSSインポートを作成</translation>
     </message>
+    <message>
+        <source>RSS exports (%exports_count)</source>
+        <translation>RSSエクスポート (%exports_count)</translation>
+    </message>
+    <message>
+        <source>RSS imports (%imports_count)</source>
+        <translation>RSSインポート (%imports_count)</translation>
+    </message>
 </context>
 <context>
     <name>design/admin/search/stats</name>
@@ -8300,11 +9021,11 @@ Note: The packages will not be uninstalled.</source>
     </message>
     <message>
         <source>Invert selection.</source>
-        <translation>選択の反転</translation>
+        <translation type="unfinished">選択の反転。</translation>
     </message>
     <message>
         <source>Select section for removal.</source>
-        <translation>削除するセクションを選択</translation>
+        <translation type="unfinished">削除するセクションを選択。</translation>
     </message>
     <message>
         <source>Assign</source>
@@ -8312,7 +9033,7 @@ Note: The packages will not be uninstalled.</source>
     </message>
     <message>
         <source>Assign the &lt;%section_name&gt; section to a subtree.</source>
-        <translation>&lt;%section_name&gt; セクションをサブツリーに割り当て</translation>
+        <translation type="unfinished">&lt;%section_name&gt; セクションをサブツリーに割り当て。</translation>
     </message>
     <message>
         <source>Edit</source>
@@ -8320,19 +9041,27 @@ Note: The packages will not be uninstalled.</source>
     </message>
     <message>
         <source>Edit the &lt;%section_name&gt; section.</source>
-        <translation>&lt;%section_name&gt; セクションを編集</translation>
+        <translation type="unfinished">&lt;%section_name&gt; セクションを編集。</translation>
     </message>
     <message>
         <source>Remove selected sections.</source>
-        <translation>選択したセクションを削除</translation>
+        <translation type="unfinished">選択したセクションを削除。</translation>
     </message>
     <message>
         <source>Create a new section.</source>
-        <translation>新しいセクションを作成</translation>
+        <translation type="unfinished">新しいセクションを作成。</translation>
     </message>
     <message>
         <source>You are not allowed to assign the &lt;%section_name&gt; section.</source>
         <translation>&lt;%section_name&gt;セクションを割り当てる権限を持っていません。</translation>
+    </message>
+    <message>
+        <source>Sections (%section_count)</source>
+        <translation type="unfinished">セクション(%section_count)</translation>
+    </message>
+    <message>
+        <source>Assign a subtree to the &lt;%section_name&gt; section.</source>
+        <translation type="unfinished">&lt;%section_name&gt;セクションにサブツリーを割り当てます。</translation>
     </message>
 </context>
 <context>
@@ -8359,7 +9088,7 @@ Note: The packages will not be uninstalled.</source>
     </message>
     <message>
         <source>Edit this section.</source>
-        <translation>セクションを編集</translation>
+        <translation type="unfinished">セクションを編集。</translation>
     </message>
     <message>
         <source>Roles containing limitations associated with this section [%number_of_roles]</source>
@@ -8396,6 +9125,26 @@ Note: The packages will not be uninstalled.</source>
     <message>
         <source>This section is not assigned to any objects.</source>
         <translation>このセクションに割り当てられたオブジェクトはありません。</translation>
+    </message>
+    <message>
+        <source>Roles containing limitations associated with this section (%number_of_roles)</source>
+        <translation>このセクションを対象とする制限を持ったロール (%number_of_roles)</translation>
+    </message>
+    <message>
+        <source>Users and user groups with role limitations associated with this section (%number_of_roles)</source>
+        <translation>このセクションを対象とする制限を持ったロールに割り当て済のユーザ/グループ (%number_of_roles)</translation>
+    </message>
+    <message>
+        <source>Objects within this section (%number_of_objects)</source>
+        <translation>このセクションのオブジェクト (%number_of_objects)</translation>
+    </message>
+    <message>
+        <source>Assign subtree</source>
+        <translation type="unfinished">サブツリーの割り当て</translation>
+    </message>
+    <message>
+        <source>Assign subtree of objects to this section</source>
+        <translation type="unfinished">オブジェクトのサブツリーをこのセクションに割り当てます</translation>
     </message>
 </context>
 <context>
@@ -8806,6 +9555,14 @@ Note: The packages will not be uninstalled.</source>
         <source>This operation will regenerate all the static content caches that are configured. This action can take  some time depending on the specifications of the server and the number of locations that are configured to be statically cached. If you encounter time-out problems, use the &amp;quot;bin/php/makestaticcache.php&amp;quot; shell script.</source>
         <translation>この操作は設定された全ての静的コンテンツキャッシュを再生成します。サーバの性能と設定箇所の数によって、時間がかかる場合があります。タイムアウトが発生した場合は、&amp;quot;bin/php/makestaticcache.php&amp;quot; シェルスクリプトを利用してください。</translation>
     </message>
+    <message>
+        <source>Categories</source>
+        <translation type="unfinished">カテゴリ</translation>
+    </message>
+    <message>
+        <source></source>
+        <translation></translation>
+    </message>
 </context>
 <context>
     <name>design/admin/setup/datatypecode</name>
@@ -8855,6 +9612,18 @@ Note: The packages will not be uninstalled.</source>
     <message>
         <source>Problems detected during autoload generation:</source>
         <translation>オートロード中に見つかった問題: </translation>
+    </message>
+    <message>
+        <source>Available extensions (%extension_count)</source>
+        <translation>利用可能なエクステンション (%extension_count)</translation>
+    </message>
+    <message>
+        <source>Invert selection.</source>
+        <translation type="unfinished">選択の反転。</translation>
+    </message>
+    <message>
+        <source>Activate</source>
+        <translation type="unfinished">有効にする</translation>
     </message>
 </context>
 <context>
@@ -9431,6 +10200,30 @@ Note: The packages will not be uninstalled.</source>
         <source>Email</source>
         <translation>e-mail</translation>
     </message>
+    <message>
+        <source>Not all timed out sessions were successfully removed.</source>
+        <translation type="unfinished">すべてのタイムアウトセッションを削除する事ができませんでした。</translation>
+    </message>
+    <message>
+        <source>The operation were cut short in order to avoid execution timeout.</source>
+        <translation type="unfinished">タイムアウトを起こさない様にオペレーションが中止されました。</translation>
+    </message>
+    <message>
+        <source>Your alternatives are to:</source>
+        <translation type="unfinished">代わりにできる事は:</translation>
+    </message>
+    <message>
+        <source>Repeat the operation several times to complete it.</source>
+        <translation type="unfinished">完了するために、数回オペレーションを繰り替えしてください。</translation>
+    </message>
+    <message>
+        <source>Clear the timed out session data from command-line using: &amp;gt;php bin/php/ezsessiongc.php</source>
+        <translation type="unfinished">コマンドラインでタイムアウトセッションを削除する: &amp;gt;php bin/php/ezsessiongc.php</translation>
+    </message>
+    <message>
+        <source>Install the session cleanup cronjob &apos;session_gc.php&apos; and run on nightly intervals (see cronjob.ini or doc for how)</source>
+        <translation type="unfinished">&apos;session_gc.php&apos;セッションをクリアするクロンジョブをインストールする（cronjob.iniに説明があります）</translation>
+    </message>
 </context>
 <context>
     <name>design/admin/shop/accounthandlers/html/ez</name>
@@ -9529,6 +10322,10 @@ Note: The packages will not be uninstalled.</source>
         <source>Unarchive selected orders.</source>
         <translation>選択した注文をアクティブにする</translation>
     </message>
+    <message>
+        <source>Archived orders (%count)</source>
+        <translation>保管された注文数 (%count)</translation>
+    </message>
 </context>
 <context>
     <name>design/admin/shop/basket</name>
@@ -9598,11 +10395,11 @@ Note: The packages will not be uninstalled.</source>
     </message>
     <message>
         <source>Invert selection.</source>
-        <translation>選択の反転</translation>
+        <translation type="unfinished">選択の反転。</translation>
     </message>
     <message>
         <source>Select item for removal.</source>
-        <translation>削除するアイテムの選択</translation>
+        <translation type="unfinished">削除するアイテムの選択。</translation>
     </message>
     <message>
         <source>There are no items in your shopping basket.</source>
@@ -9642,7 +10439,7 @@ Note: The packages will not be uninstalled.</source>
     </message>
     <message>
         <source>VAT percentage is not yet known for some of the items being purchased.</source>
-        <translation>購入されるアイテムには消費税が不明なものがあります</translation>
+        <translation type="unfinished">購入されるアイテムには消費税が不明なものがあります。</translation>
     </message>
     <message>
         <source>This probably means that some information about you is not yet available and will be obtained during checkout.</source>
@@ -9939,6 +10736,10 @@ Note: The packages will not be uninstalled.</source>
         <source>Customers [%customers]</source>
         <translation>お客様 [%customers]</translation>
     </message>
+    <message>
+        <source>Customers (%customers)</source>
+        <translation>お客様 (%customers)</translation>
+    </message>
 </context>
 <context>
     <name>design/admin/shop/customerorderview</name>
@@ -9981,6 +10782,14 @@ Note: The packages will not be uninstalled.</source>
     <message>
         <source>Status</source>
         <translation>ステータス</translation>
+    </message>
+    <message>
+        <source>Orders (%order_count)</source>
+        <translation>注文数 (%order_count)</translation>
+    </message>
+    <message>
+        <source>Purchased products (%product_count)</source>
+        <translation>購入商品数 (%product_count)</translation>
     </message>
 </context>
 <context>
@@ -10028,6 +10837,10 @@ Note: The packages will not be uninstalled.</source>
     <message>
         <source>Create a new discount group.</source>
         <translation>新規のディスカウント・グループの作成</translation>
+    </message>
+    <message>
+        <source>Discount groups (%discount_groups)</source>
+        <translation>ディスカウント・グループ (%discount_groups)</translation>
     </message>
 </context>
 <context>
@@ -10147,6 +10960,14 @@ Note: The packages will not be uninstalled.</source>
         <source>Add users and/or user groups to the &lt;%discount_group_name&gt; discount group.</source>
         <translation>ユーザまたは、ユーザグループを &lt;%discount_group_name&gt; ディスカウント・グループに追加。</translation>
     </message>
+    <message>
+        <source>Discount rules (%rule_count)</source>
+        <translation>ディスカウント・ルール (%rule_count)</translation>
+    </message>
+    <message>
+        <source>Customers (users and user groups) (%customer_count)</source>
+        <translation type="unfinished">お客様数（ユーザ、グループ）(%customer_count)</translation>
+    </message>
 </context>
 <context>
     <name>design/admin/shop/discountruleedit</name>
@@ -10176,7 +10997,7 @@ Note: The packages will not be uninstalled.</source>
     </message>
     <message>
         <source>New discount rule</source>
-        <translation>新規のディスカウント・ルール</translation>
+        <translation type="unfinished">新規のディスカウント・ルール</translation>
     </message>
     <message>
         <source>Product types</source>
@@ -10403,6 +11224,10 @@ Note: The packages will not be uninstalled.</source>
         <source>( removed )</source>
         <translation>( 削除済み )</translation>
     </message>
+    <message>
+        <source>Orders (%count)</source>
+        <translation>注文数 (%count)</translation>
+    </message>
 </context>
 <context>
     <name>design/admin/shop/orderstatistics</name>
@@ -10457,6 +11282,10 @@ Note: The packages will not be uninstalled.</source>
     <message>
         <source>Update the list using the values specified by the menus to the left.</source>
         <translation>左のメニューで表示される値を使って、リストを更新してください。</translation>
+    </message>
+    <message>
+        <source>Product statistics (%count)</source>
+        <translation>注文商品の集計 (%count)</translation>
     </message>
 </context>
 <context>
@@ -10545,6 +11374,10 @@ Note: The packages will not be uninstalled.</source>
         <source>This is the person who modified the status of the order. Click to view the user information.</source>
         <translation>注文のステータスを変更したユーザです。ユーザ情報を見るにはクリックをしてください。</translation>
     </message>
+    <message>
+        <source>Status history (%status_count)</source>
+        <translation>ステータス履歴  (%status_count)</translation>
+    </message>
 </context>
 <context>
     <name>design/admin/shop/preferredcurrency</name>
@@ -10602,6 +11435,10 @@ Note: The packages will not be uninstalled.</source>
     <message>
         <source>Input did not validate</source>
         <translation>入力が正しくありません</translation>
+    </message>
+    <message>
+        <source>Product categories (%categories)</source>
+        <translation>商品区分  (%categories)</translation>
     </message>
 </context>
 <context>
@@ -10874,6 +11711,10 @@ Note: The packages will not be uninstalled.</source>
         <source>Order status [%order_status]</source>
         <translation>注文ステータス [%order_status]</translation>
     </message>
+    <message>
+        <source>Order status (%order_status)</source>
+        <translation>注文ステータス (%order_status)</translation>
+    </message>
 </context>
 <context>
     <name>design/admin/shop/userregister</name>
@@ -11008,6 +11849,10 @@ Note: The packages will not be uninstalled.</source>
         <source>Country/region</source>
         <translation>国/県</translation>
     </message>
+    <message>
+        <source>VAT charging rules (%rules)</source>
+        <translation>課税ルール (%rules)</translation>
+    </message>
 </context>
 <context>
     <name>design/admin/shop/vattype</name>
@@ -11062,6 +11907,10 @@ Note: The packages will not be uninstalled.</source>
     <message>
         <source>Input did not validate</source>
         <translation>入力が正しくありません</translation>
+    </message>
+    <message>
+        <source>VAT types (%vat_types)</source>
+        <translation>課税方式 (%vat_types)</translation>
     </message>
 </context>
 <context>
@@ -11134,6 +11983,10 @@ Note: The packages will not be uninstalled.</source>
         <source>Click this button to store changes if you have modified quantity and/or option values.</source>
         <translation>数量やオプションの変更を適用するにはこのボタンをクリックします。</translation>
     </message>
+    <message>
+        <source>My wish list (%item_count)</source>
+        <translation>ウイッシュリスト (%item_count)</translation>
+    </message>
 </context>
 <context>
     <name>design/admin/state/edit</name>
@@ -11175,19 +12028,19 @@ Note: The packages will not be uninstalled.</source>
     </message>
     <message>
         <source>Identifier:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">識別子:</translation>
     </message>
     <message>
         <source>Default language:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">デフォルト言語:</translation>
     </message>
     <message>
         <source>Name:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">ステート名:</translation>
     </message>
     <message>
         <source>Description:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">概要:</translation>
     </message>
 </context>
 <context>
@@ -11250,7 +12103,11 @@ Note: The packages will not be uninstalled.</source>
     </message>
     <message>
         <source>Description</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">概要</translation>
+    </message>
+    <message>
+        <source>Object states in this group (%state_count)</source>
+        <translation>このグループのオブジェクトステート数  (%state_count)</translation>
     </message>
 </context>
 <context>
@@ -11293,19 +12150,19 @@ Note: The packages will not be uninstalled.</source>
     </message>
     <message>
         <source>Identifier:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">識別子:</translation>
     </message>
     <message>
         <source>Default language:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">デフォルト言語:</translation>
     </message>
     <message>
         <source>Name:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">グループ名:</translation>
     </message>
     <message>
         <source>Description:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">概要:</translation>
     </message>
 </context>
 <context>
@@ -11371,11 +12228,11 @@ Note: The packages will not be uninstalled.</source>
     </message>
     <message>
         <source>Name</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">ステート名</translation>
     </message>
     <message>
         <source>Description</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">概要</translation>
     </message>
 </context>
 <context>
@@ -11383,6 +12240,10 @@ Note: The packages will not be uninstalled.</source>
     <message>
         <source>Content object state groups [%group_count]</source>
         <translation>コンテンツオブジェクトステートグループ [%group_count]</translation>
+    </message>
+    <message>
+        <source>Content object state groups (%group_count)</source>
+        <translation>コンテンツオブジェクトステートグループ (%group_count)</translation>
     </message>
 </context>
 <context>
@@ -11422,6 +12283,10 @@ Note: The packages will not be uninstalled.</source>
     <message>
         <source>Click this button to store changes if you have modified any of the fields above.</source>
         <translation>修正した項目があれば、このボタンをクリックすると変更が保存されます。</translation>
+    </message>
+    <message>
+        <source>Workflow triggers (%trigger_count)</source>
+        <translation>ワークフロートリガー (%trigger_count)</translation>
     </message>
 </context>
 <context>
@@ -11537,6 +12402,18 @@ Note: The packages will not be uninstalled.</source>
         <source>The requested list is empty.</source>
         <translation>該当する URL はありません</translation>
     </message>
+    <message>
+        <source>Valid URLs (%url_list_count)</source>
+        <translation>有効な URL (%url_list_count)</translation>
+    </message>
+    <message>
+        <source>Invalid URLs (%url_list_count)</source>
+        <translation>無効な URL (%url_list_count)</translation>
+    </message>
+    <message>
+        <source>All URLs (%url_list_count)</source>
+        <translation>すべての URL (%url_list_count)</translation>
+    </message>
 </context>
 <context>
     <name>design/admin/url/view</name>
@@ -11639,6 +12516,10 @@ Note: The packages will not be uninstalled.</source>
     <message>
         <source>View the contents of version #%version_number.</source>
         <translation>コンテンツ・バージョン #%version_number を表示</translation>
+    </message>
+    <message>
+        <source>Objects using URL #%url_id (%url_count)</source>
+        <translation>URL #%url_id を使用するオブジェクト (%url_count)</translation>
     </message>
 </context>
 <context>
@@ -12187,6 +13068,10 @@ your account.</source>
         <source>The override.ini file could not be modified because of insufficient permission.</source>
         <translation>権限を持っていないため、override.iniを変更することはできませんでした。</translation>
     </message>
+    <message>
+        <source>Overrides for &lt;%template_name&gt; template in &lt;%current_siteaccess&gt; siteaccess (%override_count)</source>
+        <translation>&lt;%current_siteaccess&gt; サイトアクセスの &lt;%template_name&gt; テンプレートオーバーライド数 (%override_count)</translation>
+    </message>
 </context>
 <context>
     <name>design/admin/visual/toolbar</name>
@@ -12472,6 +13357,10 @@ your account.</source>
         <source>There are no payment gateway extensions installed.</source>
         <translation>決済用のエクステンションを先にインストールして下さい。</translation>
     </message>
+    <message>
+        <source>Class/attribute combinations (%count)</source>
+        <translation>クラスと属性の組み合わせ数  (%count)</translation>
+    </message>
 </context>
 <context>
     <name>design/admin/workflow/groupedit</name>
@@ -12538,6 +13427,10 @@ your account.</source>
         <source>Create a new workflow group.</source>
         <translation>新規ワークフローグループの作成</translation>
     </message>
+    <message>
+        <source>Workflow groups (%groups_count)</source>
+        <translation>ワークフローグループ数 (%groups_count)</translation>
+    </message>
 </context>
 <context>
     <name>design/admin/workflow/proccesslist</name>
@@ -12579,6 +13472,14 @@ your account.</source>
     <message>
         <source>Current event</source>
         <translation>現在のイベント</translation>
+    </message>
+    <message>
+        <source>Workflow processes (%trigger_count)</source>
+        <translation>ワークフロー処理 (%trigger_count)</translation>
+    </message>
+    <message>
+        <source>(%process_count)</source>
+        <translation>(%process_count)</translation>
     </message>
 </context>
 <context>
@@ -12650,6 +13551,14 @@ your account.</source>
     <message>
         <source>Additional information</source>
         <translation>追加情報</translation>
+    </message>
+    <message>
+        <source>Member of groups (%group_count)</source>
+        <translation>グループ・メンバー数 (%group_count)</translation>
+    </message>
+    <message>
+        <source>Events (%event_count)</source>
+        <translation>イベント数  (%event_count)</translation>
     </message>
 </context>
 <context>
@@ -12729,6 +13638,10 @@ your account.</source>
     <message>
         <source>Create a new workflow.</source>
         <translation>新規ワークフローの作成</translation>
+    </message>
+    <message>
+        <source>Workflows (%workflow_count)</source>
+        <translation>ワークフロー数  (%workflow_count)</translation>
     </message>
 </context>
 <context>
@@ -13303,14 +14216,37 @@ your account.</source>
     </message>
 </context>
 <context>
+    <name>design/ezwebin/content/datatype</name>
+    <message>
+        <source>Year</source>
+        <translation type="unfinished">年</translation>
+    </message>
+    <message>
+        <source>Month</source>
+        <translation type="unfinished">月</translation>
+    </message>
+    <message>
+        <source>Day</source>
+        <translation type="unfinished">日</translation>
+    </message>
+    <message>
+        <source>Hour</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Minute</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>design/plain/layout</name>
     <message>
         <source>Advanced search</source>
-        <translation type="unfinished">詳細な検索</translation>
+        <translation>詳細検索</translation>
     </message>
     <message>
         <source>Search</source>
-        <translation type="unfinished">検索</translation>
+        <translation>検索</translation>
     </message>
 </context>
 <context>
@@ -14161,6 +15097,61 @@ your account.</source>
         <source>Discard changes</source>
         <translation>変更の破棄</translation>
     </message>
+    <message>
+        <source>Description</source>
+        <translation type="unfinished">概要</translation>
+    </message>
+    <message>
+        <source>Use this field to set the informal description of the class. The description field can contain whitespaces and special characters.</source>
+        <translation type="unfinished">このフィールドでクラスの説明を書けます。説明は空白、特別な文字を含めることができます。</translation>
+    </message>
+</context>
+<context>
+    <name>design/standard/class/edit_locked</name>
+    <message>
+        <source>Class locked</source>
+        <translation type="unfinished">クラスはロックされています</translation>
+    </message>
+    <message>
+        <source>This class has pending modifications defered to cronjob and thus it cannot be edited.</source>
+        <translation type="unfinished">このクラスにペンディングな変更がありますので、編集ができません。</translation>
+    </message>
+    <message>
+        <source>Wait until the script is finished. You might see the status in the %urlstart script monitor%urlend&lt;/a&gt;.</source>
+        <translation type="unfinished">スクリプトが完了するまでに待ってください。%urlstartモニター%urlendでステータスを見る事ができます。</translation>
+    </message>
+    <message>
+        <source>To force the modification of the class you may run the following command</source>
+        <translation type="unfinished">クラスの変更を強制で行いたい場合は下記のコマンドを実行してください</translation>
+    </message>
+    <message>
+        <source>Edit &lt;%class_name&gt; [Class]</source>
+        <translation type="unfinished">&lt;%class_name&gt; [クラス] の編集</translation>
+    </message>
+    <message>
+        <source>Class</source>
+        <translation type="unfinished">クラス</translation>
+    </message>
+    <message>
+        <source>Last modifier</source>
+        <translation type="unfinished">最終編集者</translation>
+    </message>
+    <message>
+        <source>Last modified on</source>
+        <translation type="unfinished">最終変更日時</translation>
+    </message>
+    <message>
+        <source>The class will be available for editing after the script has been run by the cronjob.</source>
+        <translation type="unfinished">クロンジョブスクリプトが実行されて後にクラスが編集できます。</translation>
+    </message>
+    <message>
+        <source>Retry</source>
+        <translation type="unfinished">再試行</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">キャンセル</translation>
+    </message>
 </context>
 <context>
     <name>design/standard/class/list</name>
@@ -14322,6 +15313,10 @@ your account.</source>
     <message>
         <source>Siteaccess</source>
         <translation>サイトアクセス</translation>
+    </message>
+    <message>
+        <source>Description</source>
+        <translation type="unfinished">概要</translation>
     </message>
 </context>
 <context>
@@ -15393,6 +16388,18 @@ If you want to send comments to the approver or view the status use the URL belo
     <message>
         <source>Silverlight</source>
         <translation>Silverlight</translation>
+    </message>
+    <message>
+        <source>There are no related object.</source>
+        <translation type="unfinished">関連オブジェクトはありません。</translation>
+    </message>
+    <message>
+        <source>Find object</source>
+        <translation type="unfinished">オブジェクトを探す</translation>
+    </message>
+    <message>
+        <source>Find objects</source>
+        <translation type="unfinished">オブジェクトを探す</translation>
     </message>
 </context>
 <context>
@@ -17186,6 +18193,17 @@ If you want to send comments to the approver or view the status use the URL belo
     </message>
 </context>
 <context>
+    <name>design/standard/form</name>
+    <message>
+        <source>Thank you for your feedback</source>
+        <translation type="obsolete">ご意見ありがとうございます</translation>
+    </message>
+    <message>
+        <source>Your information was successfully received.</source>
+        <translation type="obsolete">内容は正常に受信されました。</translation>
+    </message>
+</context>
+<context>
     <name>design/standard/gui</name>
     <message>
         <source>Delete</source>
@@ -17568,6 +18586,10 @@ The item can viewed by using the URL below.</source>
     <message>
         <source>Store</source>
         <translation>保存</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="obsolete">キャンセル</translation>
     </message>
     <message>
         <source>Notification admin</source>
@@ -17985,6 +19007,10 @@ If unsure choose the siteaccess which reflects the user part of your site, i.e. 
     <message>
         <source>Cancel</source>
         <translation>キャンセル</translation>
+    </message>
+    <message>
+        <source>Please select an extension to be exported.</source>
+        <translation type="obsolete">エクスポートするエクステンションを選択。</translation>
     </message>
     <message>
         <source>Installing package</source>
@@ -18835,6 +19861,10 @@ menu on the top.</source>
         <source>Skip</source>
         <translation>スキップする</translation>
     </message>
+    <message>
+        <source>Enclosure (media)</source>
+        <translation type="unfinished">メディアのダイレクトリンク</translation>
+    </message>
 </context>
 <context>
     <name>design/standard/rss/list</name>
@@ -19184,8 +20214,7 @@ By using %datatypename you can ...</source>
     </message>
     <message>
         <source>Basedir restriction is on and set to %1.</source>
-        <translation>ベースディレクトリ制限ON 
-設定ディレクトリ: %1</translation>
+        <translation type="unfinished">ベースディレクトリ制限は有効になていて、ディレクトリ%1に設定されています。</translation>
     </message>
     <message>
         <source>Basedir restriction is off.</source>
@@ -20290,23 +21319,23 @@ The default code was made from the basic parameters you chose.</source>
     </message>
     <message>
         <source>The database would not accept the connection, please review your settings and try again.</source>
-        <translation>データベースの接続に失敗しました。設定内容を確認して再実行してください。</translation>
+        <translation type="unfinished">データベースの接続に失敗しました。設定内容を確認して再実行してください。</translation>
     </message>
     <message>
         <source>Password entries did not match.</source>
-        <translation>パスワードが一致しません。</translation>
+        <translation type="unfinished">パスワードが一致しません。</translation>
     </message>
     <message>
         <source>The selected database was not empty, please choose from the alternatives below.</source>
-        <translation>選択したデータベースは空ではありません。以下から別のデータベースを選択してください。</translation>
+        <translation type="unfinished">選択したデータベースは空ではありません。以下から別のデータベースを選択してください。</translation>
     </message>
     <message>
         <source>Database initalization</source>
-        <translation>データベースの接続設定</translation>
+        <translation type="unfinished">データベースの接続設定</translation>
     </message>
     <message>
         <source>Email settings</source>
-        <translation>メール送信設定</translation>
+        <translation type="unfinished">メール送信設定</translation>
     </message>
     <message>
         <source>Finished</source>
@@ -20314,19 +21343,19 @@ The default code was made from the basic parameters you chose.</source>
     </message>
     <message>
         <source>Language options</source>
-        <translation>言語の選択</translation>
+        <translation type="unfinished">言語の選択</translation>
     </message>
     <message>
         <source>Registration</source>
-        <translation>サイトの登録</translation>
+        <translation type="unfinished">サイトの登録</translation>
     </message>
     <message>
         <source>Securing site</source>
-        <translation>サイトのセキュリティ対策</translation>
+        <translation type="unfinished">サイトのセキュリティ対策</translation>
     </message>
     <message>
         <source>Site access</source>
-        <translation>サイトアクセス構成</translation>
+        <translation type="unfinished">サイトアクセス構成</translation>
     </message>
     <message>
         <source>Site details</source>
@@ -20334,7 +21363,7 @@ The default code was made from the basic parameters you chose.</source>
     </message>
     <message>
         <source>Site template selection</source>
-        <translation>サイトテンプレートの選択</translation>
+        <translation type="unfinished">サイトテンプレートの選択</translation>
     </message>
     <message>
         <source>System check</source>
@@ -20750,7 +21779,7 @@ To fix this problem you must do one of the following:</source>
     </message>
     <message>
         <source>Site selection</source>
-        <translation>サイトパッケージ</translation>
+        <translation type="unfinished">サイトパッケージ</translation>
     </message>
     <message>
         <source>You need to fill in the first name.</source>
@@ -20840,11 +21869,11 @@ It is possible to change these settings at a later time.</source>
     </message>
     <message>
         <source>Please make sure that the username and the password is correct. Verify that your PostgreSQL database is configured correctly.&lt;br&gt;See the PHP documentation for more information about this.&lt;br&gt;Remember to start postmaster with the -i option.&lt;br&gt;Note that PostgreSQL 7.2 is not supported.</source>
-        <translation>ユーザ名とパスワードが間違っていないか確認してください。PostgreSQL データベースが適性に構成されているか確認してください。&lt;br&gt;これらの問題の詳細については、PHP ドキュメントを参照してください。&lt;br&gt;postmaster の起動時には、必ず i オプションを指定してください。&lt;br&gt; 注意: PostgreSQL 7.2 はサポートしていません。</translation>
+        <translation type="unfinished">ユーザ名とパスワードが間違っていないか確認してください。PostgreSQL データベースが適性に構成されているか確認してください。&lt;br&gt;これらの問題の詳細については、PHP ドキュメントを参照してください。&lt;br&gt;postmaster の起動時には、必ず i オプションを指定してください。&lt;br&gt; 注意: PostgreSQL 7.2 はサポートしていません。</translation>
     </message>
     <message>
         <source>Your database version %version does not fit the minimum requirement which is %req_version.</source>
-        <translation>データベースのバージョンが %version です。必要条件のバージョン %req_version を満たしていません。</translation>
+        <translation type="unfinished">データベースのバージョンが %version です。必要条件のバージョン %req_version を満たしていません。</translation>
     </message>
     <message>
         <source>The setup wizard was not able to complete the creation of your selected sites.</source>
@@ -20877,23 +21906,23 @@ It is possible to change these settings at a later time.</source>
     </message>
     <message>
         <source>Cannot write to file</source>
-        <translation>ファイルへの書き込みができません</translation>
+        <translation type="unfinished">ファイルへの書き込みができません</translation>
     </message>
     <message>
         <source>Download of package &apos;%pkg&apos; failed. You may upload the package manually.</source>
-        <translation>パッケージ &apos;%pkg&apos; のダウンロードに失敗しました。代替として手動でパッケージをアップロードしてください。</translation>
+        <translation type="unfinished">パッケージ &apos;%pkg&apos; のダウンロードに失敗しました。代替として手動でパッケージをアップロードしてください。</translation>
     </message>
     <message>
         <source>Invalid package</source>
-        <translation>無効なパッケージ</translation>
+        <translation type="unfinished">無効なパッケージ</translation>
     </message>
     <message>
         <source>No package selected for upload</source>
-        <translation>アップロードするパッケージが選択されていません</translation>
+        <translation type="unfinished">アップロードするパッケージが選択されていません</translation>
     </message>
     <message>
         <source>Failed fetching upload package file</source>
-        <translation>アップロードするパッケージファイルの取得に失敗しました</translation>
+        <translation type="unfinished">アップロードするパッケージファイルの取得に失敗しました</translation>
     </message>
     <message>
         <source>Site package</source>
@@ -20917,11 +21946,11 @@ It is possible to change these settings at a later time.</source>
     </message>
     <message>
         <source>The database [%database_name] cannot be used, the setup wizard wants to create the site in [%req_charset] but the database has been created using character set [%charset]. You will have to choose a database having support for [%req_charset] or modify [%database_name] .</source>
-        <translation>データベース [%database_name] が使用できません。セットアップウィザードは文字セット [%req_charset] を使用してサイト作成を試みましたが、データベースは文字セット [%charset] により作成されています。 文字セット [%req_charset] をサポートするデータベースを選択し直すか、データベース [%database_name] の文字セットを変更してください。</translation>
+        <translation type="unfinished">データベース [%database_name] が使用できません。セットアップウィザードは文字セット [%req_charset] を使用してサイト作成を試みましたが、データベースは文字セット [%charset] により作成されています。 文字セット [%req_charset] をサポートするデータベースを選択し直すか、データベース [%database_name] の文字セットを変更してください。</translation>
     </message>
     <message>
         <source>Failed to copy %url to local file %filename</source>
-        <translation>%url をローカルファイル %filename にコピーすることに失敗しました</translation>
+        <translation type="unfinished">%url をローカルファイル %filename にコピーすることに失敗しました</translation>
     </message>
     <message>
         <source>Access method</source>
@@ -20945,7 +21974,7 @@ It is possible to change these settings at a later time.</source>
     </message>
     <message>
         <source>Package &apos;%packageName&apos; and it&apos;s dependencies have been downloaded successfully. Press &apos;Next&apos; to continue.</source>
-        <translation>パッケージ &apos;%packageName&apos; とその依存ファイルのダウンロードに成功しました。 &apos;次へ&apos; をクリックしてください。</translation>
+        <translation type="unfinished">パッケージ &apos;%packageName&apos; とその依存ファイルのダウンロードに成功しました。 &apos;次へ&apos; をクリックしてください。</translation>
     </message>
     <message>
         <source>Use the radio buttons to choose the default language, and the checkboxes to choose additional languages. You will be able to use any of the selected languages for translating your content. The default language will determine the locale settings and will be used as the most prioritized language for your site.</source>
@@ -21017,7 +22046,11 @@ It is possible to change these settings at a later time.</source>
     </message>
     <message>
         <source>The selected user has not got access to any databases. Change user or create a database for the user.</source>
-        <translation>選択されたユーザはデータベースにアクセス権限をもっていません。ユーザを変更するかユーザがアクセス出来るデータベースを作ってください。</translation>
+        <translation type="unfinished">選択されたユーザはデータベースにアクセス権限をもっていません。ユーザを変更するかユーザがアクセス出来るデータベースを作ってください。</translation>
+    </message>
+    <message>
+        <source>The &apos;digest&apos; procedure is not available in your database, you cannot run eZ Publish without this. Visit the FAQ for more information.</source>
+        <translation type="obsolete">データベースに&apos;ダイジェスト&apos;機能がついていません。この機能なしではeZ Publishを作動できません。詳しくはFAQを参照にしてください。</translation>
     </message>
     <message>
         <source>Package language options</source>
@@ -21025,27 +22058,27 @@ It is possible to change these settings at a later time.</source>
     </message>
     <message>
         <source>No packages chosen.</source>
-        <translation>パッケージが選択されていません。</translation>
+        <translation type="unfinished">パッケージが選択されていません。</translation>
     </message>
     <message>
         <source>No templates chosen.</source>
-        <translation>テンプレートが選択されていません。</translation>
+        <translation type="unfinished">テンプレートが選択されていません。</translation>
     </message>
     <message>
         <source>Uploaded file is not an eZ Publish package</source>
-        <translation>アップロードされたファイルはeZ Publishのパッケージではありません</translation>
+        <translation type="unfinished">アップロードされたファイルはeZ Publishのパッケージではありません</translation>
     </message>
     <message>
         <source>No site package chosen.</source>
-        <translation>サイトパッケージが選択されていません。</translation>
+        <translation type="unfinished">サイトパッケージが選択されていません。</translation>
     </message>
     <message>
         <source>Retrieving remote site packages list failed. You may upload packages manually.</source>
-        <translation>サイトのパッケージリストの自動取得に失敗しました。パッケージのアップロードを手動で行う必要があります。</translation>
+        <translation type="unfinished">サイトのパッケージリストの自動取得に失敗しました。パッケージのアップロードを手動で行う必要があります。</translation>
     </message>
     <message>
         <source>Welcome to eZ Publish</source>
-        <translation>eZ Publishへようこそ</translation>
+        <translation type="unfinished">eZ Publishへようこそ</translation>
     </message>
     <message>
         <source>If you think you have fixed the errors you can try then click the &quot;Retry&quot; button.</source>
@@ -21290,15 +22323,15 @@ This functionality is also available at a later time from the Administration Int
     </message>
     <message>
         <source>The &apos;digest&apos; function is not available in your database, you cannot run eZ Publish without this. See the documentation for more information.</source>
-        <translation>データベースに&apos;ダイジェスト&apos;機能がついていません。この機能なしではeZ Publishを作動できません。</translation>
+        <translation type="unfinished">データベースに&apos;ダイジェスト&apos;機能がついていません。この機能なしではeZ Publishを作動できません。</translation>
     </message>
     <message>
         <source>MySQL support was detected on your system. Please choose the database driver you would like to use.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">MySQLがシステムに見つけられました、利用するデータベースドライバーを選択してください。</translation>
     </message>
     <message>
         <source>PostgreSQL support was detected on your system. Please choose the database driver you would like to use.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">PostgreSQLがシステムに見つけられました、利用するデータベースドライバーを選択してください。</translation>
     </message>
 </context>
 <context>
@@ -21426,6 +22459,30 @@ This functionality is also available at a later time from the Administration Int
         <source>Email</source>
         <translation>e-mail</translation>
     </message>
+    <message>
+        <source>Not all timed out sessions were successfully removed.</source>
+        <translation type="unfinished">すべてのタイムアウトセッションを削除する事ができませんでした。</translation>
+    </message>
+    <message>
+        <source>The operation were cut short in order to avoid execution timeout.</source>
+        <translation type="unfinished">タイムアウトを起こさない様にオペレーションが中止されました。</translation>
+    </message>
+    <message>
+        <source>Your alternatives are to:</source>
+        <translation type="unfinished">代わりにできる事は:</translation>
+    </message>
+    <message>
+        <source>Repeat the operation several times to complete it.</source>
+        <translation type="unfinished">完了するために、数回オペレーションを繰り替えしてください。</translation>
+    </message>
+    <message>
+        <source>Clear the timed out session data from command-line using: &amp;gt;php bin/php/ezsessiongc.php</source>
+        <translation type="unfinished">コマンドラインでタイムアウトセッションを削除する: &amp;gt;php bin/php/ezsessiongc.php</translation>
+    </message>
+    <message>
+        <source>Install the session cleanup cronjob &apos;session_gc.php&apos; and run on nightly intervals (see cronjob.ini or doc for how)</source>
+        <translation type="unfinished">&apos;session_gc.php&apos;セッションをクリアするクロンジョブをインストールする（cronjob.iniに説明があります）</translation>
+    </message>
 </context>
 <context>
     <name>design/standard/setup/tests</name>
@@ -21492,6 +22549,10 @@ This functionality is also available at a later time from the Administration Int
     <message>
         <source>Missing ImageMagick program</source>
         <translation>ImageMagick プログラムが見つかりません</translation>
+    </message>
+    <message>
+        <source>If you known where the program is installed (the executable is called</source>
+        <translation type="obsolete">プログラムのインストールパスがおわかりの場合 (対象は次の名前の実行形式ファイル：</translation>
     </message>
     <message>
         <source>or</source>
@@ -21755,6 +22816,10 @@ This is a security problem and should be changed to another global temporary dir
         <translation>備考：この問題は accept_path_info テスト失敗の原因にもなります。</translation>
     </message>
     <message>
+        <source>, but the latest released PHP 4.4.x version is highly recommended.</source>
+        <translation type="obsolete"> へのアップグレードが必要です。可能な限り PHP 4.4.x の最新リリースの利用を強く推奨します。</translation>
+    </message>
+    <message>
         <source>Missed some directories</source>
         <translation>いくつかのディレクトリが存在しません</translation>
     </message>
@@ -22007,39 +23072,47 @@ Webサーバのユーザとグループを知っている場合は、ファイ�
     </message>
     <message>
         <source>To fix this, edit your php.ini configuration and add E to the variables_order setting.</source>
-        <translation>これを解決するには、php.ini設定を編集し、variables_order にEを追加して下さい。</translation>
+        <translation type="obsolete">これを解決するには、php.ini設定を編集し、variables_order にEを追加して下さい。</translation>
     </message>
     <message>
         <source>Wrong eZ Components version detected</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">eZ Componentsのバージョンは違います</translation>
     </message>
     <message>
         <source>Missing eZ Components dependancy</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">eZ Components依存がありません</translation>
     </message>
     <message>
         <source>The minimum required eZ Components version is</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">必要なeZ Componentsの最低バージョンは</translation>
     </message>
     <message>
         <source>Download instructions for both regular download and PEAR are provided at</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">PEARと一般ダウンロードでのインストール方法は次のリンクにあります</translation>
     </message>
     <message>
         <source>Missing iconv extension</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">iconvエクステンションがみつかりません</translation>
     </message>
     <message>
         <source>The iconv extension is not available to eZ Publish. Without it eZ Publish will not work.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">eZ Publishはiconvエクステンションを利用できません。ないとeZ Publishが動作しません。</translation>
     </message>
     <message>
         <source>In most cases, the iconv extension is enabled by default because it is included in the PHP core. However, some Linux distributions have PHP without compiled-in support for iconv. Instead, they provide iconv as a shared module in a separate RPM package called &quot;php-iconv&quot; (or &quot;php5-iconv&quot;).</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">一般では、PHPコアに含まれてるので、デフォルトではiconvエクステンションが有効になっています。ただ、Linuxディストリビューションによって、iconvエクステンションが別なパッケージで提供する（「php-iconv」か「php5-iconv」）。</translation>
     </message>
     <message>
         <source>, but the latest released stable PHP version is always recommended.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">、ですがPHPの最新ステーブルリリースをおすすめします。</translation>
+    </message>
+    <message>
+        <source>Since some extensions might use $_ENV it is recomended to fix it unless you have full controll over all extensions you use!</source>
+        <translation type="unfinished">エクステンションによって、$_ENVを使うこともありますので、すべてのエクステンションにフールコントロールがない場合に追加する様にお勧めします!</translation>
+    </message>
+    <message>
+        <source>To fix this, edit your php.ini configuration and add E to the variables_order setting and restart your webserver.</source>
+        <translation type="unfinished">これを直すために、「php.ini」を直し、「variables_order」設定に「E」を追加して、ウェブサーバを再起動してください。</translation>
     </message>
 </context>
 <context>
@@ -22885,19 +23958,19 @@ Webサーバのユーザとグループを知っている場合は、ファイ�
     <name>design/standard/state/edit</name>
     <message>
         <source>Identifier:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">識別子:</translation>
     </message>
     <message>
         <source>Default language:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">デフォルト言語:</translation>
     </message>
     <message>
         <source>Name:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">ステート名:</translation>
     </message>
     <message>
         <source>Description:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">概要:</translation>
     </message>
 </context>
 <context>
@@ -22912,37 +23985,37 @@ Webサーバのユーザとグループを知っている場合は、ファイ�
     </message>
     <message>
         <source>Name</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">グループ名</translation>
     </message>
     <message>
         <source>Description</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">概要</translation>
     </message>
 </context>
 <context>
     <name>design/standard/state/group_edit</name>
     <message>
         <source>Identifier:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">識別子:</translation>
     </message>
     <message>
         <source>Default language:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">デフォルト言語:</translation>
     </message>
     <message>
         <source>Name:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">グループ名:</translation>
     </message>
     <message>
         <source>Description:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">概要:</translation>
     </message>
 </context>
 <context>
     <name>design/standard/toolbar</name>
     <message>
         <source>Toolbar management</source>
-        <translation>ツールバー管理</translation>
+        <translation type="unfinished">ツールバー管理</translation>
     </message>
     <message>
         <source>There are %logged_in_count registered and %anonymous_count anonymous users online.</source>
@@ -23412,7 +24485,7 @@ Webサーバのユーザとグループを知っている場合は、ファイ�
     </message>
     <message>
         <source>The node (%1) specified in [UserSettings].DefaultUserPlacement setting in site.ini does not exist!</source>
-        <translation>ノード (%1) は[UserSettings] の中に示されています。 site.ini の中にデフォルトのユーザ設定は存在しません!</translation>
+        <translation type="unfinished">ノード (%1) は[UserSettings] の中に示されています。 site.ini の中にデフォルトのユーザ設定は存在しません!</translation>
     </message>
     <message>
         <source>Email</source>
@@ -23445,12 +24518,16 @@ your account.</source>
         <source>Try again</source>
         <translation>再実行</translation>
     </message>
+    <message>
+        <source>The new password must be at least %1 characters long. Please retype your new password.</source>
+        <translation type="unfinished">新しいパスワードは%1文字以上にしてください。パスワードを再度入力してください。</translation>
+    </message>
 </context>
 <context>
     <name>design/standard/user/</name>
     <message>
         <source>The new password must be at least %1 characters long. Please retype your new password.</source>
-        <translation>新しいパスワードは%1文字以上にしてください。パスワードを再度入力してください。</translation>
+        <translation type="obsolete">新しいパスワードは%1文字以上にしてください。パスワードを再度入力してください。</translation>
     </message>
 </context>
 <context>
@@ -24276,70 +25353,74 @@ your account.</source>
     <name>kernel/cache</name>
     <message>
         <source>Content view cache</source>
-        <translation>コンテンツ表示キャッシュ</translation>
+        <translation type="unfinished">コンテンツ表示キャッシュ</translation>
     </message>
     <message>
         <source>Global INI cache</source>
-        <translation>共通設定INI（構成）キャッシュ</translation>
+        <translation type="unfinished">共通設定INI（構成）キャッシュ</translation>
     </message>
     <message>
         <source>INI cache</source>
-        <translation>INIファイル（構成）キャッシュ</translation>
+        <translation type="unfinished">INIファイル（構成）キャッシュ</translation>
     </message>
     <message>
         <source>Codepage cache</source>
-        <translation>コードページキャッシュ</translation>
+        <translation type="unfinished">コードページキャッシュ</translation>
     </message>
     <message>
         <source>Class identifier cache</source>
-        <translation>クラス識別子キャッシュ</translation>
+        <translation type="unfinished">クラス識別子キャッシュ</translation>
     </message>
     <message>
         <source>Sort key cache</source>
-        <translation>ソート索引キャッシュ</translation>
+        <translation type="unfinished">ソート索引キャッシュ</translation>
     </message>
     <message>
         <source>URL alias cache</source>
-        <translation>URLエイリアスキャッシュ</translation>
+        <translation type="unfinished">URLエイリアスキャッシュ</translation>
     </message>
     <message>
         <source>Image alias</source>
-        <translation>画像別名</translation>
+        <translation type="unfinished">画像別名</translation>
     </message>
     <message>
         <source>Template cache</source>
-        <translation>テンプレートキャッシュ</translation>
+        <translation type="unfinished">テンプレートキャッシュ</translation>
     </message>
     <message>
         <source>Template block cache</source>
-        <translation>テンプレートブロックキャッシュ</translation>
+        <translation type="unfinished">テンプレートブロックキャッシュ</translation>
     </message>
     <message>
         <source>Template override cache</source>
-        <translation>テンプレートオーバーライドキャッシュ</translation>
+        <translation type="unfinished">テンプレートオーバーライドキャッシュ</translation>
     </message>
     <message>
         <source>RSS cache</source>
-        <translation>RSSキャッシュ</translation>
+        <translation type="unfinished">RSSキャッシュ</translation>
     </message>
     <message>
         <source>Character transformation cache</source>
-        <translation>システム文字置換キャッシュ</translation>
+        <translation type="unfinished">システム文字置換キャッシュ</translation>
     </message>
     <message>
         <source>User info cache</source>
-        <translation>ユーザ情報キャッシュ</translation>
+        <translation type="unfinished">ユーザ情報キャッシュ</translation>
     </message>
     <message>
         <source>Content tree menu (browser cache)</source>
-        <translation>コンテンツツリーメニュー（ブラウザキャッシュ）</translation>
+        <translation type="unfinished">コンテンツツリーメニュー（ブラウザキャッシュ）</translation>
     </message>
     <message>
         <source>State limitations cache</source>
-        <translation>ステート制限キャッシュ</translation>
+        <translation type="unfinished">ステート制限キャッシュ</translation>
     </message>
     <message>
         <source>Text to image cache</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Design base cache</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -24347,1008 +25428,1021 @@ your account.</source>
     <name>kernel/class</name>
     <message>
         <source>Class list of group</source>
-        <translation>クラスカテゴリのクラス一覧</translation>
+        <translation type="unfinished">クラスカテゴリのクラス一覧</translation>
     </message>
     <message>
         <source>Class group list</source>
-        <translation>クラスカテゴリ一覧</translation>
+        <translation type="unfinished">クラスカテゴリ一覧</translation>
     </message>
     <message>
         <source>Remove class</source>
-        <translation>クラスの削除</translation>
+        <translation type="unfinished">クラスの削除</translation>
     </message>
     <message>
         <source>Class edit</source>
-        <translation>クラスの編集</translation>
+        <translation type="obsolete">クラスの編集</translation>
     </message>
     <message>
         <source>Classes</source>
-        <translation>クラス</translation>
+        <translation type="obsolete">クラス</translation>
     </message>
     <message>
         <source>Class list</source>
-        <translation>クラス一覧</translation>
+        <translation type="unfinished">クラス一覧</translation>
     </message>
     <message>
         <source>(no classes)</source>
-        <translation>（クラスなし）</translation>
+        <translation type="unfinished">（クラスなし）</translation>
     </message>
     <message>
         <source>Remove class groups</source>
-        <translation>クラスカテゴリの削除</translation>
+        <translation type="unfinished">クラスカテゴリの削除</translation>
     </message>
     <message>
         <source>You have to have at least one group that the class belongs to!</source>
-        <translation>クラスは最低一つのクラスカテゴリに所属する必要があります!</translation>
+        <translation type="unfinished">クラスは最低一つのクラスカテゴリに所属する必要があります!</translation>
     </message>
     <message>
         <source>Remove classes %class_id</source>
-        <translation>クラス %class_id の削除</translation>
+        <translation type="unfinished">クラス %class_id の削除</translation>
     </message>
     <message>
         <source>Copy of %class_name</source>
-        <translation>%class_name の複製</translation>
+        <translation type="unfinished">%class_name の複製</translation>
     </message>
     <message>
         <source>The class should have nonempty &apos;Name&apos; attribute.</source>
-        <translation>クラスには入力必須の &apos;Name&apos; 属性が必要です。</translation>
+        <translation type="unfinished">クラスには入力必須の &apos;Name&apos; 属性が必要です。</translation>
     </message>
     <message>
         <source>The class should have at least one attribute.</source>
-        <translation>クラスには属性が一つ以上必要です。</translation>
+        <translation type="unfinished">クラスには属性が一つ以上必要です。</translation>
     </message>
     <message>
         <source>There is a class already having the same identifier.</source>
-        <translation>同じ識別子のクラスがすでに存在します。</translation>
+        <translation type="unfinished">同じ識別子のクラスがすでに存在します。</translation>
     </message>
     <message>
         <source>Remove translation</source>
-        <translation>翻訳を削除</translation>
+        <translation type="unfinished">翻訳を削除</translation>
     </message>
     <message>
         <source>Could not load datatype: </source>
-        <translation>データタイプをロードできません:</translation>
+        <translation type="unfinished">データタイプをロードできません:</translation>
     </message>
     <message>
         <source>Editing this content class may cause data corruption in your system.</source>
-        <translation>このコンテンツクラスを編集すると、データ損失の恐れがあります。</translation>
+        <translation type="unfinished">このコンテンツクラスを編集すると、データ損失の恐れがあります。</translation>
     </message>
     <message>
         <source>duplicate attribute placement</source>
-        <translation>属性の配置が不正です。</translation>
+        <translation type="unfinished">属性の配置が不正です。</translation>
     </message>
     <message>
         <source>duplicate attribute identifier</source>
-        <translation>属性の識別子が不正です。</translation>
+        <translation type="unfinished">属性の識別子が不正です。</translation>
     </message>
     <message>
         <source>Press &quot;Cancel&quot; to safely exit this operation.</source>
-        <translation>このオペレーションを安全に止めたい場合は、キャンセルをクリックして下さい。</translation>
+        <translation type="unfinished">このオペレーションを安全に止めたい場合は、キャンセルをクリックして下さい。</translation>
     </message>
     <message>
         <source>Please contact your eZ Publish administrator to solve this problem.</source>
-        <translation>この問題を解決するには、eZ Publish管理者へ連絡してください。</translation>
+        <translation type="unfinished">この問題を解決するには、eZ Publish管理者へ連絡してください。</translation>
+    </message>
+    <message>
+        <source>Class groups</source>
+        <translation type="unfinished">クラスカテゴリ</translation>
+    </message>
+    <message>
+        <source>Remove classes</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>kernel/class/edit</name>
     <message>
         <source>New Class</source>
-        <translation>新規クラス</translation>
+        <translation type="unfinished">新規クラス</translation>
     </message>
     <message>
         <source>new attribute</source>
-        <translation>新規属性</translation>
+        <translation type="unfinished">新規属性</translation>
     </message>
 </context>
 <context>
     <name>kernel/class/groupedit</name>
     <message>
         <source>New Group</source>
-        <translation>新規クラスカテゴリ</translation>
+        <translation type="unfinished">新規クラスカテゴリ</translation>
     </message>
 </context>
 <context>
     <name>kernel/classes</name>
     <message>
         <source>Approval</source>
-        <translation>承認状況</translation>
+        <translation type="unfinished">承認状況</translation>
     </message>
     <message>
         <source>Standard</source>
-        <translation>標準</translation>
+        <translation type="unfinished">標準</translation>
     </message>
     <message>
         <source>Observer</source>
-        <translation>オブザーバ</translation>
+        <translation type="unfinished">オブザーバ</translation>
     </message>
     <message>
         <source>Owner</source>
-        <translation>所有者</translation>
+        <translation type="unfinished">所有者</translation>
     </message>
     <message>
         <source>Approver</source>
-        <translation>承認者</translation>
+        <translation type="unfinished">承認者</translation>
     </message>
     <message>
         <source>Author</source>
-        <translation>作成者</translation>
+        <translation type="unfinished">作成者</translation>
     </message>
     <message>
         <source>Inbox</source>
-        <translation>受信Box</translation>
+        <translation type="unfinished">受信Box</translation>
     </message>
     <message>
         <source>No state yet</source>
-        <translation>未ステータス</translation>
+        <translation type="unfinished">未ステータス</translation>
     </message>
     <message>
         <source>Workflow running</source>
-        <translation>ワークフローは実行中です</translation>
+        <translation type="unfinished">ワークフローは実行中です</translation>
     </message>
     <message>
         <source>Workflow done</source>
-        <translation>ワークフローは終了しました</translation>
+        <translation type="unfinished">ワークフローは終了しました</translation>
     </message>
     <message>
         <source>Workflow failed an event</source>
-        <translation>ワークフローはイベントでエラーが発生しました</translation>
+        <translation type="unfinished">ワークフローはイベントでエラーが発生しました</translation>
     </message>
     <message>
         <source>Workflow event deferred to cron job</source>
-        <translation>ワークフローイベントはクーロンジョブで延期されています</translation>
+        <translation type="unfinished">ワークフローイベントはクーロンジョブで延期されています</translation>
     </message>
     <message>
         <source>Workflow was reset for reuse</source>
-        <translation>ワークフローは再使用のためにリセットされました</translation>
+        <translation type="unfinished">ワークフローは再使用のためにリセットされました</translation>
     </message>
     <message>
         <source>Accepted event</source>
-        <translation>承認されたイベント</translation>
+        <translation type="unfinished">承認されたイベント</translation>
     </message>
     <message>
         <source>Rejected event</source>
-        <translation>否認されたイベント</translation>
+        <translation type="unfinished">否認されたイベント</translation>
     </message>
     <message>
         <source>Event deferred to cron job</source>
-        <translation>イベントはクーロンジョブで延期されています</translation>
+        <translation type="unfinished">イベントはクーロンジョブで延期されています</translation>
     </message>
     <message>
         <source>Event deferred to cron job, event will be rerun</source>
-        <translation>ワークフローイベントはクーロンジョブで延期されています。イベントは再実行されます。</translation>
+        <translation type="unfinished">ワークフローイベントはクーロンジョブで延期されています。イベントは再実行されます。</translation>
     </message>
     <message>
         <source>Event runs a sub event</source>
-        <translation>イベントは子イベントを実行中です</translation>
+        <translation type="unfinished">イベントは子イベントを実行中です</translation>
     </message>
     <message>
         <source>Workflow fetches template</source>
-        <translation>ワークフローはテンプレートを取得します</translation>
+        <translation type="unfinished">ワークフローはテンプレートを取得します</translation>
     </message>
     <message>
         <source>Workflow redirects user view</source>
-        <translation>ワークフローはユーザビューにリダイレクトします</translation>
+        <translation type="unfinished">ワークフローはユーザビューにリダイレクトします</translation>
     </message>
     <message>
         <source>New RSS Export</source>
-        <translation>新規RSSエクスポート</translation>
+        <translation type="unfinished">新規RSSエクスポート</translation>
     </message>
     <message>
         <source>Workflow was canceled</source>
-        <translation>ワークフローを中止しました</translation>
+        <translation type="unfinished">ワークフローを中止しました</translation>
     </message>
     <message>
         <source>Canceled whole workflow</source>
-        <translation>ワークフローを全体的に中止しました</translation>
+        <translation type="unfinished">ワークフローを全体的に中止しました</translation>
     </message>
     <message>
         <source>Replace existing object</source>
-        <translation>既存オブジェクトに上書きする</translation>
+        <translation type="unfinished">既存オブジェクトに上書きする</translation>
     </message>
     <message>
         <source>Skip object</source>
-        <translation>オブジェクトをスキップ</translation>
+        <translation type="unfinished">オブジェクトをスキップ</translation>
     </message>
     <message>
         <source>Keep existing and create a new one</source>
-        <translation>既存のものを残し、新たに作成する</translation>
+        <translation type="unfinished">既存のものを残し、新たに作成する</translation>
     </message>
     <message>
         <source>Update existing object</source>
-        <translation>既存オブジェクトを更新</translation>
+        <translation type="unfinished">既存オブジェクトを更新</translation>
     </message>
 </context>
 <context>
     <name>kernel/classes/datatypes</name>
     <message>
         <source>Missing date input.</source>
-        <translation>日付が未入力です。</translation>
+        <translation type="unfinished">日付が未入力です。</translation>
     </message>
     <message>
         <source>Missing datetime input.</source>
-        <translation>日付と時刻が未入力です。</translation>
+        <translation type="unfinished">日付と時刻が未入力です。</translation>
     </message>
     <message>
         <source>At least one author is required.</source>
-        <translation>作成者が一名以上必要です。</translation>
+        <translation type="unfinished">作成者が一名以上必要です。</translation>
     </message>
     <message>
         <source>A valid file is required.</source>
-        <translation>有効なファイルが必要です。</translation>
+        <translation type="unfinished">有効なファイルが必要です。</translation>
     </message>
     <message>
         <source>Checkbox</source>
         <comment>Datatype name</comment>
-        <translation>チェックボックス</translation>
+        <translation type="unfinished">チェックボックス</translation>
     </message>
     <message>
         <source>Enum</source>
         <comment>Datatype name</comment>
-        <translation>リスト</translation>
+        <translation type="unfinished">リスト</translation>
     </message>
     <message>
         <source>At least one field should be chosen.</source>
-        <translation>一つ以上フィールドを選択してください。</translation>
+        <translation type="unfinished">一つ以上フィールドを選択してください。</translation>
     </message>
     <message>
         <source>Float</source>
         <comment>Datatype name</comment>
-        <translation>浮動小数点数</translation>
+        <translation type="unfinished">浮動小数点数</translation>
     </message>
     <message>
         <source>Image</source>
         <comment>Datatype name</comment>
-        <translation>画像</translation>
+        <translation type="unfinished">画像</translation>
     </message>
     <message>
         <source>Integer</source>
         <comment>Datatype name</comment>
-        <translation>整数</translation>
+        <translation type="unfinished">整数</translation>
     </message>
     <message>
         <source>ISBN</source>
         <comment>Datatype name</comment>
-        <translation>ISBN</translation>
+        <translation type="unfinished">ISBN</translation>
     </message>
     <message>
         <source>Matrix</source>
         <comment>Datatype name</comment>
-        <translation>行列</translation>
+        <translation type="unfinished">行列</translation>
     </message>
     <message>
         <source>Media</source>
         <comment>Datatype name</comment>
-        <translation>メディア</translation>
+        <translation type="unfinished">メディア</translation>
     </message>
     <message>
         <source>Object relation</source>
         <comment>Datatype name</comment>
-        <translation>関連オブジェクト</translation>
+        <translation type="unfinished">関連オブジェクト</translation>
     </message>
     <message>
         <source>Option</source>
         <comment>Datatype name</comment>
-        <translation>オプションリスト</translation>
+        <translation type="unfinished">オプションリスト</translation>
     </message>
     <message>
         <source>At least one option is required.</source>
-        <translation>一つ以上のオプションが必要です。</translation>
+        <translation type="unfinished">一つ以上のオプションが必要です。</translation>
     </message>
     <message>
         <source>Price</source>
         <comment>Datatype name</comment>
-        <translation>価格</translation>
+        <translation type="unfinished">価格</translation>
     </message>
     <message>
         <source>Add to basket</source>
-        <translation>買い物かごに追加</translation>
+        <translation type="unfinished">買い物かごに追加</translation>
     </message>
     <message>
         <source>Add to wish list</source>
-        <translation>ウイッシュリストに追加</translation>
+        <translation type="unfinished">ウイッシュリストに追加</translation>
     </message>
     <message>
         <source>Range option</source>
         <comment>Datatype name</comment>
-        <translation>数値範囲</translation>
+        <translation type="unfinished">数値範囲</translation>
     </message>
     <message>
         <source>Selection</source>
         <comment>Datatype name</comment>
-        <translation>選択リスト</translation>
+        <translation type="unfinished">選択リスト</translation>
     </message>
     <message>
         <source>Text line</source>
         <comment>Datatype name</comment>
-        <translation>テキスト</translation>
+        <translation type="unfinished">テキスト</translation>
     </message>
     <message>
         <source>Subtree subscription</source>
         <comment>Datatype name</comment>
-        <translation>サブツリーサブクスクリプション</translation>
+        <translation type="unfinished">サブツリーサブクスクリプション</translation>
     </message>
     <message>
         <source>URL</source>
         <comment>Datatype name</comment>
-        <translation>URL</translation>
+        <translation type="unfinished">URL</translation>
     </message>
     <message>
         <source>User account</source>
         <comment>Datatype name</comment>
-        <translation>ユーザ</translation>
+        <translation type="unfinished">ユーザ</translation>
     </message>
     <message>
         <source>A user with this email already exists.</source>
-        <translation>このメールアドレスはすでに登録されています。</translation>
+        <translation type="unfinished">このメールアドレスはすでに登録されています。</translation>
     </message>
     <message>
         <source>Identifier</source>
         <comment>Datatype name</comment>
-        <translation>識別子</translation>
+        <translation type="unfinished">識別子</translation>
     </message>
     <message>
         <source>image</source>
         <comment>Default image name</comment>
-        <translation>画像</translation>
+        <translation type="unfinished">画像</translation>
     </message>
     <message>
         <source>Ini Setting</source>
         <comment>Datatype name</comment>
-        <translation>INI設定</translation>
+        <translation type="unfinished">INI設定</translation>
     </message>
     <message>
         <source>Package</source>
         <comment>Datatype name</comment>
-        <translation>パッケージ</translation>
+        <translation type="unfinished">パッケージ</translation>
     </message>
     <message>
         <source>Send</source>
         <comment>Datatype information collector action</comment>
-        <translation>送信</translation>
+        <translation type="unfinished">送信</translation>
     </message>
     <message>
         <source>Content required</source>
-        <translation>コンテンツは必須項目です</translation>
+        <translation type="unfinished">コンテンツは必須項目です</translation>
     </message>
     <message>
         <source>Missing objectrelation input.</source>
-        <translation>オブジェクトリレーションが未入力です。</translation>
+        <translation type="unfinished">オブジェクトリレーションが未入力です。</translation>
     </message>
     <message>
         <source>Invalid time.</source>
-        <translation>時刻が無効です。</translation>
+        <translation type="unfinished">時刻が無効です。</translation>
     </message>
     <message>
         <source>The author name must be provided.</source>
-        <translation>作成者名が必要です。</translation>
+        <translation type="unfinished">作成者名が必要です。</translation>
     </message>
     <message>
         <source>The email address is not valid.</source>
-        <translation>メールアドレスが正しくありません。</translation>
+        <translation type="unfinished">メールアドレスが正しくありません。</translation>
     </message>
     <message>
         <source>File uploading is not enabled. Please contact the site administrator to enable it.</source>
-        <translation>ファイルアップロードができません。サイト管理者に連絡してください。</translation>
+        <translation type="unfinished">ファイルアップロードができません。サイト管理者に連絡してください。</translation>
     </message>
     <message>
         <source>The size of the uploaded file exceeds the limit set by the upload_max_filesize directive in php.ini.</source>
-        <translation>アップロードした画像のサイズは、php.iniのupload_max_filesizeディレクティブで設定された制限を越えています。</translation>
+        <translation type="unfinished">アップロードした画像のサイズは、php.iniのupload_max_filesizeディレクティブで設定された制限を越えています。</translation>
     </message>
     <message>
         <source>The size of the uploaded file exceeds the maximum upload size: %1 bytes.</source>
-        <translation>アップロードしたサイズはこのサイトの制限である %1 バイトを超えています。</translation>
+        <translation type="unfinished">アップロードしたサイズはこのサイトの制限である %1 バイトを超えています。</translation>
     </message>
     <message>
         <source>The email address is empty.</source>
-        <translation>メールアドレスが未入力です。</translation>
+        <translation type="unfinished">メールアドレスが未入力です。</translation>
     </message>
     <message>
         <source>The given input is not a floating point number.</source>
-        <translation>入力は浮動小数点数ではありません。</translation>
+        <translation type="unfinished">入力は浮動小数点数ではありません。</translation>
     </message>
     <message>
         <source>The input must be greater than %1</source>
-        <translation>入力値は %1 より大きい数値が必要です</translation>
+        <translation type="unfinished">入力値は %1 より大きい数値が必要です</translation>
     </message>
     <message>
         <source>The input must be less than %1</source>
-        <translation>入力値は %1 より小さい数値が必要です</translation>
+        <translation type="unfinished">入力値は %1 より小さい数値が必要です</translation>
     </message>
     <message>
         <source>The input is not in defined range %1 - %2</source>
-        <translation>入力値が定義範囲（ %1 - %2 ）外です</translation>
+        <translation type="unfinished">入力値が定義範囲（ %1 - %2 ）外です</translation>
     </message>
     <message>
         <source>A valid image file is required.</source>
-        <translation>有効な画像ファイルが必要です。</translation>
+        <translation type="unfinished">有効な画像ファイルが必要です。</translation>
     </message>
     <message>
         <source>The size of the uploaded image exceeds limit set by upload_max_filesize directive in php.ini. Please contact the site administrator.</source>
-        <translation>アップロードした画像のサイズは、php.ini の upload_max_filesize ディレクティブで設定された制限を超えています。サイト管理者に連絡してください。</translation>
+        <translation type="unfinished">アップロードした画像のサイズは、php.ini の upload_max_filesize ディレクティブで設定された制限を超えています。サイト管理者に連絡してください。</translation>
     </message>
     <message>
         <source>The size of the uploaded file exceeds the limit set for this site: %1 bytes.</source>
-        <translation>アップロードしたファイルはこのサイトの制限である %1 バイトを超えています。</translation>
+        <translation type="unfinished">アップロードしたファイルはこのサイトの制限である %1 バイトを超えています。</translation>
     </message>
     <message>
         <source>Could not locate the ini file.</source>
-        <translation>INIファイルを配置できません。</translation>
+        <translation type="unfinished">INIファイルを配置できません。</translation>
     </message>
     <message>
         <source>The input is not a valid integer.</source>
-        <translation>入力は有効な整数ではありません。</translation>
+        <translation type="unfinished">入力は有効な整数ではありません。</translation>
     </message>
     <message>
         <source>The number must be greater than %1</source>
-        <translation>数値は %1 より大きい必要があります</translation>
+        <translation type="unfinished">数値は %1 より大きい必要があります</translation>
     </message>
     <message>
         <source>The number must be less than %1</source>
-        <translation>数値は %1 より小さい必要があります</translation>
+        <translation type="unfinished">数値は %1 より小さい必要があります</translation>
     </message>
     <message>
         <source>The number is not within the required range %1 - %2</source>
-        <translation>数値が定義範囲（ %1 - %2 ）外です</translation>
+        <translation type="unfinished">数値が定義範囲（ %1 - %2 ）外です</translation>
     </message>
     <message>
         <source>The ISBN number is not correct. Please check the input for mistakes.</source>
-        <translation>ISBN番号が正しくありません。誤りを確認してください。</translation>
+        <translation type="unfinished">ISBN番号が正しくありません。誤りを確認してください。</translation>
     </message>
     <message>
         <source>A valid media file is required.</source>
-        <translation>有効なメディアファイルが必要です。</translation>
+        <translation type="unfinished">有効なメディアファイルが必要です。</translation>
     </message>
     <message>
         <source>The size of the uploaded file exceeds the limit set by upload_max_filesize directive in php.ini. Please contact the site administrator.</source>
-        <translation>アップロードした画像のサイズは、php.ini の upload_max_filesize ディレクティブで設定された制限を超えています。サイト管理者に連絡してください。</translation>
+        <translation type="unfinished">アップロードした画像のサイズは、php.ini の upload_max_filesize ディレクティブで設定された制限を超えています。サイト管理者に連絡してください。</translation>
     </message>
     <message>
         <source>The size of the uploaded file exceeds site maximum: %1 bytes.</source>
-        <translation>アップロードしたファイルは最大サイズ%1バイトを超えています。</translation>
+        <translation type="unfinished">アップロードしたファイルは最大サイズ%1バイトを超えています。</translation>
     </message>
     <message>
         <source>The option value must be provided.</source>
-        <translation>オプションは必ず設定してください。</translation>
+        <translation type="unfinished">オプションは必ず設定してください。</translation>
     </message>
     <message>
         <source>The additional price for the multioption value is not valid.</source>
-        <translation>マルチオプションの価格設定が無効です。</translation>
+        <translation type="unfinished">マルチオプションの価格設定が無効です。</translation>
     </message>
     <message>
         <source>The Additional price value is not valid.</source>
-        <translation>価格設定が無効です。</translation>
+        <translation type="unfinished">価格設定が無効です。</translation>
     </message>
     <message>
         <source>Input required.</source>
-        <translation>入力必須項目です。</translation>
+        <translation type="unfinished">入力必須項目です。</translation>
     </message>
     <message>
         <source>The input text is too long. The maximum number of characters allowed is %1.</source>
-        <translation>入力したテキストが長すぎます。最大文字数は %1 文字です。</translation>
+        <translation type="unfinished">入力したテキストが長すぎます。最大文字数は %1 文字です。</translation>
     </message>
     <message>
         <source>Time input required.</source>
-        <translation>時刻は入力必須です。</translation>
+        <translation type="unfinished">時刻は入力必須です。</translation>
     </message>
     <message>
         <source>The username must be specified.</source>
-        <translation>ユーザ名を必ず指定してください。</translation>
+        <translation type="unfinished">ユーザ名を必ず指定してください。</translation>
     </message>
     <message>
         <source>The username already exists, please choose another one.</source>
-        <translation>このユーザ名は既に使用されています。異なるユーザ名を選んで下さい。</translation>
+        <translation type="unfinished">このユーザ名は既に使用されています。異なるユーザ名を選んで下さい。</translation>
     </message>
     <message>
         <source>The passwords do not match.</source>
         <comment>eZUserType</comment>
-        <translation>パスワードが一致しません。</translation>
+        <translation type="unfinished">パスワードが一致しません。</translation>
     </message>
     <message>
         <source>Cannot remove the account:</source>
-        <translation>ユーザを削除できません:</translation>
+        <translation type="unfinished">ユーザを削除できません:</translation>
     </message>
     <message>
         <source>The account owner is currently logged in.</source>
-        <translation>所有者は現在ログイン中です。</translation>
+        <translation type="unfinished">所有者は現在ログイン中です。</translation>
     </message>
     <message>
         <source>The account is currently used by the anonymous user.</source>
-        <translation>現在匿名ユーザにより使用されています。</translation>
+        <translation type="unfinished">現在匿名ユーザにより使用されています。</translation>
     </message>
     <message>
         <source>Multi-option</source>
         <comment>Datatype name</comment>
-        <translation>マルチオプションリスト</translation>
+        <translation type="unfinished">マルチオプションリスト</translation>
     </message>
     <message>
         <source>Authors</source>
         <comment>Datatype name</comment>
-        <translation>作成者</translation>
+        <translation type="unfinished">作成者</translation>
     </message>
     <message>
         <source>File</source>
         <comment>Datatype name</comment>
-        <translation>ファイル</translation>
+        <translation type="unfinished">ファイル</translation>
     </message>
     <message>
         <source>Date</source>
         <comment>Datatype name</comment>
-        <translation>日付</translation>
+        <translation type="unfinished">日付</translation>
     </message>
     <message>
         <source>Date and time</source>
         <comment>Datatype name</comment>
-        <translation>日付と時刻</translation>
+        <translation type="unfinished">日付と時刻</translation>
     </message>
     <message>
         <source>Keywords</source>
         <comment>Datatype name</comment>
-        <translation>キーワード</translation>
+        <translation type="unfinished">キーワード</translation>
     </message>
     <message>
         <source>Object relations</source>
         <comment>Datatype name</comment>
-        <translation>関連オブジェクト（複数）</translation>
+        <translation type="unfinished">関連オブジェクト（複数）</translation>
     </message>
     <message>
         <source>Text block</source>
         <comment>Datatype name</comment>
-        <translation>テキストボックス</translation>
+        <translation type="unfinished">テキストボックス</translation>
     </message>
     <message>
         <source>Time</source>
         <comment>Datatype name</comment>
-        <translation>時刻</translation>
+        <translation type="unfinished">時刻</translation>
     </message>
     <message>
         <source>XML block</source>
         <comment>Datatype name</comment>
-        <translation>XMLタグ</translation>
+        <translation type="unfinished">XMLタグ</translation>
     </message>
     <message>
         <source>Object %1 can not be embeded to itself.</source>
-        <translation>オブジェクト %1 を自身に埋め込むことはできません。</translation>
+        <translation type="unfinished">オブジェクト %1 を自身に埋め込むことはできません。</translation>
     </message>
     <message>
         <source>Country</source>
         <comment>Datatype name</comment>
-        <translation>国名</translation>
+        <translation type="unfinished">国名</translation>
     </message>
     <message>
         <source>Date is not valid.</source>
-        <translation>日付が無効です。</translation>
+        <translation type="unfinished">日付が無効です。</translation>
     </message>
     <message>
         <source>Time is not valid.</source>
-        <translation>時刻が無効です。</translation>
+        <translation type="unfinished">時刻が無効です。</translation>
     </message>
     <message>
         <source>The image file must have non-zero size.</source>
-        <translation>画像ファイルにゼロサイズは指定できません。</translation>
+        <translation type="unfinished">画像ファイルにゼロサイズは指定できません。</translation>
     </message>
     <message>
         <source>Wrong text field value.</source>
-        <translation>テキストボックス値に誤りがあります。</translation>
+        <translation type="unfinished">テキストボックス値に誤りがあります。</translation>
     </message>
     <message>
         <source>Missing matrix input.</source>
-        <translation>マトリックス入力が未入力です。</translation>
+        <translation type="unfinished">マトリックス入力が未入力です。</translation>
     </message>
     <message>
         <source>Multi-price</source>
         <comment>Datatype name</comment>
-        <translation>複数価格</translation>
+        <translation type="unfinished">複数価格</translation>
     </message>
     <message>
         <source>Invalid price for &apos;%currencyCode&apos; currency </source>
-        <translation>&apos;%currencyCode&apos; 通貨で無効な価格です</translation>
+        <translation type="unfinished">&apos;%currencyCode&apos; 通貨で無効な価格です</translation>
     </message>
     <message>
         <source>Missing objectrelation list input.</source>
-        <translation>オブジェクトリレーションが未入力です。</translation>
+        <translation type="unfinished">オブジェクトリレーションが未入力です。</translation>
     </message>
     <message>
         <source>NAME is required.</source>
-        <translation>名前は入力必須です。</translation>
+        <translation type="unfinished">名前は入力必須です。</translation>
     </message>
     <message>
         <source>Invalid price.</source>
-        <translation>不正な価格です。</translation>
+        <translation type="unfinished">不正な価格です。</translation>
     </message>
     <message>
         <source>Product category</source>
         <comment>Datatype name</comment>
-        <translation>商品カテゴリ</translation>
+        <translation type="unfinished">商品カテゴリ</translation>
     </message>
     <message>
         <source>Dynamic VAT cannot be included.</source>
-        <translation>ダイナミック課税方法を含めることはできません。</translation>
+        <translation type="unfinished">ダイナミック課税方法を含めることはできません。</translation>
     </message>
     <message>
         <source>Missing range option input.</source>
-        <translation>数値範囲が未入力です。</translation>
+        <translation type="unfinished">数値範囲が未入力です。</translation>
     </message>
     <message>
         <source>Option set name is required.</source>
-        <translation>オプションセット名が必要です。</translation>
+        <translation type="unfinished">オプションセット名が必要です。</translation>
     </message>
     <message>
         <source>The password must be at least %1 characters long.</source>
-        <translation>パスワードは最低%1文字必要です。</translation>
+        <translation type="unfinished">パスワードは最低%1文字必要です。</translation>
     </message>
     <message>
         <source>Invalid reference in &amp;lt;embed&amp;gt; tag. Note that &lt;embed&gt; tag supports only &apos;eznode&apos; and &apos;ezobject&apos; protocols.</source>
-        <translation>&amp;lt;embed&amp;gt; タグの参照先が無効です。&lt;embed&gt; タグは &apos;eznode&apos; と &apos;ezobject&apos; プロトコルのみをサポートします。</translation>
+        <translation type="unfinished">&amp;lt;embed&amp;gt; タグの参照先が無効です。&lt;embed&gt; タグは &apos;eznode&apos; と &apos;ezobject&apos; プロトコルのみをサポートします。</translation>
     </message>
     <message>
         <source>The ISBN number is not correct. </source>
-        <translation>ISBN番号が正しくありません。</translation>
+        <translation type="unfinished">ISBN番号が正しくありません。</translation>
     </message>
     <message>
         <source>13 digit ISBN must start with 978 or 979</source>
-        <translation>13桁のISBN番号は978または979で始まるはずです</translation>
+        <translation type="unfinished">13桁のISBN番号は978または979で始まるはずです</translation>
     </message>
     <message>
         <source>ISBN length is invalid</source>
-        <translation>ISBN番号の長さが正しくありません。</translation>
+        <translation type="unfinished">ISBN番号の長さが正しくありません。</translation>
     </message>
     <message>
         <source>Email</source>
         <comment>Datatype name</comment>
-        <translation>e-mail</translation>
+        <translation type="unfinished">e-mail</translation>
     </message>
     <message>
         <source>The registrant element of the ISBN number does not exist.</source>
-        <translation>ISBN番号の登録要素は存在しません。</translation>
+        <translation type="unfinished">ISBN番号の登録要素は存在しません。</translation>
     </message>
     <message>
         <source>The ISBN number has a incorrect registration group number.</source>
-        <translation>ISBN番号の登録グループナンバーが正しく有りません。</translation>
+        <translation type="unfinished">ISBN番号の登録グループナンバーが正しく有りません。</translation>
     </message>
     <message>
         <source>The group element of the ISBN number does not exist.</source>
-        <translation>ISBN番号のグループ要素は存在しません。</translation>
+        <translation type="unfinished">ISBN番号のグループ要素は存在しません。</translation>
     </message>
     <message>
         <source>%1 is not a valid prefix of the ISBN number.</source>
-        <translation>%1は有効なISBN番号の数字ではありません。</translation>
+        <translation type="unfinished">%1は有効なISBN番号の数字ではありません。</translation>
     </message>
     <message>
         <source>All ISBN 13 characters need to be numeric</source>
-        <translation>すべてのISBN文字は数字である必要があります</translation>
+        <translation type="unfinished">すべてのISBN文字は数字である必要があります</translation>
     </message>
     <message>
         <source>Bad checksum, last digit should be %1</source>
-        <translation>チェックサムが正しくありません。最後の数字は%1になるはずです。</translation>
+        <translation type="unfinished">チェックサムが正しくありません。最後の数字は%1になるはずです。</translation>
     </message>
     <message>
         <source>The ISBN number should be ISBN13, but seems to be ISBN10.</source>
-        <translation>ISBN番号はISBN13である必要がありますが、入力されたものはISBN10のようです。</translation>
+        <translation type="unfinished">ISBN番号はISBN13である必要がありますが、入力されたものはISBN10のようです。</translation>
     </message>
     <message>
         <source>Multi-option2</source>
         <comment>Datatype name</comment>
-        <translation>マルチオプションリスト2</translation>
+        <translation type="unfinished">マルチオプションリスト2</translation>
     </message>
     <message>
         <source>You cannot choose option value &quot;%1&quot; from &quot;%2&quot; because it is unselectable </source>
-        <translation>選択不可能であるため、&quot;%2&quot;から&quot;%1&quot;オプションを選択することはできません  </translation>
+        <translation type="unfinished">選択不可能であるため、&quot;%2&quot;から&quot;%1&quot;オプションを選択することはできません  </translation>
     </message>
     <message>
         <source>You cannot choose option value &quot;%1&quot; from &quot;%2&quot;  
  if you selected option &quot;%3&quot; from &quot;%4&quot; </source>
-        <translation>&quot;%4&quot;からオプション&quot;%3&quot;を選択した場合、&quot;%2&quot;からオプション&quot;%1&quot;を選択することはできません  </translation>
+        <translation type="unfinished">&quot;%4&quot;からオプション&quot;%3&quot;を選択した場合、&quot;%2&quot;からオプション&quot;%1&quot;を選択することはできません  </translation>
     </message>
     <message>
         <source>The password must not be &quot;password&quot;.</source>
-        <translation>”password”をパスワードには設定出来ません。</translation>
+        <translation type="unfinished">”password”をパスワードには設定出来ません。</translation>
     </message>
     <message>
         <source>The account is currently used the administrator user.</source>
-        <translation>このアカウントは現在、管理者ユーザに使われてます。</translation>
+        <translation type="unfinished">このアカウントは現在、管理者ユーザに使われてます。</translation>
     </message>
     <message>
         <source>You cannot remove the last class holding user accounts.</source>
-        <translation>ユーザアカウントを持っている最後のクラスは削除できません。</translation>
+        <translation type="unfinished">ユーザアカウントを持っている最後のクラスは削除できません。</translation>
     </message>
     <message>
         <source>Missing email input.</source>
-        <translation>メールアドレスが未入力です。</translation>
+        <translation type="unfinished">メールアドレスが未入力です。</translation>
     </message>
     <message>
         <source>Input required</source>
-        <translation>入力必須項目</translation>
+        <translation type="unfinished">入力必須項目</translation>
+    </message>
+    <message>
+        <source>The password cannot be empty.</source>
+        <comment>eZUserType</comment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>kernel/classes/datatypes/ezbinaryfile</name>
     <message>
         <source>Failed to store file %filename. Please contact the site administrator.</source>
-        <translation>%filename ファイルの保存に失敗しました。サイト管理者に連絡してください。</translation>
+        <translation type="unfinished">%filename ファイルの保存に失敗しました。サイト管理者に連絡してください。</translation>
     </message>
 </context>
 <context>
     <name>kernel/classes/datatypes/ezimage</name>
     <message>
         <source>Failed to fetch Image Handler. Please contact the site administrator.</source>
-        <translation>画像ハンドラの取得に失敗しました。サイト管理者に連絡してください。</translation>
+        <translation type="unfinished">画像ハンドラの取得に失敗しました。サイト管理者に連絡してください。</translation>
     </message>
 </context>
 <context>
     <name>kernel/classes/datatypes/ezmedia</name>
     <message>
         <source>Failed to store media file %filename. Please contact the site administrator.</source>
-        <translation>%filename メディアファイルの保存に失敗しました。サイト管理者に連絡してください。</translation>
+        <translation type="unfinished">%filename メディアファイルの保存に失敗しました。サイト管理者に連絡してください。</translation>
     </message>
 </context>
 <context>
     <name>kernel/classes/datatypes/ezxmltext</name>
     <message>
         <source>Wrong closing tag</source>
-        <translation>終了タグが間違っています</translation>
+        <translation type="unfinished">終了タグが間違っています</translation>
     </message>
     <message>
         <source>Wrong closing tag : &amp;lt;/%1&amp;gt;.</source>
-        <translation>終了タグが間違っています: &amp;lt;/%1&amp;gt;</translation>
+        <translation type="unfinished">終了タグが間違っています: &amp;lt;/%1&amp;gt;</translation>
     </message>
     <message>
         <source>Wrong opening tag</source>
-        <translation>開始タグが間違っています</translation>
+        <translation type="unfinished">開始タグが間違っています</translation>
     </message>
     <message>
         <source>Unknown tag: &amp;lt;%1&amp;gt;.</source>
-        <translation>不明なタグ: &amp;lt;%1&amp;gt;</translation>
+        <translation type="unfinished">不明なタグ: &amp;lt;%1&amp;gt;</translation>
     </message>
     <message>
         <source>Can&apos;t convert tag&apos;s name: &amp;lt;%1&amp;gt;.</source>
-        <translation>タグ名を変換できません: &amp;lt;%1&amp;gt;</translation>
+        <translation type="unfinished">タグ名を変換できません: &amp;lt;%1&amp;gt;</translation>
     </message>
     <message>
         <source>Class &apos;%1&apos; is not allowed for element &amp;lt;%2&amp;gt; (check content.ini).</source>
-        <translation>&amp;lt;%2&amp;gt; では&apos;%1&apos;クラスは利用出来ません (content.iniを確認してください)。</translation>
+        <translation type="unfinished">&amp;lt;%2&amp;gt; では&apos;%1&apos;クラスは利用出来ません (content.iniを確認してください)。</translation>
     </message>
     <message>
         <source>Required attribute &apos;%1&apos; is not presented in tag &amp;lt;%2&amp;gt;.</source>
-        <translation>&amp;lt;%2&amp;gt;に必要な&apos;%1&apos;属性が存在しません。</translation>
+        <translation type="unfinished">&amp;lt;%2&amp;gt;に必要な&apos;%1&apos;属性が存在しません。</translation>
     </message>
     <message>
         <source>Custom tag &apos;%1&apos; is not allowed.</source>
-        <translation>&apos;%1&apos;カスタムタグは許可されていません。</translation>
+        <translation type="unfinished">&apos;%1&apos;カスタムタグは許可されていません。</translation>
     </message>
     <message>
         <source>&amp;lt;%1&amp;gt; tag can&apos;t be empty.</source>
-        <translation>&amp;lt;%1&amp;gt;は空にすることはできません。</translation>
+        <translation type="unfinished">&amp;lt;%1&amp;gt;は空にすることはできません。</translation>
     </message>
     <message>
         <source>%1 is not allowed to be a child of &amp;lt;%2&amp;gt;.</source>
-        <translation>%1は&amp;lt;%2&amp;gt;に含まれることはできません。</translation>
+        <translation type="unfinished">%1は&amp;lt;%2&amp;gt;に含まれることはできません。</translation>
     </message>
     <message>
         <source>Attribute &apos;%1&apos; is not allowed in &amp;lt;%2&amp;gt; element.</source>
-        <translation>&amp;lt;%2&amp;gt;要素には&apos;%1&apos;属性は使用できません。</translation>
+        <translation type="unfinished">&amp;lt;%2&amp;gt;要素には&apos;%1&apos;属性は使用できません。</translation>
     </message>
     <message>
         <source>Incorrect headers nesting</source>
-        <translation>不正なヘッダー入れ子</translation>
+        <translation type="unfinished">不正なヘッダー入れ子</translation>
     </message>
     <message>
         <source>Node &apos;%1&apos; does not exist.</source>
-        <translation>&apos;%1&apos;ノードは存在しません。</translation>
+        <translation type="unfinished">&apos;%1&apos;ノードは存在しません。</translation>
     </message>
     <message>
         <source>Using scripts in links is not allowed, link &apos;%1&apos; has been removed</source>
-        <translation>リンク内でのスクリプトの使用は出来ません。&apos;%1&apos;リンクは削除されました。</translation>
+        <translation type="unfinished">リンク内でのスクリプトの使用は出来ません。&apos;%1&apos;リンクは削除されました。</translation>
     </message>
     <message>
         <source>Invalid e-mail address: &apos;%1&apos;</source>
-        <translation>不正なe-mailアドレス: &apos;%1&apos;</translation>
+        <translation type="unfinished">不正なe-mailアドレス: &apos;%1&apos;</translation>
     </message>
     <message>
         <source>Object %1 can not be embeded to itself.</source>
-        <translation>オブジェクト %1 を自身に埋め込むことはできません。</translation>
+        <translation type="unfinished">オブジェクト %1 を自身に埋め込むことはできません。</translation>
     </message>
 </context>
 <context>
     <name>kernel/collaboration</name>
     <message>
         <source>Collaboration custom action</source>
-        <translation>カスタム協同作業</translation>
+        <translation type="unfinished">カスタム協同作業</translation>
     </message>
     <message>
         <source>Collaboration</source>
-        <translation>協同作業</translation>
+        <translation type="unfinished">協同作業</translation>
     </message>
 </context>
 <context>
     <name>kernel/content</name>
     <message>
         <source>Search</source>
-        <translation>検索</translation>
+        <translation type="unfinished">検索</translation>
     </message>
     <message>
         <source>Advanced</source>
-        <translation>検索オプション</translation>
+        <translation type="unfinished">検索オプション</translation>
     </message>
     <message>
         <source>No main node selected, please select one.</source>
-        <translation>主ノードが選択されていません。選択してください。</translation>
+        <translation type="unfinished">主ノードが選択されていません。選択してください。</translation>
     </message>
     <message>
         <source>Content</source>
-        <translation>コンテンツ</translation>
+        <translation type="unfinished">コンテンツ</translation>
     </message>
     <message>
         <source>Edit</source>
-        <translation>編集</translation>
+        <translation type="unfinished">編集</translation>
     </message>
     <message>
         <source>Copy</source>
-        <translation>複製</translation>
+        <translation type="unfinished">複製</translation>
     </message>
     <message>
         <source>My drafts</source>
-        <translation>下書き</translation>
+        <translation type="unfinished">下書き</translation>
     </message>
     <message>
         <source>Remove editing version</source>
-        <translation>編集中バージョンの削除</translation>
+        <translation type="unfinished">編集中バージョンの削除</translation>
     </message>
     <message>
         <source>Remove object</source>
-        <translation>オブジェクトの削除</translation>
+        <translation type="unfinished">オブジェクトの削除</translation>
     </message>
     <message>
         <source>Translation</source>
-        <translation>翻訳</translation>
+        <translation type="unfinished">翻訳</translation>
     </message>
     <message>
         <source>Content translations</source>
-        <translation>コンテンツ翻訳</translation>
+        <translation type="unfinished">コンテンツ翻訳</translation>
     </message>
     <message>
         <source>Trash</source>
-        <translation>ゴミ箱</translation>
+        <translation type="unfinished">ゴミ箱</translation>
     </message>
     <message>
         <source>Versions</source>
-        <translation>バージョン一覧</translation>
+        <translation type="unfinished">バージョン一覧</translation>
     </message>
     <message>
         <source>My bookmarks</source>
-        <translation>ブックマーク</translation>
+        <translation type="unfinished">ブックマーク</translation>
     </message>
     <message>
         <source>Tip from %1: %2</source>
-        <translation>%1 からの紹介: %2</translation>
+        <translation type="unfinished">%1 からの紹介: %2</translation>
     </message>
     <message>
         <source>The email address of the sender is not valid</source>
-        <translation>送信者のメールアドレスが不正です</translation>
+        <translation type="unfinished">送信者のメールアドレスが不正です</translation>
     </message>
     <message>
         <source>The email address of the receiver is not valid</source>
-        <translation>受信者のメールアドレスが不正です</translation>
+        <translation type="unfinished">受信者のメールアドレスが不正です</translation>
     </message>
     <message>
         <source>Tip a friend</source>
-        <translation>友達に教える</translation>
+        <translation type="unfinished">友達に教える</translation>
     </message>
     <message>
         <source>My pending list</source>
-        <translation>保留アイテム</translation>
+        <translation type="unfinished">保留アイテム</translation>
     </message>
     <message>
         <source>Keywords</source>
-        <translation>キーワード</translation>
+        <translation type="unfinished">キーワード</translation>
     </message>
     <message>
         <source>Top Level Nodes</source>
-        <translation>トップレベルノード</translation>
+        <translation type="unfinished">トップレベルノード</translation>
     </message>
     <message>
         <source>Hidden</source>
-        <translation>非表示</translation>
+        <translation type="unfinished">非表示</translation>
     </message>
     <message>
         <source>Hidden by superior</source>
-        <translation>権限を持つユーザによる非表示</translation>
+        <translation type="unfinished">権限を持つユーザによる非表示</translation>
     </message>
     <message>
         <source>Visible</source>
-        <translation>表示</translation>
+        <translation type="unfinished">表示</translation>
     </message>
     <message>
         <source>Media</source>
-        <translation>メディア</translation>
+        <translation type="unfinished">メディア</translation>
     </message>
     <message>
         <source>A node in the node assignment list has been deleted.</source>
-        <translation>ノード割当リストのノードが削除されました。</translation>
+        <translation type="unfinished">ノード割当リストのノードが削除されました。</translation>
     </message>
     <message>
         <source>Copy subtree</source>
-        <translation>サブツリーを複製</translation>
+        <translation type="unfinished">サブツリーを複製</translation>
     </message>
     <message>
         <source>Differences</source>
-        <translation>違い</translation>
+        <translation type="unfinished">違い</translation>
     </message>
     <message>
         <source>Class identifier</source>
-        <translation>クラス識別子</translation>
+        <translation type="unfinished">クラス識別子</translation>
     </message>
     <message>
         <source>Class name</source>
-        <translation>クラス名</translation>
+        <translation type="unfinished">クラス名</translation>
     </message>
     <message>
         <source>Depth</source>
-        <translation>階層</translation>
+        <translation type="unfinished">階層</translation>
     </message>
     <message>
         <source>Modified</source>
-        <translation>修正日時</translation>
+        <translation type="unfinished">修正日時</translation>
     </message>
     <message>
         <source>Name</source>
-        <translation>名前</translation>
+        <translation type="unfinished">名前</translation>
     </message>
     <message>
         <source>Path String</source>
-        <translation>パスストリング</translation>
+        <translation type="unfinished">パスストリング</translation>
     </message>
     <message>
         <source>Priority</source>
-        <translation>優先度</translation>
+        <translation type="unfinished">優先度</translation>
     </message>
     <message>
         <source>Published</source>
-        <translation>公開日時</translation>
+        <translation type="unfinished">公開日時</translation>
     </message>
     <message>
         <source>Section</source>
-        <translation>セクション</translation>
+        <translation type="unfinished">セクション</translation>
     </message>
     <message>
         <source>History</source>
-        <translation>履歴</translation>
+        <translation type="unfinished">履歴</translation>
     </message>
     <message>
         <source>New content</source>
-        <translation>新規コンテンツ</translation>
+        <translation type="unfinished">新規コンテンツ</translation>
     </message>
     <message>
         <source>You are not allowed to place this object under: %1</source>
-        <translation>このオブジェクトを次のオブジェクトの下に置くことは出来ません: </translation>
+        <translation type="unfinished">このオブジェクトを次のオブジェクトの下に置くことは出来ません: </translation>
     </message>
     <message>
         <source>Remove location</source>
-        <translation>配置先の削除</translation>
+        <translation type="unfinished">配置先の削除</translation>
     </message>
     <message>
         <source>&quot;$contentObjectName&quot;: Sub items that are used by other objects</source>
-        <translation>&quot;$contentObjectName&quot; : 他のオブジェクトによって使用されているサブアイテム</translation>
+        <translation type="unfinished">&quot;$contentObjectName&quot; : 他のオブジェクトによって使用されているサブアイテム</translation>
     </message>
     <message>
         <source>The receiver has already received the maximum number of tipafriend mails the last hours</source>
-        <translation>指定の受信者は、既に最大限の「友達に教える」メールを受信しています。</translation>
+        <translation type="unfinished">指定の受信者は、既に最大限の「友達に教える」メールを受信しています。</translation>
     </message>
     <message>
         <source>Remove translation</source>
-        <translation>翻訳を削除</translation>
+        <translation type="unfinished">翻訳を削除</translation>
     </message>
     <message>
         <source>Languages</source>
-        <translation>言語</translation>
+        <translation type="unfinished">言語</translation>
     </message>
     <message>
         <source>You do not have enough rights to access the requested node</source>
-        <translation>リクエストされたノードにアクセスする権限を持っていません。</translation>
+        <translation type="unfinished">リクエストされたノードにアクセスする権限を持っていません。</translation>
     </message>
     <message>
         <source>Version preview</source>
-        <translation>バージョンプレビュー</translation>
+        <translation type="unfinished">バージョンプレビュー</translation>
     </message>
     <message>
         <source>Error</source>
@@ -25359,6 +26453,10 @@ your account.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Dashboard</source>
+        <translation type="unfinished">ダッシュボード</translation>
+    </message>
+    <message>
         <source>You have already sent a tipafriend mail to this reciver regarding &apos;$nodeName&apos; content</source>
         <translation type="unfinished"></translation>
     </message>
@@ -25367,63 +26465,63 @@ your account.</source>
     <name>kernel/content/copysubtree</name>
     <message>
         <source>Object (ID = %1) was not copied: you do not have permission to read the object.</source>
-        <translation>オブジェクト(ID = %1)は複製されませんでした。このオブジェクトを表示する権限を持っていません。</translation>
+        <translation type="unfinished">オブジェクト(ID = %1)は複製されませんでした。このオブジェクトを表示する権限を持っていません。</translation>
     </message>
     <message>
         <source>Node (ID = %1) was not copied: you do not have permission to read object (ID = %2).</source>
-        <translation>オブジェクト(ID = %1)は複製されませんでした。オブジェクト(ID = %2)を表示する権限を持っていません。</translation>
+        <translation type="unfinished">オブジェクト(ID = %1)は複製されませんでした。オブジェクト(ID = %2)を表示する権限を持っていません。</translation>
     </message>
     <message>
         <source>Node (ID = %1) was not copied: parent node (ID = %2) was not copied.</source>
-        <translation>オブジェクト(ID = %1)は複製されませんでした。親ノード(ID = %2)が複製されていません。</translation>
+        <translation type="unfinished">オブジェクト(ID = %1)は複製されませんでした。親ノード(ID = %2)が複製されていません。</translation>
     </message>
     <message>
         <source>Node (ID = %1) was not copied: you do not have permission to create.</source>
-        <translation>オブジェクト(ID = %1)は複製されませんでした。作成する権限を持っていません。</translation>
+        <translation type="unfinished">オブジェクト(ID = %1)は複製されませんでした。作成する権限を持っていません。</translation>
     </message>
     <message>
         <source>Object (ID = %1) was not copied: no one nodes of object was not copied.</source>
-        <translation>オブジェクト(ID = %1)は複製されませんでした。オブジェクトのノードはどれも複製されていません。</translation>
+        <translation type="unfinished">オブジェクト(ID = %1)は複製されませんでした。オブジェクトのノードはどれも複製されていません。</translation>
     </message>
     <message>
         <source>Cannot publish object (ID = %1).</source>
-        <translation>オブジェクト (ID = %1)を公開出来ません。</translation>
+        <translation type="unfinished">オブジェクト (ID = %1)を公開出来ません。</translation>
     </message>
     <message>
         <source>Fatal error: cannot get subtree main node (ID = %1).</source>
-        <translation>致命的なエラー: サブツリーのメインノード (ID = %1)を取得出来ません。</translation>
+        <translation type="unfinished">致命的なエラー: サブツリーのメインノード (ID = %1)を取得出来ません。</translation>
     </message>
     <message>
         <source>Fatal error: cannot get destination node (ID = %1).</source>
-        <translation>致命的なエラー: 対象ノード(ID = %1)を取得出来ません。</translation>
+        <translation type="unfinished">致命的なエラー: 対象ノード(ID = %1)を取得出来ません。</translation>
     </message>
     <message>
         <source>Number of nodes of source subtree - %1</source>
-        <translation>ソースサブツリーのノードの数 - %1</translation>
+        <translation type="unfinished">ソースサブツリーのノードの数 - %1</translation>
     </message>
     <message>
         <source>Subtree was not copied.</source>
-        <translation>サブツリーは複製されませんでした。</translation>
+        <translation type="unfinished">サブツリーは複製されませんでした。</translation>
     </message>
     <message>
         <source>Number of copied nodes - %1</source>
-        <translation>複製されたノードの数 - %1</translation>
+        <translation type="unfinished">複製されたノードの数 - %1</translation>
     </message>
     <message>
         <source>Number of copied contentobjects - %1</source>
-        <translation>複製されたコンテンツオブジェクトの数 - %1</translation>
+        <translation type="unfinished">複製されたコンテンツオブジェクトの数 - %1</translation>
     </message>
     <message>
         <source>Cannot create instance of eZDB to fix local links (related objects).</source>
-        <translation>内部リンク（関連オブジェクト）を修正するeZDB のインスタンス生成ができません。</translation>
+        <translation type="unfinished">内部リンク（関連オブジェクト）を修正するeZDB のインスタンス生成ができません。</translation>
     </message>
     <message>
         <source>Successfully DONE.</source>
-        <translation>無事完了</translation>
+        <translation type="unfinished">無事完了</translation>
     </message>
     <message>
         <source>You are trying to copy a subtree that contains more than the maximum possible nodes for subtree copying. You can copy this subtree using Subtree Copy script.</source>
-        <translation>サブツリーの複製で許容されている最大限のノード数を超えるノードを持つサブツリーを複製しようとしています。このサブツリーは、Subtree Copyスクリプトを利用して複製することが出来ます。</translation>
+        <translation type="unfinished">サブツリーの複製で許容されている最大限のノード数を超えるノードを持つサブツリーを複製しようとしています。このサブツリーは、Subtree Copyスクリプトを利用して複製することが出来ます。</translation>
     </message>
 </context>
 <context>
@@ -25431,179 +26529,186 @@ your account.</source>
     <message>
         <source>child</source>
         <comment>1 child</comment>
-        <translation>子アイテム</translation>
+        <translation type="unfinished">子アイテム</translation>
     </message>
     <message>
         <source>children</source>
         <comment>several children</comment>
-        <translation>子アイテム</translation>
+        <translation type="unfinished">子アイテム</translation>
     </message>
 </context>
 <context>
     <name>kernel/content/restore</name>
     <message>
         <source>Restore object</source>
-        <translation>オブジェクトを復元する</translation>
+        <translation type="unfinished">オブジェクトを復元する</translation>
     </message>
 </context>
 <context>
     <name>kernel/content/upload</name>
     <message>
         <source>The file %filename does not exist, cannot insert file.</source>
-        <translation>ファイル %filenameは存在しません。ファイルを挿入出来ません。</translation>
+        <translation type="unfinished">ファイル %filenameは存在しません。ファイルを挿入出来ません。</translation>
     </message>
     <message>
         <source>There was an error trying to instantiate content upload handler.</source>
-        <translation>コンテンツアップロードハンドラのインスタンス化時にエラーが発生しました. </translation>
+        <translation type="unfinished">コンテンツアップロードハンドラのインスタンス化時にエラーが発生しました. </translation>
     </message>
     <message>
         <source>No matching class identifier found.</source>
-        <translation>一致するクラス識別子は見つかりませんでした。</translation>
+        <translation type="unfinished">一致するクラス識別子は見つかりませんでした。</translation>
     </message>
     <message>
         <source>The class %class_identifier does not exist.</source>
-        <translation>クラス%class_identifierは存在しません。</translation>
+        <translation type="unfinished">クラス%class_identifierは存在しません。</translation>
     </message>
     <message>
         <source>Was not able to figure out placement of object.</source>
-        <translation>オブジェクトの配置先を見つけることが出来ませんでした。</translation>
+        <translation type="unfinished">オブジェクトの配置先を見つけることが出来ませんでした。</translation>
     </message>
     <message>
         <source>Permission denied</source>
-        <translation>承認は拒否されました。</translation>
+        <translation type="unfinished">承認は拒否されました。</translation>
     </message>
     <message>
         <source>No configuration group in upload.ini for class identifier %class_identifier.</source>
-        <translation>upload.iniにクラス識別子%class_identifierの設定グループが見つかりません。</translation>
+        <translation type="unfinished">upload.iniにクラス識別子%class_identifierの設定グループが見つかりません。</translation>
     </message>
     <message>
         <source>No matching file attribute found, cannot create content object without this.</source>
-        <translation>一致するファイル属性が見つかりません。コンテンツオブジェクトを作成することは出来ません。</translation>
+        <translation type="unfinished">一致するファイル属性が見つかりません。コンテンツオブジェクトを作成することは出来ません。</translation>
     </message>
     <message>
         <source>No matching name attribute found, cannot create content object without this.</source>
-        <translation>一致する名前属性が見つかりません。コンテンツオブジェクトを作成することは出来ません。</translation>
+        <translation type="unfinished">一致する名前属性が見つかりません。コンテンツオブジェクトを作成することは出来ません。</translation>
     </message>
     <message>
         <source>The attribute %class_identifier does not support regular file storage.</source>
-        <translation>属性%class_identifierは通常のファイルストレージをサポートしません。</translation>
+        <translation type="unfinished">属性%class_identifierは通常のファイルストレージをサポートしません。</translation>
     </message>
     <message>
         <source>The attribute %class_identifier does not support simple string storage.</source>
-        <translation>属性%class_identifierは単純文字列ストレージをサポートしていません。</translation>
+        <translation type="unfinished">属性%class_identifierは単純文字列ストレージをサポートしていません。</translation>
     </message>
     <message>
         <source>No HTTP file found, cannot fetch uploaded file.</source>
-        <translation>HTTPファイルが見つかりません。アップロードされたファイルを取得することが出来ません。</translation>
+        <translation type="unfinished">HTTPファイルが見つかりません。アップロードされたファイルを取得することが出来ません。</translation>
     </message>
     <message>
         <source>The size of the uploaded file exceeds the limit set for this site: %1 bytes.</source>
-        <translation>アップロードしたファイルはこのサイトの制限である %1 バイトを超えています。</translation>
+        <translation type="unfinished">アップロードしたファイルはこのサイトの制限である %1 バイトを超えています。</translation>
     </message>
     <message>
         <source>The attribute %class_identifier does not support HTTP file storage.</source>
-        <translation>属性%class_identifierはHTTPファイルストレージをサポートしていません。</translation>
+        <translation type="unfinished">属性%class_identifierはHTTPファイルストレージをサポートしていません。</translation>
     </message>
     <message>
         <source>Publishing of content object was halted.</source>
-        <translation>コンテンツオブジェクトの公開は停止されました。</translation>
+        <translation type="unfinished">コンテンツオブジェクトの公開は停止されました。</translation>
     </message>
     <message>
         <source>Publish process was cancelled.</source>
-        <translation>公開プロセスはキャンセルされました。</translation>
+        <translation type="unfinished">公開プロセスはキャンセルされました。</translation>
     </message>
     <message>
         <source>A file is required for upload, no file were found.</source>
-        <translation>アップロードにはファイルが必要です。ファイルが見つかりません。</translation>
+        <translation type="unfinished">アップロードにはファイルが必要です。ファイルが見つかりません。</translation>
     </message>
     <message>
         <source>Expected a eZHTTPFile object but got nothing.</source>
-        <translation>eZHTTPFileオブジェクトを期待しましたが、何も見つかりませんでした。</translation>
+        <translation type="unfinished">eZHTTPFileオブジェクトを期待しましたが、何も見つかりませんでした。</translation>
     </message>
     <message>
         <source>Could not find content upload handler &apos;%handler_name&apos;</source>
-        <translation>コンテンツアップロードハンドラ &apos;%handler_name&apos; が見つかりません</translation>
+        <translation type="unfinished">コンテンツアップロードハンドラ &apos;%handler_name&apos; が見つかりません</translation>
     </message>
 </context>
 <context>
     <name>kernel/content/urlalias_global</name>
     <message>
         <source>Global URL aliases</source>
-        <translation>グローバルURLエイリアス</translation>
+        <translation type="unfinished">グローバルURLエイリアス</translation>
     </message>
 </context>
 <context>
     <name>kernel/content/urlalias_wildcard</name>
     <message>
         <source>URL wildcard aliases</source>
-        <translation>URLエイリアスのワイルドカード</translation>
+        <translation type="unfinished">URLエイリアスのワイルドカード</translation>
     </message>
 </context>
 <context>
     <name>kernel/contentclass</name>
     <message>
         <source>New %1</source>
-        <translation>新規%1</translation>
+        <translation type="unfinished">新規%1</translation>
     </message>
     <message>
         <source>Cannot remove class &apos;%class_name&apos;:</source>
-        <translation>クラス&apos;%class_name&apos;を削除出来ません: </translation>
+        <translation type="unfinished">クラス&apos;%class_name&apos;を削除出来ません: </translation>
     </message>
     <message>
         <source>The class is used by a top-level node and cannot be removed.</source>
-        <translation>このクラスはトップレベルノードによって使用されているため削除出来ません。</translation>
+        <translation type="unfinished">このクラスはトップレベルノードによって使用されているため削除出来ません。</translation>
     </message>
 </context>
 <context>
     <name>kernel/design</name>
     <message>
         <source>Template list</source>
-        <translation>テンプレートリスト</translation>
+        <translation type="unfinished">テンプレートリスト</translation>
     </message>
     <message>
         <source>Template view</source>
-        <translation>テンプレート概要</translation>
+        <translation type="unfinished">テンプレート概要</translation>
     </message>
     <message>
         <source>Create new template</source>
-        <translation>新規テンプレートの作成</translation>
+        <translation type="unfinished">新規テンプレートの作成</translation>
     </message>
     <message>
         <source>Template edit</source>
-        <translation>テンプレートの編集</translation>
+        <translation type="unfinished">テンプレートの編集</translation>
     </message>
     <message>
         <source>Toolbar list</source>
-        <translation>ツールバーリスト</translation>
+        <translation type="unfinished">ツールバーリスト</translation>
     </message>
 </context>
 <context>
     <name>kernel/error</name>
     <message>
         <source>Error</source>
-        <translation>エラー</translation>
+        <translation type="unfinished">エラー</translation>
     </message>
 </context>
 <context>
     <name>kernel/ezinfo</name>
     <message>
         <source>Info</source>
-        <translation>Info</translation>
+        <translation type="unfinished">Info</translation>
     </message>
     <message>
         <source>About</source>
-        <translation>About</translation>
+        <translation type="unfinished">About</translation>
     </message>
     <message>
         <source>Copyright</source>
-        <translation>Copyright</translation>
+        <translation type="unfinished">Copyright</translation>
+    </message>
+</context>
+<context>
+    <name>kernel/form</name>
+    <message>
+        <source>Form processing</source>
+        <translation type="obsolete">フォーム処理</translation>
     </message>
 </context>
 <context>
     <name>kernel/infocollector</name>
     <message>
         <source>Collected information</source>
-        <translation>収集された情報</translation>
+        <translation type="unfinished">収集された情報</translation>
     </message>
 </context>
 <context>
@@ -25611,741 +26716,741 @@ your account.</source>
     <message>
         <source>Content structure</source>
         <comment>Navigation part</comment>
-        <translation>コンテンツツリー</translation>
+        <translation type="unfinished">コンテンツツリー</translation>
     </message>
     <message>
         <source>Media library</source>
         <comment>Navigation part</comment>
-        <translation>メディアリソース</translation>
+        <translation type="unfinished">メディアリソース</translation>
     </message>
     <message>
         <source>User accounts</source>
         <comment>Navigation part</comment>
-        <translation>ユーザ管理</translation>
+        <translation type="unfinished">ユーザ管理</translation>
     </message>
     <message>
         <source>Webshop</source>
         <comment>Navigation part</comment>
-        <translation>ウエブショップ</translation>
+        <translation type="unfinished">ウエブショップ</translation>
     </message>
     <message>
         <source>Design</source>
         <comment>Navigation part</comment>
-        <translation>デザイン</translation>
+        <translation type="unfinished">デザイン</translation>
     </message>
     <message>
         <source>Setup</source>
         <comment>Navigation part</comment>
-        <translation>システム設定</translation>
+        <translation type="unfinished">システム設定</translation>
     </message>
     <message>
         <source>My account</source>
         <comment>Navigation part</comment>
-        <translation>Myデスク</translation>
+        <translation type="unfinished">Myデスク</translation>
     </message>
 </context>
 <context>
     <name>kernel/notification</name>
     <message>
         <source>Notification settings</source>
-        <translation>通知設定</translation>
+        <translation type="unfinished">通知設定</translation>
     </message>
 </context>
 <context>
     <name>kernel/package</name>
     <message>
         <source>Lead</source>
-        <translation>リード</translation>
+        <translation type="unfinished">リード</translation>
     </message>
     <message>
         <source>Developer</source>
-        <translation>ディベロッパー</translation>
+        <translation type="unfinished">ディベロッパー</translation>
     </message>
     <message>
         <source>Designer</source>
-        <translation>デザイナー</translation>
+        <translation type="unfinished">デザイナー</translation>
     </message>
     <message>
         <source>Contributor</source>
-        <translation>コントリビュータ</translation>
+        <translation type="unfinished">コントリビュータ</translation>
     </message>
     <message>
         <source>Tester</source>
-        <translation>テスター</translation>
+        <translation type="unfinished">テスター</translation>
     </message>
     <message>
         <source>Local</source>
-        <translation>ローカル</translation>
+        <translation type="unfinished">ローカル</translation>
     </message>
     <message>
         <source>Package information</source>
-        <translation>パッケージプロパティ</translation>
+        <translation type="unfinished">パッケージプロパティ</translation>
     </message>
     <message>
         <source>Package maintainer</source>
-        <translation>パッケージ保守管理者</translation>
+        <translation type="unfinished">パッケージ保守管理者</translation>
     </message>
     <message>
         <source>Package changelog</source>
-        <translation>パッケージ変更履歴</translation>
+        <translation type="unfinished">パッケージ変更履歴</translation>
     </message>
     <message>
         <source>Package thumbnail</source>
-        <translation>パッケージのサムネール画像</translation>
+        <translation type="unfinished">パッケージのサムネール画像</translation>
     </message>
     <message>
         <source>Package name</source>
-        <translation>パッケージ名</translation>
+        <translation type="unfinished">パッケージ名</translation>
     </message>
     <message>
         <source>Package name is missing</source>
-        <translation>パッケージ名が未入力です</translation>
+        <translation type="unfinished">パッケージ名が未入力です</translation>
     </message>
     <message>
         <source>A package named %packagename already exists, please give another name</source>
-        <translation> %packagenameというパッケージ名は既に利用されています。他の名前を選択して下さい。</translation>
+        <translation type="unfinished"> %packagenameというパッケージ名は既に利用されています。他の名前を選択して下さい。</translation>
     </message>
     <message>
         <source>The package name %packagename is not valid, it can only contain characters in the range a-z, 0-9 and underscore.</source>
-        <translation>パッケージ名、%packagenameは不正です。パッケージ名にはアルファベット、数字、アンダースコアのみ利用出来ます。</translation>
+        <translation type="unfinished">パッケージ名、%packagenameは不正です。パッケージ名にはアルファベット、数字、アンダースコアのみ利用出来ます。</translation>
     </message>
     <message>
         <source>Summary</source>
-        <translation>サマリ</translation>
+        <translation type="unfinished">サマリ</translation>
     </message>
     <message>
         <source>Summary is missing</source>
-        <translation>サマリが未入力です</translation>
+        <translation type="unfinished">サマリが未入力です</translation>
     </message>
     <message>
         <source>Version</source>
-        <translation>バージョン</translation>
+        <translation type="unfinished">バージョン</translation>
     </message>
     <message>
         <source>The version must only contain numbers (optionally followed by text) and must be delimited by dots (.), e.g. 1.0, 3.4.0beta1</source>
-        <translation>バージョンは数字（末尾のテキストは許される）とドットのみで構成しなければなりません。例えば: 1.0や3.4.0beta1</translation>
+        <translation type="unfinished">バージョンは数字（末尾のテキストは許される）とドットのみで構成しなければなりません。例えば: 1.0や3.4.0beta1</translation>
     </message>
     <message>
         <source>Name</source>
-        <translation>名前</translation>
+        <translation type="unfinished">名前</translation>
     </message>
     <message>
         <source>You must enter a name for the changelog</source>
-        <translation>変更履歴の名前（作成者）は必須入力です</translation>
+        <translation type="unfinished">変更履歴の名前（作成者）は必須入力です</translation>
     </message>
     <message>
         <source>Email</source>
-        <translation>e-mail</translation>
+        <translation type="unfinished">e-mail</translation>
     </message>
     <message>
         <source>You must enter an email for the changelog</source>
-        <translation>変更履歴のe-mail（作成者）は必須入力です</translation>
+        <translation type="unfinished">変更履歴のe-mail（作成者）は必須入力です</translation>
     </message>
     <message>
         <source>Changelog</source>
-        <translation>変更履歴</translation>
+        <translation type="unfinished">変更履歴</translation>
     </message>
     <message>
         <source>You must supply some text for the changelog entry</source>
-        <translation>変更点は必須入力です</translation>
+        <translation type="unfinished">変更点は必須入力です</translation>
     </message>
     <message>
         <source>You must enter a name of the maintainer</source>
-        <translation>保守管理者の名前は必須入力です。</translation>
+        <translation type="unfinished">保守管理者の名前は必須入力です。</translation>
     </message>
     <message>
         <source>You must enter an email address of the maintainer</source>
-        <translation>保守管理者のeメールアドレスは必須入力です</translation>
+        <translation type="unfinished">保守管理者のeメールアドレスは必須入力です</translation>
     </message>
     <message>
         <source>Content classes to include</source>
-        <translation>対象クラス</translation>
+        <translation type="unfinished">対象クラス</translation>
     </message>
     <message>
         <source>Content class export</source>
-        <translation>コンテンツクラスエクスポート</translation>
+        <translation type="unfinished">コンテンツクラスエクスポート</translation>
     </message>
     <message>
         <source>Class list</source>
-        <translation>クラス一覧</translation>
+        <translation type="unfinished">クラス一覧</translation>
     </message>
     <message>
         <source>You must select at least one class for inclusion</source>
-        <translation>エクスポートするクラスを一つ以上選択して下さい</translation>
+        <translation type="unfinished">エクスポートするクラスを一つ以上選択して下さい</translation>
     </message>
     <message>
         <source>Content objects to include</source>
-        <translation>対象コンテンツオブジェクト</translation>
+        <translation type="unfinished">対象コンテンツオブジェクト</translation>
     </message>
     <message>
         <source>Content object limits</source>
-        <translation>コンテンツオブジェクトの制限</translation>
+        <translation type="unfinished">コンテンツオブジェクトの制限</translation>
     </message>
     <message>
         <source>Content object export</source>
-        <translation>コンテンツオブジェクトエクスポート</translation>
+        <translation type="unfinished">コンテンツオブジェクトエクスポート</translation>
     </message>
     <message>
         <source>Selected nodes</source>
-        <translation>選択済みノード</translation>
+        <translation type="unfinished">選択済みノード</translation>
     </message>
     <message>
         <source>You must select one or more node(s)/subtree(s) for export.</source>
-        <translation>エクスポートするノード/サブツリーを一つ以上選択してください。</translation>
+        <translation type="unfinished">エクスポートするノード/サブツリーを一つ以上選択してください。</translation>
     </message>
     <message>
         <source>You must choose one or more languages.</source>
-        <translation>一つ以上の言語を選択してください。</translation>
+        <translation type="unfinished">一つ以上の言語を選択してください。</translation>
     </message>
     <message>
         <source>You must choose one or more site access.</source>
-        <translation>一つ以上のサイトアクセスを選択して下さい。</translation>
+        <translation type="unfinished">一つ以上のサイトアクセスを選択して下さい。</translation>
     </message>
     <message>
         <source>Extensions to include</source>
-        <translation>対象エクステンション</translation>
+        <translation type="unfinished">対象エクステンション</translation>
     </message>
     <message>
         <source>Extension export</source>
-        <translation>エクステンションエクスポート</translation>
+        <translation type="unfinished">エクステンションエクスポート</translation>
     </message>
     <message>
         <source>Extension list</source>
-        <translation>エクステンションリスト</translation>
+        <translation type="unfinished">エクステンションリスト</translation>
     </message>
     <message>
         <source>You must select at least one extension</source>
-        <translation>一つ以上のエクステンションを選択して下さい</translation>
+        <translation type="unfinished">一つ以上のエクステンションを選択して下さい</translation>
     </message>
     <message>
         <source>CSS files</source>
-        <translation>CSSファイル</translation>
+        <translation type="unfinished">CSSファイル</translation>
     </message>
     <message>
         <source>Image files</source>
-        <translation>画像ファイル</translation>
+        <translation type="unfinished">画像ファイル</translation>
     </message>
     <message>
         <source>Site style</source>
-        <translation>サイトスタイル</translation>
+        <translation type="unfinished">サイトスタイル</translation>
     </message>
     <message>
         <source>CSS file</source>
-        <translation>CSSファイル</translation>
+        <translation type="unfinished">CSSファイル</translation>
     </message>
     <message>
         <source>You must upload both CSS files</source>
-        <translation>両種のCSSファイルのアップロードが必要です</translation>
+        <translation type="unfinished">両種のCSSファイルのアップロードが必要です</translation>
     </message>
     <message>
         <source>File did not have a .css suffix, this is most likely not a CSS file</source>
-        <translation>ファイルの拡張子が .css とは異なります。CSSファイルではないようです。</translation>
+        <translation type="unfinished">ファイルの拡張子が .css とは異なります。CSSファイルではないようです。</translation>
     </message>
     <message>
         <source>Content class &apos;%classname&apos; (%classidentifier)</source>
-        <translation>コンテンツクラス&apos;%classname&apos; (%classidentifier)</translation>
+        <translation type="unfinished">コンテンツクラス&apos;%classname&apos; (%classidentifier)</translation>
     </message>
     <message>
         <source>Removing class &apos;%classname&apos; will result in the removal of %objectscount object(s) of this class and all their sub-items. Are you sure you want to uninstall it?</source>
-        <translation> クラス&apos;%classname&apos; を削除すると、このクラスに属する%objectscount個のオブジェクトがそのサブアイテムと共に削除されます。削除しますか？</translation>
+        <translation type="unfinished"> クラス&apos;%classname&apos; を削除すると、このクラスに属する%objectscount個のオブジェクトがそのサブアイテムと共に削除されます。削除しますか？</translation>
     </message>
     <message>
         <source>Class &apos;%classname&apos; already exists.</source>
-        <translation>クラス &apos;%classname&apos; は既に存在します。</translation>
+        <translation type="unfinished">クラス &apos;%classname&apos; は既に存在します。</translation>
     </message>
     <message>
         <source>Replace existing class</source>
-        <translation>既存のクラスに上書きする</translation>
+        <translation type="unfinished">既存のクラスに上書きする</translation>
     </message>
     <message>
         <source>(Warning! $objectsCount content object(s) and their sub-items will be removed)</source>
-        <translation>（警告！ $objectsCount個のコンテンツオブジェクトとそのサブアイテムは削除されます）</translation>
+        <translation type="unfinished">（警告！ $objectsCount個のコンテンツオブジェクトとそのサブアイテムは削除されます）</translation>
     </message>
     <message>
         <source>Skip installing this class</source>
-        <translation>このクラスのインストールをスキップ</translation>
+        <translation type="unfinished">このクラスのインストールをスキップ</translation>
     </message>
     <message>
         <source>Keep existing and create a new one</source>
-        <translation>既存のものを残し、新たに作成する</translation>
+        <translation type="unfinished">既存のものを残し、新たに作成する</translation>
     </message>
     <message>
         <source>%number content objects</source>
-        <translation>%number 個のコンテンツ・オブジェクト</translation>
+        <translation type="unfinished">%number 個のコンテンツ・オブジェクト</translation>
     </message>
     <message>
         <source>Content object %objectname</source>
-        <translation>コンテンツオブジェクト %objectname</translation>
+        <translation type="unfinished">コンテンツオブジェクト %objectname</translation>
     </message>
     <message>
         <source>Object &apos;%objectname&apos; has been modified since installation. Are you sure you want to remove it?</source>
-        <translation>オブジェクト  &apos;%objectname&apos; はインストール以来修正されています。削除してもよろしいですか?</translation>
+        <translation type="unfinished">オブジェクト  &apos;%objectname&apos; はインストール以来修正されています。削除してもよろしいですか?</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation>削除</translation>
+        <translation type="unfinished">削除</translation>
     </message>
     <message>
         <source>Keep object</source>
-        <translation>オブジェクトを保持する</translation>
+        <translation type="unfinished">オブジェクトを保持する</translation>
     </message>
     <message>
         <source>Object &apos;%objectname&apos; has %childrencount sub-item(s) that will be removed.</source>
-        <translation>オブジェクト&apos;%objectname&apos; には 削除される %childrencount個のサブアイテムがあります。</translation>
+        <translation type="unfinished">オブジェクト&apos;%objectname&apos; には 削除される %childrencount個のサブアイテムがあります。</translation>
     </message>
     <message>
         <source>Remove object and its sub-item(s)</source>
-        <translation>オブジェクトとそのサブアイテムを削除する。</translation>
+        <translation type="unfinished">オブジェクトとそのサブアイテムを削除する。</translation>
     </message>
     <message>
         <source>Extension &apos;%extensionname&apos;</source>
-        <translation>エクステンション &apos;%extensionname&apos;</translation>
+        <translation type="unfinished">エクステンション &apos;%extensionname&apos;</translation>
     </message>
     <message>
         <source>Package contains an invalid extension name: %extensionname</source>
-        <translation>パッケージに不正なエクステンション名が含まれています:  %extensionname</translation>
+        <translation type="unfinished">パッケージに不正なエクステンション名が含まれています:  %extensionname</translation>
     </message>
     <message>
         <source>Extension &apos;%extensionname&apos; already exists.</source>
-        <translation>エクステンション名 &apos;%extensionname&apos;は既に存在します。</translation>
+        <translation type="unfinished">エクステンション名 &apos;%extensionname&apos;は既に存在します。</translation>
     </message>
     <message>
         <source>Replace extension</source>
-        <translation>既存のエクステンションに上書きする。</translation>
+        <translation type="unfinished">既存のエクステンションに上書きする。</translation>
     </message>
     <message>
         <source>Skip</source>
-        <translation>スキップする</translation>
+        <translation type="unfinished">スキップする</translation>
     </message>
     <message>
         <source>Install script: %description</source>
-        <translation>インストールスクリプト: %description</translation>
+        <translation type="unfinished">インストールスクリプト: %description</translation>
     </message>
     <message>
         <source>Site access mapping</source>
-        <translation>サイトアクセスの割り当て</translation>
+        <translation type="unfinished">サイトアクセスの割り当て</translation>
     </message>
     <message>
         <source>Top node placements</source>
-        <translation>トップノードの配置</translation>
+        <translation type="unfinished">トップノードの配置</translation>
     </message>
     <message>
         <source>Advanced options</source>
-        <translation>その他のオプション</translation>
+        <translation type="unfinished">その他のオプション</translation>
     </message>
     <message>
         <source>Content object import</source>
-        <translation>コンテンツオブジェクトインポート</translation>
+        <translation type="unfinished">コンテンツオブジェクトインポート</translation>
     </message>
     <message>
         <source>Select parent nodes</source>
-        <translation>親ノードの選択</translation>
+        <translation type="unfinished">親ノードの選択</translation>
     </message>
     <message>
         <source>You must assign all nodes to new parent nodes.</source>
-        <translation>すべてのノードを新しい親ノードに割り当てる必要があります。</translation>
+        <translation type="unfinished">すべてのノードを新しい親ノードに割り当てる必要があります。</translation>
     </message>
     <message>
         <source>Create package</source>
-        <translation>パッケージの作成</translation>
+        <translation type="unfinished">パッケージの作成</translation>
     </message>
     <message>
         <source>Packages</source>
-        <translation>パッケージ</translation>
+        <translation type="unfinished">パッケージ</translation>
     </message>
     <message>
         <source>Install</source>
-        <translation>インストール</translation>
+        <translation type="unfinished">インストール</translation>
     </message>
     <message>
         <source>Uninstall</source>
-        <translation>アンインストール</translation>
+        <translation type="unfinished">アンインストール</translation>
     </message>
     <message>
         <source>Package %packagename already exists, cannot import the package</source>
-        <translation>パッケージ %packagename はすでにインストール済みのためインポートできません</translation>
+        <translation type="unfinished">パッケージ %packagename はすでにインストール済みのためインポートできません</translation>
     </message>
     <message>
         <source>The package name %packagename is invalid, cannot import the package</source>
-        <translation>パッケージ名 %packagenameは不正であるためパッケージをインポートすることは出来ません。</translation>
+        <translation type="unfinished">パッケージ名 %packagenameは不正であるためパッケージをインポートすることは出来ません。</translation>
     </message>
     <message>
         <source>Upload</source>
-        <translation>アップロード</translation>
+        <translation type="unfinished">アップロード</translation>
     </message>
 </context>
 <context>
     <name>kernel/pdf</name>
     <message>
         <source>An export with such filename already exists.</source>
-        <translation>このファイル名は既に存在します。</translation>
+        <translation type="unfinished">このファイル名は既に存在します。</translation>
     </message>
     <message>
         <source>PDF Export</source>
-        <translation>PDF出力</translation>
+        <translation type="unfinished">PDF出力</translation>
     </message>
 </context>
 <context>
     <name>kernel/pdfexport</name>
     <message>
         <source>New PDF Export</source>
-        <translation>新規PDF出力</translation>
+        <translation type="unfinished">新規PDF出力</translation>
     </message>
 </context>
 <context>
     <name>kernel/role</name>
     <message>
         <source>Limit on section</source>
-        <translation>セクションの制限</translation>
+        <translation type="unfinished">セクションの制限</translation>
     </message>
     <message>
         <source>Create new policy, step 2: select function</source>
-        <translation>新規ポリシーの作成　ステップ 2: ファンクションの選択</translation>
+        <translation type="unfinished">新規ポリシーの作成　ステップ 2: ファンクションの選択</translation>
     </message>
     <message>
         <source>Create new policy, step three: set function limitations</source>
-        <translation>新規ポリシーの作成　ステップ 3: ファンクション制限の設定</translation>
+        <translation type="unfinished">新規ポリシーの作成　ステップ 3: ファンクション制限の設定</translation>
     </message>
     <message>
         <source>Create new policy, step two: select function</source>
-        <translation>新規ポリシーの作成　ステップ 2: ファンクションの選択</translation>
+        <translation type="unfinished">新規ポリシーの作成　ステップ 2: ファンクションの選択</translation>
     </message>
     <message>
         <source>Create new policy, step one: select module</source>
-        <translation>新規ポリシーの作成　ステップ 1: モジュールの選択</translation>
+        <translation type="unfinished">新規ポリシーの作成　ステップ 1: モジュールの選択</translation>
     </message>
     <message>
         <source>Role list</source>
-        <translation>ロール一覧</translation>
+        <translation type="unfinished">ロール一覧</translation>
     </message>
     <message>
         <source>Editing policy</source>
-        <translation>ポリシーの編集中</translation>
+        <translation type="unfinished">ポリシーの編集中</translation>
     </message>
 </context>
 <context>
     <name>kernel/role/edit</name>
     <message>
         <source>Copy of %rolename</source>
-        <translation>%rolenameの複製</translation>
+        <translation type="unfinished">%rolenameの複製</translation>
     </message>
     <message>
         <source>New role</source>
-        <translation>新規ロール</translation>
+        <translation type="unfinished">新規ロール</translation>
     </message>
 </context>
 <context>
     <name>kernel/rss</name>
     <message>
         <source>New RSS Export</source>
-        <translation>新規RSSエクスポート</translation>
+        <translation type="unfinished">新規RSSエクスポート</translation>
     </message>
     <message>
         <source>New RSS Import</source>
-        <translation>新規RSSインポート</translation>
+        <translation type="unfinished">新規RSSインポート</translation>
     </message>
     <message>
         <source>Really Simple Syndication</source>
-        <translation>RSS</translation>
+        <translation type="unfinished">RSS</translation>
     </message>
 </context>
 <context>
     <name>kernel/rss/edit_export</name>
     <message>
         <source>Selected class does not exist</source>
-        <translation>選択されたクラスは存在しません</translation>
+        <translation type="unfinished">選択されたクラスは存在しません</translation>
     </message>
     <message>
         <source>Invalid selection for title class %1 does not have attribute &quot;%2&quot;</source>
-        <translation>タイトルの選択が不正です。クラス %1は属性&quot;%2&quot;を持ちません。</translation>
+        <translation type="unfinished">タイトルの選択が不正です。クラス %1は属性&quot;%2&quot;を持ちません。</translation>
     </message>
     <message>
         <source>Invalid selection for description class %1 does not have attribute &quot;%2&quot;</source>
-        <translation>説明の選択が不正です。クラス%1は属性&quot;%2&quot;を持ちません。</translation>
+        <translation type="unfinished">説明の選択が不正です。クラス%1は属性&quot;%2&quot;を持ちません。</translation>
     </message>
     <message>
         <source>Invalid selection for category class %1 does not have attribute &quot;%2&quot;</source>
-        <translation>カテゴリーの選択が不正です。クラス%1は属性&quot;%2&quot;を持ちません。</translation>
+        <translation type="unfinished">カテゴリーの選択が不正です。クラス%1は属性&quot;%2&quot;を持ちません。</translation>
     </message>
 </context>
 <context>
     <name>kernel/search</name>
     <message>
         <source>Search stats</source>
-        <translation>検索統計</translation>
+        <translation type="unfinished">検索統計</translation>
     </message>
 </context>
 <context>
     <name>kernel/section</name>
     <message>
         <source>Sections</source>
-        <translation>セクション</translation>
+        <translation type="unfinished">セクション</translation>
     </message>
     <message>
         <source>Assign section</source>
-        <translation>セクションの割り当て</translation>
+        <translation type="unfinished">セクションの割り当て</translation>
     </message>
     <message>
         <source>New section</source>
-        <translation>新規セクション</translation>
+        <translation type="unfinished">新規セクション</translation>
     </message>
     <message>
         <source>Edit Section</source>
-        <translation>セクションの編集</translation>
+        <translation type="obsolete">セクションの編集</translation>
     </message>
     <message>
         <source>View section</source>
-        <translation>セクションの表示</translation>
+        <translation type="obsolete">セクションの表示</translation>
     </message>
 </context>
 <context>
     <name>kernel/setup</name>
     <message>
         <source>Cache admin</source>
-        <translation>キャッシュ</translation>
+        <translation type="unfinished">キャッシュ</translation>
     </message>
     <message>
         <source>Datatype wizard</source>
-        <translation>データタイプウイザード</translation>
+        <translation type="unfinished">データタイプウイザード</translation>
     </message>
     <message>
         <source>Extension configuration</source>
-        <translation>エクステンション設定</translation>
+        <translation type="unfinished">エクステンション設定</translation>
     </message>
     <message>
         <source>System information</source>
-        <translation>システム情報</translation>
+        <translation type="unfinished">システム情報</translation>
     </message>
     <message>
         <source>Rapid Application Development</source>
-        <translation>高速アプリケーション開発</translation>
+        <translation type="unfinished">高速アプリケーション開発</translation>
     </message>
     <message>
         <source>Session admin</source>
-        <translation>ユーザセッション管理</translation>
+        <translation type="unfinished">ユーザセッション管理</translation>
     </message>
     <message>
         <source>Setup menu</source>
-        <translation>セットアップ・メニュー</translation>
+        <translation type="unfinished">セットアップ・メニュー</translation>
     </message>
     <message>
         <source>File %1 does not exist. You should copy it from the recent eZ Publish distribution.</source>
-        <translation>ファイル%1が見つかりません。最新のeZ Publishパッケージからコピーして下さい。</translation>
+        <translation type="unfinished">ファイル%1が見つかりません。最新のeZ Publishパッケージからコピーして下さい。</translation>
     </message>
     <message>
         <source>System Upgrade</source>
-        <translation>システムアップグレード</translation>
+        <translation type="unfinished">システムアップグレード</translation>
     </message>
     <message>
         <source>Template operator wizard</source>
-        <translation>テンプレートオペレータウイザード</translation>
+        <translation type="unfinished">テンプレートオペレータウイザード</translation>
     </message>
 </context>
 <context>
     <name>kernel/shop</name>
     <message>
         <source>Order status</source>
-        <translation>注文ステータス</translation>
+        <translation type="unfinished">注文ステータス</translation>
     </message>
     <message>
         <source>Undefined</source>
-        <translation>未定義</translation>
+        <translation type="unfinished">未定義</translation>
     </message>
     <message>
         <source>Any</source>
-        <translation>指定なし</translation>
+        <translation type="unfinished">指定なし</translation>
     </message>
     <message>
         <source>VAT type</source>
-        <translation>課税方式</translation>
+        <translation type="unfinished">課税方式</translation>
     </message>
     <message>
         <source>None</source>
-        <translation>なし</translation>
+        <translation type="unfinished">なし</translation>
     </message>
     <message>
         <source>Order list</source>
-        <translation>ご注文一覧</translation>
+        <translation type="unfinished">ご注文一覧</translation>
     </message>
     <message>
         <source>Basket</source>
-        <translation>買い物かご</translation>
+        <translation type="unfinished">買い物かご</translation>
     </message>
     <message>
         <source>Checkout</source>
-        <translation>レジに進む</translation>
+        <translation type="unfinished">レジに進む</translation>
     </message>
     <message>
         <source>&apos;Autorates&apos; were retrieved successfully</source>
-        <translation>&quot;為替レート&quot;の取得に成功しました</translation>
+        <translation type="unfinished">&quot;為替レート&quot;の取得に成功しました</translation>
     </message>
     <message>
         <source>Unknown body format in HTTP response. Expected &apos;text/xml&apos;</source>
-        <translation>HTTPレスポンスのbody内容が不正。&apos;text/xml&apos;が指定されています。</translation>
+        <translation type="unfinished">HTTPレスポンスのbody内容が不正。&apos;text/xml&apos;が指定されています。</translation>
     </message>
     <message>
         <source>Invalid HTTP response</source>
-        <translation>無効なHTTPレスポンス</translation>
+        <translation type="unfinished">無効なHTTPレスポンス</translation>
     </message>
     <message>
         <source>Unable to send http request: %1:%2/%3</source>
-        <translation>httpリクエスト: %1:%2/%3 を送信することができません</translation>
+        <translation type="unfinished">httpリクエスト: %1:%2/%3 を送信することができません</translation>
     </message>
     <message>
         <source>eZExchangeRatesUpdateHandler: you should reimplement &apos;requestRates&apos; method</source>
-        <translation>eZExchangeRatesUpdateHandler: &quot;requestRates&quot; 方法を再実行してください</translation>
+        <translation type="unfinished">eZExchangeRatesUpdateHandler: &quot;requestRates&quot; 方法を再実行してください</translation>
     </message>
     <message>
         <source>&apos;Auto&apos; prices were updated successfully.</source>
-        <translation>&apos;自動&apos;価格の更新に成功しました。</translation>
+        <translation type="unfinished">&apos;自動&apos;価格の更新に成功しました。</translation>
     </message>
     <message>
         <source>&apos;Auto&apos; rates were updated successfully.</source>
-        <translation>&apos;為替レート&apos;の更新に成功しました。</translation>
+        <translation type="unfinished">&apos;為替レート&apos;の更新に成功しました。</translation>
     </message>
     <message>
         <source>Unable to calculate cross-rate for currency-pair &apos;%1&apos;/&apos;%2&apos;</source>
-        <translation>通貨 &apos;%1&apos;/&apos;%2&apos; のペアではクロス・レート計算はできません</translation>
+        <translation type="unfinished">通貨 &apos;%1&apos;/&apos;%2&apos; のペアではクロス・レート計算はできません</translation>
     </message>
     <message>
         <source>Unable to determine currency for retrieved rates.</source>
-        <translation>為替レートの取得ができません。</translation>
+        <translation type="unfinished">為替レートの取得ができません。</translation>
     </message>
     <message>
         <source>Retrieved empty list of rates.</source>
-        <translation>替レートの空リストを取得しました。</translation>
+        <translation type="unfinished">替レートの空リストを取得しました。</translation>
     </message>
     <message>
         <source>Unable to create handler to update auto rates.</source>
-        <translation>為替レートを更新するハンドラを作成できません。</translation>
+        <translation type="unfinished">為替レートを更新するハンドラを作成できません。</translation>
     </message>
     <message>
         <source>Confirm order</source>
-        <translation>注文内容の確認</translation>
+        <translation type="unfinished">注文内容の確認</translation>
     </message>
     <message>
         <source>The confirm order operation was canceled. Try to checkout again.</source>
-        <translation>注文の確認処理はキャンセルされました。もう一度実行してください。</translation>
+        <translation type="unfinished">注文の確認処理はキャンセルされました。もう一度実行してください。</translation>
     </message>
     <message>
         <source>Changes were stored successfully.</source>
-        <translation>変更は保存されました。</translation>
+        <translation type="unfinished">変更は保存されました。</translation>
     </message>
     <message>
         <source>Available currency list</source>
-        <translation>利用可能な通貨リスト</translation>
+        <translation type="unfinished">利用可能な通貨リスト</translation>
     </message>
     <message>
         <source>Customer list</source>
-        <translation>顧客一覧</translation>
+        <translation type="unfinished">顧客一覧</translation>
     </message>
     <message>
         <source>Customer order view</source>
-        <translation>注文リスト</translation>
+        <translation type="unfinished">注文リスト</translation>
     </message>
     <message>
         <source>Discount group</source>
-        <translation>ディスカウント・グループ</translation>
+        <translation type="unfinished">ディスカウント・グループ</translation>
     </message>
     <message>
         <source>Classes</source>
-        <translation>クラス</translation>
+        <translation type="unfinished">クラス</translation>
     </message>
     <message>
         <source>Any class</source>
-        <translation>指定なし</translation>
+        <translation type="unfinished">指定なし</translation>
     </message>
     <message>
         <source>in sections</source>
-        <translation>セクション</translation>
+        <translation type="unfinished">セクション</translation>
     </message>
     <message>
         <source>in any section</source>
-        <translation>指定なし</translation>
+        <translation type="unfinished">指定なし</translation>
     </message>
     <message>
         <source>Products</source>
-        <translation>商品</translation>
+        <translation type="unfinished">商品</translation>
     </message>
     <message>
         <source>Any product</source>
-        <translation>指定なし</translation>
+        <translation type="unfinished">指定なし</translation>
     </message>
     <message>
         <source>Group view of discount rule</source>
-        <translation>割引設定のグループ表示</translation>
+        <translation type="unfinished">割引設定のグループ表示</translation>
     </message>
     <message>
         <source>Editing rule</source>
-        <translation>割引設定の編集</translation>
+        <translation type="unfinished">割引設定の編集</translation>
     </message>
     <message>
         <source>Edit currency</source>
-        <translation>通貨の編集</translation>
+        <translation type="unfinished">通貨の編集</translation>
     </message>
     <message>
         <source>Create new currency</source>
-        <translation>新規通貨の作成</translation>
+        <translation type="unfinished">新規通貨の作成</translation>
     </message>
     <message>
         <source>Error checking out</source>
-        <translation>チェックアウトエラー</translation>
+        <translation type="unfinished">チェックアウトエラー</translation>
     </message>
     <message>
         <source>Unable to calculate VAT percentage because your country is unknown. You can either fill country manually in your account information (if you are a registered user) or contact site administrator.</source>
-        <translation>国名が不明のため税率の計算ができません。(登録済みのユーザである場合)ご自分のアカウント情報に国名を入力するか、サイト管理者に連絡してください。</translation>
+        <translation type="unfinished">国名が不明のため税率の計算ができません。(登録済みのユーザである場合)ご自分のアカウント情報に国名を入力するか、サイト管理者に連絡してください。</translation>
     </message>
     <message>
         <source>Statistics</source>
-        <translation>統計</translation>
+        <translation type="unfinished">統計</translation>
     </message>
     <message>
         <source>Order #%order_id</source>
-        <translation>注文 #%order_id</translation>
+        <translation type="unfinished">注文 #%order_id</translation>
     </message>
     <message>
         <source>Preferred currency</source>
-        <translation>デフォルト通貨</translation>
+        <translation type="unfinished">デフォルト通貨</translation>
     </message>
     <message>
         <source>Products overview</source>
-        <translation>商品一覧</translation>
+        <translation type="unfinished">商品一覧</translation>
     </message>
     <message>
         <source>Enter account information</source>
-        <translation>お客様情報の入力</translation>
+        <translation type="unfinished">お客様情報の入力</translation>
     </message>
     <message>
         <source>Remove order</source>
-        <translation>注文の削除</translation>
+        <translation type="unfinished">注文の削除</translation>
     </message>
     <message>
         <source>New order status was successfully added.</source>
-        <translation>新しい注文ステータスの追加に成功しました。</translation>
+        <translation type="unfinished">新しい注文ステータスの追加に成功しました。</translation>
     </message>
     <message>
         <source>Changes to order status were successfully stored.</source>
-        <translation>注文ステータスの変更を保存しました。</translation>
+        <translation type="unfinished">注文ステータスの変更を保存しました。</translation>
     </message>
     <message>
         <source>Selected order statuses were successfully removed.</source>
-        <translation>選択した注文ステータスの削除に成功しました。</translation>
+        <translation type="unfinished">選択した注文ステータスの削除に成功しました。</translation>
     </message>
     <message>
         <source>Internal orders cannot be removed.</source>
-        <translation>内部の注文は削除できません。</translation>
+        <translation type="unfinished">内部の注文は削除できません。</translation>
     </message>
     <message>
         <source>Status</source>
-        <translation>ステータス</translation>
+        <translation type="unfinished">ステータス</translation>
     </message>
     <message>
         <source>VAT types</source>
-        <translation>課税方法</translation>
+        <translation type="unfinished">課税方法</translation>
     </message>
     <message>
         <source>Wishlist</source>
-        <translation>ウイッシュリスト</translation>
+        <translation type="unfinished">ウイッシュリスト</translation>
     </message>
     <message>
         <source>&apos;%value&apos; is not a valid custom rate value (positive number expected)</source>
@@ -26360,355 +27465,355 @@ your account.</source>
     <name>kernel/shop/classes/ezcurrencydata</name>
     <message>
         <source>Invalid characters in currency code.</source>
-        <translation>通貨記号に不正な文字が含まれています。</translation>
+        <translation type="unfinished">通貨記号に不正な文字が含まれています。</translation>
     </message>
     <message>
         <source>Currency already exists.</source>
-        <translation>通貨はすでに使用中です。</translation>
+        <translation type="unfinished">通貨はすでに使用中です。</translation>
     </message>
     <message>
         <source>Unknown error.</source>
-        <translation>不明なエラー。</translation>
+        <translation type="unfinished">不明なエラー。</translation>
     </message>
 </context>
 <context>
     <name>kernel/shop/discountgroup</name>
     <message>
         <source>New discount group</source>
-        <translation>新規のディスカウント・グループ</translation>
+        <translation type="unfinished">新規のディスカウント・グループ</translation>
     </message>
     <message>
         <source>New Discount Rule</source>
-        <translation>新規のディスカウント・ルール</translation>
+        <translation type="unfinished">新規のディスカウント・ルール</translation>
     </message>
 </context>
 <context>
     <name>kernel/shop/editvatrule</name>
     <message>
         <source>Invalid data entered</source>
-        <translation>無効なデータが入力されました</translation>
+        <translation type="unfinished">無効なデータが入力されました</translation>
     </message>
     <message>
         <source>Choose a country.</source>
-        <translation>国を選択して下さい。</translation>
+        <translation type="unfinished">国を選択して下さい。</translation>
     </message>
     <message>
         <source>Choose a VAT type.</source>
-        <translation>課税方式を選択して下さい。</translation>
+        <translation type="unfinished">課税方式を選択して下さい。</translation>
     </message>
     <message>
         <source>Conflicting rule</source>
-        <translation>矛盾したルール</translation>
+        <translation type="unfinished">矛盾したルール</translation>
     </message>
     <message>
         <source>Default rule for any country already exists.</source>
-        <translation>すでに登録済みの国に対するデフォルト・ルール</translation>
+        <translation type="unfinished">すでに登録済みの国に対するデフォルト・ルール</translation>
     </message>
     <message>
         <source>Rule not found</source>
-        <translation>ルールが見つかりません</translation>
+        <translation type="unfinished">ルールが見つかりません</translation>
     </message>
     <message>
         <source>Edit VAT charging rule</source>
-        <translation>課税ルールの編集</translation>
+        <translation type="unfinished">課税ルールの編集</translation>
     </message>
     <message>
         <source>Create new VAT charging rule</source>
-        <translation>新規の課税ルール作成</translation>
+        <translation type="unfinished">新規の課税ルール作成</translation>
     </message>
 </context>
 <context>
     <name>kernel/shop/productcategories</name>
     <message>
         <source>Product category</source>
-        <translation>商品カテゴリ</translation>
+        <translation type="unfinished">商品カテゴリ</translation>
     </message>
     <message>
         <source>Empty category names are not allowed (corrected).</source>
-        <translation>空のカテゴリ名は使用できません</translation>
+        <translation type="unfinished">空のカテゴリ名は使用できません</translation>
     </message>
     <message>
         <source>Product categories</source>
-        <translation>商品カテゴリ</translation>
+        <translation type="unfinished">商品カテゴリ</translation>
     </message>
 </context>
 <context>
     <name>kernel/shop/vatrules</name>
     <message>
         <source>No default rule found. Please add rule having &quot;Any&quot; country and &quot;Any&quot; category.</source>
-        <translation>デフォルトのルールが見つかりません。国名 &apos;指定なし&apos; やカテゴリー &apos;指定なし&apos; を選択出来るルールを追加してください。</translation>
+        <translation type="unfinished">デフォルトのルールが見つかりません。国名 &apos;指定なし&apos; やカテゴリー &apos;指定なし&apos; を選択出来るルールを追加してください。</translation>
     </message>
     <message>
         <source>VAT rules</source>
-        <translation>課税ルール</translation>
+        <translation type="unfinished">課税ルール</translation>
     </message>
 </context>
 <context>
     <name>kernel/shop/vattype</name>
     <message>
         <source>Empty VAT type names are not allowed (corrected).</source>
-        <translation>課税方法の名前を空にすることは出来ません。</translation>
+        <translation type="unfinished">課税方法の名前を空にすることは出来ません。</translation>
     </message>
     <message>
         <source>Wrong VAT percentage (corrected).</source>
-        <translation>誤った税率です。</translation>
+        <translation type="unfinished">誤った税率です。</translation>
     </message>
 </context>
 <context>
     <name>kernel/state</name>
     <message>
         <source>State</source>
-        <translation>ステート</translation>
+        <translation type="unfinished">ステート</translation>
     </message>
     <message>
         <source>Assign</source>
-        <translation>割り当て</translation>
+        <translation type="unfinished">割り当て</translation>
     </message>
     <message>
         <source>New</source>
-        <translation>新規</translation>
+        <translation type="unfinished">新規</translation>
     </message>
     <message>
         <source>Edit</source>
-        <translation>編集</translation>
+        <translation type="unfinished">編集</translation>
     </message>
     <message>
         <source>Groups</source>
-        <translation>グループ</translation>
+        <translation type="unfinished">グループ</translation>
     </message>
     <message>
         <source>New group</source>
-        <translation>新グループ</translation>
+        <translation type="unfinished">新グループ</translation>
     </message>
     <message>
         <source>Group edit</source>
-        <translation>グループ編集</translation>
+        <translation type="unfinished">グループ編集</translation>
     </message>
 </context>
 <context>
     <name>kernel/state/edit</name>
     <message>
         <source>Identifier: input required</source>
-        <translation>識別子: 入力が必要です</translation>
+        <translation type="unfinished">識別子: 入力が必要です</translation>
     </message>
     <message>
         <source>Identifier: invalid, it can only consist of characters in the range a-z, 0-9 and underscore.</source>
-        <translation>識別子: 不正。使用できる文字は英小文字と数字およびアンダースコアです。</translation>
+        <translation type="unfinished">識別子: 不正。使用できる文字は英小文字と数字およびアンダースコアです。</translation>
     </message>
     <message>
         <source>Identifier: invalid, maximum %max characters allowed.</source>
-        <translation>識別子: 不正。最大で%max文字利用出来ます。</translation>
+        <translation type="unfinished">識別子: 不正。最大で%max文字利用出来ます。</translation>
     </message>
     <message>
         <source>Identifier: a content object state group with this identifier already exists, please give another identifier</source>
-        <translation>識別子: この識別子を利用するコンテンツオブジェクトステートグループは既に存在します。他の識別子を選択して下さい。</translation>
+        <translation type="unfinished">識別子: この識別子を利用するコンテンツオブジェクトステートグループは既に存在します。他の識別子を選択して下さい。</translation>
     </message>
     <message>
         <source>%language_name: this language is the default but neither name or description were provided for this language</source>
-        <translation>%language_name: この言語がデフォルトに設定されていますが、名前も説明文も入力されていません。</translation>
+        <translation type="unfinished">%language_name: この言語がデフォルトに設定されていますが、名前も説明文も入力されていません。</translation>
     </message>
     <message>
         <source>Translations: you need to add at least one localization</source>
-        <translation>翻訳: 一つ以上の翻訳を追加する必要があります。</translation>
+        <translation type="unfinished">翻訳: 一つ以上の翻訳を追加する必要があります。</translation>
     </message>
     <message>
         <source>Translations: there are multiple localizations but you did not specify which is the default one</source>
-        <translation>翻訳: 複数の翻訳が存在しますが、デフォルトが指定されていません。</translation>
+        <translation type="unfinished">翻訳: 複数の翻訳が存在しますが、デフォルトが指定されていません。</translation>
     </message>
     <message>
         <source>Identifier: identifiers starting with &quot;ez&quot; are reserved.</source>
-        <translation>識別子: &quot;ez&quot;で始まる識別子は利用出来ません。</translation>
+        <translation type="unfinished">識別子: &quot;ez&quot;で始まる識別子は利用出来ません。</translation>
     </message>
     <message>
         <source>Name in %language_name is too long. Maximum 45 characters allowed.</source>
-        <translation>%language_nameでの名前が長すぎます。最大で45文字までです。</translation>
+        <translation type="unfinished">%language_nameでの名前が長すぎます。最大で45文字までです。</translation>
     </message>
     <message>
         <source>Name in %language_name: input required</source>
-        <translation>%language_nameでの名前: 入力が必要です。</translation>
+        <translation type="unfinished">%language_nameでの名前: 入力が必要です。</translation>
     </message>
 </context>
 <context>
     <name>kernel/trigger</name>
     <message>
         <source>Trigger</source>
-        <translation>トリガー</translation>
+        <translation type="unfinished">トリガー</translation>
     </message>
     <message>
         <source>List</source>
-        <translation>一覧</translation>
+        <translation type="unfinished">一覧</translation>
     </message>
 </context>
 <context>
     <name>kernel/url</name>
     <message>
         <source>URL edit</source>
-        <translation>URLの編集</translation>
+        <translation type="unfinished">URLの編集</translation>
     </message>
     <message>
         <source>URL</source>
-        <translation>URL</translation>
+        <translation type="unfinished">URL</translation>
     </message>
     <message>
         <source>List</source>
-        <translation>一覧</translation>
+        <translation type="unfinished">一覧</translation>
     </message>
     <message>
         <source>View</source>
-        <translation>表示</translation>
+        <translation type="unfinished">表示</translation>
     </message>
 </context>
 <context>
     <name>kernel/user</name>
     <message>
         <source>User</source>
-        <translation>ユーザ</translation>
+        <translation type="unfinished">ユーザ</translation>
     </message>
     <message>
         <source>Activate</source>
-        <translation>有効にする</translation>
+        <translation type="unfinished">有効にする</translation>
     </message>
     <message>
         <source>User profile</source>
-        <translation>ユーザ・プロフィール</translation>
+        <translation type="unfinished">ユーザ・プロフィール</translation>
     </message>
     <message>
         <source>Forgot password</source>
-        <translation>パスワードを忘れましたか?</translation>
+        <translation type="unfinished">パスワードを忘れましたか?</translation>
     </message>
     <message>
         <source>Login</source>
-        <translation>ログイン</translation>
+        <translation type="unfinished">ログイン</translation>
     </message>
     <message>
         <source>Change password</source>
-        <translation>パスワード変更</translation>
+        <translation type="unfinished">パスワード変更</translation>
     </message>
     <message>
         <source>Register</source>
-        <translation>新規登録</translation>
+        <translation type="unfinished">新規登録</translation>
     </message>
     <message>
         <source>Setting</source>
-        <translation>設定</translation>
+        <translation type="unfinished">設定</translation>
     </message>
     <message>
         <source>Success</source>
-        <translation>成功</translation>
+        <translation type="unfinished">成功</translation>
     </message>
 </context>
 <context>
     <name>kernel/user/register</name>
     <message>
         <source>Registration info</source>
-        <translation>登録情報</translation>
+        <translation type="unfinished">登録情報</translation>
     </message>
     <message>
         <source>New user registered</source>
-        <translation>新規に登録されたユーザ</translation>
+        <translation type="unfinished">新規に登録されたユーザ</translation>
     </message>
 </context>
 <context>
     <name>kernel/workflow</name>
     <message>
         <source>You have to have at least one group that the workflow belongs to!</source>
-        <translation>ワークフローは最低一つのワークグループに所属する必要があります!</translation>
+        <translation type="unfinished">ワークフローは最低一つのワークグループに所属する必要があります!</translation>
     </message>
     <message>
         <source>Edit workflow</source>
-        <translation>ワークフローの編集</translation>
+        <translation type="unfinished">ワークフローの編集</translation>
     </message>
     <message>
         <source>Workflow</source>
-        <translation>ワークフロー</translation>
+        <translation type="unfinished">ワークフロー</translation>
     </message>
     <message>
         <source>Edit</source>
-        <translation>編集</translation>
+        <translation type="unfinished">編集</translation>
     </message>
     <message>
         <source>Edit workflow group</source>
-        <translation>ワークフローグループの編集</translation>
+        <translation type="unfinished">ワークフローグループの編集</translation>
     </message>
     <message>
         <source>Group edit</source>
-        <translation>グループ編集</translation>
+        <translation type="unfinished">グループ編集</translation>
     </message>
     <message>
         <source>Workflow group list</source>
-        <translation>ワークフローグループ一覧</translation>
+        <translation type="unfinished">ワークフローグループ一覧</translation>
     </message>
     <message>
         <source>Group list</source>
-        <translation>グループ一覧</translation>
+        <translation type="unfinished">グループ一覧</translation>
     </message>
     <message>
         <source>Workflow list</source>
-        <translation>ワークフロー一覧</translation>
+        <translation type="unfinished">ワークフロー一覧</translation>
     </message>
     <message>
         <source>Process list</source>
-        <translation>プロセス一覧</translation>
+        <translation type="unfinished">プロセス一覧</translation>
     </message>
     <message>
         <source>View</source>
-        <translation>表示</translation>
+        <translation type="unfinished">表示</translation>
     </message>
     <message>
         <source>Workflow list of group</source>
-        <translation>ワークグループのワークフロー一覧</translation>
+        <translation type="unfinished">ワークグループのワークフロー一覧</translation>
     </message>
     <message>
         <source>List</source>
-        <translation>一覧</translation>
+        <translation type="unfinished">一覧</translation>
     </message>
 </context>
 <context>
     <name>kernel/workflow/edit</name>
     <message>
         <source>New Workflow</source>
-        <translation>新規ワークフロー</translation>
+        <translation type="unfinished">新規ワークフロー</translation>
     </message>
 </context>
 <context>
     <name>kernel/workflow/event</name>
     <message>
         <source>Event</source>
-        <translation>イベント</translation>
+        <translation type="unfinished">イベント</translation>
     </message>
     <message>
         <source>Approve</source>
-        <translation>承認</translation>
+        <translation type="unfinished">承認</translation>
     </message>
     <message>
         <source>Multiplexer</source>
-        <translation>他のワークフローを実行</translation>
+        <translation type="unfinished">他のワークフローを実行</translation>
     </message>
     <message>
         <source>Payment Gateway</source>
-        <translation>決済連携機能</translation>
+        <translation type="unfinished">決済連携機能</translation>
     </message>
     <message>
         <source>Simple shipping</source>
-        <translation>シンプル配送</translation>
+        <translation type="unfinished">シンプル配送</translation>
     </message>
     <message>
         <source>Wait until date</source>
-        <translation>指定期日まで待機</translation>
+        <translation type="unfinished">指定期日まで待機</translation>
     </message>
 </context>
 <context>
     <name>kernel/workflow/group</name>
     <message>
         <source>Group</source>
-        <translation>グループ</translation>
+        <translation type="unfinished">グループ</translation>
     </message>
 </context>
 <context>
     <name>kernel/workflow/groupedit</name>
     <message>
         <source>New WorkflowGroup</source>
-        <translation>新規ワークフローグループ</translation>
+        <translation type="unfinished">新規ワークフローグループ</translation>
     </message>
 </context>
 <context>
@@ -26716,62 +27821,62 @@ your account.</source>
     <message>
         <source>Contents</source>
         <comment>Table of contents</comment>
-        <translation>目次</translation>
+        <translation type="unfinished">目次</translation>
     </message>
     <message>
         <source>Index</source>
         <comment>Keyword index name</comment>
-        <translation>索引</translation>
+        <translation type="unfinished">索引</translation>
     </message>
 </context>
 <context>
     <name>lib/eztemplate</name>
     <message>
         <source>Some template errors occurred, see debug for more information.</source>
-        <translation>テンプレートでエラーが発生しました. 詳細はデバッグ情報を参照してください。</translation>
+        <translation type="unfinished">テンプレートでエラーが発生しました. 詳細はデバッグ情報を参照してください。</translation>
     </message>
 </context>
 <context>
     <name>lib/template</name>
     <message>
         <source>The maximum nesting level of %max has been reached. The execution is stopped to avoid infinite recursion.</source>
-        <translation>最大ネストレベルの%maxに達しました。無限ループを抑止するために実行を終了しました。</translation>
+        <translation type="unfinished">最大ネストレベルの%maxに達しました。無限ループを抑止するために実行を終了しました。</translation>
     </message>
 </context>
 <context>
     <name>pdf/edit</name>
     <message>
         <source>PDF Export</source>
-        <translation>PDF出力</translation>
+        <translation type="unfinished">PDF出力</translation>
     </message>
 </context>
 <context>
     <name>settings/edit</name>
     <message>
         <source>Settings</source>
-        <translation>設定</translation>
+        <translation type="unfinished">設定</translation>
     </message>
     <message>
         <source>Edit</source>
-        <translation>編集</translation>
+        <translation type="unfinished">編集</translation>
     </message>
 </context>
 <context>
     <name>settings/view</name>
     <message>
         <source>Settings</source>
-        <translation>設定</translation>
+        <translation type="unfinished">設定</translation>
     </message>
     <message>
         <source>View</source>
-        <translation>表示</translation>
+        <translation type="unfinished">表示</translation>
     </message>
 </context>
 <context>
     <name>shop</name>
     <message>
         <source>Remove orders</source>
-        <translation>注文の削除</translation>
+        <translation type="unfinished">注文の削除</translation>
     </message>
 </context>
 <context>

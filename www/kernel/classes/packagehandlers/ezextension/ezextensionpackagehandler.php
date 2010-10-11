@@ -4,10 +4,10 @@
 //
 // Created on: <15-Dec-2005 11:15:42 ks>
 //
+// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.2.0
-// BUILD VERSION: 24182
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 4.3.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -24,6 +24,8 @@
 //   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 //   MA 02110-1301, USA.
 //
+//
+// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
 /*! \file
@@ -72,7 +74,7 @@ class eZExtensionPackageHandler extends eZPackageHandler
             {
                 $root = $dom->documentElement;
                 $extensionName = $root->getAttribute( 'name' );
-                return array( 'description' => ezi18n( 'kernel/package', 'Extension \'%extensionname\'', false,
+                return array( 'description' => ezpI18n::tr( 'kernel/package', 'Extension \'%extensionname\'', false,
                                                        array( '%extensionname' => $extensionName ) ) );
             }
         }
@@ -132,7 +134,7 @@ class eZExtensionPackageHandler extends eZPackageHandler
         $extensionName = $trans->transformByGroup( $name, 'urlalias' );
         if ( strcmp( $name, $extensionName ) !== 0 )
         {
-            $description = ezi18n( 'kernel/package', 'Package contains an invalid extension name: %extensionname', false, array( '%extensionname' => $name ) );
+            $description = ezpI18n::tr( 'kernel/package', 'Package contains an invalid extension name: %extensionname', false, array( '%extensionname' => $name ) );
             $installParameters['error'] = array( 'error_code' => false,
                                                  'element_id' => $name,
                                                  'description' => $description );
@@ -147,7 +149,7 @@ class eZExtensionPackageHandler extends eZPackageHandler
         // Error: extension already exists.
         if ( file_exists( $extensionDir ) )
         {
-            $description = ezi18n( 'kernel/package', "Extension '%extensionname' already exists.",
+            $description = ezpI18n::tr( 'kernel/package', "Extension '%extensionname' already exists.",
                                    false, array( '%extensionname' => $extensionName ) );
             $choosenAction = $this->errorChoosenAction( self::ERROR_EXISTS,
                                                         $installParameters, $description, $this->HandlerType );
@@ -165,8 +167,8 @@ class eZExtensionPackageHandler extends eZPackageHandler
                 $installParameters['error'] = array( 'error_code' => self::ERROR_EXISTS,
                                                      'element_id' => $extensionName,
                                                      'description' => $description,
-                                                     'actions' => array( self::ACTION_REPLACE => ezi18n( 'kernel/package', "Replace extension" ),
-                                                                         self::ACTION_SKIP => ezi18n( 'kernel/package', 'Skip' ) ) );
+                                                     'actions' => array( self::ACTION_REPLACE => ezpI18n::tr( 'kernel/package', "Replace extension" ),
+                                                                         self::ACTION_SKIP => ezpI18n::tr( 'kernel/package', 'Skip' ) ) );
                 return false;
             }
         }

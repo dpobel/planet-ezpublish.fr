@@ -4,10 +4,10 @@
 //
 // Created on: <19-Apr-2006 16:15:17 vs>
 //
+// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.2.0
-// BUILD VERSION: 24182
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 4.3.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -24,6 +24,8 @@
 //   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 //   MA 02110-1301, USA.
 //
+//
+// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
 /*! \file
@@ -1302,7 +1304,7 @@ class eZDBFileHandlerMysqlBackend
     {
         if ( $value === null )
             return 'NULL';
-    	elseif ( is_integer( $value ) )
+        elseif ( is_integer( $value ) )
             return (string)$value;
         else
             return "'" . mysql_real_escape_string( $value ) . "'";
@@ -1660,6 +1662,35 @@ class eZDBFileHandlerMysqlBackend
             return -1;
 
         return ( $row[0] + $this->dbparams['cache_generation_timeout'] ) - time();
+    }
+    
+    /**
+     * Returns the list of expired binary files (images + binaries)
+     * 
+     * @param array $scopes Array of scopes to consider. At least one.
+     * @param int $limit Max number of items. Set to false for unlimited.
+     * 
+     * @return array(filepath)
+     * 
+     * @since 4.3
+     */
+    public function expiredFilesList( $scopes, $limit = array( 0, 100 ) )
+    {
+        if ( count( $scopes ) == 0 )
+            throw new ezcBaseValueException( 'scopes', $scopes, "array of scopes", "parameter" );
+        
+        $scopeString = $this->_sqlList( $scopes );
+        $query = "SELECT name FROM " . TABLE_METADATA . " WHERE expired = 1 AND scope IN( $scopeString )";
+        if ( $limit !== false )
+        {
+            $query .= " LIMIT {$limit[0]}, {$limit[1]}";
+        }
+        $res = $this->_query( $query, __METHOD__ );
+        $filePathList = array();
+        while ( $row = mysql_fetch_row( $res ) )
+            $filePathList[] = $row[0];
+
+        return $filePathList;
     }
 
     public $db   = null;

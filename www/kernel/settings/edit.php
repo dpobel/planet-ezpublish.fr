@@ -2,10 +2,10 @@
 //
 // Created on: <17-Jan-2004 12:36:36 oh>
 //
+// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.2.0
-// BUILD VERSION: 24182
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 4.3.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -23,14 +23,16 @@
 //   MA 02110-1301, USA.
 //
 //
-require_once( "kernel/common/template.php" );
+// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
+//
+
 $settingTypeArray = array( 'array' => 'Array',
                            'true/false' => 'True/False',
                            'enable/disable' => 'Enabled/Disabled',
                            'string' => 'String',
                            'numeric' => 'Numeric' );
 
-$tpl = templateInit();
+$tpl = eZTemplate::factory();
 $http = eZHTTPTool::instance();
 //$ini = eZINI::instance();
 
@@ -247,8 +249,8 @@ $tpl->setVariable( 'placement', $settingPlacement );
 
 $Result = array();
 $Result['content'] = $tpl->fetch( 'design:settings/edit.tpl' );
-$Result['path'] = array( array( 'text' => ezi18n( 'settings/edit', 'Settings' ),
+$Result['path'] = array( array( 'text' => ezpI18n::tr( 'settings/edit', 'Settings' ),
                                 'url' => false ),
-                         array( 'text' => ezi18n( 'settings/edit', 'Edit' ),
+                         array( 'text' => ezpI18n::tr( 'settings/edit', 'Edit' ),
                                 'url' => false ) );
 ?>

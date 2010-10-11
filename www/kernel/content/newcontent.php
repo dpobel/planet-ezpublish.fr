@@ -2,10 +2,10 @@
 //
 // Created on: <09-Aug-2004 11:53:46 bf>
 //
+// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.2.0
-// BUILD VERSION: 24182
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 4.3.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -23,18 +23,20 @@
 //   MA 02110-1301, USA.
 //
 //
+// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
+//
 
 
-require_once( 'kernel/common/template.php' );
 
-$tpl = templateInit();
+
+$tpl = eZTemplate::factory();
 $user = eZUser::currentUser();
 
 $tpl->setVariable( "view_parameters", $Params['UserParameters'] );
 $tpl->setVariable( 'last_visit_timestamp', $user->lastVisit() );
 
 $Result['content'] = $tpl->fetch( 'design:content/newcontent.tpl' );
-$Result['path'] = array( array( 'text' => ezi18n( 'kernel/content', 'New content' ),
+$Result['path'] = array( array( 'text' => ezpI18n::tr( 'kernel/content', 'New content' ),
                                 'url' => false ) );
 
 

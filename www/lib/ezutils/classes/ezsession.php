@@ -4,10 +4,10 @@
 //
 // Created on: <19-Aug-2002 12:49:18 bf>
 //
+// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.2.0
-// BUILD VERSION: 24182
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 4.3.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -24,6 +24,8 @@
 //   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 //   MA 02110-1301, USA.
 //
+//
+// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
 /*!
@@ -82,6 +84,15 @@ class eZSession
 {
     // Name of session handler, change if you override class with autoload
     const HANDLER_NAME = 'ezdb';
+
+    // Seconds before timeout occurs that gc function stops to make sure request completes 
+    const GC_TIMEOUT_MARGIN = 5;
+
+    // Max execution time if php's setting evaluates to false, to avoid hitting http server timeout
+    const GC_MAX_EXECUTION_TIME = 300;
+
+    // Same as above when in CLI mode
+    const GC_MAX_EXECUTION_TIME_CLI = 3000;
 
     /**
      * User id, see {@link eZSession::userID()}.
@@ -328,18 +339,56 @@ class eZSession
      * Deletes all expired session data in the database, this function is 
      * register in {@link eZSession::registerFunctions()}
      * 
-     * @static
+     * @param int $sessionsPrIteration Will delete only this amount of sessions at a time to avoid timeout, set to 0 to disable
+     *            (keep bellow 1000 to not cause issues on Oracle)
+     * @return bool Return boolean to signal if gc completed or if it stopped to avoid timeout.
      */
-    static public function garbageCollector()
+    static public function garbageCollector( $sessionsPrIteration = 50 )
     {
         $db = eZDB::instance();
-        $time = time();
+        $gcCompleted = true;
+        $requestTime = $_SERVER['REQUEST_TIME'];
+        self::triggerCallback( 'gc_pre', array( $db, $requestTime ) );
 
-        self::triggerCallback( 'gc_pre', array( $db, $time ) );
+        if ( $sessionsPrIteration )
+        {
+            $timedOut = false;
+            $maxExecutionTime = ini_get( 'max_execution_time' );
+            if ( !$maxExecutionTime )
+            {
+                if ( PHP_SAPI === 'cli' )
+                    $maxExecutionTime = self::GC_MAX_EXECUTION_TIME_CLI;
+                else
+                    $maxExecutionTime = self::GC_MAX_EXECUTION_TIME;
+            }
 
-        $db->query( "DELETE FROM ezsession WHERE expiration_time < $time" );
+            do
+            {
+                $startTime = time();
+                $rows = $db->arrayQuery( 'SELECT session_key FROM ezsession WHERE expiration_time < ' . $requestTime ,  array( 'offset' => 0, 'limit' => $sessionsPrIteration, 'column' => 'session_key' ) );
+                if ( $rows )
+                {
+                    $keyINString = '\'' . implode( '\', \'', $rows ) . '\'';// generateSQLINStatement does not add quotes when casting to string
+                    $db->query( "DELETE FROM ezsession WHERE session_key IN ( $keyINString )" );
 
-        self::triggerCallback( 'gc_post', array( $db, $time ) );
+                    $stopTime = time();
+                    $remaningTime = $maxExecutionTime - self::GC_TIMEOUT_MARGIN - ( $stopTime - $requestTime );
+                    if ( $remaningTime < ( $stopTime - $startTime ) )
+                    {
+                        $timedOut = true;
+                        break;
+                    }
+                }
+            } while ( $rows );
+            $gcCompleted = !$timedOut || !$rows;
+        }
+        else
+        {
+            $db->query( 'DELETE FROM ezsession WHERE expiration_time < ' . $requestTime );
+        }
+
+        self::triggerCallback( 'gc_post', array( $db, $requestTime ) );
+        return $gcCompleted;
     }
 
     /**

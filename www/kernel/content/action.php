@@ -2,10 +2,10 @@
 //
 // Created on: <04-Jul-2002 13:06:30 bf>
 //
+// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.2.0
-// BUILD VERSION: 24182
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 4.3.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -22,6 +22,8 @@
 //   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 //   MA 02110-1301, USA.
 //
+//
+// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
 $http = eZHTTPTool::instance();
@@ -112,8 +114,7 @@ if ( $http->hasPostVariable( 'NewButton' ) || $module->isCurrentAction( 'NewObje
         if ( count( $allLanguages ) > 1 &&
              $hasClassInformation )
         {
-            require_once( 'kernel/common/template.php' );
-            $tpl = templateInit();
+            $tpl = eZTemplate::factory();
 
             $tpl->setVariable( 'node_id', $http->postVariable( 'NodeID' ) );
             $tpl->setVariable( 'class_id', $contentClassID );
@@ -792,7 +793,6 @@ else if ( $module->isCurrentAction( 'RemoveAssignment' )  )
         $nodes[] = eZContentObjectTreeNode::fetch( $locationID );
     }
     $removeList = array();
-    $nodeRemoveList = array();
     foreach ( $nodes as $node )
     {
         if ( $node )
@@ -807,8 +807,7 @@ else if ( $module->isCurrentAction( 'RemoveAssignment' )  )
                 $redirectNodeID = $node->attribute( 'parent_node_id' );
             }
 
-            $removeList[] = $node->attribute( 'node_id' );
-            $nodeRemoveList[] = $node;
+            $removeList[$node->attribute( 'node_id' )] = 1;
             $count = $node->childrenCount( false );
 
             if ( $count > 0 )
@@ -821,8 +820,7 @@ else if ( $module->isCurrentAction( 'RemoveAssignment' )  )
     if ( $hasChildren )
     {
         $http->setSessionVariable( 'CurrentViewMode', $viewMode );
-        $http->setSessionVariable( 'DeleteIDArray', $removeList );
-        $http->setSessionVariable( 'ContentObjectID', $objectID );
+        $http->setSessionVariable( 'DeleteIDArray', array_keys( $removeList ) );
         $http->setSessionVariable( 'ContentNodeID', $nodeID );
         $http->setSessionVariable( 'ContentLanguage', $languageCode );
         return $module->redirectToView( 'removeobject' );
@@ -832,16 +830,13 @@ else if ( $module->isCurrentAction( 'RemoveAssignment' )  )
         if ( eZOperationHandler::operationIsAvailable( 'content_removelocation' ) )
         {
             $operationResult = eZOperationHandler::execute( 'content',
-                                                            'removelocation', array( 'node_id'       => $nodeID,
-                                                                                     'object_id'     => $objectID,
-                                                                                     'node_list'     => $nodeRemoveList,
-                                                                                     'move_to_trash' => false ),
+                                                            'removelocation', array( 'node_list' => array_keys( $removeList ) ),
                                                             null,
                                                             true );
         }
         else
         {
-            eZContentOperationCollection::removeAssignment( $nodeID, $objectID, $nodeRemoveList, false );
+            eZContentOperationCollection::removeNodes( array_keys( $removeList ) );
         }
     }
 
@@ -930,7 +925,6 @@ else if ( $http->hasPostVariable( 'RemoveButton' ) )
         {
             $http->setSessionVariable( 'CurrentViewMode', $viewMode );
             $http->setSessionVariable( 'ContentNodeID', $contentNodeID );
-            $http->setSessionVariable( 'ContentObjectID', $contentObjectID );
             $http->setSessionVariable( 'HideRemoveConfirmation', $hideRemoveConfirm );
             $http->setSessionVariable( 'DeleteIDArray', $deleteIDArray );
             $object = eZContentObject::fetch( $contentObjectID );
@@ -1220,7 +1214,6 @@ else if ( $http->hasPostVariable( "ContentObjectID" )  )
         {
             $http->setSessionVariable( 'CurrentViewMode', $viewMode );
             $http->setSessionVariable( 'ContentNodeID', $parentNodeID );
-            $http->setSessionVariable( 'ContentObjectID', $contentObjectID );
             $http->setSessionVariable( 'HideRemoveConfirmation', $hideRemoveConfirm );
             $http->setSessionVariable( 'DeleteIDArray', array( $contentNodeID ) );
 
@@ -1256,6 +1249,60 @@ else if ( $http->hasPostVariable( "ContentObjectID" )  )
     else if ( $http->hasPostVariable( "ActionCollectInformation" ) )
     {
         return $module->run( "collectinformation", array() );
+    }
+    else if( $http->hasPostVariable( 'CreateNodeFeed' ) || $http->hasPostVariable( 'RemoveNodeFeed' ) )
+    {
+        // First, do permission checking
+        $user = eZUser::currentUser();
+        $hasAccess = $user->hasAccessTo( 'rss', 'edit' );
+        if ( $hasAccess['accessWord'] === 'no' )
+        {
+            return $module->handleError( eZError::KERNEL_ACCESS_DENIED, 'kernel' );
+        }
+
+        // Then make sure we have node id parameter
+        if ( !$http->hasPostVariable( 'NodeID' ) )
+        {
+            eZDebug::writeError( 'Create/ Remove NodeFeed: missing node ID parameter.', 'content-action-handler' );
+            return $module->handleError( eZError::KERNEL_NOT_AVAILABLE, 'kernel' );
+        }
+
+        $nodeID = $http->postVariable( 'NodeID' );
+        if ( $http->hasPostVariable( 'CreateNodeFeed' ) )
+        {
+            if ( eZOperationHandler::operationIsAvailable( 'content_createnodefeed' ) )
+            {
+                $operationResult = eZOperationHandler::execute( 'content',
+                                                                'createnodefeed', array( 'node_id' => $nodeID ),
+                                                                null,
+                                                                true );
+            }
+            else
+            {
+                $operationResult = eZContentOperationCollection::createFeedForNode( $nodeID );
+            }
+        }
+        else // DisableRSS
+        {
+            if ( eZOperationHandler::operationIsAvailable( 'content_removenodefeed' ) )
+            {
+                $operationResult = eZOperationHandler::execute( 'content',
+                                                                'removenodefeed', array( 'node_id' => $nodeID ),
+                                                                null,
+                                                                true );
+            }
+            else
+            {
+                $operationResult = eZContentOperationCollection::removeFeedForNode( $nodeID );
+            }
+        }
+
+        if ( !isset( $operationResult['status'] ) || !$operationResult['status'] )
+        {
+            return $module->handleError( eZError::KERNEL_NOT_AVAILABLE, 'kernel' );
+        }
+
+        return $module->redirectToView( 'view', array( 'full', $nodeID ) );
     }
     else
     {

@@ -4,10 +4,10 @@
 //
 // Created on: <18-Sep-2003 11:13:56 kk>
 //
+// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.2.0
-// BUILD VERSION: 24182
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 4.3.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -24,6 +24,8 @@
 //   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 //   MA 02110-1301, USA.
 //
+//
+// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
 /*! \file
@@ -51,7 +53,7 @@ class eZRSSExport extends eZPersistentObject
 
     static function definition()
     {
-        return array( "fields" => array( "id" => array( 'name' => 'ID',
+        return array( 'fields' => array( 'id' => array( 'name' => 'ID',
                                                         'datatype' => 'integer',
                                                         'default' => 0,
                                                         'required' => true ),
@@ -61,7 +63,7 @@ class eZRSSExport extends eZPersistentObject
                                                              'required' => false ),
                                          'title' => array( 'name' => 'Title',
                                                            'datatype' => 'string',
-                                                           'default' => ezi18n( 'kernel/rss', 'New RSS Export' ),
+                                                           'default' => ezpI18n::tr( 'kernel/rss', 'New RSS Export' ),
                                                            'required' => true ),
                                          'url' => array( 'name' => 'URL',
                                                          'datatype' => 'string',
@@ -125,16 +127,17 @@ class eZRSSExport extends eZPersistentObject
                                                                     'datatype' => 'integer',
                                                                     'default' => 0,
                                                                     'required' => true ) ),
-                      "keys" => array( "id", 'status' ),
+                      'keys' => array( 'id', 'status' ),
                       'function_attributes' => array( 'item_list' => 'itemList',
                                                       'modifier' => 'modifier',
-                                                      'rss-xml' => 'rssXml',
+                                                      'rss-xml' => 'rssXml', // deprecated
+                                                      'rss-xml-content' => 'rssXmlContent', // new attribute which uses the Feed component
                                                       'image_path' => 'imagePath',
                                                       'image_node' => 'imageNode' ),
-                      "increment_key" => "id",
-                      "sort" => array( "title" => "asc" ),
-                      "class_name" => "eZRSSExport",
-                      "name" => "ezrss_export" );
+                      'increment_key' => 'id',
+                      'sort' => array( 'title' => 'asc' ),
+                      'class_name' => 'eZRSSExport',
+                      'name' => 'ezrss_export' );
 
     }
 
@@ -151,7 +154,7 @@ class eZRSSExport extends eZPersistentObject
         $dateTime = time();
         $row = array( 'id' => null,
                       'node_id', '',
-                      'title' => ezi18n( 'kernel/classes', 'New RSS Export' ),
+                      'title' => ezpI18n::tr( 'kernel/classes', 'New RSS Export' ),
                       'site_access' => '',
                       'modifier_id' => $user_id,
                       'modified' => $dateTime,
@@ -309,6 +312,12 @@ class eZRSSExport extends eZPersistentObject
         return null;
     }
 
+    /**
+     * Generates an RSS feed document based on the rss_version attribute.
+     *
+     * @deprecated
+     * @return DomDocument XML document
+     */
     function rssXml()
     {
         switch( $this->attribute( 'rss_version' ) )
@@ -327,6 +336,50 @@ class eZRSSExport extends eZPersistentObject
             {
                 return null;
             } break;
+        }
+
+        return null;
+    }
+
+    /**
+     * Generates an RSS feed document based on the rss_version attribute.
+     *
+     * It uses the Feed component from eZ Components.
+     *
+     * Supported types: 'rss1', 'rss2', 'atom'.
+     *
+     * @return string XML document as a string
+     */
+    function rssXmlContent()
+    {
+        try
+        {
+            switch ( $this->attribute( 'rss_version' ) )
+            {
+                case '1.0':
+                {
+                    return $this->generateFeed( 'rss1' );
+                } break;
+
+                case '2.0':
+                {
+                    return $this->generateFeed( 'rss2' );
+                } break;
+
+                case 'ATOM':
+                {
+                    return $this->generateFeed( 'atom' );
+                } break;
+
+                default:
+                {
+                    return null;
+                } break;
+            }
+        }
+        catch ( ezcFeedException $e )
+        {
+            return '<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang=""><title>The RSS feed you were trying to access contains some errors and cannot be generated: ' . $e->getMessage() . ' Please contact the webmaster.</title></feed>';
         }
 
         return null;
@@ -377,11 +430,12 @@ class eZRSSExport extends eZPersistentObject
                      );
     }
 
-    /*!
-     Get a RSS xml document based on the RSS 2.0 standard based on the RSS Export settings defined by this object
-
-     \return RSS 2.0 XML document
-    */
+    /**
+     * Get a RSS xml document based on the RSS 2.0 standard based on the RSS Export settings defined by this object
+     *
+     * @deprecated
+     * @return string RSS 2.0 XML document
+     */
     function fetchRSS2_0()
     {
         $locale = eZLocale::instance();
@@ -591,11 +645,12 @@ class eZRSSExport extends eZPersistentObject
         return $doc;
     }
 
-    /*!
-     Get a RSS xml document based on the RSS 1.0 standard based on the RSS Export settings defined by this object
-
-     \return RSS 1.0 XML document
-    */
+    /**
+     * Get a RSS xml document based on the RSS 1.0 standard based on the RSS Export settings defined by this object
+     *
+     * @deprecated
+     * @return DomDocument RSS 1.0 XML document
+     */
     function fetchRSS1_0()
     {
         $imageURL = $this->fetchImageURL();
@@ -772,6 +827,268 @@ class eZRSSExport extends eZPersistentObject
         }
 
         return $doc;
+    }
+
+    /**
+     * Generates an RSS feed document with type $type and returns it as a string.
+     *
+     * It uses the Feed component from eZ Components.
+     *
+     * Supported types: 'rss1', 'rss2', 'atom'.
+     *
+     * @param string $type One of 'rss1', 'rss2' and 'atom'
+     * @return string XML document as a string
+     */
+    function generateFeed( $type )
+    {
+        $locale = eZLocale::instance();
+
+        // Get URL Translation settings.
+        $config = eZINI::instance();
+        if ( $config->variable( 'URLTranslator', 'Translation' ) == 'enabled' )
+        {
+            $useURLAlias = true;
+        }
+        else
+        {
+            $useURLAlias = false;
+        }
+
+        if ( $this->attribute( 'url' ) == '' )
+        {
+            $baseItemURL = '';
+            eZURI::transformURI( $baseItemURL, false, 'full' );
+            $baseItemURL .= '/';
+        }
+        else
+        {
+            $baseItemURL = $this->attribute( 'url' ) . '/'; //.$this->attribute( 'site_access' ).'/';
+        }
+
+        $feed = new ezcFeed();
+
+        $feed->title = $this->attribute( 'title' );
+
+        $link = $feed->add( 'link' );
+        $link->href = $baseItemURL;
+
+        $feed->description = $this->attribute( 'description' );
+        $feed->language = $locale->httpLocaleCode();
+
+        // to add the <atom:link> element needed for RSS2
+        $feed->id = $baseItemURL . 'rss/feed/' . $this->attribute( 'access_url' );
+
+        // required for ATOM
+        $feed->updated = time();
+        $author        = $feed->add( 'author' );
+        $author->email = $config->variable( 'MailSettings', 'AdminEmail' );
+        $creatorObject = eZContentObject::fetch( $this->attribute( 'creator_id' ) );
+        if ( $creatorObject instanceof eZContentObject )
+        {
+            $author->name = $creatorObject->attribute('name');
+        }
+
+        $imageURL = $this->fetchImageURL();
+        if ( $imageURL !== false )
+        {
+            $image = $feed->add( 'image' );
+
+            // Required for RSS1
+            $image->about = $imageURL;
+
+            $image->url = $imageURL;
+            $image->title = $this->attribute( 'title' );
+            $image->link = $baseItemURL;
+        }
+
+        $cond = array(
+                    'rssexport_id'  => $this->ID,
+                    'status'        => $this->Status
+                    );
+        $rssSources = eZRSSExportItem::fetchFilteredList( $cond );
+
+        $nodeArray = eZRSSExportItem::fetchNodeList( $rssSources, $this->getObjectListFilter() );
+
+        if ( is_array( $nodeArray ) && count( $nodeArray ) )
+        {
+            $attributeMappings = eZRSSExportItem::getAttributeMappings( $rssSources );
+
+            foreach ( $nodeArray as $node )
+            {
+                $object = $node->attribute( 'object' );
+                $dataMap = $object->dataMap();
+                if ( $useURLAlias === true )
+                {
+                    $nodeURL = $this->urlEncodePath( $baseItemURL . $node->urlAlias() );
+                }
+                else
+                {
+                    $nodeURL = $baseItemURL . 'content/view/full/' . $node->attribute( 'node_id' );
+                }
+
+                // keep track if there's any match
+                $doesMatch = false;
+                // start mapping the class attribute to the respective RSS field
+                foreach ( $attributeMappings as $attributeMapping )
+                {
+                    // search for correct mapping by path
+                    if ( $attributeMapping[0]->attribute( 'class_id' ) == $object->attribute( 'contentclass_id' ) and
+                         in_array( $attributeMapping[0]->attribute( 'source_node_id' ), $node->attribute( 'path_array' ) ) )
+                    {
+                        // found it
+                        $doesMatch = true;
+                        // now fetch the attributes
+                        $title =  $dataMap[$attributeMapping[0]->attribute( 'title' )];
+                        // description is optional
+                        $descAttributeIdentifier = $attributeMapping[0]->attribute( 'description' );
+                        $description = $descAttributeIdentifier ? $dataMap[$descAttributeIdentifier] : false;
+                        // category is optional
+                        $catAttributeIdentifier = $attributeMapping[0]->attribute( 'category' );
+                        $category = $catAttributeIdentifier ? $dataMap[$catAttributeIdentifier] : false;
+                        // enclosure is optional
+                        $enclosureAttributeIdentifier = $attributeMapping[0]->attribute( 'enclosure' );
+                        $enclosure = $enclosureAttributeIdentifier ? $dataMap[$enclosureAttributeIdentifier] : false;
+                        break;
+                    }
+                }
+
+                if( !$doesMatch )
+                {
+                    // no match
+                    eZDebug::writeError( 'Cannot find matching RSS attributes for datamap on node: ' . $node->attribute( 'node_id' ), __METHOD__ );
+                    return null;
+                }
+
+                // title RSS element with respective class attribute content
+                $titleContent =  $title->attribute( 'content' );
+                if ( $titleContent instanceof eZXMLText )
+                {
+                    $outputHandler = $titleContent->attribute( 'output' );
+                    $itemTitleText = $outputHandler->attribute( 'output_text' );
+                }
+                else
+                {
+                    $itemTitleText = $titleContent;
+                }
+
+                $item = $feed->add( 'item' );
+
+                $item->title = $itemTitleText;
+
+                $link = $item->add( 'link' );
+                $link->href = $nodeURL;
+
+                $item->id = $nodeURL;
+
+                $itemCreatorObject = $node->attribute('creator');
+                if ( $itemCreatorObject instanceof eZContentObject )
+                {
+                    $author = $item->add( 'author' );
+                    $author->name = $itemCreatorObject->attribute('name');
+                    $author->email = $config->variable( 'MailSettings', 'AdminEmail' );
+                }
+
+                // description RSS element with respective class attribute content
+                if ( $description )
+                {
+                    $descContent = $description->attribute( 'content' );
+                    if ( $descContent instanceof eZXMLText )
+                    {
+                        $outputHandler =  $descContent->attribute( 'output' );
+                        $itemDescriptionText = $outputHandler->attribute( 'output_text' );
+                    }
+                    else if ( $descContent instanceof eZImageAliasHandler )
+                    {
+                        $itemImage   = $descContent->hasAttribute( 'rssitem' ) ? $descContent->attribute( 'rssitem' ) : $descContent->attribute( 'rss' );
+                        $origImage   = $descContent->attribute( 'original' );
+                        eZURI::transformURI( $itemImage['full_path'], true, 'full' );
+                        eZURI::transformURI( $origImage['full_path'], true, 'full' );
+                        $itemDescriptionText = '&lt;a href="' . htmlspecialchars( $origImage['full_path'] )
+                                             . '"&gt;&lt;img alt="' . htmlspecialchars( $descContent->attribute( 'alternative_text' ) )
+                                             . '" src="' . htmlspecialchars( $itemImage['full_path'] )
+                                             . '" width="' . $itemImage['width']
+                                             . '" height="' . $itemImage['height']
+                                             . '" /&gt;&lt;/a&gt;';
+                    }
+                    else
+                    {
+                        $itemDescriptionText = $descContent;
+                    }
+                    $item->description = $itemDescriptionText;
+                }
+
+                // category RSS element with respective class attribute content
+                if ( $category )
+                {
+                    $categoryContent =  $category->attribute( 'content' );
+                    if ( $categoryContent instanceof eZXMLText )
+                    {
+                        $outputHandler = $categoryContent->attribute( 'output' );
+                        $itemCategoryText = $outputHandler->attribute( 'output_text' );
+                    }
+                    elseif ( $categoryContent instanceof eZKeyword )
+                    {
+                        $itemCategoryText = $categoryContent->keywordString();
+                    }
+                    else
+                    {
+                        $itemCategoryText = $categoryContent;
+                    }
+
+                    if ( $itemCategoryText )
+                    {
+                        $cat = $item->add( 'category' );
+                        $cat->term = $itemCategoryText;
+                    }
+                }
+                
+                // enclosure RSS element with respective class attribute content
+                if ( $enclosure )
+                {
+                    $encItemURL       = false;
+                    $enclosureContent = $enclosure->attribute( 'content' );
+                    if ( $enclosureContent instanceof eZMedia )
+                    {
+                        $enc         = $item->add( 'enclosure' );
+                        $enc->length = $enclosureContent->attribute('filesize');
+                        $enc->type   = $enclosureContent->attribute('mime_type');
+                        $encItemURL = 'content/download/' . $enclosure->attribute('contentobject_id')
+                                    . '/' . $enclosureContent->attribute( 'contentobject_attribute_id' )
+                                    . '/' . urlencode( $enclosureContent->attribute( 'original_filename' ) );
+                        eZURI::transformURI( $encItemURL, false, 'full' );
+                    }
+                    else if ( $enclosureContent instanceof eZBinaryFile )
+                    {
+                        $enc         = $item->add( 'enclosure' );
+                        $enc->length = $enclosureContent->attribute('filesize');
+                        $enc->type   = $enclosureContent->attribute('mime_type');
+                        $encItemURL = 'content/download/' . $enclosure->attribute('contentobject_id')
+                                    . '/' . $enclosureContent->attribute( 'contentobject_attribute_id' )
+                                    . '/version/' . $enclosureContent->attribute( 'version' )
+                                    . '/file/' . urlencode( $enclosureContent->attribute( 'original_filename' ) );
+                        eZURI::transformURI( $encItemURL, false, 'full' );
+                    }
+                    else if ( $enclosureContent instanceof eZImageAliasHandler )
+                    {
+                        $enc         = $item->add( 'enclosure' );
+                        $origImage   = $enclosureContent->attribute( 'original' );
+                        $enc->length = $origImage['filesize'];
+                        $enc->type   = $origImage['mime_type'];
+                        $encItemURL  = $origImage['full_path'];
+                        eZURI::transformURI( $encItemURL, true, 'full' );
+                    }
+
+                    if ( $encItemURL )
+                    {
+                        $enc->url = $encItemURL;
+                    }
+                }
+
+                $item->published = $object->attribute( 'published' );
+                $item->updated = $object->attribute( 'published' );
+            }
+        }
+        return $feed->generate( $type );
     }
 
     /*!

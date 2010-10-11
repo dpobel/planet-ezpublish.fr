@@ -2,10 +2,10 @@
 //
 // Created on: <15-Apr-2003 11:25:31 bf>
 //
+// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.2.0
-// BUILD VERSION: 24182
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 4.3.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -23,13 +23,15 @@
 //   MA 02110-1301, USA.
 //
 //
+// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
+//
 
 $http = eZHTTPTool::instance();
 $module = $Params['Module'];
 
-require_once( "kernel/common/template.php" );
+
 $ini = eZINI::instance( );
-$tpl = templateInit();
+$tpl = eZTemplate::factory();
 
 $cacheList = eZCache::fetchList();
 
@@ -115,6 +117,6 @@ $tpl->setVariable( 'cache_list', $cacheList );
 $Result = array();
 $Result['content'] = $tpl->fetch( "design:setup/cache.tpl" );
 $Result['path'] = array( array( 'url' => false,
-                                'text' => ezi18n( 'kernel/setup', 'Cache admin' ) ) );
+                                'text' => ezpI18n::tr( 'kernel/setup', 'Cache admin' ) ) );
 
 ?>

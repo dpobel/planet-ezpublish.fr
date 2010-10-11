@@ -4,10 +4,10 @@
 //
 // Created on: <30-Apr-2002 16:47:08 bf>
 //
+// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.2.0
-// BUILD VERSION: 24182
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 4.3.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -24,6 +24,8 @@
 //   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 //   MA 02110-1301, USA.
 //
+//
+// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
 /*!
@@ -98,23 +100,33 @@ class eZImageFile extends eZPersistentObject
      * @param string $filePath file path to look up as URL in the XML string
      * @param int $contentObjectAttributeID
      *
-     * @return array An array of ids and versions of image files where the url
-     *               is referenced
+     * @return array An array of content object attribute ids and versions of
+     *               image files where the url is referenced
      *
      * @todo Rewrite ! A where data_text LIKE '%xxx%' is a resource hog !
      **/
     static function fetchImageAttributesByFilepath( $filepath, $contentObjectAttributeID )
     {
-       $db = eZDB::instance();
-       $filepath = $db->escapeString( $filepath );
-       $contentObjectAttributeID =(int) $contentObjectAttributeID;
-       $query = "SELECT id, version
-                 FROM   ezcontentobject_attribute
-                 WHERE  id = $contentObjectAttributeID and
-                        data_text like '%url=\"$filepath\"%'";
+        $db = eZDB::instance();
+        $contentObjectAttributeID = (int) $contentObjectAttributeID;
+        $query = "SELECT contentobject_id, contentclassattribute_id
+                  FROM   ezcontentobject_attribute
+                  WHERE  id = $contentObjectAttributeID
+                  LIMIT 1";
+        $rows = $db->arrayQuery( $query );
+        if ( count( $rows ) != 1 )
+            return array();
 
-       $rows = $db->arrayQuery( $query );
-       return $rows;
+        $contentObjectID = (int)( $rows[0]['contentobject_id'] );
+        $contentClassAttributeID = (int)( $rows[0]['contentclassattribute_id'] );
+        $filepath = $db->escapeString( $filepath );
+        $query = "SELECT id, version
+                  FROM   ezcontentobject_attribute
+                  WHERE  contentobject_id = $contentObjectID and
+                         contentclassattribute_id = $contentClassAttributeID and
+                         data_text like '%url=\"$filepath\"%'";
+        $rows = $db->arrayQuery( $query );
+        return $rows;
     }
 
     static function fetchByFilepath( $contentObjectAttributeID, $filepath, $asObject = true )

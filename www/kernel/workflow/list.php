@@ -2,10 +2,10 @@
 //
 // Created on: <16-Apr-2002 11:00:12 amos>
 //
+// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.2.0
-// BUILD VERSION: 24182
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 4.3.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -22,6 +22,8 @@
 //   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 //   MA 02110-1301, USA.
 //
+//
+// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
 
@@ -56,8 +58,8 @@ foreach( $workflows as $workflow )
 
 $Module->setTitle( 'Workflow list' );
 
-require_once( 'kernel/common/template.php' );
-$tpl = templateInit();
+
+$tpl = eZTemplate::factory();
 
 $tpl->setVariable( 'workflow_list', $workflowList );
 $tpl->setVariable( 'group_list', $groupList );
@@ -66,6 +68,6 @@ $tpl->setVariable( 'module', $Module );
 $Result = array();
 $Result['content'] = $tpl->fetch( 'design:workflow/list.tpl' );
 $Result['path'] = array( array( 'url' => '/workflow/list/',
-                                'text' => ezi18n( 'kernel/workflow', 'Workflow list' ) ) );
+                                'text' => ezpI18n::tr( 'kernel/workflow', 'Workflow list' ) ) );
 
 ?>

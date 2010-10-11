@@ -2,10 +2,10 @@
 //
 // Created on: <03-May-2002 15:17:01 bf>
 //
+// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.2.0
-// BUILD VERSION: 24182
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 4.3.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -23,18 +23,39 @@
 //   MA 02110-1301, USA.
 //
 //
+// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
+//
 
 
-require_once( 'kernel/common/template.php' );
-require_once( 'access.php' );
-
+$http = eZHTTPTool::instance();
 $Offset = $Params['Offset'];
 $viewParameters = array( 'offset' => $Offset );
 
-$tpl = templateInit();
+
+if ( $http->hasPostVariable( 'BackButton' )  )
+{
+    $userRedirectURI = '';
+    if ( $http->hasPostVariable( 'RedirectURI' ) )
+    {
+        $redurectURI = $http->postVariable( 'RedirectURI' );
+        $http->removeSessionVariable( 'LastAccessesVersionURI' );
+        return $Module->redirectTo( $redurectURI );
+    }
+    if ( $http->hasSessionVariable( "LastAccessesURI" ) )
+        $userRedirectURI = $http->sessionVariable( "LastAccessesURI" );
+    return $Module->redirectTo( $userRedirectURI );
+}
+
+
+$tpl = eZTemplate::factory();
 // Will be sent from the content/edit page and should be kept
 // incase the user decides to continue editing.
 $FromLanguage = $Params['FromLanguage'];
+
+if ( $http->hasSessionVariable( 'LastAccessesVersionURI' ) )
+{
+    $tpl->setVariable( 'redirect_uri', $http->sessionVariable( 'LastAccessesVersionURI' ) );
+}
 
 $ini = eZINI::instance();
 
@@ -211,6 +232,7 @@ $node->setAttribute( 'depth', $depth );
 $node->setAttribute( 'node_id', $virtualNodeID );
 $node->setAttribute( 'sort_field', $class->attribute( 'sort_field' ) );
 $node->setAttribute( 'sort_order', $class->attribute( 'sort_order' ) );
+$node->setAttribute( 'remote_id', md5( (string)mt_rand() . (string)time() ) );
 $node->setName( $objectName );
 
 $node->setContentObject( $contentObject );

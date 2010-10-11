@@ -4,10 +4,10 @@
 //
 // Created on: <22-Jun-2007 09:03:31 amos>
 //
+// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.2.0
-// BUILD VERSION: 24182
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 4.3.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -25,92 +25,83 @@
 //   MA 02110-1301, USA.
 //
 //
+// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
+//
 
-/*! \file
-*/
+/**
+ * The eZURLAliasFilter class the interface for all url alias filters,
+ * the filter implementation must implement the process method.
+ *
+ * For execution of the configured filters use the static method processFilters.
+ * Help with configuration is found in settings/site.ini under the group URLTranslator.
+ *
+ * @abstract
+ */
 
-/*!
-  \class eZURLAliasFilter ezurlaliasfilter.php
-  \brief Handles filtering of URL aliases
-
-  This class defines the interface for all url alias filters, the filter implementation must implement the process method.
-
-  For execution of the configured filters use the static method processFilters.
-  Help with configuration is found in settings/site.ini under the group URLTranslator.
-*/
-
-class eZURLAliasFilter
+abstract class eZURLAliasFilter
 {
     /**
-     Initialize the filter object.
+     * Initialize the filter object.
      */
-    function eZURLAliasFilter()
+    public function eZURLAliasFilter()
     {
     }
 
-    /*!
-     \abstract
-     Process the url alias element $text and return the new element as a string.
-
-     \param $languageObject The current language object used for the string $text.
-     \param $caller The object which called the filtering process, can be null.
+    /*
+     *
+     * Process the url alias element $text and return the new element as a string.
+     * This method must be overriden in custom URL alias filters.
+     *
+     * This function has not been declared as "abstract" because of backward compatibility
+     * but you should see it as an abstract method.
+     *
+     * @abstract
+     * @param string $text           The URL alias
+     * @param string $languageObject The current language object used for the string $text.
+     * @param object $caller         The object which called the filtering process, can be null.
+     * @return string the processed URL alias
      */
-    function process( $text, &$languageObject, &$caller )
+    public function process( $text, &$languageObject, &$caller )
     {
         return $text;
     }
 
-    /*!
-     \static
-     Process all configured filters and return the resulting text.
-
-     Filters are found in the INI group URLTranslator and the setting Filters.
-     This is done in combination with the setting Extensions which controls
-     which extensions have filter classes.
-
-     The parameters $text, $languageObject and $caller are sent to the method
-     process on the filter object.
-
-     Note: The filter list will be cached in memory to improve performance of subsequent calls.
+    /**
+     *
+     * Process all configured filters and return the resulting text.
+     *
+     * Filters are found in the INI group URLTranslator and the setting Filters.
+     * This is done in combination with the setting Extensions which controls
+     * which extensions have filter classes.
+     *
+     * The parameters $text, $languageObject and $caller are sent to the method
+     * process on the filter object.
+     *
+     * Note: The filter list will be cached in memory to improve performance of subsequent calls.
+     *
+     * @static
+     * @param string $text           The URL alias
+     * @param string $languageObject The current language object used for the string $text.
+     * @param object $caller         The object which called the filtering process, can be null.
+     * @return string the URL alias processed by the process() method
      */
-    static function processFilters( $text, $languageObject, $caller )
+    public static function processFilters( $text, $languageObject, $caller )
     {
-        $filters = array();
-        if ( isset( $GLOBALS['eZURLAliasFilters'] ) )
-        {
-            $filters = $GLOBALS['eZURLAliasFilters'];
-        }
-        else
-        {
-            // No filters are cached in memory, load them and cache for later use
+        $ini = eZINI::instance( 'site.ini' );
+        $filterClassList = $ini->variable( 'URLTranslator', 'FilterClasses' );
 
-            $ini = eZINI::instance();
-            $extensionList = $ini->variable( 'URLTranslator', 'Extensions' );
-            $pathList = eZExtension::expandedPathList( $extensionList, 'urlfilters' );
-            $filterNames = $ini->variable( 'URLTranslator', 'Filters' );
-            foreach ( $filterNames as $filterName )
+        foreach ( $filterClassList as $filterClass )
+        {
+            if( !class_exists( $filterClass ) )
             {
-                foreach ( $pathList as $path )
-                {
-                    $filterPath = $path . '/' . strtolower( $filterName ) . '.php';
-                    if ( !file_exists( $filterPath ) )
-                        continue;
-                    include_once( $filterPath );
-                    if ( !class_exists( $filterName ) )
-                    {
-                        eZDebug::writeError( "URLAlias filter class named '$filterName' does not exist after loading PHP file $filterPath, ignoring entry." );
-                        break;
-                    }
-                    $filters[] = new $filterName;
-                }
+                eZDebug::writeError( $filterClass . ' does not exist, please run bin/php/ezpgenerateautoload.php', __METHOD__ );
+                continue;
             }
-            $GLOBALS['eZURLAliasFilters'] = $filters;
-        }
 
-        foreach ( $filters as $filter )
-        {
+            $filter = new $filterClass();
             $text = $filter->process( $text, $languageObject, $caller );
         }
+
         return $text;
     }
 }

@@ -4,10 +4,10 @@
 //
 // Created on: <30-Apr-2002 13:06:21 bf>
 //
+// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.2.0
-// BUILD VERSION: 24182
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 4.3.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -24,6 +24,8 @@
 //   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 //   MA 02110-1301, USA.
 //
+//
+// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
 /*!
@@ -43,7 +45,7 @@ class eZMediaType extends eZDataType
 
     function eZMediaType()
     {
-        $this->eZDataType( self::DATA_TYPE_STRING, ezi18n( 'kernel/classes/datatypes', "Media", 'Datatype name' ),
+        $this->eZDataType( self::DATA_TYPE_STRING, ezpI18n::tr( 'kernel/classes/datatypes', "Media", 'Datatype name' ),
                            array( 'serialize_supported' => true ) );
     }
 
@@ -81,16 +83,68 @@ class eZMediaType extends eZDataType
     }
 
     /*!
+     The object is being moved to trash, do any necessary changes to the attribute.
+     Rename file and update db row with new name, so that access to the file using old links no longer works.
+    */
+    function trashStoredObjectAttribute( $contentObjectAttribute, $version = null )
+    {
+        $contentObjectAttributeID = $contentObjectAttribute->attribute( "id" );
+        $sys = eZSys::instance();
+        $storage_dir = $sys->storageDirectory();
+
+        if ( $version == null )
+            $mediaFiles = eZMedia::fetch( $contentObjectAttributeID, null );
+        else
+            $mediaFiles = array( eZMedia::fetch( $contentObjectAttributeID, $version ) );
+
+        foreach ( $mediaFiles as $mediaFile )
+        {
+            if ( $mediaFile == null )
+                continue;
+            $mimeType =  $mediaFile->attribute( "mime_type" );
+            list( $prefix, $suffix ) = explode( '/', $mimeType );
+            $orig_dir = $storage_dir . '/original/' . $prefix;
+            $fileName = $mediaFile->attribute( "filename" );
+
+            // Check if there are any other records in ezmedia that point to that fileName.
+            $mediaObjectsWithSameFileName = eZMedia::fetchByFileName( $fileName );
+
+            $filePath = $orig_dir . "/" . $fileName;
+            $file = eZClusterFileHandler::instance( $filePath );
+
+            if ( $file->exists() and count( $mediaObjectsWithSameFileName ) <= 1 )
+            {
+                // create dest filename in the same manner as eZHTTPFile::store()
+                // grab file's suffix
+                $fileSuffix = eZFile::suffix( $fileName );
+                // prepend dot
+                if ( $fileSuffix )
+                    $fileSuffix = '.' . $fileSuffix;
+                // grab filename without suffix
+                $fileBaseName = basename( $fileName, $fileSuffix );
+                // create dest filename
+                $newFileName = md5( $fileBaseName . microtime() . mt_rand() ) . $fileSuffix;
+                $newFilePath = $orig_dir . "/" . $newFileName;
+
+                // rename the file, and update the database data
+                $file->move( $newFilePath );
+                $mediaFile->setAttribute( 'filename', $newFileName );
+                $mediaFile->store();
+            }
+        }
+    }
+
+    /*!
      Delete stored attribute
     */
     function deleteStoredObjectAttribute( $contentObjectAttribute, $version = null )
     {
         $contentObjectAttributeID = $contentObjectAttribute->attribute( "id" );
-        $mediaFiles = eZMedia::fetch( $contentObjectAttributeID, null );
         $sys = eZSys::instance();
         $storage_dir = $sys->storageDirectory();
         if ( $version == null )
         {
+            $mediaFiles = eZMedia::fetch( $contentObjectAttributeID, null );
             foreach ( $mediaFiles as $mediaFile )
             {
                 $mimeType =  $mediaFile->attribute( "mime_type" );
@@ -109,6 +163,7 @@ class eZMediaType extends eZDataType
         }
         else
         {
+            $mediaFiles = eZMedia::fetchByContentObjectID( $contentObjectAttribute->attribute( 'contentobject_id' ) );
             $count = 0;
             $currentBinaryFile = eZMedia::fetch( $contentObjectAttributeID, $version );
             if ( $currentBinaryFile != null )
@@ -160,19 +215,19 @@ class eZMediaType extends eZDataType
         $canFetchResult = eZHTTPFile::canFetch( $httpFileName, $maxSize );
         if ( $mustUpload && $canFetchResult == eZHTTPFile::UPLOADEDFILE_DOES_NOT_EXIST )
         {
-            $contentObjectAttribute->setValidationError( ezi18n( 'kernel/classes/datatypes',
+            $contentObjectAttribute->setValidationError( ezpI18n::tr( 'kernel/classes/datatypes',
                 'A valid media file is required.' ) );
             return eZInputValidator::STATE_INVALID;
         }
         if ( $canFetchResult == eZHTTPFile::UPLOADEDFILE_EXCEEDS_PHP_LIMIT )
         {
-            $contentObjectAttribute->setValidationError( ezi18n( 'kernel/classes/datatypes',
+            $contentObjectAttribute->setValidationError( ezpI18n::tr( 'kernel/classes/datatypes',
                 'The size of the uploaded file exceeds the limit set by upload_max_filesize directive in php.ini. Please contact the site administrator.') );
             return eZInputValidator::STATE_INVALID;
         }
         if ( $canFetchResult == eZHTTPFile::UPLOADEDFILE_EXCEEDS_MAX_SIZE )
         {
-            $contentObjectAttribute->setValidationError( ezi18n( 'kernel/classes/datatypes',
+            $contentObjectAttribute->setValidationError( ezpI18n::tr( 'kernel/classes/datatypes',
                 'The size of the uploaded file exceeds site maximum: %1 bytes.' ), $maxSize );
             return eZInputValidator::STATE_INVALID;
         }
@@ -191,7 +246,7 @@ class eZMediaType extends eZDataType
             {
                 eZAppendWarningItem( array( 'error' => array( 'type' => 'kernel',
                                                               'number' => eZError::KERNEL_NOT_AVAILABLE ),
-                                            'text' => ezi18n( 'kernel/classes/datatypes',
+                                            'text' => ezpI18n::tr( 'kernel/classes/datatypes',
                                                               'File uploading is not enabled. Please contact the site administrator to enable it.' ) ) );
                 $GLOBALS['eZMediaTypeWarningAdded'] = true;
             }
@@ -368,7 +423,7 @@ class eZMediaType extends eZDataType
         $httpFile->setMimeType( $mimeData['name'] );
         if ( !$httpFile->store( "original", false, false ) )
         {
-            $result['errors'][] = array( 'description' => ezi18n( 'kernel/classes/datatypes/ezmedia',
+            $result['errors'][] = array( 'description' => ezpI18n::tr( 'kernel/classes/datatypes/ezmedia',
                                                         'Failed to store media file %filename. Please contact the site administrator.', null,
                                                         array( '%filename' => $httpFile->attribute( "original_filename" ) ) ) );
             return false;

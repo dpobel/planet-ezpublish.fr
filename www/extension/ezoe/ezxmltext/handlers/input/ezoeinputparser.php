@@ -3,25 +3,28 @@
 // Created on: <27-Mar-2006 15:28:40 ks>
 // Forked on: <20-Des-2007 13:02:06 ar> from eZDHTMLInputParser class
 //
+// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Online Editor extension for eZ Publish
-// SOFTWARE RELEASE: 5.0
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 4.3.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
 //   modify it under the terms of version 2.0  of the GNU General
 //   Public License as published by the Free Software Foundation.
-//
+// 
 //   This program is distributed in the hope that it will be useful,
 //   but WITHOUT ANY WARRANTY; without even the implied warranty of
 //   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 //   GNU General Public License for more details.
-//
+// 
 //   You should have received a copy of version 2.0 of the GNU General
 //   Public License along with this program; if not, write to the Free
 //   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 //   MA 02110-1301, USA.
-//
+// 
+// 
+// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
 
@@ -35,11 +38,20 @@
 
 */
 
+require_once( 'kernel/common/i18n.php' );
+
 class eZOEInputParser extends eZXMLInputParser
 {
     /**
+     * Used to strip out ezoe, tinymce & browser specific classes
+     */    
+     const HTML_CLASS_REGEX = "/(webkit-[\w\-]+|Apple-[\w\-]+|mceItem\w+|mceVisualAid|mceNonEditable)/i";
+
+    /**
      * Maps input tags (html) to a output tag or a hander to 
-     * decide what kind of ezxml tag to use. 
+     * decide what kind of ezxml tag to use.
+     *
+     * @var array $InputTags
      */
     public $InputTags = array(
         'section' => array( 'name' => 'section' ),
@@ -82,7 +94,9 @@ class eZOEInputParser extends eZXMLInputParser
 
     /**
      * Maps output tags (ezxml) to varius handlers at different stages 
-     * decide what kind of ezxml tag to use. 
+     * decide what kind of ezxml tag to use.
+     * 
+     * @var array $OutputTags
      */
     public $OutputTags = array(
         'section'   => array(),
@@ -163,14 +177,19 @@ class eZOEInputParser extends eZXMLInputParser
      * @param bool $parseLineBreaks flag if line breaks should be given meaning or not
      * @param bool $removeDefaultAttrs singal if attributes of default value should not be saved.
      */
-    function eZOEInputParser( $validateErrorLevel = eZXMLInputParser::ERROR_NONE, $detectErrorLevel = eZXMLInputParser::ERROR_NONE,
-                                 $parseLineBreaks = false, $removeDefaultAttrs = false )
+    function eZOEInputParser( $validateErrorLevel = eZXMLInputParser::ERROR_NONE,
+                              $detectErrorLevel = eZXMLInputParser::ERROR_NONE,
+                              $parseLineBreaks = false,
+                              $removeDefaultAttrs = false )
     {
-        $this->eZXMLInputParser( $validateErrorLevel, $detectErrorLevel, $parseLineBreaks, $removeDefaultAttrs );
+        $this->eZXMLInputParser( $validateErrorLevel,
+                                 $detectErrorLevel,
+                                 $parseLineBreaks,
+                                 $removeDefaultAttrs );
 
         $ini = eZINI::instance( 'content.ini' );
         if ( $ini->hasVariable( 'header', 'AnchorAsAttribute' ) )
-            $this->anchorAsAttribute = $ini->variable( 'header', 'AnchorAsAttribute' ) === 'disabled' ? false : true;
+            $this->anchorAsAttribute = $ini->variable( 'header', 'AnchorAsAttribute' ) !== 'disabled';
     }
 
      /**
@@ -193,7 +212,8 @@ class eZOEInputParser extends eZXMLInputParser
                 $name = 'strong';
             elseif ( strpos( $attributes['style'], 'font-style: italic' ) !== false )
                 $name = 'emphasize';
-            elseif ( strpos( $attributes['style'], 'text-decoration: underline' ) !== false && self::customTagIsEnabled('underline') )
+            elseif ( strpos( $attributes['style'], 'text-decoration: underline' ) !== false
+                  && self::customTagIsEnabled('underline') )
             {
                 $name = 'custom';
                 $attributes['name'] = 'underline';
@@ -250,7 +270,8 @@ class eZOEInputParser extends eZXMLInputParser
         $name = '';
         if ( isset( $attributes['id'] ) )
         {
-            if ( strpos( $attributes['id'], 'eZObject_' ) !== false || strpos( $attributes['id'], 'eZNode_' ) !== false )
+            if ( strpos( $attributes['id'], 'eZObject_' ) !== false
+              || strpos( $attributes['id'], 'eZNode_' ) !== false )
             {
                 // decide if inline or block embed tag
                 if ( isset( $attributes['inline'] ) && $attributes['inline'] === 'true' )
@@ -290,17 +311,23 @@ class eZOEInputParser extends eZXMLInputParser
         if ( $tagName === 'link'
           && isset( $attributes['href'] )
           && isset( $attributes['rel'] )
-          && ( $attributes['rel'] === 'File-List' || $attributes['rel'] === 'themeData' || $attributes['rel'] === 'colorSchemeMapping' )
-          && ( strpos( $attributes['href'], '.xml' ) !== false || strpos( $attributes['href'], '.thmx' ) !== false) )
+          && ( $attributes['rel'] === 'File-List'
+            || $attributes['rel'] === 'themeData'
+            || $attributes['rel'] === 'colorSchemeMapping' )
+          && ( strpos( $attributes['href'], '.xml' ) !== false
+            || strpos( $attributes['href'], '.thmx' ) !== false) )
         {
             // empty check to not store buggy links created
             // by pasting content from ms word 2007
-        }        
+        }
         else if ( isset( $attributes['href'] ) )
         {
             // normal link tag
             $name = 'link';
-            if ( isset( $attributes['name'] ) && !isset( $attributes['anchor_name'] ) ) $attributes['anchor_name'] = $attributes['name'];
+            if ( isset( $attributes['name'] ) && !isset( $attributes['anchor_name'] ) )
+            {
+                $attributes['anchor_name'] = $attributes['name'];
+            }
         }
         else if ( isset( $attributes['name'] ) )
         {
@@ -346,7 +373,7 @@ class eZOEInputParser extends eZXMLInputParser
 
      /**
      * tagClassNamesCleanup
-     * Used by init handlers, removes any tinMCE/browser specific classes and trims the result.
+     * Used by init handlers, removes any oe/tinMCE/browser specific classes and trims the result.
      *
      * @static
      * @param string $className 'Dirty' class name as provided by TinyMCE
@@ -354,8 +381,7 @@ class eZOEInputParser extends eZXMLInputParser
      */
     public static function tagClassNamesCleanup( $className )
     {
-         // remove classes that is used internally by editor on embed objects
-        return trim( preg_replace("/(webkit-[\w\-]+|Apple-[\w\-]+|mceItem\w+|mceVisualAid|mceNonEditable)/i", '', $className ) );
+        return trim( preg_replace( self::HTML_CLASS_REGEX, '', $className ) );
     }
 
      /**
@@ -654,7 +680,9 @@ class eZOEInputParser extends eZXMLInputParser
                 $ret['result'] = $newParent;
                 return $ret;
             }
-            if ( $newParent && $newParent->parentNode && $newParent->parentNode->nodeName === 'paragraph' )
+            if ( $newParent
+              && $newParent->parentNode
+              && $newParent->parentNode->nodeName === 'paragraph' )
             {
                 $para = $newParent->parentNode;
                 $element = $parent->removeChild( $element );
@@ -719,7 +747,9 @@ class eZOEInputParser extends eZXMLInputParser
             {
                 $addEmph = false;
             }
-            elseif ( $myParent->nodeName === 'td' || $myParent->nodeName === 'th' || $myParent->nodeName === 'section' )
+            elseif ( $myParent->nodeName === 'td'
+                  || $myParent->nodeName === 'th'
+                  || $myParent->nodeName === 'section' )
             {
                 break;
             }
@@ -1048,7 +1078,10 @@ class eZOEInputParser extends eZXMLInputParser
                 $element->setAttribute( 'object_id', $objectID );
                 if ( !eZContentObject::exists( $objectID ))
                 {
-                    $this->Messages[] = ezi18n( 'design/standard/ezoe/handler', 'Object %1 does not exist.', false, array( $objectID ) );
+                    $this->Messages[] = ezi18n( 'design/standard/ezoe/handler',
+                                                'Object %1 does not exist.',
+                                                false,
+                                                array( $objectID ) );
                 }
             }
             /*
@@ -1068,7 +1101,10 @@ class eZOEInputParser extends eZXMLInputParser
                     $node = eZContentObjectTreeNode::fetch( $nodeID );
                     if ( !$node instanceOf eZContentObjectTreeNode )
                     {
-                        $this->Messages[] = ezi18n( 'design/standard/ezoe/handler', 'Node %1 does not exist.', false, array( $nodeID ) );
+                        $this->Messages[] = ezi18n( 'design/standard/ezoe/handler',
+                                                    'Node %1 does not exist.',
+                                                    false,
+                                                    array( $nodeID ) );
                     }
                 }
                 else
@@ -1076,7 +1112,10 @@ class eZOEInputParser extends eZXMLInputParser
                     $node = eZContentObjectTreeNode::fetchByURLPath( $nodePath );
                     if ( !$node instanceOf eZContentObjectTreeNode )
                     {
-                        $this->Messages[] = ezi18n( 'design/standard/ezoe/handler', 'Node &apos;%1&apos; does not exist.', false, array( $nodePath ) );
+                        $this->Messages[] = ezi18n( 'design/standard/ezoe/handler',
+                                                    'Node &apos;%1&apos; does not exist.',
+                                                    false,
+                                                    array( $nodePath ) );
                     }
                     else
                     {
@@ -1114,7 +1153,7 @@ class eZOEInputParser extends eZXMLInputParser
                     if ( strpos( $url, 'script' ) !== false && preg_match( "/^(java|vb)script:.*/i" , $url ) )
                     {
                         $this->isInputValid = false;
-                        $this->Messages[] = "Using scripts in links is not allowed, link '$url' has been removed";
+                        $this->Messages[] = "Using scripts in links is not allowed, '$url' has been removed";
                         $element->removeAttribute( 'href' );
                         return $ret;
                     }
@@ -1127,8 +1166,10 @@ class eZOEInputParser extends eZXMLInputParser
                         {
                             $this->isInputValid = false;
                             if ( $this->errorLevel >= 0 )
-                                $this->Messages[] = ezi18n( 'kernel/classes/datatypes/ezxmltext', "Invalid e-mail address: '%1'",
-                                                            false, array( $mailAddr[1] ) );
+                                $this->Messages[] = ezi18n( 'kernel/classes/datatypes/ezxmltext',
+                                                            "Invalid e-mail address: '%1'",
+                                                            false,
+                                                            array( $mailAddr[1] ) );
                             $element->removeAttribute( 'href' );
                             return $ret;
                         }
@@ -1268,7 +1309,9 @@ class eZOEInputParser extends eZXMLInputParser
                 if ( $attr !== '' && strpos( $attr, '|' ) !== false )
                 {
                     list( $attrName, $attrValue ) = explode( '|', $attr );
-                    $element->setAttributeNS( 'http://ez.no/namespaces/ezpublish3/custom/', 'custom:' . $attrName, $attrValue );
+                    $element->setAttributeNS( 'http://ez.no/namespaces/ezpublish3/custom/',
+                                              'custom:' . $attrName,
+                                              $attrValue );
                 }
             }
         }

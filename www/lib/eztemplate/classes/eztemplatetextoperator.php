@@ -4,10 +4,10 @@
 //
 // Created on: <01-Aug-2002 11:38:40 amos>
 //
+// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.2.0
-// BUILD VERSION: 24182
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 4.3.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -24,6 +24,8 @@
 //   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 //   MA 02110-1301, USA.
 //
+//
+// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
 /*! \file
@@ -153,22 +155,40 @@ class eZTemplateTextOperator
         {
             $tmpCount = 0;
             $values[] = $parameters[0];
-            $indentation = str_repeat( $filler, $count );
-            $code = ( "%output% = '$indentation' . str_replace( '\n', '\n$indentation', %1% );\n" );
+            if ( $count < 0 )
+            {
+                //$code = ( $tpl->error( "indent", "Count parameter can not be negative" );
+                $code = ( "\$tpl->error( \"indent\", \"Count parameter can not be negative, string won't be indented\" );\n" .
+                          "%output% = %1%;\n" );
+            }
+            else
+            {
+                $indentation = str_repeat( $filler, $count );
+                $code = ( "%output% = '$indentation' . str_replace( '\n', '\n$indentation', %1% );\n" );
+            }
         }
         else if ( $filler and $type )
         {
             $tmpCount = 1;
             $values[] = $parameters[0];
             $values[] = $parameters[1];
-            $code = ( "%tmp1% = str_repeat( '$filler', %2% );\n" .
-                      "%output% = %tmp1% . str_replace( '\n', '\n' . %tmp1%, %1% );\n" );
+            $code = ( "if ( %2% < 0 )\n{" .
+                      "\$tpl->error( \"indent\", \"Count parameter can not be negative, string won't be indented\" );\n" .
+                      "%output% = %1%;\n" .
+                      "}else{\n" .
+                      "%tmp1% = str_repeat( '$filler', %2% );\n" .
+                      "%output% = %tmp1% . str_replace( '\n', '\n' . %tmp1%, %1% );\n" .
+                      "}\n");
         }
         else
         {
             $tmpCount = 2;
-            $code = "if ( %3% == 'tab' )\n{\n\t%tmp1% = \"\\t\";\n}\nelse ";
-            $code .= "if ( %3% == 'space' )\n{\n\t%tmp1% = ' ';\n}\nelse\n";
+            $code = ( "if ( %2% < 0 ){\n" .
+                     "\$tpl->error( \"indent\", \"Count parameter can not be negative, string won't be indented\" );\n" .
+                     "%output% = %1%;\n" .
+                     "}else{" .
+                     "if ( %3% == 'tab' )\n{\n\t%tmp1% = \"\\t\";\n}\nelse " .
+                     "if ( %3% == 'space' )\n{\n\t%tmp1% = ' ';\n}\nelse\n" );
             if ( count ( $parameters ) == 4 )
             {
                 $code .= "{\n\t%tmp1% = %4%;\n}\n";
@@ -179,6 +199,7 @@ class eZTemplateTextOperator
             }
             $code .= ( "%tmp2% = str_repeat( %tmp1%, %2% );\n" .
                        "%output% = %tmp2% . str_replace( '\n', '\n' . %tmp2%, %1% );\n" );
+            $code .= "}\n";
             foreach ( $parameters as $parameter )
             {
                 $values[] = $parameter;
@@ -247,6 +268,12 @@ class eZTemplateTextOperator
             } break;
             case $this->IndentName:
             {
+                if( $namedParameters['indent_count'] < 0 )
+                {
+                    eZDebug::writeError( 'The value of the "count" argument is negative, indent() will not be called' );
+                    break;
+                }
+
                 $indentCount = $namedParameters['indent_count'];
                 $indentType = $namedParameters['indent_type'];
                 $filler = false;

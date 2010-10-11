@@ -2,10 +2,10 @@
 //
 // Created on: <11-Aug-2003 18:12:39 amos>
 //
+// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.2.0
-// BUILD VERSION: 24182
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 4.3.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -23,8 +23,10 @@
 //   MA 02110-1301, USA.
 //
 //
+// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
+//
 
-require_once( "kernel/common/template.php" );
+
 $module = $Params['Module'];
 
 if ( !eZPackage::canUsePolicyFunction( 'import' ) )
@@ -58,11 +60,11 @@ if ( $module->isCurrentAction( 'UploadPackage' ) )
             }
             else if ( $package == eZPackage::STATUS_ALREADY_EXISTS )
             {
-                $errorList[] = array( 'description' => ezi18n( 'kernel/package', 'Package %packagename already exists, cannot import the package', false, array( '%packagename' => $packageName ) ) );
+                $errorList[] = array( 'description' => ezpI18n::tr( 'kernel/package', 'Package %packagename already exists, cannot import the package', false, array( '%packagename' => $packageName ) ) );
             }
             else if ( $package == eZPackage::STATUS_INVALID_NAME )
             {
-                $errorList[] = array( 'description' => ezi18n( 'kernel/package', 'The package name %packagename is invalid, cannot import the package', false, array( '%packagename' => $packageName ) ) );
+                $errorList[] = array( 'description' => ezpI18n::tr( 'kernel/package', 'The package name %packagename is invalid, cannot import the package', false, array( '%packagename' => $packageName ) ) );
             }
             else
             {
@@ -85,7 +87,7 @@ else if ( $module->isCurrentAction( 'UploadCancel' ) )
     return;
 }
 
-$tpl = templateInit();
+$tpl = eZTemplate::factory();
 
 $tpl->setVariable( 'package', $package );
 $tpl->setVariable( 'error_list', $errorList );
@@ -93,8 +95,8 @@ $tpl->setVariable( 'error_list', $errorList );
 $Result = array();
 $Result['content'] = $tpl->fetch( "design:package/upload.tpl" );
 $Result['path'] = array( array( 'url' => 'package/list',
-                                'text' => ezi18n( 'kernel/package', 'Packages' ) ),
+                                'text' => ezpI18n::tr( 'kernel/package', 'Packages' ) ),
                          array( 'url' => false,
-                                'text' => ezi18n( 'kernel/package', 'Upload' ) ) );
+                                'text' => ezpI18n::tr( 'kernel/package', 'Upload' ) ) );
 
 ?>

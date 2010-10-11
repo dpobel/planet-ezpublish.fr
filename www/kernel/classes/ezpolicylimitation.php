@@ -4,10 +4,10 @@
 //
 // Created on: <19-Aug-2002 10:57:01 sp>
 //
+// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.2.0
-// BUILD VERSION: 24182
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 4.3.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -24,6 +24,8 @@
 //   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 //   MA 02110-1301, USA.
 //
+//
+// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
 /*! \file
@@ -245,8 +247,8 @@ class eZPolicyLimitation extends eZPersistentObject
         $limitation = $functions[$currentFunction ][$this->attribute( 'identifier' )];
 
         if ( $limitation &&
-             count( $limitation[ 'values' ] == 0 ) &&
-             array_key_exists( 'class', $limitation ) )
+             isset( $limitation['class'] ) &&
+             count( $limitation[ 'values' ] == 0 ) )
         {
             $basePath = 'kernel/'; //set default basepath for limitationValueClasses
             if( array_key_exists( 'extension', $limitation ) && $limitation['extension'] )
@@ -264,7 +266,7 @@ class eZPolicyLimitation extends eZPersistentObject
                 $limitationValueArray[] = $limitationValuePair;
             }
         }
-        else if ( $limitation['name'] == "Node" )
+        else if ( $limitation['name'] === 'Node' )
         {
             foreach ( $valueList as $value )
             {
@@ -274,10 +276,11 @@ class eZPolicyLimitation extends eZPersistentObject
                 $limitationValuePair = array();
                 $limitationValuePair['Name'] = $node['name'];
                 $limitationValuePair['value'] = $value;
+                $limitationValuePair['node_data'] = $node;
                 $limitationValueArray[] = $limitationValuePair;
             }
         }
-        else if ( $limitation['name'] == "Subtree" )
+        else if ( $limitation['name'] === 'Subtree' )
         {
             foreach ( $valueList as $value )
             {
@@ -287,6 +290,7 @@ class eZPolicyLimitation extends eZPersistentObject
                     $limitationValuePair = array();
                     $limitationValuePair['Name'] = $subtreeObject['name'];
                     $limitationValuePair['value'] = $value;
+                    $limitationValuePair['node_data'] = $subtreeObject;
                     $limitationValueArray[] = $limitationValuePair;
                 }
             }

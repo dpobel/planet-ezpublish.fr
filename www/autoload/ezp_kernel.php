@@ -2,9 +2,9 @@
 /**
  * Autoloader definition for eZ Publish Kernel files.
  *
- * @copyright Copyright (C) 1999-2009 eZ Systems AS. All rights reserved.
+ * @copyright Copyright (C) 1999-2010 eZ Systems AS. All rights reserved.
  * @license http://ez.no/licenses/gnu_gpl GNU GPL v2
- * @version //autogentag//
+ * @version 4.3.0
  * @package kernel
  *
  */
@@ -16,7 +16,6 @@ return array(
       'eZAlphabetOperator'                                 => 'kernel/common/ezalphabetoperator.php',
       'eZApproveCollaborationHandler'                      => 'kernel/classes/collaborationhandlers/ezapprove/ezapprovecollaborationhandler.php',
       'eZApproveType'                                      => 'kernel/classes/workflowtypes/event/ezapprove/ezapprovetype.php',
-      'eZArchiveHandler'                                   => 'lib/ezfile/classes/ezarchivehandler.php',
       'eZAudit'                                            => 'kernel/classes/ezaudit.php',
       'eZAuthor'                                           => 'kernel/classes/datatypes/ezauthor/ezauthor.php',
       'eZAuthorType'                                       => 'kernel/classes/datatypes/ezauthor/ezauthortype.php',
@@ -71,6 +70,7 @@ return array(
       'eZContentClassAttribute'                            => 'kernel/classes/ezcontentclassattribute.php',
       'eZContentClassAttributeNameList'                    => 'kernel/classes/ezcontentclassattributenamelist.php',
       'eZContentClassClassGroup'                           => 'kernel/classes/ezcontentclassclassgroup.php',
+      'eZContentClassEditHandler'                          => 'kernel/classes/ezcontentclassedithandler.php',
       'eZContentClassGroup'                                => 'kernel/classes/ezcontentclassgroup.php',
       'eZContentClassName'                                 => 'kernel/classes/ezcontentclassname.php',
       'eZContentClassNameList'                             => 'kernel/classes/ezcontentclassnamelist.php',
@@ -214,7 +214,6 @@ return array(
       'eZImageShellHandler'                                => 'lib/ezimage/classes/ezimageshellhandler.php',
       'eZImageTextLayer'                                   => 'lib/ezimage/classes/ezimagetextlayer.php',
       'eZImageType'                                        => 'kernel/classes/datatypes/ezimage/ezimagetype.php',
-      'eZImportLookupTable'                                => 'kernel/classes/ezimportlookuptable.php',
       'eZInfocollectorFunctionCollection'                  => 'kernel/infocollector/ezinfocollectorfunctioncollection.php',
       'eZInformationCollection'                            => 'kernel/classes/ezinformationcollection.php',
       'eZInformationCollectionAttribute'                   => 'kernel/classes/ezinformationcollectionattribute.php',
@@ -246,7 +245,6 @@ return array(
       'eZMimeType'                                         => 'lib/ezutils/classes/ezmimetype.php',
       'eZModule'                                           => 'lib/ezutils/classes/ezmodule.php',
       'eZModuleFunctionInfo'                               => 'lib/ezutils/classes/ezmodulefunctioninfo.php',
-      'eZModuleManager'                                    => 'kernel/classes/ezmodulemanager.php',
       'eZModuleOperationInfo'                              => 'lib/ezutils/classes/ezmoduleoperationinfo.php',
       'eZModuleOperator'                                   => 'kernel/common/ezmoduleoperator.php',
       'eZModuleParamsOperator'                             => 'kernel/common/ezmoduleparamsoperator.php',
@@ -332,6 +330,7 @@ return array(
       'eZRSSEditFunction'                                  => 'kernel/rss/edit_functions.php',
       'eZRSSExport'                                        => 'kernel/classes/ezrssexport.php',
       'eZRSSExportItem'                                    => 'kernel/classes/ezrssexportitem.php',
+      'eZRSSFunctionCollection'                            => 'kernel/rss/ezrssfunctioncollection.php',
       'eZRSSImport'                                        => 'kernel/classes/ezrssimport.php',
       'eZRandomTranslator'                                 => 'lib/ezi18n/classes/ezrandomtranslator.php',
       'eZRangeOption'                                      => 'kernel/classes/datatypes/ezrangeoption/ezrangeoption.php',
@@ -355,6 +354,7 @@ return array(
       'eZSOAPServer'                                       => 'lib/ezsoap/classes/ezsoapserver.php',
       'eZSSLZone'                                          => 'kernel/classes/ezsslzone.php',
       'eZScript'                                           => 'kernel/classes/ezscript.php',
+      'eZScriptClusterPurge'                               => 'kernel/private/classes/ezscriptclusterpurge.php',
       'eZSearch'                                           => 'kernel/classes/ezsearch.php',
       'eZSearchEngine'                                     => 'kernel/search/plugins/ezsearchengine/ezsearchengine.php',
       'eZSearchFunctionCollection'                         => 'kernel/search/ezsearchfunctioncollection.php',
@@ -412,7 +412,6 @@ return array(
       'eZSubtreeSubscriptionType'                          => 'kernel/classes/datatypes/ezsubtreesubscription/ezsubtreesubscriptiontype.php',
       'eZSys'                                              => 'lib/ezutils/classes/ezsys.php',
       'eZSysInfo'                                          => 'lib/ezutils/classes/ezsysinfo.php',
-      'eZTARArchiveHandler'                                => 'lib/ezfile/classes/eztararchivehandler.php',
       'eZTOCOperator'                                      => 'kernel/common/eztocoperator.php',
       'eZTSTranslator'                                     => 'lib/ezi18n/classes/eztstranslator.php',
       'eZTemplate'                                         => 'lib/eztemplate/classes/eztemplate.php',
@@ -489,6 +488,7 @@ return array(
       'eZURI'                                              => 'lib/ezutils/classes/ezuri.php',
       'eZURL'                                              => 'kernel/classes/datatypes/ezurl/ezurl.php',
       'eZURLAliasFilter'                                   => 'kernel/classes/ezurlaliasfilter.php',
+      'eZURLAliasFilterAppendNodeID'                       => 'kernel/private/classes/urlaliasfilters/ezurlaliasfilterappendnodeid.php',
       'eZURLAliasML'                                       => 'kernel/classes/ezurlaliasml.php',
       'eZURLAliasQuery'                                    => 'kernel/classes/ezurlaliasquery.php',
       'eZURLFunctionCollection'                            => 'kernel/url/ezurlfunctioncollection.php',
@@ -549,11 +549,11 @@ return array(
       'ezpAutoloadOutput'                                  => 'kernel/private/interfaces/ezpautoloadoutput.php',
       'ezpAutoloader'                                      => 'autoload.php',
       'ezpExtensionOptions'                                => 'kernel/private/options/ezpextensionoptions.php',
+      'ezpI18n'                                            => 'kernel/common/ezpi18n.php',
       'ezpLanguageSwitcher'                                => 'kernel/private/classes/ezplanguageswitcher.php',
       'ezpLanguageSwitcherCapable'                         => 'kernel/private/interfaces/ezplanguageswitchercapable.php',
       'ezpLanguageSwitcherFunctionCollection'              => 'kernel/private/modules/switchlanguage/ezpLanguageSwitcherFunctionCollection.php',
       'ezpLanguageSwitcherOperator'                        => 'kernel/private/eztemplate/ezplanguageswitcheroperator.php',
-      'smtp'                                               => 'lib/ezutils/classes/ezsmtp.php',
     );
 
 ?>

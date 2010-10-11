@@ -2,10 +2,10 @@
 //
 // Created on: <06-Oct-2002 16:01:10 amos>
 //
+// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.2.0
-// BUILD VERSION: 24182
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 4.3.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -22,6 +22,8 @@
 //   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 //   MA 02110-1301, USA.
 //
+//
+// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
 /*! \file
@@ -694,7 +696,11 @@ $FunctionList['can_instantiate_class_list'] = array( 'name' => 'can_instantiate_
                                                                             array( 'name' => 'as_object',
                                                                                    'type' => 'bool',
                                                                                    'required' => false,
-                                                                                   'default' => true ) ) );
+                                                                                   'default' => true ),
+                                                                            array( 'name' => 'group_by_class_group',
+                                                                                   'type' => 'bool',
+                                                                                   'required' => false,
+                                                                                   'default' => false ) ) );
 
 $FunctionList['can_instantiate_classes'] = array( 'name' => 'can_instantiate_classes',
                                                   'operation_types' => array( 'read' ),
@@ -906,6 +912,10 @@ $FunctionList['object_count_by_user_id'] = array( 'name' => 'object_count_by_use
                                                                      array( 'name' => 'user_id',
                                                                             'type' => 'integer',
                                                                             'required' => true,
+                                                                            'default' => false ),
+                                                                     array( 'name' => 'status',
+                                                                            'type' => 'integer',
+                                                                            'required' => false,
                                                                             'default' => false ) ) );
 
 $FunctionList['same_classattribute_node'] = array( 'name' => 'same_classattribute_node',

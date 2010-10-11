@@ -1,6 +1,5 @@
 {let item_type=ezpreference( 'admin_list_limit' )
      number_of_items=min( $item_type, 3)|choose( 10, 10, 25, 50 )
-     wish_list_items=fetch( 'shop', 'wish_list', hash( 'production_id', $wish_list.productcollection_id, 'offset', $view_parameters.offset, 'limit', number_of_items ) )
      wish_list_count=fetch( 'shop', 'wish_list_count', hash( 'production_id', $wish_list.productcollection_id ) )}
 <form name="wishlistform" method="post" action={'/shop/wishlist/'|ezurl}>
 
@@ -16,7 +15,7 @@
 
 {* DESIGN: Content START *}<div class="box-ml"><div class="box-mr"><div class="box-content">
 
-{section show=$wish_list_items}
+{if $wish_list_count}
 {* Items per page *}
 <div class="context-toolbar">
 <div class="block">
@@ -61,7 +60,7 @@
     <th>{'Total price (inc. VAT)'|i18n( 'design/admin/shop/wishlist')}</th>
 *}
 </tr>
-{section var=WishedItems loop=$wish_list_items sequence=array( bglight, bgdark )}
+{section var=WishedItems loop=fetch( 'shop', 'wish_list', hash( 'production_id', $wish_list.productcollection_id, 'offset', $view_parameters.offset, 'limit', number_of_items ) ) sequence=array( bglight, bgdark )}
 <tr class="{$WishedItems.sequence}">
 
     {* Remove. *}
@@ -78,10 +77,10 @@
 {/section})
         {/section}
         <input type="hidden" name="ProductItemIDList[]" value="{$WishedItems.item.id}" />
-	</td>
+        </td>
 
     {* Quantity. *}
-    {* <td><input type="text" name="ProductItemCountList[]" value="{$WishedItems.item.item_count}" size="3" />	</td> *}
+    {* <td><input type="text" name="ProductItemCountList[]" value="{$WishedItems.item.item_count}" size="3" />  </td> *}
 
     {* VAT. *}
     {* <td>{$WishedItems.item.vat_value}%</td> *}
@@ -115,24 +114,24 @@
          item_limit=$number_of_items}
 </div>
 
-{section-else}
+{else}
 <div class="block">
 <p>{'The wish list is empty.'|i18n( 'design/admin/shop/wishlist')}</p>
 </div>
-{/section}
+{/if}
 
 {* DESIGN: Content END *}</div></div></div>
 
 <div class="controlbar">
 {* DESIGN: Control bar START *}<div class="box-bc"><div class="box-ml"><div class="box-mr"><div class="box-tc"><div class="box-bl"><div class="box-br">
 <div class="block">
-{section show=$wish_list.items}
+{if $wish_list.items}
 <input class="button" type="submit" name="RemoveProductItemButton" value="{'Remove selected'|i18n( 'design/admin/shop/wishlist' )}" title="{'Remove selected items.'|i18n( 'design/admin/shop/wishlist' )}" />
 {* <input class="button" type="submit" name="StoreChangesButton" value="{'Apply changes'|i18n( 'design/admin/shop/wishlist' )}" title="{'Click this button to store changes if you have modified quantity and/or option values.'|i18n( 'design/admin/shop/wishlist' )}" /> *}
-{section-else}
+{else}
 <input class="button-disabled" type="submit" name="RemoveProductItemButton" value="{'Remove selected'|i18n( 'design/admin/shop/wishlist' )}" disabled="disabled" />
 {* <input class="button-disabled" type="submit" name="StoreChangesButton" value="{'Apply changes'|i18n( 'design/admin/shop/wishlist' )}" disabled="disabled" /> *}
-{/section}
+{/if}
 </div>
 {* DESIGN: Control bar END *}</div></div></div></div></div></div>
 </div>

@@ -4,10 +4,10 @@
 //
 // Created on: <06-Oct-2002 16:19:31 amos>
 //
+// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.2.0
-// BUILD VERSION: 24182
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 4.3.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -24,6 +24,8 @@
 //   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 //   MA 02110-1301, USA.
 //
+//
+// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
 /*! \file
@@ -570,7 +572,7 @@ class eZContentFunctionCollection
         return array( 'result' => $versionList[0]['count'] );
     }
 
-    static public function canInstantiateClassList( $groupID, $parentNode, $filterType = 'include', $fetchID, $asObject )
+    static public function canInstantiateClassList( $groupID, $parentNode, $filterType = 'include', $fetchID, $asObject, $groupByClassGroup = false )
     {
         $ClassGroupIDs = false;
 
@@ -593,6 +595,36 @@ class eZContentFunctionCollection
         else
         {
             $classList = eZContentClass::canInstantiateClassList( $asObject, $filterType == 'include', $ClassGroupIDs, $fetchID );
+        }
+
+        if ( $groupByClassGroup && $asObject )
+        {
+            $tmpClassList = array();
+
+            $ini = eZINI::instance( 'content.ini' );
+
+            foreach ( $classList as $class )
+            {
+                foreach ( $class->fetchGroupList() as $group )
+                {
+                    $groupID = $group->attribute( 'group_id' );
+
+                    if ( !in_array( $class->attribute('identifier'), $ini->variable( 'FetchFunctionSettings', 'InstClassListFilter' ) ) )
+                    {
+                        if ( isset( $tmpClassList[$groupID] ) )
+                        {
+                            $tmpClassList[$groupID]['items'][] = $class;
+                        }
+                        else
+                        {
+                            $tmpClassList[$groupID]['items'] = array( $class );
+                            $tmpClassList[$groupID]['group_name'] = $group->attribute( 'group_name' );
+                        }
+                    }
+                }
+            }
+
+            $classList = $tmpClassList;
         }
 
         return array( 'result' => $classList );
@@ -762,9 +794,9 @@ class eZContentFunctionCollection
         return $result;
     }
 
-    static public function fetchObjectCountByUserID( $classID, $userID )
+    static public function fetchObjectCountByUserID( $classID, $userID, $status = false )
     {
-        $objectCount = eZContentObject::fetchObjectCountByUserID( $classID, $userID );
+        $objectCount = eZContentObject::fetchObjectCountByUserID( $classID, $userID, $status );
         return array( 'result' => $objectCount );
     }
 
@@ -1439,15 +1471,15 @@ class eZContentFunctionCollection
 
     static public function fetchAvailableSortFieldList()
     {
-        return array( 'result' => array( '6' => ezi18n( 'kernel/content', 'Class identifier' ),
-                                         '7' => ezi18n( 'kernel/content', 'Class name' ),
-                                         '5' => ezi18n( 'kernel/content', 'Depth' ),
-                                         '3' => ezi18n( 'kernel/content', 'Modified' ),
-                                         '9' => ezi18n( 'kernel/content', 'Name' ),
-                                         '1' => ezi18n( 'kernel/content', 'Path String' ),
-                                         '8' => ezi18n( 'kernel/content', 'Priority' ),
-                                         '2' => ezi18n( 'kernel/content', 'Published' ),
-                                         '4' => ezi18n( 'kernel/content', 'Section' ) ) );
+        return array( 'result' => array( '6' => ezpI18n::tr( 'kernel/content', 'Class identifier' ),
+                                         '7' => ezpI18n::tr( 'kernel/content', 'Class name' ),
+                                         '5' => ezpI18n::tr( 'kernel/content', 'Depth' ),
+                                         '3' => ezpI18n::tr( 'kernel/content', 'Modified' ),
+                                         '9' => ezpI18n::tr( 'kernel/content', 'Name' ),
+                                         '1' => ezpI18n::tr( 'kernel/content', 'Path String' ),
+                                         '8' => ezpI18n::tr( 'kernel/content', 'Priority' ),
+                                         '2' => ezpI18n::tr( 'kernel/content', 'Published' ),
+                                         '4' => ezpI18n::tr( 'kernel/content', 'Section' ) ) );
     }
 
     static public function fetchCountryList( $filter, $value )

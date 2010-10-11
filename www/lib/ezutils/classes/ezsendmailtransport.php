@@ -4,10 +4,10 @@
 //
 // Created on: <10-Dec-2002 14:41:22 amos>
 //
+// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.2.0
-// BUILD VERSION: 24182
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 4.3.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -24,6 +24,8 @@
 //   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 //   MA 02110-1301, USA.
 //
+//
+// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
 /*! \file
@@ -95,6 +97,16 @@ class eZSendmailTransport extends eZMailTransport
             {
                 $receiverEmailText = $mail->receiverEmailText();
             }
+
+            // If in debug mode, send to debug email address and nothing else
+            if ( $ini->variable( 'MailSettings', 'DebugSending' ) == 'enabled' )
+            {
+                $receiverEmailText = $ini->variable( 'MailSettings', 'DebugReceiverEmail' );
+                $excludeHeaders[] = 'To';
+                $excludeHeaders[] = 'Cc';
+                $excludeHeaders[] = 'Bcc';
+            }
+
             $extraHeaders = $mail->headerText( array( 'exclude-headers' => $excludeHeaders ) );
 
             return mail( $receiverEmailText, $mail->subject(), $message, $extraHeaders, $sendmailOptions );

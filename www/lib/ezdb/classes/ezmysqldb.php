@@ -6,10 +6,10 @@
 //
 // Created on: <12-Feb-2002 15:54:17 bf>
 //
+// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.2.0
-// BUILD VERSION: 24182
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 4.3.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -26,6 +26,8 @@
 //   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 //   MA 02110-1301, USA.
 //
+//
+// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
 /*!
@@ -91,7 +93,7 @@ class eZMySQLDB extends eZDBInterface
             }
             else
             {
-                $connection =& $this->DBWriteConnection;
+                $connection = $this->DBWriteConnection;
             }
 
             if ( $connection and $this->DBWriteConnection )
@@ -175,7 +177,6 @@ class eZMySQLDB extends eZDBInterface
 
         if ( $charset !== null )
         {
-            $originalCharset = $charset;
             $charset = eZCharsetInfo::realCharsetCode( $charset );
             // Convert charset names into something MySQL will understand
             if ( isset( $this->CharsetMapping[ $charset ] ) )
@@ -315,7 +316,6 @@ class eZMySQLDB extends eZDBInterface
         if ( $this->IsConnected )
         {
             eZDebug::accumulatorStart( 'mysql_query', 'mysql_total', 'Mysql_queries' );
-            $orig_sql = $sql;
             // The converted sql should not be output
             if ( $this->InputTextCodec )
             {
@@ -453,7 +453,8 @@ class eZMySQLDB extends eZDBInterface
             }
             else
             {
-                eZDebug::writeError( "Query error: " . mysql_error( $connection ) . ". Query: ". $sql, "eZMySQLDB"  );
+                $errorMessage = "Query error: " . mysql_error( $connection ) . ". Query: ". $sql;
+                eZDebug::writeError( $errorMessage, "eZMySQLDB"  );
                 $oldRecordError = $this->RecordError;
                 // Turn off error handling while we unlock
                 $this->RecordError = false;
@@ -461,6 +462,10 @@ class eZMySQLDB extends eZDBInterface
                 $this->RecordError = $oldRecordError;
 
                 $this->reportError();
+
+                // This is to behave the same way as other RDBMS PHP API as PostgreSQL
+                // functions which throws an error with a failing request.
+                trigger_error( "mysql_query(): $errorMessage", E_USER_ERROR );
 
                 return false;
             }
@@ -791,7 +796,8 @@ class eZMySQLDB extends eZDBInterface
     {
         if ( $this->IsConnected )
         {
-            mysql_close( $this->DBConnection );
+            if ( $this->UseSlaveServer === true )
+                mysql_close( $this->DBConnection );
             mysql_close( $this->DBWriteConnection );
         }
     }

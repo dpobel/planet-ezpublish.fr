@@ -50,37 +50,37 @@ void merge( MetaTranslator *tor, const MetaTranslator *virginTor, const QString 
       according to the virgin translator.
     */
     for ( it = all.begin(); it != all.end(); ++it ) {
-	MetaTranslatorMessage::Type newType;
-	MetaTranslatorMessage m = *it;
+        MetaTranslatorMessage::Type newType;
+        MetaTranslatorMessage m = *it;
 
-	// skip context comment
-	if ( !QCString((*it).sourceText()).isEmpty() ) {
-	    if ( !virginTor->contains((*it).context(), (*it).sourceText(),
-				      (*it).comment()) ) {
-		newType = MetaTranslatorMessage::Obsolete;
-		if ( m.type() != MetaTranslatorMessage::Obsolete )
-		    obsoleted++;
-	    } else {
-		switch ( m.type() ) {
-		case MetaTranslatorMessage::Finished:
-		    newType = MetaTranslatorMessage::Finished;
-		    known++;
-		    break;
-		case MetaTranslatorMessage::Unfinished:
-		    newType = MetaTranslatorMessage::Unfinished;
-		    known++;
-		    break;
-		case MetaTranslatorMessage::Obsolete:
-		    newType = MetaTranslatorMessage::Unfinished;
-		    neww++;
-		}
-	    }
+        // skip context comment
+        if ( !QCString((*it).sourceText()).isEmpty() ) {
+            if ( !virginTor->contains((*it).context(), (*it).sourceText(),
+                                      (*it).comment()) ) {
+                newType = MetaTranslatorMessage::Obsolete;
+                if ( m.type() != MetaTranslatorMessage::Obsolete )
+                    obsoleted++;
+            } else {
+                switch ( m.type() ) {
+                case MetaTranslatorMessage::Finished:
+                    newType = MetaTranslatorMessage::Finished;
+                    known++;
+                    break;
+                case MetaTranslatorMessage::Unfinished:
+                    newType = MetaTranslatorMessage::Unfinished;
+                    known++;
+                    break;
+                case MetaTranslatorMessage::Obsolete:
+                    newType = MetaTranslatorMessage::Unfinished;
+                    neww++;
+                }
+            }
 
-	    if ( newType != m.type() ) {
-		m.setType( newType );
-		tor->insert( m );
-	    }
-	}
+            if ( newType != m.type() ) {
+                m.setType( newType );
+                tor->insert( m );
+            }
+        }
     }
 
     /*
@@ -90,12 +90,12 @@ void merge( MetaTranslator *tor, const MetaTranslator *virginTor, const QString 
     all = virginTor->messages();
 
     for ( it = all.begin(); it != all.end(); ++it ) {
-	if ( !tor->contains((*it).context(), (*it).sourceText(),
-			    (*it).comment()) ) {
-	    tor->insert( *it );
-	    if ( !QCString((*it).sourceText()).isEmpty() )
-		neww++;
-	}
+        if ( !tor->contains((*it).context(), (*it).sourceText(),
+                            (*it).comment()) ) {
+            tor->insert( *it );
+            if ( !QCString((*it).sourceText()).isEmpty() )
+                neww++;
+        }
     }
 
     /*

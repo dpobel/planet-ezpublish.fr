@@ -2,10 +2,10 @@
 //
 // Created on: <13-Feb-2005 03:13:00 bh>
 //
+// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.2.0
-// BUILD VERSION: 24182
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 4.3.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -23,8 +23,10 @@
 //   MA 02110-1301, USA.
 //
 //
+// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
+//
 
-require_once( 'kernel/common/template.php' );
+
 
 $http = eZHTTPTool::instance();
 $Module = $Params['Module'];
@@ -53,14 +55,14 @@ if( !$object )
 $objectID   = $collection->attribute( 'contentobject_id' );
 $objectName = $object->attribute( 'name' );
 
-$tpl = templateInit();
+$tpl = eZTemplate::factory();
 $tpl->setVariable( 'module', $Module );
 $tpl->setVariable( 'collection', $collection );
 
 $Result = array();
 $Result['content'] = $tpl->fetch( 'design:infocollector/view.tpl' );
 $Result['path'] = array( array( 'url' => '/infocollector/overview',
-                                'text' => ezi18n( 'kernel/infocollector', 'Collected information' ) ),
+                                'text' => ezpI18n::tr( 'kernel/infocollector', 'Collected information' ) ),
                          array( 'url' => '/infocollector/collectionlist/' . $objectID,
                                 'text' => $objectName ),
                          array( 'url' => false,

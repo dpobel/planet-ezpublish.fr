@@ -5,17 +5,17 @@
 </div>
 
 <select name="Year">
-    <option value="0" {section show=eq($year,0)}selected="selected"{/section}>[{"All Years"|i18n("design/standard/shop")}]</option>
+    <option value="0" {if eq($year,0)}selected="selected"{/if}>[{"All Years"|i18n("design/standard/shop")}]</option>
     {section var=YearValue loop=$year_list}
-        <option value="{$YearValue}" {section show=eq($YearValue,$year)}selected="selected"{/section}>{$YearValue}</option>
+        <option value="{$YearValue}" {if eq($YearValue,$year)}selected="selected"{/if}>{$YearValue}</option>
     {/section}
 </select>
 &nbsp;
 
 <select name="Month">
-    <option value="0" {section show=eq($month,0)}selected="selected"{/section}>[{"All Months"|i18n("design/standard/shop")}]</option>
+    <option value="0" {if eq($month,0)}selected="selected"{/if}>[{"All Months"|i18n("design/standard/shop")}]</option>
     {section var=MonthItem loop=$month_list}
-        <option value="{$MonthItem.value}" {section show=eq($MonthItem.value,$month)}selected="selected"{/section}>{$MonthItem.name}</option>
+        <option value="{$MonthItem.value}" {if eq($MonthItem.value,$month)}selected="selected"{/if}>{$MonthItem.name}</option>
     {/section}
 </select>
 &nbsp;
@@ -33,18 +33,18 @@
 
 <table class="list" width="100%" cellspacing="0" cellpadding="0" border="0">
 <tr>
-	<th>
-	{"Product"|i18n("design/standard/shop")}
-	</th>
-	<th>
-	{"Amount"|i18n("design/standard/shop")}
-	</th>
-	<th>
-	{"Total ex. VAT"|i18n("design/standard/shop")}
-	</th>
-	<th>
-	{"Total inc. VAT"|i18n("design/standard/shop")}
-	</th>
+        <th>
+        {"Product"|i18n("design/standard/shop")}
+        </th>
+        <th>
+        {"Amount"|i18n("design/standard/shop")}
+        </th>
+        <th>
+        {"Total ex. VAT"|i18n("design/standard/shop")}
+        </th>
+        <th>
+        {"Total inc. VAT"|i18n("design/standard/shop")}
+        </th>
 </tr>
 
 {section var=Product loop=$statistic_result[0].product_list sequence=array(bglight,bgdark)}
@@ -118,10 +118,10 @@
 {/foreach}
 
 <tr>
-  	<td class="bgdark"><h2>{"SUM:"|i18n("design/standard/shop")}</h2></td>
+        <td class="bgdark"><h2>{"SUM:"|i18n("design/standard/shop")}</h2></td>
     <td class="bgdark"></td>
-	<td class="bgdark"><b>{$sum_ex_vat_text}</b></td>
-	<td class="bgdark"><b>{$sum_inc_vat_text}</b></td>
+        <td class="bgdark"><b>{$sum_ex_vat_text}</b></td>
+        <td class="bgdark"><b>{$sum_inc_vat_text}</b></td>
 </tr>
 
 </table>

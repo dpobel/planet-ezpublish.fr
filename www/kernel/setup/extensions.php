@@ -4,10 +4,10 @@
 //
 // Created on: <03-Jul-2003 10:14:14 jhe>
 //
+// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.2.0
-// BUILD VERSION: 24182
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 4.3.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -25,17 +25,27 @@
 //   MA 02110-1301, USA.
 //
 //
+// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
+//
 
 $http = eZHTTPTool::instance();
 $module = $Params['Module'];
 
-require_once( "kernel/common/template.php" );
-$tpl = templateInit();
+
+$tpl = eZTemplate::factory();
 
 $extensionDir = eZExtension::baseDirectory();
 $availableExtensionArray = eZDir::findSubItems( $extensionDir, 'dl' );
-sort( $availableExtensionArray );
 
+// open site.ini for reading
+$siteINI = eZINI::instance();
+$siteINI->load();
+$selectedExtensionArray       = $siteINI->variable( 'ExtensionSettings', "ActiveExtensions" );
+$selectedAccessExtensionArray = $siteINI->variable( 'ExtensionSettings', "ActiveAccessExtensions" );
+$selectedExtensions           = array_merge( $selectedExtensionArray, $selectedAccessExtensionArray );
+$selectedExtensions           = array_unique( $selectedExtensions );
+
+// When the user clicks on "Apply changes" button in admin interface in the Extensions section
 if ( $module->isCurrentAction( 'ActivateExtensions' ) )
 {
     $ini = eZINI::instance( 'module.ini' );
@@ -52,9 +62,18 @@ if ( $module->isCurrentAction( 'ActivateExtensions' ) )
         $selectedExtensionArray = array();
     }
 
+    // The file settings/override/site.ini.append.php is updated like this:
+    // - take the existing list of extensions from site.ini.append.php (to preserve their order)
+    // - remove from the list the extensions that the user unchecked in the admin interface
+    // - add to the list the extensions checked by the user in the admin interface, but to the end of the list
+    $intersection = array_intersect( $selectedExtensions, $selectedExtensionArray );
+    $difference = array_diff( $selectedExtensionArray, $selectedExtensions );
+    $toSave = array_merge( $intersection, $difference );
+    $toSave = array_unique( $toSave );
+
     // open settings/override/site.ini.append[.php] for writing
     $writeSiteINI = eZINI::instance( 'site.ini.append', 'settings/override', null, null, false, true );
-    $writeSiteINI->setVariable( "ExtensionSettings", "ActiveExtensions", $selectedExtensionArray );
+    $writeSiteINI->setVariable( "ExtensionSettings", "ActiveExtensions", $toSave );
     $writeSiteINI->save( 'site.ini.append', '.php', false, false );
     eZCache::clearByTag( 'ini' );
 
@@ -72,7 +91,7 @@ if ( $module->isCurrentAction( 'ActivateExtensions' ) )
     updateAutoload( $tpl );
 }
 
-// open site.ini for reading
+// open site.ini for reading (need to do it again to take into account the changes made to site.ini after clicking "Apply changes" button above
 $siteINI = eZINI::instance();
 $siteINI->load();
 $selectedExtensionArray       = $siteINI->variable( 'ExtensionSettings', "ActiveExtensions" );
@@ -91,7 +110,7 @@ $tpl->setVariable( "selected_extension_array", $selectedExtensions );
 $Result = array();
 $Result['content'] = $tpl->fetch( "design:setup/extensions.tpl" );
 $Result['path'] = array( array( 'url' => false,
-                                'text' => ezi18n( 'kernel/setup', 'Extension configuration' ) ) );
+                                'text' => ezpI18n::tr( 'kernel/setup', 'Extension configuration' ) ) );
 
 function updateAutoload( $tpl = null )
 {

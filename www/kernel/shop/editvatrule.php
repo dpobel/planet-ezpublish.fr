@@ -2,10 +2,10 @@
 //
 // Created on: <18-Feb-2006 13:11:18 vs>
 //
+// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.2.0
-// BUILD VERSION: 24182
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 4.3.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -22,6 +22,8 @@
 //   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 //   MA 02110-1301, USA.
 //
+//
+// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
 // Parameters: ruleID (optional)
@@ -49,12 +51,12 @@ function checkEnteredData( $country, $categories, $vatType, $productCategories, 
     if ( !$country || !is_numeric( $vatType ) )
     {
         $errors = array();
-        $errorHeader = ezi18n( 'kernel/shop/editvatrule', 'Invalid data entered' );
+        $errorHeader = ezpI18n::tr( 'kernel/shop/editvatrule', 'Invalid data entered' );
 
         if ( !$country )
-            $errors[] = ezi18n( 'kernel/shop/editvatrule', 'Choose a country.' );
+            $errors[] = ezpI18n::tr( 'kernel/shop/editvatrule', 'Choose a country.' );
         if ( !is_numeric( $vatType ) )
-            $errors[] = ezi18n( 'kernel/shop/editvatrule', 'Choose a VAT type.' );
+            $errors[] = ezpI18n::tr( 'kernel/shop/editvatrule', 'Choose a VAT type.' );
 
         return array( $errorHeader, $errors );
     }
@@ -64,7 +66,7 @@ function checkEnteredData( $country, $categories, $vatType, $productCategories, 
      * conflicts with existing ones.
      */
 
-    $errorHeader = ezi18n( 'kernel/shop/editvatrule', 'Conflicting rule' );
+    $errorHeader = ezpI18n::tr( 'kernel/shop/editvatrule', 'Conflicting rule' );
     $vatRules = eZVatRule::fetchList();
 
     // If the rule is default one
@@ -79,11 +81,11 @@ function checkEnteredData( $country, $categories, $vatType, $productCategories, 
                 continue;
 
             if ( $country == '*' )
-                $errors[] = ezi18n( 'kernel/shop/editvatrule', 'Default rule for any country already exists.' );
+                $errors[] = ezpI18n::tr( 'kernel/shop/editvatrule', 'Default rule for any country already exists.' );
             else
             {
                 $errorMessage = "Default rule for country '%1' already exists.";
-                $errors[] = ezi18n( 'kernel/shop/editvatrule', $errorMessage, null, array( $country ) );
+                $errors[] = ezpI18n::tr( 'kernel/shop/editvatrule', $errorMessage, null, array( $country ) );
             }
 
             break;
@@ -121,7 +123,7 @@ function checkEnteredData( $country, $categories, $vatType, $productCategories, 
             else
                 $errorMessage = "There is already a rule defined for country '%1' containing the following categories: %2.";
 
-            $errors[] = ezi18n( 'kernel/shop/editvatrule', $errorMessage, null, array( $country, $intersectingCategories ) );
+            $errors[] = ezpI18n::tr( 'kernel/shop/editvatrule', $errorMessage, null, array( $country, $intersectingCategories ) );
         }
     }
 
@@ -164,7 +166,7 @@ else if ( in_array( $module->currentAction(), array(  'Create', 'StoreChanges' )
             if ( !is_object( $vatRule ) )
             {
                 //$ruleID = null;
-                $errors[] = ezi18n( 'kernel/shop/editvatrule', 'Rule not found' );
+                $errors[] = ezpI18n::tr( 'kernel/shop/editvatrule', 'Rule not found' );
                 break;
             }
         }
@@ -196,7 +198,7 @@ if ( is_numeric( $ruleID ) )
     $tplCategoryIDs  = $tplVatRule->attribute( 'product_categories_ids' );
     $tplVatTypeID    = $tplVatRule->attribute( 'vat_type' );
 
-    $pathText = ezi18n( 'kernel/shop/editvatrule', 'Edit VAT charging rule' );
+    $pathText = ezpI18n::tr( 'kernel/shop/editvatrule', 'Edit VAT charging rule' );
 }
 else
 {
@@ -205,7 +207,7 @@ else
     $tplVatTypeID = false;
     $tplCategoryIDs = array();
 
-    $pathText = ezi18n( 'kernel/shop/editvatrule', 'Create new VAT charging rule' );
+    $pathText = ezpI18n::tr( 'kernel/shop/editvatrule', 'Create new VAT charging rule' );
 }
 
 if ( $errors !== false )
@@ -217,8 +219,8 @@ if ( $errors !== false )
 
 $vatTypes = eZVatType::fetchList( true, true );
 
-require_once( 'kernel/common/template.php' );
-$tpl = templateInit();
+
+$tpl = eZTemplate::factory();
 
 $tpl->setVariable( 'error_header', $errorHeader );
 $tpl->setVariable( 'errors', $errors );

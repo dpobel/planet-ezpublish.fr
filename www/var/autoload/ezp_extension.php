@@ -2,9 +2,9 @@
 /**
  * Autoloader definition for eZ Publish Extension files.
  *
- * @copyright Copyright (C) 1999-2009 eZ Systems AS. All rights reserved.
+ * @copyright Copyright (C) 1999-2010 eZ Systems AS. All rights reserved.
  * @license http://ez.no/licenses/gnu_gpl GNU GPL v2
- * @version //autogentag//
+ * @version 4.3.0
  * @package kernel
  *
  */
@@ -12,6 +12,8 @@
 return array(
       'EnchantSpell'                                     => 'extension/ezoe/modules/ezoe/classes/EnchantSpell.php',
       'GoogleSpell'                                      => 'extension/ezoe/modules/ezoe/classes/GoogleSpell.php',
+      'JSMin'                                            => 'extension/ezjscore/lib/jsmin.php',
+      'JSMinException'                                   => 'extension/ezjscore/lib/jsmin.php',
       'Moxiecode_JSON'                                   => 'extension/ezoe/modules/ezoe/classes/utils/mcejson.php',
       'Moxiecode_JSONReader'                             => 'extension/ezoe/modules/ezoe/classes/utils/mcejson.php',
       'PSpell'                                           => 'extension/ezoe/modules/ezoe/classes/PSpell.php',
@@ -238,6 +240,7 @@ return array(
       'Zend_Validate_Sitemap_Loc'                        => 'extension/autostatus/classes/Zend/Validate/Sitemap/Loc.php',
       'Zend_Validate_Sitemap_Priority'                   => 'extension/autostatus/classes/Zend/Validate/Sitemap/Priority.php',
       'Zend_Validate_StringLength'                       => 'extension/autostatus/classes/Zend/Validate/StringLength.php',
+      'autostatusAlwayserror'                            => 'extension/autostatus/classes/autostatusalwayserror.php',
       'autostatusFunctionCollection'                     => 'extension/autostatus/classes/autostatusfunctioncollection.php',
       'autostatusIdentica'                               => 'extension/autostatus/classes/autostatusidentica.php',
       'autostatusIdenticaClient'                         => 'extension/autostatus/classes/autostatusidenticaclient.php',
@@ -247,10 +250,8 @@ return array(
       'autostatusTwitterClient'                          => 'extension/autostatus/classes/autostatustwitterclient.php',
       'autostatusType'                                   => 'extension/autostatus/eventtypes/event/autostatus/autostatustype.php',
       'cssmin'                                           => 'extension/planete/classes/cssmin-v1.0.1.b3.php',
-      'eZOEAjaxContent'                                  => 'extension/ezoe/classes/ezoeajaxcontent.php',
+      'eZContentClassEditDeferredHandler'                => 'extension/ezscriptmonitor/classes/ezcontentclasseditdeferredhandler.php',
       'eZOEInputParser'                                  => 'extension/ezoe/ezxmltext/handlers/input/ezoeinputparser.php',
-      'eZOEPacker'                                       => 'extension/ezoe/autoloads/ezoepacker.php',
-      'eZOEPackerFunctions'                              => 'extension/ezoe/classes/ezoepackerfunctions.php',
       'eZOETemplateUtils'                                => 'extension/ezoe/autoloads/ezoetemplateutils.php',
       'eZOEXMLInput'                                     => 'extension/ezoe/ezxmltext/handlers/input/ezoexmlinput.php',
       'eZOOConverter'                                    => 'extension/ezodf/classes/ezooconverter.php',
@@ -259,9 +260,22 @@ return array(
       'eZOpenofficeUploadHandler'                        => 'extension/ezodf/uploadhandlers/ezopenofficeuploadhandler.php',
       'eZPlaneteUtils'                                   => 'extension/planete/autoloads/planeteutils.php',
       'eZRESTODFHandler'                                 => 'extension/ezodf/classes/ezrestodfhandler.php',
+      'eZScheduledScript'                                => 'extension/ezscriptmonitor/classes/ezscheduledscript.php',
+      'eZScriptMonitorInfo'                              => 'extension/ezscriptmonitor/ezinfo.php',
       'ezclasslistsInfo'                                 => 'extension/ezclasslists/ezinfo.php',
+      'ezjscAccessTemplateFunctions'                     => 'extension/ezjscore/autoloads/ezjscaccesstemplatefunctions.php',
+      'ezjscAjaxContent'                                 => 'extension/ezjscore/classes/ezjscajaxcontent.php',
+      'ezjscEncodingTemplateFunctions'                   => 'extension/ezjscore/autoloads/ezjscencodingtemplatefunctions.php',
+      'ezjscPacker'                                      => 'extension/ezjscore/classes/ezjscpacker.php',
+      'ezjscPackerTemplateFunctions'                     => 'extension/ezjscore/autoloads/ezjscpackertemplatefunctions.php',
+      'ezjscServerFunctions'                             => 'extension/ezjscore/classes/ezjscserverfunctions.php',
+      'ezjscServerFunctionsJs'                           => 'extension/ezjscore/classes/ezjscserverfunctionsjs.php',
+      'ezjscServerRouter'                                => 'extension/ezjscore/classes/ezjscserverrouter.php',
+      'ezjscoreInfo'                                     => 'extension/ezjscore/ezinfo.php',
       'ezodfInfo'                                        => 'extension/ezodf/ezinfo.php',
       'ezoeInfo'                                         => 'extension/ezoe/ezinfo.php',
+      'ezoeServerFunctions'                              => 'extension/ezoe/classes/ezoeserverfunctions.php',
+      'statusUpdateEvent'                                => 'extension/autostatus/classes/statusupdateevent.php',
     );
 
 ?>

@@ -5,16 +5,15 @@
          summary_indentation=10}
 <h1>{"Group list for '%1'"|i18n('design/standard/collaboration',,array($collab_group.title|wash))}</h1>
 
-{let  group_item_count=fetch("collaboration","item_count",hash("parent_group_id",$collab_group.id))
-      group_item_list=fetch("collaboration","item_list",hash("limit",$item_limit,"offset",$offset,"parent_group_id",$collab_group.id))}
+{let  group_item_count=fetch("collaboration","item_count",hash("parent_group_id",$collab_group.id))}
 
 <table width="100%" cellspacing="6" cellpadding="0" border="0">
 <tr>
   <td valign="top">
 
-{section show=$group_item_count}
+{if $group_item_count}
 
-{include uri="design:collaboration/item_list.tpl" item_list=$group_item_list}
+{include uri="design:collaboration/item_list.tpl" item_list=fetch( "collaboration", "item_list", hash( "limit", $item_limit, "offset", $offset, "parent_group_id", $collab_group.id ) )}
 
 {include name=Navigator
          uri='design:navigator/google.tpl'
@@ -23,9 +22,9 @@
          view_parameters=$view_parameters
          item_limit=$item_limit}
 
-{section-else}
+{else}
 <p>{"No items in group."|i18n('design/standard/collaboration')}</p>
-{/section}
+{/if}
 
   </td>
 

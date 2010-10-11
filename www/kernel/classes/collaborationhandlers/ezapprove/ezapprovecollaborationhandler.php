@@ -4,10 +4,10 @@
 //
 // Created on: <23-Jan-2003 11:57:11 amos>
 //
+// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.2.0
-// BUILD VERSION: 24182
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 4.3.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -25,6 +25,8 @@
 //   MA 02110-1301, USA.
 //
 //
+// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
+//
 
 /*! \file
 */
@@ -41,8 +43,6 @@
   - data_int3 - The status of the approval, see defines.
 
 */
-
-require_once( 'kernel/common/i18n.php' );
 
 class eZApproveCollaborationHandler extends eZCollaborationItemHandler
 {
@@ -67,7 +67,7 @@ class eZApproveCollaborationHandler extends eZCollaborationItemHandler
     function eZApproveCollaborationHandler()
     {
         $this->eZCollaborationItemHandler( 'ezapprove',
-                                           ezi18n( 'kernel/classes', 'Approval' ),
+                                           ezpI18n::tr( 'kernel/classes', 'Approval' ),
                                            array( 'use-messages' => true,
                                                   'notification-types' => true,
                                                   'notification-collection-handling' => eZCollaborationItemHandler::NOTIFICATION_COLLECTION_PER_PARTICIPATION_ROLE ) );
@@ -75,7 +75,7 @@ class eZApproveCollaborationHandler extends eZCollaborationItemHandler
 
     function title( $collaborationItem )
     {
-        return ezi18n( 'kernel/classes', 'Approval' );
+        return ezpI18n::tr( 'kernel/classes', 'Approval' );
     }
 
     function content( $collaborationItem )

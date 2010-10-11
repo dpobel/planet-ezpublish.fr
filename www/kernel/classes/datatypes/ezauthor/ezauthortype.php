@@ -4,10 +4,10 @@
 //
 // Created on: <19-Aug-2002 10:51:10 bf>
 //
+// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.2.0
-// BUILD VERSION: 24182
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 4.3.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -25,6 +25,8 @@
 //   MA 02110-1301, USA.
 //
 //
+// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
+//
 
 /*!
   \class eZAuthorType ezauthortype.php
@@ -39,7 +41,7 @@ class eZAuthorType extends eZDataType
 
     function eZAuthorType()
     {
-        $this->eZDataType( self::DATA_TYPE_STRING, ezi18n( 'kernel/classes/datatypes', "Authors", 'Datatype name' ),
+        $this->eZDataType( self::DATA_TYPE_STRING, ezpI18n::tr( 'kernel/classes/datatypes', "Authors", 'Datatype name' ),
                            array( 'serialize_supported' => true ) );
     }
 
@@ -75,7 +77,7 @@ class eZAuthorType extends eZDataType
             {
                 if ( trim( $nameList[0] ) == "" )
                 {
-                    $contentObjectAttribute->setValidationError( ezi18n( 'kernel/classes/datatypes',
+                    $contentObjectAttribute->setValidationError( ezpI18n::tr( 'kernel/classes/datatypes',
                                                                          'At least one author is required.' ) );
                     return eZInputValidator::STATE_INVALID;
                 }
@@ -92,7 +94,7 @@ class eZAuthorType extends eZDataType
                     $email =  $emailList[$i];
                     if ( trim( $name )== "" )
                     {
-                        $contentObjectAttribute->setValidationError( ezi18n( 'kernel/classes/datatypes',
+                        $contentObjectAttribute->setValidationError( ezpI18n::tr( 'kernel/classes/datatypes',
                                                                              'The author name must be provided.' ) );
                         return eZInputValidator::STATE_INVALID;
 
@@ -100,7 +102,7 @@ class eZAuthorType extends eZDataType
                     $isValidate =  eZMail::validate( $email );
                     if ( ! $isValidate )
                     {
-                        $contentObjectAttribute->setValidationError( ezi18n( 'kernel/classes/datatypes',
+                        $contentObjectAttribute->setValidationError( ezpI18n::tr( 'kernel/classes/datatypes',
                                                                              'The email address is not valid.' ) );
                         return eZInputValidator::STATE_INVALID;
                     }
@@ -111,7 +113,7 @@ class eZAuthorType extends eZDataType
         {
             if ( $contentObjectAttribute->validateIsRequired() )
             {
-                $contentObjectAttribute->setValidationError( ezi18n( 'kernel/classes/datatypes',
+                $contentObjectAttribute->setValidationError( ezpI18n::tr( 'kernel/classes/datatypes',
                                                                      'At least one author is required.' ) );
                 return eZInputValidator::STATE_INVALID;
             }
@@ -249,7 +251,7 @@ class eZAuthorType extends eZDataType
             case "remove_selected" :
             {
                 $author = $contentObjectAttribute->content( );
-                $postvarname = "ContentObjectAttribute" . "_data_author_remove_" . $contentObjectAttribute->attribute( "id" );
+                $postvarname = $parameters['base_name'] . "_data_author_remove_" . $contentObjectAttribute->attribute( "id" );
                 if ( !$http->hasPostVariable( $postvarname ) )
                     break;
                 $array_remove = $http->postVariable( $postvarname );

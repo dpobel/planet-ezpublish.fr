@@ -15,7 +15,7 @@ eZOEPopupUtils.settings.tagEditTitleText = "{'Edit %tag_name tag'|i18n('design/s
 {literal} 
 
 
-tinyMCEPopup.onInit.add( ez.fn.bind( eZOEPopupUtils.init, window, {
+tinyMCEPopup.onInit.add( eZOEPopupUtils.BIND( eZOEPopupUtils.init, window, {
     tagName: ezTagName,
     form: 'EditForm',
     cancelButton: 'CancelButton',
@@ -42,17 +42,17 @@ tinyMCEPopup.onInit.add( ez.fn.bind( eZOEPopupUtils.init, window, {
                 filterOutCustomBlockTags( );
         }
     },
-    tagGenerator: function( tag, customTag, selectedHtml )
+    tagCreator: function( ed, tag, customTag, selectedHtml )
     {
         if ( !selectedHtml ) selectedHtml = customTag;
 
         if ( customTag === 'underline' )
         {
-            return '<u id="__mce_tmp" type="custom">' + selectedHtml + '<\/u>';
+            return eZOEPopupUtils.insertHTMLCleanly( ed, '<u id="__mce_tmp" type="custom">' + selectedHtml + '<\/u>', '__mce_tmp' );
         }
         else if ( customTag === 'sub' || customTag === 'sup' )
         {
-            return '<' + customTag + ' id="__mce_tmp" type="custom">' + selectedHtml + '<\/' + customTag + '>';
+            return eZOEPopupUtils.insertHTMLCleanly( ed, '<' + customTag + ' id="__mce_tmp" type="custom">' + selectedHtml + '<\/' + customTag + '>', '__mce_tmp' );
         }
         else if ( document.getElementById( customTag + '_inline_source' ).checked )
         {
@@ -61,14 +61,14 @@ tinyMCEPopup.onInit.add( ez.fn.bind( eZOEPopupUtils.init, window, {
                 var customImgUrl = document.getElementById( customTag + '_image_url_source' ), imageSrc = imageIcon;
                 if ( customImgUrl && customImgUrl.value )
                     imageSrc = customImgUrl.value;
-                return '<img id="__mce_tmp" type="custom" src="' + imageSrc + '" />';
+                return eZOEPopupUtils.insertHTMLCleanly( ed, '<img id="__mce_tmp" type="custom" src="' + imageSrc + '" \/>', '__mce_tmp' );
             }
             else
-                return '<span id="__mce_tmp" type="custom">' + selectedHtml + '<\/span>';
+                return eZOEPopupUtils.insertHTMLCleanly( ed, '<span id="__mce_tmp" type="custom">' + selectedHtml + '<\/span>', '__mce_tmp' );
         }
         else
         {
-            return '<div id="__mce_tmp" type="custom"><p>' + selectedHtml + '<\/p><\/div>';
+            return eZOEPopupUtils.insertTagCleanly( ed, 'div', '<p>' + selectedHtml + '<\/p>', {'type': 'custom' } );
         }
     },
     onTagGenerated:  function( el, ed, args )
@@ -81,10 +81,10 @@ tinyMCEPopup.onInit.add( ez.fn.bind( eZOEPopupUtils.init, window, {
             edBody = edBody.parentNode
         }
         if ( edBody.nodeName === 'BODY'
-        && edBody.childNodes.length <= (ez.array.indexOf( edBody.childNodes, temp ) +1) )
+        && edBody.childNodes.length <= (jQuery.inArray( temp, edBody.childNodes ) +1) )
         {
             var p = doc.createElement('p');
-            p.innerHTML = ed.isIE ? '&nbsp;' : '<br />';
+            p.innerHTML = ed.isIE ? '&nbsp;' : '<br \/>';
             edBody.appendChild( p );
         }
     },
@@ -103,16 +103,16 @@ tinyMCEPopup.onInit.add( ez.fn.bind( eZOEPopupUtils.init, window, {
         if ( el.nodeName !== 'DIV' && origin === 'DIV' )
         {
             // remove p tag if inline tag
-            var childs = ez.$$('> *', el);
-            if ( childs.length === 1 && childs[0].el.nodeName === 'P' )
-                el.innerHTML = childs[0].el.innerHTML;
+            var childs = jQuery('> *', el);
+            if ( childs.size() === 1 && childs[0].nodeName === 'P' )
+                el.innerHTML = childs[0].innerHTML;
         }
         else if ( el.nodeName === 'DIV' && origin !== 'DIV' )
         {
             // add p tag if block tag and no child tags
-            var childs = ez.$$('> *', el);
-            if ( childs.length === 0 || childs[0].el.nodeName !== 'P' )
-                el.innerHTML = '<p>' + el.innerHTML + '</p>';
+            var childs = jQuery('> *', el);
+            if ( childs.size() === 0 || childs[0].nodeName !== 'P' )
+                el.innerHTML = '<p>' + el.innerHTML + '<\/p>';
         }
         ed.dom.setAttrib( el, 'type', 'custom' );
 
@@ -132,12 +132,12 @@ tinyMCEPopup.onInit.add( ez.fn.bind( eZOEPopupUtils.init, window, {
 
 function filterOutCustomBlockTags( n )
 {
-    var inlineTags = ez.$c();
-    ez.$$('input[id*=_inline_source]').forEach(function( o ){
-        if ( o.el.checked ) inlineTags.push( o.el.id.split('_inline_')[0] );
+    var inlineTags = [];
+    jQuery('input[id*=_inline_source]').each(function( i, node ){
+        if ( node.checked ) inlineTags.push( node.id.split('_inline_')[0] );
     });
-    ez.$$('#custom_name_source option').forEach(function( o ){
-        if ( inlineTags.indexOf( o.el.value ) === -1 ) o.el.parentNode.removeChild( o.el );
+    jQuery('#custom_name_source option').each(function( i, node ){
+        if ( jQuery.inArray( node.value, inlineTags ) === -1 ) node.parentNode.removeChild( node );
     });
 }
 

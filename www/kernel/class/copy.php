@@ -2,10 +2,10 @@
 //
 // Created on: <08-Jan-2003 16:36:23 amos>
 //
+// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.2.0
-// BUILD VERSION: 24182
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 4.3.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -23,6 +23,8 @@
 //   MA 02110-1301, USA.
 //
 //
+// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
+//
 
 $Module = $Params['Module'];
 $ClassID = null;
@@ -34,7 +36,7 @@ if ( !$class )
 
 $classCopy = clone $class;
 $classCopy->initializeCopy( $class );
-$classCopy->setAttribute( 'version', 1 );
+$classCopy->setAttribute( 'version', eZContentClass::VERSION_STATUS_MODIFIED );
 $classCopy->store();
 
 $mainGroupID = false;
@@ -67,7 +69,7 @@ foreach ( array_keys( $classAttributes ) as $classAttributeKey )
     }
 
     $classAttributeCopy->setAttribute( 'contentclass_id', $classCopy->attribute( 'id' ) );
-    $classAttributeCopy->setAttribute( 'version', 1 );
+    $classAttributeCopy->setAttribute( 'version', eZContentClass::VERSION_STATUS_MODIFIED );
     $classAttributeCopy->store();
     $classAttributeCopies[] =& $classAttributeCopy;
     unset( $classAttributeCopy );

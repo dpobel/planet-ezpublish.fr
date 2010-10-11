@@ -4,10 +4,10 @@
 //
 // Created on: <17-Apr-2002 09:15:27 bf>
 //
+// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.2.0
-// BUILD VERSION: 24182
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 4.3.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -24,6 +24,8 @@
 //   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 //   MA 02110-1301, USA.
 //
+//
+// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
 /*!
@@ -191,6 +193,7 @@ class eZContentObject extends eZPersistentObject
                                                       "can_move_from" => "canMoveFrom",
                                                       'can_view_embed' => 'canViewEmbed',
                                                       "data_map" => "dataMap",
+                                                      "grouped_data_map" => "groupedDataMap",
                                                       "main_parent_node_id" => "mainParentNodeID",
                                                       "assigned_nodes" => "assignedNodes",
                                                       "parent_nodes" => "parentNodeIDArray",
@@ -516,6 +519,51 @@ class eZContentObject extends eZPersistentObject
         return $this->fetchDataMap();
     }
 
+    /**
+     * Generates a map with all the content object attributes where the keys are
+     * the attribute identifiers grouped by class attribute category.
+     * 
+     * @note Result is not cached, so make sure you don't call this over and over.
+     * 
+     * @return array 
+     */
+    public function groupedDataMap()
+    {
+        return self::createGroupedDataMap( $this->fetchDataMap() );
+    }
+    
+    /**
+     * Generates a map with all the content object attributes where the keys are
+     * the attribute identifiers grouped by class attribute category.
+     * 
+     * @note Result is not cached, so make sure you don't call this over and over.
+     * 
+     * @param array $contentObjectAttributes Array of eZContentObjectAttribute objects
+     * @return array 
+     */
+    public static function createGroupedDataMap( $contentObjectAttributes )
+    {
+        $groupedDataMap  = array();
+        $contentINI      = eZINI::instance( 'content.ini' );
+        $categorys       = $contentINI->variable( 'ClassAttributeSettings', 'CategoryList' );
+        $defaultCategory = $contentINI->variable( 'ClassAttributeSettings', 'DefaultCategory' );
+        foreach( $contentObjectAttributes as $attribute )
+        {
+            $classAttribute      = $attribute->contentClassAttribute();
+            $attributeCategory   = $classAttribute->attribute('category');
+            $attributeIdentifier = $classAttribute->attribute( 'identifier' );
+            if ( !isset( $categorys[ $attributeCategory ] ) || !$attributeCategory )
+                $attributeCategory = $defaultCategory;
+
+            if ( !isset( $groupedDataMap[ $attributeCategory ] ) )
+                $groupedDataMap[ $attributeCategory ] = array();
+
+            $groupedDataMap[ $attributeCategory ][$attributeIdentifier] = $attribute;
+            
+        }
+        return $groupedDataMap;
+    }
+
     /*!
      \return a map with all the content object attributes where the keys are the
              attribute identifiers.
@@ -611,20 +659,20 @@ class eZContentObject extends eZPersistentObject
 
             if ( !empty( $langCodeQuotedString ) )
             {
-                $languageText = "AND\n\t\t";
+                $languageText = "AND ";
                 $languageText .= $db->generateSQLINStatement( $langCodeQuotedString, 'ezcontentobject_attribute.language_code' );
             }
         }
 
         if ( !isset( $languageText ) )
         {
-            $languageText = "AND\n\t\t\t" . eZContentLanguage::sqlFilter( 'ezcontentobject_attribute', 'ezcontentobject_version' );
+            $languageText = "AND " . eZContentLanguage::sqlFilter( 'ezcontentobject_attribute', 'ezcontentobject_version' );
         }
 
-        $versionText = "AND\n\t\t ezcontentobject_attribute.version = '$version'";
+        $versionText = "AND ezcontentobject_attribute.version = '$version'";
 
-        $query = "SELECT\t ezcontentobject_attribute.*, ezcontentclass_attribute.identifier as identifier
-            FROM\t ezcontentobject_attribute, ezcontentclass_attribute, ezcontentobject_version
+        $query = "SELECT ezcontentobject_attribute.*, ezcontentclass_attribute.identifier as identifier
+            FROM ezcontentobject_attribute, ezcontentclass_attribute, ezcontentobject_version
             WHERE
                 ezcontentclass_attribute.version = ". eZContentClass::VERSION_STATUS_DEFINED . " AND
                 ezcontentclass_attribute.id = ezcontentobject_attribute.contentclassattribute_id AND
@@ -1974,18 +2022,18 @@ class eZContentObject extends eZPersistentObject
         if ( !$language || !isset( $this->ContentObjectAttributes[$version][$language] ) )
         {
 //             print( "uncached<br>" );
-            $versionText = "AND\n                    ezcontentobject_attribute.version = '$version'";
+            $versionText = "AND                    ezcontentobject_attribute.version = '$version'";
             if ( $language )
             {
-                $languageText = "AND\n                    ezcontentobject_attribute.language_code = '$language'";
+                $languageText = "AND                    ezcontentobject_attribute.language_code = '$language'";
             }
             else
             {
-                $languageText = "AND\n                    ".eZContentLanguage::sqlFilter( 'ezcontentobject_attribute', 'ezcontentobject_version' );
+                $languageText = "AND                    ".eZContentLanguage::sqlFilter( 'ezcontentobject_attribute', 'ezcontentobject_version' );
             }
             $attributeIDText = false;
             if ( $contentObjectAttributeID )
-                $attributeIDText = "AND\n                    ezcontentobject_attribute.id = '$contentObjectAttributeID'";
+                $attributeIDText = "AND                    ezcontentobject_attribute.id = '$contentObjectAttributeID'";
             $distinctText = false;
             if ( $distinctItemsOnly )
                 $distinctText = "GROUP BY ezcontentobject_attribute.id";
@@ -3206,7 +3254,7 @@ class eZContentObject extends eZPersistentObject
         {
             if ( isset( $params['IgnoreVisibility'] ) )
             {
-                $showInvisibleNodesCond = self::createFilterByVisibilitySQLString( $params['IgnoreVisibility'] );
+                $showInvisibleNodesCond = self::createFilterByVisibilitySQLString( $params['IgnoreVisibility'], 'inner_object' );
             }
         }
 
@@ -3215,7 +3263,7 @@ class eZContentObject extends eZPersistentObject
         if ( $attributeID && ( $relationTypeMask === false || $relationTypeMask === eZContentObject::RELATION_ATTRIBUTE ) )
         {
             $attributeID =(int) $attributeID;
-            $relationTypeMasking .= " AND contentclassattribute_id=$attributeID ";
+            $relationTypeMasking .= " AND inner_link.contentclassattribute_id = $attributeID ";
             $relationTypeMask = eZContentObject::RELATION_ATTRIBUTE;
         }
         elseif ( is_bool( $relationTypeMask ) )
@@ -3225,21 +3273,22 @@ class eZContentObject extends eZPersistentObject
 
         if ( $db->databaseName() == 'oracle' )
         {
-            $relationTypeMasking .= " AND bitand( relation_type, $relationTypeMask ) <> 0 ";
+            $relationTypeMasking .= " AND bitand( inner_link.relation_type, $relationTypeMask ) <> 0 ";
         }
         else
         {
-            $relationTypeMasking .= " AND ( relation_type & $relationTypeMask ) <> 0 ";
+            $relationTypeMasking .= " AND ( inner_link.relation_type & $relationTypeMask ) <> 0 ";
         }
 
         if ( $reverseRelatedObjects )
         {
+            $outerObjectIDSQL = 'outer_object.id = outer_link.from_contentobject_id';
             if ( is_array( $objectID ) )
             {
                 if ( count( $objectID ) > 0 )
                 {
-                    $objectIDSQL = ' AND ' . $db->generateSQLINStatement( $objectID, 'ezcontentobject_link.to_contentobject_id', false, false, 'int' ) . ' AND
-                                    ezcontentobject_link.from_contentobject_version=ezcontentobject.current_version';
+                    $objectIDSQL = ' AND ' . $db->generateSQLINStatement( $objectID, 'inner_link.to_contentobject_id', false, false, 'int' ) . ' AND
+                                     inner_link.from_contentobject_version = inner_object.current_version';
                 }
                 else
                 {
@@ -3249,24 +3298,29 @@ class eZContentObject extends eZPersistentObject
             else
             {
                 $objectID = (int) $objectID;
-                $objectIDSQL = ' AND ezcontentobject_link.to_contentobject_id = ' .  $objectID . ' AND
-                                ezcontentobject_link.from_contentobject_version=ezcontentobject.current_version';
+                $objectIDSQL = " AND inner_link.to_contentobject_id = $objectID
+                                 AND inner_link.from_contentobject_version = inner_object.current_version";
             }
-            $select = " count( DISTINCT ezcontentobject.id ) AS count";
         }
         else
         {
-            $select = " count( ezcontentobject_link.from_contentobject_id ) as count ";
-            $objectIDSQL = " AND ezcontentobject_link.from_contentobject_id='$objectID'
-                                AND ezcontentobject_link.from_contentobject_version='$version'";
+            $outerObjectIDSQL = 'outer_object.id = outer_link.to_contentobject_id';
+            $objectIDSQL = " AND inner_link.from_contentobject_id = $objectID
+                             AND inner_link.from_contentobject_version = $version";
         }
-        $query = "SELECT $select
+
+        $query = "SELECT
+                    COUNT( outer_object.id ) AS count
                   FROM
-                    ezcontentobject, ezcontentobject_link
+                    ezcontentobject outer_object, ezcontentobject inner_object, ezcontentobject_link outer_link
+                  INNER JOIN
+                    ezcontentobject_link inner_link ON outer_link.id = inner_link.id
                   WHERE
-                    ezcontentobject.id=ezcontentobject_link.from_contentobject_id AND
-                    ezcontentobject.status=" . eZContentObject::STATUS_PUBLISHED . " AND
-                    ezcontentobject_link.op_code='0'
+                    $outerObjectIDSQL
+                    AND outer_object.status = " . eZContentObject::STATUS_PUBLISHED . "
+                    AND inner_object.id = inner_link.from_contentobject_id
+                    AND inner_object.status = " . eZContentObject::STATUS_PUBLISHED . "
+                    AND inner_link.op_code = 0
                     $objectIDSQL
                     $relationTypeMasking
                     $showInvisibleNodesCond";
@@ -3460,11 +3514,9 @@ class eZContentObject extends eZPersistentObject
             // Set section of the newly created object to the section's value of it's parent object
             $sectionID = $parentObject->attribute( 'section_id' );
 
-            $userID = eZUser::currentUserID();
-
             $db = eZDB::instance();
             $db->begin();
-            $contentObject = $class->instantiateIn( $languageCode, $userID, $sectionID, false, eZContentObjectVersion::STATUS_INTERNAL_DRAFT );
+            $contentObject = $class->instantiateIn( $languageCode, false, $sectionID, false, eZContentObjectVersion::STATUS_INTERNAL_DRAFT );
             $nodeAssignment = $contentObject->createNodeAssignment( $parentNode->attribute( 'node_id' ),
                                                                     true, $remoteID,
                                                                     $class->attribute( 'sort_field' ),
@@ -4444,8 +4496,8 @@ class eZContentObject extends eZPersistentObject
             }
 
             $filterTableSQL = ', ezcontentclass_classgroup ccg';
-            $filterSQL = ( " AND\n" .
-                           "      cc.id = ccg.contentclass_id AND\n" .
+            $filterSQL = ( " AND" .
+                           "      cc.id = ccg.contentclass_id AND" .
                            "      " );
             $filterSQL .= $db->generateSQLINStatement( $groupList, 'ccg.group_id', !$includeFilter, true, 'int' );
         }
@@ -4456,9 +4508,9 @@ class eZContentObject extends eZPersistentObject
         {
             // If $asObject is true we fetch all fields in class
             $fields = $asObject ? "cc.*, $classNameFilter[nameField]" : "cc.id, $classNameFilter[nameField]";
-            $rows = $db->arrayQuery( "SELECT DISTINCT $fields\n" .
-                                     "FROM ezcontentclass cc$filterTableSQL, $classNameFilter[from]\n" .
-                                     "WHERE cc.version = " . eZContentClass::VERSION_STATUS_DEFINED . " $filterSQL AND $classNameFilter[where]\n" .
+            $rows = $db->arrayQuery( "SELECT DISTINCT $fields " .
+                                     "FROM ezcontentclass cc$filterTableSQL, $classNameFilter[from] " .
+                                     "WHERE cc.version = " . eZContentClass::VERSION_STATUS_DEFINED . " $filterSQL AND $classNameFilter[where] " .
                                      "ORDER BY $classNameFilter[nameField] ASC" );
             $classList = eZPersistentObject::handleRows( $rows, 'eZContentClass', $asObject );
         }
@@ -4473,10 +4525,10 @@ class eZContentObject extends eZPersistentObject
             $classIDCondition = $db->generateSQLInStatement( $classIDArray, 'cc.id' );
             // If $asObject is true we fetch all fields in class
             $fields = $asObject ? "cc.*, $classNameFilter[nameField]" : "cc.id, $classNameFilter[nameField]";
-            $rows = $db->arrayQuery( "SELECT DISTINCT $fields\n" .
-                                     "FROM ezcontentclass cc$filterTableSQL, $classNameFilter[from]\n" .
-                                     "WHERE $classIDCondition AND\n" .
-                                     "      cc.version = " . eZContentClass::VERSION_STATUS_DEFINED . " $filterSQL AND $classNameFilter[where]\n" .
+            $rows = $db->arrayQuery( "SELECT DISTINCT $fields " .
+                                     "FROM ezcontentclass cc$filterTableSQL, $classNameFilter[from] " .
+                                     "WHERE $classIDCondition AND" .
+                                     "      cc.version = " . eZContentClass::VERSION_STATUS_DEFINED . " $filterSQL AND $classNameFilter[where] " .
                                      "ORDER BY $classNameFilter[nameField] ASC" );
             $classList = eZPersistentObject::handleRows( $rows, 'eZContentClass', $asObject );
         }
@@ -5072,10 +5124,10 @@ class eZContentObject extends eZPersistentObject
                     $options['error'] = array( 'error_code' => self::PACKAGE_ERROR_EXISTS,
                                                'element_id' => $remoteID,
                                                'description' => $description,
-                                               'actions' => array( self::PACKAGE_REPLACE => ezi18n( 'kernel/classes', 'Replace existing object' ),
-                                                                   self::PACKAGE_SKIP    => ezi18n( 'kernel/classes', 'Skip object' ),
-                                                                   self::PACKAGE_NEW     => ezi18n( 'kernel/classes', 'Keep existing and create a new one' ),
-                                                                   self::PACKAGE_UPDATE  => ezi18n( 'kernel/classes', 'Update existing object' ) ) );
+                                               'actions' => array( self::PACKAGE_REPLACE => ezpI18n::tr( 'kernel/classes', 'Replace existing object' ),
+                                                                   self::PACKAGE_SKIP    => ezpI18n::tr( 'kernel/classes', 'Skip object' ),
+                                                                   self::PACKAGE_NEW     => ezpI18n::tr( 'kernel/classes', 'Keep existing and create a new one' ),
+                                                                   self::PACKAGE_UPDATE  => ezpI18n::tr( 'kernel/classes', 'Update existing object' ) ) );
                     $retValue = false;
                     return $retValue;
                 } break;
@@ -5512,15 +5564,16 @@ class eZContentObject extends eZPersistentObject
     /*!
      \return the number of objects of the given class is created by the given user.
     */
-    static function fetchObjectCountByUserID( $classID, $userID )
+    static function fetchObjectCountByUserID( $classID, $userID, $status = false )
     {
         $count = 0;
         if ( is_numeric( $classID ) and is_numeric( $userID ) )
         {
-            $db = eZDB::instance();
-            $classID =(int) $classID;
-            $userID =(int) $userID;
-            $countArray = $db->arrayQuery( "SELECT count(*) AS count FROM ezcontentobject WHERE contentclass_id=$classID AND owner_id=$userID" );
+            $db         = eZDB::instance();
+            $classID    = (int) $classID;
+            $userID     = (int) $userID;
+            $statusSQL  = $status !== false ? ( ' AND status=' . (int) $status ) : '';
+            $countArray = $db->arrayQuery( "SELECT count(*) AS count FROM ezcontentobject WHERE contentclass_id=$classID AND owner_id=$userID$statusSQL" );
             $count = $countArray[0]['count'];
         }
         return $count;
@@ -5839,13 +5892,12 @@ class eZContentObject extends eZPersistentObject
         $access = $user->hasAccessTo( 'state', 'assign' );
 
         $db = eZDB::instance();
+        $sql = 'SELECT ezcobj_state.id
+                FROM   ezcobj_state, ezcobj_state_group
+                WHERE  ezcobj_state.group_id = ezcobj_state_group.id
+                    AND ezcobj_state_group.identifier NOT LIKE \'ez%\'';
         if ( $access['accessWord'] == 'yes' )
         {
-            $sql = 'SELECT ezcobj_state.id
-                    FROM   ezcobj_state, ezcobj_state_group
-                    WHERE  ezcobj_state.group_id = ezcobj_state_group.id
-                       AND ezcobj_state_group.identifier NOT LIKE \'ez%\'';
-
             $allowedStateIDList = $db->arrayQuery( $sql, array( 'column' => 'id' ) );
         }
         else if ( $access['accessWord'] == 'limited' )

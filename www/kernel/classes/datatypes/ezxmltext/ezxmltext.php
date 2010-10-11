@@ -4,10 +4,10 @@
 //
 // Created on: <28-Jan-2003 12:56:49 bf>
 //
+// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.2.0
-// BUILD VERSION: 24182
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 4.3.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -24,6 +24,8 @@
 //   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 //   MA 02110-1301, USA.
 //
+//
+// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
 /*! \file
@@ -84,11 +86,11 @@ class eZXMLText
 
             case 'pdf_output' :
             {
-                if ( $this->XMLOutputHandler === null )
+                if ( $this->PDFOutputHandler === null )
                 {
-                    $this->XMLOutputHandler = $this->outputHandler( $this->XMLData, 'ezpdf', true, $this->ContentObjectAttribute );
+                    $this->PDFOutputHandler = $this->outputHandler( $this->XMLData, 'ezpdf', true, $this->ContentObjectAttribute );
                 }
-                return $this->XMLOutputHandler;
+                return $this->PDFOutputHandler;
             }break;
 
             case 'xml_data' :
@@ -134,9 +136,10 @@ class eZXMLText
                               'iniVariable'   => 'HandlerClass',
                               'callMethod'    => 'isValid',
                               'handlerParams' => array( $xmlData,
-                                                        false,
+                                                        $type,
                                                         $contentObjectAttribute ),
-                              'aliasVariable' => ( $useAlias ? 'AliasClasses' : null ) );
+                              'aliasVariable' => ( $useAlias ? 'AliasClasses' : null ),
+                              'aliasOptionalIndex' => ( $type ? $type : null ) );
 
         $options = new ezpExtensionOptions( $optionArray );
 
@@ -157,9 +160,10 @@ class eZXMLText
                               'iniVariable'   => 'HandlerClass',
                               'callMethod'    => 'isValid',
                               'handlerParams' => array( $xmlData,
-                                                        false,
+                                                        $type,
                                                         $contentObjectAttribute ),
-                              'aliasVariable' => ( $useAlias ? 'AliasClasses' : null )  );
+                              'aliasVariable' => ( $useAlias ? 'AliasClasses' : null ),
+                              'aliasOptionalIndex' => ( $type ? $type : null ) );
 
         $options = new ezpExtensionOptions( $optionArray );
 

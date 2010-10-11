@@ -4,10 +4,10 @@
 //
 // Created on: <24-Jul-2003 15:48:06 wy>
 //
+// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.2.0
-// BUILD VERSION: 24182
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 4.3.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -24,6 +24,8 @@
 //   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 //   MA 02110-1301, USA.
 //
+//
+// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
 /*! \file
@@ -59,6 +61,8 @@ class eZLDAPUser extends eZUser
 
         $loginEscaped = $db->escapeString( $login );
         $passwordEscaped = $db->escapeString( $password );
+
+        $loginLdapEscaped = self::ldap_escape( $login );
 
         $loginArray = array();
         if ( $authenticationMatch & eZUser::AUTHENTICATE_LOGIN )
@@ -172,16 +176,16 @@ class eZLDAPUser extends eZUser
             $LDAPBindPassword       = $LDAPIni->variable( 'LDAPSettings', 'LDAPBindPassword' );
             $LDAPSearchScope        = $LDAPIni->variable( 'LDAPSettings', 'LDAPSearchScope' );
 
-            $LDAPLoginAttribute     = $LDAPIni->variable( 'LDAPSettings', 'LDAPLoginAttribute' );
-            $LDAPFirstNameAttribute = $LDAPIni->variable( 'LDAPSettings', 'LDAPFirstNameAttribute' );
+            $LDAPLoginAttribute     = strtolower( $LDAPIni->variable( 'LDAPSettings', 'LDAPLoginAttribute' ) );
+            $LDAPFirstNameAttribute = strtolower( $LDAPIni->variable( 'LDAPSettings', 'LDAPFirstNameAttribute' ) );
             $LDAPFirstNameIsCN      = $LDAPIni->variable( 'LDAPSettings', 'LDAPFirstNameIsCommonName' ) === 'true';
-            $LDAPLastNameAttribute  = $LDAPIni->variable( 'LDAPSettings', 'LDAPLastNameAttribute' );
-            $LDAPEmailAttribute     = $LDAPIni->variable( 'LDAPSettings', 'LDAPEmailAttribute' );
+            $LDAPLastNameAttribute  = strtolower( $LDAPIni->variable( 'LDAPSettings', 'LDAPLastNameAttribute' ) );
+            $LDAPEmailAttribute     = strtolower( $LDAPIni->variable( 'LDAPSettings', 'LDAPEmailAttribute' ) );
 
             $defaultUserPlacement   = $ini->variable( "UserSettings", "DefaultUserPlacement" );
 
-            $LDAPUserGroupAttributeType = $LDAPIni->variable( 'LDAPSettings', 'LDAPUserGroupAttributeType' );
-            $LDAPUserGroupAttribute     = $LDAPIni->variable( 'LDAPSettings', 'LDAPUserGroupAttribute' );
+            $LDAPUserGroupAttributeType = strtolower( $LDAPIni->variable( 'LDAPSettings', 'LDAPUserGroupAttributeType' ) );
+            $LDAPUserGroupAttribute     = strtolower( $LDAPIni->variable( 'LDAPSettings', 'LDAPUserGroupAttribute' ) );
 
             if ( $LDAPIni->hasVariable( 'LDAPSettings', 'Utf8Encoding' ) )
             {
@@ -261,7 +265,7 @@ class eZLDAPUser extends eZUser
                     return $user;
                 }
 
-                $LDAPFilter .= "($LDAPLoginAttribute=$login)";
+                $LDAPFilter .= "($LDAPLoginAttribute=$loginLdapEscaped)";
                 $LDAPFilter .= ")";
 
                 ldap_set_option( $ds, LDAP_OPT_SIZELIMIT, 0 );
@@ -422,9 +426,6 @@ class eZLDAPUser extends eZUser
                     }
                 }
 
-                $adminUser = eZUser::fetchByName( 'admin' );
-                $adminUserContentObjectID = $adminUser->attribute( 'contentobject_id' );
-
                 // read group mapping LDAP settings
                 $LDAPGroupMappingType = $LDAPIni->variable( 'LDAPSettings', 'LDAPGroupMappingType' );
                 $LDAPUserGroupMap     = $LDAPIni->variable( 'LDAPSettings', 'LDAPUserGroupMap' );
@@ -467,9 +468,9 @@ class eZLDAPUser extends eZUser
                     $LDAPGroupBaseDN          = str_replace( $LDAPEqualSign, '=', $LDAPGroupBaseDN );
                     $LDAPGroupClass           = $LDAPIni->variable( 'LDAPSettings', 'LDAPGroupClass' );
 
-                    $LDAPGroupNameAttribute   = $LDAPIni->variable( 'LDAPSettings', 'LDAPGroupNameAttribute' );
-                    $LDAPGroupMemberAttribute = $LDAPIni->variable( 'LDAPSettings', 'LDAPGroupMemberAttribute' );
-                    $LDAPGroupDescriptionAttribute = $LDAPIni->variable( 'LDAPSettings', 'LDAPGroupDescriptionAttribute' );
+                    $LDAPGroupNameAttribute   = strtolower( $LDAPIni->variable( 'LDAPSettings', 'LDAPGroupNameAttribute' ) );
+                    $LDAPGroupMemberAttribute = strtolower( $LDAPIni->variable( 'LDAPSettings', 'LDAPGroupMemberAttribute' ) );
+                    $LDAPGroupDescriptionAttribute = strtolower( $LDAPIni->variable( 'LDAPSettings', 'LDAPGroupDescriptionAttribute' ) );
 
                     $groupSearchingDepth = ( $LDAPGroupMappingType == '1' ) ? 1 : 1000;
 
@@ -536,8 +537,6 @@ class eZLDAPUser extends eZUser
                     }
                     else if ( $LDAPGroupMappingType == $ByMemberAttributeHierarhicaly )
                     {
-                        eZUser::setCurrentlyLoggedInUser( $adminUser, $adminUserContentObjectID );
-
                         $stack = array();
                         self::goAndPublishGroups( $requiredParams, $userData['dn'], $groupsTree, $stack, $groupSearchingDepth, true );
                     }
@@ -552,6 +551,13 @@ class eZLDAPUser extends eZUser
                 {
                     if ( $LDAPUserGroupAttributeType )
                     {
+                        // Should we create user groups that are specified in LDAP, but not found in eZ Publish?
+                        $createMissingGroups = ( $LDAPIni->variable( 'LDAPSettings', 'LDAPCreateMissingGroups' ) === 'enabled' );
+                        if ( $LDAPIni->variable( 'LDAPSettings', 'LDAPGroupRootNodeId' ) !== '' )
+                            $parentNodeID = $LDAPIni->variable( 'LDAPSettings', 'LDAPGroupRootNodeId' );
+                        else
+                            $parentNodeID = 5;
+
                         $groupAttributeCount = $info[0][$LDAPUserGroupAttribute]['count'];
                         if ( $LDAPUserGroupAttributeType == "name" )
                         {
@@ -565,24 +571,10 @@ class eZLDAPUser extends eZUser
                                 {
                                     $groupName = $info[0][$LDAPUserGroupAttribute][$i];
                                 }
-                                if ( $groupName != null )
-                                {
-                                    $groupQuery = "SELECT ezcontentobject_tree.node_id
-                                                     FROM ezcontentobject, ezcontentobject_tree
-                                                    WHERE ezcontentobject.name like '$groupName'
-                                                      AND ezcontentobject.id=ezcontentobject_tree.contentobject_id
-                                                      AND ezcontentobject.contentclass_id=$userGroupClassID";
-                                    $groupObject = $db->arrayQuery( $groupQuery );
 
-                                    if ( count( $groupObject ) > 0 and $i == 0 )
-                                    {
-                                        $defaultUserPlacement = $groupObject[0]['node_id'];
-                                    }
-                                    else if ( count( $groupObject ) > 0 )
-                                    {
-                                        $extraNodeAssignments[] = $groupObject[0]['node_id'];
-                                    }
-                                }
+                                // Save group node id to either defaultUserPlacement or extraNodeAssignments
+                                self::getNodeAssignmentsForGroupName( $groupName, ($i == 0), $defaultUserPlacement, $extraNodeAssignments,
+                                                                      $createMissingGroups, $parentNodeID );
                             }
                         }
                         else if ( $LDAPUserGroupAttributeType == "id" )
@@ -597,27 +589,34 @@ class eZLDAPUser extends eZUser
                                 {
                                     $groupID = $info[0][$LDAPUserGroupAttribute][$i];
                                 }
+                                $groupName = "LDAP $groupID";
 
-                                if ( $groupID != null )
+                                // Save group node id to either defaultUserPlacement or extraNodeAssignments
+                                self::getNodeAssignmentsForGroupName( $groupName, ($i == 0), $defaultUserPlacement, $extraNodeAssignments,
+                                                                      $createMissingGroups, $parentNodeID );
+                            }
+                        }
+                        else if ( $LDAPUserGroupAttributeType == "dn" )
+                        {
+                            for ( $i = 0; $i < $groupAttributeCount; $i++ )
+                            {
+                                $groupDN = $info[0][$LDAPUserGroupAttribute][$i];
+                                $groupName = self::getGroupNameByDN( $ds, $groupDN );
+
+                                if ( $groupName )
                                 {
-                                    $groupName = "LDAP " . $groupID;
-                                    $groupQuery = "SELECT ezcontentobject_tree.node_id
-                                                     FROM ezcontentobject, ezcontentobject_tree
-                                                    WHERE ezcontentobject.name like '$groupName'
-                                                      AND ezcontentobject.id=ezcontentobject_tree.contentobject_id
-                                                      AND ezcontentobject.contentclass_id=$userGroupClassID";
-                                    $groupObject = $db->arrayQuery( $groupQuery );
-
-                                    if ( count( $groupObject ) > 0 and $i == 0 )
-                                    {
-                                        $defaultUserPlacement = $groupObject[0]['node_id'];
-                                    }
-                                    else if ( count( $groupObject ) > 0 )
-                                    {
-                                        $extraNodeAssignments[] = $groupObject[0]['node_id'];
-                                    }
+                                    // Save group node id to either defaultUserPlacement or extraNodeAssignments
+                                    self::getNodeAssignmentsForGroupName( $groupName, ($i == 0), $defaultUserPlacement, $extraNodeAssignments,
+                                                                          $createMissingGroups, $parentNodeID );
                                 }
                             }
+                        }
+                        else
+                        {
+                            eZDebug::writeError( "Bad LDAPUserGroupAttributeType '$LDAPUserGroupAttributeType'. It must be either 'name', 'id' or 'dn'.",
+                                                 __METHOD__ );
+                            $user = false;
+                            return $user;
                         }
                     }
                 }
@@ -647,14 +646,12 @@ class eZLDAPUser extends eZUser
                                          'userAttributes' => $userAttributes,
                                          'isUtf8Encoding' => $isUtf8Encoding,
                                          'defaultUserPlacement' => $defaultUserPlacement,
-                                         'extraNodeAssignments' => $extraNodeAssignments,
-                                         'adminUserContentObjectID' => $adminUserContentObjectID
+                                         'extraNodeAssignments' => $extraNodeAssignments
                     );
                     eZDebug::writeNotice( var_export( $debugArray, true ), 'eZLDAPUser::loginUser' );
                 }
 
                 $oldUser = clone eZUser::currentUser();
-                eZUser::setCurrentlyLoggedInUser( $adminUser, $adminUserContentObjectID );
                 $existingUser = eZLDAPUser::publishUpdateUser( $extraNodeAssignments, $defaultUserPlacement, $userAttributes, $isUtf8Encoding );
 
                 if ( is_object( $existingUser ) )
@@ -721,6 +718,12 @@ class eZLDAPUser extends eZUser
         $last_name  = $userAttributes[ 'last_name' ];
         $email      = $userAttributes[ 'email' ];
 
+        if ( $isUtf8Encoding )
+        {
+            $first_name = utf8_decode( $first_name );
+            $last_name = utf8_decode( $last_name );
+        }
+
         $user = eZUser::fetchByName( $login );
         $createNewUser = ( is_object( $user ) ) ? false : true;
 
@@ -760,19 +763,18 @@ class eZLDAPUser extends eZUser
             $userID = $contentObjectID = $user->attribute( 'contentobject_id' );
             $contentObject = eZContentObject::fetch( $userID );
             $version = $contentObject->attribute( 'current' );
-            //$currentVersion = $contentObject->attribute( 'current_version' );
         }
 
-        //================= common part : start ========================
+        //================= common part 1: start ========================
         $contentObjectAttributes = $version->contentObjectAttributes();
 
-        // find ant set 'name' and 'description' attributes (as standard user group class)
+        // find and set 'name' and 'description' attributes (as standard user group class)
         $firstNameIdentifier = 'first_name';
         $lastNameIdentifier = 'last_name';
         $firstNameAttribute = null;
         $lastNameAttribute = null;
 
-        foreach( $contentObjectAttributes as $attribute )
+        foreach ( $contentObjectAttributes as $attribute )
         {
             if ( $attribute->attribute( 'contentclass_attribute_identifier' ) == $firstNameIdentifier )
             {
@@ -783,35 +785,98 @@ class eZLDAPUser extends eZUser
                 $lastNameAttribute = $attribute;
             }
         }
+        //================= common part 1: end ==========================
+
+        // If we are updating an existing user, we must find out if some data should be changed.
+        // In that case, we must create a new version and publish it.
+        if ( !$createNewUser )
+        {
+            $userDataChanged = false;
+            $firstNameChanged = false;
+            $lastNameChanged = false;
+            $emailChanged = false;
+
+            if ( $firstNameAttribute and $firstNameAttribute->attribute( 'data_text' ) != $first_name )
+            {
+                $firstNameChanged = true;
+            }
+            $firstNameAttribute = false; // We will load this again from the new version we will create, if it has changed
+            if ( $lastNameAttribute and $lastNameAttribute->attribute( 'data_text' ) != $last_name )
+            {
+                $lastNameChanged = true;
+            }
+            $lastNameAttribute = false; // We will load this again from the new version we will create, if it has changed
+            if ( $user->attribute( 'email' ) != $email )
+            {
+                $emailChanged = true;
+            }
+
+            if ( $firstNameChanged or $lastNameChanged or $emailChanged )
+            {
+                $userDataChanged = true;
+                // Create new version
+                $version = $contentObject->createNewVersion();
+                $contentObjectAttributes = $version->contentObjectAttributes();
+                foreach ( $contentObjectAttributes as $attribute )
+                {
+                    if ( $attribute->attribute( 'contentclass_attribute_identifier' ) == $firstNameIdentifier )
+                    {
+                        $firstNameAttribute = $attribute;
+                    }
+                    else if ( $attribute->attribute( 'contentclass_attribute_identifier' ) == $lastNameIdentifier )
+                    {
+                        $lastNameAttribute = $attribute;
+                    }
+                }
+            }
+        }
+
+        //================= common part 2: start ========================
         if ( $firstNameAttribute )
         {
-            if ( $isUtf8Encoding )
-                $first_name = utf8_decode( $first_name );
             $firstNameAttribute->setAttribute( 'data_text', $first_name );
             $firstNameAttribute->store();
         }
         if ( $lastNameAttribute )
         {
-            if ( $isUtf8Encoding )
-                $last_name = utf8_decode( $last_name );
             $lastNameAttribute->setAttribute( 'data_text', $last_name );
             $lastNameAttribute->store();
         }
 
-        $contentClass = $contentObject->attribute( 'content_class' );
-        $name = $contentClass->contentObjectName( $contentObject );
-        $contentObject->setName( $name );
+        if ( !isset( $userDataChanged ) or $userDataChanged === true )
+        {
+            $contentClass = $contentObject->attribute( 'content_class' );
+            $name = $contentClass->contentObjectName( $contentObject );
+            $contentObject->setName( $name );
+        }
 
-        $user->setAttribute( 'email', $email );
+        if ( !isset( $emailChanged ) or $emailChanged === true )
+        {
+            $user->setAttribute( 'email', $email );
+        }
+
         $user->setAttribute( 'password_hash', "" );
         $user->setAttribute( 'password_hash_type', 0 );
         $user->store();
-        //================= common part : end ==========================
+
+        $debugArray = array( 'Updating user data',
+                             'createNewUser' => $createNewUser,
+                             'userDataChanged' => isset( $userDataChanged ) ? $userDataChanged : null,
+                             'login' => $login,
+                             'first_name' => $first_name,
+                             'last_name' => $last_name,
+                             'email' => $email,
+                             'firstNameAttribute is_object' => is_object( $firstNameAttribute ),
+                             'lastNameAttribute is_object' => is_object( $lastNameAttribute ),
+                             'content object id' => $contentObjectID,
+                             'version id' => $version->attribute( 'version' )
+        );
+        eZDebug::writeNotice( var_export( $debugArray, true ), __METHOD__ );
+        //================= common part 2: end ==========================
 
         if ( $createNewUser )
         {
             reset( $parentNodeIDs );
-            //$defaultPlacement = current( $parentNodeIDs );
             // prepare node assignments for publishing new user
             foreach( $parentNodeIDs as $parentNodeID )
             {
@@ -823,80 +888,87 @@ class eZLDAPUser extends eZUser
                 $newNodeAssignment->store();
             }
 
-            //$adminUser = eZUser::fetchByName( 'admin' );
-            //eZUser::setCurrentlyLoggedInUser( $adminUser, $adminUser->attribute( 'contentobject_id' ) );
-
             $operationResult = eZOperationHandler::execute( 'content', 'publish', array( 'object_id' => $contentObjectID,
                                                                                          'version' => 1 ) );
         }
         else
         {
+            if ( $userDataChanged )
+            {
+                // Publish object
+                $operationResult = eZOperationHandler::execute( 'content', 'publish', array( 'object_id' => $contentObjectID,
+                                                                                             'version' => $version->attribute( 'version' ) ) );
+                // Refetch object
+                $contentObject = eZContentObject::fetch( $contentObjectID );
+                $version = $contentObject->attribute( 'current' );
+            }
+
             $LDAPIni = eZINI::instance( 'ldap.ini' );
             $keepGroupAssignment = ( $LDAPIni->hasVariable( 'LDAPSettings', 'KeepGroupAssignment' ) ) ?
                 ( $LDAPIni->variable( 'LDAPSettings', 'KeepGroupAssignment' ) == "enabled" ) : false;
 
             if ( $keepGroupAssignment == false )
             {
-                $parentNodeID = $contentObject->attribute( 'main_parent_node_id' );
-                if ( $defaultUserPlacement != $parentNodeID )
+                $objectIsChanged = false;
+
+                $db = eZDB::instance();
+                $db->begin();
+
+                // First check existing assignments, remove any that should not exist
+                $assignedNodesList = $contentObject->assignedNodes();
+                $existingParentNodeIDs = array();
+                foreach ( $assignedNodesList as $node )
                 {
-                    //$adminUser = eZUser::fetchByName( 'admin' );
-                    //eZUser::setCurrentlyLoggedInUser( $adminUser, $adminUser->attribute( 'contentobject_id' ) );
-
-                    // Check: is there user has location (not main) in default placement
-                    $nodeAssignmentList = $version->nodeAssignments();
-                    $isAssignmentExist = false;
-                    foreach ( $nodeAssignmentList as $nodeAssignment )
+                    $parentNodeID = $node->attribute( 'parent_node_id' );
+                    if ( !in_array( $parentNodeID, $parentNodeIDs ) )
                     {
-                        if ( $defaultUserPlacement == $nodeAssignment->attribute( 'parent_node' ) )
-                        {
-                            $isAssignmentExist = true;
-                            break;
-                        }
-                    }
-
-                    if ( $isAssignmentExist )
-                    {
-                        // make existing node as main
-                        $existingNode = eZContentObjectTreeNode::fetchNode( $contentObjectID, $defaultUserPlacement );
-                        if ( !is_object( $existingNode ) )
-                        {
-                            eZDebug::writeError( "Cannot find assigned node as $defaultUserPlacement's child.",
-                                                 'kernel/classes/datatypes/ezuser/ezldapuser' );
-                        }
-                        else
-                        {
-                            $existingNodeID = $existingNode->attribute( 'node_id' );
-                            $versionNum = $version->attribute( 'version' );
-                            eZContentObjectTreeNode::updateMainNodeID( $existingNodeID, $contentObjectID, $versionNum, $defaultUserPlacement );
-                        }
+                        $node->removeThis();
+                        $objectIsChanged = true;
                     }
                     else
                     {
-                        $mainNodeID = $contentObject->attribute( 'main_node_id' );
-                        $mainNode = eZContentObjectTreeNode::fetch( $mainNodeID );
-
-                        if ( !$mainNode->canMoveFrom() )
-                        {
-                            eZDebug::writeError( "Cannot move node $mainNodeID.",
-                                                 'kernel/classes/datatypes/ezuser/ezldapuser' );
-                        }
-                        $newParentNode = eZContentObjectTreeNode::fetch( $defaultUserPlacement );
-                        // Check if we try to move the node as child of itself or one of its children
-                        if ( in_array( $mainNodeID, $newParentNode->pathArray() ) )
-                        {
-                            eZDebug::writeError( "Cannot move node $mainNodeID as child of itself or one of its own children (node $defaultUserPlacement).",
-                                                 'kernel/classes/datatypes/ezuser/ezldapuser' );
-                        }
-                        else
-                        {
-                            if ( !eZContentObjectTreeNodeOperations::move( $mainNodeID, $defaultUserPlacement ) )
-                            {
-                                eZDebug::writeError( "Failed to move node $mainNodeID as child of parent node $defaultUserPlacement",
-                                                     'kernel/classes/datatypes/ezuser/ezldapuser' );
-                            }
-                        }
+                        $existingParentNodeIDs[] = $parentNodeID;
                     }
+                }
+
+                // Then check assignments that should exist, add them if they are missing
+                foreach( $parentNodeIDs as $parentNodeID )
+                {
+                    if ( !in_array( $parentNodeID, $existingParentNodeIDs ) )
+                    {
+                        $newNode = $contentObject->addLocation( $parentNodeID, true );
+                        $newNode->updateSubTreePath();
+                        $newNode->setAttribute( 'contentobject_is_published', 1 );
+                        $newNode->sync();
+                        $existingParentNodeIDs[] = $parentNodeID;
+                        $objectIsChanged = true;
+                    }
+                }
+
+                // Then ensure that the main node is correct
+                $currentMainParentNodeID = $contentObject->attribute( 'main_parent_node_id' );
+                if ( $currentMainParentNodeID != $defaultUserPlacement )
+                {
+                    $existingNode = eZContentObjectTreeNode::fetchNode( $contentObjectID, $defaultUserPlacement );
+                    if ( !is_object( $existingNode ) )
+                    {
+                        eZDebug::writeError( "Cannot find assigned node as $defaultUserPlacement's child.", __METHOD__ );
+                    }
+                    else
+                    {
+                        $existingNodeID = $existingNode->attribute( 'node_id' );
+                        $versionNum = $version->attribute( 'version' );
+                        eZContentObjectTreeNode::updateMainNodeID( $existingNodeID, $contentObjectID, $versionNum, $defaultUserPlacement );
+                        $objectIsChanged = true;
+                    }
+                }
+
+                $db->commit();
+
+                // Finally, clear object view cache if something was changed
+                if ( $objectIsChanged )
+                {
+                    eZContentCacheManager::clearObjectViewCache( $contentObjectID, true );
                 }
             }
         }
@@ -1286,6 +1358,122 @@ class eZLDAPUser extends eZUser
         return true;
     }
 
+    /*
+        Static method, for internal usage only
+        Finds a user group with the given name and remembers the node ID for it. The first match is always used.
+        If $createMissingGroups is true, it will create any groups it does not find.
+    */
+    static function getNodeAssignmentsForGroupName( $groupName,
+                                $isFirstGroupAssignment,
+                                &$defaultUserPlacement,
+                                &$extraNodeAssignments,
+                                $createMissingGroups,
+                                $parentNodeID )
+    {
+        if ( !is_string( $groupName ) or $groupName === '' )
+        {
+            eZDebug::writeError( 'The groupName must be a non empty string. Bad groupName: ' . $groupName, __METHOD__ );
+            return;
+        }
+
+        $db = eZDB::instance();
+        $ini = eZINI::instance();
+        $userGroupClassID = $ini->variable( "UserSettings", "UserGroupClassID" );
+
+        $groupQuery = "SELECT ezcontentobject_tree.node_id
+                       FROM ezcontentobject, ezcontentobject_tree
+                       WHERE ezcontentobject.name like '$groupName'
+                       AND ezcontentobject.id = ezcontentobject_tree.contentobject_id
+                       AND ezcontentobject.contentclass_id = $userGroupClassID";
+        $groupRows = $db->arrayQuery( $groupQuery );
+
+        if ( count( $groupRows ) > 0 and $isFirstGroupAssignment )
+        {
+            $defaultUserPlacement = $groupRows[0]['node_id'];
+            return;
+        }
+        else if ( count( $groupRows ) > 0 )
+        {
+            $extraNodeAssignments[] = $groupRows[0]['node_id'];
+            return;
+        }
+
+        // Should we create user groups that are specified in LDAP, but not found in eZ Publish?
+        if ( !$createMissingGroups )
+        {
+            return;
+        }
+
+        $newNodeIDs = self::publishNewUserGroup( array( $parentNodeID ), array( 'name' => $groupName ) );
+
+        if ( count( $newNodeIDs ) > 0 and $isFirstGroupAssignment )
+        {
+            $defaultUserPlacement = $newNodeIDs[0]; // We only supplied one parent to publishNewUserGroup(), so there is only one node
+        }
+        else if ( count( $newNodeIDs ) > 0 )
+        {
+            $extraNodeAssignments[] = $newNodeIDs[0]; // We only supplied one parent to publishNewUserGroup(), so there is only one node
+        }
+    }
+
+    /*
+        Static method, for internal usage only
+        Fetch the LDAP group object given by the DN, and return its name
+    */
+    static function getGroupNameByDN( $ds, $groupDN )
+    {
+        $LDAPIni = eZINI::instance( 'ldap.ini' );
+        $LDAPGroupNameAttribute = $LDAPIni->variable( 'LDAPSettings', 'LDAPGroupNameAttribute' );
+
+        // First, try to see if the $LDAPGroupNameAttribute is contained within the DN, in that case we can read it directly
+        $groupDNParts = ldap_explode_dn( $groupDN, 0 );
+        list( $firstName, $firstValue ) = explode( '=', $groupDNParts[0] );
+
+        if ( $firstName = $LDAPGroupNameAttribute ) // Read the group name attribute directly from the group DN
+        {
+            $groupName = $firstValue;
+        }
+        else // Read the LDAP group object, get the group name attribute from it
+        {
+            $sr = ldap_read( $ds, $groupDN, "($LDAPGroupNameAttribute=*)", array( $LDAPGroupNameAttribute ) );
+            $info = ldap_get_entries( $ds, $sr );
+
+            if ( $info['count'] < 1 or $info[0]['count'] < 1 )
+            {
+                eZDebug::writeWarning( 'LDAP group not found, tried DN: ' . $groupDN, __METHOD__ );
+                return false;
+            }
+
+            $groupName = $info[0][$LDAPGroupNameAttribute];
+            if ( is_array( $groupName ) ) // This may be a string or an array of strings, depending on LDAP setup
+                $groupName = $groupName[0]; // At least one must exist, since we specified it in the search filter
+        }
+
+        return $groupName;
+    }
+
+    /*
+        Based on a similar function suggested at: http://php.net/manual/en/function.ldap-search.php
+    */
+    static function ldap_escape( $str, $for_dn = false )
+    {
+        // see: RFC2254
+        // http://msdn.microsoft.com/en-us/library/ms675768(VS.85).aspx
+        // http://www-03.ibm.com/systems/i/software/ldap/underdn.html
+
+        if ( $for_dn )
+        {
+            $metaChars = array( ',', '=', '+', '<', '>', ';', '\\', '"', '#' );
+            $quotedMetaChars = array( '\2c', '\3d', '\2b', '\3c', '\3e', '\3b', '\5c', '\22', '\23' );
+        }
+        else
+        {
+            $metaChars = array( '*', '(', ')', '\\', chr(0) );
+            $quotedMetaChars = array( '\2a', '\28', '\29', '\5c', '\00' );
+        }
+
+        return str_replace( $metaChars, $quotedMetaChars, $str );
+    }
 
 }
 

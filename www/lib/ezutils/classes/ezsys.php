@@ -4,10 +4,10 @@
 //
 // Created on: <01-Mar-2002 13:48:53 amos>
 //
+// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.2.0
-// BUILD VERSION: 24182
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 4.3.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -24,6 +24,8 @@
 //   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 //   MA 02110-1301, USA.
 //
+//
+// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 // Portions are modifications on patches by Andreas B�ckler and Francis Nart
 //
@@ -721,22 +723,29 @@ class eZSys
     }
 
     /*!
-     \return the variable named \a $variableName in the global \c $_ENV variable.
+     \return the variable named \a $variableName in the global \c ENV variable.
              If the variable is not present an error is shown and \c null is returned.
     */
-    static function &environmentVariable( $variableName, $quiet = false )
+    static function environmentVariable( $variableName, $quiet = false )
     {
-        $_ENV;
-        if ( !isset( $_ENV[$variableName] ) )
+        if ( getenv($variableName) === false )
         {
             if ( !$quiet )
             {
                 eZDebug::writeError( "Environment variable '$variableName' does not exist", 'eZSys::environmentVariable' );
             }
-            $retValue = null;
-            return $retValue;
+            return null;
         }
-        return $_ENV[$variableName];
+        return getenv($variableName);
+    }
+
+    /*!
+     \return the true if variable named \a $variableName exists.
+             If the variable is not present false is returned.
+    */
+    static function hasEnvironmentVariable( $variableName )
+    {
+        return getenv($variableName) !== false;
     }
 
     /*!
@@ -745,8 +754,7 @@ class eZSys
     */
     static function setEnvironmentVariable( $variableName, $variableValue )
     {
-        $_ENV;
-        $_ENV[$variableName] = $variableValue;
+        putenv( "$variableName=$variableValue" );
     }
 
     function attributes()

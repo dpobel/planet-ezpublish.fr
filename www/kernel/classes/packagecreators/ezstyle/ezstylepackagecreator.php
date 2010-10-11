@@ -4,10 +4,10 @@
 //
 // Created on: <21-Nov-2003 12:39:59 amos>
 //
+// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.2.0
-// BUILD VERSION: 24182
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 4.3.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -24,6 +24,8 @@
 //   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 //   MA 02110-1301, USA.
 //
+//
+// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
 /*! \file
@@ -46,13 +48,13 @@ class eZStylePackageCreator extends eZPackageCreationHandler
         $steps = array();
         $steps[] = $this->packageThumbnailStep();
         $steps[] = array( 'id' => 'cssfile',
-                          'name' => ezi18n( 'kernel/package', 'CSS files' ),
+                          'name' => ezpI18n::tr( 'kernel/package', 'CSS files' ),
                           'methods' => array( 'initialize' => 'initializeCSSFile',
                                               'validate' => 'validateCSSFile',
                                               'commit' => 'commitCSSFile' ),
                           'template' => 'cssfile.tpl' );
         $steps[] = array( 'id' => 'imagefiles',
-                          'name' => ezi18n( 'kernel/package', 'Image files' ),
+                          'name' => ezpI18n::tr( 'kernel/package', 'Image files' ),
                           'methods' => array( 'initialize' => 'initializeImageFiles',
                                               'validate' => 'validateImageFiles',
                                               'commit' => 'commitImageFiles' ),
@@ -61,7 +63,7 @@ class eZStylePackageCreator extends eZPackageCreationHandler
         $steps[] = $this->packageMaintainerStep();
         $steps[] = $this->packageChangelogStep();
         $this->eZPackageCreationHandler( $id,
-                                         ezi18n( 'kernel/package', 'Site style' ),
+                                         ezpI18n::tr( 'kernel/package', 'Site style' ),
                                          $steps );
     }
 
@@ -205,8 +207,8 @@ class eZStylePackageCreator extends eZPackageCreationHandler
         $result = true;
         if ( !$hasSiteFile or !$hasClassesFile )
         {
-            $errorList[] = array( 'field' => ezi18n( 'kernel/package', 'CSS file' ),
-                                  'description' => ezi18n( 'kernel/package', 'You must upload both CSS files' ) );
+            $errorList[] = array( 'field' => ezpI18n::tr( 'kernel/package', 'CSS file' ),
+                                  'description' => ezpI18n::tr( 'kernel/package', 'You must upload both CSS files' ) );
             return false;
         }
 
@@ -215,8 +217,8 @@ class eZStylePackageCreator extends eZPackageCreationHandler
         if ( !preg_match( "#\.css$#", strtolower( $siteFile->attribute( 'original_filename' ) ) ) or
              !preg_match( "#\.css$#", strtolower( $classesFile->attribute( 'original_filename' ) ) ) )
         {
-            $errorList[] = array( 'field' => ezi18n( 'kernel/package', 'CSS file' ),
-                                  'description' => ezi18n( 'kernel/package', 'File did not have a .css suffix, this is most likely not a CSS file' ) );
+            $errorList[] = array( 'field' => ezpI18n::tr( 'kernel/package', 'CSS file' ),
+                                  'description' => ezpI18n::tr( 'kernel/package', 'File did not have a .css suffix, this is most likely not a CSS file' ) );
             $result = false;
         }
         return $result;

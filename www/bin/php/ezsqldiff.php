@@ -3,10 +3,10 @@
 //
 // Created on: <19-Mar-2004 09:51:56 amos>
 //
+// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.2.0
-// BUILD VERSION: 24182
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 4.3.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -23,6 +23,8 @@
 //   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 //   MA 02110-1301, USA.
 //
+//
+// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
 require 'autoload.php';
@@ -63,6 +65,7 @@ $options = $script->getOptions( "[source-type:][source-host:][source-user:][sour
                                        'user' => "User for login to match and source database",
                                        'password' => "Password to use when connecting to match and source database",
                                        'socket' => 'Socket to connect to match and source database (only for MySQL)',
+                                       'lint-check' => 'Instead of comparing 2 datase schemas, verify source database schema for standards compliance',
                                        'reverse' => "Reverse the differences",
                                        'check-only' => "Don't show SQLs for the differences, just set exit code and return"
                                        ) );

@@ -2,9 +2,9 @@
 /**
  * File containing the eZContentObjectStateGroupLanguage class.
  *
- * @copyright Copyright (C) 1999-2009 eZ Systems AS. All rights reserved.
+ * @copyright Copyright (C) 1999-2010 eZ Systems AS. All rights reserved.
  * @license http://ez.no/licenses/gnu_gpl GNU GPL v2
- * @version //autogentag//
+ * @version 4.3.0
  * @package kernel
  */
 
@@ -13,7 +13,7 @@
  *
  * Instances of this class contain the name and description of a content object state group in a specific language.
  *
- * @version //autogentag//
+ * @version 4.3.0
  * @package kernel
  * @see eZContentObjectStateGroup
  */
@@ -73,13 +73,13 @@ class eZContentObjectStateGroupLanguage extends eZPersistentObject
         $isValid = true;
         if ( isset( $this->Name ) && strlen( $this->Name ) > 45 )
         {
-            $messages[] = ezi18n( 'kernel/state/edit', 'Name in %language_name is too long. Maximum 45 characters allowed.', null, array( '%language_name' => $this->language()->attribute( 'locale_object' )->attribute( 'intl_language_name' ) ) );
+            $messages[] = ezpI18n::tr( 'kernel/state/edit', 'Name in %language_name is too long. Maximum 45 characters allowed.', null, array( '%language_name' => $this->language()->attribute( 'locale_object' )->attribute( 'intl_language_name' ) ) );
             $isValid = false;
         }
 
         if ( ( !isset( $this->Name ) || $this->Name == '' ) && $this->Description != '' )
         {
-            $messages[] = ezi18n( 'kernel/state/edit', 'Name in %language_name: input required', null, array( '%language_name' => $this->language()->attribute( 'locale_object' )->attribute( 'intl_language_name' ) ) );
+            $messages[] = ezpI18n::tr( 'kernel/state/edit', 'Name in %language_name: input required', null, array( '%language_name' => $this->language()->attribute( 'locale_object' )->attribute( 'intl_language_name' ) ) );
             $isValid = false;
         }
 

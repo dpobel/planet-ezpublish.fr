@@ -2,10 +2,10 @@
 //
 // Created on: <04-Jul-2002 13:19:43 bf>
 //
+// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.2.0
-// BUILD VERSION: 24182
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 4.3.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -23,11 +23,13 @@
 //   MA 02110-1301, USA.
 //
 //
+// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
+//
 
 $http = eZHTTPTool::instance();
 $module = $Params['Module'];
 
-require_once( "kernel/common/template.php" );
+
 $basket = eZBasket::currentBasket();
 $basket->updatePrices(); // Update the prices. Transaction not necessary.
 
@@ -306,7 +308,7 @@ if ( $http->hasPostVariable( "CheckoutButton" ) or ( $doCheckout === true ) )
 }
 $basket = eZBasket::currentBasket();
 
-$tpl = templateInit();
+$tpl = eZTemplate::factory();
 if ( isset( $Params['Error'] ) )
 {
     $tpl->setVariable( 'error', $Params['Error'] );
@@ -346,5 +348,5 @@ if ( $shippingInfo !== null )
 $Result = array();
 $Result['content'] = $tpl->fetch( "design:shop/basket.tpl" );
 $Result['path'] = array( array( 'url' => false,
-                                'text' => ezi18n( 'kernel/shop', 'Basket' ) ) );
+                                'text' => ezpI18n::tr( 'kernel/shop', 'Basket' ) ) );
 ?>

@@ -3,10 +3,10 @@
 //
 // Created on: <07-Jul-2005 10:14:34 bf>
 //
+// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.2.0
-// BUILD VERSION: 24182
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 4.3.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS.
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -23,6 +23,8 @@
 //   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 //   MA 02110-1301, USA.
 //
+//
+// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
 /*
@@ -71,7 +73,11 @@ function convert_to( $sourceFileName, $convertCommand, $destinationFileName )
         case "convertToOOo":
         case "convertToDoc":
         {
-            $result = shell_exec( $ooexecutable . " -writer -invisible -display " . $display . " 'macro:///eZconversion.Module1." . $convertCommand . "(\"$sourceFileName\", \"$destinationFileName\")'" );
+            $convertShellCommand = escapeshellcmd( $ooexecutable . " -writer -invisible -display " . $display ) . " " .
+            escapeshellarg( "macro:///eZconversion.Module1.$convertCommand(\"$sourceFileName\", \"$destinationFileName\")" );
+
+            $result = shell_exec( $convertShellCommand  );
+
             echo "$result\n";
         }break;
 

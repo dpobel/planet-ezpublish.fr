@@ -16,7 +16,7 @@
     {section name=ContentObjectAttribute loop=$content_version.contentobject_attributes}
     <div class="block">
         <label>{$ContentObjectAttribute:item.contentclass_attribute.name|wash}</label>
-    	<p class="box">{attribute_view_gui attribute=$ContentObjectAttribute:item}</p>
+        <p class="box">{attribute_view_gui attribute=$ContentObjectAttribute:item}</p>
     </div>
     {/section}
 
@@ -33,7 +33,7 @@
 
     {let name=Object related_objects=$content_version.related_contentobject_array}
 
-      {section name=ContentObject  loop=$Object:related_objects show=$Object:related_objects  sequence=array(bglight,bgdark)}
+      {section name=ContentObject  loop=$Object:related_objects show=$Object:related_objects}
 
         <div class="block">
         {content_view_gui view=text_linked content_object=$Object:ContentObject:item}

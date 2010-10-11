@@ -2,10 +2,10 @@
 //
 // Created on: <24-Apr-2002 16:06:53 bf>
 //
+// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.2.0
-// BUILD VERSION: 24182
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 4.3.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -23,15 +23,17 @@
 //   MA 02110-1301, USA.
 //
 //
+// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
+//
 
-require_once( "kernel/common/template.php" );
+
 
 $http = eZHTTPTool::instance();
 
 $NodeID = (int)$Params['NodeID'];
 $Module = $Params['Module'];
 
-$tpl = templateInit();
+$tpl = eZTemplate::factory();
 $tpl->setVariable( 'action', '' );
 
 $error_strings = array();
@@ -69,7 +71,7 @@ if ( !$object->canRead() )
 }
 
 $hostName = eZSys::hostname();
-$subject = ezi18n( 'kernel/content', 'Tip from %1: %2', null, array( $hostName, $nodeName ) );
+$subject = ezpI18n::tr( 'kernel/content', 'Tip from %1: %2', null, array( $hostName, $nodeName ) );
 $comment = '';
 $overrideKeysAreSet = false;
 
@@ -96,9 +98,9 @@ if ( $http->hasPostVariable( 'SendButton' ) )
 
     // email validation
     if ( !eZMail::validate( $yourEmail ) )
-        $error_strings[] = ezi18n( 'kernel/content', 'The email address of the sender is not valid' );
+        $error_strings[] = ezpI18n::tr( 'kernel/content', 'The email address of the sender is not valid' );
     if ( !eZMail::validate( $receiversEmail ) )
-        $error_strings[] = ezi18n( 'kernel/content', 'The email address of the receiver is not valid' );
+        $error_strings[] = ezpI18n::tr( 'kernel/content', 'The email address of the receiver is not valid' );
 
     $fromEmail = null;
 
@@ -118,11 +120,11 @@ if ( $http->hasPostVariable( 'SendButton' ) )
     if ( $http->hasSessionVariable('ezpContentTipafriendList') )
     {
         if ( strpos( $http->sessionVariable('ezpContentTipafriendList'), $NodeID . '|' . $receiversEmail ) !== false )
-            $error_strings[] = ezi18n( 'kernel/content', "You have already sent a tipafriend mail to this reciver regarding '$nodeName' content" );
+            $error_strings[] = ezpI18n::tr( 'kernel/content', "You have already sent a tipafriend mail to this reciver regarding '$nodeName' content" );
     }
 
     if ( !isset( $error_strings[0] ) && !eZTipafriendRequest::checkReceiver( $receiversEmail ) )
-        $error_strings[] = ezi18n( 'kernel/content', 'The receiver has already received the maximum number of tipafriend mails the last hours' );
+        $error_strings[] = ezpI18n::tr( 'kernel/content', 'The receiver has already received the maximum number of tipafriend mails the last hours' );
 
     // no validation errors
     if ( count( $error_strings ) == 0 )
@@ -149,7 +151,7 @@ if ( $http->hasPostVariable( 'SendButton' ) )
         $overrideKeysAreSet = true;
 
         // fetch text from mail template
-        $mailtpl = templateInit();
+        $mailtpl = eZTemplate::factory();
         $mailtpl->setVariable( 'hostname', $hostName );
         $mailtpl->setVariable( 'nodename', $nodeName );
         $mailtpl->setVariable( 'node_id', $NodeID );
@@ -233,7 +235,7 @@ $tpl->setVariable( 'comment', $comment );
 
 $Result = array();
 $Result['content'] = $tpl->fetch( 'design:content/tipafriend.tpl' );
-$Result['path'] = array( array( 'text' => ezi18n( 'kernel/content', 'Tip a friend' ),
+$Result['path'] = array( array( 'text' => ezpI18n::tr( 'kernel/content', 'Tip a friend' ),
                                 'url' => false ) );
 
 ?>

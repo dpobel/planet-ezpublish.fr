@@ -6,10 +6,10 @@
 //
 // Created on: <12-Feb-2002 15:54:17 bf>
 //
+// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.2.0
-// BUILD VERSION: 24182
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 4.3.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -26,6 +26,8 @@
 //   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 //   MA 02110-1301, USA.
 //
+//
+// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
 /*!
@@ -436,14 +438,19 @@ class eZMySQLiDB extends eZDBInterface
             }
             else
             {
-                eZDebug::writeError( 'Query error (' . mysqli_errno( $connection ) . '): ' . mysqli_error( $connection ) . '. Query: ' . $sql, "eZMySQLiDB" );
+                $errorMessage = 'Query error (' . mysqli_errno( $connection ) . '): ' . mysqli_error( $connection ) . '. Query: ' . $sql;
+                eZDebug::writeError( $errorMessage, "eZMySQLiDB"  );
                 $oldRecordError = $this->RecordError;
                 // Turn off error handling while we unlock
                 $this->RecordError = false;
-                $this->unlock();
+                mysqli_query( $connection, 'UNLOCK TABLES' );
                 $this->RecordError = $oldRecordError;
 
                 $this->reportError();
+
+                // This is to behave the same way as other RDBMS PHP API as PostgreSQL
+                // functions which throws an error with a failing request.
+                trigger_error( "mysql_query(): $errorMessage", E_USER_ERROR );
 
                 return false;
             }
@@ -765,7 +772,8 @@ class eZMySQLiDB extends eZDBInterface
     {
         if ( $this->IsConnected )
         {
-            mysqli_close( $this->DBConnection );
+            if ( $this->UseSlaveServer === true )
+                mysqli_close( $this->DBConnection );
             mysqli_close( $this->DBWriteConnection );
         }
     }

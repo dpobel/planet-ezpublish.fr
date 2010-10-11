@@ -4,10 +4,10 @@
 //
 // Created on: <28-Nov-2002 07:44:29 amos>
 //
+// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.2.0
-// BUILD VERSION: 24182
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 4.3.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -24,6 +24,8 @@
 //   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 //   MA 02110-1301, USA.
 //
+//
+// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
 /*! \file
@@ -100,7 +102,7 @@ class eZTemplateTreeCache
         $key = eZTemplateTreeCache::internalKey( $originalKey );
         if ( isset( $templateCache[$key] ) )
         {
-            eZDebug::writeWarning( "Template cache for key '$key', created from uri '$uri', already exists", 'eZTemplateTreeCache::setCachedTree' );
+            eZDebug::writeDebug( "Template cache for key '$key', created from uri '$uri', already exists", 'eZTemplateTreeCache::setCachedTree' );
         }
         else
         {
@@ -208,7 +210,7 @@ class eZTemplateTreeCache
         $key = eZTemplateTreeCache::internalKey( $key );
         if ( isset( $templateCache[$key] ) )
         {
-            eZDebug::writeWarning( "Template cache for key '$key' already exist, cannot restore cache", 'eZTemplateTreeCache::restoreCache' );
+            eZDebug::writeDebug( "Template cache for key '$key' already exist, cannot restore cache", 'eZTemplateTreeCache::restoreCache' );
             return false;
         }
         $cacheFileName = eZTemplateTreeCache::treeCacheFilename( $key, $templateFilepath );
@@ -238,7 +240,7 @@ class eZTemplateTreeCache
         $key = eZTemplateTreeCache::internalKey( $key );
         if ( !isset( $templateCache[$key] ) )
         {
-            eZDebug::writeWarning( "Template cache for key '$key' does not exist, cannot store cache", 'eZTemplateTreeCache::storeCache' );
+            eZDebug::writeDebug( "Template cache for key '$key' does not exist, cannot store cache", 'eZTemplateTreeCache::storeCache' );
             return;
         }
         $cacheFileName = eZTemplateTreeCache::treeCacheFilename( $key, $templateFilepath );

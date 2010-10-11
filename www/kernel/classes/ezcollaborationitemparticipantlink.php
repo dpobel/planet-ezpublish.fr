@@ -4,10 +4,10 @@
 //
 // Created on: <22-Jan-2003 16:08:22 amos>
 //
+// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.2.0
-// BUILD VERSION: 24182
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 4.3.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -24,6 +24,8 @@
 //   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 //   MA 02110-1301, USA.
 //
+//
+// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
 /*! \file
@@ -281,13 +283,13 @@ class eZCollaborationItemParticipantLink extends eZPersistentObject
         {
             if ( empty( $GLOBALS['eZCollaborationParticipantRoleNameMap'] ) )
             {
-                require_once( 'kernel/common/i18n.php' );
+                
                 $GLOBALS['eZCollaborationParticipantRoleNameMap'] =
-                    array( self::ROLE_STANDARD => ezi18n( 'kernel/classes', 'Standard' ),
-                           self::ROLE_OBSERVER => ezi18n( 'kernel/classes', 'Observer' ),
-                           self::ROLE_OWNER => ezi18n( 'kernel/classes', 'Owner' ),
-                           self::ROLE_APPROVER => ezi18n( 'kernel/classes', 'Approver' ),
-                           self::ROLE_AUTHOR => ezi18n( 'kernel/classes', 'Author' ) );
+                    array( self::ROLE_STANDARD => ezpI18n::tr( 'kernel/classes', 'Standard' ),
+                           self::ROLE_OBSERVER => ezpI18n::tr( 'kernel/classes', 'Observer' ),
+                           self::ROLE_OWNER => ezpI18n::tr( 'kernel/classes', 'Owner' ),
+                           self::ROLE_APPROVER => ezpI18n::tr( 'kernel/classes', 'Approver' ),
+                           self::ROLE_AUTHOR => ezpI18n::tr( 'kernel/classes', 'Author' ) );
             }
             $roleNameMap = $GLOBALS['eZCollaborationParticipantRoleNameMap'];
             if ( isset( $roleNameMap[$roleID] ) )

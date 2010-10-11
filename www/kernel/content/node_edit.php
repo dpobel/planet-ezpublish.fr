@@ -2,10 +2,10 @@
 //
 // Created on: <17-Apr-2002 10:34:48 bf>
 //
+// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.2.0
-// BUILD VERSION: 24182
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 4.3.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -23,8 +23,10 @@
 //   MA 02110-1301, USA.
 //
 //
+// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
+//
 
-require_once( 'kernel/common/template.php' );
+
 
 
 function checkNodeAssignments( $module, $class, $object, $version, $contentObjectAttributes, $editVersion, $editLanguage, $FromLanguage, &$validation )
@@ -99,7 +101,7 @@ function checkNodeAssignments( $module, $class, $object, $version, $contentObjec
                 if ( !$isPermitted )
                 {
                     eZDebug::writeError( $newNode->pathWithNames(), "You are not allowed to place this object under:" );
-                    $validation[ 'placement' ][] = array( 'text' => ezi18n( 'kernel/content', 'You are not allowed to place this object under: %1', null, array( $newNode->pathWithNames() ) ) );
+                    $validation[ 'placement' ][] = array( 'text' => ezpI18n::tr( 'kernel/content', 'You are not allowed to place this object under: %1', null, array( $newNode->pathWithNames() ) ) );
                     $validation[ 'processed' ] = true;
                     // Error message.
                 }
@@ -184,7 +186,7 @@ function checkNodeMovements( $module, $class, $object, $version, $contentObjectA
                     if ( !$isPermitted )
                     {
                         eZDebug::writeError( $newNode->pathWithNames(), "You are not allowed to place this object under:" );
-                        $validation[ 'placement' ][] = array( 'text' => ezi18n( 'kernel/content', "You are not allowed to place this object under: %1", null, array( $newNode->pathWithNames() ) ) );
+                        $validation[ 'placement' ][] = array( 'text' => ezpI18n::tr( 'kernel/content', "You are not allowed to place this object under: %1", null, array( $newNode->pathWithNames() ) ) );
                         $validation[ 'processed' ] = true;
                         // Error message.
                     }

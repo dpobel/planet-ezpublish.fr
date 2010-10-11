@@ -4,10 +4,10 @@
 //
 // Created on: <13-Aug-2003 19:54:38 kk>
 //
+// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.2.0
-// BUILD VERSION: 24182
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 4.3.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -25,10 +25,12 @@
 //   MA 02110-1301, USA.
 //
 //
+// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
+//
 
 /*! \file
 */
-require_once( "kernel/common/i18n.php" );
+
 /*!
   Error codes:
 
@@ -334,6 +336,9 @@ class eZStepCreateSites extends eZStepInstaller
             $ini->setVariable( 'MailSettings', 'TransportPassword', $emailInfo['password'] );
         }
 
+        // Enable design location cache
+        $ini->setVariable( 'DesignSettings', 'DesignLocationCache', 'enabled' );
+
         if ( $saveData )
         {
             foreach ( $siteINISettings as $siteINISetting )
@@ -363,7 +368,7 @@ class eZStepCreateSites extends eZStepInstaller
         $result = array();
         // Display template
         $result['content'] = $this->Tpl->fetch( "design:setup/init/create_sites.tpl" );
-        $result['path'] = array( array( 'text' => ezi18n( 'design/standard/setup/init',
+        $result['path'] = array( array( 'text' => ezpI18n::tr( 'design/standard/setup/init',
                                                           'Creating sites' ),
                                         'url' => false ) );
         return $result;
@@ -985,7 +990,7 @@ language_locale='eng-GB'";
                              'class_remote_map' => $classRemoteMap,
                              //'extra_functionality' => $extraFunctionality,
                              'preview_design' => $userDesignName,
-                             'design_list' => array( $userDesignName, 'admin' ),
+                             'design_list' => array( $userDesignName, 'admin2', 'admin' ),
                              'user_siteaccess' => $userSiteaccessName,
                              'admin_siteaccess' => $adminSiteaccessName,
                              'package_object' => $sitePackage,
@@ -1032,6 +1037,8 @@ language_locale='eng-GB'";
 
         // Enable OE and ODF extensions by default
         $extensionsToEnable = array();
+        // Included in "fat" install, needs to override $extraCommonSettings extensions
+        $extensionsPrepended = array( 'ezmultiupload', 'ezjscore' );
         foreach ( array( 'ezoe', 'ezodf' ) as $extension )
         {
             if ( file_exists( "extension/$extension" ) )
@@ -1048,7 +1055,7 @@ language_locale='eng-GB'";
             {
                 $settingAdded = true;
                 $extraCommonSettings[$key]['settings']['ExtensionSettings']['ActiveExtensions'] =
-                    array_merge( $extraCommonSettings[$key]['settings']['ExtensionSettings']['ActiveExtensions'], $extensionsToEnable );
+                    array_merge( $extensionsPrepended, $extraCommonSettings[$key]['settings']['ExtensionSettings']['ActiveExtensions'], $extensionsToEnable );
                 break;
             }
         }
@@ -1056,7 +1063,7 @@ language_locale='eng-GB'";
         if ( !$settingAdded )
         {
             $extraCommonSettings[] = array( 'name' => 'site.ini',
-                                            'settings' => array( 'ExtensionSettings' => array( 'ActiveExtensions' => $extensionsToEnable ) ) );
+                                            'settings' => array( 'ExtensionSettings' => array( 'ActiveExtensions' => array_merge( $extensionsPrepended, $extensionsToEnable ) ) ) );
         }
 
         // Enable dynamic tree menu for the admin interface by default
@@ -1163,8 +1170,10 @@ language_locale='eng-GB'";
                 $siteINIAdminStored = true;
                 $tmpINI->setVariables( $siteINIChanges );
                 $tmpINI->setVariable( 'SiteAccessSettings', 'RequireUserLogin', 'true' );
-                $tmpINI->setVariable( 'DesignSettings', 'SiteDesign', 'admin' );
+                $tmpINI->setVariable( 'DesignSettings', 'SiteDesign', 'admin2' );
+                $tmpINI->setVariable( 'DesignSettings', 'AdditionalSiteDesignList', array( 'admin' ) );
                 $tmpINI->setVariable( 'SiteSettings', 'LoginPage', 'custom' );
+                $tmpINI->setVariable( 'SiteSettings', 'DefaultPage', 'content/dashboard' );
             }
             $tmpINI->save( false, '.append.php', false, true, "settings/siteaccess/$adminSiteaccessName", $resetArray );
         }
@@ -1178,8 +1187,10 @@ language_locale='eng-GB'";
 
             $siteINI->setVariables( $siteINIChanges );
             $siteINI->setVariable( 'SiteAccessSettings', 'RequireUserLogin', 'true' );
-            $siteINI->setVariable( 'DesignSettings', 'SiteDesign', 'admin' );
+            $siteINI->setVariable( 'DesignSettings', 'SiteDesign', 'admin2' );
+            $tmpINI->setVariable( 'DesignSettings', 'AdditionalSiteDesignList', array( 'admin' ) );
             $siteINI->setVariable( 'SiteSettings', 'LoginPage', 'custom' );
+            $siteINI->setVariable( 'SiteSettings', 'DefaultPage', 'content/dashboard' );
             $siteINI->save( false, '.append.php', false, false, "settings/siteaccess/$adminSiteaccessName", true );
         }
         if ( !$siteINIStored )

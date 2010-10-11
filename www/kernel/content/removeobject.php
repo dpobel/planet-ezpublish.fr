@@ -3,10 +3,10 @@
 //
 // Created on: <08-Nov-2002 16:02:26 wy>
 //
+// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.2.0
-// BUILD VERSION: 24182
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 4.3.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -24,8 +24,10 @@
 //   MA 02110-1301, USA.
 //
 //
+// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
+//
 
-require_once( "kernel/common/template.php" );
+
 
 $Module = $Params['Module'];
 
@@ -33,7 +35,6 @@ $http = eZHTTPTool::instance();
 
 $viewMode = $http->sessionVariable( "CurrentViewMode" );
 $deleteIDArray = $http->sessionVariable( "DeleteIDArray" );
-$contentObjectID = $http->sessionVariable( 'ContentObjectID' );
 $contentNodeID = $http->sessionVariable( 'ContentNodeID' );
 
 $requestedURI = '';
@@ -61,7 +62,6 @@ if ( $http->hasPostVariable( "CancelButton" ) )
 {
     $http->removeSessionVariable( "CurrentViewMode" );
     $http->removeSessionVariable( "DeleteIDArray" );
-    $http->removeSessionVariable( 'ContentObjectID' );
     $http->removeSessionVariable( 'ContentNodeID' );
     $http->removeSessionVariable( 'userRedirectURIReverseRelatedList' );
     $http->removeSessionVariable( 'HideRemoveConfirmation' );
@@ -137,7 +137,7 @@ $deleteResult       = $info['delete_list'];
 $moveToTrashAllowed = $info['move_to_trash'];
 $totalChildCount    = $info['total_child_count'];
 $exceededLimit      = false;
-$deleteNodeArray    = array();
+$deleteNodeIdArray  = array();
 
 // Check if number of nodes being removed not more then MaxNodesRemoveSubtree setting.
 $maxNodesRemoveSubtree = $contentINI->hasVariable( 'RemoveSettings', 'MaxNodesRemoveSubtree' ) ?
@@ -148,7 +148,7 @@ $deleteItemsExist = true; // If false, we should disable 'OK' button if count of
 foreach ( array_keys( $deleteResult ) as $removeItemKey )
 {
     $removeItem =& $deleteResult[$removeItemKey];
-    $deleteNodeArray[] = $removeItem['node'];
+    $deleteNodeIdArray[$removeItem['node']->attribute( 'node_id' )] = 1;
     if ( $removeItem['child_count'] > $maxNodesRemoveSubtree )
     {
         $removeItem['exceeded_limit_of_subitems'] = true;
@@ -190,15 +190,13 @@ if ( $totalChildCount == 0 )
         {
             $operationResult = eZOperationHandler::execute( 'content',
                                                             'removelocation',
-                                                             array( 'node_id' => $contentNodeID,
-                                                                    'object_id' => $contentObjectID,
-                                                                    'node_list' => $deleteNodeArray,
+                                                             array( 'node_list' => array_keys( $deleteNodeIdArray ),
                                                                     'move_to_trash' => $moveToTrash ),
                                                               null, true );
         }
         else
         {
-            eZContentOperationCollection::removeAssignment( $contentNodeID, $contentObjectID, $deleteNodeArray, $moveToTrash );
+            eZContentOperationCollection::removeNodes( array_keys( $deleteNodeIdArray ) );
         }
 
         if ( $http->hasSessionVariable( 'RedirectURIAfterRemove' )
@@ -215,7 +213,7 @@ if ( $totalChildCount == 0 )
     }
 }
 
-$tpl = templateInit();
+$tpl = eZTemplate::factory();
 
 $tpl->setVariable( 'reverse_related'        , $info['reverse_related_count'] );
 $tpl->setVariable( 'module'                 , $Module );
@@ -233,5 +231,5 @@ $tpl->setVariable( 'move_to_trash'          , $moveToTrash );
 $Result = array();
 $Result['content'] = $tpl->fetch( "design:node/removeobject.tpl" );
 $Result['path'] = array( array( 'url' => false,
-                                'text' => ezi18n( 'kernel/content', 'Remove object' ) ) );
+                                'text' => ezpI18n::tr( 'kernel/content', 'Remove object' ) ) );
 ?>

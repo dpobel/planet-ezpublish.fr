@@ -7,7 +7,7 @@
                                            )}
 <script type="text/javascript">
 <!--
-var contentType = '{$content_type}', classFilter = ez.$c();
+var contentType = '{$content_type}', classFilter = [];
 
 {foreach $class_filter_array as $class_filter}
     classFilter.push('{$class_filter}');
@@ -38,7 +38,7 @@ tinyMCEPopup.onInit.add( function(){
 if ( contentType === 'images' )
 {
     eZOEPopupUtils.settings.browseClassGenerator = function( n, hasImage ){
-        if ( hasImage && classFilter.indexOf( n.class_identifier ) !== -1 )
+        if ( hasImage && jQuery.inArray( n.class_identifier, classFilter ) !== -1 )
             return '';
         if ( n.children_count )
             return 'node_not_image';
@@ -71,7 +71,7 @@ if ( contentType === 'images' )
                 </tr>
                 <tr>
                     <td class="column1"><label id="srclabel" for="fileName">{'File'|i18n('design/standard/ezoe')}</label></td>
-                    <td colspan="2"><input name="fileName" type="file" id="fileName" size="50" value="" title="{'Choose file to upload from your local machine.'|i18n('design/standard/ezoe/wai')}" /></td>
+                    <td colspan="2"><input name="fileName" type="file" id="fileName" size="40" accept="image/*" value="" title="{'Choose file to upload from your local machine.'|i18n('design/standard/ezoe/wai')}" /></td>
                 </tr>
                 <tr id="embedlistsrcrow">
                     <td class="column1"><label for="location">{'Location'|i18n('design/standard/ezoe')}</label></td>
@@ -127,6 +127,7 @@ if ( contentType === 'images' )
                                         {/foreach}
                                     {/if}
                                 {/foreach}
+        
                             {/if}
                         {/foreach}
 

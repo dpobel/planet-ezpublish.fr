@@ -4,10 +4,10 @@
 //
 // Created on: <25-Nov-2002 15:40:10 wy>
 //
+// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.2.0
-// BUILD VERSION: 24182
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 4.3.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -25,8 +25,10 @@
 //   MA 02110-1301, USA.
 //
 //
+// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
+//
 
-require_once( "kernel/common/template.php" );
+
 $module = $Params['Module'];
 
 $http = eZHTTPTool::instance();
@@ -65,12 +67,12 @@ if ( $http->hasPostVariable( "RemoveDiscountGroupButton" ) )
     return;
 }
 $module->setTitle( "View discount group" );
-$tpl = templateInit();
+$tpl = eZTemplate::factory();
 $tpl->setVariable( "discountgroup_array", $discountGroupArray );
 $tpl->setVariable( "module", $module );
 
 $Result = array();
 $Result['content'] = $tpl->fetch( "design:shop/discountgroup.tpl" );
 $Result['path'] = array( array( 'url' => '/shop/discountgroup/',
-                                'text' => ezi18n( 'kernel/shop', 'Discount group' ) ) );
+                                'text' => ezpI18n::tr( 'kernel/shop', 'Discount group' ) ) );
 ?>

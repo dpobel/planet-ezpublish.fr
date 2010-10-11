@@ -4,10 +4,10 @@
 //
 // Created on: <19-Apr-2006 16:01:30 vs>
 //
+// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.2.0
-// BUILD VERSION: 24182
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 4.3.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -24,6 +24,8 @@
 //   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 //   MA 02110-1301, USA.
 //
+//
+// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
 /*! \file
@@ -1302,6 +1304,32 @@ class eZDBFileHandler
     public function requiresClusterizing()
     {
         return true;
+    }
+
+    /**
+     * eZDFS does require binary purge.
+     * It does store files in DB and therefore doesn't remove files in real time
+     * 
+     * @since 4.3.0
+     */
+    public function requiresBinaryPurge()
+    {
+        return true;
+    }
+    
+    /**
+     * Fetches the first $limit expired binary items from the DB
+     * 
+     * @param array $limit A 2 items array( offset, limit )
+     * 
+     * @return array(eZClusterFileHandlerInterace)
+     * @since 4.3.0
+     * 
+     * @todo handle output using $cli or something
+     */
+    public function fetchExpiredBinaryItems( $limit = array( 0, 100 ) )
+    {
+        return $this->backend->expiredFilesList( array( 'image', 'binaryfile' ), $limit );
     }
 
     /**

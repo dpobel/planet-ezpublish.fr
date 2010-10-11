@@ -2,10 +2,10 @@
 //
 // Created on: <24-Apr-2002 11:18:59 bf>
 //
+// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.2.0
-// BUILD VERSION: 24182
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 4.3.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -23,12 +23,14 @@
 //   MA 02110-1301, USA.
 //
 //
+// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
+//
 
-require_once( 'kernel/common/template.php' );
+
 
 $http = eZHTTPTool::instance();
 
-$tpl = templateInit();
+$tpl = eZTemplate::factory();
 
 $ViewMode = $Params['ViewMode'];
 $NodeID = $Params['NodeID'];
@@ -60,11 +62,10 @@ if ( $Month )
 if ( $Day )
     $Day = (int) $Day;
 
+$NodeID = (int)$NodeID;
+
 if ( $NodeID < 2 )
     $NodeID = 2;
-
-if ( !is_numeric( $Offset ) )
-    $Offset = 0;
 
 $ini = eZINI::instance();
 $viewCacheEnabled = ( $ini->variable( 'ContentSettings', 'ViewCaching' ) == 'enabled' );
@@ -129,6 +130,7 @@ if ( ( array_key_exists(  'status', $operationResult ) && $operationResult['stat
     switch( $operationResult['status'] )
     {
         case eZModuleOperationInfo::STATUS_HALTED:
+        case eZModuleOperationInfo::STATUS_REPEAT:
         {
             if ( isset( $operationResult['redirect_url'] ) )
             {

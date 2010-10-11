@@ -3,10 +3,10 @@
 //
 // Created on: <01-Mar-2004 15:35:18 wy>
 //
+// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.2.0
-// BUILD VERSION: 24182
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 4.3.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -24,12 +24,14 @@
 //   MA 02110-1301, USA.
 //
 //
+// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
+//
 
 /*! \file
 */
 
 
-require_once( "kernel/common/template.php" );
+
 $module = $Params['Module'];
 $year = $Params['Year'];
 $month = $Params['Month'];
@@ -66,7 +68,7 @@ for ( $monthIndex = 1; $monthIndex <= 12; $monthIndex++ )
     $monthList[] = array( 'value' => $monthIndex, 'name' => $locale->longMonthName( $monthIndex ) );
 }
 
-$tpl = templateInit();
+$tpl = eZTemplate::factory();
 $tpl->setVariable( "year", $year );
 $tpl->setVariable( "month", $month );
 $tpl->setVariable( "year_list", $yearList );
@@ -74,11 +76,11 @@ $tpl->setVariable( "month_list", $monthList );
 $tpl->setVariable( "statistic_result", $statisticArray );
 
 $path = array();
-$path[] = array( 'text' => ezi18n( 'kernel/shop', 'Statistics' ),
+$path[] = array( 'text' => ezpI18n::tr( 'kernel/shop', 'Statistics' ),
                  'url' => false );
 
 $Result = array();
-$Result['path'] = array( array( 'text' => ezi18n( 'kernel/shop', 'Statistics' ),
+$Result['path'] = array( array( 'text' => ezpI18n::tr( 'kernel/shop', 'Statistics' ),
                                 'url' => false ) );
 
 $Result['content'] = $tpl->fetch( "design:shop/orderstatistics.tpl" );

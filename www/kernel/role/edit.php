@@ -2,10 +2,10 @@
 //
 // Created on: <19-Aug-2002 16:38:41 sp>
 //
+// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.2.0
-// BUILD VERSION: 24182
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 4.3.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -23,13 +23,15 @@
 //   MA 02110-1301, USA.
 //
 //
+// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
+//
 
 /*! \file
 */
 
-require_once( 'kernel/common/template.php' );
 
-$tpl = templateInit();
+
+$tpl = eZTemplate::factory();
 $Module = $Params['Module'];
 $roleID = $Params['RoleID'];
 
@@ -125,7 +127,10 @@ if ( $http->hasPostVariable( 'ChangeRoleName' ) )
 }
 if ( $http->hasPostVariable( 'AddModule' ) )
 {
-    $currentModule = $http->postVariable( 'Modules' );
+    if ( $http->hasPostVariable( 'Modules' ) )
+        $currentModule = $http->postVariable( 'Modules' );
+    else if ( $http->hasPostVariable( 'CurrentModule' ) )
+        $currentModule = $http->postVariable( 'CurrentModule' );
     $policy = eZPolicy::createNew( $roleID, array( 'ModuleName'=> $currentModule,
                                                    'FunctionName' => '*' ) );
 }
@@ -264,7 +269,10 @@ if ( $http->hasPostVariable( 'RemovePolicies' ) and
 
 if ( $http->hasPostVariable( 'CustomFunction' ) )
 {
-    $currentModule = $http->postVariable( 'Modules' );
+    if ( $http->hasPostVariable( 'Modules' ) )
+        $currentModule = $http->postVariable( 'Modules' );
+    else if ( $http->hasPostVariable( 'CurrentModule' ) )
+        $currentModule = $http->postVariable( 'CurrentModule' );
     if ( $currentModule != '*' )
     {
         $mod = eZModule::exists( $currentModule );
@@ -295,7 +303,7 @@ if ( $http->hasPostVariable( 'CustomFunction' ) )
     $Result = array();
 
     $Result['path'] = array( array( 'url' => false ,
-                                    'text' => ezi18n( 'kernel/role',
+                                    'text' => ezpI18n::tr( 'kernel/role',
                                                       'Create new policy, step 2: select function' ) ) );
 
     $Result['content'] = $tpl->fetch( 'design:role/createpolicystep2.tpl' );
@@ -678,7 +686,7 @@ if ( $http->hasPostVariable( 'SelectButton' ) or
 
         $Result = array();
         $Result['path'] = array( array( 'url' => false ,
-                                        'text' => ezi18n( 'kernel/role',
+                                        'text' => ezpI18n::tr( 'kernel/role',
                                                           'Create new policy, step three: set function limitations' ) ) );
 
         $Result['content'] = $tpl->fetch( 'design:role/createpolicystep3.tpl' );
@@ -702,7 +710,7 @@ if ( $http->hasPostVariable( 'DiscardLimitation' )  || $http->hasPostVariable( '
 
     $Result = array();
     $Result['path'] = array( array( 'url' => false ,
-                                    'text' => ezi18n( 'kernel/role',
+                                    'text' => ezpI18n::tr( 'kernel/role',
                                                       'Create new policy, step two: select function' ) ) );
 
     $Result['content'] = $tpl->fetch( 'design:role/createpolicystep2.tpl' );
@@ -715,12 +723,19 @@ if ( $http->hasPostVariable( 'CreatePolicy' ) || $http->hasPostVariable( 'Step1'
     $http->setSessionVariable( 'RoleWasChanged', true );
     $Module->setTitle( 'Edit ' . $role->attribute( 'name' ) );
     $tpl->setVariable( 'modules', $modules );
+
+    $moduleList = array();
+    foreach( $modules as $module )
+    {
+        $moduleList[] = eZModule::exists( $module );
+    }
+    $tpl->setVariable( 'module_list', $moduleList );
     $tpl->setVariable( 'role', $role );
     $tpl->setVariable( 'module', $Module );
 
     $Result = array();
     $Result['path'] = array( array( 'url' => false ,
-                                    'text' => ezi18n( 'kernel/role',
+                                    'text' => ezpI18n::tr( 'kernel/role',
                                                       'Create new policy, step one: select module' ) ) );
 
     $Result['content'] = $tpl->fetch( 'design:role/createpolicystep1.tpl' );

@@ -4,10 +4,10 @@
 //
 // Created on: <23-Jul-2003 12:34:55 amos>
 //
+// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.2.0
-// BUILD VERSION: 24182
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 4.3.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -24,6 +24,8 @@
 //   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 //   MA 02110-1301, USA.
 //
+//
+// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
 /*! \file
@@ -61,9 +63,9 @@ class eZPackage
         $this->RepositoryInformation = null;
     }
 
-    /*!
-     Removes the package directory and all it's subfiles/directories.
-    */
+    /**
+     * Removes the package directory and all it's subfiles/directories.
+    **/
     function remove()
     {
         $path = $this->path();
@@ -461,12 +463,11 @@ class eZPackage
 
     static function maintainerRoleName( $roleID )
     {
-        require_once "kernel/common/i18n.php";
-        $nameMap = array( 'lead' => ezi18n( 'kernel/package', 'Lead' ),
-                          'developer' => ezi18n( 'kernel/package', 'Developer' ),
-                          'designer' => ezi18n( 'kernel/package', 'Designer' ),
-                          'contributor' => ezi18n( 'kernel/package', 'Contributor' ),
-                          'tester' => ezi18n( 'kernel/package', 'Tester' ) );
+        $nameMap = array( 'lead' => ezpI18n::tr( 'kernel/package', 'Lead' ),
+                          'developer' => ezpI18n::tr( 'kernel/package', 'Developer' ),
+                          'designer' => ezpI18n::tr( 'kernel/package', 'Designer' ),
+                          'contributor' => ezpI18n::tr( 'kernel/package', 'Contributor' ),
+                          'tester' => ezpI18n::tr( 'kernel/package', 'Tester' ) );
         if ( isset( $nameMap[$roleID] ) )
             return $nameMap[$roleID];
         return false;
@@ -1114,9 +1115,17 @@ class eZPackage
         return $archivePath;
     }
 
-    /*!
-     Imports a package from a gzip compressed tarball file \a $archiveName
-    */
+    /**
+     * Imports a package from a gzip compressed tarball file
+     *
+     * @param string $archiveName Path to the archive file
+     * @param string $packageName Package name
+     * @param bool $dbAvailable
+     * @param bool $repositoryID
+     *
+     * @return eZPackage The eZPackage object if successfull, or one of the
+     *         STATUS_* class constants if an error occurs
+     **/
     static function import( $archiveName, &$packageName, $dbAvailable = true, $repositoryID = false )
     {
         if ( is_dir( $archiveName ) )
@@ -1137,7 +1146,13 @@ class eZPackage
             eZDir::mkdir( $archivePath, false, true );
 
             $archiveOptions = new ezcArchiveOptions( array( 'readOnly' => true ) );
-            $archive = ezcArchive::open( "compress.zlib://$archiveName", null, $archiveOptions );
+
+            // Fix for issue #15891: ezjscore - file names are cutted
+            // Force the type of the archive as ezcArchive::TAR_GNU so that long file names are supported on Windows
+            // The previous value for the second parameter was null which meant the type was guessed from the
+            // archive, but on Windows it was detected as TAR_USTAR and this lead to filenames being limited
+            // to 100 characters
+            $archive = ezcArchive::open( "compress.zlib://$archiveName", ezcArchive::TAR_GNU, $archiveOptions );
 
             $fileList = array();
             $fileList[] = eZPackage::definitionFilename();
@@ -1605,13 +1620,12 @@ class eZPackage
     */
     static function packageRepositories( $parameters = array() )
     {
-        require_once "kernel/common/i18n.php";
         if ( isset( $parameters['path'] ) and $parameters['path'] )
         {
             $path = $parameters['path'];
             $packageRepositories = array( array( 'path' => $path,
                                              'id' => 'local',
-                                             'name' => ezi18n( 'kernel/package', 'Local' ),
+                                             'name' => ezpI18n::tr( 'kernel/package', 'Local' ),
                                              'type' => 'local' ) );
         }
         else
@@ -1619,7 +1633,7 @@ class eZPackage
             $repositoryPath = eZPackage::repositoryPath();
             $packageRepositories = array( array( 'path' => $repositoryPath . '/local',
                                                  'id' => 'local',
-                                                 'name' => ezi18n( 'kernel/package', 'Local' ),
+                                                 'name' => ezpI18n::tr( 'kernel/package', 'Local' ),
                                                  'type' => 'local' ) );
 
             $subdirs = eZDir::findSubitems( $repositoryPath, 'd' );
@@ -1849,9 +1863,13 @@ class eZPackage
         return $installResult;
     }
 
-    /*!
-     Install all install items in package
-    */
+    /**
+     * Installs all items in the package
+     *
+     * @param array $installParameters
+     *
+     * @return bool true if all items installed correctly, false otherwise
+     **/
     function install( &$installParameters )
     {
         if ( $this->Parameters['install_type'] != 'install' )

@@ -3,10 +3,10 @@
 // Definition of eZISBNType class
 //
 //
+// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.2.0
-// BUILD VERSION: 24182
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 4.3.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -24,6 +24,8 @@
 //   MA 02110-1301, USA.
 //
 //
+// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
+//
 
 /*!
   \class eZISBNType ezisbntype.php
@@ -40,7 +42,7 @@ class eZISBNType extends eZDataType
 
     function eZISBNType()
     {
-        $this->eZDataType( self::DATA_TYPE_STRING, ezi18n( 'kernel/classes/datatypes', "ISBN", 'Datatype name' ),
+        $this->eZDataType( self::DATA_TYPE_STRING, ezpI18n::tr( 'kernel/classes/datatypes', "ISBN", 'Datatype name' ),
                            array( 'serialize_supported' => true,
                                   'object_serialize_map' => array( self::CONTENT_VALUE => 'isbn' ) ) );
     }
@@ -61,7 +63,7 @@ class eZISBNType extends eZDataType
 
             if ( $contentObjectAttribute->validateIsRequired() and ( !$number13 or $number13 == '' ) )
             {
-                $contentObjectAttribute->setValidationError( ezi18n( 'kernel/classes/datatypes',
+                $contentObjectAttribute->setValidationError( ezpI18n::tr( 'kernel/classes/datatypes',
                                                                      'Input required.' ) );
 
                 return eZInputValidator::STATE_INVALID;
@@ -82,7 +84,7 @@ class eZISBNType extends eZDataType
                 }
                 else
                 {
-                    $contentObjectAttribute->setValidationError( ezi18n( 'kernel/classes/datatypes',
+                    $contentObjectAttribute->setValidationError( ezpI18n::tr( 'kernel/classes/datatypes',
                                                                          'The ISBN number should be ISBN13, but seems to be ISBN10.' ) );
                     return eZInputValidator::STATE_INVALID;
                 }
@@ -97,7 +99,7 @@ class eZISBNType extends eZDataType
             }
             else
             {
-                $contentObjectAttribute->setValidationError( ezi18n( 'kernel/classes/datatypes',
+                $contentObjectAttribute->setValidationError( ezpI18n::tr( 'kernel/classes/datatypes',
                                                                      'The ISBN number is not correct. ' ) . $error );
                 return eZInputValidator::STATE_INVALID;
             }
@@ -135,14 +137,14 @@ class eZISBNType extends eZDataType
             }
             else
             {
-                $contentObjectAttribute->setValidationError( ezi18n( 'kernel/classes/datatypes',
+                $contentObjectAttribute->setValidationError( ezpI18n::tr( 'kernel/classes/datatypes',
                                                                      'The ISBN number is not correct. Please check the input for mistakes.' ) );
                 return eZInputValidator::STATE_INVALID;
             }
         }
         else
         {
-            $contentObjectAttribute->setValidationError( ezi18n( 'kernel/classes/datatypes',
+            $contentObjectAttribute->setValidationError( ezpI18n::tr( 'kernel/classes/datatypes',
                                                                  'The ISBN number is not correct. Please check the input for mistakes.' ) );
             return eZInputValidator::STATE_INVALID;
         }

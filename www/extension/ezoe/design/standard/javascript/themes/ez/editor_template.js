@@ -10,7 +10,14 @@
 */
 
 (function(tinymce) {
-    var DOM = tinymce.DOM, Event = tinymce.dom.Event, extend = tinymce.extend, each = tinymce.each, Cookie = tinymce.util.Cookie, lastExtID, explode = tinymce.explode;
+    var DOM = tinymce.DOM, Event = tinymce.dom.Event, extend = tinymce.extend, each = tinymce.each, Cookie = tinymce.util.Cookie, lastExtID, explode = tinymce.explode, BIND = function()
+    {
+        // Binds arguments to a function, so when you call the returned wrapper function,
+        // arguments are intact and arguments passed to the wrapper function is appended.
+        // first argument is function, second is 'this' and the rest is arguments
+        var __args = Array.prototype.slice.call( arguments ), __fn = __args.shift(), __obj = __args.shift();
+        return function(){return __fn.apply( __obj, __args.concat( Array.prototype.slice.call( arguments ) ) )};
+    };
 
     tinymce.create('tinymce.themes.eZTheme', {
         sizes : [8, 10, 12, 14, 18, 24, 36],
@@ -160,6 +167,37 @@
                     DOM.remove(id + '_blocker');
                     DOM.remove(id + '_progress');
                     clearTimeout(t.progressTimer);
+                }
+            });
+
+            ed.onBeforeGetContent.add(function(ed, o)
+            {
+                if ( o.save === true && o.format === 'html' )
+                { 
+                    var body = ed.getBody();
+
+                    // Remove the content of the embed tags that are just there for oe preview
+                    // purpose, this is to avoid that the ez xml parsers in some cases 
+                    // duplicates the embed tag
+                    jQuery.each( body.getElementsByTagName('div'), function( i, node )
+                    {
+                        if ( node && node.className.indexOf('mceNonEditable') !== -1 )
+                            node.innerHTML = '';
+                    });
+                    jQuery.each( body.getElementsByTagName('span'), function( i, node )
+                    {
+                        if ( node && node.className.indexOf('mceNonEditable') !== -1 )
+                            node.innerHTML = '';
+                    });
+
+                    // @todo: Might not be needed anymore now that we don't use save handler and overwrite html
+                    // Fix link cleanup issues in IE 6 / 7 (it adds the current url before the anchor and invalid urls)
+                    var currenthost = document.location.protocol + '//' + document.location.host;
+                    jQuery.each( body.getElementsByTagName('a'), function( i, node )
+                    {
+                        if ( node.href.indexOf( currenthost ) === 0 && node.getAttribute('mce_href') != node.href )
+                            node.href = node.getAttribute('mce_href');
+                    });
                 }
             });
 
@@ -743,7 +781,7 @@
             h += DOM.createHTML('span', {'class' : c}, DOM.createHTML('span', null, '<!-- IE -->')) + '</div>';
 
             if ( tinymce.isIE && !DOM.stdMode ) c2 += ' mceToolBarFlowIEbug';
-            else if ( tinymce.isOpera && ez.num( navigator.appVersion ) < 9.30 ) c2 += ' mceToolBarFlowIEbug';
+            else if ( tinymce.isOpera && navigator.appVersion < 9.30 ) c2 += ' mceToolBarFlowIEbug';
 
             return DOM.createHTML('div', {id : t.id, 'class' : c2 + (s['class'] ? ' ' + s['class'] : ''), align : t.settings.align || ''},  h );
         },
@@ -883,15 +921,27 @@
             c2 = cm.get('file')
             if ( c || c2 )
             {
-                if ( ( p && (p.nodeName === 'DIV' || p.nodeName === 'SPAN') && p.className.indexOf('mceNonEditable') !== -1 )
-                   || (p = t.__getParentByTag( n, 'div,span', 'mceNonEditable') ) )
+                if ( ( p && (p.nodeName === 'DIV' || p.nodeName === 'SPAN') && p.className.indexOf('mceNonEditable') !== -1 ) )
                 {
-                    ed.selection.select( p );
                     mceNonEditable = true;
-                    div = p.nodeName === 'DIV';
+                    //console.log( 'mceNonEditable 1' );
+                }
+                else if ( (p = t.__getParentByTag( n, 'div,span', 'mceNonEditable') ) )
+                {
+                        mceNonEditable = true;
+                        //console.log( 'mceNonEditable 2' );
+                }
+                //else
+                        //console.log( 'mceNonEditable 3' );
+
+                if ( mceNonEditable )
+                {
+                        ed.selection.select( p );
+                        div = p.nodeName === 'DIV';
                     n = p;
                     type = p.className.indexOf('mceItemContentTypeFiles') !== -1 ? 'files' : 'objects';
                 }
+
                 if ( c )
                 {
                     c.setActive( mceNonEditable && (!c2 || type === 'objects')  );
@@ -1055,8 +1105,13 @@
                     // Ignore non element and hidden elements
                     if ( n.nodeType !== 1 || n.nodeName === 'BR' || DOM.hasClass(n, 'mceItemHidden') || DOM.hasClass(n, 'mceItemRemoved') )
                         return;
+
                    // seems like hasClass has some issues in ie..
                    if ( DOM.getAttrib( n, 'class').indexOf('mceItemHidden') !== -1 )
+                       return;
+
+                   // Ignore hidden spellcheker nodes (both spellcheck and AtD plugin)
+                   if ( DOM.hasClass(n, 'mceItemHiddenSpellWord') || DOM.hasClass(n, 'hiddenGrammarError') || DOM.hasClass(n, 'hiddenSpellError') || DOM.hasClass(n, 'hiddenSuggestion') )
                        return;
 
                     // node name to ez xml tag translation
@@ -1125,7 +1180,7 @@
                     {
                         v = v.replace(/(webkit-[\w\-]+|Apple-[\w\-]+|mceItem\w+|mceVisualAid|mceNonEditable)/g, '');
 
-                        if ( v = ez.string.trim( v ) )
+                        if ( v = jQuery.trim( v ) )
                         {
                             ti = ti + 'class: ' + v + ' ';
                             //if (na === 'embed' || na === 'custom' || DOM.isBlock(n))
@@ -1190,14 +1245,16 @@
         __block : function(ed, e) {
 
             if ( this.__disabled === false )
-                return;
+                return true;
+
+            //console.log( 'mceNonEditable __block()' );
             
             e = e || window.event;            
             var k = e.which || e.keyCode;
 
             // Don't block arrow keys, page up/down, and F1-F12
             if ((k > 32 && k < 41) || (k > 111 && k < 124))
-                return;
+                return true;
 
             // Remove embed tag if user clicks del or backspace
             if ( k === 8 || k === 46 )
@@ -1210,10 +1267,10 @@
                     {
                         this.__recursion = true;
                         n.parentNode.removeChild( n );
-                        setTimeout(ez.fn.bind( function(){ this.__recursion = false; }, this ), 50);
+                        setTimeout(BIND( function(){ this.__recursion = false; }, this ), 50);
                     }
                 }
-                else return;
+                else return true;
             }
             return Event.cancel(e);
         },
@@ -1241,10 +1298,10 @@
             {
                 if ( t.__disabled === undefined )
                 {
-                    ed.onKeyDown.addToTop( ez.fn.bind( t.__block, t ) );
-                    ed.onKeyPress.addToTop( ez.fn.bind( t.__block, t ) );
-                    ed.onKeyUp.addToTop( ez.fn.bind( t.__block, t ) );
-                    ed.onPaste.addToTop( ez.fn.bind( t.__block, t ) );
+                    ed.onKeyDown.addToTop( BIND( t.__block, t ) );
+                    ed.onKeyPress.addToTop( BIND( t.__block, t ) );
+                    ed.onKeyUp.addToTop( BIND( t.__block, t ) );
+                    ed.onPaste.addToTop( BIND( t.__block, t ) );
                 }
                 t.__disabled = s;
             }

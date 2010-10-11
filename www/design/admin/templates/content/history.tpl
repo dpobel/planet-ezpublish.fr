@@ -16,33 +16,33 @@
 {* Created *}
 <p>
 <label>{'Created'|i18n( 'design/admin/content/history' )}:</label>
-{section show=$object.published}
+{if $object.published}
 {$object.published|l10n( shortdatetime )}<br />
 {$object.current.creator.name|wash}
-{section-else}
+{else}
 {'Not yet published'|i18n( 'design/admin/content/history' )}
-{/section}
+{/if}
 </p>
 
 {* Modified *}
 <p>
 <label>{'Modified'|i18n( 'design/admin/content/history' )}:</label>
-{section show=$object.modified}
+{if $object.modified}
 {$object.modified|l10n( shortdatetime )}<br />
 {fetch( content, object, hash( object_id, $object.content_class.modifier_id ) ).name|wash}
-{section-else}
+{else}
 {'Not yet published'|i18n( 'design/admin/content/history' )}
-{/section}
+{/if}
 </p>
 
 {* Published version*}
 <p>
 <label>{'Published version'|i18n( 'design/admin/content/history' )}:</label>
-{section show=$object.published}
+{if $object.published}
 {$object.current_version}
-{section-else}
+{else}
 {'Not yet published'|i18n( 'design/admin/content/history' )}
-{/section}
+{/if}
 </p>
 
 </div></div></div></div></div></div>
@@ -90,7 +90,6 @@
 
 
 {def $page_limit=30
-     $version_list=fetch(content,version_list,hash(contentobject, $object,limit,$page_limit,offset,$view_parameters.offset))
      $list_count=fetch(content,version_count, hash(contentobject, $object))}
 
 <form name="versionsform" action={concat( '/content/history/', $object.id, '/' )|ezurl} method="post">
@@ -103,7 +102,7 @@
 {* DESIGN: Header END *}</div></div></div></div></div></div>
 {* DESIGN: Content START *}<div class="box-ml"><div class="box-mr"><div class="box-content">
 
-{if $version_list}
+{if $list_count}
 <table class="list" cellspacing="0">
 <tr>
     <th class="tight"><img src={'toggle-button-16x16.gif'|ezimage} alt="Toggle selection" onclick="ezjs_toggleCheckboxes( document.versionsform, 'DeleteIDArray[]' ); return false;" /></th>
@@ -118,7 +117,7 @@
 </tr>
 
 
-{foreach $version_list as $version
+{foreach fetch(content, version_list, hash( contentobject, $object, limit, $page_limit, offset, $view_parameters.offset ) ) as $version
     sequence array( bglight, bgdark ) as $seq
 }
 

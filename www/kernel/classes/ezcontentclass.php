@@ -4,10 +4,10 @@
 //
 // Created on: <16-Apr-2002 11:08:14 amos>
 //
+// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.2.0
-// BUILD VERSION: 24182
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 4.3.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -25,6 +25,8 @@
 //   MA 02110-1301, USA.
 //
 //
+// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
+//
 
 /*!
   \class eZContentClass ezcontentclass.php
@@ -33,8 +35,6 @@
 
   \sa eZContentObject
 */
-
-require_once( "kernel/common/i18n.php" );
 
 class eZContentClass extends eZPersistentObject
 {
@@ -58,6 +58,12 @@ class eZContentClass extends eZPersistentObject
                 $this->NameList->initFromSerializedList( $row['serialized_name_list'] );
             else
                 $this->NameList->initDefault();
+
+            $this->DescriptionList = new eZSerializedObjectNameList();
+            if ( isset( $row['serialized_description_list'] ) )
+                $this->DescriptionList->initFromSerializedList( $row['serialized_description_list'] );
+            else
+                $this->DescriptionList->initDefault();
         }
         $this->DataMap = false;
     }
@@ -73,6 +79,10 @@ class eZContentClass extends eZPersistentObject
                                                              'default' => 0,
                                                              'required' => true ),
                                          "serialized_name_list" => array( 'name' => 'SerializedNameList',
+                                                                          'datatype' => 'string',
+                                                                          'default' => '',
+                                                                          'required' => true ),
+                                         'serialized_description_list' => array( 'name' => 'SerializedDescriptionList',
                                                                           'datatype' => 'string',
                                                                           'default' => '',
                                                                           'required' => true ),
@@ -157,6 +167,8 @@ class eZContentClass extends eZPersistentObject
                                                       'can_instantiate_languages' => 'canInstantiateLanguages',
                                                       'name' => 'name',
                                                       'nameList' => 'nameList',
+                                                      'description' => 'description',
+                                                      'descriptionList' => 'descriptionList',
                                                       'languages' => 'languages',
                                                       'prioritized_languages' => 'prioritizedLanguages',
                                                       'prioritized_languages_js_array' => 'prioritizedLanguagesJsArray',
@@ -217,6 +229,14 @@ class eZContentClass extends eZPersistentObject
             $nameList->initFromString( $optionalValues['name'], $languageLocale );
         else
             $nameList->initFromString( '', $languageLocale );
+            
+        $descriptionList = new eZSerializedObjectNameList();
+        if ( isset( $optionalValues['serialized_description_list'] ) )
+            $descriptionList->initFromSerializedList( $optionalValues['serialized_description_list'] );
+        else if ( isset( $optionalValues['description'] ) )
+            $descriptionList->initFromString( $optionalValues['description'], $languageLocale );
+        else
+            $descriptionList->initFromString( '', $languageLocale );
 
         $languageMask = $nameList->languageMask();
         $initialLanguageID = $nameList->alwaysAvailableLanguageID();
@@ -226,6 +246,7 @@ class eZContentClass extends eZPersistentObject
             "id" => null,
             "version" => 1,
             "serialized_name_list" => $nameList->serializeNames(),
+            'serialized_description_list' => $descriptionList->serializeNames(),
             "identifier" => "",
             "contentobject_name" => "",
             "creator_id" => $userID,
@@ -258,7 +279,7 @@ class eZContentClass extends eZPersistentObject
     /*!
      Creates a new content object instance and stores it.
 
-     \param userID user ID (optional), current user if not set
+     \param userID user ID (optional), current user if not set (also store object id in session if $userID = false)
      \param sectionID section ID (optional), 0 if not set
      \param versionNumber version number, create initial version if not set
      \note Transaction unsafe. If you call several transaction unsafe methods you must enclose
@@ -268,9 +289,9 @@ class eZContentClass extends eZPersistentObject
     {
         $attributes = $this->fetchAttributes();
 
-        $user = eZUser::currentUser();
         if ( $userID === false )
         {
+            $user   = eZUser::currentUser();
             $userID = $user->attribute( 'contentobject_id' );
         }
 
@@ -279,7 +300,7 @@ class eZContentClass extends eZPersistentObject
             $languageCode = eZContentObject::defaultLanguage();
         }
 
-        $object = eZContentObject::create( ezi18n( "kernel/contentclass", "New %1", null, array( $this->name( $languageCode ) ) ),
+        $object = eZContentObject::create( ezpI18n::tr( "kernel/contentclass", "New %1", null, array( $this->name( $languageCode ) ) ),
                                            $this->attribute( "id" ),
                                            $userID,
                                            $sectionID,
@@ -296,7 +317,7 @@ class eZContentClass extends eZPersistentObject
 
         $object->store();
         $object->assignDefaultStates();
-        $object->setName( ezi18n( "kernel/contentclass", "New %1", null, array( $this->name( $languageCode ) ) ), false, $languageCode );
+        $object->setName( ezpI18n::tr( "kernel/contentclass", "New %1", null, array( $this->name( $languageCode ) ) ), false, $languageCode );
 
         if ( !$versionNumber )
         {
@@ -318,7 +339,7 @@ class eZContentClass extends eZPersistentObject
             $attribute->instantiate( $object->attribute( 'id' ), $languageCode );
         }
 
-        if ( $user->isAnonymous() )
+        if ( isset( $user ) && $user instanceof eZUser && $user->isAnonymous() )
         {
             $createdObjectIDList = eZPreferences::value( 'ObjectCreationIDList' );
             if ( !$createdObjectIDList )
@@ -535,22 +556,22 @@ class eZContentClass extends eZPersistentObject
             }
 
             $filterTableSQL = ', ezcontentclass_classgroup ccg';
-            $filterSQL = ( " AND\n" .
-                           "      cc.id = ccg.contentclass_id AND\n" .
+            $filterSQL = ( " AND" .
+                           "      cc.id = ccg.contentclass_id AND" .
                            "      " );
             $filterSQL .= $db->generateSQLINStatement( $groupList, 'ccg.group_id', !$includeFilter, true, 'int' );
         }
 
         $classNameFilter = eZContentClassName::sqlFilter( 'cc' );
-        $filterSQL .= " AND\n      cc.id=" . $classNameFilter['from'] . ".contentclass_id";
+        $filterSQL .= " AND      cc.id=" . $classNameFilter['from'] . ".contentclass_id";
 
         if ( $fetchAll )
         {
             // If $asObject is true we fetch all fields in class
             $fields = $asObject ? "cc.*, $classNameFilter[nameField]" : "cc.id, $classNameFilter[nameField]";
-            $rows = $db->arrayQuery( "SELECT DISTINCT $fields\n" .
-                                     "FROM ezcontentclass cc$filterTableSQL, $classNameFilter[from]\n" .
-                                     "WHERE cc.version = " . eZContentClass::VERSION_STATUS_DEFINED . " $filterSQL\n" .
+            $rows = $db->arrayQuery( "SELECT DISTINCT $fields " .
+                                     "FROM ezcontentclass cc$filterTableSQL, $classNameFilter[from] " .
+                                     "WHERE cc.version = " . eZContentClass::VERSION_STATUS_DEFINED . " $filterSQL " .
                                      "ORDER BY $classNameFilter[nameField] ASC" );
             $classList = eZPersistentObject::handleRows( $rows, 'eZContentClass', $asObject );
         }
@@ -565,10 +586,10 @@ class eZContentClass extends eZPersistentObject
             $classIDCondition = $db->generateSQLInStatement( $classIDArray, 'cc.id' );
             // If $asObject is true we fetch all fields in class
             $fields = $asObject ? "cc.*, $classNameFilter[nameField]" : "cc.id, $classNameFilter[nameField]";
-            $rows = $db->arrayQuery( "SELECT DISTINCT $fields\n" .
-                                     "FROM ezcontentclass cc$filterTableSQL, $classNameFilter[from]\n" .
-                                     "WHERE $classIDCondition AND\n" .
-                                     "      cc.version = " . eZContentClass::VERSION_STATUS_DEFINED . " $filterSQL\n" .
+            $rows = $db->arrayQuery( "SELECT DISTINCT $fields " .
+                                     "FROM ezcontentclass cc$filterTableSQL, $classNameFilter[from] " .
+                                     "WHERE $classIDCondition AND" .
+                                     "      cc.version = " . eZContentClass::VERSION_STATUS_DEFINED . " $filterSQL " .
                                      "ORDER BY $classNameFilter[nameField] ASC" );
             $classList = eZPersistentObject::handleRows( $rows, 'eZContentClass', $asObject );
         }
@@ -694,8 +715,8 @@ class eZContentClass extends eZPersistentObject
         if ( is_array( $groupList ) )
         {
             $filterTableSQL = ', ezcontentclass_classgroup ccg';
-            $filterSQL = ( " AND\n" .
-                           "      cc.id = ccg.contentclass_id AND\n" .
+            $filterSQL = ( " AND" .
+                           "      cc.id = ccg.contentclass_id AND" .
                            "      ccg.group_id " );
             $groupText = implode( ', ', $groupList );
             if ( $includeFilter )
@@ -710,9 +731,9 @@ class eZContentClass extends eZPersistentObject
         $db = eZDb::instance();
         // If $asObject is true we fetch all fields in class
         $fields = $asObject ? "cc.*" : "cc.id, $classNameFilter[nameField]";
-        $rows = $db->arrayQuery( "SELECT DISTINCT $fields\n" .
-                                 "FROM ezcontentclass cc$filterTableSQL, $classNameFilter[from]\n" .
-                                 "WHERE cc.version = " . eZContentClass::VERSION_STATUS_DEFINED . "$filterSQL AND $classNameFilter[where]\n" .
+        $rows = $db->arrayQuery( "SELECT DISTINCT $fields " .
+                                 "FROM ezcontentclass cc$filterTableSQL, $classNameFilter[from] " .
+                                 "WHERE cc.version = " . eZContentClass::VERSION_STATUS_DEFINED . "$filterSQL AND $classNameFilter[where]" .
                                  "ORDER BY $classNameFilter[nameField] ASC" );
 
         $classList = eZPersistentObject::handleRows( $rows, 'eZContentClass', $asObject );
@@ -784,7 +805,7 @@ class eZContentClass extends eZPersistentObject
     function remove( $removeAttributes = false, $version = eZContentClass::VERSION_STATUS_DEFINED )
     {
         // If we are not allowed to remove just return false
-        if ( $this->Version != eZContentClass::VERSION_STATUS_TEMPORARY && !$this->isRemovable() )
+        if ( $this->Version == eZContentClass::VERSION_STATUS_DEFINED && !$this->isRemovable() )
             return false;
 
         if ( is_array( $removeAttributes ) or $removeAttributes )
@@ -818,7 +839,7 @@ class eZContentClass extends eZPersistentObject
     */
     function removableInformation( $includeAll = true )
     {
-        $result  = array( 'text' => ezi18n( 'kernel/contentclass', "Cannot remove class '%class_name':",
+        $result  = array( 'text' => ezpI18n::tr( 'kernel/contentclass', "Cannot remove class '%class_name':",
                                          null, array( '%class_name' => $this->attribute( 'name' ) ) ),
                        'list' => array() );
         $db      = eZDB::instance();
@@ -831,7 +852,7 @@ WHERE ezcot.depth = 1 AND
       ezco.id=ezcot.contentobject_id" );
         if ( count( $rows ) > 0 )
         {
-            $result['list'][] = array( 'text' => ezi18n( 'kernel/contentclass', 'The class is used by a top-level node and cannot be removed.
+            $result['list'][] = array( 'text' => ezpI18n::tr( 'kernel/contentclass', 'The class is used by a top-level node and cannot be removed.
 You will need to change the class of the node by using the swap functionality.' ) );
             if ( !$includeAll )
                 return $result;
@@ -945,6 +966,7 @@ You will need to change the class of the node by using the swap functionality.' 
         $handler->store();
 
         $this->setAttribute( 'serialized_name_list', $this->NameList->serializeNames() );
+        $this->setAttribute( 'serialized_description_list', $this->DescriptionList->serializeNames() );
 
         eZPersistentObject::store( $fieldFilters );
 
@@ -967,7 +989,7 @@ You will need to change the class of the node by using the swap functionality.' 
     */
     function initializeCopy( &$originalClass )
     {
-        $name = ezi18n( 'kernel/class', 'Copy of %class_name', null,
+        $name = ezpI18n::tr( 'kernel/class', 'Copy of %class_name', null,
                         array( '%class_name' => $originalClass->attribute( 'name' ) ) );
         $identifier = 'copy_of_' . $originalClass->attribute( 'identifier' );
         $db = eZDB::instance();
@@ -988,51 +1010,63 @@ You will need to change the class of the node by using the swap functionality.' 
         $this->setAttribute( 'creator_id', $userID );
     }
 
-    /*!
-     Stores the current class as a defined version, updates the contentobject_name
-     attribute and recreates the class group entries.
-     \note It will remove any existing temporary or defined classes before storing.
-    */
-    function storeDefined( $attributes )
+    /**
+     * Stores the current class as a defined version, updates the contentobject_name
+     * attribute and recreates the class group entries.
+     *
+     * @note It will remove any existing temporary or defined classes before storing.
+     *
+     * @param array $attributes array of attributes of the content class
+     */
+    public function storeDefined( $attributes )
     {
+        $this->storeVersioned( $attributes, self::VERSION_STATUS_DEFINED );
+    }
+
+    /**
+     * Stores the current class as a modified version, updates the contentobject_name
+     * attribute and recreates the class group entries.
+     *
+     * @note It will remove classes in the previous and specified version before storing.
+     * 
+     * @param array $attributes array of attributes
+     * @param int $version version status
+     * @since Version 4.3
+     */
+    public function storeVersioned( $attributes, $version )
+    {
+        $previousVersion = $this->attribute( 'version' );
+
         $db = eZDB::instance();
         $db->begin();
 
-        $this->removeAttributes( false, eZContentClass::VERSION_STATUS_DEFINED );
-        $this->removeAttributes( false, eZContentClass::VERSION_STATUS_TEMPORARY );
+        $this->removeAttributes( false, $version );
+        $this->removeAttributes( false, $previousVersion );
         $this->remove( false );
-        $this->setVersion( eZContentClass::VERSION_STATUS_DEFINED, $attributes );
-        // include_once( "kernel/classes/datatypes/ezuser/ezuser.php" );
-        $user = eZUser::currentUser();
-        $user_id = $user->attribute( "contentobject_id" );
-        $this->setAttribute( "modifier_id", $user_id );
+        $this->setVersion( $version, $attributes );
+        $this->setAttribute( "modifier_id", eZUser::currentUser()->attribute( "contentobject_id" ) );
         $this->setAttribute( "modified", time() );
         $this->adjustAttributePlacements( $attributes );
         foreach( $attributes as $attribute )
         {
-            $attribute->storeDefined();
+            $attribute->storeVersioned( $version );
         }
 
         // Set contentobject_name to something sensible if it is missing
-        if ( count( $attributes ) > 0 )
+        if ( count( $attributes ) > 0 && trim( $this->attribute( 'contentobject_name' ) ) == '' )
         {
-            $identifier = $attributes[0]->attribute( 'identifier' );
-            $identifier = '<' . $identifier . '>';
-            if ( trim( $this->attribute( 'contentobject_name' ) ) == '' )
-            {
-                $this->setAttribute( 'contentobject_name', $identifier );
-            }
+            $this->setAttribute( 'contentobject_name', '<' . $attributes[0]->attribute( 'identifier' ) . '>' );
         }
 
         // Recreate class member entries
-        eZContentClassClassGroup::removeClassMembers( $this->ID, eZContentClass::VERSION_STATUS_DEFINED );
-        $classgroups = eZContentClassClassGroup::fetchGroupList( $this->ID, eZContentClass::VERSION_STATUS_TEMPORARY );
-        foreach( $classgroups as $classgroup )
+        eZContentClassClassGroup::removeClassMembers( $this->ID, $version );
+        
+        foreach( eZContentClassClassGroup::fetchGroupList( $this->ID, $previousVersion ) as $classgroup )
         {
-            $classgroup->setAttribute( 'contentclass_version', eZContentClass::VERSION_STATUS_DEFINED );
+            $classgroup->setAttribute( 'contentclass_version', $version );
             $classgroup->store();
         }
-        eZContentClassClassGroup::removeClassMembers( $this->ID, eZContentClass::VERSION_STATUS_TEMPORARY );
+        eZContentClassClassGroup::removeClassMembers( $this->ID, $previousVersion );
 
         eZExpiryHandler::registerShutdownFunction();
         $handler = eZExpiryHandler::instance();
@@ -1045,6 +1079,7 @@ You will need to change the class of the node by using the swap functionality.' 
         eZContentCacheManager::clearAllContentCache();
 
         $this->setAttribute( 'serialized_name_list', $this->NameList->serializeNames() );
+        $this->setAttribute( 'serialized_description_list', $this->DescriptionList->serializeNames() );
         eZPersistentObject::store();
         $this->NameList->store( $this );
 
@@ -1499,6 +1534,19 @@ You will need to change the class of the node by using the swap functionality.' 
         return eZContentClassNameList::nameFromSerializedString( $serializedNameList );
     }
 
+    /*!
+     \static
+     Returns a contentclass description from serialized array \a $serializedNameList using
+     top language from siteaccess language list or 'always available' name
+     from \a $serializedNameList.
+
+     \return string with contentclass description.
+    */
+    static function descriptionFromSerializedString( $serializedDescriptionList )
+    {
+        return eZSerializedObjectNameList::nameFromSerializedString( $serializedNameList );
+    }
+
     function hasNameInLanguage( $languageLocale )
     {
         $hasName = $this->NameList->hasNameInLocale( $languageLocale );
@@ -1527,6 +1575,32 @@ You will need to change the class of the node by using the swap functionality.' 
         $this->setAttribute( 'language_mask', $languageMask | $languageID );
     }
 
+    function nameList()
+    {
+        return $this->NameList->nameList();
+    }
+
+    /*!
+     Returns a contentclass description in \a $languageLocale language.
+     Uses siteaccess language list or 'always available' language if \a $languageLocale is 'false'.
+
+     \return string with contentclass name.
+    */
+    function description( $languageLocale = false )
+    {
+        return $this->DescriptionList->name( $languageLocale );
+    }
+
+    function setDescription( $description, $languageLocale = false )
+    {
+        $this->DescriptionList->setName( $description, $languageLocale );
+    }
+
+    function descriptionList()
+    {
+        return $this->DescriptionList->nameList();
+    }
+
     function setAlwaysAvailableLanguageID( $languageID, $updateChilds = true )
     {
         $db = eZDB::instance();
@@ -1543,11 +1617,13 @@ You will need to change the class of the node by using the swap functionality.' 
         {
             $this->setAttribute( 'language_mask', (int)$this->attribute( 'language_mask' ) | 1 );
             $this->NameList->setAlwaysAvailableLanguage( $languageLocale );
+            $this->DescriptionList->setAlwaysAvailableLanguage( $languageLocale );
         }
         else
         {
             $this->setAttribute( 'language_mask', (int)$this->attribute( 'language_mask' ) & ~1 );
             $this->NameList->setAlwaysAvailableLanguage( false );
+            $this->DescriptionList->setAlwaysAvailableLanguage( false );
         }
         $this->store();
 
@@ -1650,11 +1726,6 @@ You will need to change the class of the node by using the swap functionality.' 
         return $language;
     }
 
-    function nameList()
-    {
-        return $this->NameList->nameList();
-    }
-
     /*!
      Removes translated name for specified by \a $languageID language.
     */
@@ -1692,6 +1763,7 @@ You will need to change the class of the node by using the swap functionality.' 
 
         $languageLocale = $language->attribute( 'locale' );
         $this->NameList->removeName( $languageLocale );
+        $this->DescriptionList->removeName( $languageLocale );
 
         $this->store();
 
@@ -1833,15 +1905,24 @@ You will need to change the class of the node by using the swap functionality.' 
         return $classIDArray;
     }
 
+    /**
+     * Expires in-memory cache for eZContentClass.
+     * 
+     * Clears cache for fetched eZContentClass objects,
+     * class identifiers and class attributes.
+     *
+     * @since 4.2
+     */
     public static function expireCache()
     {
+        unset( $GLOBALS['eZContentClassObjectCache'] );
         self::$identifierHash = null;
         eZContentClassAttribute::expireCache();
     }
-    
+
     /**
      * Computes the version history limit for a content class
-     * 
+     *
      * @param mixed $class
      *        Content class ID, content class identifier or content class object
      * @return int
@@ -1852,7 +1933,7 @@ You will need to change the class of the node by using the swap functionality.' 
         // default version limit
         $contentINI = eZINI::instance( 'content.ini' );
         $versionLimit = $contentINI->variable( 'VersionManagement', 'DefaultVersionHistoryLimit' );
-        
+
         // version limit can't be < 2
         if ( $versionLimit < 2 )
         {
@@ -1893,13 +1974,13 @@ You will need to change the class of the node by using the swap functionality.' 
                 $classID = $class->attribute( 'id' );
             }
         }
-        
+
         $classLimitSetting = $contentINI->variable( 'VersionManagement', 'VersionHistoryClass' );
         $classArray = array_keys( $classLimitSetting );
         $limitsArray = array_values( $classLimitSetting );
-        
+
         $classArray = eZContentClass::classIDByIdentifier( $classArray );
-        
+
         foreach ( $classArray as $index => $id )
         {
             if ( $id == $classID )
@@ -1925,6 +2006,8 @@ You will need to change the class of the node by using the swap functionality.' 
     public $SerializedNameList;
     // unserialized class names
     public $NameList;
+    // unserialized class description
+    public $DescriptionList;
     public $Identifier;
     public $ContentObjectName;
     public $Version;

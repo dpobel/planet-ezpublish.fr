@@ -4,10 +4,10 @@
 //
 // Created on: <10-Dec-2002 15:20:20 amos>
 //
+// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.2.0
-// BUILD VERSION: 24182
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 4.3.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -24,6 +24,8 @@
 //   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 //   MA 02110-1301, USA.
 //
+//
+// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
 /*! \file
@@ -79,38 +81,30 @@ class eZSMTPTransport extends eZMailTransport
                 $mail->setSenderText( $emailSender );
         }
 
-        $sendData = array();
-//        $sendData['from'] = $mail->senderText();
-        $from = $mail->sender();
-        $sendData['from'] = isset( $from['email'] ) ? $from['email'] : '';
-        $sendData["recipients"] = $mail->receiverTextList();
-        $sendData['CcRecipients'] = $mail->ccReceiverTextList();
-        $sendData['BccRecipients'] = $mail->bccReceiverTextList();
-        $sendData['headers'] = $mail->headerTextList();
-        $sendData['body'] = $mail->body();
+        $smtp = new ezcMailSmtpTransport( $parameters['host'], $user, $password, 
+        $parameters['port'] );
 
-        $smtp = new smtp( $parameters );
-        $smtpConnected = $smtp->connect();
-        if ( $smtpConnected )
+        // If in debug mode, send to debug email address and nothing else
+        if ( $ini->variable( 'MailSettings', 'DebugSending' ) == 'enabled' )
         {
-            $result = $smtp->send( $sendData );
-            $mailSent = true;
-            if ( isset( $smtp->errors ) and is_array( $smtp->errors ) and count( $smtp->errors ) > 0 )
-            {
-                $mailSent = false;
-                foreach ( $smtp->errors as $error )
-                {
-                    eZDebug::writeError( "Error sending SMTP mail: " . $error, "eZSMTPTransport::sendMail()" );
-                }
-            }
-            $smtp->quit();
+            $mail->Mail->to = array( new ezcMailAddress( $ini->variable( 'MailSettings', 'DebugReceiverEmail' ) ) );
+            $mail->Mail->cc = array();
+            $mail->Mail->bcc = array();
         }
-        else
+
+        // send() from ezcMailSmtpTransport doesn't return anything (it uses exceptions in case
+        // something goes bad)
+        try
         {
-            eZDebug::writeError( 'Unable to connect to SMTP server ' . $parameters['host'], 'error.log', __METHOD__ );
-            $mailSent = false;
+            $smtp->send( $mail->Mail );
         }
-        return $mailSent;
+        catch ( ezcMailException $e )
+        {
+            return false;
+        }
+
+        // return true in case of no exceptions
+        return true;
     }
 }
 

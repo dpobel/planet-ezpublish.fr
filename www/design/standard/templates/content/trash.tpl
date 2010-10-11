@@ -12,12 +12,12 @@ function checkAll()
         document.trashaction.selectall.value = "{'Deselect all'|i18n('design/standard/content/trash')}";
 {literal}
         with (document.trashaction) 
-	{
+        {
             for (var i=0; i < elements.length; i++) 
-	    {
+            {
                 if (elements[i].type == 'checkbox' && elements[i].name == 'DeleteIDArray[]')
                      elements[i].checked = true;
-	    }
+            }
         }
      }
      else
@@ -26,12 +26,12 @@ function checkAll()
          document.trashaction.selectall.value = "{'Select all'|i18n('design/standard/content/trash')}";
 {literal}
          with (document.trashaction) 
-	 {
+         {
             for (var i=0; i < elements.length; i++) 
-	    {
+            {
                 if (elements[i].type == 'checkbox' && elements[i].name == 'DeleteIDArray[]')
                      elements[i].checked = false;
-	    }
+            }
          }
      }
 }
@@ -46,8 +46,7 @@ function checkAll()
 <h1>{"Trash"|i18n("design/standard/content/trash")}</h1>
 </div>
 
-{let object_list=fetch('content','trash_object_list',hash(limit,$page_limit,offset,$view_parameters.offset))}
-{section show=$object_list}
+{if $list_count}
 
 <div class="buttonblock">
 <input type="submit" name="EmptyButton" value="{'Empty Trash'|i18n('design/standard/content/trash')}" />
@@ -67,7 +66,8 @@ function checkAll()
     </div>
     </th>*}
 </tr>
-{section name=Draft loop=$object_list sequence=array(bglight,bgdark)}
+{section name=Draft loop=fetch( 'content', 'trash_object_list', hash( limit, $page_limit, offset, $view_parameters.offset ) )
+         sequence=array(bglight,bgdark)}
 <tr>
     <td class="{$Draft:sequence}">
     <a href={concat("/content/versionview/",$Draft:item.id,"/",$Draft:item.current_version,"/")|ezurl}>{$Draft:item.content_class.identifier|class_icon( small, $Draft:item.content_class.name )}&nbsp;{$Draft:item.name|wash}</a>
@@ -106,12 +106,11 @@ function checkAll()
          item_limit=$page_limit}
 
 
-{section-else}
+{else}
 
 <div class="feedback">
 <h2>{"Trash is empty"|i18n("design/standard/content/trash")}</h2>
 </div>
 
-{/section}
-{/let}
+{/if}
 {/let}

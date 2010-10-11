@@ -42,7 +42,7 @@
               {delimiter}, {/delimiter}
           {/section}
         {section-else}
-	  *
+          *
         {/section}
     </td>
 </tr>
@@ -63,9 +63,9 @@
         {$User:item.user_object.content_class.identifier|class_icon( 'small', $User:item.user_object.content_class.name )}{$User:item.user_object.name|wash}
     </td>
     <td class="{$User:sequence}">
-        {section show=$User:item.limit_ident}
+        {if $User:item.limit_ident}
           {$User:item.limit_ident|wash}( {$User:item.limit_value|wash} )
-        {/section}
+        {/if}
     </td>
     <td class="{$User:sequence}">
         <input type="checkbox" value="{$User:item.user_role_id}" name="IDArray[]" />
@@ -76,10 +76,10 @@
     <td>
         <input class="button" type="submit" name="AssignRoleButton" value="{'Assign'|i18n('design/standard/role')}" title="{'Assign role to user or group'|i18n('design/standard/role')}" />
         <input class="button" type="submit" name="AssignRoleLimitedButton" value="{'Assign limited'|i18n('design/standard/role')}" title="{'Assign role to user or group'|i18n('design/standard/role')}" />on
-	<select name="AssignRoleType">
-	    <option value="subtree">{"Subtree"|i18n( 'design/standard/role' )}</option>
-	    <option value="section">{"Section"|i18n( 'design/standard/role' )}</option>
-	</select>
+        <select name="AssignRoleType">
+            <option value="subtree">{"Subtree"|i18n( 'design/standard/role' )}</option>
+            <option value="section">{"Section"|i18n( 'design/standard/role' )}</option>
+        </select>
     </td>
     <td>
       &nbsp;

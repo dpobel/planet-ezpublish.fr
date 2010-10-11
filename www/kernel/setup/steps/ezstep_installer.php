@@ -4,10 +4,10 @@
 //
 // Created on: <08-Aug-2003 14:46:44 kk>
 //
+// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.2.0
-// BUILD VERSION: 24182
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 4.3.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -24,6 +24,8 @@
 //   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 //   MA 02110-1301, USA.
 //
+//
+// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
 /*! \file
@@ -499,7 +501,7 @@ class eZStepInstaller
             {
                 if ( $errorInfo['database_info']['type'] == 'pgsql' )
                 {
-                    $dbError = array( 'text' => ezi18n( 'design/standard/setup/init',
+                    $dbError = array( 'text' => ezpI18n::tr( 'design/standard/setup/init',
                                                         'Please make sure that the username and the password is correct. Verify that your PostgreSQL database is configured correctly.'
                                                         .'<br>See the PHP documentation for more information about this.'
                                                         .'<br>Remember to start postmaster with the -i option.'
@@ -510,7 +512,7 @@ class eZStepInstaller
                 }
                 else
                 {
-                    $dbError = array( 'text' => ezi18n( 'design/standard/setup/init',
+                    $dbError = array( 'text' => ezpI18n::tr( 'design/standard/setup/init',
                                                         'The database would not accept the connection, please review your settings and try again.' ),
                                   'url' => false,
                                       'number' => self::DB_ERROR_CONNECTION_FAILED );
@@ -520,7 +522,7 @@ class eZStepInstaller
             }
             case self::DB_ERROR_NONMATCH_PASSWORD:
             {
-                $dbError = array( 'text' => ezi18n( 'design/standard/setup/init',
+                $dbError = array( 'text' => ezpI18n::tr( 'design/standard/setup/init',
                                                     'Password entries did not match.' ),
                                   'url' => false,
                                   'number' => self::DB_ERROR_NONMATCH_PASSWORD );
@@ -528,7 +530,7 @@ class eZStepInstaller
             }
             case self::DB_ERROR_NOT_EMPTY:
             {
-                $dbError = array( 'text' => ezi18n( 'design/standard/setup/init',
+                $dbError = array( 'text' => ezpI18n::tr( 'design/standard/setup/init',
                                                     'The selected database was not empty, please choose from the alternatives below.' ),
                                   'url' => false,
                                   'number' => self::DB_ERROR_NOT_EMPTY );
@@ -537,7 +539,7 @@ class eZStepInstaller
             }
             case self::DB_ERROR_NO_DATABASES:
             {
-                $dbError = array( 'text' => ezi18n( 'design/standard/setup/init',
+                $dbError = array( 'text' => ezpI18n::tr( 'design/standard/setup/init',
                                                     'The selected user has not got access to any databases. Change user or create a database for the user.' ),
                                   'url' => false,
                                   'number' => self::DB_ERROR_NO_DATABASES );
@@ -546,7 +548,7 @@ class eZStepInstaller
 
             case self::DB_ERROR_NO_DIGEST_PROC:
             {
-                $dbError = array( 'text' => ezi18n( 'design/standard/setup/init',
+                $dbError = array( 'text' => ezpI18n::tr( 'design/standard/setup/init',
                                                     "The 'digest' function is not available in your database, you cannot run eZ Publish without this. See the documentation for more information." ),
                                   'url' => array( 'href' => 'http://ez.no/doc/ez_publish/technical_manual/current/installation/normal_installation/requirements_for_doing_a_normal_installation#digest_function',
                                                   'text' => 'PostgreSQL digest FAQ' ),
@@ -556,7 +558,7 @@ class eZStepInstaller
 
             case self::DB_ERROR_VERSION_INVALID:
             {
-                $dbError = array( 'text' => ezi18n( 'design/standard/setup/init',
+                $dbError = array( 'text' => ezpI18n::tr( 'design/standard/setup/init',
                                                     "Your database version %version does not fit the minimum requirement which is %req_version.
 See the requirements page for more information.",
                                                     null,
@@ -570,7 +572,7 @@ See the requirements page for more information.",
 
             case self::DB_ERROR_CHARSET_DIFFERS:
             {
-                $dbError = array( 'text' => ezi18n( 'design/standard/setup/init',
+                $dbError = array( 'text' => ezpI18n::tr( 'design/standard/setup/init',
                                                     "The database [%database_name] cannot be used, the setup wizard wants to create the site in [%req_charset] but the database has been created using character set [%charset]. You will have to choose a database having support for [%req_charset] or modify [%database_name] .",
                                                     null,
                                                     array( '%database_name' => $errorInfo['site_type']['database'],

@@ -3,10 +3,10 @@
 //
 // Created on: <18-Mar-2003 17:06:45 amos>
 //
+// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.2.0
-// BUILD VERSION: 24182
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 4.3.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -23,6 +23,8 @@
 //   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 //   MA 02110-1301, USA.
 //
+//
+// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
 
@@ -42,6 +44,7 @@ if ( !ini_get( "date.timezone" ) )
 }
 
 require 'autoload.php';
+require_once( 'kernel/common/i18n.php' );
 
 eZContentLanguage::setCronjobMode();
 
@@ -344,7 +347,10 @@ foreach ( $scripts as $cronScript )
             print( $endl );
         }
         if ( !$isQuiet )
-            $cli->output( "Running " . $cli->stylize( 'emphasize', $scriptFile ) );
+        {
+            $startTime = new eZDateTime();
+            $cli->output( 'Running ' . $cli->stylize( 'emphasize', $scriptFile ) . ' at: ' . $startTime->toString( true ) );
+        }
 
         eZDebug::addTimingPoint( "Script $scriptFile starting" );
         eZRunCronjobs::runScript( $cli, $scriptFile );
@@ -354,6 +360,14 @@ foreach ( $scripts as $cronScript )
         $transactionCounterCheck = eZDB::checkTransactionCounter();
         if ( isset( $transactionCounterCheck['error'] ) )
             $cli->error( $transactionCounterCheck['error'] );
+
+        if ( !$isQuiet )
+        {
+            $endTime = new eZDateTime();
+            $cli->output( 'Completing ' . $cli->stylize( 'emphasize', $scriptFile ) . ' at: ' . $endTime->toString( true ) );
+            $elapsedTime = new eZTime( $endTime->timeStamp() - $startTime->timeStamp() );
+            $cli->output( 'Elapsed time: ' . sprintf( '%02d:%02d:%02d', $elapsedTime->hour(), $elapsedTime->minute(), $elapsedTime->second() ) );
+        }
     }
 }
 

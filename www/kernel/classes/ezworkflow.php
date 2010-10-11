@@ -4,10 +4,10 @@
 //
 // Created on: <16-Apr-2002 11:08:14 amos>
 //
+// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.2.0
-// BUILD VERSION: 24182
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 4.3.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -24,6 +24,8 @@
 //   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 //   MA 02110-1301, USA.
 //
+//
+// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
 //!! eZKernel
@@ -568,15 +570,15 @@ class eZWorkflow extends eZPersistentObject
      */
     static function statusNameMap()
     {
-        return array( eZWorkflow::STATUS_NONE => ezi18n( 'kernel/classes', 'No state yet' ),
-                      eZWorkflow::STATUS_BUSY => ezi18n( 'kernel/classes', 'Workflow running' ),
-                      eZWorkflow::STATUS_DONE => ezi18n( 'kernel/classes', 'Workflow done' ),
-                      eZWorkflow::STATUS_FAILED => ezi18n( 'kernel/classes', 'Workflow failed an event' ),
-                      eZWorkflow::STATUS_DEFERRED_TO_CRON => ezi18n( 'kernel/classes', 'Workflow event deferred to cron job' ),
-                      eZWorkflow::STATUS_CANCELLED => ezi18n( 'kernel/classes', 'Workflow was canceled' ),
-                      eZWorkflow::STATUS_FETCH_TEMPLATE => ezi18n( 'kernel/classes', 'Workflow fetches template' ),
-                      eZWorkflow::STATUS_REDIRECT => ezi18n( 'kernel/classes', 'Workflow redirects user view' ),
-                      eZWorkflow::STATUS_RESET => ezi18n( 'kernel/classes', 'Workflow was reset for reuse' ) );
+        return array( eZWorkflow::STATUS_NONE => ezpI18n::tr( 'kernel/classes', 'No state yet' ),
+                      eZWorkflow::STATUS_BUSY => ezpI18n::tr( 'kernel/classes', 'Workflow running' ),
+                      eZWorkflow::STATUS_DONE => ezpI18n::tr( 'kernel/classes', 'Workflow done' ),
+                      eZWorkflow::STATUS_FAILED => ezpI18n::tr( 'kernel/classes', 'Workflow failed an event' ),
+                      eZWorkflow::STATUS_DEFERRED_TO_CRON => ezpI18n::tr( 'kernel/classes', 'Workflow event deferred to cron job' ),
+                      eZWorkflow::STATUS_CANCELLED => ezpI18n::tr( 'kernel/classes', 'Workflow was canceled' ),
+                      eZWorkflow::STATUS_FETCH_TEMPLATE => ezpI18n::tr( 'kernel/classes', 'Workflow fetches template' ),
+                      eZWorkflow::STATUS_REDIRECT => ezpI18n::tr( 'kernel/classes', 'Workflow redirects user view' ),
+                      eZWorkflow::STATUS_RESET => ezpI18n::tr( 'kernel/classes', 'Workflow was reset for reuse' ) );
     }
 
     /// \privatesection

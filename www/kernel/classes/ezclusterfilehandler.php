@@ -4,10 +4,10 @@
 //
 // Created on: <07-Mar-2006 16:14:02 vs>
 //
+// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.2.0
-// BUILD VERSION: 24182
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 4.3.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -24,6 +24,8 @@
 //   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 //   MA 02110-1301, USA.
 //
+//
+// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
 /*! \file
@@ -78,9 +80,8 @@ class eZClusterFileHandler
     }
 
     /**
-     * \public
-     * \static
-     * \return list of directories used to search cluster file handlers for.
+     * @deprecated 4.3 No longer used as we rely on ezpExtension & autoloads
+     * @return array list of directories used to search cluster file handlers for
      */
     static function searchPathArray()
     {

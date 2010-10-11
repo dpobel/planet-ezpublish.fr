@@ -6,10 +6,10 @@
 //
 // Created on: <25-Feb-2002 14:08:32 bf>
 //
+// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.2.0
-// BUILD VERSION: 24182
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 4.3.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -26,6 +26,8 @@
 //   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 //   MA 02110-1301, USA.
 //
+//
+// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
 /*!
@@ -177,7 +179,6 @@ class eZPostgreSQLDB extends eZDBInterface
 
                 if ($this->timeTaken() > $this->SlowSQLTimeout)
                 {
-                    eZDebug::instance();
                     eZDebug::accumulatorStop( 'postgresql_query' );
                     $this->reportQuery( 'eZPostgreSQLDB', $sql, false, $this->timeTaken() );
                 }

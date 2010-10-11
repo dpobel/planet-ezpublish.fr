@@ -4,10 +4,10 @@
 //
 // Created on: <01-Oct-2002 11:18:14 kk>
 //
+// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.2.0
-// BUILD VERSION: 24182
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 4.3.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -25,6 +25,8 @@
 //   MA 02110-1301, USA.
 //
 //
+// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
+//
 
 /*!
   \class eZIniSettingType ezinisettingtype.php
@@ -34,7 +36,7 @@
   Enable editing and versioning of ini files from the admin interface
 */
 
-require_once( 'kernel/common/i18n.php' );
+
 
 class eZIniSettingType extends eZDataType
 {
@@ -60,7 +62,7 @@ class eZIniSettingType extends eZDataType
     */
     function eZIniSettingType()
     {
-        $this->eZDataType( self::DATA_TYPE_STRING, ezi18n( 'kernel/classes/datatypes', 'Ini Setting', 'Datatype name' ),
+        $this->eZDataType( self::DATA_TYPE_STRING, ezpI18n::tr( 'kernel/classes/datatypes', 'Ini Setting', 'Datatype name' ),
                                                          array( 'translation_allowed' => false,
                                                                 'serialize_supported' => true ) );
     }
@@ -77,7 +79,7 @@ class eZIniSettingType extends eZDataType
             $config = eZINI::instance( $iniFile );
             if ( $config == null )
             {
-                $contentObjectAttribute->setValidationError( ezi18n( 'kernel/classes/datatypes',
+                $contentObjectAttribute->setValidationError( ezpI18n::tr( 'kernel/classes/datatypes',
                                                                      'Could not locate the ini file.' ) );
                 return eZInputValidator::STATE_INVALID;
             }
@@ -88,7 +90,7 @@ class eZIniSettingType extends eZDataType
    //             if ( eZIniSettingType::parseArrayInput( $contentObjectAttribute->attribute( 'data_text' ), $iniArray ) === false )
                 if ( eZIniSettingType::parseArrayInput( $http->postVariable( $base . '_ini_setting_' . $contentObjectAttribute->attribute( 'id' ) ), $iniArray ) === false )
                 {
-                    $contentObjectAttribute->setValidationError( ezi18n( 'kernel/classes/datatypes', 'Wrong text field value.' ) );
+                    $contentObjectAttribute->setValidationError( ezpI18n::tr( 'kernel/classes/datatypes', 'Wrong text field value.' ) );
 
                     return eZInputValidator::STATE_INVALID;
                 }

@@ -4,10 +4,10 @@
 //
 // Created on: <18-Feb-2003 11:38:57 bf>
 //
+// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.2.0
-// BUILD VERSION: 24182
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 4.3.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -24,6 +24,8 @@
 //   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 //   MA 02110-1301, USA.
 //
+//
+// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
 /*!
@@ -87,7 +89,7 @@ class eZNavigationPart
         $list = array();
         foreach ( $parts as $identifier => $name )
         {
-            $list[$identifier] = array( 'name' => ezi18n( 'kernel/navigationpart', $name, 'Navigation part' ),
+            $list[$identifier] = array( 'name' => ezpI18n::tr( 'kernel/navigationpart', $name, 'Navigation part' ),
                                         'identifier' => $identifier );
         }
         return $list;
@@ -99,13 +101,13 @@ class eZNavigationPart
     */
     private static function i18nDummy()
     {
-        ezi18n( 'kernel/navigationpart', 'Content structure', 'Navigation part' );
-        ezi18n( 'kernel/navigationpart', 'Media library', 'Navigation part' );
-        ezi18n( 'kernel/navigationpart', 'User accounts', 'Navigation part' );
-        ezi18n( 'kernel/navigationpart', 'Webshop', 'Navigation part' );
-        ezi18n( 'kernel/navigationpart', 'Design', 'Navigation part' );
-        ezi18n( 'kernel/navigationpart', 'Setup', 'Navigation part' );
-        ezi18n( 'kernel/navigationpart', 'My account', 'Navigation part' );
+        ezpI18n::tr( 'kernel/navigationpart', 'Content structure', 'Navigation part' );
+        ezpI18n::tr( 'kernel/navigationpart', 'Media library', 'Navigation part' );
+        ezpI18n::tr( 'kernel/navigationpart', 'User accounts', 'Navigation part' );
+        ezpI18n::tr( 'kernel/navigationpart', 'Webshop', 'Navigation part' );
+        ezpI18n::tr( 'kernel/navigationpart', 'Design', 'Navigation part' );
+        ezpI18n::tr( 'kernel/navigationpart', 'Setup', 'Navigation part' );
+        ezpI18n::tr( 'kernel/navigationpart', 'My account', 'Navigation part' );
     }
 
 }

@@ -2,10 +2,10 @@
 //
 // Created on: <27-Aug-2002 15:42:43 bf>
 //
+// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.2.0
-// BUILD VERSION: 24182
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 4.3.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -23,11 +23,13 @@
 //   MA 02110-1301, USA.
 //
 //
+// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
+//
 
-require_once( 'kernel/common/template.php' );
+
 $http = eZHTTPTool::instance();
 $Module = $Params['Module'];
-$tpl = templateInit();
+$tpl = eZTemplate::factory();
 $tpl->setVariable( 'module', $Module );
 
 $offset = $Params['Offset'];
@@ -93,7 +95,7 @@ if ( $http->hasPostVariable( 'RemoveSectionButton' ) )
                 $Result = array();
                 $Result['content'] = $tpl->fetch( "design:section/confirmremove.tpl" );
                 $Result['path'] = array( array( 'url' => false,
-                                                'text' => ezi18n( 'kernel/section', 'Sections' ) ) );
+                                                'text' => ezpI18n::tr( 'kernel/section', 'Sections' ) ) );
                 return;
             }
         }
@@ -152,6 +154,6 @@ $tpl->setVariable( 'allowed_assign_sections', $allowedAssignSectionList );
 $Result = array();
 $Result['content'] = $tpl->fetch( "design:section/list.tpl" );
 $Result['path'] = array( array( 'url' => false,
-                                'text' => ezi18n( 'kernel/section', 'Sections' ) ) );
+                                'text' => ezpI18n::tr( 'kernel/section', 'Sections' ) ) );
 
 ?>

@@ -4,10 +4,10 @@
 //
 // Created on: <30-Apr-2002 13:06:21 bf>
 //
+// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.2.0
-// BUILD VERSION: 24182
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 4.3.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -24,6 +24,8 @@
 //   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 //   MA 02110-1301, USA.
 //
+//
+// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
 /*!
@@ -43,7 +45,7 @@ class eZImageType extends eZDataType
 
     function eZImageType()
     {
-        $this->eZDataType( self::DATA_TYPE_STRING, ezi18n( 'kernel/classes/datatypes', "Image", 'Datatype name' ),
+        $this->eZDataType( self::DATA_TYPE_STRING, ezpI18n::tr( 'kernel/classes/datatypes', "Image", 'Datatype name' ),
                            array( 'serialize_supported' => true ) );
     }
 
@@ -53,6 +55,56 @@ class eZImageType extends eZDataType
         {
             $dataText = $originalContentObjectAttribute->attribute( "data_text" );
             $contentObjectAttribute->setAttribute( "data_text", $dataText );
+        }
+    }
+
+    /*!
+     The object is being moved to trash, do any necessary changes to the attribute.
+     Rename file and update db row with new name, so that access to the file using old links no longer works.
+    */
+    function trashStoredObjectAttribute( $contentObjectAttribute, $version = null )
+    {
+        $contentObjectAttributeID = $contentObjectAttribute->attribute( "id" );
+        $imageHandler = $contentObjectAttribute->attribute( 'content' );
+        $imageFiles = eZImageFile::fetchForContentObjectAttribute( $contentObjectAttributeID );
+
+        foreach ( $imageFiles as $imageFile )
+        {
+            if ( $imageFile == null )
+                continue;
+            $existingFilepath = $imageFile;
+
+            // Check if there are any other records in ezimagefile that point to that filename.
+            $imageObjectsWithSameFileName = eZImageFile::fetchByFilepath( false, $existingFilepath );
+
+            $file = eZClusterFileHandler::instance( $existingFilepath );
+
+            if ( $file->exists() and count( $imageObjectsWithSameFileName ) <= 1 )
+            {
+                $orig_dir = dirname( $existingFilepath ) . '/trashed';
+                $fileName = basename( $existingFilepath );
+
+                // create dest filename in the same manner as eZHTTPFile::store()
+                // grab file's suffix
+                $fileSuffix = eZFile::suffix( $fileName );
+                // prepend dot
+                if ( $fileSuffix )
+                    $fileSuffix = '.' . $fileSuffix;
+                // grab filename without suffix
+                $fileBaseName = basename( $fileName, $fileSuffix );
+                // create dest filename
+                $newFileBaseName = md5( $fileBaseName . microtime() . mt_rand() );
+                $newFileName = $newFileBaseName . $fileSuffix;
+                $newFilepath = $orig_dir . '/' . $newFileName;
+
+                // rename the file, and update the database data
+                $imageHandler->updateAliasPath( $orig_dir, $newFileBaseName );
+                if ( $imageHandler->isStorageRequired() )
+                {
+                    $imageHandler->store( $contentObjectAttribute );
+                    $contentObjectAttribute->store();
+                }
+            }
         }
     }
 
@@ -70,6 +122,15 @@ class eZImageType extends eZDataType
         }
     }
 
+    /**
+     * Validate the object attribute input in http. If there is validation failure, there failure message will be put into $contentObjectAttribute->ValidationError
+     * @param $http: http object
+     * @param $base:
+     * @param $contentObjectAttribute: content object attribute being validated
+     * @return validation result- eZInputValidator::STATE_INVALID or eZInputValidator::STATE_ACCEPTED
+     * 
+     * @see kernel/classes/eZDataType#validateObjectAttributeHTTPInput($http, $base, $objectAttribute)
+     */
     function validateObjectAttributeHTTPInput( $http, $base, $contentObjectAttribute )
     {
         $classAttribute = $contentObjectAttribute->contentClassAttribute();
@@ -93,7 +154,7 @@ class eZImageType extends eZDataType
              $imagefile = $_FILES[$httpFileName]['tmp_name'];
              if ( !$_FILES[$httpFileName]["size"] )
              {
-                $contentObjectAttribute->setValidationError( ezi18n( 'kernel/classes/datatypes',
+                $contentObjectAttribute->setValidationError( ezpI18n::tr( 'kernel/classes/datatypes',
                                                                      'The image file must have non-zero size.' ) );
                 return eZInputValidator::STATE_INVALID;
              }
@@ -102,7 +163,7 @@ class eZImageType extends eZDataType
                 $info = getimagesize( $imagefile );
                 if ( !$info )
                 {
-                    $contentObjectAttribute->setValidationError( ezi18n( 'kernel/classes/datatypes',
+                    $contentObjectAttribute->setValidationError( ezpI18n::tr( 'kernel/classes/datatypes',
                                                                          'A valid image file is required.' ) );
                     return eZInputValidator::STATE_INVALID;
                 }
@@ -114,7 +175,7 @@ class eZImageType extends eZDataType
                  $nameMimeTypes = explode("/", $nameMimeType);
                  if ( $nameMimeTypes[0] != 'image' )
                  {
-                     $contentObjectAttribute->setValidationError( ezi18n( 'kernel/classes/datatypes',
+                     $contentObjectAttribute->setValidationError( ezpI18n::tr( 'kernel/classes/datatypes',
                                                                           'A valid image file is required.' ) );
                      return eZInputValidator::STATE_INVALID;
                  }
@@ -122,25 +183,34 @@ class eZImageType extends eZDataType
         }
         if ( $mustUpload && $canFetchResult == eZHTTPFile::UPLOADEDFILE_DOES_NOT_EXIST )
         {
-            $contentObjectAttribute->setValidationError( ezi18n( 'kernel/classes/datatypes',
+            $contentObjectAttribute->setValidationError( ezpI18n::tr( 'kernel/classes/datatypes',
                 'A valid image file is required.' ) );
             return eZInputValidator::STATE_INVALID;
         }
         if ( $canFetchResult == eZHTTPFile::UPLOADEDFILE_EXCEEDS_PHP_LIMIT )
         {
-            $contentObjectAttribute->setValidationError( ezi18n( 'kernel/classes/datatypes',
+            $contentObjectAttribute->setValidationError( ezpI18n::tr( 'kernel/classes/datatypes',
                 'The size of the uploaded image exceeds limit set by upload_max_filesize directive in php.ini. Please contact the site administrator.' ) );
             return eZInputValidator::STATE_INVALID;
         }
         if ( $canFetchResult == eZHTTPFile::UPLOADEDFILE_EXCEEDS_MAX_SIZE )
         {
-            $contentObjectAttribute->setValidationError( ezi18n( 'kernel/classes/datatypes',
+            $contentObjectAttribute->setValidationError( ezpI18n::tr( 'kernel/classes/datatypes',
                 'The size of the uploaded file exceeds the limit set for this site: %1 bytes.' ), $maxSize );
             return eZInputValidator::STATE_INVALID;
         }
         return eZInputValidator::STATE_ACCEPTED;
     }
 
+    /**
+     * Fetch object attribute http input, override the ezDataType method
+     * This method is triggered when submiting a http form which includes Image class
+     * Image is stored into file system every time there is a file input and validation result is valid.
+     * @param $http http object 
+     * @param $base
+     * @param $contentObjectAttribute : the content object attribute being handled
+     * @return true if content object is not null, false if content object is null
+     */
     function fetchObjectAttributeHTTPInput( $http, $base, $contentObjectAttribute )
     {
         $result = false;
@@ -154,7 +224,7 @@ class eZImageType extends eZDataType
 
         $content = $contentObjectAttribute->attribute( 'content' );
         $httpFileName = $base . "_data_imagename_" . $contentObjectAttribute->attribute( "id" );
-
+        
         if ( eZHTTPFile::canFetch( $httpFileName ) )
         {
             $httpFile = eZHTTPFile::fetch( $httpFileName );
@@ -166,6 +236,7 @@ class eZImageType extends eZDataType
                     $result = true;
                 }
             }
+        
         }
 
         if ( $content )
@@ -174,7 +245,7 @@ class eZImageType extends eZDataType
                 $content->setAttribute( 'alternative_text', $imageAltText );
             $result = true;
         }
-
+        
         return $result;
     }
 
@@ -226,7 +297,7 @@ class eZImageType extends eZDataType
         $handler = $objectAttribute->content();
         if ( !$handler )
         {
-            $result['errors'][] = array( 'description' => ezi18n( 'kernel/classes/datatypes/ezimage',
+            $result['errors'][] = array( 'description' => ezpI18n::tr( 'kernel/classes/datatypes/ezimage',
                                                                   'Failed to fetch Image Handler. Please contact the site administrator.' ) );
             return false;
         }
@@ -249,7 +320,7 @@ class eZImageType extends eZDataType
         $handler = $objectAttribute->content();
         if ( !$handler )
         {
-            $result['errors'][] = array( 'description' => ezi18n( 'kernel/classes/datatypes/ezimage',
+            $result['errors'][] = array( 'description' => ezpI18n::tr( 'kernel/classes/datatypes/ezimage',
                                                                   'Failed to fetch Image Handler. Please contact the site administrator.' ) );
             return false;
         }
@@ -479,7 +550,7 @@ class eZImageType extends eZDataType
         $content = $objectAttribute->attribute( 'content' );
         if ( $delimiterPos === false )
         {
-        	$content->initializeFromFile( $string, '' );
+               $content->initializeFromFile( $string, '' );
         }
         else
         {

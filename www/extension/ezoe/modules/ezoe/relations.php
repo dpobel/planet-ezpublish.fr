@@ -2,9 +2,10 @@
 //
 // Created on: <25-Des-2007 00:00:00 ar>
 //
+// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Online Editor extension for eZ Publish
-// SOFTWARE RELEASE: 5.0
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 4.3.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -22,10 +23,10 @@
 //   MA 02110-1301, USA.
 //
 //
+// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
+//
 
 include_once( 'kernel/common/template.php' );
-//include_once( 'kernel/classes/ezcontentobjecttreenode.php' );
-include_once( 'extension/ezoe/classes/ezoeajaxcontent.php' );
 include_once( 'extension/ezoe/ezxmltext/handlers/input/ezoexmlinput.php' );
 
 $objectID        = isset( $Params['ObjectID'] ) ? (int) $Params['ObjectID'] : 0;
@@ -182,7 +183,7 @@ else
 $classList = array();
 if ( $classListData )
 {
-    $classList['0'] = 'None';
+    $classList['-0-'] = 'None';
     foreach ( $classListData as $class )
     {
         if ( isset( $classListDescription[$class] ) )
@@ -195,7 +196,7 @@ if ( $classListData )
 $classListInline = array();
 if ( $classListInlineData )
 {
-    $classListInline['0'] = 'None';
+    $classListInline['-0-'] = 'None';
     foreach ( $classListInlineData as $class )
     {
         if ( isset( $classListDescriptionInline[$class] ) )
@@ -253,7 +254,7 @@ $tpl->setVariable( 'object_version', $objectVersion );
 $tpl->setVariable( 'embed_id', $embedId );
 $tpl->setVariable( 'embed_type', $embedType );
 $tpl->setVariable( 'embed_object', $embedObject );
-$tpl->setVariable( 'embed_data', eZOEAjaxContent::encode( $embedObject, $params ) );
+$tpl->setVariable( 'embed_data', ezjscAjaxContent::nodeEncode( $embedObject, $params ) );
 $tpl->setVariable( 'content_type', $contentType );
 $tpl->setVariable( 'content_type_name', ucfirst( rtrim( $contentType, 's' ) ) );
 $tpl->setVariable( 'compatibility_mode', $ezoeIni->variable('EditorSettings', 'CompatibilityMode' ) );
@@ -266,9 +267,9 @@ if ( isset( $xmlTagAliasList[$tagName] ) )
 else
     $tpl->setVariable( 'tag_name_alias', $tagName );
 
-$tpl->setVariable( 'view_list', eZOEAjaxContent::jsonEncode( array( 'embed' => $viewList, 'embed-inline' => $viewListInline ) ) );
-$tpl->setVariable( 'class_list', eZOEAjaxContent::jsonEncode( array( 'embed' => $classList, 'embed-inline' => $classListInline ) ) );
-$tpl->setVariable( 'attribute_defaults', eZOEAjaxContent::jsonEncode( array( 'embed' => $attributeDefaults, 'embed-inline' => $attributeDefaultsInline ) ) );
+$tpl->setVariable( 'view_list', json_encode( array( 'embed' => $viewList, 'embed-inline' => $viewListInline ) ) );
+$tpl->setVariable( 'class_list', json_encode( array( 'embed' => $classList, 'embed-inline' => $classListInline ) ) );
+$tpl->setVariable( 'attribute_defaults', json_encode( array( 'embed' => $attributeDefaults, 'embed-inline' => $attributeDefaultsInline ) ) );
 
 
 $tpl->setVariable( 'custom_attributes', $customAttributes );
@@ -282,9 +283,11 @@ if ( $contentIni->hasVariable( 'ImageSettings', 'DefaultCropAlias' ) )
 else
     $tpl->setVariable( 'default_crop_size', $defaultSize );
 
-$tpl->setVariable( 'custom_attribute_style_map', eZOEAjaxContent::jsonEncode( $ezoeIni->variable('EditorSettings', 'CustomAttributeStyleMap' ) ) );
+$tpl->setVariable( 'custom_attribute_style_map', json_encode( $ezoeIni->variable('EditorSettings', 'CustomAttributeStyleMap' ) ) );
 
 $tpl->setVariable( 'persistent_variable', array() );
+
+$tpl->setVariable( 'original_uri_string', eZURI::instance()->originalURIString() );
 
 $Result = array();
 $Result['content'] = $tpl->fetch( 'design:ezoe/tag_embed_' . $contentType . '.tpl' );

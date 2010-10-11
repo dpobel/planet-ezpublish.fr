@@ -18,24 +18,24 @@
 <div class="block">
 <div class="left">
 <p>
-{section show=eq( ezpreference( 'admin_orderlist_sortfield' ), 'user_name' )}
+{if eq( ezpreference( 'admin_orderlist_sortfield' ), 'user_name' )}
     <a href={'/user/preferences/set/admin_orderlist_sortfield/time/shop/orderlist/'|ezurl}>{'Time'|i18n( 'design/admin/shop/orderlist' )}</a>
     <span class="current">{'Customer'|i18n( 'design/admin/shop/orderlist' )}</span>
-{section-else}
+{else}
     <span class="current">{'Time'|i18n( 'design/admin/shop/orderlist' )}</span>
     <a href={'/user/preferences/set/admin_orderlist_sortfield/user_name/shop/orderlist/'|ezurl}>{'Customer'|i18n( 'design/admin/shop/orderlist' )}</a>
-{/section}
+{/if}
 </p>
 </div>
 <div class="right">
 <p>
-{section show=eq( ezpreference( 'admin_orderlist_sortorder' ), 'desc' )}
+{if eq( ezpreference( 'admin_orderlist_sortorder' ), 'desc' )}
     <a href={'/user/preferences/set/admin_orderlist_sortorder/asc/shop/orderlist/'|ezurl}>{'Ascending'|i18n( 'design/admin/shop/orderlist' )}</a>
     <span class="current">{'Descending'|i18n( 'design/admin/shop/orderlist' )}</span>
-{section-else}
+{else}
     <span class="current">{'Ascending'|i18n( 'design/admin/shop/orderlist' )}</span>
     <a href={'/user/preferences/set/admin_orderlist_sortorder/desc/shop/orderlist/'|ezurl}>{'Descending'|i18n( 'design/admin/shop/orderlist' )}</a>
-{/section}
+{/if}
 </p>
 </div>
 
@@ -51,12 +51,12 @@
 <table class="list" cellspacing="0">
 <tr>
     <th class="tight"><img src={'toggle-button-16x16.gif'|ezimage} alt="{'Invert selection.'|i18n( 'design/admin/shop/orderlist' )}" title="{'Invert selection.'|i18n( 'design/admin/shop/orderlist' )}" onclick="ezjs_toggleCheckboxes( document.orderlist, 'OrderIDArray[]' ); return false;" /></th>
-	<th class="tight">{'ID'|i18n( 'design/admin/shop/orderlist' )}</th>
-	<th class="wide">{'Customer'|i18n( 'design/admin/shop/orderlist' )}</th>
-	<th class="tight">{'Total (ex. VAT)'|i18n( 'design/admin/shop/orderlist' )}</th>
-	<th class="tight">{'Total (inc. VAT)'|i18n( 'design/admin/shop/orderlist' )}</th>
-	<th class="wide">{'Time'|i18n( 'design/admin/shop/orderlist' )}</th>
-	<th class="wide">{'Status'|i18n( 'design/admin/shop/orderlist' )}</th>
+        <th class="tight">{'ID'|i18n( 'design/admin/shop/orderlist' )}</th>
+        <th class="wide">{'Customer'|i18n( 'design/admin/shop/orderlist' )}</th>
+        <th class="tight">{'Total (ex. VAT)'|i18n( 'design/admin/shop/orderlist' )}</th>
+        <th class="tight">{'Total (inc. VAT)'|i18n( 'design/admin/shop/orderlist' )}</th>
+        <th class="wide">{'Time'|i18n( 'design/admin/shop/orderlist' )}</th>
+        <th class="wide">{'Status'|i18n( 'design/admin/shop/orderlist' )}</th>
 </tr>
 {section var=Orders loop=$order_list sequence=array( bglight, bgdark )}
 
@@ -71,23 +71,23 @@
 
 <tr class="{$Orders.sequence}">
     <td><input type="checkbox" name="OrderIDArray[]" value="{$Orders.item.id}" title="{'Select order for removal.'|i18n( 'design/admin/shop/orderlist' )}" /></td>
-	<td><a href={concat( '/shop/orderview/', $Orders.item.id, '/' )|ezurl}>{$Orders.item.order_nr}</a></td>
-	<td>
-	{if is_null($Orders.item.account_name)}
-	    <s><i>{'( removed )'|i18n( 'design/admin/shop/orderlist' )}</i></s>
-	{else}
-	    <a href={concat( '/shop/customerorderview/', $Orders.item.user_id, '/', $Orders.item.account_email )|ezurl}>{$Orders.item.account_name}</a>
-	{/if}
-	</td>
-	
+        <td><a href={concat( '/shop/orderview/', $Orders.item.id, '/' )|ezurl}>{$Orders.item.order_nr}</a></td>
+        <td>
+        {if is_null($Orders.item.account_name)}
+            <s><i>{'( removed )'|i18n( 'design/admin/shop/orderlist' )}</i></s>
+        {else}
+            <a href={concat( '/shop/customerorderview/', $Orders.item.user_id, '/', $Orders.item.account_email )|ezurl}>{$Orders.item.account_name}</a>
+        {/if}
+        </td>
+        
 
     {* NOTE: These two attribute calls are slow, they cause the system to generate lots of SQLs.
              The reason is that their values are not cached in the order tables *}
-	<td class="number" align="right">{$Orders.item.total_ex_vat|l10n( 'currency', $locale, $symbol )}</td>
-	<td class="number" align="right">{$Orders.item.total_inc_vat|l10n( 'currency', $locale, $symbol )}</td>
+        <td class="number" align="right">{$Orders.item.total_ex_vat|l10n( 'currency', $locale, $symbol )}</td>
+        <td class="number" align="right">{$Orders.item.total_inc_vat|l10n( 'currency', $locale, $symbol )}</td>
 
-	<td>{$Orders.item.created|l10n( shortdatetime )}</td>
-	<td>
+        <td>{$Orders.item.created|l10n( shortdatetime )}</td>
+        <td>
     {let order_status_list=$Orders.status_modification_list}
 
     {section show=$order_status_list|count|gt( 0 )}
@@ -95,7 +95,7 @@
         <select name="StatusList[{$Orders.item.id}]">
         {section var=Status loop=$order_status_list}
             <option value="{$Status.item.status_id}"
-                {section show=eq( $Status.item.status_id, $Orders.item.status_id )}selected="selected"{/section}>
+                {if eq( $Status.item.status_id, $Orders.item.status_id )}selected="selected"{/if}>
                 {$Status.item.name|wash}</option>
         {/section}
         </select>
@@ -105,7 +105,7 @@
     {/section}
 
     {/let}
-	</td>
+        </td>
 </tr>
 {/section}
 </table>
@@ -132,18 +132,18 @@
 
 <div class="block">
 <div class="button-left">
-{section show=$order_list}
+{if $order_list}
     <input class="button" type="submit" name="ArchiveButton" value="{'Archive selected'|i18n( 'design/admin/shop/orderlist' )}" title="{'Archive selected orders.'|i18n( 'design/admin/shop/orderlist' )}" />
-{section-else}
+{else}
     <input class="button-disabled" type="submit" name="ArchiveButton" value="{'Archive selected'|i18n( 'design/admin/shop/orderlist' )}" disabled="disabled" />
-{/section}
+{/if}
 </div>
 <div class="button-right">
-    {section show=and( $order_list|count|gt( 0 ), $can_apply )}
+    {if and( $order_list|count|gt( 0 ), $can_apply )}
     <input class="button" type="submit" name="SaveOrderStatusButton" value="{'Apply changes'|i18n( 'design/admin/shop/orderlist' )}" title="{'Click this button to store changes if you have modified any of the fields above.'|i18n( 'design/admin/shop/orderlist' )}" />
-    {section-else}
+    {else}
     <input class="button-disabled" type="submit" name="SaveOrderStatusButton" value="{'Apply changes'|i18n( 'design/admin/shop/orderlist' )}" disabled="disabled" />
-    {/section}
+    {/if}
 </div>
 <div class="break"></div>
 

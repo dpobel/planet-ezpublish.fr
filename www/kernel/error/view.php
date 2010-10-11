@@ -2,10 +2,10 @@
 //
 // Created on: <30-Aug-2002 17:06:01 bf>
 //
+// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.2.0
-// BUILD VERSION: 24182
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 4.3.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -23,10 +23,12 @@
 //   MA 02110-1301, USA.
 //
 //
+// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
+//
 
-require_once( "kernel/common/template.php" );
 
-$tpl = templateInit();
+
+$tpl = eZTemplate::factory();
 
 $module = $Params['Module'];
 $errorType = $Params['Type'];
@@ -191,7 +193,7 @@ $res->setKeys( array( array( 'error_type', $errorType ), array( 'error_number', 
 
 $Result = array();
 $Result['content'] = $tpl->fetch( "design:error/$errorType/$errorNumber.tpl" );
-$Result['path'] = array( array( 'text' => ezi18n( 'kernel/error', 'Error' ),
+$Result['path'] = array( array( 'text' => ezpI18n::tr( 'kernel/error', 'Error' ),
                                 'url' => false ),
                          array( 'text' => "$errorType ($errorNumber)",
                                 'url' => false ) );

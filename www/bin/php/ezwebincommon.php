@@ -2,10 +2,10 @@
 //
 // Created on: <26-Jun-2007 15:00:00 dl>
 //
+// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.2.0
-// BUILD VERSION: 24182
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 4.3.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -22,6 +22,8 @@
 //   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 //   MA 02110-1301, USA.
 //
+//
+// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
 // eZWebin install/updagrade helper routines.
@@ -45,8 +47,6 @@ global $script;
  includes
 */
 require_once 'autoload.php';
-
-require_once( 'kernel/common/i18n.php' );
 
 /**************************************************************
 * 'cli->output' wrappers                                      *
@@ -547,7 +547,7 @@ function templateLookObjectData( $params )
                                 "language_settings" => array( "MatrixTitle" => "Language settings",
                                                               "MatrixDefinition" => $languageSettingsMatrixDefinition,
                                                               "MatrixCells" => $siteaccessAliasTable ),
-                                "footer_text" => array( "DataText" => "Copyright &#169; 2007 eZ Systems AS. All rights reserved." ),
+                                "footer_text" => array( "DataText" => "Copyright &#169; 1999-2010 eZ Systems AS. All rights reserved." ),
                                 "hide_powered_by" => array( "DataInt" => 0 ),
                                 "footer_script" => array( "DataText" => "" ) );
 

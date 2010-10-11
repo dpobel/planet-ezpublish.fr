@@ -4,10 +4,10 @@
 //
 // Created on: <05-Aug-2003 13:00:00 amos>
 //
+// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.2.0
-// BUILD VERSION: 24182
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 4.3.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -24,6 +24,8 @@
 //   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 //   MA 02110-1301, USA.
 //
+//
+// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
 /*! \file
@@ -66,7 +68,7 @@ class eZCLI
         }
         $this->EndlineString = $endl;
         $this->WebOutput = $webOutput;
-        $this->TerminalStyles = array( 'warning' => "\033[1;35m",
+        $this->TerminalStyles = array( 'warning' => "\033[1;33m",
                                        'warning-end' => "\033[0;39m",
                                        'error' => "\033[1;31m",
                                        'error-end' => "\033[0;39m",
@@ -74,6 +76,8 @@ class eZCLI
                                        'failure-end' => "\033[0;39m",
                                        'notice' => "\033[0;32m",
                                        'notice-end' => "\033[0;39m",
+                                       'strict' => "\033[0;35m",
+                                       'strict-end' => "\033[0;39m",
                                        'debug' => "\033[0;30m",
                                        'debug-end' => "\033[0;39m",
                                        'timing' => "\033[1;34m",

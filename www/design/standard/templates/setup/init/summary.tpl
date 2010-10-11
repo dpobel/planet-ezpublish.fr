@@ -78,16 +78,16 @@
   </td>
   <td class="normal">
     {section name=Language loop=$variation_list}
-	 {section show=eq($:item.locale_code,$regional_info.primary_language)}
-	   <b>{$:item.language_name}</b>
-	 {section-else}
-	   {$:item.language_name}
-	 {/section}
-	 {section show=$:item.country_variation}
-	   [{$:item.language_comment}]
-	 {/section}
-	 {delimiter}, {/delimiter}
-	{/section}
+         {if eq($:item.locale_code,$regional_info.primary_language)}
+           <b>{$:item.language_name}</b>
+         {else}
+           {$:item.language_name}
+         {/if}
+         {if $:item.country_variation}
+           [{$:item.language_comment}]
+         {/if}
+         {delimiter}, {/delimiter}
+        {/section}
   </td>
 </tr>
 </fieldset>

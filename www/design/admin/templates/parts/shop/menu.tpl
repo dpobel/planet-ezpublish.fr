@@ -1,45 +1,16 @@
-{* DESIGN: Header START *}<div class="box-header"><div class="box-tc"><div class="box-ml"><div class="box-mr"><div class="box-tl"><div class="box-tr">
-
-<h4>{'Shop'|i18n( 'design/admin/parts/shop/menu' )}</h4>
-
-{* DESIGN: Header END *}</div></div></div></div></div></div>
-
-{* DESIGN: Content START *}<div class="box-bc"><div class="box-ml"><div class="box-mr"><div class="box-bl"><div class="box-br"><div class="box-content">
-
-{section show=eq( $ui_context, 'edit' )}
-
-<ul>
-    <li><div><span class="disabled">{'Customers'|i18n( 'design/admin/parts/shop/menu' )}</span></div></li>
-    <li><div><span class="disabled">{'Discounts'|i18n( 'design/admin/parts/shop/menu' )}</span></div></li>
-    <li><div><span class="disabled">{'Orders'|i18n( 'design/admin/parts/shop/menu' )}</span></div></li>
-    <li><div><span class="disabled">{'Archive'|i18n( 'design/admin/parts/shop/menu' )}</span></div></li>
-    <li><div><span class="disabled">{'Order status'|i18n( 'design/admin/parts/shop/menu' )}</span></div></li>
-    <li><div><span class="disabled">{'Product statistics'|i18n( 'design/admin/parts/shop/menu' )}</span></div></li>
-    <li><div><span class="disabled">{'VAT types'|i18n( 'design/admin/parts/shop/menu' )}</span></div></li>
-    <li><div><span class="disabled">{'VAT rules'|i18n( 'design/admin/parts/shop/menu' )}</span></div></li>
-    <li><div><span class="disabled">{'Product categories'|i18n( 'design/admin/parts/shop/menu' )}</span></div></li>
-    <li><div><span class="disabled">{'Currencies'|i18n( 'design/admin/parts/shop/menu' )}</span></div></li>
-    <li><div><span class="disabled">{'Preferred currency'|i18n( 'design/admin/parts/shop/menu' )}</span></div></li>
-    <li><div><span class="disabled">{'Products overview'|i18n( 'design/admin/parts/shop/menu' )}</span></div></li>
-</ul>
-
-{section-else}
-
-<ul>
-    <li><div><a href={'/shop/customerlist/'|ezurl}>{'Customers'|i18n( 'design/admin/parts/shop/menu' )}</a></div></li>
-    <li><div><a href={'/shop/discountgroup/'|ezurl}>{'Discounts'|i18n( 'design/admin/parts/shop/menu' )}</a></div></li>
-    <li><div><a href={'/shop/orderlist/'|ezurl}>{'Orders'|i18n( 'design/admin/parts/shop/menu' )}</a></div></li>
-    <li><div><a href={'/shop/archivelist/'|ezurl}>{'Archive'|i18n( 'design/admin/parts/shop/menu' )}</a></div></li>
-    <li><div><a href={'/shop/status/'|ezurl}>{'Order status'|i18n( 'design/admin/parts/shop/menu' )}</a></div></li>
-    <li><div><a href={'/shop/statistics/'|ezurl}>{'Product statistics'|i18n( 'design/admin/parts/shop/menu' )}</a></div></li>
-    <li><div><a href={'/shop/vattype/'|ezurl}>{'VAT types'|i18n( 'design/admin/parts/shop/menu' )}</a></div></li>
-    <li><div><a href={'/shop/vatrules/'|ezurl}>{'VAT rules'|i18n( 'design/admin/parts/shop/menu' )}</a></div></li>
-    <li><div><a href={'/shop/productcategories/'|ezurl}>{'Product categories'|i18n( 'design/admin/parts/shop/menu' )}</a></div></li>
-    <li><div><a href={'/shop/currencylist/'|ezurl}>{'Currencies'|i18n( 'design/admin/parts/shop/menu' )}</a></div></li>
-    <li><div><a href={'/shop/preferredcurrency/'|ezurl}>{'Preferred currency'|i18n( 'design/admin/parts/shop/menu' )}</a></div></li>
-    <li><div><a href={'/shop/productsoverview/'|ezurl}>{'Products overview'|i18n( 'design/admin/parts/shop/menu' )}</a></div></li>
-</ul>
-
-{/section}
-
-{* DESIGN: Content END *}</div></div></div></div></div></div>
+{* See parts/ini_menu.tpl and menu.ini for more info, or parts/setup/menu.tpl for full example *}
+{include uri='design:parts/ini_menu.tpl' ini_section='Leftmenu_shop' i18n_hash=hash(
+    'shop',               'Shop'|i18n( 'design/admin/parts/shop/menu' ),
+    'customers',          'Customers'|i18n( 'design/admin/parts/shop/menu' ),
+    'discounts',          'Discounts'|i18n( 'design/admin/parts/shop/menu' ),
+    'orders',             'Orders'|i18n( 'design/admin/parts/shop/menu' ),
+    'archive',            'Archive'|i18n( 'design/admin/parts/shop/menu' ),
+    'order_status',       'Order status'|i18n( 'design/admin/parts/shop/menu' ),
+    'product_statistics', 'Product statistics'|i18n( 'design/admin/parts/shop/menu' ),
+    'vat_types',          'VAT types'|i18n( 'design/admin/parts/shop/menu' ),
+    'vat_rules',          'VAT rules'|i18n( 'design/admin/parts/shop/menu' ),
+    'product_categories', 'Product categories'|i18n( 'design/admin/parts/shop/menu' ),
+    'currencies',         'Currencies'|i18n( 'design/admin/parts/shop/menu' ),
+    'preferred_currency', 'Preferred currency'|i18n( 'design/admin/parts/shop/menu' ),
+    'products_overview',  'Products overview'|i18n( 'design/admin/parts/shop/menu' ),
+)}

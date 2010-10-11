@@ -2,10 +2,10 @@
 //
 // Created on: <13-Маr-2003 13:06:18 sp>
 //
+// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.2.0
-// BUILD VERSION: 24182
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 4.3.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -23,13 +23,15 @@
 //   MA 02110-1301, USA.
 //
 //
+// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
+//
 
 /*! \file
 */
 
 
-require_once( "kernel/common/template.php" );
-$tpl = templateInit();
+
+$tpl = eZTemplate::factory();
 $tpl->setVariable( 'generated', false );
 $tpl->setVariable( 'wrong_email', false );
 $tpl->setVariable( 'link', false );
@@ -70,14 +72,13 @@ if ( strlen( $hashKey ) == 32 )
             eZUserOperationCollection::password( $userID, $newPassword );
         }
 
-        require_once( "kernel/common/template.php" );
         $receiver = $email;
         $mail = new eZMail();
         if ( !$mail->validate( $receiver ) )
         {
         }
-        $tpl = templateInit();
 
+        $tpl = eZTemplate::factory();
         $tpl->setVariable( 'user', $userToSendEmail );
         $tpl->setVariable( 'object', $userToSendEmail->attribute( 'contentobject' ) );
         $tpl->setVariable( 'password', $newPassword );
@@ -88,7 +89,7 @@ if ( strlen( $hashKey ) == 32 )
             $emailSender = $ini->variable( 'MailSettings', 'AdminEmail' );
         $mail->setSender( $emailSender );
         $mail->setReceiver( $receiver );
-        $subject = ezi18n( 'kernel/user/register', 'Registration info' );
+        $subject = ezpI18n::tr( 'kernel/user/register', 'Registration info' );
         if ( $tpl->hasVariable( 'subject' ) )
             $subject = $tpl->variable( 'subject' );
         if ( $tpl->hasVariable( 'content_type' ) )
@@ -153,14 +154,14 @@ if ( $module->isCurrentAction( "Generate" ) )
             }
 
             $userToSendEmail = $user;
-            require_once( "kernel/common/template.php" );
             $receiver = $email;
 
             $mail = new eZMail();
             if ( !$mail->validate( $receiver ) )
             {
             }
-            $tpl = templateInit();
+
+            $tpl = eZTemplate::factory();
             $tpl->setVariable( 'user', $userToSendEmail );
             $tpl->setVariable( 'object', $userToSendEmail->attribute( 'contentobject' ) );
             $tpl->setVariable( 'password', $password );
@@ -174,7 +175,7 @@ if ( $module->isCurrentAction( "Generate" ) )
                 $emailSender = $ini->variable( 'MailSettings', 'AdminEmail' );
             $mail->setSender( $emailSender );
             $mail->setReceiver( $receiver );
-            $subject = ezi18n( 'kernel/user/register', 'Registration info' );
+            $subject = ezpI18n::tr( 'kernel/user/register', 'Registration info' );
             if ( $tpl->hasVariable( 'subject' ) )
                 $subject = $tpl->variable( 'subject' );
             $mail->setSubject( $subject );
@@ -192,9 +193,9 @@ if ( $module->isCurrentAction( "Generate" ) )
 
 $Result = array();
 $Result['content'] = $tpl->fetch( 'design:user/forgotpassword.tpl' );
-$Result['path'] = array( array( 'text' => ezi18n( 'kernel/user', 'User' ),
+$Result['path'] = array( array( 'text' => ezpI18n::tr( 'kernel/user', 'User' ),
                                 'url' => false ),
-                         array( 'text' => ezi18n( 'kernel/user', 'Forgot password' ),
+                         array( 'text' => ezpI18n::tr( 'kernel/user', 'Forgot password' ),
                                 'url' => false ) );
 
 if ( $ini->variable( 'SiteSettings', 'LoginPage' ) == 'custom' )

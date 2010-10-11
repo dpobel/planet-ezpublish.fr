@@ -40,14 +40,14 @@ QMap<QString, QString> proFileTagMap( const QString& text )
     QStringList lines = QStringList::split( QChar(';'), t );
     QStringList::Iterator line;
     for ( line = lines.begin(); line != lines.end(); ++line ) {
-	QStringList toks = QStringList::split( QChar(' '), *line );
+        QStringList toks = QStringList::split( QChar(' '), *line );
 
         if ( toks.count() >= 3 && 
              (toks[1] == QString("=") || toks[1] == QString("+=")) ) {
             QString tag = toks.first();
-	    int k = tag.findRev( QChar(':') ); // as in 'unix:'
-	    if ( k != -1 )
-		tag = tag.mid( k + 1 );
+            int k = tag.findRev( QChar(':') ); // as in 'unix:'
+            if ( k != -1 )
+                tag = tag.mid( k + 1 );
             toks.remove( toks.begin() );
 
             QString action = toks.first();
@@ -60,7 +60,7 @@ QMap<QString, QString> proFileTagMap( const QString& text )
                     tagMap[tag] += QChar( ' ' ) + toks.join( QChar(' ') );
             } else {
                 tagMap[tag] = toks.join( QChar(' ') );
-	    }
+            }
         }
     }
 
@@ -70,9 +70,9 @@ QMap<QString, QString> proFileTagMap( const QString& text )
         int i = 0;
 
         while ( (i = var.search(it.data(), i)) != -1 ) {
-	    int len = var.matchedLength();
+            int len = var.matchedLength();
             (*it).replace( i, len, tagMap[(*it).mid(i + 2, len - 2)] );
-	}
+        }
     }
     return tagMap;
 }

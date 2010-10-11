@@ -2,10 +2,10 @@
 //
 // Created on: <01-Aug-2002 09:58:09 bf>
 //
+// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.2.0
-// BUILD VERSION: 24182
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 4.3.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -22,6 +22,8 @@
 //   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 //   MA 02110-1301, USA.
 //
+//
+// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
 $http = eZHTTPTool::instance();
@@ -42,8 +44,8 @@ $viewParameters = array_merge( $viewParameters, $UserParameters );
 $Params['TemplateName'] = "design:user/register.tpl";
 $EditVersion = 1;
 
-require_once( "kernel/common/template.php" );
-$tpl = templateInit();
+
+$tpl = eZTemplate::factory();
 $tpl->setVariable( 'view_parameters', $viewParameters );
 
 $Params['TemplateObject'] = $tpl;
@@ -89,13 +91,26 @@ if ( !$http->hasSessionVariable( "RegisterUserID" ) )
         $Result = array();
         $Result['content'] = $tpl->fetch( 'design:user/register_user_not_valid.tpl' );
         $Result['path'] = array( array( 'url' => false,
-                                'text' => ezi18n( 'kernel/user', 'User' ) ),
+                                'text' => ezpI18n::tr( 'kernel/user', 'User' ) ),
                          array( 'url' => false,
-                                'text' => ezi18n( 'kernel/user', 'Register' ) ) );
+                                'text' => ezpI18n::tr( 'kernel/user', 'Register' ) ) );
         return $Result;
     }
     // else create user object
-    
+
+    if ( $http->hasSessionVariable( 'StartedRegistration' ) )
+    {
+        eZDebug::writeWarning( 'Cancel module run to protect against multiple form submits', 'user/register' );
+        $http->removeSessionVariable( "RegisterUserID" );
+        $http->removeSessionVariable( 'StartedRegistration' );
+        $db->commit();
+        return eZModule::HOOK_STATUS_CANCEL_RUN;
+    }
+    else if ( $http->hasPostVariable( 'PublishButton' ) or $http->hasPostVariable( 'CancelButton' ) )
+    {
+        $http->setSessionVariable( 'StartedRegistration', 1 );
+    }
+
     $ini = eZINI::instance();
     $errMsg = '';
     $checkErrNodeId = false;
@@ -107,7 +122,7 @@ if ( !$http->hasSessionVariable( "RegisterUserID" ) )
     $count = $rows[0]['count'];
     if ( $count < 1 )
     {
-        $errMsg = ezi18n( 'design/standard/user', 'The node (%1) specified in [UserSettings].DefaultUserPlacement setting in site.ini does not exist!', null, array( $defaultUserPlacement ) );
+        $errMsg = ezpI18n::tr( 'design/standard/user', 'The node (%1) specified in [UserSettings].DefaultUserPlacement setting in site.ini does not exist!', null, array( $defaultUserPlacement ) );
         $checkErrNodeId = true;
         eZDebug::writeError( "$errMsg" );
         $tpl->setVariable( 'errMsg', $errMsg );
@@ -135,6 +150,15 @@ if ( !$http->hasSessionVariable( "RegisterUserID" ) )
 }
 else
 {
+    if ( $http->hasSessionVariable( 'StartedRegistration' ) )
+    {
+        eZDebug::writeWarning( 'Cancel module run to protect against multiple form submits', 'user/register' );
+        $http->removeSessionVariable( "RegisterUserID" );
+        $http->removeSessionVariable( 'StartedRegistration' );
+        $db->commit();
+        return eZModule::HOOK_STATUS_CANCEL_RUN;
+    }
+
     $userID = $http->sessionVariable( "RegisterUserID" );
 }
 
@@ -162,6 +186,7 @@ if ( !function_exists( 'checkContentActions' ) )
 
             $http = eZHTTPTool::instance();
             $http->removeSessionVariable( "RegisterUserID" );
+            $http->removeSessionVariable( 'StartedRegistration' );
             return eZModule::HOOK_STATUS_CANCEL_RUN;
         }
 
@@ -185,9 +210,9 @@ if ( !function_exists( 'checkContentActions' ) )
             if ( !$mail->validate( $receiver ) )
             {
             }
-            require_once( "kernel/common/template.php" );
+
             $ini = eZINI::instance();
-            $tpl = templateInit();
+            $tpl = eZTemplate::factory();
             $tpl->setVariable( 'user', $user );
             $tpl->setVariable( 'object', $object );
             $hostname = eZSys::hostname();
@@ -257,14 +282,20 @@ if ( !function_exists( 'checkContentActions' ) )
                 $templateResult = $tpl->fetch( 'design:user/registrationinfo.tpl' );
                 if ( $tpl->hasVariable( 'content_type' ) )
                     $mail->setContentType( $tpl->variable( 'content_type' ) );
+
                 $emailSender = $ini->variable( 'MailSettings', 'EmailSender' );
-                if ( !$emailSender )
+                if ( $tpl->hasVariable( 'email_sender' ) )
+                    $emailSender = $tpl->variable( 'email_sender' );
+                else if ( !$emailSender )
                     $emailSender = $ini->variable( 'MailSettings', 'AdminEmail' );
-                $mail->setSender( $emailSender );
-                $mail->setReceiver( $receiver );
-                $subject = ezi18n( 'kernel/user/register', 'Registration info' );
+
                 if ( $tpl->hasVariable( 'subject' ) )
                     $subject = $tpl->variable( 'subject' );
+                else
+                    $subject = ezpI18n::tr( 'kernel/user/register', 'Registration info' );
+
+                $mail->setSender( $emailSender );
+                $mail->setReceiver( $receiver );
                 $mail->setSubject( $subject );
                 $mail->setBody( $templateResult );
                 $mailResult = eZMailTransport::send( $mail );
@@ -288,16 +319,24 @@ if ( !function_exists( 'checkContentActions' ) )
                         if ( $tpl->hasVariable( 'content_type' ) )
                             $mail->setContentType( $tpl->variable( 'content_type' ) );
 
-                        $feedbackReceiver = $ini->variable( 'UserSettings', 'RegistrationEmail' );
-                        if ( !$feedbackReceiver )
-                            $feedbackReceiver = $ini->variable( "MailSettings", "AdminEmail" );
+                        $emailSender = $ini->variable( 'MailSettings', 'EmailSender' );
+                        if ( $tpl->hasVariable( 'email_sender' ) )
+                            $emailSender = $tpl->variable( 'email_sender' );
+                        else if ( !$emailSender )
+                            $emailSender = $ini->variable( 'MailSettings', 'AdminEmail' );
 
-                        $subject = ezi18n( 'kernel/user/register', 'New user registered' );
-                        if ( $tpl->hasVariable( 'subject' ) )
-                            $subject = $tpl->variable( 'subject' );
+                        $feedbackReceiver = $ini->variable( 'UserSettings', 'RegistrationEmail' );
                         if ( $tpl->hasVariable( 'email_receiver' ) )
                             $feedbackReceiver = $tpl->variable( 'email_receiver' );
+                        else if ( !$feedbackReceiver )
+                            $feedbackReceiver = $ini->variable( 'MailSettings', 'AdminEmail' );
 
+                        if ( $tpl->hasVariable( 'subject' ) )
+                            $subject = $tpl->variable( 'subject' );
+                        else
+                            $subject = ezpI18n::tr( 'kernel/user/register', 'New user registered' );
+
+                        $mail->setSender( $emailSender );
                         $mail->setReceiver( $feedbackReceiver );
                         $mail->setSubject( $subject );
                         $mail->setBody( $templateResult );
@@ -326,6 +365,7 @@ if ( !function_exists( 'checkContentActions' ) )
 
             $http->removeSessionVariable( "GeneratedPassword" );
             $http->removeSessionVariable( "RegisterUserID" );
+            $http->removeSessionVariable( 'StartedRegistration' );
 
             // check for redirectionvariable
             if ( $http->hasSessionVariable( 'RedirectAfterUserRegister' ) )
@@ -364,8 +404,8 @@ if ( $ini->variable( 'SiteSettings', 'LoginPage' ) == 'custom' )
 }
 
 $Result['path'] = array( array( 'url' => false,
-                                'text' => ezi18n( 'kernel/user', 'User' ) ),
+                                'text' => ezpI18n::tr( 'kernel/user', 'User' ) ),
                          array( 'url' => false,
-                                'text' => ezi18n( 'kernel/user', 'Register' ) ) );
+                                'text' => ezpI18n::tr( 'kernel/user', 'Register' ) ) );
 
 ?>

@@ -34,20 +34,21 @@ eZOEPopupUtils.bookmarks = function( offset )
 {
     // browse personal bookmarks by offset
     eZOEPopupUtils.bookmarksAjax.load( tinyMCEPopup.editor.settings.ez_extension_url + '/bookmarks/' + (offset || 0), '', eZOEPopupUtils.bookmarksCallBack  );
-    ez.$('bookmarks_progress' ).show();
+    jQuery('#bookmarks_progress' ).show();
 };
 
 eZOEPopupUtils.bookmarksCallBack = function( r )
 {
     // wrapper function for browseCallBack, called by ajax call in bookmarks()
-    return eZOEPopupUtils.browseCallBack( r, 'bookmarks', function( tbody, mode, ed ){
-            var tr = document.createElement("tr"), td = document.createElement("td"), tag = document.createElement("span");
-            tr.appendChild( document.createElement("td") );
-            td.setAttribute('colspan', '3');
-            tag.innerHTML = ed.getLang('ez.empty_bookmarks_result');
-            td.appendChild( tag );
-            tr.appendChild( td );
-            tbody.el.appendChild( tr );
+    return eZOEPopupUtils.browseCallBack( r, 'bookmarks', function( tbody, mode, ed )
+    {
+        var tr = document.createElement("tr"), td = document.createElement("td"), tag = document.createElement("span");
+        tr.appendChild( document.createElement("td") );
+        td.setAttribute('colspan', '3');
+        tag.innerHTML = ed.getLang('ez.empty_bookmarks_result');
+        td.appendChild( tag );
+        tr.appendChild( td );
+        tbody.appendChild( tr );
     });
 };
 

@@ -1,4 +1,6 @@
-<!DOCTYPE TS><TS>
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE TS>
+<TS version="2.0">
 <context>
     <name>contentstructuremenu/show_content_structure</name>
     <message>
@@ -119,12 +121,24 @@
         <source>Use this menu to select the language you to want use then click the &quot;New class&quot; button. The item will be created within the current location.</source>
         <translation>Користите овај мени за избор језика који желите и притисните дугме &quot;Нова класа&quot;. Ставка ће бити додата на тренутну локацију.</translation>
     </message>
+    <message>
+        <source>Classes inside &lt;%group_name&gt; (%class_count)</source>
+        <translation>Класе унутар групе &lt;%group_name&gt; (%class_count)</translation>
+    </message>
+    <message>
+        <source>List of classes inside %group_name class group (%class_count)</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>design/admin/class/datatype/browse_objectrelation_placement</name>
     <message>
         <source>Choose node for default selection</source>
         <translation>Изабери чвор за основни избор</translation>
+    </message>
+    <message>
+        <source>Select the item that you want to be the default selection and click &quot;OK&quot;.</source>
+        <translation type="obsolete">Изабери елемент за који желиш да буде основни избор и кликни на &quot;OK&quot;.</translation>
     </message>
     <message>
         <source>Navigate using the available tabs (above), the tree menu (left) and the content list (middle).</source>
@@ -140,6 +154,10 @@
     <message>
         <source>Choose initial location</source>
         <translation>Изабери првобитну локацију</translation>
+    </message>
+    <message>
+        <source>Select the location that should be the default location and click &quot;OK&quot;.</source>
+        <translation type="obsolete">Изабери локацију за коју желиш да буде основни избор локације и кликни на &quot;OK&quot;.</translation>
     </message>
     <message>
         <source>Navigate using the available tabs (above), the tree menu (left) and the content list (middle).</source>
@@ -241,6 +259,22 @@
         <translation>Користи ово поље за описни назив класе. Поље може садржати празна места и специјалне карактере.</translation>
     </message>
     <message>
+        <source>Use this field to set the internal name of the class. The identifier will be used in templates and in PHP code. Allowed characters: letters, numbers and underscore.</source>
+        <translation type="obsolete">Користи ово поље за интерни назив класе. Идентификатор ће бити коришћен у шаблонима и PHP коду. Дозвољени карактери: слова, бројеви и подцрта.</translation>
+    </message>
+    <message>
+        <source>Use this field to configure how the name of the objects are generated (also applies to nice URLs). Type in the identifiers of the attributes that should be used. The identifiers must be enclosed in angle brackets. Text outside angle brackets will be included as is.</source>
+        <translation type="obsolete">Користи ово поље за подешавање начина генерисања објеката (односи се и на једноставне URLс). Унеси идентификатор атрибута који ће бити коришћен. Идентификатори морају бити унутар &quot;мање&quot; &quot;веће&quot; симбола. Текст изван симбола биће приказани као што су уписани.</translation>
+    </message>
+    <message>
+        <source>Use this checkbox to allow instances of the class to have sub items. If checked, it will be possible to create new sub-items. If not checked, the sub items will not be displayed.</source>
+        <translation type="obsolete">Користи кућиште како би дозволио поделементе у класи. Ако је изабрано моћи ће се креирати поделементи. Уколико није, поделементи неће бити приказани.</translation>
+    </message>
+    <message>
+        <source>Select attribute for removal. Click the &quot;Remove selected attributes&quot; button to actually remove the selected attributes.</source>
+        <translation type="obsolete">Одабери атрибут за брисање.</translation>
+    </message>
+    <message>
         <source>Use the order buttons to set the order of the class attributes. The up arrow moves the attribute one place up. The down arrow moves the attribute one place down.</source>
         <translation>Користи дугме за избор сортирања атрибута класе.</translation>
     </message>
@@ -249,8 +283,28 @@
         <translation>Користи ово поље за описни назив атрибута. Поље може садржати празна места и специјалне карактере.</translation>
     </message>
     <message>
+        <source>Use this field to set the internal name of the attribute. The identifier will be used in templates and in PHP code. Allowed characters: letters, numbers and underscore.</source>
+        <translation type="obsolete">Користи ово поље за интерни назив атрибута. Идентификатор ће бити коришћен у шаблонима и PHP коду. Дозвољени карактери: слова, бројеви и подцрта.</translation>
+    </message>
+    <message>
+        <source>Use this checkbox to control if the user should be forced to enter information into the attribute.</source>
+        <translation type="obsolete">Користи ово кућиште како би контролисао обавезност уноса информација.</translation>
+    </message>
+    <message>
+        <source>Use this checkbox to control if the contents of the attribute should be indexed by the search engine.</source>
+        <translation type="obsolete">Користи ово кућиште ако желиш да атрибут буде индексиран за претраживање.</translation>
+    </message>
+    <message>
         <source>The &lt;%datatype_name&gt; datatype does not support search indexing.</source>
         <translation>&lt;%datatype_name&gt; не подржава индексирање за претраживање.</translation>
+    </message>
+    <message>
+        <source>Use this checkbox to control if the attribute should collect input from users.</source>
+        <translation type="obsolete">Користи ово кућиште у случају да атрибут мора преузети унос од корисника.</translation>
+    </message>
+    <message>
+        <source>The &lt;%datatype_name&gt; datatype can not be used as an information collector.</source>
+        <translation type="obsolete">&lt;%datatype_name&gt; дататип не подржава прикупљање информација.</translation>
     </message>
     <message>
         <source>Use this checkbox for attributes that contain non-translatable content.</source>
@@ -348,6 +402,42 @@
         <source>The &lt;%datatype_name&gt; datatype cannot be used as an information collector.</source>
         <translation>&lt;%datatype_name&gt; не може бити коришћен за прикупљање уноса.</translation>
     </message>
+    <message>
+        <source>Edit &lt;%class_name&gt; (%object_count)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Description</source>
+        <translation type="unfinished">Опис</translation>
+    </message>
+    <message>
+        <source>Use this field to set the informal description of the class. The description field can contain whitespaces and special characters.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>List of class attributes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Class attribute item</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use this field to set the informal description of the attribute. This field can contain whitespaces and special characters.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use this category to group attributes together in edit interface, some categories might also be hidden in full view if they are for instance only meta attributes.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Default</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Category</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>design/admin/class/edit_denied</name>
@@ -358,6 +448,10 @@
     <message>
         <source>This class is already being edited by someone else.</source>
         <translation>Класа је већ била мењана од неког другог корисника.</translation>
+    </message>
+    <message>
+        <source>The class is temporarly locked and thus it can not be edited by you.</source>
+        <translation type="obsolete">Класа је привремено закључана и зато се не може едитовати.</translation>
     </message>
     <message>
         <source>Possible actions</source>
@@ -386,6 +480,10 @@
     <message>
         <source>Unlock time</source>
         <translation>Време откључавања</translation>
+    </message>
+    <message>
+        <source>The class will be available for editing once it has been stored by the current modifier or when it is unlocked by the system.</source>
+        <translation type="obsolete">Класа ће бити доступна за едитовање тек кад буде снимљена од стране активног модификатора или кад буде откључана од стране система.</translation>
     </message>
     <message>
         <source>Retry</source>
@@ -496,6 +594,22 @@
         <source>Edit the &lt;%class_name&gt; class.</source>
         <translation>Измени класу &lt;%class_name&gt;.</translation>
     </message>
+    <message>
+        <source>Class groups (%group_count)</source>
+        <translation>Групе класа (%group_count)</translation>
+    </message>
+    <message>
+        <source>List of class groups</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>List of recently modified classes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Objects</source>
+        <translation type="unfinished">Објекти</translation>
+    </message>
 </context>
 <context>
     <name>design/admin/class/removeclass</name>
@@ -520,12 +634,24 @@
         <translation>Јесте ли сигурни да желите уклонити ове класе?</translation>
     </message>
     <message>
+        <source>You do not have permissions to remove classes.</source>
+        <translation type="obsolete">Немате овлашћења за уклањање класа.</translation>
+    </message>
+    <message>
         <source>The %1 class was already removed from the group but still exists in other groups.</source>
         <translation>%1 класа је већ уклоњена из групе али постоји у другим групама.</translation>
     </message>
     <message>
         <source>The %1 classes were already removed from the group but still exist in other groups.</source>
         <translation>%1 класе су већ уклоњене из групе али постоји у другим групама.</translation>
+    </message>
+    <message>
+        <source>Removing class &lt;%1&gt; will result in the removal of %2 object.</source>
+        <translation type="obsolete">Уклањањем класе &lt;%1&gt; уклања се и објект %2.</translation>
+    </message>
+    <message>
+        <source>Removing class &lt;%1&gt; will result in the removal of %2 objects.</source>
+        <translation type="obsolete">Уклањањем класе &lt;%1&gt; уклањају се и објекти %2.</translation>
     </message>
     <message>
         <source>You do not have permission to remove classes.</source>
@@ -759,6 +885,10 @@
         <translation>Уклони класу &lt;%class_name&gt; из изабраних група класа.</translation>
     </message>
     <message>
+        <source>Select a group which the &lt;%class_name&gt; class should be added to.</source>
+        <translation type="obsolete">Изабери групу класе у коју ће се додати класа &lt;%class_name&gt;.</translation>
+    </message>
+    <message>
         <source>Add to class group</source>
         <translation>Додај у групу класа</translation>
     </message>
@@ -918,6 +1048,42 @@
         <source>Show available translations.</source>
         <translation>Прикажи доступне преводе.</translation>
     </message>
+    <message>
+        <source>Class storing deferred</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The storing of the class has been deferred because existing objects need to be updated. The process has been scheduled to run in the background and will be started automatically. Please do not edit the class again until the process has finished. You can monitor the progress of the background process here:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Background process monitor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Class name and number of objects</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Member of class groups (%group_count)</source>
+        <translation>Члан групе класа (%group_count)</translation>
+    </message>
+    <message>
+        <source>Override templates (%1)</source>
+        <translation>Заобиђи шаблоне (%1)</translation>
+    </message>
+    <message>
+        <source>Translations (%translations)</source>
+        <translation>Преводи (%translations)</translation>
+    </message>
+    <message>
+        <source>Description</source>
+        <translation type="unfinished">Опис</translation>
+    </message>
+    <message>
+        <source>Category</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>design/admin/collaboration</name>
@@ -959,6 +1125,10 @@
         <translation>Објект садржаја %1 чека одобрење да би могао бити објављен.  </translation>
     </message>
     <message>
+        <source>If you wish you may send a message to the person approving it?</source>
+        <translation type="obsolete">Ако желите, можете послати поруку особи која га треба одобрити?</translation>
+    </message>
+    <message>
         <source>The content object %1 needs your approval before it can be published.</source>
         <translation>Објект садржаја %1 чека Ваше одобрење да би могао бити објављен.</translation>
     </message>
@@ -967,12 +1137,28 @@
         <translation>Одобравате ли објаву објекта садржаја?</translation>
     </message>
     <message>
+        <source>The content object %1 was approved and will be published once the publishing workflow continues.</source>
+        <translation type="obsolete">Објект садржаја %1 је одобрен те ће бити објављен кад се издавачки процес настави.</translation>
+    </message>
+    <message>
+        <source>The content object %1 was not accepted but is available as a draft again.</source>
+        <translation type="obsolete">Објект садржаја %1 није прихваћен, али је опет доступан као скица.</translation>
+    </message>
+    <message>
+        <source>You may reedit the draft and publish it, in which case an approval is required again.</source>
+        <translation type="obsolete">Можете преуредити скицу те је објавити, у том случају поново Вам је потребно одобрење.</translation>
+    </message>
+    <message>
         <source>Edit the object</source>
         <translation>Измени објект</translation>
     </message>
     <message>
         <source>The content object %1 was not accepted but will be available as a draft for the author.</source>
         <translation>Објект садржаја %1 није прихваћен, али ће аутору бити доступан као скица.</translation>
+    </message>
+    <message>
+        <source>The author can reedit the draft and publish it again, in which a new approval item is made.</source>
+        <translation type="obsolete">Аутор може преуредити скицу и поново је објавити. У том случају креира се нова ставка за одобрење.</translation>
     </message>
     <message>
         <source>Comment</source>
@@ -1146,6 +1332,10 @@
         <translation>Измени &lt;%bookmark_name&gt;.</translation>
     </message>
     <message>
+        <source>You do not have permissions to edit the contents of &lt;%bookmark_name&gt;.</source>
+        <translation type="obsolete">Немате овлашћења за едитовање садржаја &lt;%bookmark_name&gt;.</translation>
+    </message>
+    <message>
         <source>Remove selected bookmarks.</source>
         <translation>Уклони изабране ознаке за књигу.</translation>
     </message>
@@ -1165,6 +1355,10 @@
         <source>You do not have permission to edit the contents of &lt;%bookmark_name&gt;.</source>
         <translation>Немате овлашћења да мењате садржај &lt;%bookmark_name&gt;.</translation>
     </message>
+    <message>
+        <source>My bookmarks (%bookmark_count)</source>
+        <translation>Моје ознаке за књигу (%bookmark_count)</translation>
+    </message>
 </context>
 <context>
     <name>design/admin/content/browse</name>
@@ -1177,6 +1371,14 @@
         <translation>Главни ниво</translation>
     </message>
     <message>
+        <source>To select objects, choose the appropriate radiobutton or checkbox(es), and click the &quot;Choose&quot; button.</source>
+        <translation type="obsolete">Да би одабрали објекте, изаберите прикладан radiobutton или checkbox, и притисните дугме &apos;&apos;Изабери&apos;&apos;.</translation>
+    </message>
+    <message>
+        <source>To select an object that is a child of one of the displayed objects, click the object name and you will get a list of the children of the object.</source>
+        <translation type="obsolete">Да би одабрали објекат који је потомак једног од приказаних објеката, изаберите име објекта и добићете листу потомака истог. </translation>
+    </message>
+    <message>
         <source>Back</source>
         <translation>Назад</translation>
     </message>
@@ -1187,6 +1389,10 @@
     <message>
         <source>Type</source>
         <translation>Врста</translation>
+    </message>
+    <message>
+        <source>OK</source>
+        <translation type="obsolete">OK</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -1240,6 +1446,10 @@
         <translation>Изаберите елементе које ћете ставити у ознаке за књигу</translation>
     </message>
     <message>
+        <source>Select the items that you want to bookmark using the checkboxes and click &quot;OK&quot;.</source>
+        <translation type="obsolete">Изабери елемент за који желиш да буде предвиђен избор и кликни на &quot;OK&quot;.</translation>
+    </message>
+    <message>
         <source>Navigate using the available tabs (above), the tree menu (left) and the content list (middle).</source>
         <translation>Користи доступне табове [горе], стабло мени [лево] и листу садржаја [средина] за навигацију.</translation>
     </message>
@@ -1251,8 +1461,24 @@
 <context>
     <name>design/admin/content/browse_copy_node</name>
     <message>
+        <source>Choose location for copy of &lt;%object_name&gt;</source>
+        <translation type="obsolete">Изабери локацију за копију објекта &lt;%object_name&gt;</translation>
+    </message>
+    <message>
+        <source>Choose a new location the copy of &lt;%object_name&gt; using the radio buttons and click &quot;OK&quot;.</source>
+        <translation type="obsolete">Изабери нову локацију за копију објекта &lt;%object_name&gt; користећи радио дугмад и кликни на &quot;OK&quot;.</translation>
+    </message>
+    <message>
         <source>Navigate using the available tabs (above), the tree menu (left) and the content list (middle).</source>
         <translation>Користи доступне табове [горе], стабло мени [лево] и листу садржаја [средина] за навигацију.</translation>
+    </message>
+    <message>
+        <source>Choose location for copy of subtree of node &lt;%node_name&gt;</source>
+        <translation type="obsolete">Изабери локацију за копију подстабла чвора &lt;%node_name&gt;</translation>
+    </message>
+    <message>
+        <source>Choose a new location the copy subtree of node &lt;%node_name&gt; using the radio buttons and click &quot;OK&quot;.</source>
+        <translation type="obsolete">Изабери нову локацију за копију подстабла чвора &lt;%node_name&gt; користећи радио дугмад и кликни на &quot;OK&quot;.</translation>
     </message>
     <message>
         <source>Choose location for the copy of &lt;%object_name&gt;</source>
@@ -1278,6 +1504,10 @@
         <translation>Изабери извозни чвор</translation>
     </message>
     <message>
+        <source>Select the item that you want to export using the checkboxes and click &quot;OK&quot;.</source>
+        <translation type="obsolete">Изабери елемент који желиш извести(export) помоћу checkboxова и кликни на &quot;OK&quot;.</translation>
+    </message>
+    <message>
         <source>Navigate using the available tabs (above), the tree menu (left) and the content list (middle).</source>
         <translation>Користи доступне табове [горе], стабло мени [лево] и листу садржаја [средина] за навигацију.</translation>
     </message>
@@ -1291,6 +1521,10 @@
     <message>
         <source>Choose location for new &lt;%classname&gt;</source>
         <translation>Изабери локацију за нову класу &lt;%classname&gt;</translation>
+    </message>
+    <message>
+        <source>Choose a location for the new &lt;%classname&gt; using the radiobuttons and click &quot;OK&quot;.</source>
+        <translation type="obsolete">Изабери локацију за нову класу &lt;%classname&gt; користећи radiobuttonе и кликни на &quot;OK&quot;.</translation>
     </message>
     <message>
         <source>Navigate using the available tabs (above), the tree menu (left) and the content list (middle).</source>
@@ -1312,6 +1546,10 @@
         <translation>Изабери нову локацију за објект &lt;%object_name&gt;</translation>
     </message>
     <message>
+        <source>Choose a new location for &lt;%object_name&gt; using the radio buttons and click &quot;OK&quot;.</source>
+        <translation type="obsolete">Изабери нову локацију за објект &lt;%object_name&gt; користећи radiobuttonе и кликни на &quot;OK&quot;.</translation>
+    </message>
+    <message>
         <source>Choose a new location for &lt;%object_name&gt; using the radio buttons then click &quot;Select&quot;.</source>
         <translation>Користећи радио-дугмад означите нову локацију &lt;%object_name&gt;, затим притисните &quot;Изабери&quot;.</translation>
     </message>
@@ -1321,6 +1559,10 @@
     <message>
         <source>Choose a new location for &lt;%version_name&gt;</source>
         <translation>Изабери нову локацију за верзију &lt;%version_name&gt;</translation>
+    </message>
+    <message>
+        <source>Choose a new location for &lt;%version_name&gt; using the radio buttons and click &quot;OK&quot;.</source>
+        <translation type="obsolete">Изабери нову локацију за верзију &lt;%version_name&gt; користећи радио дугмад и кликни на &quot;OK&quot;.</translation>
     </message>
     <message>
         <source>The previous location was &lt;%previous_location&gt;.</source>
@@ -1342,6 +1584,10 @@
         <translation>Изабери локацију за верзију &lt;%version_name&gt;</translation>
     </message>
     <message>
+        <source>Choose locations for &lt;%version_name&gt; using the checkboxes and click &quot;OK&quot;.</source>
+        <translation type="obsolete">Изабери локацију за верзију &lt;%version_name&gt; користећи checkboxове и кликни на &quot;OK&quot;.</translation>
+    </message>
+    <message>
         <source>Navigate using the available tabs (above), the tree menu (left) and the content list (middle).</source>
         <translation>Користи доступне табове [горе], стабло мени [лево] и листу садржаја [средина] за навигацију.</translation>
     </message>
@@ -1352,6 +1598,14 @@
 </context>
 <context>
     <name>design/admin/content/browse_related</name>
+    <message>
+        <source>Choose objects that you wish to relate to &lt;%version_name&gt;</source>
+        <translation type="obsolete">Изабери објекте које желиш везати уз верзијом &lt;%version_name&gt;</translation>
+    </message>
+    <message>
+        <source>Use the checkboxes to choose the objects that you wish to relate to &lt;%version_name&gt;.</source>
+        <translation type="obsolete">Користи кућишта како би изабрао објекте које желиш везати уз верзију &lt;%version_name&gt;.</translation>
+    </message>
     <message>
         <source>Navigate using the available tabs (above), the tree menu (left) and the content list (middle).</source>
         <translation>Користи доступне табове [горе], стабло мени [лево] и листу садржаја [средина] за навигацију.</translation>
@@ -1367,6 +1621,14 @@
 </context>
 <context>
     <name>design/admin/content/browse_swap_node</name>
+    <message>
+        <source>Choose the exchanging node for &lt;%object_name&gt;</source>
+        <translation type="obsolete">Изабери чвор за замени за објект &lt;%version_name&gt;</translation>
+    </message>
+    <message>
+        <source>Use the radio buttons to choose the node with which you want to swap &lt;%object_name&gt;.</source>
+        <translation type="obsolete">Изабери помоћу радио дугмета чвор који желиш заменити са објектом &lt;%version_name&gt;.</translation>
+    </message>
     <message>
         <source>Navigate using the available tabs (above), the tree menu (left) and the content list (middle).</source>
         <translation>Користи доступне табове [горе], стабло мени [лево] и листу садржаја [средина] за навигацију.</translation>
@@ -1387,6 +1649,10 @@
         <translation>Елемент</translation>
     </message>
     <message>
+        <source>Objects referring to this one</source>
+        <translation type="obsolete">Објекти који се позивају на овај</translation>
+    </message>
+    <message>
         <source>Objects referring to this item</source>
         <translation>Објекти који се позивају на ову ставку</translation>
     </message>
@@ -1396,6 +1662,14 @@
     <message>
         <source>Feedback for %feedbackname</source>
         <translation>Повратна информација о %feedbackname</translation>
+    </message>
+    <message>
+        <source>You have already submitted data to this feedback. The previously submitted data was the following.</source>
+        <translation type="obsolete">Већ сте унели податке за повратну информацију. Пре унесени подаци су следећи.</translation>
+    </message>
+    <message>
+        <source>Thanks for your feedback, the following information was collected.</source>
+        <translation type="obsolete">Хвала на повратним информацијама, прикупљени су следећи подаци.</translation>
     </message>
     <message>
         <source>Return to site</source>
@@ -1421,6 +1695,10 @@
         <translation>Прикупљене информације</translation>
     </message>
     <message>
+        <source>You have already submitted data to this form. The previously submitted data was the following.</source>
+        <translation type="obsolete">Већ сте унели податке у овај образац. Пре унесени подаци су следећи.</translation>
+    </message>
+    <message>
         <source>Back</source>
         <translation>Назад</translation>
     </message>
@@ -1434,6 +1712,14 @@
     <message>
         <source>Poll %pollname</source>
         <translation>Анкета %pollname</translation>
+    </message>
+    <message>
+        <source>Anonymous users are not allowed to vote on this poll, please login.</source>
+        <translation type="obsolete">Анонимним корисницима није дозвољено гласати у овој анкети, молимо пријавите се.</translation>
+    </message>
+    <message>
+        <source>You have already voted for this poll.</source>
+        <translation type="obsolete">Већ сте гласали у овој анкети.</translation>
     </message>
     <message>
         <source>Poll results</source>
@@ -1500,6 +1786,13 @@
     <message>
         <source>Cancel</source>
         <translation>Поништи</translation>
+    </message>
+</context>
+<context>
+    <name>design/admin/content/dashboard</name>
+    <message>
+        <source>Dashboard</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1590,6 +1883,10 @@
         <source>New version</source>
         <translation>Нова верзија</translation>
     </message>
+    <message>
+        <source>Versions for &lt;%object_name&gt; (%version_count)</source>
+        <translation>Верзије за објект &lt;%object_name&gt; (%version_count)</translation>
+    </message>
 </context>
 <context>
     <name>design/admin/content/draft</name>
@@ -1661,6 +1958,10 @@
         <source>Are you sure you want to remove all drafts?</source>
         <translation>Јесте ли сигурни да желите уклонити све скице?</translation>
     </message>
+    <message>
+        <source>My drafts (%draft_count)</source>
+        <translation>Моје скице (%draft_count)</translation>
+    </message>
 </context>
 <context>
     <name>design/admin/content/edit</name>
@@ -1675,6 +1976,10 @@
     <message>
         <source>Send for publishing</source>
         <translation>Објави</translation>
+    </message>
+    <message>
+        <source>Publish the contents of the draft that is being edited. The draft will thus become the published version of the object.</source>
+        <translation type="obsolete">Објави садржај скице која се едитовала. Скица ће постати објављена верзија објекта.</translation>
     </message>
     <message>
         <source>Store draft</source>
@@ -1707,6 +2012,14 @@
     <message>
         <source>Name</source>
         <translation>Назив</translation>
+    </message>
+    <message>
+        <source>Class Identifier</source>
+        <translation type="obsolete">Идентификатор класе</translation>
+    </message>
+    <message>
+        <source>Class Name</source>
+        <translation type="obsolete">Назив класе</translation>
     </message>
     <message>
         <source>Priority</source>
@@ -1745,8 +2058,20 @@
         <translation>Главни</translation>
     </message>
     <message>
+        <source>You do not have permissions to remove this location.</source>
+        <translation type="obsolete">Немате овлашћења за уклањање ове локације.</translation>
+    </message>
+    <message>
         <source>Select location for removal.</source>
         <translation>Изабери локацију за брисање.</translation>
+    </message>
+    <message>
+        <source>Use this menu to set the sorting method for the sub items of the respective location.</source>
+        <translation type="obsolete">Користите овај мени за избор методе сортирања поделемената на тренутној локацији.</translation>
+    </message>
+    <message>
+        <source>Use this menu to set the sorting direction for the sub items of the respective location.</source>
+        <translation type="obsolete">Користите овај мени за избор смјера сортирања поделемената на тренутној локацији.</translation>
     </message>
     <message>
         <source>Desc.</source>
@@ -1797,6 +2122,10 @@
         <translation>Додај једну или више локација за објект који мењате.</translation>
     </message>
     <message>
+        <source>You can not add or remove locations because the object being edited belongs to a top node.</source>
+        <translation type="obsolete">Не можете додати или уклонити локације зато јер објект који мењате припада главном чвору.</translation>
+    </message>
+    <message>
         <source>Object information</source>
         <translation>Подаци о објекту</translation>
     </message>
@@ -1825,6 +2154,10 @@
         <translation>Приказ и управљање [копирање, брисање и сл.] верзија овог објекта.</translation>
     </message>
     <message>
+        <source>You can not manage the versions of this object because there is only one version available (the one that is being edited).</source>
+        <translation type="obsolete">Не можете управљати са верзијама овог објекта јер не постоји ни једна друга верзија објекта.</translation>
+    </message>
+    <message>
         <source>Current draft</source>
         <translation>Текућа скица</translation>
     </message>
@@ -1849,8 +2182,40 @@
         <translation>Запамти скицу коју уређујем и напусти едитовање.</translation>
     </message>
     <message>
+        <source>Translations [%translation_count]</source>
+        <translation type="obsolete">Преводи [%translation_count]</translation>
+    </message>
+    <message>
+        <source>%1 (No locale information available)</source>
+        <translation type="obsolete">%1 (нема података о локализацији)</translation>
+    </message>
+    <message>
+        <source>Edit</source>
+        <translation type="obsolete">Измени</translation>
+    </message>
+    <message>
+        <source>Edit the selected translation of the draft that is being edited.</source>
+        <translation type="obsolete">Измени одабрани превод скице коју едитујем.</translation>
+    </message>
+    <message>
         <source>Translate</source>
         <translation>Преведи</translation>
+    </message>
+    <message>
+        <source>Edit the selected translation of the draft using the content being edited as a reference.</source>
+        <translation type="obsolete">Измени одабрани превод скице коју едитујем користећи садржај који едитујем као референцу.</translation>
+    </message>
+    <message>
+        <source>The draft that is being edited only exists in one language; thus this button is disabled.</source>
+        <translation type="obsolete">Скица која се едитује је једнојезична стога је дугме искључено.</translation>
+    </message>
+    <message>
+        <source>Manage translations</source>
+        <translation type="obsolete">Управљање преводима</translation>
+    </message>
+    <message>
+        <source>View and manage (add/remove) translations for the draft that is being edited.</source>
+        <translation type="obsolete">Приказ и управљање [додај/уклони] преводима за скицу која се едитује.</translation>
     </message>
     <message>
         <source>Related objects [%related_objects]</source>
@@ -1859,6 +2224,10 @@
     <message>
         <source>Related images [%related_images]</source>
         <translation>Повезане слике [%related_images]</translation>
+    </message>
+    <message>
+        <source>Copy this code and paste it into an XML field.</source>
+        <translation type="obsolete">Копирај код и залепи га у XML поље.</translation>
     </message>
     <message>
         <source>Related files [%related_files]</source>
@@ -1935,6 +2304,10 @@
     <message>
         <source>Discard the draft that is being edited. This will also remove the translations that belong to the draft (if any).</source>
         <translation>Поништи скицу која се едитује. Такође ће се уклонити и превод за скицу (ако постоји).</translation>
+    </message>
+    <message>
+        <source>You do not have sufficient permissions to view this object</source>
+        <translation type="obsolete">Немате овлашћења да видите овај објекат</translation>
     </message>
     <message>
         <source>Publish the contents of the draft that is being edited. The draft will become the published version of the object.</source>
@@ -2048,6 +2421,58 @@
         <source>The following data is invalid according to the custom validation rules</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Toggle fullscreen editing!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Store draft and exit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Store the draft that is being edited and exit from edit mode. Use when you need to exit your work and return later to continue.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit &lt;%object_name&gt; (%class_name)</source>
+        <translation>Измена објекта &lt;%object_name&gt; (%class_name)</translation>
+    </message>
+    <message>
+        <source>Locations (%locations)</source>
+        <translation>Локације (%locations)</translation>
+    </message>
+    <message>
+        <source>Preview</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Existing translations</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Base translation on</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>None</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Related objects (%related_objects)</source>
+        <translation>Повезани објекти (%related_objects)</translation>
+    </message>
+    <message>
+        <source>Related images (%related_images)</source>
+        <translation>Повезане слике (%related_images)</translation>
+    </message>
+    <message>
+        <source>Related files (%related_files)</source>
+        <translation>Повезане датотеке (%related_files)</translation>
+    </message>
+    <message>
+        <source>Related content (%related_objects)</source>
+        <translation>Повезани садржај (%related_objects)</translation>
+    </message>
 </context>
 <context>
     <name>design/admin/content/edit_attribute</name>
@@ -2155,6 +2580,14 @@
         <translation>Изаберите скицу верзије #%version за едитовање.</translation>
     </message>
     <message>
+        <source>You can not select draft version #%version for editing because it belongs to another user. Please select a draft that belongs to you or create a new draft and then edit it.</source>
+        <translation type="obsolete">Не можете изабрати скицу верзије #%version јер скица припада другом кориснику. Молимо изаберите скицу која припада вама или креирајте нову скицу.</translation>
+    </message>
+    <message>
+        <source>View the contents of version #%version. Default translation: %default_translation.</source>
+        <translation type="obsolete">Прикажи садржај верзије #%version. Основни превод: %default_translation.</translation>
+    </message>
+    <message>
         <source>View the contents of version #%version_number. Translation: %translation.</source>
         <translation>Прикажи садржај верзије #%version_number. Превод: %translation.</translation>
     </message>
@@ -2167,8 +2600,16 @@
         <translation>Измени изабрану скицу.</translation>
     </message>
     <message>
+        <source>You can not edit any of the drafts because none of them belong to you. Hint: Create a new draft, select it and edit it.</source>
+        <translation type="obsolete">Не можете едитовати ни једну скицу јер не припадају вама. Савет: Креирајте нову скицу, изаберите је и измените.</translation>
+    </message>
+    <message>
         <source>New draft</source>
         <translation>Нова скица</translation>
+    </message>
+    <message>
+        <source>Create a new draft. The contents of the new draft will copied from the published version.</source>
+        <translation type="obsolete">Креирајте нову скицу. Садржај нове скице биће копиран из објављене верзије.</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -2213,6 +2654,14 @@
     <message>
         <source>You cannot edit any of the drafts because none of them belong to you. You can create a new draft, select it and then edit it.</source>
         <translation>Не можете мењати ни једну скицу јер нису ваше. Можете започети нову скицу, изабрати је и онда мењати.</translation>
+    </message>
+    <message>
+        <source>Conflicting versions (%draft_count)</source>
+        <translation>Верзије у сукобу (%draft_count)</translation>
+    </message>
+    <message>
+        <source>Current drafts (%draft_count)</source>
+        <translation>Тренутне скице (%draft_count)</translation>
     </message>
 </context>
 <context>
@@ -2292,6 +2741,26 @@
     <message>
         <source>Cancel</source>
         <translation>Одустани</translation>
+    </message>
+    <message>
+        <source>Existing translations</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select the translation you want to edit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>New translation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select the translation you want to add</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Translate based on</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2488,6 +2957,14 @@
         <source>Back to history</source>
         <translation>Повратак на историјат</translation>
     </message>
+    <message>
+        <source>Versions for &lt;%object_name&gt; (%version_count)</source>
+        <translation>Верзије за објект &lt;%object_name&gt; (%version_count)</translation>
+    </message>
+    <message>
+        <source>New drafts (%newerDraftCount)</source>
+        <translation>Нове скице (%newerDraftCount)</translation>
+    </message>
 </context>
 <context>
     <name>design/admin/content/pendinglist</name>
@@ -2518,6 +2995,10 @@
     <message>
         <source>Unknown</source>
         <translation>Непознат</translation>
+    </message>
+    <message>
+        <source>My pending items (%pending_count)</source>
+        <translation>Моји послови на чекању (%pending_count)</translation>
     </message>
 </context>
 <context>
@@ -2579,6 +3060,10 @@
         <translation>Јесте ли сигурни да желите уклонити локацију и садржај?</translation>
     </message>
     <message>
+        <source>The locations marked with red contain items that you do not have permissions to remove.</source>
+        <translation type="obsolete">Црвена ознака у локацијама означава елементе за које немате овлашћења да их уклоните.</translation>
+    </message>
+    <message>
         <source>Click the &quot;Cancel&quot; button and try removing only the locations that you are allowed to remove.</source>
         <translation>Кликните на &quot;Одустани&quot; и пробајте уклонити само локације за које имате овлашћења.</translation>
     </message>
@@ -2605,6 +3090,10 @@
     <message>
         <source>Remove the locations along with all the sub items.</source>
         <translation>Уклони локације заједно са свим поделементима.</translation>
+    </message>
+    <message>
+        <source>You can not continue because you do not have permissions to remove some of the selected locations.</source>
+        <translation type="obsolete">Не можете наставити зато што немате овлашћења за уклањање неке изабране локације.</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -2770,6 +3259,10 @@
         <source>This subtree/item has no external relations.</source>
         <translation>Ово подстабло/елемент нема спољашњих релација.</translation>
     </message>
+    <message>
+        <source>&quot;%contentObjectName&quot; (%children_count): Sub items that are used by other objects </source>
+        <translation>&quot;%contentObjectName&quot; (%children_count): Поделементи које користе други објекти</translation>
+    </message>
 </context>
 <context>
     <name>design/admin/content/search</name>
@@ -2809,6 +3302,10 @@
     <message>
         <source>Try more general keywords.</source>
         <translation>Покушајте с уопштенијим кључним речима.</translation>
+    </message>
+    <message>
+        <source>Fewer keywords gives more results, try reducing keywords until you get a result.</source>
+        <translation type="obsolete">Мањи број кључних речи даје више резултата, покушајте смањити број кључних речи док не дођете до резултата.</translation>
     </message>
     <message>
         <source>Search for &lt;%1&gt; returned %2 matches</source>
@@ -2919,12 +3416,151 @@
         <translation>Следеће речи искључене су из претраживања</translation>
     </message>
     <message>
+        <source>Try changing some keywords e.g. car instead of cars.</source>
+        <translation type="obsolete">Покушајте променити неке од кључних речи нпр. аутомобил уместо аутомобили.</translation>
+    </message>
+    <message>
         <source>Try changing some keywords e.g. &amp;quot;car&amp;quot; instead of &amp;quot;cars&amp;quot;.</source>
         <translation>Пробајте са мењањем неких кључних речи нпр. &amp;quot;лопта&amp;quot; уместо &amp;quot;лопте&amp;quot;.</translation>
     </message>
     <message>
         <source>Fewer keywords result in more matches. Try reducing keywords until you get a result.</source>
         <translation>Мање кључних доноси више погодака. Пробајте уносити мање речи да бисте добили резултате.</translation>
+    </message>
+</context>
+<context>
+    <name>design/admin/content/translate</name>
+    <message>
+        <source>Object information</source>
+        <translation type="obsolete">Подаци о објекту</translation>
+    </message>
+    <message>
+        <source>ID</source>
+        <translation type="obsolete">ИД</translation>
+    </message>
+    <message>
+        <source>Created</source>
+        <translation type="obsolete">Креирано</translation>
+    </message>
+    <message>
+        <source>Not yet published</source>
+        <translation type="obsolete">Још није објављено</translation>
+    </message>
+    <message>
+        <source>Modified</source>
+        <translation type="obsolete">Промењено</translation>
+    </message>
+    <message>
+        <source>Published version</source>
+        <translation type="obsolete">Објављена верзија</translation>
+    </message>
+    <message>
+        <source>Manage versions</source>
+        <translation type="obsolete">Управљање верзијама</translation>
+    </message>
+    <message>
+        <source>Current draft</source>
+        <translation type="obsolete">Текућа скица</translation>
+    </message>
+    <message>
+        <source>Version</source>
+        <translation type="obsolete">Верзија</translation>
+    </message>
+    <message>
+        <source>Confirm translation removal</source>
+        <translation type="obsolete">Потврди уклањање превода</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to remove the translation?</source>
+        <translation type="obsolete">Јесте ли сигурни да желите уклонити превод?</translation>
+    </message>
+    <message>
+        <source>The following translation (along with translated content) will be removed from the draft</source>
+        <translation type="obsolete">Превод (заједно са преведеним садржајем) биће уклоњен из скице</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to remove the translations?</source>
+        <translation type="obsolete">Јесте ли сигурни да желите уклонити преводе?</translation>
+    </message>
+    <message>
+        <source>The following translations (along with translated content) will be removed from the draft</source>
+        <translation type="obsolete">Преводи (заједно са преведеним садржајем) биће уклоњени из скице</translation>
+    </message>
+    <message>
+        <source>(No locale information available.)</source>
+        <translation type="obsolete">(Нема доступних локалних података)</translation>
+    </message>
+    <message>
+        <source>Yes</source>
+        <translation type="obsolete">Да</translation>
+    </message>
+    <message>
+        <source>No</source>
+        <translation type="obsolete">Не</translation>
+    </message>
+    <message>
+        <source>Translations for &lt;%object_name&gt; [%translation_count]</source>
+        <translation type="obsolete">Преводи за објект &lt;%object_name&gt; [%translation_count]</translation>
+    </message>
+    <message>
+        <source>Invert selection.</source>
+        <translation type="obsolete">Обрнути избор.</translation>
+    </message>
+    <message>
+        <source>Language</source>
+        <translation type="obsolete">Језик</translation>
+    </message>
+    <message>
+        <source>Locale</source>
+        <translation type="obsolete">Језичко подешавање</translation>
+    </message>
+    <message>
+        <source>Select translation for removal.</source>
+        <translation type="obsolete">Изабери превод за брисање.</translation>
+    </message>
+    <message>
+        <source>(Unable to display because of unknown locale!)</source>
+        <translation type="obsolete">(Не може се приказати због непознатог језичког подешавања!)</translation>
+    </message>
+    <message>
+        <source>There are no translations available.</source>
+        <translation type="obsolete">Нема превода.</translation>
+    </message>
+    <message>
+        <source>Remove selected</source>
+        <translation type="obsolete">Уклони изабрано</translation>
+    </message>
+    <message>
+        <source>Remove the selected translations from the draft that is being edited.</source>
+        <translation type="obsolete">Уклони изабране преводе из скице која се едитује.</translation>
+    </message>
+    <message>
+        <source>Select a translation you wish to add to the draft that is being edited.</source>
+        <translation type="obsolete">Изабери превод који желите додати у скицу коју мењате.</translation>
+    </message>
+    <message>
+        <source>All available translations have been added to the draft that is being edited.</source>
+        <translation type="obsolete">Сви доступни преводи су додани у скицу коју мењате.</translation>
+    </message>
+    <message>
+        <source>No languages</source>
+        <translation type="obsolete">Нема језика</translation>
+    </message>
+    <message>
+        <source>Add translation</source>
+        <translation type="obsolete">Додај превод</translation>
+    </message>
+    <message>
+        <source>Add the selected translation to the draft that is being edited.</source>
+        <translation type="obsolete">Додај одабрани превод у скицу коју мењате.</translation>
+    </message>
+    <message>
+        <source>Back to edit mode</source>
+        <translation type="obsolete">Повратак на едитовање</translation>
+    </message>
+    <message>
+        <source>Go back to edit mode.</source>
+        <translation type="obsolete">Врати се на едитовање</translation>
     </message>
 </context>
 <context>
@@ -2965,6 +3601,10 @@
         <translation>Језик</translation>
     </message>
     <message>
+        <source>Country</source>
+        <translation type="obsolete">Земља</translation>
+    </message>
+    <message>
         <source>Locale</source>
         <translation>Језичко подешавање</translation>
     </message>
@@ -2993,6 +3633,10 @@
         <translation>Изабери превод за брисање.</translation>
     </message>
     <message>
+        <source>The default language can not be removed.</source>
+        <translation type="obsolete">Основни језик не може бити уклоњен.</translation>
+    </message>
+    <message>
         <source>Remove selected languages.</source>
         <translation>Уклони изабране језике.</translation>
     </message>
@@ -3011,6 +3655,14 @@
     <message>
         <source>The language cannot be removed because it is in use.</source>
         <translation>Језик не може бити уклоњен јер је у употреби.</translation>
+    </message>
+    <message>
+        <source>Available languages for translation of content (%translations_count)</source>
+        <translation>Доступни језици за превод садржаја (%translations_count)</translation>
+    </message>
+    <message>
+        <source>Toggle all.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3046,6 +3698,22 @@
     <message>
         <source>Allowed charsets</source>
         <translation>Допуштене кодне странице</translation>
+    </message>
+    <message>
+        <source>Country name</source>
+        <translation type="obsolete">Земља</translation>
+    </message>
+    <message>
+        <source>Country comment</source>
+        <translation type="obsolete">Коментар земље</translation>
+    </message>
+    <message>
+        <source>Country code</source>
+        <translation type="obsolete">Код земље</translation>
+    </message>
+    <message>
+        <source>Country variation</source>
+        <translation type="obsolete">Варијације земље</translation>
     </message>
     <message>
         <source>Language name</source>
@@ -3175,6 +3843,10 @@
         <translation>Обрнути избор.</translation>
     </message>
     <message>
+        <source>Use these checkboxes to mark items for removal. Click the &quot;Remove selected&quot; button to actually remove the selected items.</source>
+        <translation type="obsolete">Користите checkboxове за селекцију елемената за уклањање.</translation>
+    </message>
+    <message>
         <source>Remove selected</source>
         <translation>Уклони изабрано</translation>
     </message>
@@ -3207,6 +3879,10 @@
         <translation>Сегмент</translation>
     </message>
     <message>
+        <source>Edit</source>
+        <translation type="obsolete">Измени</translation>
+    </message>
+    <message>
         <source>Unknown</source>
         <translation>Непознат</translation>
     </message>
@@ -3221,6 +3897,10 @@
     <message>
         <source>Restore</source>
         <translation>Обнови</translation>
+    </message>
+    <message>
+        <source>Trash (%list_count)</source>
+        <translation>Смеће (%list_count)</translation>
     </message>
 </context>
 <context>
@@ -3274,6 +3954,10 @@
         <translation>Учитај датотеку</translation>
     </message>
     <message>
+        <source>Choose a file from your local machine and click the &quot;Upload&quot; button. An object will be created according to file type and placed in your chosen location.</source>
+        <translation type="obsolete">Изаберите датотеку са локалног рачунара и кликните на &quot;Учитај&quot;. Објект ће бити креиран зависно од врсте датотеке и стављен на локацију коју изаберете.</translation>
+    </message>
+    <message>
         <source>Upload file</source>
         <translation>Учитај датотеку</translation>
     </message>
@@ -3294,6 +3978,10 @@
         <translation>Датотека</translation>
     </message>
     <message>
+        <source>Select the file that you wish to upload.</source>
+        <translation type="obsolete">Изаберите датотеку коју желите учитати.</translation>
+    </message>
+    <message>
         <source>Upload</source>
         <translation>Учитај</translation>
     </message>
@@ -3304,6 +3992,10 @@
     <message>
         <source>Cancel</source>
         <translation>Одустани</translation>
+    </message>
+    <message>
+        <source>Abort the upload operation and go back to where you came from.</source>
+        <translation type="obsolete">Поништи учитавање датотеке и врати се назад. </translation>
     </message>
     <message>
         <source>Choose a file from your local machine then click the &quot;Upload&quot; button. An object will be created according to file type and placed in the specified location.</source>
@@ -3337,8 +4029,16 @@
         <translation>Кад датотека буде учитана, креираће се објект са обзиром на врсту датотеке.</translation>
     </message>
     <message>
+        <source>The newly created object will be placed within the chosen location.</source>
+        <translation type="obsolete">Ново креирани објект биће смештен на изабрану локацију.</translation>
+    </message>
+    <message>
         <source>The newly created object will be automatically related to the draft being edited (&lt;%version_name&gt;).</source>
         <translation>Нови објект биће аутоматски повезан са скицом која се едитује (&lt;%version_name&gt;).</translation>
+    </message>
+    <message>
+        <source>Select the file you wish to upload and click the &quot;Upload&quot; button.</source>
+        <translation type="obsolete">Изаберите датотеку коју желите учитати и изаберите дугме учитавање.</translation>
     </message>
     <message>
         <source>The newly created object will be placed within the specified location.</source>
@@ -3539,6 +4239,14 @@
         <source>Redirecting URL</source>
         <translation>Преусмерени URL</translation>
     </message>
+    <message>
+        <source>URL aliases for &lt;%node_name&gt; (%alias_count)</source>
+        <translation>URL алијас за &lt;%node_name&gt; (%alias_count)</translation>
+    </message>
+    <message>
+        <source>Generated aliases (%count)</source>
+        <translation>Генерисаниx алијасa (%count)</translation>
+    </message>
 </context>
 <context>
     <name>design/admin/content/urlalias_global</name>
@@ -3703,6 +4411,10 @@
         <translation>Унесите URL за нови алијас. Користите симбол кроз (/) за креирање подуноса.</translation>
     </message>
     <message>
+        <source>Destination (path to existing funtionality or resource)</source>
+        <translation type="obsolete">Одредиште (пут до постојеће фунције или ресурса)</translation>
+    </message>
+    <message>
         <source>Enter the destination URL for the new alias. Use forward slashes (/) to create subentries.</source>
         <translation>Унесите URL одредишта за нови алијас. Користите симбол кроз (/) за креирање подуноса.</translation>
     </message>
@@ -3717,6 +4429,10 @@
     <message>
         <source>Destination (path to existing functionality or resource)</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Globally defined URL aliases (%alias_count)</source>
+        <translation>Глобално дефинисани URL алијаси (%alias_count)</translation>
     </message>
 </context>
 <context>
@@ -3826,6 +4542,14 @@
         <translation>Нов URL wildcard</translation>
     </message>
     <message>
+        <source>Enter the URL for the new wildcard. Example: /developer/*</source>
+        <translation type="obsolete">Унесите URL за нов wildcard. Пример: /developer/*</translation>
+    </message>
+    <message>
+        <source>Enter the destination URL for the new wildcard. Example: /dev/{1\}</source>
+        <translation type="obsolete">Унесите URL одредиште за нов wildcard. Пример: /dev/{1\}</translation>
+    </message>
+    <message>
         <source>Perform redirecting.</source>
         <translation>Изврши преусмеравање.</translation>
     </message>
@@ -3845,9 +4569,188 @@
         <source>Enter the destination URL for the new wildcard. Example: dev/{1\}</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Defined URL aliases with wildcard(%wildcard_count)</source>
+        <translation>Дефинисани URL алијаси са wildcard(%wildcard_count)</translation>
+    </message>
+</context>
+<context>
+    <name>design/admin/content/urltranslator</name>
+    <message>
+        <source>The destination URL &lt;%destination_url&gt; does not exist in the system.</source>
+        <translation type="obsolete">Циљани URL &lt;%destination_url&gt; не постоји у систему.</translation>
+    </message>
+    <message>
+        <source>Add</source>
+        <translation type="obsolete">Додај</translation>
+    </message>
+    <message>
+        <source>Existing virtual URL</source>
+        <translation type="obsolete">Постојећи виртуелни URL</translation>
+    </message>
+    <message>
+        <source>Example: /about/service</source>
+        <translation type="obsolete">Пример: /about/service</translation>
+    </message>
+    <message>
+        <source>Example: /developer/*</source>
+        <translation type="obsolete">Пример: /developers/*</translation>
+    </message>
+    <message>
+        <source>Custom URL translations [%alias_count]</source>
+        <translation type="obsolete">Посебни URL преводи [%alias_count]</translation>
+    </message>
+    <message>
+        <source>Type</source>
+        <translation type="obsolete">Врста</translation>
+    </message>
+    <message>
+        <source>Forwards to</source>
+        <translation type="obsolete">Преусмерава на</translation>
+    </message>
+    <message>
+        <source>Remove selected</source>
+        <translation type="obsolete">Уклони изабрано</translation>
+    </message>
+    <message>
+        <source>Apply changes</source>
+        <translation type="obsolete">Примени измене</translation>
+    </message>
+    <message>
+        <source>New system URL forwarding</source>
+        <translation type="obsolete">Нови системски URL за преусмеравање</translation>
+    </message>
+    <message>
+        <source>Use this field to enter an address relative to the root of the system that should be translated into another URL. This address does not have to exist in your current system.</source>
+        <translation type="obsolete">Користи ово поље за унос адресе релативне у односу на корен система која ће бити преведена у други URL. Те адресе не морају постојати у систему.</translation>
+    </message>
+    <message>
+        <source>Use this field to enter a valid system URL. A system URL is easily recognized since it consists of several parts separated by a &quot;/&quot;.</source>
+        <translation type="obsolete">Користи ово поље за унос исправног URL-а система. URL система једноставно је препознати јер садржи неколико делова одељених са &quot;/&quot;.</translation>
+    </message>
+    <message>
+        <source>Click this button to add a new system URL forwarding. System URL forwarding is used to forward any URL to a system URL in eZ publish.</source>
+        <translation type="obsolete">Кликни на дугме за додавање преусмереног URL система. Преусмерени URL система користи се за преусмеравање било којег URL-а на URL система.</translation>
+    </message>
+    <message>
+        <source>New virtual URL forwarding</source>
+        <translation type="obsolete">Нови URL виртуелног преусмеравања</translation>
+    </message>
+    <message>
+        <source>Use this field to enter a valid existing virtual URL in the system. A virtual URL is generated by the system and usually contains part of the content of an object.</source>
+        <translation type="obsolete">Користи ово поље за унос исправног постојећег виртуелног URL у систему. Виртуелни URL је генерисан од стране система и обично садржи делове садржаја објекта.</translation>
+    </message>
+    <message>
+        <source>Click this button to add a new virtual URL forwarding. Virtual URL forwarding is used to forward any URL to an existing virtual URL in eZ publish.</source>
+        <translation type="obsolete">Кликни на дугме за додавање новог преусмереног виртуелног URL система. Преусмерени виртуелни URL система користи се за преусмеравање било којег URL-а на виртуелни URL система.</translation>
+    </message>
+    <message>
+        <source>New virtual URL forwarding with wildcard</source>
+        <translation type="obsolete">Нови URL виртуелног преусмеравања са узорком</translation>
+    </message>
+    <message>
+        <source>Redirecting URL</source>
+        <translation type="obsolete">Преусмерени URL</translation>
+    </message>
+    <message>
+        <source>Example</source>
+        <translation type="obsolete">Пример</translation>
+    </message>
+    <message>
+        <source>Use this field to enter an address relative to the root of the system that should be translated into another URL. This address does not have to exist in your current system. You can place a star anywhere in the URL which will match an arbitrary number of characters.</source>
+        <translation type="obsolete">Користи поље за унос адресе релативне у односу на root система која ће бити преведена у другу URL адресу. Та адреса не мора постојати у систему. Можеш ставити звездицу у URL која ће представљати произвољни број карактера.</translation>
+    </message>
+    <message>
+        <source>Use this field to enter a valid existing virtual URL in the system. A virtual URL is generated by the system and usually contains part of the content of an object. Any characters matched by a star in the source URL can be transfered to the destination URL by inserting {1\} where appropriate.</source>
+        <translation type="obsolete">Користи поље за унос исправног виртуелног URL-а система. Виртуелни URL је генерисан од стране система и обично се састоји од дела садржаја објекта. Било који карактер упоређен са звездицом у изворном URL-у може бити преведен на излазни URL стављањем {1\} на одговарајуће место.</translation>
+    </message>
+    <message>
+        <source>Use this checkbox to select if eZ publish should perform an internal redirect or a browser redirect. An internal redirect simply redirects the old URL to the new one without notifying the browser. A browser redirect makes the browser abort the current request and reload with the new URL. A browser redirect can be useful if you want the browser URL field to be updated.</source>
+        <translation type="obsolete">Користи ово кућиште ако желиш да систем изврши интерно преусмеравање или преусмеравање у browserу. Интерно преусмеравање једноставно преусмери стари URL на нови без обавештења browserу. Преусмеравање у browserу зауставља текући захтев и поново учита захтев али са новим URL-ом. Преусмеравање у browserу може бити корисно ако желиш освежити информацију у пољу за URL.</translation>
+    </message>
+    <message>
+        <source>Click this button to add a new virtual URL forwarding with wildcard match. Virtual URL forwarding is used to forward any URL to an existing virtual URL in eZ publish. The wildcard match is useful if you have moved a complete tree from one place to another.</source>
+        <translation type="obsolete">Кликни на дугме за додавање новог виртуелног преусмереног URL са звездицом(wildcard). Виртуелно преусмеравање URL-а служи за преусмеравање било којег URL-а на постојећи виртуелни у систему. Користећи звездицу(wildcard) корисно је ако је комплетно стабло пребачено на другу локацију.</translation>
+    </message>
+    <message>
+        <source>Invert selection.</source>
+        <translation type="obsolete">Обрнути избор.</translation>
+    </message>
+    <message>
+        <source>Source URL</source>
+        <translation type="obsolete">Изворни URL</translation>
+    </message>
+    <message>
+        <source>Destination URL</source>
+        <translation type="obsolete">Циљни URL</translation>
+    </message>
+    <message>
+        <source>Select URL translation for removal.</source>
+        <translation type="obsolete">Изабери URL превода за брисање.</translation>
+    </message>
+    <message>
+        <source>Wildcard forwarding</source>
+        <translation type="obsolete">Преусмеравања са узорком</translation>
+    </message>
+    <message>
+        <source>System forwarding</source>
+        <translation type="obsolete">Системско преусмеравање</translation>
+    </message>
+    <message>
+        <source>Virtual forwarding</source>
+        <translation type="obsolete">Виртуелно преусмеравање</translation>
+    </message>
+    <message>
+        <source>There are no custom URL translations.</source>
+        <translation type="obsolete">Нема посебних URL превода.</translation>
+    </message>
+    <message>
+        <source>Remove selected URL translations.</source>
+        <translation type="obsolete">Уклони изабране URL преводе.</translation>
+    </message>
+    <message>
+        <source>Click this button to store changes if you have modified any of the fields in the list above.</source>
+        <translation type="obsolete">Кликни на дугме за снимање измена.</translation>
+    </message>
+    <message>
+        <source>System URL</source>
+        <translation type="obsolete">URL система</translation>
+    </message>
+    <message>
+        <source>Example: /services</source>
+        <translation type="obsolete">Пример: /service</translation>
+    </message>
+    <message>
+        <source>Example: /content/view/full/42</source>
+        <translation type="obsolete">Пример: /content/view/full/42</translation>
+    </message>
+    <message>
+        <source>New virtual URL</source>
+        <translation type="obsolete">Нови виртуелни URL</translation>
+    </message>
 </context>
 <context>
     <name>design/admin/content/versions</name>
+    <message>
+        <source>Version not a draft</source>
+        <translation type="obsolete">Верзија, а не скица</translation>
+    </message>
+    <message>
+        <source>Version %1 is not available for editing anymore, only drafts can be edited.</source>
+        <translation type="obsolete">Верзију %1 није више могуће едитовати, могуће је едитовати само скице.</translation>
+    </message>
+    <message>
+        <source>To edit this version create a copy of it.</source>
+        <translation type="obsolete">Да би могли едитовати ову верзију креирајте копију.</translation>
+    </message>
+    <message>
+        <source>Version not yours</source>
+        <translation type="obsolete">Верзија није ваша</translation>
+    </message>
+    <message>
+        <source>Version %1 was not created by you, only your own drafts can be edited.</source>
+        <translation type="obsolete">Ви нисте креирали верзију %1, можете едитовати само властите скице.</translation>
+    </message>
     <message>
         <source>Unable to create new version</source>
         <translation>Није могуће креирати нову верзију</translation>
@@ -3871,6 +4774,10 @@
     <message>
         <source>Status</source>
         <translation>Статус</translation>
+    </message>
+    <message>
+        <source>Translations</source>
+        <translation type="obsolete">Преводи</translation>
     </message>
     <message>
         <source>Creator</source>
@@ -3933,6 +4840,14 @@
         <translation>Изаберите верзију #%version за брисање.</translation>
     </message>
     <message>
+        <source>Version #%version_number can not be removed because it is either the published version of the object or because you do not have permissions to remove it.</source>
+        <translation type="obsolete">Верзија #%version_number не може бити обрисана јер је или објављена или немате овлашћења за брисање.</translation>
+    </message>
+    <message>
+        <source>View the contents of version #%version_number. Default translation: %default_translation.</source>
+        <translation type="obsolete">Прикажи садржај верзије #%version_number. Превод: %default_translation.</translation>
+    </message>
+    <message>
         <source>View the contents of version #%version_number. Translation: %translation.</source>
         <translation>Прикажи садржај верзије #%version_number. Превод: %translation.</translation>
     </message>
@@ -3945,8 +4860,16 @@
         <translation>Направи копију верзије #%version_number.</translation>
     </message>
     <message>
+        <source>You can not make copies of versions because you do not have permissions to edit the object.</source>
+        <translation type="obsolete">Не можете направити копију верзије зато што немате овлашћења за едитовање објекта.</translation>
+    </message>
+    <message>
         <source>Edit the contents of version #%version_number.</source>
         <translation>Измени садржај верзије #%version_number.</translation>
+    </message>
+    <message>
+        <source>You can not edit the contents of version #%version_number either because it is not a draft or because you do not have permissions to edit the object.</source>
+        <translation type="obsolete">Не можете едитовати садржај верзије #%version_number зато што није скица или немате овлашћења за тај објект.</translation>
     </message>
     <message>
         <source>This object does not have any versions.</source>
@@ -4004,6 +4927,10 @@
         <source>Back</source>
         <translation>Назад</translation>
     </message>
+    <message>
+        <source>Versions for &lt;%object_name&gt; (%version_count)</source>
+        <translation>Верзије за објект &lt;%object_name&gt; (%version_count)</translation>
+    </message>
 </context>
 <context>
     <name>design/admin/content/view/versionview</name>
@@ -4038,6 +4965,10 @@
     <message>
         <source>View and manage (copy, delete, etc.) the versions of this object.</source>
         <translation>Приказ и управљање [копирање, брисање и сл.] верзија овог објекта.</translation>
+    </message>
+    <message>
+        <source>You can not manage the versions of this object because there is only one version available (the one that is being displayed).</source>
+        <translation type="obsolete">Не можете управљати верзијама овог објекта јер не постоји ни једна друга верзија објекта.</translation>
     </message>
     <message>
         <source>Version information</source>
@@ -4108,6 +5039,10 @@
         <translation>Измени скицу која је приказана.</translation>
     </message>
     <message>
+        <source>This version is not a draft and thus it can not be edited.</source>
+        <translation type="obsolete">Ова верзија није скица и зато не може бити мењана.</translation>
+    </message>
+    <message>
         <source>Siteaccess</source>
         <translation>Siteaccess (Приступ сајту)</translation>
     </message>
@@ -4135,12 +5070,24 @@
         <source>Your selected translation does not match the language of your selected siteaccess. This may lead to unexpected results in the preview, however it may also be what you intended.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Back to edit</source>
+        <translation type="unfinished">Назад на уређивање</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished">Назад</translation>
+    </message>
 </context>
 <context>
     <name>design/admin/contentstructuremenu</name>
     <message>
         <source>Fold/Unfold</source>
         <translation>Скупи/Рашири</translation>
+    </message>
+    <message>
+        <source>[%classname] Click on the icon to get a context sensitive menu.</source>
+        <translation type="obsolete">[%classname] Кликните на икону за приказ менија.</translation>
     </message>
     <message>
         <source>Click on the icon to display a context-sensitive menu.</source>
@@ -4182,6 +5129,176 @@
         <source>[%classname] Click on the icon to display a context-sensitive menu.</source>
         <translation>[%classname] Кликните на икону за приказ менија.</translation>
     </message>
+    <message>
+        <source>Object ID</source>
+        <translation type="unfinished">Објект ID</translation>
+    </message>
+</context>
+<context>
+    <name>design/admin/dashboard/all_latest_content</name>
+    <message>
+        <source>All latest content</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Type</source>
+        <translation type="unfinished">Врста</translation>
+    </message>
+    <message>
+        <source>Published</source>
+        <translation type="unfinished">Објављено</translation>
+    </message>
+    <message>
+        <source>Author</source>
+        <translation type="unfinished">Аутор</translation>
+    </message>
+    <message>
+        <source>Edit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit &lt;%child_name&gt;.</source>
+        <translation type="unfinished">Измени &lt;%child_name&gt;.</translation>
+    </message>
+    <message>
+        <source>You do not have permission to edit &lt;%child_name&gt;.</source>
+        <translation type="unfinished">Немате овлашћења да уређујете &lt;%child_name&gt;.</translation>
+    </message>
+    <message>
+        <source>Latest content list is empty.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>design/admin/dashboard/drafts</name>
+    <message>
+        <source>My drafts</source>
+        <translation type="unfinished">Моје скице</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Type</source>
+        <translation type="unfinished">Врста</translation>
+    </message>
+    <message>
+        <source>Version</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Modified</source>
+        <translation type="unfinished">Промењено</translation>
+    </message>
+    <message>
+        <source>Edit &lt;%draft_name&gt;.</source>
+        <translation type="unfinished">Измени &lt;%draft_name&gt;.</translation>
+    </message>
+    <message>
+        <source>Edit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Currently you do not have any drafts available.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>design/admin/dashboard/latest_content</name>
+    <message>
+        <source>My latest content</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Type</source>
+        <translation type="unfinished">Врста</translation>
+    </message>
+    <message>
+        <source>Modified</source>
+        <translation type="unfinished">Промењено</translation>
+    </message>
+    <message>
+        <source>Edit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit &lt;%child_name&gt;.</source>
+        <translation type="unfinished">Измени &lt;%child_name&gt;.</translation>
+    </message>
+    <message>
+        <source>You do not have permission to edit &lt;%child_name&gt;.</source>
+        <translation type="unfinished">Немате овлашћења да уређујете &lt;%child_name&gt;.</translation>
+    </message>
+    <message>
+        <source>Your latest content list is empty.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>design/admin/dashboard/maintenance</name>
+    <message>
+        <source>Software update and Maintenance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Your installation: &lt;span id=&quot;ez-version&quot;&gt;%1&lt;/span&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>If your installation is not running eZ Publish Premium, it might not be up to date with the latest maintenance service packs. Contact eZ Systems.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>design/admin/dashboard/pending_list</name>
+    <message>
+        <source>My pending items</source>
+        <translation type="unfinished">Листа послова који ме очекују</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Type</source>
+        <translation type="unfinished">Врста</translation>
+    </message>
+    <message>
+        <source>Modified</source>
+        <translation type="unfinished">Промењено</translation>
+    </message>
+    <message>
+        <source>Currently you do not have any pending items available.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>design/admin/dashboard/wishlist</name>
+    <message>
+        <source>Wish list</source>
+        <translation type="unfinished">Листа жеља</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Type</source>
+        <translation type="unfinished">Врста</translation>
+    </message>
+    <message>
+        <source>Currently you do not have any products on your wish list.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>design/admin/error/kernel</name>
@@ -4200,6 +5317,10 @@
     <message>
         <source>Your account does not have the proper privileges to access the requested page.</source>
         <translation>Немате потребна овлашћења за приступ жељеној страници.</translation>
+    </message>
+    <message>
+        <source>You are not logged into the system. Please log in.</source>
+        <translation type="obsolete">Нисте пријављени на систем. Молимо пријавите се.</translation>
     </message>
     <message>
         <source>The requested page does not exist. Try changing the URL.</source>
@@ -4263,6 +5384,10 @@
         <translation>Модул &lt;%module&gt; не постоји.</translation>
     </message>
     <message>
+        <source>The site is using URL matching to determine which siteaccess to use, but the name of the siteaccess is missing from the URL. Try to add the name of the siteaccess, it should be specified before the name of the module.</source>
+        <translation type="obsolete">Сите користи URL препознавање како би одредио подешавања које ће користити али назив подешавања недостаје у URLу. Пробајте додати назив подешавања.</translation>
+    </message>
+    <message>
         <source>The requested page could not be displayed. (21)</source>
         <translation>Затражена страница не може бити приказана. (21)</translation>
     </message>
@@ -4283,12 +5408,32 @@
         <translation>Затражена страница не може бити приказана. (22)</translation>
     </message>
     <message>
+        <source>The requested view can not be accessed.</source>
+        <translation type="obsolete">Не могу приступити траженом приказу.</translation>
+    </message>
+    <message>
+        <source>The &lt;%view&gt; within the &lt;%module&gt; is disabled and thus it can not be accessed.</source>
+        <translation type="obsolete">Приказ &lt;%view&gt; унутар модула &lt;%module&gt; је искључен и зато му се не може приступити.</translation>
+    </message>
+    <message>
+        <source>The requested module can not be accessed.</source>
+        <translation type="obsolete">Не могу приступити траженом модулу.</translation>
+    </message>
+    <message>
+        <source>The &lt;%module&gt; module is disabled and thus it can not be accessed.</source>
+        <translation type="obsolete">Модул &lt;%module&gt; је онемогућен те му се не може приступити.</translation>
+    </message>
+    <message>
         <source>The requested page could not be displayed. (3)</source>
         <translation>Затражена страница не може бити приказана. (3)</translation>
     </message>
     <message>
         <source>The requested object is not available.</source>
         <translation>Затражени објект није доступан.</translation>
+    </message>
+    <message>
+        <source>The ID number of the object is incorrect. Please check the URL for spelling mistakes.</source>
+        <translation type="obsolete">ИД објекта није тачан. Проверите URL.</translation>
     </message>
     <message>
         <source>The object is no longer available.</source>
@@ -4305,6 +5450,10 @@
     <message>
         <source>The system should automatically redirect you to the new location of the object.</source>
         <translation>Систем ће вас аутоматски преусмерити на нову локацију објекта.</translation>
+    </message>
+    <message>
+        <source>If redirection fails, please click on the following address: %url.</source>
+        <translation type="obsolete">Ако преусмеравање не успе, молимо кликните на линк: %url.</translation>
     </message>
     <message>
         <source>You are not logged in to the system. Please log in.</source>
@@ -4459,6 +5608,10 @@
         <source>Unknown user</source>
         <translation>Непознат корисник</translation>
     </message>
+    <message>
+        <source>Information collected by &lt;%object_name&gt; (%collection_count)</source>
+        <translation>Прикупљени подаци са &lt;%object_name&gt; (%collection_count)</translation>
+    </message>
 </context>
 <context>
     <name>design/admin/infocollector/confirmremoval</name>
@@ -4536,6 +5689,10 @@
     <message>
         <source>Remove all information that was collected by the selected objects.</source>
         <translation>Уклони све информације које су прикупљене са изабраним објектима.</translation>
+    </message>
+    <message>
+        <source>Objects that have collected information (%object_count)</source>
+        <translation>Објекти који су прикупили информације (%object_count)</translation>
     </message>
 </context>
 <context>
@@ -4641,6 +5798,10 @@
         <translation>Јесте ли сигурни да желите уклонити елементе заједно са њиховим садржајем?</translation>
     </message>
     <message>
+        <source>The lines marked with red contain items that you do not have permissions to remove.</source>
+        <translation type="obsolete">Линије означене црвеном бојом садрже елементе за које немате овлашћења за уклањање.</translation>
+    </message>
+    <message>
         <source>Click the &quot;Cancel&quot; button and try removing only the locations that you are allowed to remove.</source>
         <translation>Кликните на &quot;Одустани&quot; и пробајте уклонити само локације за које имате овлашћења.</translation>
     </message>
@@ -4661,6 +5822,10 @@
         <translation>OK</translation>
     </message>
     <message>
+        <source>You can not continue because you do not have permissions to remove some of the selected locations.</source>
+        <translation type="obsolete">Не можете наставити зато што немате овлашћења за уклањање неке изабране локације.</translation>
+    </message>
+    <message>
         <source>Cancel</source>
         <translation>Одустани</translation>
     </message>
@@ -4675,6 +5840,14 @@
     <message>
         <source>If &quot;Move to trash&quot; is checked, the items will be moved to the trash instead of being permanently deleted.</source>
         <translation>Ако је опција &quot;Склони у смеће&quot; означена, елементи ће бити уклоњени у смеће а не трајно уклоњени са система.</translation>
+    </message>
+    <message>
+        <source>Some of the subtrees or objects selected for removal are used by other objects. Select the menu from the content tree, and &lt;strong&gt;Advanced&lt;/strong&gt;-&amp;gt;&lt;strong&gt;Reverse related for subtree&lt;/strong&gt;.</source>
+        <translation type="obsolete">Нека од подстабала или објеката које сте изабрали за уклањање користе други објекти. Изаберите мени из дрвета садржаја и &lt;strong&gt;Advanced&lt;/strong&gt;-&amp;gt;&lt;strong&gt;Reverse related for subtree&lt;/strong&gt;.</translation>
+    </message>
+    <message>
+        <source>Some of the objects selected for removal are used by other objects. Select the menu from the content tree, and &lt;strong&gt;Advanced&lt;/strong&gt;-&amp;gt;&lt;strong&gt;Reverse related for subtree&lt;/strong&gt;.</source>
+        <translation type="obsolete">Неки од објеката које сте изабрали за брисање су искоришћени од стране других објеката. Изаберите мени из стабла садржаја и &lt;strong&gt;Advanced&lt;/strong&gt;-&amp;gt;&lt;strong&gt;Reverse related for subtree&lt;/strong&gt;.</translation>
     </message>
     <message>
         <source>Confirm translation removal</source>
@@ -4724,12 +5897,24 @@
 <context>
     <name>design/admin/node/view</name>
     <message>
+        <source>Two level index for &lt;%node_name&gt;</source>
+        <translation type="obsolete">Двонивовски index за &lt;%node_name&gt;</translation>
+    </message>
+    <message>
         <source>Two-level index for &lt;%node_name&gt;</source>
         <translation>Двонивовски index за &lt;%node_name&gt;</translation>
     </message>
 </context>
 <context>
     <name>design/admin/node/view/embed</name>
+    <message>
+        <source> - You do not have sufficient permissions to view this object</source>
+        <translation type="obsolete"> - Немате довољно овлашћења да видите овај објекат</translation>
+    </message>
+    <message>
+        <source>You do not have sufficient permissions to view this object</source>
+        <translation type="obsolete">Немате довољно овлашћења да видите овај објекат</translation>
+    </message>
     <message>
         <source> - You do not have permission to view this object</source>
         <translation>- Немате овлашћења да видите овај објекат</translation>
@@ -4830,6 +6015,10 @@
         <translation>Уклони изабране елементе са горње листе.</translation>
     </message>
     <message>
+        <source>You do not have permissions to remove any of the items from the list above.</source>
+        <translation type="obsolete">Немате овлашћења за уклањање било којег елемента са горње листе.</translation>
+    </message>
+    <message>
         <source>Update priorities</source>
         <translation>Ажурирај приоритете</translation>
     </message>
@@ -4838,8 +6027,20 @@
         <translation>Примени измене на приоритете елемената са горње листе.</translation>
     </message>
     <message>
+        <source>You can not update the priorities because you do not have permissions to edit the current item or because a non-priority sorting method is used.</source>
+        <translation type="obsolete">Не можете ажурирати приоритете јер немате одговарајућа овлашћења за едитовање текућег елемента или зато што није коришћена метода сортирања по приоритету.</translation>
+    </message>
+    <message>
         <source>Create here</source>
         <translation>Креирај овде</translation>
+    </message>
+    <message>
+        <source>Create a new item within the current location. Use the menu on the left to select the type of the item.</source>
+        <translation type="obsolete">Креирајте нови елемент унутар текуће локације. Користите мени на лево за избор врсте елемента.</translation>
+    </message>
+    <message>
+        <source>You do not have permissions to create new items within the current location.</source>
+        <translation type="obsolete">Немате одговарајућа овлашћења за креирање нових елемената унутар текуће локације.</translation>
     </message>
     <message>
         <source>Depth</source>
@@ -4866,6 +6067,10 @@
         <translation>Сегмент</translation>
     </message>
     <message>
+        <source>You can not set the sorting method for the current location because you do not have permissions to edit the current item.</source>
+        <translation type="obsolete">Не можете поставити методу сортирања јер немате за то потребна овлашћења.</translation>
+    </message>
+    <message>
         <source>Set</source>
         <translation>Постави</translation>
     </message>
@@ -4878,6 +6083,14 @@
         <translation>Модификатор</translation>
     </message>
     <message>
+        <source>Use the priority fields to control the order in which the items appear. Use positive and negative integers. Click the &quot;Update priorities&quot; button to apply the changes.</source>
+        <translation type="obsolete">Користите приоритетно поље за контролу приказа елемената(сортирање).</translation>
+    </message>
+    <message>
+        <source>You are not allowed to update the priorities because you do not have permissions to edit &lt;%node_name&gt;.</source>
+        <translation type="obsolete">Не можете ажурирати приоритете јер немате овлашћења за едитовање чвора &lt;%node_name&gt;.</translation>
+    </message>
+    <message>
         <source>Copy</source>
         <translation>Копирај</translation>
     </message>
@@ -4886,12 +6099,24 @@
         <translation>Направи копију класе &lt;%class_name&gt;.</translation>
     </message>
     <message>
+        <source>You can not make a copy of &lt;%child_name&gt; because you do not have create permissions for &lt;%node_name&gt;.</source>
+        <translation type="obsolete">Не можете направити копију &lt;%child_name&gt; јер немате овлашћења за креирање за чвор &lt;%node_name&gt;.</translation>
+    </message>
+    <message>
         <source>Edit</source>
         <translation>Измени</translation>
     </message>
     <message>
         <source>Edit &lt;%child_name&gt;.</source>
         <translation>Измени &lt;%child_name&gt;.</translation>
+    </message>
+    <message>
+        <source>You do not have permissions to edit &lt;%child_name&gt;.</source>
+        <translation type="obsolete">Немате овлашћења за едитовање &lt;%child_name&gt;.</translation>
+    </message>
+    <message>
+        <source>You do not have permissions to edit %child_name.</source>
+        <translation type="obsolete">Немате овлашћења за едитовање %child_name.</translation>
     </message>
     <message>
         <source>Creator</source>
@@ -4950,12 +6175,28 @@
         <translation>Уклони изабрану локацију са горње листе.</translation>
     </message>
     <message>
+        <source>You can not remove any locations because you do not have permissions to edit the current item.</source>
+        <translation type="obsolete">Не можете уклонити локације јер немате одговарајућа овлашћења за едитовање текућег елемента.</translation>
+    </message>
+    <message>
+        <source>You can not add new locations because you do not have permissions to edit the current item.</source>
+        <translation type="obsolete">Не можете додати нову локацију јер немате одговарајућа овлашћења за едитовање текућег елемента.</translation>
+    </message>
+    <message>
         <source>Set main</source>
         <translation>Постави главно</translation>
     </message>
     <message>
+        <source>You can not set the main location because you do not have permissions to edit the current item.</source>
+        <translation type="obsolete">Не можете поставити главну локацију јер немате одговарајућа овлашћења за едитовање текућег елемента.</translation>
+    </message>
+    <message>
         <source>Last modified</source>
         <translation>Последња промена</translation>
+    </message>
+    <message>
+        <source>You do not have permissions to edit this item.</source>
+        <translation type="obsolete">Немате овлашћења за едитовање тог елемента.</translation>
     </message>
     <message>
         <source>Move</source>
@@ -4966,12 +6207,20 @@
         <translation>Премести овај елемент на другу локацију.</translation>
     </message>
     <message>
+        <source>You do not have permissions to move this item to another location.</source>
+        <translation type="obsolete">Немате овлашћења да преместите елемент на другу локацију.</translation>
+    </message>
+    <message>
         <source>Remove</source>
         <translation>Уклони</translation>
     </message>
     <message>
         <source>Remove this item.</source>
         <translation>Уклони овај елемент.</translation>
+    </message>
+    <message>
+        <source>You do not have permissions to remove this item.</source>
+        <translation type="obsolete">Немате овлашћења за уклањање овог елемента.</translation>
     </message>
     <message>
         <source>Function</source>
@@ -5000,6 +6249,14 @@
     <message>
         <source>The item being viewed does not make use of any other objects.</source>
         <translation>Елемент који прегледате не користи ни један други објект.</translation>
+    </message>
+    <message>
+        <source>Reverse related objects</source>
+        <translation type="obsolete">Реверзни повезани објекти</translation>
+    </message>
+    <message>
+        <source>The item being viewed is not in use by any other objects.</source>
+        <translation type="obsolete">Елемент који прегледате не користи ни један други објект.</translation>
     </message>
     <message>
         <source>Assigned roles [%roles_count]</source>
@@ -5070,6 +6327,10 @@
         <translation>Прикажи поделементе као сличице.</translation>
     </message>
     <message>
+        <source>Use this menu to select the type of item you wish to create and click the &quot;Create here&quot; button. The item will be created within the current location.</source>
+        <translation type="obsolete">Користите мени за избор врсте елемента који желите креирати и кликните на дугме &quot;Креирај овде&quot;. Елемент ће бити креиран унутар текуће локације.</translation>
+    </message>
+    <message>
         <source>Not available</source>
         <translation>Није доступан</translation>
     </message>
@@ -5102,8 +6363,16 @@
         <translation>Врста</translation>
     </message>
     <message>
+        <source>Use these checkboxes to select items for removal. Click the &quot;Remove selected&quot; button to actually remove the selected items.</source>
+        <translation type="obsolete">Користите checkboxове за селекцију елемената за уклањање.</translation>
+    </message>
+    <message>
         <source>Move &lt;%child_name&gt; to another location.</source>
         <translation>Премести &lt;%child_name&gt; на другу локацију.</translation>
+    </message>
+    <message>
+        <source>You do not have permissions remove this item.</source>
+        <translation type="obsolete">Немате овлашћења за уклањање овог елемента.</translation>
     </message>
     <message>
         <source>Locations [%locations]</source>
@@ -5112,6 +6381,10 @@
     <message>
         <source>Sub items</source>
         <translation>Поделементи</translation>
+    </message>
+    <message>
+        <source>This location can not be removed either because you do not have permissions to remove it or because it is currently being displayed.</source>
+        <translation type="obsolete">Ова локација не може бити уклоњена зато јер немате одговарајућа овлашћења или зато јер је тренутно приказана.</translation>
     </message>
     <message>
         <source>Select location for removal.</source>
@@ -5150,6 +6423,14 @@
         <translation>Користи ову радио дугмад за избор жељене главне локације.</translation>
     </message>
     <message>
+        <source>The item being displayed has only one location and thus it does not make sense to set it.</source>
+        <translation type="obsolete">Приказани елемент има само једну локацију и зато нема смисла поставити га.</translation>
+    </message>
+    <message>
+        <source>You can not set the main location because you do not have permissions to edit the item being displayed.</source>
+        <translation type="obsolete">Не можете поставити главну локацију јер немате одговарајућа овлашћења за едитовање текућег елемента.</translation>
+    </message>
+    <message>
         <source>Add locations</source>
         <translation>Додај локације</translation>
     </message>
@@ -5160,6 +6441,14 @@
     <message>
         <source>It is not possible to add locations to a top level node.</source>
         <translation>Није могуће додати локације на главни чвор.</translation>
+    </message>
+    <message>
+        <source>Select the desired main location using the radio buttons above and click this button to store the setting.</source>
+        <translation type="obsolete">Изаберите жељену главну локацију користећи радио дугмад изнад и кликните на дугме за снимање подешавања.</translation>
+    </message>
+    <message>
+        <source>You can not set the main location because there is only one location present.</source>
+        <translation type="obsolete">Не можете поставити главну локацију јер постоји само једна локација.</translation>
     </message>
     <message>
         <source>The &lt;%class_name&gt; class is not configured to contain any sub items.</source>
@@ -5465,9 +6754,133 @@
         <source>Object states for object</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Tab is disabled, enable on dashboard.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Translations (%count)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Locations (%count)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Relations (%count)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Roles (%count)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Policies (%count)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sub items (%children_count)</source>
+        <translation>Поделемената (%children_count)</translation>
+    </message>
+    <message>
+        <source>Create</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>in</source>
+        <translation type="unfinished">у</translation>
+    </message>
+    <message>
+        <source>Here</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Published order</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>List of sub items of current node, with controlls to edit, remove and move them directly.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Node and object details like creator, when it was created, section it belongs to, number of versions and translations, Node ID and Object ID.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Content state</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>States and their states groups for current object.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>State group</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No content object state is configured. This can be done %urlstart here%urlend.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Locations (aka Nodes) for current object.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>New translation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Policy list and the Role that are assignet to current node.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Limited to</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%limitation_identifier %limitation_value</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Object relation list from current object.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Related objects (%related_objects_count)</source>
+        <translation>Повезани објекти (%related_objects_count)</translation>
+    </message>
+    <message>
+        <source>Reverse object relation list to current object.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Reverse related objects (%related_objects_count)</source>
+        <translation>Повратно повезани објекти (%related_objects_count)</translation>
+    </message>
+    <message>
+        <source>List of roles assigned with and without limitations for current node.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Translations (%translations)</source>
+        <translation>Преводи (%translations)</translation>
+    </message>
+    <message>
+        <source>Existing translations</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Language list of translations for current object.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>design/admin/node/view/line</name>
+    <message>
+        <source>Click on the icon to get a context sensitive menu.</source>
+        <translation type="obsolete">Кликните на икону за приказ менија садржаја.</translation>
+    </message>
     <message>
         <source>Node ID: %node_id Visibility: %node_visibility</source>
         <translation>Чвор ID: %node_id Видљивост: %visibility</translation>
@@ -5479,6 +6892,10 @@
 </context>
 <context>
     <name>design/admin/node/view/thumbnail</name>
+    <message>
+        <source>[%classname] Click on the icon to get a context sensitive menu.</source>
+        <translation type="obsolete">[%classname] Кликните на икону за приказ менија.</translation>
+    </message>
     <message>
         <source>[%classname] Click on the icon to display a context-sensitive menu.</source>
         <translation>[%classname] Кликните на икону за приказ менија.</translation>
@@ -5508,6 +6925,10 @@
     <message>
         <source>Collaboration notification</source>
         <translation>Обавештење о сарадњи</translation>
+    </message>
+    <message>
+        <source>Choose which collaboration items you wish to get notifications for.</source>
+        <translation type="obsolete">Изаберите ставке сарадње о којиме желите бити обавештени.</translation>
     </message>
     <message>
         <source>Choose which collaboration items you want to get notifications for.</source>
@@ -5591,6 +7012,10 @@
         <source>Unknown</source>
         <translation>Непознат</translation>
     </message>
+    <message>
+        <source>My item notifications (%notification_count)</source>
+        <translation>Моја обавештења елемента (%notification_count)</translation>
+    </message>
 </context>
 <context>
     <name>design/admin/notification/runfilter</name>
@@ -5637,12 +7062,20 @@
         <translation>Назив</translation>
     </message>
     <message>
+        <source>E-mail</source>
+        <translation type="obsolete">E-mail</translation>
+    </message>
+    <message>
         <source>Changes</source>
         <translation>Промене</translation>
     </message>
     <message>
         <source>Start an entry with a marker ( %emstart-%emend (dash) or %emstart*%emend (asterisk) ) at the beginning of the line. The change will continue to the next change marker.</source>
         <translation>Започните унос с маркером ( %emstart-%emend (dash) или %emstart*%emend (asterix) ) на почетку реда. Промена ће важити до следећег маркера промене. </translation>
+    </message>
+    <message>
+        <source>Please provide some basic information for your package.</source>
+        <translation type="obsolete">Молимо доставите основне податке о свом пакету. </translation>
     </message>
     <message>
         <source>Package name</source>
@@ -5661,6 +7094,10 @@
         <translation>Верзија</translation>
     </message>
     <message>
+        <source>Licence</source>
+        <translation type="obsolete">Дозвола</translation>
+    </message>
+    <message>
         <source>Package host</source>
         <translation>Хост пакета</translation>
     </message>
@@ -5669,9 +7106,17 @@
         <translation>Аутор пакета</translation>
     </message>
     <message>
+        <source>Please provide information on the maintainer of the package.</source>
+        <translation type="obsolete">Молимо да нам доставите податке о одржаваоцу пакета. </translation>
+    </message>
+    <message>
         <source>Name</source>
         <comment>Maintainer name</comment>
         <translation>Име</translation>
+    </message>
+    <message>
+        <source>E-Mail</source>
+        <translation type="obsolete">E-mail</translation>
     </message>
     <message>
         <source>Role</source>
@@ -5701,6 +7146,10 @@
     <message>
         <source>Include class definitions.</source>
         <translation>Укључи дефиниције класа.</translation>
+    </message>
+    <message>
+        <source>Include templates related exported objects.</source>
+        <translation type="obsolete">Укључи извезене објекте повезане с шаблонима.</translation>
     </message>
     <message>
         <source>Select templates from the following siteaccesses</source>
@@ -5747,6 +7196,10 @@
         <translation>Ни један</translation>
     </message>
     <message>
+        <source>Please choose objects you wish to include in the package.</source>
+        <translation type="obsolete">Молимо изаберите објекте које желите укључити у пакет.</translation>
+    </message>
+    <message>
         <source>Selected nodes</source>
         <translation>Изабрани чворови</translation>
     </message>
@@ -5761,6 +7214,10 @@
     <message>
         <source>Export type</source>
         <translation>Врста извоза</translation>
+    </message>
+    <message>
+        <source>There are currently no objects selected for exportation</source>
+        <translation type="obsolete">Тренутно нема ни једног изабраног објекта за извоз</translation>
     </message>
     <message>
         <source>Remove selected</source>
@@ -5783,6 +7240,10 @@
         <translation>Изаберите класу CSS датотеку која ће бити укључена у пакет.</translation>
     </message>
     <message>
+        <source>Select an image file to be included in the package and click Next.Click &quot;Next&quot; without choosing an image to continue to the next step.</source>
+        <translation type="obsolete">Изаберите графичку датотеку за коју желите да буде укључена у пакет и изаберите Следећи.Кад завршите с додавањем слика изаберите Следећи без одабира слике.</translation>
+    </message>
+    <message>
         <source>Currently added image files</source>
         <translation>Тренутно додане графичке датотеке</translation>
     </message>
@@ -5793,6 +7254,10 @@
     <message>
         <source>Install package</source>
         <translation>Инсталирај пакет</translation>
+    </message>
+    <message>
+        <source>The package can be installed on your system, installing the package will copy files, create content classes etc. all depending on the package.If you do not wish to install the package at this time you can do so later on the view page for the package.</source>
+        <translation type="obsolete">Пакет може бити инсталиран на Ваш систем. Инсталирање пакета ће копирати датотеке, креирати класе садржаја итд., зависно о пакету.Ако не желите инсталирати пакет у овом тренутку можете то учинити касније на страници приказа пакета. </translation>
     </message>
     <message>
         <source>Install items</source>
@@ -5811,12 +7276,20 @@
         <translation>Следећи %arrowright</translation>
     </message>
     <message>
+        <source>Finish</source>
+        <translation type="obsolete">Заврши</translation>
+    </message>
+    <message>
         <source>Error</source>
         <translation>Грешка</translation>
     </message>
     <message>
         <source>Upload package</source>
         <translation>Учитај пакет</translation>
+    </message>
+    <message>
+        <source>Select the file containing your package and click the upload button</source>
+        <translation type="obsolete">Изаберите датотеку која садржи Ваш пакет и изаберите дугме учитавање</translation>
     </message>
     <message>
         <source>Import package</source>
@@ -5863,6 +7336,14 @@
         <translation>Одржаваоци</translation>
     </message>
     <message>
+        <source>Regarding eZ publish package &apos;%packagename&apos;</source>
+        <translation type="obsolete">У вези с eZ publish пакетом &apos;%packagename&apos;</translation>
+    </message>
+    <message>
+        <source>Send e-mail to the maintainer</source>
+        <translation type="obsolete">Пошаљите e-mail поруку одржаваоцу</translation>
+    </message>
+    <message>
         <source>Documents</source>
         <translation>Документи</translation>
     </message>
@@ -5877,6 +7358,10 @@
     <message>
         <source>Uninstall package</source>
         <translation>Уклони пакет</translation>
+    </message>
+    <message>
+        <source>The package can be uninstalled from your system, uninstalling the package will remove any installed files, content classes etc. all depending on the package.If you do not wish to uninstall the package at this time you can do so later on the view page for the package.You may also remove the package without uninstalling it from the package list.</source>
+        <translation type="obsolete">Пакет може бити  уклоњен из вашег система. Уклањањем пакета уклонићете све инсталиране датотеке, садржајне класе итд., зависно о пакету.Ако не желите уклонити пакет у овом тренутку можете то учинити касније на страници приказа пакета.Такође, можете уклонити пакет без да га уклањате с листе пакета. </translation>
     </message>
     <message>
         <source>Uninstall items</source>
@@ -5966,6 +7451,10 @@ You can also remove the package without uninstalling it from the package list.</
         <translation>Уклањање пакета</translation>
     </message>
     <message>
+        <source>Are you sure you wish to remove the following packages?The packages will be lost forever.Note: The packages will not be uninstalled.</source>
+        <translation type="obsolete">Јесте ли сигурни да желите уклонити следеће пакете?Ти пакети ће бити заувек изгубљени.Пази: Пакети неће бити уклоњени.</translation>
+    </message>
+    <message>
         <source>OK</source>
         <translation>OK</translation>
     </message>
@@ -6049,6 +7538,10 @@ Note: The packages will not be uninstalled.</source>
 Пакети ће заувек бити изгубљени.
 Напомена: Пакети неће бити уклоњени из система.</translation>
     </message>
+    <message>
+        <source>Remove</source>
+        <translation type="unfinished">Уклони</translation>
+    </message>
 </context>
 <context>
     <name>design/admin/pagelayout</name>
@@ -6074,31 +7567,31 @@ Note: The packages will not be uninstalled.</source>
     </message>
     <message>
         <source>Content structure</source>
-        <translation>Садржај</translation>
+        <translation type="unfinished">Садржај</translation>
     </message>
     <message>
         <source>Media library</source>
-        <translation>Медија</translation>
+        <translation type="unfinished">Медија</translation>
     </message>
     <message>
         <source>User accounts</source>
-        <translation>Корисници</translation>
+        <translation type="unfinished">Корисници</translation>
     </message>
     <message>
         <source>Webshop</source>
-        <translation>Продавница</translation>
+        <translation type="unfinished">Продавница</translation>
     </message>
     <message>
         <source>Setup</source>
-        <translation>Подешавања</translation>
+        <translation type="unfinished">Подешавања</translation>
     </message>
     <message>
         <source>Design</source>
-        <translation>Дизајн</translation>
+        <translation type="unfinished">Дизајн</translation>
     </message>
     <message>
         <source>My account</source>
-        <translation>Моје активности </translation>
+        <translation type="obsolete">Моје активности </translation>
     </message>
     <message>
         <source>Current user</source>
@@ -6138,31 +7631,35 @@ Note: The packages will not be uninstalled.</source>
     </message>
     <message>
         <source>Manage the main content structure of the site.</source>
-        <translation>Управљање главним садржајем.</translation>
+        <translation type="unfinished">Управљање главним садржајем.</translation>
     </message>
     <message>
         <source>Manage images, files, documents, etc.</source>
-        <translation>Управљање сликама, документима и сл.</translation>
+        <translation type="unfinished">Управљање сликама, документима и сл.</translation>
     </message>
     <message>
         <source>Manage users, user groups and permission settings.</source>
-        <translation>Управљање корисницима, групама корисника и дозволама.</translation>
+        <translation type="unfinished">Управљање корисницима, групама корисника и дозволама.</translation>
     </message>
     <message>
         <source>Manage customers, orders, discounts and VAT types; view sales statistics.</source>
-        <translation>Управљање купцима, снижењима и порезима.</translation>
+        <translation type="unfinished">Управљање купцима, снижењима и порезима.</translation>
     </message>
     <message>
         <source>Manage templates, menus, toolbars and other things related to appearence.</source>
-        <translation>Управљање шаблонима, менијима, алатним тракама и сл.</translation>
+        <translation type="unfinished">Управљање шаблонима, менијима, алатним тракама и сл.</translation>
     </message>
     <message>
         <source>Configure settings and manage advanced functionality.</source>
-        <translation>Конфигурација подешавања и управљање напредним опцијама.</translation>
+        <translation type="unfinished">Конфигурација подешавања и управљање напредним опцијама.</translation>
     </message>
     <message>
         <source>Manage items and settings that belong to your account.</source>
-        <translation>Управљање елементима и подешавањима које припадају вама као кориснику.</translation>
+        <translation type="unfinished">Управљање елементима и подешавањима које припадају вама као кориснику.</translation>
+    </message>
+    <message>
+        <source>Change name, e-mail, password, etc.</source>
+        <translation type="obsolete">Измена имена, е-поште, лозинке и сл.</translation>
     </message>
     <message>
         <source>Change password for &lt;%username&gt;.</source>
@@ -6191,6 +7688,10 @@ Note: The packages will not be uninstalled.</source>
     <message>
         <source>Manage your personal bookmarks.</source>
         <translation>Подеси фаворите.</translation>
+    </message>
+    <message>
+        <source>[%classname] Click on the icon to get a context sensitive menu.</source>
+        <translation type="obsolete">[%classname] Кликните на икону за приказ менија из садржаја.</translation>
     </message>
     <message>
         <source>Show bookmarks.</source>
@@ -6235,6 +7736,40 @@ Note: The packages will not be uninstalled.</source>
     <message>
         <source>Change name, email, password, etc.</source>
         <translation>Измена имена, адресе е-поште, лозинке итд.</translation>
+    </message>
+    <message>
+        <source>Search in all content</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Search in &apos;%node&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>User perferences</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dashboard</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>design/admin/pagelayout/path</name>
+    <message>
+        <source>You are here:</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>design/admin/pagelayout/rightmenu</name>
+    <message>
+        <source>Show / Hide rightmenu</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Hide / Show rightmenu</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -6282,6 +7817,10 @@ Note: The packages will not be uninstalled.</source>
     <message>
         <source>Show content structure.</source>
         <translation>Прикажи структуру садржаја.</translation>
+    </message>
+    <message>
+        <source>Site structure</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -6397,6 +7936,26 @@ Note: The packages will not be uninstalled.</source>
         <source>Enable &amp;quot;Back to edit&amp;quot; checkbox when editing content.</source>
         <translation>Омогући кућицу &amp;quot;Натраг на уређивање&amp;quot; приликом уређивања садржаја.</translation>
     </message>
+    <message>
+        <source>Edit profile</source>
+        <translation type="unfinished">Измени профил</translation>
+    </message>
+    <message>
+        <source>Dashboard</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Preview tab</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Disable &amp;quot;Preview tab&amp;quot; while browsing content.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enable &amp;quot;Preview tab&amp;quot; while browsing content.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>design/admin/parts/setup/menu</name>
@@ -6461,6 +8020,10 @@ Note: The packages will not be uninstalled.</source>
     <message>
         <source>Sessions</source>
         <translation>Сесије</translation>
+    </message>
+    <message>
+        <source>Translations</source>
+        <translation type="obsolete">Преводи</translation>
     </message>
     <message>
         <source>Triggers</source>
@@ -6586,7 +8149,7 @@ Note: The packages will not be uninstalled.</source>
     </message>
     <message>
         <source>Manage permission settings.</source>
-        <translation>Управљање овлашћењима.</translation>
+        <translation type="obsolete">Управљање овлашћењима.</translation>
     </message>
     <message>
         <source>Roles and policies</source>
@@ -6758,6 +8321,10 @@ Note: The packages will not be uninstalled.</source>
 <context>
     <name>design/admin/pdf/list</name>
     <message>
+        <source>PDF Exports [%export_count]</source>
+        <translation type="obsolete">PDF извоз [%export_count]</translation>
+    </message>
+    <message>
         <source>PDF Export</source>
         <translation>PDF извоз</translation>
     </message>
@@ -6812,6 +8379,10 @@ Note: The packages will not be uninstalled.</source>
     <message>
         <source>PDF exports [%export_count]</source>
         <translation>PDF извоза [%export_count]</translation>
+    </message>
+    <message>
+        <source>PDF exports (%export_count)</source>
+        <translation>PDF извоза (%export_count)</translation>
     </message>
 </context>
 <context>
@@ -6901,8 +8472,16 @@ Note: The packages will not be uninstalled.</source>
         <translation>Нови заобилазак чвора</translation>
     </message>
     <message>
+        <source>Copy Subtree</source>
+        <translation type="obsolete">Копирај подстабло</translation>
+    </message>
+    <message>
         <source>Remove bookmark</source>
         <translation>Уклони ознаку за књигу</translation>
+    </message>
+    <message>
+        <source>Choose SiteAccess</source>
+        <translation type="obsolete">Изабери приступ сајту</translation>
     </message>
     <message>
         <source>Reverse related for subtree</source>
@@ -6939,6 +8518,18 @@ Note: The packages will not be uninstalled.</source>
     <message>
         <source>Choose siteaccess</source>
         <translation>Изаберите сајт-приступ</translation>
+    </message>
+    <message>
+        <source>Create RSS/ATOM feed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove RSS/ATOM feed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>New translation</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -6977,6 +8568,10 @@ Note: The packages will not be uninstalled.</source>
 </context>
 <context>
     <name>design/admin/preview/feedbackform</name>
+    <message>
+        <source>Your E-mail address</source>
+        <translation type="obsolete">Ваша e-mail адреса</translation>
+    </message>
     <message>
         <source>Subject</source>
         <translation>Наслов</translation>
@@ -7072,12 +8667,20 @@ Note: The packages will not be uninstalled.</source>
         <translation>Креирај нову политику за &lt;%role_name%&gt; ролу</translation>
     </message>
     <message>
+        <source>Welcome to the policy wizard. This three step wizard will help you create a new policy which will be added to the role that is currently being edited. The wizard can be aborted at any stage by using the &quot;Cancel&quot; button.</source>
+        <translation type="obsolete">Чаробњак за политику.</translation>
+    </message>
+    <message>
         <source>Step one: select module</source>
         <translation>Корак први: изабери модул</translation>
     </message>
     <message>
         <source>Instructions</source>
         <translation>Упутства</translation>
+    </message>
+    <message>
+        <source>Use the drop-down menu to select the module that you wish to grant access to.</source>
+        <translation type="obsolete">Користи падајући мени за избор модула.</translation>
     </message>
     <message>
         <source>Click one of the &quot;Grant..&quot; buttons (explained below) in order to go to the next step.</source>
@@ -7119,9 +8722,17 @@ Note: The packages will not be uninstalled.</source>
         <source>Use the drop-down menu to select the module that you want to grant access to.</source>
         <translation>Користите падајући мени за избор модула којем желите дозволити приступ.</translation>
     </message>
+    <message>
+        <source>Every function</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>design/admin/role/createpolicystep2</name>
+    <message>
+        <source>Welcome to the policy wizard. This three step wizard will help you set up a new policy. The policy will be added to the role that is currently being edited. The wizard can be aborted at any stage by using the &quot;Cancel&quot; button.</source>
+        <translation type="obsolete">Чаробњак за политику.</translation>
+    </message>
     <message>
         <source>Step one: select module [completed]</source>
         <translation>Корак први: изабери модул [завршен]</translation>
@@ -7151,6 +8762,14 @@ Note: The packages will not be uninstalled.</source>
         <translation>Упутства</translation>
     </message>
     <message>
+        <source>Use the drop-down menu to select the function that you wish to grant access to.</source>
+        <translation type="obsolete">Користи падајући мени за избор функције којој желиш доделити приступ.</translation>
+    </message>
+    <message>
+        <source>The &quot;Grant full access&quot; button will create a policy that grants unlimited access to the selected function within the module that was specified in step one. If you wish to limit the access method in some way, click the &quot;Grant limited access&quot; button. Function limitation is only supported by some functions. If unsupported, eZ publish will simply set up a policy with unlimited access to the selected function.</source>
+        <translation type="obsolete">&quot;Дозволи приступ свим функцијама&quot; креираће политику која дозвољава неограничен приступ свим функцијама у изабраном модулу.</translation>
+    </message>
+    <message>
         <source>Function</source>
         <translation>Функција</translation>
     </message>
@@ -7161,6 +8780,10 @@ Note: The packages will not be uninstalled.</source>
     <message>
         <source>Grant limited access</source>
         <translation>Омогући ограничени приступ</translation>
+    </message>
+    <message>
+        <source>It is unfortunately not possible to grant limited access to all modules at once. To grant unlimited access to all modules and their functions, go back to step one and select &quot;Grant access to all functions&quot;. In order to grant limited access to different functions within different modules, you need to set up a collection of policies.</source>
+        <translation type="obsolete">На жалост није могуће доделити ограничен приступ свим модулима одједном. За доделу неограниченог приступа свим модулима и њиховим функцијама вратите се на корак 1 и изаберите &quot;Омогући потпуни приступ&quot;. Уколико требате доделити ограничен приступ различитим функцијама унутар модула морате креирати групе политика.</translation>
     </message>
     <message>
         <source>The selected module (%module_name) does not support limitations on the function level. Please go back to step one and use the &quot;Grant access to all functions&quot; option instead.</source>
@@ -7208,6 +8831,10 @@ Note: The packages will not be uninstalled.</source>
     <message>
         <source>Create a new policy for the &lt;%role_name&gt; role</source>
         <translation>Креирај нову политику за &lt;%role_name%&gt; ролу</translation>
+    </message>
+    <message>
+        <source>Welcome to the policy wizard. This three step wizard will help you set up a new policy. The policy will be added to the role that is currently being edited. The wizard can be aborted at any stage by using the &quot;Cancel&quot; button.</source>
+        <translation type="obsolete">Чаробњак за политику.</translation>
     </message>
     <message>
         <source>Step one: select module [completed]</source>
@@ -7313,6 +8940,18 @@ Note: The packages will not be uninstalled.</source>
         <source>Welcome to the policy wizard. This three-step wizard will help you set up a new policy. The policy will be added to the role that is currently being edited. The wizard can be aborted at any stage by using the &quot;Cancel&quot; button.</source>
         <translation>Добродошли на чаробњак за политике. Чаробњак у три корака ће вам помоћи да направите нову политику. Политика ће бити прикључена улози коју тренутно мењате. Чаробњак можете прекинути било када притиском на дугме &quot;Поништи&quot;.</translation>
     </message>
+    <message>
+        <source>Properties</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Nodes (%node_count)</source>
+        <translation>Чворови (%node_count)</translation>
+    </message>
+    <message>
+        <source>Subtrees (%subtree_count)</source>
+        <translation>Подстабла (%subtree_count)</translation>
+    </message>
 </context>
 <context>
     <name>design/admin/role/edit</name>
@@ -7400,6 +9039,14 @@ Note: The packages will not be uninstalled.</source>
         <source>Create a new policy.</source>
         <translation>Креирај нову политику.</translation>
     </message>
+    <message>
+        <source>Save</source>
+        <translation type="unfinished">Сними</translation>
+    </message>
+    <message>
+        <source>Save policy changes to this role</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>design/admin/role/list</name>
@@ -7463,6 +9110,10 @@ Note: The packages will not be uninstalled.</source>
         <source>Copy the &lt;%role_name&gt; role.</source>
         <translation>Копирај &lt;%role_name&gt; улогу.</translation>
     </message>
+    <message>
+        <source>Roles (%role_count)</source>
+        <translation>Улоге (%role_count)</translation>
+    </message>
 </context>
 <context>
     <name>design/admin/role/policyedit</name>
@@ -7523,6 +9174,10 @@ Note: The packages will not be uninstalled.</source>
         <translation>Додај подстабло</translation>
     </message>
     <message>
+        <source>The function limitations of this policy can not be edited. This is either because the function simply does not support limitations or because the function was assigned without limitations when the policy was created.</source>
+        <translation type="obsolete">ограничења функција ове политике не могу бити мењана. Разлог томе је што функција не подржава ограничења или је функција активирана као функција без ограничења.</translation>
+    </message>
+    <message>
         <source>OK</source>
         <translation>OK</translation>
     </message>
@@ -7533,6 +9188,14 @@ Note: The packages will not be uninstalled.</source>
     <message>
         <source>The function limitations of this policy cannot be edited. This is either because the function does not support limitations or because the function was assigned without limitations when the policy was created.</source>
         <translation>Ограничења функција ове политике не могу бити мењана. Функција не подржава ограничења или јој нису додељена ограничења приликом прављења политике.</translation>
+    </message>
+    <message>
+        <source>Nodes (%node_count)</source>
+        <translation>Чворови (%node_count)</translation>
+    </message>
+    <message>
+        <source>Subtrees (%subtree_count)</source>
+        <translation>Подстабла (%subtree_count)</translation>
     </message>
 </context>
 <context>
@@ -7645,12 +9308,28 @@ Note: The packages will not be uninstalled.</source>
         <source>Name</source>
         <translation>Назив</translation>
     </message>
+    <message>
+        <source>Policies (%policies_count)</source>
+        <translation>Политике (%policies_count)</translation>
+    </message>
+    <message>
+        <source>Path: &apos;/%path_string&apos;, Class identifier: &apos;%class_identifier&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Users and groups using the &lt;%role_name&gt; role (%users_count)</source>
+        <translation>Корисници и групе корисника користе &lt;%role_name&gt; улогу (%users_count)</translation>
+    </message>
 </context>
 <context>
     <name>design/admin/rss/browse_destination</name>
     <message>
         <source>Choose a destination for RSS import</source>
         <translation>Изаберите дестинацију за RSS увоз</translation>
+    </message>
+    <message>
+        <source>Use the radio buttons to choose a destination location for RSS import and click &quot;OK&quot;.</source>
+        <translation type="obsolete">Користи радио дугме за избор нове локације за RSS увоз и кликни &quot;OK&quot;.</translation>
     </message>
     <message>
         <source>Navigate using the available tabs (above), the tree menu (left) and the content list (middle).</source>
@@ -7668,6 +9347,10 @@ Note: The packages will not be uninstalled.</source>
         <translation>Изаберите слику за RSS извоз</translation>
     </message>
     <message>
+        <source>Use the radio buttons to choose an image to use in the RSS export and click &quot;OK&quot;.</source>
+        <translation type="obsolete">Користи радио дугме за избор слике код RSS извоз и кликни &quot;OK&quot;.</translation>
+    </message>
+    <message>
         <source>Navigate using the available tabs (above), the tree menu (left) and the content list (middle).</source>
         <translation>Користи доступне табове [горе], стабло мени [лево] и листу садржаја [средина] за навигацију.</translation>
     </message>
@@ -7683,6 +9366,10 @@ Note: The packages will not be uninstalled.</source>
         <translation>Изаберите извор за RSS извоз</translation>
     </message>
     <message>
+        <source>Use the radio buttons to choose the item that you wish to export using RSS and click &quot;OK&quot;.</source>
+        <translation type="obsolete">Користи радио дугмад за избор елемента који желите извести користећи RSS и кликни &quot;OK&quot;.</translation>
+    </message>
+    <message>
         <source>Navigate using the available tabs (above), the tree menu (left) and the content list (middle).</source>
         <translation>Користи доступне табове [горе], стабло мени [лево] и листу садржаја [средина] за навигацију.</translation>
     </message>
@@ -7696,6 +9383,10 @@ Note: The packages will not be uninstalled.</source>
     <message>
         <source>Choose owner for RSS imported objects</source>
         <translation>Изаберите власника за RSS увезене објекте</translation>
+    </message>
+    <message>
+        <source>Use the radio buttons to choose a user and click &quot;OK&quot;. The user will become the owner of the objects that were imported using RSS.</source>
+        <translation type="obsolete">Користите радио дугмад за избор корисника и кликните на &quot;OK&quot;. Корисник ће постати власник објеката који су увезени са RSS.</translation>
     </message>
     <message>
         <source>Navigate using the available tabs (above), the tree menu (left) and the content list (middle).</source>
@@ -7773,6 +9464,10 @@ Note: The packages will not be uninstalled.</source>
         <translation>Измени &lt;%rss_export_name&gt; [RSS извоз]</translation>
     </message>
     <message>
+        <source>Name of the RSS export. This name is used in the administration interface only, to distinguish the different exports from each other.</source>
+        <translation type="obsolete">Назив RSS извоза. Назив је коришћен само у администрационом делу webа како би се боље разликовали различити извози.</translation>
+    </message>
+    <message>
         <source>Use the description field to write a text explaining what users can expect from the RSS export.</source>
         <translation>У поље за опис упиши шта корисници могу очекивати од RSS извоза.</translation>
     </message>
@@ -7797,6 +9492,26 @@ Note: The packages will not be uninstalled.</source>
         <translation>Извор</translation>
     </message>
     <message>
+        <source>Click this button to select the source node for RSS export source. Objects of the type selected in the drop down below published as sub-items of the selected node will be included in the RSS export.</source>
+        <translation type="obsolete">Кликните ово дугме за избор изворног чвора за RSS извоз извора. Објекти изабраног типа у листи испод објављени као поделементи изабраног чвора биће укључени у RSS извоз.</translation>
+    </message>
+    <message>
+        <source>Use this drop down to select the type of object that triggers the export. Click the &quot;Set&quot; button to load the correct attribute types for the remaining fields.</source>
+        <translation type="obsolete">Користите падајућу листи да изаберете тип објекта који покреће извоз. Кликните &quot;Set&quot; дугме да  учитате исправне типове атрибута за преостала поља.</translation>
+    </message>
+    <message>
+        <source>Click this button to load the correct values into the drop-down fields below. Use the drop-down menu on the left to select the correct class type.</source>
+        <translation type="obsolete">Кликните ово дугме за учитавање коректних вредности из падајуће листе испод. Искористите падајући мени са леве стране да изаберете исправан тип класе.</translation>
+    </message>
+    <message>
+        <source>Use this drop-down to select which attribute that should be exported as the title of the RSS export entry.</source>
+        <translation type="obsolete">Користите падајућу листу да изаберете који атрибути би требало да се извезу као наслов RSS извозне листе.</translation>
+    </message>
+    <message>
+        <source>Use this drop-down to select which attribute that should be exported as the description of the RSS export entry.</source>
+        <translation type="obsolete">Користит падајућу листу да изаберете који атрибути би требало да буду извезени као опис RSS export извоза.</translation>
+    </message>
+    <message>
         <source>Click to remove this source from the RSS export.</source>
         <translation>Кликни за уклањање извора из RSS извоза.</translation>
     </message>
@@ -7817,12 +9532,24 @@ Note: The packages will not be uninstalled.</source>
         <translation>Поништи измене и врати се на приказ RSS-а.</translation>
     </message>
     <message>
+        <source>Invalid Input</source>
+        <translation type="obsolete">Неисправан унос</translation>
+    </message>
+    <message>
         <source>If RSS Export is Active then a valid Access URL is required.</source>
         <translation>Ако је RSS извоз активан тада је потребан исправан приступни URL.</translation>
     </message>
     <message>
+        <source>Use this field to enter the base URL of your site. It is used to produce the URLs in the export, composed by the Site URL (e.g. &quot;http://www.example.com/index.php&quot;) and the path to the object (e.g. &quot;/articles/my_article&quot;). The Site URL depends on your Webserver and eZ publish configuration.</source>
+        <translation type="obsolete">Користите ово поље да унесете басе URL вашег сајта. То се користи да производи URL-ове у извозу комбинујући URL сајта (нпр. &quot;http://www.example.com/index.php&quot;) и путању до објекта (нпр. &quot;/articles/my_article&quot;). URL сајта зависи од вашег web сервера и конфигурације EZ.</translation>
+    </message>
+    <message>
         <source>Number of objects</source>
         <translation>Број објеката</translation>
+    </message>
+    <message>
+        <source>Use this drop-down menu to select the maximum number of objects included in the RSS feed.</source>
+        <translation type="obsolete">Користите падајућу листу да изаберете максималан број објеката укључених у RSS feed.</translation>
     </message>
     <message>
         <source>Main node only</source>
@@ -7837,6 +9564,10 @@ Note: The packages will not be uninstalled.</source>
         <translation>Подчворови</translation>
     </message>
     <message>
+        <source>Activate this checkbox if also objects from the subnodes of the source should be feeded.</source>
+        <translation type="obsolete">Активирајте овај checkbox ако и објекти из подчворова извора треба да уђу у feed.</translation>
+    </message>
+    <message>
         <source>Invalid input</source>
         <translation>Неважећи унос</translation>
     </message>
@@ -7847,6 +9578,10 @@ Note: The packages will not be uninstalled.</source>
     <message>
         <source>Use this field to enter the base URL of your site. It is used to produce the URLs in the export, composed by the Site URL (e.g. &quot;http://www.example.com/index.php&quot;) and the path to the object (e.g. &quot;/articles/my_article&quot;). The Site URL depends on your web server and eZ Publish configuration.</source>
         <translation>Користите ово поље да унесете основни URL вашег сајта. Користи се да произведе URL-е приликом извоза, састављене од сајт URL-а  (нпр. &quot;http://www.mojsajt.com/index.php&quot;) и путање до објекта (нпр. &quot;/clanci/moj_clanak&quot;). Сајт URL зависи од вашег сервера и подешавања eZ Publish-а.</translation>
+    </message>
+    <message>
+        <source>Leave this field emty if you want system automaticaly detect the URL of your site from the URL you access feed with</source>
+        <translation type="obsolete">Оставите ово поље празно уколико желите да систем сам утврди URL вашег сајта преко URL-а путем ког приступате извозу</translation>
     </message>
     <message>
         <source>Remove image</source>
@@ -7904,6 +9639,18 @@ Note: The packages will not be uninstalled.</source>
         <source>Skip</source>
         <translation type="unfinished">Прескочи</translation>
     </message>
+    <message>
+        <source>Enclosure (media)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use this drop-down to select the attribute that should be exported as the enclosure of the RSS export entry, enclosures are direct link to a media file, so use a media/image/file datatype .</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Field data</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>design/admin/rss/edit_import</name>
@@ -7940,8 +9687,20 @@ Note: The packages will not be uninstalled.</source>
         <translation>Постави</translation>
     </message>
     <message>
+        <source>Title</source>
+        <translation type="obsolete">Назив</translation>
+    </message>
+    <message>
         <source>Ignore</source>
         <translation>Занемари</translation>
+    </message>
+    <message>
+        <source>URL</source>
+        <translation type="obsolete">URL</translation>
+    </message>
+    <message>
+        <source>Description</source>
+        <translation type="obsolete">Опис</translation>
     </message>
     <message>
         <source>Active</source>
@@ -7960,6 +9719,10 @@ Note: The packages will not be uninstalled.</source>
         <translation>Измени &lt;%rss_import_name&gt; [RSS увоз]</translation>
     </message>
     <message>
+        <source>Name of the RSS import. This name is used in the administration interface only, to distinguish the different imports from each other.</source>
+        <translation type="obsolete">Назив RSS увоза. Назив се користи само у администрационом делу webа.</translation>
+    </message>
+    <message>
         <source>Use this field to enter the source URL of the RSS feed to import.</source>
         <translation>Користите поље за унос изворног URLа RSS увоза.</translation>
     </message>
@@ -7970,6 +9733,26 @@ Note: The packages will not be uninstalled.</source>
     <message>
         <source>Click this button to select the user who should own the objects created by the import.</source>
         <translation>Кликните ово дугме за избор корисника коме ће припадати увезени објекти.</translation>
+    </message>
+    <message>
+        <source>Use this drop down to select the type of object the import should create. Click the &quot;Set&quot; button to load the correct attribute types for the remaining fields.</source>
+        <translation type="obsolete">Користите падајућу листу да изаберете тип објекта које ће увоз креирати. Кликните &quot;Set&quot; дугме да учитате коректне типове атрибута за преостала поља.</translation>
+    </message>
+    <message>
+        <source>Click this button to load the correct values into the drop-down fields below. Use the drop-down menu on the left to select the correct class type.</source>
+        <translation type="obsolete">Кликните ово дугме да учитате коректне вредности у падајућу листу испод. Користите падајући мени са леве стране да изаберете коректну класу.</translation>
+    </message>
+    <message>
+        <source>Use this drop-down menu to select the attribute that should bet set to the title information from the RSS stream.</source>
+        <translation type="obsolete">Користите падајући мени да изаберете атрибут који би требао бити постављен за наслов информације из RSS stream.</translation>
+    </message>
+    <message>
+        <source>Use this drop-down menu to select the attribute that should be set to the URL information from the RSS stream.</source>
+        <translation type="obsolete">Искористите овај падајући мени да изаберете атрибут који би требао бити постављен као URL информације из RSS stream.</translation>
+    </message>
+    <message>
+        <source>Use this drop-down menu to select the attribute that should be set to the description information from the RSS stream.</source>
+        <translation type="obsolete">Користите падајући мени да изаберете атрибут који би требао бити постављен као опис информације у RSS stream.</translation>
     </message>
     <message>
         <source>Use this checkbox to control if the RSS feed is active or not. An inactive feed will not be automatically updated.</source>
@@ -8126,6 +9909,14 @@ Note: The packages will not be uninstalled.</source>
         <source>Create a new RSS import.</source>
         <translation>Креирај нови RSS увоз.</translation>
     </message>
+    <message>
+        <source>RSS exports (%exports_count)</source>
+        <translation>RSS извози (%exports_count)</translation>
+    </message>
+    <message>
+        <source>RSS imports (%imports_count)</source>
+        <translation>RSS увози (%imports_count)</translation>
+    </message>
 </context>
 <context>
     <name>design/admin/search/stats</name>
@@ -8192,6 +9983,10 @@ Note: The packages will not be uninstalled.</source>
         <translation>Користите радио дугмад за избор елемента којем ће се доделити сегмент &lt;%section_name&gt;.</translation>
     </message>
     <message>
+        <source>Keep in mind that the section assignment of the sub items will also be changed.</source>
+        <translation type="obsolete">Запамтите да се доделом сегмента и поделементи мењају.</translation>
+    </message>
+    <message>
         <source>Navigate using the available tabs (above), the tree menu (left) and the content list (middle).</source>
         <translation>Користи доступне табове [горе], стабло мени [лево] и листу садржаја [средина] за навигацију.</translation>
     </message>
@@ -8215,6 +10010,10 @@ Note: The packages will not be uninstalled.</source>
         <translation>Потврдите брисање сегмента</translation>
     </message>
     <message>
+        <source>Are you sure you want to remove the section?</source>
+        <translation type="obsolete">Јесте ли сигурни да желите уклонити сегмент?</translation>
+    </message>
+    <message>
         <source>Are you sure you want to remove the sections?</source>
         <translation>Јесте ли сигурни да желите уклонити сегменте?</translation>
     </message>
@@ -8225,6 +10024,14 @@ Note: The packages will not be uninstalled.</source>
     <message>
         <source>Warning</source>
         <translation>Упозорење</translation>
+    </message>
+    <message>
+        <source>Removing a section may corrupt permission settings, template output and other things in the system.</source>
+        <translation type="obsolete">Уклањање сегмента може имати за последицу неисправна овлашћења, приказе шаблона и других елемената система.</translation>
+    </message>
+    <message>
+        <source>Proceed only if you know what you are doing.</source>
+        <translation type="obsolete">Наставите уколико знате шта радите.</translation>
     </message>
     <message>
         <source>The following sections cannot be removed because they are either assigned to objects or used in role and policy limitations</source>
@@ -8256,6 +10063,10 @@ Note: The packages will not be uninstalled.</source>
     <message>
         <source>Name</source>
         <translation>Назив</translation>
+    </message>
+    <message>
+        <source>Navigation Part</source>
+        <translation type="obsolete">Делови за навигацију</translation>
     </message>
     <message>
         <source>OK</source>
@@ -8332,6 +10143,14 @@ Note: The packages will not be uninstalled.</source>
         <source>You are not allowed to assign the &lt;%section_name&gt; section.</source>
         <translation>Немате овлашћења да доделите&lt;%section_name&gt; сегмент.</translation>
     </message>
+    <message>
+        <source>Sections (%section_count)</source>
+        <translation>Сегменти (%section_count)</translation>
+    </message>
+    <message>
+        <source>Assign a subtree to the &lt;%section_name&gt; section.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>design/admin/section/view</name>
@@ -8395,6 +10214,26 @@ Note: The packages will not be uninstalled.</source>
         <source>This section is not assigned to any objects.</source>
         <translation>Сегмент није додељен ни једном објекту.</translation>
     </message>
+    <message>
+        <source>Roles containing limitations associated with this section (%number_of_roles)</source>
+        <translation>Улоге садрже ограничења с обзиром на сегмент (%number_of_roles)</translation>
+    </message>
+    <message>
+        <source>Users and user groups with role limitations associated with this section (%number_of_roles)</source>
+        <translation>Корисници и групе корисника са ограниченим улогама повезани са овим сегментом (%number_of_roles)</translation>
+    </message>
+    <message>
+        <source>Objects within this section (%number_of_objects)</source>
+        <translation>Објекти унутар сегмента (%number_of_objects)</translation>
+    </message>
+    <message>
+        <source>Assign subtree</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Assign subtree of objects to this section</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>design/admin/settings</name>
@@ -8419,8 +10258,24 @@ Note: The packages will not be uninstalled.</source>
         <translation>Подешавање: &lt;ново подешавање&gt;</translation>
     </message>
     <message>
+        <source>INI File</source>
+        <translation type="obsolete">Ini датотека</translation>
+    </message>
+    <message>
+        <source>SiteAccess</source>
+        <translation type="obsolete">Siteaccess</translation>
+    </message>
+    <message>
         <source>Change setting type</source>
         <translation>Промени врсту подешавања</translation>
+    </message>
+    <message>
+        <source>Note</source>
+        <translation type="obsolete">Напомена</translation>
+    </message>
+    <message>
+        <source>A global setting will override a siteaccess setting</source>
+        <translation type="obsolete">Глобално подешавање ће заобићи siteaccess подешавање</translation>
     </message>
     <message>
         <source>Tip</source>
@@ -8437,6 +10292,14 @@ Note: The packages will not be uninstalled.</source>
     <message>
         <source>Override setting (global)</source>
         <translation>Подешавања заобилажења (глобалне)</translation>
+    </message>
+    <message>
+        <source>Global setting</source>
+        <translation type="obsolete">Глобална подешавања</translation>
+    </message>
+    <message>
+        <source>Setting Name</source>
+        <translation type="obsolete">Назив подешавања</translation>
     </message>
     <message>
         <source>Setting value</source>
@@ -8479,12 +10342,20 @@ Note: The packages will not be uninstalled.</source>
         <translation>Варијабла %valfield већ постоји у сегменту %block</translation>
     </message>
     <message>
+        <source>Please choose another name that is not already taken</source>
+        <translation type="obsolete">Молимо изаберите назив који још није коришћен</translation>
+    </message>
+    <message>
         <source>%valfield is not allowed to contain spaces</source>
         <translation>%valfield не сме садржати празна места</translation>
     </message>
     <message>
         <source>Writing setting: %setting_name to file: %filename failed.</source>
         <translation>Записивање подешавања: %setting_name у датотеку %filename није успело.</translation>
+    </message>
+    <message>
+        <source>Make sure you have proper permissions to %path and try again.</source>
+        <translation type="obsolete">Проверите имате ли одговарајућа овлашћења на %path и пробајте поново.</translation>
     </message>
     <message>
         <source>Name contains illegal character(s).</source>
@@ -8525,6 +10396,10 @@ Note: The packages will not be uninstalled.</source>
     <message>
         <source>%ini_file consist of %blocks section(s) and %setting_count different setting(s)</source>
         <translation>%ini_file садржи сегмената %blocks и %setting_count различитих подешавања</translation>
+    </message>
+    <message>
+        <source>Please select an ini file from the dropdown below</source>
+        <translation type="obsolete">Молимо изаберите ini датотеку из доњег падајућег менија</translation>
     </message>
     <message>
         <source>Select ini file to view</source>
@@ -8618,6 +10493,10 @@ Note: The packages will not be uninstalled.</source>
         <translation>Провера конзистентности датотека - У реду.</translation>
     </message>
     <message>
+        <source>Warning, it is not safe to upgrade without checking the modifications done to the following files</source>
+        <translation type="obsolete">Упозорење, није сигурно унапређивати систем без провере промена које ће бити учињене следећим датотекама</translation>
+    </message>
+    <message>
         <source>Database check OK.</source>
         <translation>Провера базе података - у реду.</translation>
     </message>
@@ -8634,12 +10513,32 @@ Note: The packages will not be uninstalled.</source>
         <translation>Провера унапређивања система</translation>
     </message>
     <message>
+        <source>Before upgrading eZ publish to a newer version, it is important to check that the current installation is ready for upgrading.</source>
+        <translation type="obsolete">Пре унапређивања eZ publishа на нову верзију проверите је ли тренутна инсталација спремна за унапређивање.</translation>
+    </message>
+    <message>
+        <source>Remember to make a backup of the eZ publish directory and the database before you upgrade.</source>
+        <translation type="obsolete">Запамтите на да је добро направити сигурносне копије датотека и базе пре унапређивања.</translation>
+    </message>
+    <message>
         <source>File consistency check</source>
         <translation>Провера конзистентности датотека</translation>
     </message>
     <message>
+        <source>The file consistency tool checks if you have altered any of the files that came with the current installation. Altered files may be replaced by new versions which contain bugfixes, new features, etc. Make sure that you backup and then merge in your custom changes into the new versions of the files.</source>
+        <translation type="obsolete">Провера исправности датотека проверава да ли су све датотеке изворне. Измењене датотеке можда су замењене новим верзијама у којима су уклоњене грешке.</translation>
+    </message>
+    <message>
         <source>Database consistency check</source>
         <translation>Провера конзистентности базе</translation>
+    </message>
+    <message>
+        <source>The database consistency tool checks if the current database is consistent with the database schema that came with the eZ publish distribution. If there are any inconsistencies, the tool will suggest the necessary SQL statements that should be ran in order to bring the database into a consistent state. Please run the suggested SQL statements before upgrading.</source>
+        <translation type="obsolete">Алат за проверу конзистентности базе служи за проверу конзистентности постојеће базе са базом која долази са системом.</translation>
+    </message>
+    <message>
+        <source>The upgrade checking tools require a lot of resources and it may take some time to run them.</source>
+        <translation type="obsolete">Алат за проверу унапређивања система користи доста ресурса сервера и због тога ће можда провера трајати нешто дуже.</translation>
     </message>
     <message>
         <source>Check file consistency</source>
@@ -8713,6 +10612,10 @@ Note: The packages will not be uninstalled.</source>
         <translation>Очисти cache садржаја</translation>
     </message>
     <message>
+        <source>Clear ini caches</source>
+        <translation type="obsolete">Очисти ini cache-а</translation>
+    </message>
+    <message>
         <source>Clear all caches</source>
         <translation>Очисти све cache-а</translation>
     </message>
@@ -8737,12 +10640,28 @@ Note: The packages will not be uninstalled.</source>
         <translation>Очисти cache</translation>
     </message>
     <message>
+        <source>This operation will clear all the template override caches and the compiled templates. It may lead to weaker performance until the caches are up and running again.</source>
+        <translation type="obsolete">Ова операција ће почистити заобилазне и компајлиране шаблоне. Може доћи до споре обнове web странице док се cache не напуни поново. </translation>
+    </message>
+    <message>
+        <source>This operation will clear all caches that are related to either template views or cache blocks inside the pagelayout template. Use it if you have modified templates or if you have changed something inside a cache block.</source>
+        <translation type="obsolete">Ова операција ће почистити сав cache који је повезан са шаблонима или блоковима унутар изгледа шаблона. Користите је ако сте мењали шаблон или ако сте мењали нешто унутар блока cache-а.</translation>
+    </message>
+    <message>
         <source>Configuration (ini) caches</source>
         <translation>Конфигурациона (ini) предмеморија</translation>
     </message>
     <message>
+        <source>This operation will clear all the configuration caches. Use it to force the system to re-read the configuration files if you have changed some settings.</source>
+        <translation type="obsolete">Ова операција ће почистити конфигурациони cache. Користите ту операцију када желите присилити систем да поново прочита конфигурационе датотеке ако сте радили измене у њима.</translation>
+    </message>
+    <message>
         <source>Everything</source>
         <translation>Све</translation>
+    </message>
+    <message>
+        <source>This operation will clear ALL the caches and may lead to long response times until the caches are up and running again.</source>
+        <translation type="obsolete">Ова операција почистиће сав cache те може узроковати дуже време учитавања странице док се cache поново не напуни.</translation>
     </message>
     <message>
         <source>Fine-grained cache control</source>
@@ -8755,6 +10674,10 @@ Note: The packages will not be uninstalled.</source>
     <message>
         <source>Select the &lt;%cache_name&gt; for clearing.</source>
         <translation>Изаберите cache &lt;%cache_name&gt; за чишћење.</translation>
+    </message>
+    <message>
+        <source>The &lt;%cache_name&gt; is disabled and thus it can not be marked for clearing.</source>
+        <translation type="obsolete">Cache &lt;%cache_name&gt; је искључен и зато не може бити очишћен.</translation>
     </message>
     <message>
         <source>Clear the selected caches.</source>
@@ -8771,6 +10694,10 @@ Note: The packages will not be uninstalled.</source>
     <message>
         <source>Regenerate static content cache</source>
         <translation>Регенериши статички cache</translation>
+    </message>
+    <message>
+        <source>This operation will regenerate all the static content caches that are configured. This action can take quite some time depending on the specifications of the server and the number of locations that are configured to be statically cached. If you encounter time-out problems, please use the &amp;quot;bin/php/makestaticcache.php&amp;quot; shell script.</source>
+        <translation type="obsolete">Ова операција ће обновити сав статички садржај који је конфигурисан. Та операција може потрајати зависно о брзини сервера и броју локација које су дефинисане као статичке. Ако скрипта не обави функцију користи &amp;quot;bin/php/makestaticcache.php&amp;quot; shell скрипту</translation>
     </message>
     <message>
         <source>Create new</source>
@@ -8803,6 +10730,14 @@ Note: The packages will not be uninstalled.</source>
     <message>
         <source>This operation will regenerate all the static content caches that are configured. This action can take  some time depending on the specifications of the server and the number of locations that are configured to be statically cached. If you encounter time-out problems, use the &amp;quot;bin/php/makestaticcache.php&amp;quot; shell script.</source>
         <translation>Ова операција ће изнова направити сав статични кеш садржине који је подешен. Извршавање ове акција може потрајати, зависно од стања сервера и броја локација подешених да буду статично кеширане. Уколико настану проблеми везани за време извршавања, употребите скрипту &amp;quot;bin/php/makestaticcache.php&amp;quot;.</translation>
+    </message>
+    <message>
+        <source>Categories</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source></source>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -8854,6 +10789,18 @@ Note: The packages will not be uninstalled.</source>
         <source>Problems detected during autoload generation:</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Available extensions (%extension_count)</source>
+        <translation>Доступне екстензије (%extension_count)</translation>
+    </message>
+    <message>
+        <source>Invert selection.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Activate</source>
+        <translation type="unfinished">Активирај</translation>
+    </message>
 </context>
 <context>
     <name>design/admin/setup/info</name>
@@ -8864,6 +10811,21 @@ Note: The packages will not be uninstalled.</source>
     <message>
         <source>Site</source>
         <translation>Сите</translation>
+    </message>
+    <message>
+        <source>Version</source>
+        <comment>eZ publish version</comment>
+        <translation type="obsolete">Верзија</translation>
+    </message>
+    <message>
+        <source>SVN revision</source>
+        <comment>eZ publish version</comment>
+        <translation type="obsolete">SVN ревизија </translation>
+    </message>
+    <message>
+        <source>Extensions</source>
+        <comment>eZ publish extensions</comment>
+        <translation type="obsolete">Екстензије</translation>
     </message>
     <message>
         <source>Version</source>
@@ -8922,6 +10884,25 @@ Note: The packages will not be uninstalled.</source>
     <message>
         <source>Maximum execution time is %1 seconds.</source>
         <translation>Максимално време извршења је %1 секунди.</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <comment>Webserver name</comment>
+        <translation type="obsolete">Назив</translation>
+    </message>
+    <message>
+        <source>Version</source>
+        <comment>Webserver version</comment>
+        <translation type="obsolete">Верзија</translation>
+    </message>
+    <message>
+        <source>Modules</source>
+        <comment>Webserver modules</comment>
+        <translation type="obsolete">Модули</translation>
+    </message>
+    <message>
+        <source>eZ publish was unable to extract information from the webserver.</source>
+        <translation type="obsolete">Систем не може извући податке са webservera.</translation>
     </message>
     <message>
         <source>Name</source>
@@ -9006,12 +10987,34 @@ Note: The packages will not be uninstalled.</source>
         <translation>Не користи се помоћна база података.</translation>
     </message>
     <message>
+        <source>eZ publish</source>
+        <translation type="obsolete">eZ publish</translation>
+    </message>
+    <message>
         <source>PHP</source>
         <translation>PHP</translation>
     </message>
     <message>
         <source>PHP Accelerator</source>
         <translation>PHP Акцелератор</translation>
+    </message>
+    <message>
+        <source>A known and active PHP accelerator could not be found.</source>
+        <translation type="obsolete">Познат и активан PHP акцелератор није нађен.</translation>
+    </message>
+    <message>
+        <source>Webserver (software)</source>
+        <comment>Webserver title</comment>
+        <translation type="obsolete">Webserver (software)</translation>
+    </message>
+    <message>
+        <source>The modules of the webserver could not be detected.</source>
+        <comment>Webserver modules</comment>
+        <translation type="obsolete">Модули webservera не могу бити детектовани.</translation>
+    </message>
+    <message>
+        <source>Webserver (hardware)</source>
+        <translation type="obsolete">Webserver (hardware)</translation>
     </message>
     <message>
         <source>CPU</source>
@@ -9022,6 +11025,10 @@ Note: The packages will not be uninstalled.</source>
         <source>Memory</source>
         <comment>Memory info</comment>
         <translation>Меморија</translation>
+    </message>
+    <message>
+        <source>Script memory limit is Unlimited.</source>
+        <translation type="obsolete">Нема ограничење меморије скрипти.</translation>
     </message>
     <message>
         <source>eZ Publish</source>
@@ -9104,8 +11111,16 @@ Note: The packages will not be uninstalled.</source>
         <translation>По основној поставци конструктор не чини ништа.</translation>
     </message>
     <message>
+        <source>\return an array with the template operator name.</source>
+        <translation type="obsolete">\враћа матрицу са називом оператора шаблона.</translation>
+    </message>
+    <message>
         <source>Executes the PHP function for the operator cleanup and modifies \a $operatorValue.</source>
         <translation>Извршава PHP функцију за оператора чишћења и мења \а $operatorValue.</translation>
+    </message>
+    <message>
+        <source>Example code, this code must be modified to do what the operator should do, currently it only trims text.</source>
+        <translation type="obsolete">Пример кода, овај код мора бити модификован да би обављао функцију оператора, тренутно едитује текст. </translation>
     </message>
     <message>
         <source>\\return an array with the template operator name.</source>
@@ -9123,6 +11138,10 @@ Note: The packages will not be uninstalled.</source>
         <translation>Rapid Application Development алати</translation>
     </message>
     <message>
+        <source>The rapid application development (RAD) tools make the creation of new/extended functionality for eZ publish easier. Currently there are two RAD tools available: the template operator wizard and the datatype wizard. The template operator wizard basically generates a valid framework (PHP code) for a new template operator. The datatype wizard generates a valid framework (PHP code) for a new datatype.</source>
+        <translation type="obsolete">RAD алат омогућује креирање нових/проширених функција у систем.</translation>
+    </message>
+    <message>
         <source>Available RAD tools</source>
         <translation>Доступни RAD алати</translation>
     </message>
@@ -9137,6 +11156,10 @@ Note: The packages will not be uninstalled.</source>
     <message>
         <source>Template operator wizard (step 1 of 3)</source>
         <translation>Чаробњак оператора шаблона (корак 1 од 3)</translation>
+    </message>
+    <message>
+        <source>Welcome to the template operator wizard. Template operators are usually used for manipulating template variables. However, they can also be used to generate or fetch data. This wizard will take you through a couple of steps with some basic choices. When finished, eZ publish will generate a PHP framework for the a new operator (which will be available for download).</source>
+        <translation type="obsolete">Добродошли у чаробњак за израду оператора шаблона. Оператори шаблона се обично користе за манипулацију варијабли унутар шаблона. Они такође могу бити коришћени и за генерисање или дохват података из базе. чаробњак ће вас извести кроз неколико основних корака. По завршетку, систем ће генерисати PHP framework за нови оператор који ће понудити за download.</translation>
     </message>
     <message>
         <source>Restart</source>
@@ -9194,6 +11217,10 @@ Note: The packages will not be uninstalled.</source>
         <translation>Назив класе</translation>
     </message>
     <message>
+        <source>Constant name</source>
+        <translation type="obsolete">Назив константе</translation>
+    </message>
+    <message>
         <source>The creator of the datatype</source>
         <translation>Дизајнер datatypа</translation>
     </message>
@@ -9212,6 +11239,10 @@ Note: The packages will not be uninstalled.</source>
     <message>
         <source>Finish and generate</source>
         <translation>Заврши и генериши</translation>
+    </message>
+    <message>
+        <source>Welcome to the wizard for creating a new datatypes. Everything you store in your content objects are called attributes. These attributes are defined as a data types. To be able to customize the storing and validation of these attributes, you can create your own data types.</source>
+        <translation type="obsolete">Добродошли у чаробњак за креирање новог datatypа. Све што снимите у садржај објеката зове се атрибут. Ти атрибути су дефинисани као дата врсте.</translation>
     </message>
     <message>
         <source>Welcome to the wizard for creating a new datatype. Everything stored in a content object are called attributes. Attributes are defined as data types. To customize storing and validation of attributes, you can create your own data types.</source>
@@ -9392,6 +11423,10 @@ Note: The packages will not be uninstalled.</source>
         <translation>Збир</translation>
     </message>
     <message>
+        <source>E-mail</source>
+        <translation type="obsolete">E-mail</translation>
+    </message>
+    <message>
         <source>Full name</source>
         <translation>Име и презиме</translation>
     </message>
@@ -9427,12 +11462,40 @@ Note: The packages will not be uninstalled.</source>
         <source>Email</source>
         <translation>Електронска пошта</translation>
     </message>
+    <message>
+        <source>Not all timed out sessions were successfully removed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The operation were cut short in order to avoid execution timeout.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Your alternatives are to:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Repeat the operation several times to complete it.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Clear the timed out session data from command-line using: &amp;gt;php bin/php/ezsessiongc.php</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Install the session cleanup cronjob &apos;session_gc.php&apos; and run on nightly intervals (see cronjob.ini or doc for how)</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>design/admin/shop/accounthandlers/html/ez</name>
     <message>
         <source>Name</source>
         <translation>Назив</translation>
+    </message>
+    <message>
+        <source>E-mail</source>
+        <translation type="obsolete">E-mail</translation>
     </message>
     <message>
         <source>Address</source>
@@ -9457,6 +11520,10 @@ Note: The packages will not be uninstalled.</source>
     <message>
         <source>State</source>
         <translation>Статус</translation>
+    </message>
+    <message>
+        <source>Country</source>
+        <translation type="obsolete">Земља</translation>
     </message>
     <message>
         <source>Email</source>
@@ -9525,6 +11592,10 @@ Note: The packages will not be uninstalled.</source>
         <source>Unarchive selected orders.</source>
         <translation>Избаци изабране наруџбе из архиве.</translation>
     </message>
+    <message>
+        <source>Archived orders (%count)</source>
+        <translation>Архивиране наруџбе (%count)</translation>
+    </message>
 </context>
 <context>
     <name>design/admin/shop/basket</name>
@@ -9567,6 +11638,14 @@ Note: The packages will not be uninstalled.</source>
     <message>
         <source>Selected options</source>
         <translation>Изабране опције</translation>
+    </message>
+    <message>
+        <source>Subtotal (ex. VAT)</source>
+        <translation type="obsolete">Међузбир без ПДВ-а</translation>
+    </message>
+    <message>
+        <source>Subtotal (inc. VAT)</source>
+        <translation type="obsolete">Међузбир укључујући ПДВ</translation>
     </message>
     <message>
         <source>Remove selected</source>
@@ -9619,6 +11698,18 @@ Note: The packages will not be uninstalled.</source>
     <message>
         <source>Proceed to checkout and purchase the items that are in the basket.</source>
         <translation>Наставите са плаћањем.</translation>
+    </message>
+    <message>
+        <source>You can not remove any items because there are no items in the basket.</source>
+        <translation type="obsolete">Не можете уклонити производе јер је корпа празна.</translation>
+    </message>
+    <message>
+        <source>You can not store any changes because the basket is empty.</source>
+        <translation type="obsolete">Не можете снимити корпу јер је празна.</translation>
+    </message>
+    <message>
+        <source>You can not check out because the basket is empty.</source>
+        <translation type="obsolete">Не можете кренути на наплату јер је корпа празна.</translation>
     </message>
     <message>
         <source>VAT is unknown</source>
@@ -9935,6 +12026,10 @@ Note: The packages will not be uninstalled.</source>
         <source>Customers [%customers]</source>
         <translation>Купци [%customers]</translation>
     </message>
+    <message>
+        <source>Customers (%customers)</source>
+        <translation>Купци (%customers)</translation>
+    </message>
 </context>
 <context>
     <name>design/admin/shop/customerorderview</name>
@@ -9977,6 +12072,14 @@ Note: The packages will not be uninstalled.</source>
     <message>
         <source>Status</source>
         <translation>Статус</translation>
+    </message>
+    <message>
+        <source>Orders (%order_count)</source>
+        <translation>Наруџбе (%order_count)</translation>
+    </message>
+    <message>
+        <source>Purchased products (%product_count)</source>
+        <translation>Купљени производи (%product_count)</translation>
     </message>
 </context>
 <context>
@@ -10024,6 +12127,10 @@ Note: The packages will not be uninstalled.</source>
     <message>
         <source>Create a new discount group.</source>
         <translation>Креирај нову групу снижења.</translation>
+    </message>
+    <message>
+        <source>Discount groups (%discount_groups)</source>
+        <translation>Групе снижења (%discount_groups)</translation>
     </message>
 </context>
 <context>
@@ -10143,6 +12250,14 @@ Note: The packages will not be uninstalled.</source>
         <source>Add users and/or user groups to the &lt;%discount_group_name&gt; discount group.</source>
         <translation>Додај купца и-или групу купаца у групу &lt;%discount_group_name&gt; попуста.</translation>
     </message>
+    <message>
+        <source>Discount rules (%rule_count)</source>
+        <translation>Улоге попуста (%rule_count)</translation>
+    </message>
+    <message>
+        <source>Customers (users and user groups) (%customer_count)</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>design/admin/shop/discountruleedit</name>
@@ -10172,7 +12287,7 @@ Note: The packages will not be uninstalled.</source>
     </message>
     <message>
         <source>New discount rule</source>
-        <translation>Нова улога попуста</translation>
+        <translation type="unfinished">Нова улога попуста</translation>
     </message>
     <message>
         <source>Product types</source>
@@ -10356,6 +12471,10 @@ Note: The packages will not be uninstalled.</source>
         <translation>Време</translation>
     </message>
     <message>
+        <source>Remove selected</source>
+        <translation type="obsolete">Уклони изабрано</translation>
+    </message>
+    <message>
         <source>Ascending</source>
         <translation>Узлазно</translation>
     </message>
@@ -10374,6 +12493,10 @@ Note: The packages will not be uninstalled.</source>
     <message>
         <source>The order list is empty.</source>
         <translation>Листа наруџби је празна.</translation>
+    </message>
+    <message>
+        <source>Remove selected orders.</source>
+        <translation type="obsolete">Уклони изабране наруџбе.</translation>
     </message>
     <message>
         <source>Status</source>
@@ -10398,6 +12521,10 @@ Note: The packages will not be uninstalled.</source>
     <message>
         <source>Archive selected orders.</source>
         <translation>Архивирај изабране наруџбе.</translation>
+    </message>
+    <message>
+        <source>Orders (%count)</source>
+        <translation>Наруџбе (%count)</translation>
     </message>
 </context>
 <context>
@@ -10443,6 +12570,18 @@ Note: The packages will not be uninstalled.</source>
         <translation>Листа је празна.</translation>
     </message>
     <message>
+        <source>Select the year for which you wish to view statistics.</source>
+        <translation type="obsolete">Изаберите годину за коју желите видети статистику</translation>
+    </message>
+    <message>
+        <source>Select the month for which you wish to view statistics.</source>
+        <translation type="obsolete">Изаберите месец за који желите да видите статистике.</translation>
+    </message>
+    <message>
+        <source>Update the list using the values specified by the menus on the left.</source>
+        <translation type="obsolete">Освежите листу користећи вредности специфициране менијем са леве стране.</translation>
+    </message>
+    <message>
         <source>Select the year for which you want to view statistics.</source>
         <translation>Изаберите годину за коју желите да прегледате статистике.</translation>
     </message>
@@ -10453,6 +12592,10 @@ Note: The packages will not be uninstalled.</source>
     <message>
         <source>Update the list using the values specified by the menus to the left.</source>
         <translation>Обновите листу користећи вредности означене на менију с лева.</translation>
+    </message>
+    <message>
+        <source>Product statistics (%count)</source>
+        <translation>Статистика производа (%count)</translation>
     </message>
 </context>
 <context>
@@ -10490,6 +12633,14 @@ Note: The packages will not be uninstalled.</source>
         <translation>Попуст</translation>
     </message>
     <message>
+        <source>Total Price ex. VAT</source>
+        <translation type="obsolete">Укупна цена без ПДВ-а</translation>
+    </message>
+    <message>
+        <source>Total Price inc. VAT</source>
+        <translation type="obsolete">Укупна цена са ПДВ-ом</translation>
+    </message>
+    <message>
         <source>Order summary</source>
         <translation>Укратко наруџбе</translation>
     </message>
@@ -10522,6 +12673,10 @@ Note: The packages will not be uninstalled.</source>
         <translation>Особа</translation>
     </message>
     <message>
+        <source>This is the person which modified the status of the order. Click to view the user information.</source>
+        <translation type="obsolete">Ово је особа које је изменила статус наруџбе. Кликните да видите информације о кориснику.</translation>
+    </message>
+    <message>
         <source>Selected options</source>
         <translation>Изабране опције</translation>
     </message>
@@ -10540,6 +12695,10 @@ Note: The packages will not be uninstalled.</source>
     <message>
         <source>This is the person who modified the status of the order. Click to view the user information.</source>
         <translation>Ово је особа која је променила статус поруџбе. Притисните за преглед корисничких информација.</translation>
+    </message>
+    <message>
+        <source>Status history (%status_count)</source>
+        <translation>Историјат статуса (%status_count)</translation>
     </message>
 </context>
 <context>
@@ -10598,6 +12757,10 @@ Note: The packages will not be uninstalled.</source>
     <message>
         <source>Click this button to store changes if you have modified any of the fields above.</source>
         <translation>Кликните на дугме за чување измена ако сте изменили било које поље.</translation>
+    </message>
+    <message>
+        <source>Product categories (%categories)</source>
+        <translation>Категорије производа (%categories)</translation>
     </message>
 </context>
 <context>
@@ -10870,6 +13033,10 @@ Note: The packages will not be uninstalled.</source>
         <source>Order status [%order_status]</source>
         <translation>Статус наруџбе [%order_status]</translation>
     </message>
+    <message>
+        <source>Order status (%order_status)</source>
+        <translation>Статус наруџбе (%order_status)</translation>
+    </message>
 </context>
 <context>
     <name>design/admin/shop/userregister</name>
@@ -10878,8 +13045,16 @@ Note: The packages will not be uninstalled.</source>
         <translation>Недостаје потребна информација...</translation>
     </message>
     <message>
+        <source>Please please fill in the fields that are marked with a star.</source>
+        <translation type="obsolete">Молимо попуните поља означена звездицом.</translation>
+    </message>
+    <message>
         <source>Account information</source>
         <translation>Подаци о рачуну</translation>
+    </message>
+    <message>
+        <source>Please fill in the necessary information. Required fields are marked with a star.</source>
+        <translation type="obsolete">Молимо поуните потребне информације. Обавезна поља су означена звездицом.</translation>
     </message>
     <message>
         <source>First name</source>
@@ -10888,6 +13063,10 @@ Note: The packages will not be uninstalled.</source>
     <message>
         <source>Last name</source>
         <translation>Презиме</translation>
+    </message>
+    <message>
+        <source>E-mail</source>
+        <translation type="obsolete">E-mail</translation>
     </message>
     <message>
         <source>Company</source>
@@ -10908,6 +13087,10 @@ Note: The packages will not be uninstalled.</source>
     <message>
         <source>State</source>
         <translation>Регија</translation>
+    </message>
+    <message>
+        <source>Country</source>
+        <translation type="obsolete">Земља</translation>
     </message>
     <message>
         <source>Comments</source>
@@ -11004,6 +13187,10 @@ Note: The packages will not be uninstalled.</source>
         <source>Create a new VAT charging rule.</source>
         <translation>Направи ново правило наплате ПДВ-а.</translation>
     </message>
+    <message>
+        <source>VAT charging rules (%rules)</source>
+        <translation>Правила наплате ПДВ-а (%rules)</translation>
+    </message>
 </context>
 <context>
     <name>design/admin/shop/vattype</name>
@@ -11058,6 +13245,10 @@ Note: The packages will not be uninstalled.</source>
     <message>
         <source>Input did not validate</source>
         <translation>Унос није исправан</translation>
+    </message>
+    <message>
+        <source>VAT types (%vat_types)</source>
+        <translation>Врсте ПДВ-а (%vat_types)</translation>
     </message>
 </context>
 <context>
@@ -11129,6 +13320,10 @@ Note: The packages will not be uninstalled.</source>
     <message>
         <source>Click this button to store changes if you have modified quantity and/or option values.</source>
         <translation>Кликните ово дугме да снимите измене ако сте мењали количини и/или садржај.</translation>
+    </message>
+    <message>
+        <source>My wish list (%item_count)</source>
+        <translation>Моја листа жеља (%item_count)</translation>
     </message>
 </context>
 <context>
@@ -11247,6 +13442,10 @@ Note: The packages will not be uninstalled.</source>
     <message>
         <source>Description</source>
         <translation type="unfinished">Опис</translation>
+    </message>
+    <message>
+        <source>Object states in this group (%state_count)</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -11380,6 +13579,10 @@ Note: The packages will not be uninstalled.</source>
         <source>Content object state groups [%group_count]</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Content object state groups (%group_count)</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>design/admin/trigger/list</name>
@@ -11418,6 +13621,10 @@ Note: The packages will not be uninstalled.</source>
     <message>
         <source>Click this button to store changes if you have modified any of the fields above.</source>
         <translation>Кликните на дугме за чување измена ако сте изменили било које поље.</translation>
+    </message>
+    <message>
+        <source>Workflow triggers (%trigger_count)</source>
+        <translation>Окидачи радног тока (%trigger_count)</translation>
     </message>
 </context>
 <context>
@@ -11533,6 +13740,18 @@ Note: The packages will not be uninstalled.</source>
         <source>The requested list is empty.</source>
         <translation>Затражена листа је празна.</translation>
     </message>
+    <message>
+        <source>Valid URLs (%url_list_count)</source>
+        <translation>Важећи URLови (%url_list_count)</translation>
+    </message>
+    <message>
+        <source>Invalid URLs (%url_list_count)</source>
+        <translation>Неважећи URLови (%url_list_count)</translation>
+    </message>
+    <message>
+        <source>All URLs (%url_list_count)</source>
+        <translation>Сви URLови (%url_list_count)</translation>
+    </message>
 </context>
 <context>
     <name>design/admin/url/view</name>
@@ -11633,8 +13852,16 @@ Note: The packages will not be uninstalled.</source>
         <translation>Све</translation>
     </message>
     <message>
+        <source>View the contents of version #%version_number. Default translation: %default_translation.</source>
+        <translation type="obsolete">Прикажи садржај верзије #%version_number. Превод: %default_translation.</translation>
+    </message>
+    <message>
         <source>View the contents of version #%version_number.</source>
         <translation>Види садржај верзије #%version_number.</translation>
+    </message>
+    <message>
+        <source>Objects using URL #%url_id (%url_count)</source>
+        <translation>Објекти који користе URL #%url_id (%url_count)</translation>
     </message>
 </context>
 <context>
@@ -11654,6 +13881,10 @@ Note: The packages will not be uninstalled.</source>
     <message>
         <source>Sorry, the key submitted was not a valid key. Account was not activated.</source>
         <translation>Нажалост, унесени кључ није одговарајући кључ. Рачун није активиран.</translation>
+    </message>
+    <message>
+        <source>Your account was successfully created. An e-mail will be sent to the specifiede-mail address. You need to follow the instructions in that mail to activateyour account.</source>
+        <translation type="obsolete">Ваш кориснички рачун је успешно креиран. Послан вам је email на адресу коју сте навелипри регистрацији. Следите упутства у том emailу да би активирали ваш кориснички рачун.</translation>
     </message>
     <message>
         <source>Your account was successfully created.</source>
@@ -11683,6 +13914,10 @@ your account.</source>
         <translation>Проверите је ли ваше корисничко име и лозинка исправна.</translation>
     </message>
     <message>
+        <source>All letters must be typed in using the correct case.</source>
+        <translation type="obsolete">Пазите на велика и мала слова.</translation>
+    </message>
+    <message>
         <source>Please try again or contact the site administrator.</source>
         <translation>Молимо пробајте поново или контактирајте администратора &lt;%administrator&gt;.</translation>
     </message>
@@ -11691,8 +13926,20 @@ your account.</source>
         <translation>Ускраћен приступ!</translation>
     </message>
     <message>
+        <source>You do not have permissions to access &lt;%siteaccess_name&gt;.</source>
+        <translation type="obsolete">Немате овлашћења за приступ &lt;%siteaccess_name&gt;.</translation>
+    </message>
+    <message>
         <source>Please contact the site administrator.</source>
         <translation>Молимо контактирајте администратора.</translation>
+    </message>
+    <message>
+        <source>Log in to the administration interface of eZ publish</source>
+        <translation type="obsolete">Логујте се на администраторски интерфејс</translation>
+    </message>
+    <message>
+        <source>Please enter a valid username/password combination and click &quot;Log in&quot;.</source>
+        <translation type="obsolete">Унесите исправно корисничко име/лозинку и кликните на &quot;Пријава&quot;.</translation>
     </message>
     <message>
         <source>Use the &quot;Register&quot; button to create a new account.</source>
@@ -11703,8 +13950,16 @@ your account.</source>
         <translation>Корисничко име</translation>
     </message>
     <message>
+        <source>Enter a valid username into this field.</source>
+        <translation type="obsolete">Унесите исправно корисничко име у ово поље.</translation>
+    </message>
+    <message>
         <source>Password</source>
         <translation>Лозинка</translation>
+    </message>
+    <message>
+        <source>Enter a valid password into this field.</source>
+        <translation type="obsolete">Унесите исправну лозинку у поље.</translation>
     </message>
     <message>
         <source>Log in</source>
@@ -11816,6 +14071,10 @@ your account.</source>
         <translation>Потврди нову лозинку</translation>
     </message>
     <message>
+        <source>The password must be at least 3 characters long.</source>
+        <translation type="obsolete">Лозинка мора садржати барем 3 знака.</translation>
+    </message>
+    <message>
         <source>The password must be at least %1 characters long.</source>
         <translation>Лозинка мора имати најмање %1 симбола.</translation>
     </message>
@@ -11907,6 +14166,10 @@ your account.</source>
     <message>
         <source>Menu management</source>
         <translation>Управљање менијем</translation>
+    </message>
+    <message>
+        <source>SiteAccess</source>
+        <translation type="obsolete">Siteaccess</translation>
     </message>
     <message>
         <source>Set</source>
@@ -12035,6 +14298,14 @@ your account.</source>
         <translation>Назад на преглед заобилазака.</translation>
     </message>
     <message>
+        <source>You do not have permissions to save the contents of the text field above to the template file.</source>
+        <translation type="obsolete">Немате овлашћења за снимање садржаја текстуалног поља у датотеку шаблона.</translation>
+    </message>
+    <message>
+        <source>The template can not be edited.</source>
+        <translation type="obsolete">Шаблон не може бити мењан.</translation>
+    </message>
+    <message>
         <source>The web server does not have write access to the requested template.</source>
         <translation>Web сервер нема овлашћења писања у затражени шаблон.</translation>
     </message>
@@ -12059,6 +14330,10 @@ your account.</source>
         <translation>Siteaccess</translation>
     </message>
     <message>
+        <source>Overrides template</source>
+        <translation type="obsolete">Заобићи шаблон</translation>
+    </message>
+    <message>
         <source>Open as read only</source>
         <translation>Отвори само за читање</translation>
     </message>
@@ -12081,6 +14356,10 @@ your account.</source>
 </context>
 <context>
     <name>design/admin/visual/templatelist</name>
+    <message>
+        <source>Complete template list</source>
+        <translation type="obsolete">Комплетна листа шаблона</translation>
+    </message>
     <message>
         <source>Template</source>
         <translation>Шаблон</translation>
@@ -12173,6 +14452,10 @@ your account.</source>
         <translation>Немате одговарајућа овлашћења за уклањање датотека и заобилазних улога</translation>
     </message>
     <message>
+        <source>The override.ini file could not be modified because of insufficient permissions.</source>
+        <translation type="obsolete">Немате одговарајућа овлашћења за уклањање override.ini датотеке.</translation>
+    </message>
+    <message>
         <source>No file matched</source>
         <translation>Датотека није пронађена</translation>
     </message>
@@ -12184,9 +14467,17 @@ your account.</source>
         <source>There are no overrides for the &lt;%template_name&gt; template.</source>
         <translation>Нема заобилазака за шаблон &lt;%template_name&gt;.</translation>
     </message>
+    <message>
+        <source>Overrides for &lt;%template_name&gt; template in &lt;%current_siteaccess&gt; siteaccess (%override_count)</source>
+        <translation>Заобилазни шаблон &lt;%template_name&gt; у текућем &lt;%current_siteaccess&gt; (%override_count)</translation>
+    </message>
 </context>
 <context>
     <name>design/admin/visual/toolbar</name>
+    <message>
+        <source>Tool List for &lt;Toolbar_%toolbar_position&gt;</source>
+        <translation type="obsolete">Листа алата за Toolbar_%toolbar_position</translation>
+    </message>
     <message>
         <source>Browse</source>
         <translation>Листај</translation>
@@ -12242,6 +14533,10 @@ your account.</source>
     <message>
         <source>Toolbar management</source>
         <translation>Управљање алатном траком</translation>
+    </message>
+    <message>
+        <source>SiteAccess</source>
+        <translation type="obsolete">Siteaccess</translation>
     </message>
     <message>
         <source>Current siteaccess</source>
@@ -12338,6 +14633,10 @@ your account.</source>
         <translation>Све секције</translation>
     </message>
     <message>
+        <source>User who approves content</source>
+        <translation type="obsolete">Корисник који одобрава садржај</translation>
+    </message>
+    <message>
         <source>Classes to run workflow</source>
         <translation>Класе за радни ток</translation>
     </message>
@@ -12394,12 +14693,24 @@ your account.</source>
         <translation>Измени датуме објављених објеката</translation>
     </message>
     <message>
+        <source>There are no payment Gateway extensions installed.</source>
+        <translation type="obsolete">Нема инсталираних гатеwаy екстензија за плаћање.</translation>
+    </message>
+    <message>
         <source>Please install a payment extension first.</source>
         <translation>Молимо прво инсталирај екстензије за плаћање.</translation>
     </message>
     <message>
         <source>User</source>
         <translation>Корисник</translation>
+    </message>
+    <message>
+        <source>No user selected.</source>
+        <translation type="obsolete">Ниједан корисник није изабран.</translation>
+    </message>
+    <message>
+        <source>Add user</source>
+        <translation type="obsolete">Додај корисника</translation>
     </message>
     <message>
         <source>Excluded user groups ( users in these groups do not need to have their content approved )</source>
@@ -12469,6 +14780,10 @@ your account.</source>
         <source>There are no payment gateway extensions installed.</source>
         <translation>Нема екстензија за портале за наплату.</translation>
     </message>
+    <message>
+        <source>Class/attribute combinations (%count)</source>
+        <translation>Класа/атрибут комбинација (%count)</translation>
+    </message>
 </context>
 <context>
     <name>design/admin/workflow/groupedit</name>
@@ -12535,6 +14850,10 @@ your account.</source>
         <source>Create a new workflow group.</source>
         <translation>Креирај нову групу радног тока.</translation>
     </message>
+    <message>
+        <source>Workflow groups (%groups_count)</source>
+        <translation>Групе радних токова (%groups_count)</translation>
+    </message>
 </context>
 <context>
     <name>design/admin/workflow/proccesslist</name>
@@ -12576,6 +14895,14 @@ your account.</source>
     <message>
         <source>Current event</source>
         <translation>Текући догађај</translation>
+    </message>
+    <message>
+        <source>Workflow processes (%trigger_count)</source>
+        <translation>Процеси радних токова (%trigger_count)</translation>
+    </message>
+    <message>
+        <source>(%process_count)</source>
+        <translation>(%process_count)</translation>
     </message>
 </context>
 <context>
@@ -12647,6 +14974,14 @@ your account.</source>
     <message>
         <source>Additional information</source>
         <translation>Додатни подаци</translation>
+    </message>
+    <message>
+        <source>Member of groups (%group_count)</source>
+        <translation>Припада групама (%group_count)</translation>
+    </message>
+    <message>
+        <source>Events (%event_count)</source>
+        <translation>Догађаји (%event_count)</translation>
     </message>
 </context>
 <context>
@@ -12727,6 +15062,10 @@ your account.</source>
         <source>Create a new workflow.</source>
         <translation>Креирај нови радни ток.</translation>
     </message>
+    <message>
+        <source>Workflows (%workflow_count)</source>
+        <translation>Радни токови (%workflow_count)</translation>
+    </message>
 </context>
 <context>
     <name>design/base</name>
@@ -12799,6 +15138,10 @@ your account.</source>
         <translation>Контакт особе</translation>
     </message>
     <message>
+        <source>Your E-mail address</source>
+        <translation type="obsolete">Ваша e-mail адреса</translation>
+    </message>
+    <message>
         <source>Send form</source>
         <translation>Пошаљи</translation>
     </message>
@@ -12809,6 +15152,10 @@ your account.</source>
     <message>
         <source>Keep me updated</source>
         <translation>Редовно ме обавештавај</translation>
+    </message>
+    <message>
+        <source>You need to be logged in to get access to the forums. You can do so %login_link_start%here%login_link_end%</source>
+        <translation type="obsolete">Морате бити пријављени како би имали приступ форуму. Пријавити се можете на следећи начин: %login_link_start%ovde%login_link_end%</translation>
     </message>
     <message>
         <source>Topic</source>
@@ -12845,6 +15192,10 @@ your account.</source>
     <message>
         <source>New reply</source>
         <translation>Нови одговор</translation>
+    </message>
+    <message>
+        <source>You need to be logged in to get access to the forums. You can do so</source>
+        <translation type="obsolete">Морате бити пријављени како би имали приступ форуму. То можете учинити на следећи начин</translation>
     </message>
     <message>
         <source>here</source>
@@ -12947,6 +15298,10 @@ your account.</source>
         <translation>Прегледај коментаре</translation>
     </message>
     <message>
+        <source>Powered by %linkStartTag eZ publish&amp;reg;&amp;trade; open source content management system %linkEndTag and development framework.</source>
+        <translation type="obsolete">Израђено помоћу %linkStartTag eZ Publish %linkEndTag отвореног кода.</translation>
+    </message>
+    <message>
         <source>Top menu</source>
         <translation>Главни мени</translation>
     </message>
@@ -12963,6 +15318,10 @@ your account.</source>
         <translation>Леви подмени</translation>
     </message>
     <message>
+        <source>Powered by %linkStartTag eZ publish&amp;reg; open source content management system %linkEndTag and development framework.</source>
+        <translation type="obsolete">Израђено помоћу %linkStartTag eZ Publish %linkEndTag отвореног кода.</translation>
+    </message>
+    <message>
         <source>Details...</source>
         <translation>Детаљи...</translation>
     </message>
@@ -12973,6 +15332,14 @@ your account.</source>
     <message>
         <source>Results</source>
         <translation>Резултати</translation>
+    </message>
+    <message>
+        <source>Anonymous users are not allowed to vote on this poll, please login.</source>
+        <translation type="obsolete">Анонимним корисницима није дозвољено гласати у овој анкети, молимо пријавите се.</translation>
+    </message>
+    <message>
+        <source>You have already voted for this poll.</source>
+        <translation type="obsolete">Већ сте гласали у овој анкети.</translation>
     </message>
     <message>
         <source>Votes</source>
@@ -13100,8 +15467,16 @@ your account.</source>
         <translation>Проверите јесте ли исправно написали кључне речи.</translation>
     </message>
     <message>
+        <source>Try changing some keywords eg. car instead of cars.</source>
+        <translation type="obsolete">Покушајте променити неке од кључних речи нпр. аутомобил уместо аутомобили.</translation>
+    </message>
+    <message>
         <source>Try more general keywords.</source>
         <translation>Покушајте с уопштенијим кључним речима.</translation>
+    </message>
+    <message>
+        <source>Fewer keywords gives more results, try reducing keywords until you get a result.</source>
+        <translation type="obsolete">Мањи број кључних речи даје више резултата, покушајте смањити број кључних речи док не дођете до резултата.</translation>
     </message>
     <message>
         <source>Search for &quot;%1&quot; returned %2 matches</source>
@@ -13171,8 +15546,24 @@ your account.</source>
         <translation>Цена</translation>
     </message>
     <message>
+        <source>Total Price</source>
+        <translation type="obsolete">Укупна цена</translation>
+    </message>
+    <message>
         <source>Basket</source>
         <translation>Корпа</translation>
+    </message>
+    <message>
+        <source>The following items were removed from your basket, because the products were changed</source>
+        <translation type="obsolete">Производи су уклоњени из ваше корпе јер је дошло до промена на производима</translation>
+    </message>
+    <message>
+        <source>Attempted to add object without price to basket.</source>
+        <translation type="obsolete">Покушај додавања производа без цене у корпу.</translation>
+    </message>
+    <message>
+        <source>Your payment was aborted.</source>
+        <translation type="obsolete">Ваше плаћање је прекинуто.</translation>
     </message>
     <message>
         <source>VAT</source>
@@ -13189,6 +15580,10 @@ your account.</source>
     <message>
         <source>Selected options</source>
         <translation>Изабране опције</translation>
+    </message>
+    <message>
+        <source>Subtotal Inc. VAT</source>
+        <translation type="obsolete">Међузбир укључујући ПДВ</translation>
     </message>
     <message>
         <source>Checkout</source>
@@ -13217,6 +15612,10 @@ your account.</source>
     <message>
         <source>Order summary</source>
         <translation>Укратко наруџбе</translation>
+    </message>
+    <message>
+        <source>Subtotal of items</source>
+        <translation type="obsolete">Међузбир производа</translation>
     </message>
     <message>
         <source>Order total</source>
@@ -13297,6 +15696,29 @@ your account.</source>
     <message>
         <source>Total VAT</source>
         <translation>Укупан ПДВ</translation>
+    </message>
+</context>
+<context>
+    <name>design/ezwebin/content/datatype</name>
+    <message>
+        <source>Year</source>
+        <translation type="unfinished">Година</translation>
+    </message>
+    <message>
+        <source>Month</source>
+        <translation type="unfinished">Месец</translation>
+    </message>
+    <message>
+        <source>Day</source>
+        <translation type="unfinished">Дан</translation>
+    </message>
+    <message>
+        <source>Hour</source>
+        <translation type="unfinished">Сат</translation>
+    </message>
+    <message>
+        <source>Minute</source>
+        <translation type="unfinished">Минут</translation>
     </message>
 </context>
 <context>
@@ -13405,6 +15827,14 @@ your account.</source>
     <message>
         <source>QuickTime</source>
         <translation>QuickTime</translation>
+    </message>
+    <message>
+        <source>Real player</source>
+        <translation type="obsolete">Real player</translation>
+    </message>
+    <message>
+        <source>Windows media player</source>
+        <translation type="obsolete">Windows media player</translation>
     </message>
     <message>
         <source>Price inc. VAT</source>
@@ -13563,6 +15993,10 @@ your account.</source>
         <translation>Изабери које категорије корисник може креирати</translation>
     </message>
     <message>
+        <source>Package Type</source>
+        <translation type="obsolete">Врста пакета</translation>
+    </message>
+    <message>
         <source>Checked</source>
         <translation>Проверено</translation>
     </message>
@@ -13575,8 +16009,16 @@ your account.</source>
         <translation>Једна могућност</translation>
     </message>
     <message>
+        <source>Warning, the ini file settings value and object value does not match.</source>
+        <translation type="obsolete">Упозорење, подешавања вредности ini датотеке и вредности објекта не поклапају се.</translation>
+    </message>
+    <message>
         <source>The ini file has probably been modified manually since last time.</source>
         <translation>Ini датотека вероватно је ручно промењена од последњег пута.</translation>
+    </message>
+    <message>
+        <source>Ini File : </source>
+        <translation type="obsolete">Ini датотека:</translation>
     </message>
     <message>
         <source>Ini Value: </source>
@@ -13609,6 +16051,14 @@ your account.</source>
     <message>
         <source>Browse</source>
         <translation>Листај</translation>
+    </message>
+    <message>
+        <source>Dropdown list</source>
+        <translation type="obsolete">Падајућа листа</translation>
+    </message>
+    <message>
+        <source>Dropdown tree</source>
+        <translation type="obsolete">Падајуће стабло</translation>
     </message>
     <message>
         <source>Remove selection</source>
@@ -13645,6 +16095,10 @@ your account.</source>
     <message>
         <source>Minute</source>
         <translation>Минут</translation>
+    </message>
+    <message>
+        <source>View Mode</source>
+        <translation type="obsolete">Начин приказа</translation>
     </message>
     <message>
         <source>Drop-down list</source>
@@ -13699,6 +16153,10 @@ your account.</source>
         <translation>Уклони изабране колоне.</translation>
     </message>
     <message>
+        <source>Default location for objects</source>
+        <translation type="obsolete">Основна локација за објекте</translation>
+    </message>
+    <message>
         <source>New objects will not be placed in the content tree.</source>
         <translation>Нови објекти неће бити стављени у садржај.</translation>
     </message>
@@ -13733,6 +16191,14 @@ your account.</source>
     <message>
         <source>Style</source>
         <translation>Стил</translation>
+    </message>
+    <message>
+        <source>Checkboxes / radiobuttons</source>
+        <translation type="obsolete">Checkbox-ови / радиодугмад</translation>
+    </message>
+    <message>
+        <source>Dropdown menu / multi menu</source>
+        <translation type="obsolete">Падајући мени / вишеселективни</translation>
     </message>
     <message>
         <source>Elements</source>
@@ -13827,6 +16293,14 @@ your account.</source>
         <translation>Интерфаце</translation>
     </message>
     <message>
+        <source>Dropdown menu / multiselect</source>
+        <translation type="obsolete">Падајући мени / вишеселективни</translation>
+    </message>
+    <message>
+        <source>Radiobuttons / checkboxes</source>
+        <translation type="obsolete">Радио дугмад / checkbox-ови</translation>
+    </message>
+    <message>
         <source>Yes</source>
         <translation>Да</translation>
     </message>
@@ -13853,6 +16327,10 @@ your account.</source>
     <message>
         <source>Price</source>
         <translation>Цена</translation>
+    </message>
+    <message>
+        <source>For more options, set &quot;AdvancedObjectRelationList&quot; to &quot;enabled&quot; in a configuration override for &quot;site.ini&quot;.</source>
+        <translation type="obsolete">За додатне опције изабери &quot;AdvancedObjectRelationList&quot; и активирај у конфигурационом заобиласку за &quot;site.ini&quot;.</translation>
     </message>
     <message>
         <source>Default selection</source>
@@ -14053,6 +16531,10 @@ your account.</source>
         <translation>Примени</translation>
     </message>
     <message>
+        <source>Discard Changes</source>
+        <translation type="obsolete">Одбаци промене</translation>
+    </message>
+    <message>
         <source>Discard</source>
         <translation>Одбаци</translation>
     </message>
@@ -14125,6 +16607,18 @@ your account.</source>
         <translation>Промене извршио %username у %time</translation>
     </message>
     <message>
+        <source>Is Container Class</source>
+        <translation type="obsolete">Класа је контејнер</translation>
+    </message>
+    <message>
+        <source>Use this menu to select the type of attribute you wish to create. Click the &quot;add attribute&quot; button. The attribute will be appended to the bottom of the list of attributes.</source>
+        <translation type="obsolete">Користите мени за избор врсте атрибута који желите креирати. Атрибут ће бити додан на крај листе атрибута.</translation>
+    </message>
+    <message>
+        <source>The class should have at least one attribute and nonempty &apos;Name&apos; attribute</source>
+        <translation type="obsolete">Класа мора имати барем један атрибут и испуњено поље атрибута &quot;Назив&quot;</translation>
+    </message>
+    <message>
         <source>The class %1 was already removed from the group but still exists in others.</source>
         <translation>Класа %1 је уклоњена из групе али још увек постоји у другим групама.</translation>
     </message>
@@ -14155,6 +16649,61 @@ your account.</source>
     <message>
         <source>Discard changes</source>
         <translation>Одбаци промене</translation>
+    </message>
+    <message>
+        <source>Description</source>
+        <translation type="unfinished">Опис</translation>
+    </message>
+    <message>
+        <source>Use this field to set the informal description of the class. The description field can contain whitespaces and special characters.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>design/standard/class/edit_locked</name>
+    <message>
+        <source>Class locked</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This class has pending modifications defered to cronjob and thus it cannot be edited.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Wait until the script is finished. You might see the status in the %urlstart script monitor%urlend&lt;/a&gt;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>To force the modification of the class you may run the following command</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit &lt;%class_name&gt; [Class]</source>
+        <translation type="unfinished">Измени класу &lt;%class_name&gt; [Класа]</translation>
+    </message>
+    <message>
+        <source>Class</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Last modifier</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Last modified on</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The class will be available for editing after the script has been run by the cronjob.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Retry</source>
+        <translation type="unfinished">Понови</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -14299,6 +16848,10 @@ your account.</source>
         <translation>Заобиласци шаблона</translation>
     </message>
     <message>
+        <source>SiteAccess</source>
+        <translation type="obsolete">Siteaccess</translation>
+    </message>
+    <message>
         <source>Override</source>
         <translation>Заобилазак</translation>
     </message>
@@ -14318,6 +16871,10 @@ your account.</source>
         <source>Siteaccess</source>
         <translation>Приступ сајту</translation>
     </message>
+    <message>
+        <source>Description</source>
+        <translation type="unfinished">Опис</translation>
+    </message>
 </context>
 <context>
     <name>design/standard/collaboration</name>
@@ -14336,6 +16893,22 @@ your account.</source>
     <message>
         <source>Approval</source>
         <translation>Одобрење</translation>
+    </message>
+    <message>
+        <source>%1 awaits approval by editor</source>
+        <translation type="obsolete">%1 очекује одобрење уредника</translation>
+    </message>
+    <message>
+        <source>%1 was approved for publishing</source>
+        <translation type="obsolete">%1 : ОДОБРЕНО за објаву</translation>
+    </message>
+    <message>
+        <source>%1 was not approved for publishing</source>
+        <translation type="obsolete">%1 : ОДБИЈЕНО</translation>
+    </message>
+    <message>
+        <source>%1 awaits your approval</source>
+        <translation type="obsolete">%1 : ЧЕКА ваше одобрење</translation>
     </message>
     <message>
         <source>Subject</source>
@@ -14385,12 +16958,20 @@ your account.</source>
         <translation>Објект садржаја %1 чека одобрење да би могао бити објављен.  </translation>
     </message>
     <message>
+        <source>If you wish you may send a message to the person approving it?</source>
+        <translation type="obsolete">Ако желите, можете послати поруку особи која га треба одобрити?</translation>
+    </message>
+    <message>
         <source>The content object %1 needs your approval before it can be published.</source>
         <translation>Објект садржаја %1 чека Ваше одобрење да би могао бити објављен.</translation>
     </message>
     <message>
         <source>Do you approve of the content object being published?</source>
         <translation>Одобравате ли објаву објекта садржаја?</translation>
+    </message>
+    <message>
+        <source>The content object %1 was approved and will be published once the publishing workflow continues.</source>
+        <translation type="obsolete">Објект садржаја %1 је одобрен те ће бити објављен кад се издавачки процес настави.</translation>
     </message>
     <message>
         <source>Comment</source>
@@ -14417,6 +16998,10 @@ your account.</source>
         <translation>Поруке</translation>
     </message>
     <message>
+        <source>The content object %1 was not accepted but is available as a draft again.</source>
+        <translation type="obsolete">Објект садржаја %1 није прихваћен, али је опет доступан као скица.</translation>
+    </message>
+    <message>
         <source>Edit the object</source>
         <translation>Измени објект</translation>
     </message>
@@ -14435,6 +17020,18 @@ your account.</source>
     <message>
         <source>You may re-edit the draft and publish it, in which case an approval is required again.</source>
         <translation>Можете преуредити скицу те је објавити, у том случају поново Вам је потребно одобрење.</translation>
+    </message>
+    <message>
+        <source>The author can re-edit the draft and publish it again, in which a new approval item is made.</source>
+        <translation type="obsolete">Аутор може преуредити скицу и поново је објавити. У том случају креира се нова ставка за одобрење.</translation>
+    </message>
+    <message>
+        <source>This e-mail is to inform you that &quot;%objectname&quot; awaits your attention at %sitename.The publishing process has been halted and it is up to you to decide if it should continue or stop.The approval can viewed by using the URL below.</source>
+        <translation type="obsolete">Овај e-mail служи да вас обавештења да &quot;%objectname&quot; чека на %sitename.Proces објаве је тренутно заустављен и на вама је да одлучите да ли ће &quot;%objectname&quot; бити објављен или не.Кликните на доњи линк за приказ одобрења.</translation>
+    </message>
+    <message>
+        <source>This e-mail is to inform you that &quot;%objectname&quot; awaits approval at %sitename before it is published.If you wish to send comments to the approver or view the status use the URL below.</source>
+        <translation type="obsolete">Овај e-mail служи да вас обавести да објект &quot;%objectname&quot; чека одобрење на %sitename пре него буде објављен.Ако желите послати коментар особи која одобрава или видети статус користите доњу URL адресу.</translation>
     </message>
     <message>
         <source>This email is to inform you that &quot;%objectname&quot; awaits your attention at %sitename.
@@ -14549,6 +17146,10 @@ If you want to send comments to the approver or view the status use the URL belo
         <translation>Преводи садржаја</translation>
     </message>
     <message>
+        <source>Below you&apos;ll find a list of active translations which content objects may be translated into.</source>
+        <translation type="obsolete">Ниже ћете наћи листу активних превода чији објекти садржаја могу бити преведени на.</translation>
+    </message>
+    <message>
         <source>Edit</source>
         <translation>Измена</translation>
     </message>
@@ -14565,8 +17166,24 @@ If you want to send comments to the approver or view the status use the URL belo
         <translation>Језик</translation>
     </message>
     <message>
+        <source>Country</source>
+        <translation type="obsolete">Земља</translation>
+    </message>
+    <message>
         <source>Remove</source>
         <translation>Уклони</translation>
+    </message>
+    <message>
+        <source>URL translator</source>
+        <translation type="obsolete">URL преводилац</translation>
+    </message>
+    <message>
+        <source>Store</source>
+        <translation type="obsolete">Сними</translation>
+    </message>
+    <message>
+        <source>Add</source>
+        <translation type="obsolete">Додај</translation>
     </message>
     <message>
         <source>Below you will find a list of active translations that content objects may be translated into.</source>
@@ -14586,6 +17203,14 @@ If you want to send comments to the approver or view the status use the URL belo
     <message>
         <source>Browse</source>
         <translation>Листај</translation>
+    </message>
+    <message>
+        <source>To select objects, choose the appropriate radiobutton or checkbox(es), and click the &quot;Choose&quot; button.</source>
+        <translation type="obsolete">За избор објеката изаберите одговарајући radiobutton или checkbox и кликните &quot;Изабери&quot; дугме.</translation>
+    </message>
+    <message>
+        <source>To select an object that is a child of one of the displayed objects, click the object name and you will get a list of the children of the object.</source>
+        <translation type="obsolete">За избор објекта који је дете једног од приказаних објеката кликните на назив објекта и приказаће вам се листа све деце која припада објекту.</translation>
     </message>
     <message>
         <source>Name</source>
@@ -14679,6 +17304,10 @@ If you want to send comments to the approver or view the status use the URL belo
         <translation>Копирање у току %1</translation>
     </message>
     <message>
+        <source>Version count is %1, and current version is %2.</source>
+        <translation type="obsolete">Број верзија је %1 док је тренутна верзија %2.</translation>
+    </message>
+    <message>
         <source>Version count is %1 and current version is %2.</source>
         <translation>Број верзија ја %1 а актуелна верзија је %2.</translation>
     </message>
@@ -14696,6 +17325,22 @@ If you want to send comments to the approver or view the status use the URL belo
     <message>
         <source>Copy current version.</source>
         <translation>Копирај све текуће верзије.</translation>
+    </message>
+    <message>
+        <source>Keep creators of contentobjects being copied unchaged.</source>
+        <translation type="obsolete">Сачувај ауторе копираног објекта.</translation>
+    </message>
+    <message>
+        <source>Set new creator for contentobjects being copied.</source>
+        <translation type="obsolete">Додели новог аутора копираном објекту.</translation>
+    </message>
+    <message>
+        <source>Keep time of creation and modification of contentobjects being copied unchanged.</source>
+        <translation type="obsolete">Сачувај време креирања и измена копираног објекта.</translation>
+    </message>
+    <message>
+        <source>Copy and publish contentobjects at current time.</source>
+        <translation type="obsolete">Копирај и објави објекте са тренутним временом.</translation>
     </message>
     <message>
         <source>Copy</source>
@@ -14724,6 +17369,10 @@ If you want to send comments to the approver or view the status use the URL belo
 </context>
 <context>
     <name>design/standard/content/copy_subtree_notification</name>
+    <message>
+        <source>Copy Subtree Notification</source>
+        <translation type="obsolete">Обавештење о копираном подстаблу</translation>
+    </message>
     <message>
         <source>OK</source>
         <translation>OK</translation>
@@ -14942,6 +17591,10 @@ If you want to send comments to the approver or view the status use the URL belo
         <translation>E-mail</translation>
     </message>
     <message>
+        <source>Edit</source>
+        <translation type="obsolete">Измена</translation>
+    </message>
+    <message>
         <source>No media file is available.</source>
         <translation>Ни једна медијска датотека није доступна.</translation>
     </message>
@@ -14956,6 +17609,10 @@ If you want to send comments to the approver or view the status use the URL belo
     <message>
         <source>Additional price</source>
         <translation>Додатна цена</translation>
+    </message>
+    <message>
+        <source>E-mail</source>
+        <translation type="obsolete">E-mail</translation>
     </message>
     <message>
         <source>Username</source>
@@ -15100,6 +17757,14 @@ If you want to send comments to the approver or view the status use the URL belo
     <message>
         <source>QuickTime</source>
         <translation>QuickTime</translation>
+    </message>
+    <message>
+        <source>Real player</source>
+        <translation type="obsolete">Real player</translation>
+    </message>
+    <message>
+        <source>Windows media player</source>
+        <translation type="obsolete">Windows media player</translation>
     </message>
     <message>
         <source>Unknown</source>
@@ -15389,6 +18054,18 @@ If you want to send comments to the approver or view the status use the URL belo
         <source>Silverlight</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>There are no related object.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Find object</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Find objects</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>design/standard/content/diff</name>
@@ -15528,6 +18205,14 @@ If you want to send comments to the approver or view the status use the URL belo
         <translation>Дубина</translation>
     </message>
     <message>
+        <source>Class Identifier</source>
+        <translation type="obsolete">Идентификатор класе</translation>
+    </message>
+    <message>
+        <source>Class Name</source>
+        <translation type="obsolete">Назив категорије</translation>
+    </message>
+    <message>
         <source>Priority</source>
         <translation>Приоритет</translation>
     </message>
@@ -15620,6 +18305,10 @@ If you want to send comments to the approver or view the status use the URL belo
         <translation>Измена</translation>
     </message>
     <message>
+        <source>%1 (No locale information available)</source>
+        <translation type="obsolete">%1 (нема података о локализацији)</translation>
+    </message>
+    <message>
         <source>Feedback from %1</source>
         <translation>Повратне информације од %1</translation>
     </message>
@@ -15634,6 +18323,18 @@ If you want to send comments to the approver or view the status use the URL belo
     <message>
         <source>The object is owned by %owner.</source>
         <translation>Објект је власништво %owner.</translation>
+    </message>
+    <message>
+        <source>This object is already being edited by someone else including you.    You can either continue editing one of your drafts or you can create a new draft.</source>
+        <translation type="obsolete">Овај објект већ едитује још неко осим Вас.Можете наставити едитовати неку од својих скица или креирати нову скицу.</translation>
+    </message>
+    <message>
+        <source>This object is already being edited by you.        You can either continue editing one of your drafts or you can create a new draft.</source>
+        <translation type="obsolete">Овај објект ви већ мењате.       Можете наставити едитовати једну од својих скица или креирати нову скицу.</translation>
+    </message>
+    <message>
+        <source>This object is already being edited by someone else.        You should either contact the person about the draft or create a new draft for personal editing.</source>
+        <translation type="obsolete">Овај објект већ едитује неко други.      Требали бисте контактирати ту особу у вези скице или креирати нову скицу за ваше едитовање.</translation>
     </message>
     <message>
         <source>Current drafts</source>
@@ -15767,8 +18468,16 @@ If you want to send comments to the approver or view the status use the URL belo
         <translation>Повратна информација о %feedbackname</translation>
     </message>
     <message>
+        <source>Thanks for your feedback, the following information was collected.</source>
+        <translation type="obsolete">Хвала на повратним информацијама, прикупљени су следећи подаци.</translation>
+    </message>
+    <message>
         <source>Return to site</source>
         <translation>Повратак на страницу</translation>
+    </message>
+    <message>
+        <source>You have already submitted data to this feedback. The previously submitted data was the following.</source>
+        <translation type="obsolete">Већ сте унели податке у овај образац. Пре унесени подаци су следећи.</translation>
     </message>
     <message>
         <source>You have already submitted feedback. The previously submitted data was:</source>
@@ -15788,6 +18497,10 @@ If you want to send comments to the approver or view the status use the URL belo
     <message>
         <source>Return to site</source>
         <translation>Повратак на страницу</translation>
+    </message>
+    <message>
+        <source>You have already submitted data to this form. The previously submitted data was the following.</source>
+        <translation type="obsolete">Већ сте унели податке у овај образац. Пре унесени подаци су следећи.</translation>
     </message>
     <message>
         <source>Collected information</source>
@@ -15995,6 +18708,10 @@ If you want to send comments to the approver or view the status use the URL belo
 <context>
     <name>design/standard/content/pdf</name>
     <message>
+        <source>eZ publish PDF export</source>
+        <translation type="obsolete">eZ publish PDF извоз</translation>
+    </message>
+    <message>
         <source>#page of #total</source>
         <translation>#page од #total</translation>
     </message>
@@ -16032,6 +18749,14 @@ If you want to send comments to the approver or view the status use the URL belo
     <message>
         <source>Poll results</source>
         <translation>Резултати анкете</translation>
+    </message>
+    <message>
+        <source>Anonymous users are not allowed to vote on this poll, please login.</source>
+        <translation type="obsolete">Анонимним корисницима није дозвољено гласати у овој анкети, молимо пријавите се.</translation>
+    </message>
+    <message>
+        <source>You have already voted for this poll.</source>
+        <translation type="obsolete">Већ сте гласали у овој анкети.</translation>
     </message>
     <message>
         <source>Anonymous users are not allowed to vote in this poll. Please log in.</source>
@@ -16181,8 +18906,16 @@ If you want to send comments to the approver or view the status use the URL belo
         <translation>Проверите јесте ли исправно написали кључне речи.</translation>
     </message>
     <message>
+        <source>Try changing some keywords eg. car instead of cars.</source>
+        <translation type="obsolete">Покушајте променити неке од кључних речи нпр. аутомобил уместо аутомобили.</translation>
+    </message>
+    <message>
         <source>Try more general keywords.</source>
         <translation>Покушајте с уопштенијим кључним речима.</translation>
+    </message>
+    <message>
+        <source>Fewer keywords gives more results, try reducing keywords until you get a result.</source>
+        <translation type="obsolete">Мањи број кључних речи даје више резултата, покушајте смањити број кључних речи док не дођете до резултата.</translation>
     </message>
     <message>
         <source>Any attribute</source>
@@ -16273,6 +19006,69 @@ If you want to send comments to the approver or view the status use the URL belo
     </message>
 </context>
 <context>
+    <name>design/standard/content/translate</name>
+    <message>
+        <source>%1 input was stored successfully</source>
+        <translation type="obsolete">%1 унос је успешно смештен</translation>
+    </message>
+    <message>
+        <source>(No locale information available)</source>
+        <translation type="obsolete">(Нема доступних локалних података)</translation>
+    </message>
+    <message>
+        <source>Yes</source>
+        <translation type="obsolete">Да</translation>
+    </message>
+    <message>
+        <source>No</source>
+        <translation type="obsolete">Не</translation>
+    </message>
+    <message>
+        <source>Add</source>
+        <translation type="obsolete">Додај</translation>
+    </message>
+    <message>
+        <source>Translations</source>
+        <translation type="obsolete">Преводи</translation>
+    </message>
+    <message>
+        <source>Translate</source>
+        <translation type="obsolete">Преведи</translation>
+    </message>
+    <message>
+        <source>Store</source>
+        <translation type="obsolete">Сними</translation>
+    </message>
+    <message>
+        <source>Translating &apos;%1&apos;</source>
+        <translation type="obsolete">Преводи &apos;%1&apos;</translation>
+    </message>
+    <message>
+        <source>Remove the following translations from &apos;%1&apos;</source>
+        <translation type="obsolete">Уклони следеће преводе с &apos;&apos;%1&apos;&apos;</translation>
+    </message>
+    <message>
+        <source>Locale</source>
+        <translation type="obsolete">Локалан</translation>
+    </message>
+    <message>
+        <source>Language</source>
+        <translation type="obsolete">Језик</translation>
+    </message>
+    <message>
+        <source>Translate into</source>
+        <translation type="obsolete">Преведи на</translation>
+    </message>
+    <message>
+        <source>Edit</source>
+        <translation type="obsolete">Измена</translation>
+    </message>
+    <message>
+        <source>Input did not validate</source>
+        <translation type="obsolete">Унос није исправан</translation>
+    </message>
+</context>
+<context>
     <name>design/standard/content/trash</name>
     <message>
         <source>Trash</source>
@@ -16326,6 +19122,10 @@ If you want to send comments to the approver or view the status use the URL belo
         <translation>Учитај датотеку</translation>
     </message>
     <message>
+        <source>Choose a file from your locale machine and click the &quot;Upload&quot; button. An object will be created according to file type and placed in your chosen location.</source>
+        <translation type="obsolete">Изаберите датотеку са локалног рачунара и кликните на &quot;Учитај&quot;. Објект ће бити креиран зависно о врсти датотеке и стављен на локацију коју изаберете.</translation>
+    </message>
+    <message>
         <source>Some errors occurred</source>
         <translation>Дошло је до грешке</translation>
     </message>
@@ -16361,12 +19161,28 @@ If you want to send comments to the approver or view the status use the URL belo
 <context>
     <name>design/standard/content/version</name>
     <message>
+        <source>Version not a draft</source>
+        <translation type="obsolete">Верзија није скица</translation>
+    </message>
+    <message>
         <source>Version</source>
         <translation>Верзија</translation>
     </message>
     <message>
+        <source>To edit this version create a copy of it.</source>
+        <translation type="obsolete">Да би могли едитовати ову верзију креирајте копију.</translation>
+    </message>
+    <message>
+        <source>Version not yours</source>
+        <translation type="obsolete">Верзија која није ваша</translation>
+    </message>
+    <message>
         <source>Versions for: %1</source>
         <translation>Верзије за: %1</translation>
+    </message>
+    <message>
+        <source>Version %1 was not created by you, only your own drafts can be edited.</source>
+        <translation type="obsolete">Ви нисте креирали верзију %1, можете едитовати само властите скице.</translation>
     </message>
     <message>
         <source>Unable to create new version</source>
@@ -16479,6 +19295,10 @@ If you want to send comments to the approver or view the status use the URL belo
         <translation>Изабери првобитно место</translation>
     </message>
     <message>
+        <source>Please choose where you want to place the new %classname.    Select the placement and click the %buttonname button.    Using the recent and bookmark items for quick placement is also possible.    Click on placement names to change the browse listing.</source>
+        <translation type="obsolete">Молимо изаберите где желите сместити нову %classname.Izaberite место и изаберите дугме %buttonname.</translation>
+    </message>
+    <message>
         <source>My bookmarks</source>
         <translation>Моје ознаке у књизи</translation>
     </message>
@@ -16507,8 +19327,16 @@ If you want to send comments to the approver or view the status use the URL belo
         <translation>Изаберите елементе које ћете означити</translation>
     </message>
     <message>
+        <source>Please choose the items you want to add to your bookmark list.    Select your items and click the %buttonname button.    Using the recent and bookmark items for quick selection is also possible.    Click on item names to change the browse listing.</source>
+        <translation type="obsolete">Изаберите ставке које желите додати на своју листу означених ставака.Означите ставке и притисните дугме %buttonname.</translation>
+    </message>
+    <message>
         <source>Choose new placement</source>
         <translation>Изаберите ново место</translation>
+    </message>
+    <message>
+        <source>Please choose the new placement for %name.      The previous placement was in %placementname.      Select the placement and click the %buttonname button.      Using the recent and bookmark items for quick placement is also possible.      Click on placement names to change the browse listing.</source>
+        <translation type="obsolete">Изаберите ново место за %name.Prethodna локација била је %placementname.Izaberite место и притисните дугме %buttonname.Moguća је и употреба недавно изабраних и означених елемената за брз смештај.Притисните на имена одредишта да би променили листу претраживања.</translation>
     </message>
     <message>
         <source>Choose placements</source>
@@ -16563,8 +19391,16 @@ If you want to send comments to the approver or view the status use the URL belo
         <translation>Ваша листа послова који Вас очекују је празна</translation>
     </message>
     <message>
+        <source>These are the objects you have bookmarked. Click on an object to view it or if you have sufficient permission you can to edit the object by clicking the edit button.      If you want to add more objects to this list click the %emphasize_startAdd bookmarks%emphasize_stop button.      Removing objects will only remove them from this list.</source>
+        <translation type="obsolete">Ово су објекти које сте означили. Означите објект да би ге прегледали или ако посједујете потребна овлашћења да би га мењали притискањем дугмета Измени.   Ако желите овој листи додати још објеката притисните дугме %emphasize_startAdd боокмаркс%emphasize_stop.Uklanjanje објеката ће их уклонити само с ове листе. </translation>
+    </message>
+    <message>
         <source>Choose node for default selection</source>
         <translation>Изабери чвор за основни избор</translation>
+    </message>
+    <message>
+        <source>Please choose where you want to the default selection of objectrelation to start from.    Select the placement and click the %buttonname button.    Using the recent and bookmark items for quick placement is also possible.    Click on placement names to change the browse listing.</source>
+        <translation type="obsolete">Молимо изаберите одакле желите да крене основни објецтрелатион.Изаберите место и притисните дугме %buttonname.Moguća је и употреба недавно коришћених и означених елемената за брз смештај.Притисните имена места за промени пописа прегледа.  </translation>
     </message>
     <message>
         <source>Collected info</source>
@@ -16575,12 +19411,56 @@ If you want to send comments to the approver or view the status use the URL belo
         <translation>Изабери нову локацију за објект %object_name</translation>
     </message>
     <message>
+        <source>Please choose where you want to place %objectname.    Select the new location and click the %buttonname button.    Using the recent and bookmark items for quick placement is also possible.    Click on placement names to change the browse listing.</source>
+        <translation type="obsolete">Молимо изаберите где желите сместити нови објект %objectname.Izaberite локацију и кликните дугме %buttonname.</translation>
+    </message>
+    <message>
         <source>Upload file</source>
         <translation>Учитај датотеку</translation>
     </message>
     <message>
+        <source>Choose the exchanging node for %objectname</source>
+        <translation type="obsolete">Изабери чвор за замени за објект %version_name</translation>
+    </message>
+    <message>
+        <source>Please choose which node you want to exchange %objectname with.    Select the node and click the %buttonname button.    Using the recent and bookmark items for quick placement is also possible.    Click on placement names to change the browse listing.</source>
+        <translation type="obsolete">Изабери чвор са којим желиш заменити %objectname   Изаберите чвор и кликните на дугме %buttonname   коришћење честих и ознака за књигу је такође могуће.   Кликни на назив локације за измени приказане листе.</translation>
+    </message>
+    <message>
+        <source>These are the current objects you are working on. The drafts are owned by you and can only be seen by you.      You can either edit the drafts or remove them if you don&apos;t need them any more.</source>
+        <translation type="obsolete">Ово су тренутни објекти на којима радиш. Скице припадају само теби и само их ти можеш видети.Можеш или едитовати скице или их једноставно обрисати ако их не користиш.</translation>
+    </message>
+    <message>
+        <source>Choose a file from your locale machine and click the &quot;Upload&quot; button. An object will be created according to file type and placed in your chosen location.</source>
+        <translation type="obsolete">Изабери датотеку са својег рачунара и кликни &quot;Увоз&quot; дугме. Објект ће бити креиран с обзиром на врсту датотеке и убачен на локацију коју одабереш.</translation>
+    </message>
+    <message>
+        <source>Choose a new location the copy of %objectname</source>
+        <translation type="obsolete">Изабери нову локацију за копију објекта %object_name</translation>
+    </message>
+    <message>
+        <source>Please choose where you want to copy %objectname.    Select the new location and click the %buttonname button.    Using the recent and bookmark items for quick placement is also possible.    Click on placement names to change the browse listing.</source>
+        <translation type="obsolete">Изабери локацију где желиш копирати %objectname          Изабери нову локацију и кликни на дугме %buttonname          коришћење ознака за књигу такође је могуће.</translation>
+    </message>
+    <message>
+        <source>Choose new location for copy of subtree of node %node_name</source>
+        <translation type="obsolete">Изабери нову локацију за копију подстабла чвора %node_name</translation>
+    </message>
+    <message>
+        <source>Please choose where you want to copy subtree of node %node_name.    Select the new location and click the %buttonname button.    Using the recent and bookmark items for quick placement is also possible.    Click on placement names to change the browse listing.</source>
+        <translation type="obsolete">Молимо изаберите где желите копирати подстабло чвора %node_name.    Изаберите нову локацију и кликните %buttonname дугме. Коришћење недавно коришћених елемената и    ознака за књигу је такође могуће. Кликните на називе локација да промените листинг.        </translation>
+    </message>
+    <message>
         <source>Site Access</source>
         <translation>Приступ страници</translation>
+    </message>
+    <message>
+        <source>Please choose where you want to place %name.    Select your placements and click the %buttonname button.    Using the recent and bookmark items for quick placement is also possible.    Click on placement names to change the browse listing.</source>
+        <translation type="obsolete">Изаберите место и кликните %buttonname дугме.    Коришћење недавно коришћених елемената и ознака за књиге је могуће за брзо смештање.    Кликните на назив смештаја да промените преглед листинга.</translation>
+    </message>
+    <message>
+        <source>Please choose objects which you want to relate to %name.    Select your objects and click the %buttonname button.    Using the recent and bookmark items for quick selection is also possible.    Click on object names to change the browse listing.</source>
+        <translation type="obsolete">Молимо изаберите објекте које желите да повежете са %name.    Изаберите ваше објекте и кликните %buttonname дугме.    Коришћење недавно коришћених елемената и ознака за књиге је могуће за брзо бирање.    Кликните на називе објеката да промените преглед листинга.        </translation>
     </message>
     <message>
         <source>Please choose where you want the default selection of object relation to start from.
@@ -16747,6 +19627,10 @@ If you want to send comments to the approver or view the status use the URL belo
     <message>
         <source>Fold/Unfold</source>
         <translation>Скупи/Рашири</translation>
+    </message>
+    <message>
+        <source>[%classname] Click on the icon to get a context sensitive menu.</source>
+        <translation type="obsolete">[%classname] Кликните на икону за приказ менија.</translation>
     </message>
     <message>
         <source>[%classname] Click on the icon to display a context-sensitive menu.</source>
@@ -16972,6 +19856,10 @@ If you want to send comments to the approver or view the status use the URL belo
         <translation>Управљање алатном траком</translation>
     </message>
     <message>
+        <source>SiteAccess</source>
+        <translation type="obsolete">Siteaccess</translation>
+    </message>
+    <message>
         <source>Current siteaccess</source>
         <translation>Тренутни SiteAccess</translation>
     </message>
@@ -17008,6 +19896,10 @@ If you want to send comments to the approver or view the status use the URL belo
     <message>
         <source>Access denied</source>
         <translation>Ускраћен приступ</translation>
+    </message>
+    <message>
+        <source>You don&apos;t have permission to access this area.</source>
+        <translation type="obsolete">Немате овлашћења за приступ овом подручју.</translation>
     </message>
     <message>
         <source>Click the Login button to login.</source>
@@ -17131,6 +20023,10 @@ If you want to send comments to the approver or view the status use the URL belo
         <translation>Назив модула је погрешно написан.</translation>
     </message>
     <message>
+        <source>This site uses siteaccess matching in the URL and you didn&apos;t supply one, try inserting a siteaccess name before the module in the URL .</source>
+        <translation type="obsolete">Овај site користи siteaccess препознавање у URL адреси а ви нисте уписали ни један.</translation>
+    </message>
+    <message>
         <source>The view name was misspelled, try changing the URL.</source>
         <translation>Назив приказа је погрешно написан.</translation>
     </message>
@@ -17210,6 +20106,17 @@ If you want to send comments to the approver or view the status use the URL belo
     </message>
 </context>
 <context>
+    <name>design/standard/form</name>
+    <message>
+        <source>Thank you for your feedback</source>
+        <translation type="obsolete">Хвала Вам на повратној информацији</translation>
+    </message>
+    <message>
+        <source>Your information was successfully received.</source>
+        <translation type="obsolete">Ваши подаци су примљени.</translation>
+    </message>
+</context>
+<context>
     <name>design/standard/gui</name>
     <message>
         <source>Delete</source>
@@ -17218,6 +20125,10 @@ If you want to send comments to the approver or view the status use the URL belo
 </context>
 <context>
     <name>design/standard/layout</name>
+    <message>
+        <source>Welcome to eZ publish administration</source>
+        <translation type="obsolete">Добродошли у администрацију ХНБ интранета</translation>
+    </message>
     <message>
         <source>To log in enter a valid login and password.</source>
         <translation>Да би се пријавили унесите исправан логин и лозинку.</translation>
@@ -17283,6 +20194,10 @@ If you want to send comments to the approver or view the status use the URL belo
         <translation>Тражи %sitetitle</translation>
     </message>
     <message>
+        <source>eZ publish redirection - %url</source>
+        <translation type="obsolete">eZ publish преусмерава - %URL</translation>
+    </message>
+    <message>
         <source>Redirecting to %url</source>
         <translation>Преусмери на %url</translation>
     </message>
@@ -17308,6 +20223,10 @@ If you want to send comments to the approver or view the status use the URL belo
     <message>
         <source>Removal of locations</source>
         <translation>Уклањање локација</translation>
+    </message>
+    <message>
+        <source>Some of the locations you tried to remove has children, are you really sure you want to remove those locations?If you do all the children will be removed as well.</source>
+        <translation type="obsolete">Неке од локација које желите уклонити имају децу, јесте ли сигурни да желите уклонити локације?Ако уклоните локације уклонићете и децу.</translation>
     </message>
     <message>
         <source>Path</source>
@@ -17337,6 +20256,10 @@ If you do all the children will be removed as well.</source>
     <message>
         <source>Menu management</source>
         <translation>Управљање менијем</translation>
+    </message>
+    <message>
+        <source>SiteAccess</source>
+        <translation type="obsolete">Siteaccess</translation>
     </message>
     <message>
         <source>Current siteaccess</source>
@@ -17423,6 +20346,10 @@ If you do all the children will be removed as well.</source>
     <message>
         <source>Move to trash</source>
         <translation>Премести у смеће</translation>
+    </message>
+    <message>
+        <source>If %trashname is checked you will find the removed items in the trash afterwards.</source>
+        <translation type="obsolete">Ако је %trashname проверено, уклоњене елементе после ћете пронаћи у смећу.</translation>
     </message>
     <message>
         <source>Note</source>
@@ -17543,6 +20470,10 @@ If you do all the children will be removed as well.</source>
         <translation>Уклони</translation>
     </message>
     <message>
+        <source>If you do not wish to continue receiving these notifications,change your settings at:</source>
+        <translation type="obsolete">Ако не желите наставити примати ове обавештењапромените своја подешавања у:</translation>
+    </message>
+    <message>
         <source>%sitename notification system</source>
         <translation>%sitename систем обавештавања</translation>
     </message>
@@ -17577,6 +20508,10 @@ If you do all the children will be removed as well.</source>
     <message>
         <source>Store</source>
         <translation>Сними</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="obsolete">Одустани</translation>
     </message>
     <message>
         <source>Notification admin</source>
@@ -17627,6 +20562,10 @@ If you do all the children will be removed as well.</source>
         <translation>Ако је одабрани број дана у месецу већи од стварног броја дана, задњи дан у текућем месецу ће бити изабран.</translation>
     </message>
     <message>
+        <source>This e-mail is to inform you that a new collaboration item is awaiting your attention at %sitename.The item can viewed by using the URL below.</source>
+        <translation type="obsolete">Овај e-mail вас обавештава да имате нову &quot;сарадњу&quot; која вас очекује на %sitename.Element можете видети ако кликнете на доњу URL адресу.</translation>
+    </message>
+    <message>
         <source>Time of day</source>
         <translation>Време</translation>
     </message>
@@ -17637,6 +20576,14 @@ If you do all the children will be removed as well.</source>
     <message>
         <source>Monthly, day of month</source>
         <translation>Месечно, дан у месецу</translation>
+    </message>
+    <message>
+        <source>This digest e-mail is to inform you on new items at %sitename.</source>
+        <translation type="obsolete">Збирни email вас информише о новим елементима са %sitename.</translation>
+    </message>
+    <message>
+        <source>This e-mail is to inform you on news at %sitename.</source>
+        <translation type="obsolete">Овај e-mail вас обавештава о новостима на %sitename.</translation>
     </message>
     <message>
         <source>Node notification</source>
@@ -17657,6 +20604,14 @@ If you do all the children will be removed as well.</source>
     <message>
         <source>Select</source>
         <translation>Изабери</translation>
+    </message>
+    <message>
+        <source>This e-mail is to inform you that an updated item has been published at %sitename.</source>
+        <translation type="obsolete">Овај е-email вас обавештава да су објављене измене садржаја на %sitename.</translation>
+    </message>
+    <message>
+        <source>This e-mail is to inform you that a new item has been published at %sitename.</source>
+        <translation type="obsolete">Овај е-email вас обавештава да су објављени нови садржаји на %sitename.</translation>
     </message>
     <message>
         <source>Notification filter processed all available notification events</source>
@@ -17723,6 +20678,10 @@ The item can viewed by using the URL below.</source>
         <translation>Обавештење о сарадњи</translation>
     </message>
     <message>
+        <source>Choose which collaboration items you wish to get notifications for.</source>
+        <translation type="obsolete">Изаберите ставке сарадње о којиме желите бити обавештени.</translation>
+    </message>
+    <message>
         <source>Choose which collaboration items you want to get notifications for.</source>
         <translation>Изаберите за које елементе сарадње желите да будете извештавани.</translation>
     </message>
@@ -17758,6 +20717,10 @@ The item can viewed by using the URL below.</source>
         <translation>Учитај пакет</translation>
     </message>
     <message>
+        <source>Select the file containing your package and click the upload button</source>
+        <translation type="obsolete">Изаберите датотеку која садржи Ваш пакет и изаберите дугме учитавање</translation>
+    </message>
+    <message>
         <source>Install package</source>
         <translation>Инсталирај пакет</translation>
     </message>
@@ -17770,12 +20733,24 @@ The item can viewed by using the URL below.</source>
         <translation>Промене</translation>
     </message>
     <message>
+        <source>Start an entry with a marker ( %emstart-%emend (dash) or %emstart*%emend (asterix) ) at the beginning of the line.The change will continue to the next change marker.</source>
+        <translation type="obsolete">Започните унос с маркером ( %emstart-%emend (dash) или %emstart*%emend (asterix) ) на почетку реда.Промена ће важити до следећег маркера промене. </translation>
+    </message>
+    <message>
+        <source>Please provide some basic information for your package.</source>
+        <translation type="obsolete">Молимо доставите основне податке о свом пакету. </translation>
+    </message>
+    <message>
         <source>Package name</source>
         <translation>Име пакета</translation>
     </message>
     <message>
         <source>Description</source>
         <translation>Опис</translation>
+    </message>
+    <message>
+        <source>Licence</source>
+        <translation type="obsolete">Дозвола</translation>
     </message>
     <message>
         <source>Package host</source>
@@ -17786,6 +20761,10 @@ The item can viewed by using the URL below.</source>
         <translation>Пацкагер</translation>
     </message>
     <message>
+        <source>Please provide information on the maintainer of the package.</source>
+        <translation type="obsolete">Молимо да нам доставите податке о одржаваоцу пакета. </translation>
+    </message>
+    <message>
         <source>Name</source>
         <comment>Maintainer name</comment>
         <translation>Име</translation>
@@ -17794,6 +20773,10 @@ The item can viewed by using the URL below.</source>
         <source>Role</source>
         <comment>Maintainer role</comment>
         <translation>Улога</translation>
+    </message>
+    <message>
+        <source>Please select a thumbnail file to be included in the package,if you do not wish to have a thumbnail simply click Next.</source>
+        <translation type="obsolete">Молим изаберите минијатуру коју желите да буде укључена у пакетако не желите минијатуру, притисните Даље.</translation>
     </message>
     <message>
         <source>Create package</source>
@@ -17808,8 +20791,16 @@ The item can viewed by using the URL below.</source>
         <translation>Изабери једног од следећих чаробњака за креирање пакета</translation>
     </message>
     <message>
+        <source>Please choose the content classes you wish to be included in the package.</source>
+        <translation type="obsolete">Молимо изаберите садржајне класе које желите укључити у пакет.</translation>
+    </message>
+    <message>
         <source>Class list</source>
         <translation>Листа класа</translation>
+    </message>
+    <message>
+        <source>Select an image file to be included in the package and click Next.When you are done with adding images click Next without choosing an image.</source>
+        <translation type="obsolete">Изаберите графичку датотеку за коју желите да буде укључена у пакет и изаберите Следећи.Кад завршите с додавањем слика изаберите Следећи без одабира слике.</translation>
     </message>
     <message>
         <source>Currently added image files</source>
@@ -17818,6 +20809,10 @@ The item can viewed by using the URL below.</source>
     <message>
         <source>Package wizard: %wizardname</source>
         <translation>Чаробњак пакета: %wizardname</translation>
+    </message>
+    <message>
+        <source>The package can be installed on your system, installing the package will copy files, create content classes etc. all depending on the package.If you do not wish to install the package at this time you can do so later on the view page for the package.</source>
+        <translation type="obsolete">Пакет може бити инсталиран у Ваш систем. Инсталирање пакета ће копирати датотеке, креирати класе садржаја итд., зависно о пакету.Ако не желите инсталирати пакет у овом тренутку можете то учинити касније на страници приказа пакета. </translation>
     </message>
     <message>
         <source>Install items</source>
@@ -17832,12 +20827,20 @@ The item can viewed by using the URL below.</source>
         <translation>Уклањање пакета</translation>
     </message>
     <message>
+        <source>Are you sure you wish to remove the following packages?The packages will be lost forever.Note: The packages will not be uninstalled.</source>
+        <translation type="obsolete">Јесте ли сигурни да желите уклонити следеће пакете?Ти ће пакети бити заувек изгубљени.Пази: Пакети неће бити уклоњени.</translation>
+    </message>
+    <message>
         <source>Confirm removal</source>
         <translation>Потврди уклањање</translation>
     </message>
     <message>
         <source>Keep packages</source>
         <translation>Задржи пакете</translation>
+    </message>
+    <message>
+        <source>Package removal was cancelled.</source>
+        <translation type="obsolete">Уклањање пакета је поништено.</translation>
     </message>
     <message>
         <source>Selection</source>
@@ -17876,6 +20879,10 @@ The item can viewed by using the URL below.</source>
         <translation>Уклони пакет</translation>
     </message>
     <message>
+        <source>The package can be uninstalled from your system, uninstalling the package will remove any installed files, content classes etc. all depending on the package.If you do not wish to uninstall the package at this time you can do so later on the view page for the package.You may also remove the package without uninstalling it from the package list.</source>
+        <translation type="obsolete">Пакет може бити  уклоњен из вашег система. Уклањањем пакета уклонићете све инсталиране датотеке, садржајне класе итд., зависно о пакету.Ако не желите уклонити пакет у овом тренутку можете то учинити касније на страници приказа пакета.Такође, можете уклонити пакет без да га уклањате с листе пакета. </translation>
+    </message>
+    <message>
         <source>Uninstall items</source>
         <translation>Уклони елементе</translation>
     </message>
@@ -17912,6 +20919,14 @@ The item can viewed by using the URL below.</source>
         <translation>Одржаваоци</translation>
     </message>
     <message>
+        <source>Regarding eZ publish package &apos;%packagename&apos;</source>
+        <translation type="obsolete">У вези с eZ publish пакетом &apos;%packagename&apos;</translation>
+    </message>
+    <message>
+        <source>Send E-Mail to the maintainer</source>
+        <translation type="obsolete">Пошаљи e-mail поруку одржаваоцу</translation>
+    </message>
+    <message>
         <source>Documents</source>
         <translation>Документи</translation>
     </message>
@@ -17922,6 +20937,10 @@ The item can viewed by using the URL below.</source>
     <message>
         <source>File list</source>
         <translation>Листа датотека</translation>
+    </message>
+    <message>
+        <source>Please choose objects you wish to include in the package.</source>
+        <translation type="obsolete">Молимо изаберите објекте које желите укључити у пакет.</translation>
     </message>
     <message>
         <source>Selected nodes</source>
@@ -17940,12 +20959,20 @@ The item can viewed by using the URL below.</source>
         <translation>Чаробњак за инсталирање пакета: %wizardname</translation>
     </message>
     <message>
+        <source>You must now choose which siteaccess the package contents should be installed to.The chosen siteaccess determines where design files and settings are written to.If unsure choose the siteaccess which reflects the user part of your site, i.e. not admin.</source>
+        <translation type="obsolete">Морате изабрати на који приступ страници желите да садржај пакета буде инсталиран.Изабрани приступ страници одређује где су уписане датотеке дизајна и подешавања.Ако нисте сигурни изаберите приступ страници који оцртава кориснички део ваше странице, а не административни. </translation>
+    </message>
+    <message>
         <source>Select siteaccess</source>
         <translation>Изабери приступ страници</translation>
     </message>
     <message>
         <source>Please select where you want to place the imported items.</source>
         <translation>Молимо одредите где желите сместити увезене елементе.</translation>
+    </message>
+    <message>
+        <source>If you wish to change the placement click the browse button.</source>
+        <translation type="obsolete">Ако желите променити место изаберите дугме листај.</translation>
     </message>
     <message>
         <source>Place %object_name in node %node_placement</source>
@@ -17962,6 +20989,10 @@ The item can viewed by using the URL below.</source>
     <message>
         <source>Change repository</source>
         <translation>Промени складиште</translation>
+    </message>
+    <message>
+        <source>E-mail</source>
+        <translation type="obsolete">E-mail</translation>
     </message>
     <message>
         <source>Node</source>
@@ -17998,6 +21029,10 @@ The item can viewed by using the URL below.</source>
     <message>
         <source>Repositories</source>
         <translation>Складишта</translation>
+    </message>
+    <message>
+        <source>Send e-mail to the maintainer</source>
+        <translation type="obsolete">Пошаљи e-mail поруку одржаваоцу</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -18074,6 +21109,10 @@ The change will continue to the next change marker.</source>
     <message>
         <source>Choose the objects to include in the package.</source>
         <translation>Изаберите објекте које желите у пакету.</translation>
+    </message>
+    <message>
+        <source>Please select an extension to be exported.</source>
+        <translation type="obsolete">Изаберите екстензију за извоз.</translation>
     </message>
     <message>
         <source>Select an image file to be included in the package then click Next.
@@ -18163,12 +21202,20 @@ You can also remove the package without uninstalling it from the package list.</
         <translation>Изаберите подстабло за извоз</translation>
     </message>
     <message>
+        <source>Specify export properties. Default settings will most likely be suitable for your needs.</source>
+        <translation type="obsolete">Одреди подешавања извоза. Основна подешавања ће највероватније одговарати Вашим потребама.</translation>
+    </message>
+    <message>
         <source>Miscellaneous</source>
         <translation>Разно</translation>
     </message>
     <message>
         <source>Include class definitions.</source>
         <translation>Укључи дефиниције класа.</translation>
+    </message>
+    <message>
+        <source>Include templates related exported objects.</source>
+        <translation type="obsolete">Укључи извезене објекте повезане с шаблонима.</translation>
     </message>
     <message>
         <source>Select templates from the following siteaccesses</source>
@@ -18296,6 +21343,14 @@ You can also remove the package without uninstalling it from the package list.</
         <translation>Уклони</translation>
     </message>
     <message>
+        <source>PDF Exports</source>
+        <translation type="obsolete">PDF извоз</translation>
+    </message>
+    <message>
+        <source>New Export</source>
+        <translation type="obsolete">Нови извоз</translation>
+    </message>
+    <message>
         <source>PDF exports</source>
         <translation>PDF извоз</translation>
     </message>
@@ -18361,6 +21416,14 @@ You can also remove the package without uninstalling it from the package list.</
     <message>
         <source>Introduction</source>
         <translation>Увод</translation>
+    </message>
+    <message>
+        <source>The Reference Documentation for eZ publish consists of multiple sections whicheach have a different view on the documentation. The sections can be accessed atmenu on the top.</source>
+        <translation type="obsolete">Референтна документација за eZ publish састоји се од неколико сегмената од којих сваки даје различит приказ документације. Те сегменте је могуће отворити путем менија на врху странице. </translation>
+    </message>
+    <message>
+        <source>The documentation will give an overview of the API of eZ publish.</source>
+        <translation type="obsolete">Документација ће дати преглед API-а за eZ publish.</translation>
     </message>
     <message>
         <source>All reference documentation has been made with %doxygenurl</source>
@@ -18617,6 +21680,10 @@ menu on the top.</source>
         <translation>Изабери извозни ноде</translation>
     </message>
     <message>
+        <source>Please choose where to export from.    Select your placements and click the %buttonname button.    Using the recent and bookmark items for quick placement is also possible.    Click on placement names to change the browse listing.</source>
+        <translation type="obsolete">Изаберите одакле желите извоз.Изаберите место и притисните дугме %buttonname.Moguća је и употреба недавно изабраних и означених елемената за брз смештај.Притисните на имена одредишта да би променили листу претраживања.</translation>
+    </message>
+    <message>
         <source>Select</source>
         <translation>Изабери</translation>
     </message>
@@ -18625,8 +21692,16 @@ menu on the top.</source>
         <translation>Изабери одредиште увоза</translation>
     </message>
     <message>
+        <source>Please choose where to store imported items.    Select your placements and click the %buttonname button.    Using the recent and bookmark items for quick placement is also possible.    Click on placement names to change the browse listing.</source>
+        <translation type="obsolete">Изаберите где желите сместити увезене елементе.    Изаберите место и притисните дугме %buttonname.    Могућа је и употреба недавно изабраних и означених елемената за брз смештај.    Притисните на имена одредишта да би променили листу претраживања.</translation>
+    </message>
+    <message>
         <source>Choose RSS image</source>
         <translation>Изабери RSS слику</translation>
+    </message>
+    <message>
+        <source>Please choose image to use in RSS export.    Select your placements and click the %buttonname button.    Using the recent and bookmark items for quick placement is also possible.    Click on placement names to change the browse listing.</source>
+        <translation type="obsolete">Молимо изаберите слику за коришћење код RSS извоза.    Изаберите ваша места и кликните %buttonname дугме.    Могућа је и употреба недавно изабраних и означених елемената за брз смештај.    Кликните на назив смештаја да измените преглед листинга.</translation>
     </message>
     <message>
         <source>Choose export source</source>
@@ -18635,6 +21710,10 @@ menu on the top.</source>
     <message>
         <source>Choose owner of imported objects</source>
         <translation>Изаберите власника за увезене објекте</translation>
+    </message>
+    <message>
+        <source>Please select the owner of the objects to import    Select the user and click the %buttonname button.    Using the recent and bookmark items for quick selection is also possible.    Click on placement names to change the browse listing.</source>
+        <translation type="obsolete">Молимо изаберите власника објеката за увозИзаберите корисника и притисните дугме %buttonname.Takođe је могућа употреба последњих изабраних и означених елемената за брз избор.Притисните на име локације да би променили листу прегледа.</translation>
     </message>
     <message>
         <source>RSS export is locked</source>
@@ -18784,6 +21863,30 @@ menu on the top.</source>
         <translation>Уклони</translation>
     </message>
     <message>
+        <source>RSS Import</source>
+        <translation type="obsolete">RSS увоз</translation>
+    </message>
+    <message>
+        <source>URL</source>
+        <translation type="obsolete">URL</translation>
+    </message>
+    <message>
+        <source>Destination path</source>
+        <translation type="obsolete">Пут према дестинацији</translation>
+    </message>
+    <message>
+        <source>Imported objects owner</source>
+        <translation type="obsolete">Власник увезених објеката</translation>
+    </message>
+    <message>
+        <source>Select</source>
+        <translation type="obsolete">Изабери</translation>
+    </message>
+    <message>
+        <source>Ignore</source>
+        <translation type="obsolete">Занемари</translation>
+    </message>
+    <message>
         <source>Remove Source</source>
         <translation>Уклони извор</translation>
     </message>
@@ -18820,6 +21923,10 @@ menu on the top.</source>
         <translation>Извозне класе</translation>
     </message>
     <message>
+        <source>Site access</source>
+        <translation type="obsolete">Приступ страници</translation>
+    </message>
+    <message>
         <source>Export destination</source>
         <translation>Одредиште извоза</translation>
     </message>
@@ -18836,8 +21943,16 @@ menu on the top.</source>
         <translation>Извоз</translation>
     </message>
     <message>
+        <source>Use this field to enter the base URL of your site. It is used to produce the URLs in the export, composed by the Site URL (e.g. &quot;http://www.example.com/index.php&quot;) and the path to the object (e.g. &quot;/articles/my_article&quot;). The Site URL depends on your Webserver and eZ publish configuration.</source>
+        <translation type="obsolete">Унесите основни URL за сајт у ово поље. Користи се за прављење URL-ова за извоз тако што се на њега додаје путања до објекта који се извози.</translation>
+    </message>
+    <message>
         <source>Number of objects</source>
         <translation>Број објеката</translation>
+    </message>
+    <message>
+        <source>Use this drop-down menu to select the maximum number of objects included in the RSS feed.</source>
+        <translation type="obsolete">Користите падајући мени да изаберете максималан број објеката који се укључени у RSS feed.</translation>
     </message>
     <message>
         <source>Main node only</source>
@@ -18850,6 +21965,10 @@ menu on the top.</source>
     <message>
         <source>Subnodes</source>
         <translation>Подчворови</translation>
+    </message>
+    <message>
+        <source>Activate this checkbox if also objects from the subnodes of the source should be feeded.</source>
+        <translation type="obsolete">Активирајте овај checkbox ако и објекти из подчворова треба да буду у feedу.</translation>
     </message>
     <message>
         <source>Use this field to enter the base URL of your site. It is used to produce the URLs in the export, composed by the Site URL (e.g. &quot;http://www.example.com/index.php&quot;) and the path to the object (e.g. &quot;/articles/my_article&quot;). The Site URL depends on your Web server and eZ Publish configuration.</source>
@@ -18874,6 +21993,10 @@ menu on the top.</source>
     <message>
         <source>Skip</source>
         <translation type="unfinished">Прескочи</translation>
+    </message>
+    <message>
+        <source>Enclosure (media)</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -18913,6 +22036,22 @@ menu on the top.</source>
     <message>
         <source>No</source>
         <translation>Не</translation>
+    </message>
+    <message>
+        <source>RSS Exports</source>
+        <translation type="obsolete">RSS извоз</translation>
+    </message>
+    <message>
+        <source>New Export</source>
+        <translation type="obsolete">Нови извоз</translation>
+    </message>
+    <message>
+        <source>RSS Imports</source>
+        <translation type="obsolete">RSS увоз</translation>
+    </message>
+    <message>
+        <source>New Import</source>
+        <translation type="obsolete">Нови увоз</translation>
     </message>
     <message>
         <source>RSS feeds</source>
@@ -18973,6 +22112,10 @@ menu on the top.</source>
         <translation>Јесте ли сигурни да желите уклонити ове сегменте?</translation>
     </message>
     <message>
+        <source>Removing these sections can corrupt permissions, sitedesigns, and other things in the system. Do not do this unless you know exactly what are you doing.</source>
+        <translation type="obsolete">Уклањање ових сегмената може поништити овлашћења, дизајн страница и друге елементе система. Не чините то уколико не знате тачно шта радите. </translation>
+    </message>
+    <message>
         <source>Confirm</source>
         <translation>Потврди</translation>
     </message>
@@ -19005,8 +22148,24 @@ menu on the top.</source>
         <translation>Изабери задатке сегмента</translation>
     </message>
     <message>
+        <source>Please choose where you want to start the section assignment for section %sectionname.    Select the placements and click the %buttonname button.    Using the recent and bookmark items for quick placement is also possible.    Click on placement names to change the browse listing.</source>
+        <translation type="obsolete">Please choose where you want to start the section assignment for section %sectionname. Select the placements and click the %buttonname button. Using the recent and bookmark items for quick placement is also possible. Click on placement names to change the browse listing.</translation>
+    </message>
+    <message>
         <source>Name</source>
         <translation>Име</translation>
+    </message>
+    <message>
+        <source>Navigation Part</source>
+        <translation type="obsolete">Делови за навигацију</translation>
+    </message>
+    <message>
+        <source>About Navigation Parts</source>
+        <translation type="obsolete">О деловима за навигацију</translation>
+    </message>
+    <message>
+        <source>The eZ publish admin interface is divided into navigation parts. This is a way to group different areas of the site administration. Select the navigation part that should be active when this section is browsed.</source>
+        <translation type="obsolete">eZ publish администраторски интерфејс подељен је у навигационе делове. То је начин да се групишу различита подручја администрације страница. Одредите навигациони део који би требао бити активан при листању овог сегмента. </translation>
     </message>
     <message>
         <source>ID</source>
@@ -19164,6 +22323,11 @@ menu on the top.</source>
         <translation>Име класе</translation>
     </message>
     <message>
+        <source>Constant name</source>
+        <comment>Datatype</comment>
+        <translation type="obsolete">Назив константе</translation>
+    </message>
+    <message>
         <source>The creator of the datatype</source>
         <comment>Datatype</comment>
         <translation>Дизајнер врсте података </translation>
@@ -19177,6 +22341,11 @@ menu on the top.</source>
         <source>The first line will be used as the brief description and the rest are operator documentation.</source>
         <comment>Datatype</comment>
         <translation>Први ред користиће се као кратак опис док је остатак документација оператера.</translation>
+    </message>
+    <message>
+        <source>Handles the datatype %datatypenameBy using %datatypename you can ...</source>
+        <comment>Datatype default description</comment>
+        <translation type="obsolete">Хандлес тхе datatype %datatypename (неw лине)Бy усинг %datatypename yоу цан ...</translation>
     </message>
     <message>
         <source>Once the download button is clicked the code will be generated and the browser will ask you to store the generated file.</source>
@@ -19199,6 +22368,21 @@ menu on the top.</source>
     <message>
         <source>System information</source>
         <translation>Подаци о систему</translation>
+    </message>
+    <message>
+        <source>Version</source>
+        <comment>eZ publish version</comment>
+        <translation type="obsolete">Верзија</translation>
+    </message>
+    <message>
+        <source>SVN revision</source>
+        <comment>eZ publish version</comment>
+        <translation type="obsolete">SVN ревизија </translation>
+    </message>
+    <message>
+        <source>Extensions</source>
+        <comment>eZ publish extensions</comment>
+        <translation type="obsolete">Екстензије</translation>
     </message>
     <message>
         <source>Version</source>
@@ -19271,6 +22455,10 @@ menu on the top.</source>
     <message>
         <source>Rapid Application Development Tools</source>
         <translation>Rapid Application Development алати</translation>
+    </message>
+    <message>
+        <source>The rapid application development (RAD) tools allow you to easily get started with creating new functionality for eZ publish.</source>
+        <translation type="obsolete">Rapid application development (RAD) алати вам омогућују да лагано креирате нову функцију eZ publish-а.</translation>
     </message>
     <message>
         <source>Tools</source>
@@ -19427,9 +22615,19 @@ menu on the top.</source>
         <translation>Први ред користиће се као кратак опис док је остатак документација оператера.</translation>
     </message>
     <message>
+        <source>Handles template operator %operatornameBy using %operatorname you can ...</source>
+        <comment>Template operator default description</comment>
+        <translation type="obsolete">Барата са оператором %operatorname шаблонаКористећи %operatorname можете ...</translation>
+    </message>
+    <message>
         <source>Example code</source>
         <comment>Template operator</comment>
         <translation>Пример кода</translation>
+    </message>
+    <message>
+        <source>If you wish you can add some example code to explain how your operator should work.The default code was made from the basic parameters you chose.</source>
+        <comment>Template operator</comment>
+        <translation type="obsolete">Ако желите додати пример кода да би објаснили како оператер треба радити.Основни код састављен од основних параметара које сте одабрали. </translation>
     </message>
     <message>
         <source>Once the download button is clicked the code will be generated and the browser will ask you to store the generated file.</source>
@@ -19604,6 +22802,18 @@ menu on the top.</source>
         <translation>Предмеморија(cache) шаблона је искључена</translation>
     </message>
     <message>
+        <source>INI caches.</source>
+        <translation type="obsolete">INI cache-а.</translation>
+    </message>
+    <message>
+        <source>INI caches</source>
+        <translation type="obsolete">INI cache-а</translation>
+    </message>
+    <message>
+        <source>INI cache is disabled</source>
+        <translation type="obsolete">INI cache је искључен</translation>
+    </message>
+    <message>
         <source>Selection</source>
         <translation>Избор</translation>
     </message>
@@ -19644,6 +22854,10 @@ menu on the top.</source>
         <translation>%name је уклоњен.</translation>
     </message>
     <message>
+        <source>SiteAccess</source>
+        <translation type="obsolete">Приступ страници</translation>
+    </message>
+    <message>
         <source>Current siteaccess</source>
         <translation>Тренутни приступ страници</translation>
     </message>
@@ -19674,6 +22888,35 @@ menu on the top.</source>
     <message>
         <source>Create</source>
         <translation>Креирај</translation>
+    </message>
+    <message>
+        <source>Webserver</source>
+        <comment>Webserver title</comment>
+        <translation type="obsolete">Webserver</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <comment>Webserver name</comment>
+        <translation type="obsolete">Назив</translation>
+    </message>
+    <message>
+        <source>Version</source>
+        <comment>Webserver version</comment>
+        <translation type="obsolete">Верзија</translation>
+    </message>
+    <message>
+        <source>Modules</source>
+        <comment>Webserver modules</comment>
+        <translation type="obsolete">Модули</translation>
+    </message>
+    <message>
+        <source>Webserver modules could not be detected</source>
+        <comment>Webserver modules</comment>
+        <translation type="obsolete">Webserver модули нису детектовани</translation>
+    </message>
+    <message>
+        <source>No known information on the webserver</source>
+        <translation type="obsolete">Нема познатих информација о webсерверу</translation>
     </message>
     <message>
         <source>Here you can activate/deactivate you extensions. Only system wide extensions can be activated, for site access specific extensions, modify these configuration files.</source>
@@ -19716,6 +22959,10 @@ menu on the top.</source>
     <message>
         <source>Site</source>
         <translation>Сите</translation>
+    </message>
+    <message>
+        <source>Warning, it is not safe to upgrade without checking the modifications done to the following files </source>
+        <translation type="obsolete">Упозорење, није сигурно унапређивати систем без провере промена које ће бити учињене следећим датотекама</translation>
     </message>
     <message>
         <source>To revert your database to distribution setup, run the following SQL queries</source>
@@ -19874,6 +23121,10 @@ The default code was made from the basic parameters you chose.</source>
         <translation>MySQL је систем управљања базама података који је креирао MySQLАБ.</translation>
     </message>
     <message>
+        <source>It&apos;s currently one of the most popular databases in the Open Source community and most often on by default in PHP.</source>
+        <translation type="obsolete">То је једна од веома популарних база података у Open Source заједници те се често серијски налази у PHP-у. </translation>
+    </message>
+    <message>
         <source>MySQL is the world&apos;s most popular Open Source Database, designed for speed, power and precision in mission critical, heavy load use.</source>
         <translation>MySQL је најпопуларнија Open Source база података, која пружа брзину снагу и прецизност при коришћењу под великим оптерећењем. </translation>
     </message>
@@ -19908,6 +23159,10 @@ The default code was made from the basic parameters you chose.</source>
     <message>
         <source>PostgreSQL is a database management system developed at the University of California at Berkeley Computer Science Department.</source>
         <translation>PostgreSQL је систем управљана базом података развијен на Университy оф Цалифорниа, Беркелеy Цомпутер Сциенце Департмент.</translation>
+    </message>
+    <message>
+        <source>It&apos;s a very popular database in the Open Source community and provides highly advanced database functionality.</source>
+        <translation type="obsolete">То је веома популарна база у Open Source заједници те омогућује веома напредну функцију базе података. </translation>
     </message>
     <message>
         <source>PostgreSQL is a sophisticated Object-Relational DBMS, supporting almost all SQL constructs, including subselects, transactions, and user-defined types and functions. It is the most advanced open-source database available anywhere.</source>
@@ -20068,12 +23323,20 @@ The default code was made from the basic parameters you chose.</source>
         <translation>Након што сте решили проблем изаберите</translation>
     </message>
     <message>
+        <source>Rerun System Check</source>
+        <translation type="obsolete">Поново изведи проверу система</translation>
+    </message>
+    <message>
         <source>button to re-run the system checking. This is recommended after system changes to check for critical failures. You can also click the</source>
         <translation>дугме да би поново обавили проверу система. То је препоручљиво након промена на систему ради идентификовања критичних грешака. Можете такође притиснути </translation>
     </message>
     <message>
         <source>Check Again</source>
         <translation>Провери поново</translation>
+    </message>
+    <message>
+        <source>button to rerun the finetuning checks. However if you wish you can skip straight to the next step by clicking the</source>
+        <translation type="obsolete">дугме да би поново обавили фину проверу. Ако желите заобићи тај корак притисните </translation>
     </message>
     <message>
         <source>Issues</source>
@@ -20094,6 +23357,10 @@ The default code was made from the basic parameters you chose.</source>
     <message>
         <source>directory. This is required to disable the initialization. Following the instructions found in</source>
         <translation>директоријум. То је потребно да би се онемогућило покретање.  Према упутствима пронађеним у </translation>
+    </message>
+    <message>
+        <source>to enable write access and click the</source>
+        <translation type="obsolete">да би омогућили приступ за писање притисните</translation>
     </message>
     <message>
         <source>Try Again</source>
@@ -20132,8 +23399,28 @@ The default code was made from the basic parameters you chose.</source>
         <translation>Лозинка</translation>
     </message>
     <message>
+        <source>Congratulations, eZ publish should now run on your system.</source>
+        <translation type="obsolete">Честитамо, eZ publish би сад требао радити у Вашем систему. </translation>
+    </message>
+    <message>
+        <source>eZ publish website</source>
+        <translation type="obsolete">интернет страница eZ publish</translation>
+    </message>
+    <message>
+        <source>eZ publish bug reports</source>
+        <translation type="obsolete">обавештења eZ publish-а о вирусима</translation>
+    </message>
+    <message>
         <source>Done</source>
         <translation>Направљено</translation>
+    </message>
+    <message>
+        <source>It&apos;s time to select the language this site should support.</source>
+        <translation type="obsolete">Време је да изаберете језик који ће подржавати ова страница.</translation>
+    </message>
+    <message>
+        <source>Select your language and click the</source>
+        <translation type="obsolete">Изабери језик и притисни </translation>
     </message>
     <message>
         <source>Summary</source>
@@ -20152,6 +23439,14 @@ The default code was made from the basic parameters you chose.</source>
         <translation>дугме да би изабрао језичне варијације.</translation>
     </message>
     <message>
+        <source>It&apos;s time to select the languages this site should support. Select your primary language and check any additional languages.</source>
+        <translation type="obsolete">Време је да изаберете језике које ће подржавати ова страница. Изаберите примарни језик и проверите било који додатни језик.</translation>
+    </message>
+    <message>
+        <source>Once you&apos;re done click the</source>
+        <translation type="obsolete">Кад завршите притисните</translation>
+    </message>
+    <message>
         <source>The languages you choose will help determine the charset to use on the site.</source>
         <translation>Језици које сте одабрали помоћи ће Вам при избору знакова које ћете користити на страници. </translation>
     </message>
@@ -20162,6 +23457,14 @@ The default code was made from the basic parameters you chose.</source>
     <message>
         <source>Selection</source>
         <translation>Избор</translation>
+    </message>
+    <message>
+        <source>It&apos;s now possible to select a variation for your language. A variation does small adjustments to the language, such as adding Euro support or date format changes. Using variations are optional so you may safely skip this step. Once your&apos;re done click the</source>
+        <translation type="obsolete">Сад је могуће изабрати варијацију вашег језика. Варијација ради мале прилагодбе језика, као што је додавање Еуро подршке или промена датума. Варијације нису обавезне па можете прескочити овај корак. Кад сте завршили притисните</translation>
+    </message>
+    <message>
+        <source>It&apos;s now possible to select variations for your languages. Variations do small adjustments to the language, such as adding Euro support or date format changes. Using variations are optional so you may safely skip this step. Once you are done click the</source>
+        <translation type="obsolete">Сад је могуће изабрати варијацију вашег језика. Варијација ради мала прилагођавања језика, као што је додавање Еуро подршке или промена датума. Варијације нису обавезне па можете прескочити овај корак. Кад сте завршили притисните</translation>
     </message>
     <message>
         <source>Default</source>
@@ -20280,12 +23583,20 @@ The default code was made from the basic parameters you chose.</source>
         <translation>Настави</translation>
     </message>
     <message>
+        <source>The setup will not do an upgrade from older eZ publish versions (such as 2.2.7) if you leave the data as it is. This is only meant for people who have existing data that they don&apos;t want to lose. If you have existing eZ publish 3.0 data (such as from an RC release) you should skip DB initialization, however you will then need to do a manual upgrade.</source>
+        <translation type="obsolete">Setup неће обавити ажурирање старијих верзија eZ publishа (као што је 2.2.7) ако оставите податке какви јесу.  То се односи на особе које имају постојеће податке које не желе изгубити. Ако имате постојеће eZ publish 3.0 податке (из РЦ издања), требали бисте прескочити ДБ иницијацију, међутим онда ћете морати ажурирање обавити ручно.</translation>
+    </message>
+    <message>
         <source>Continue but remove the data first.</source>
         <translation>Настави, али прво уклони податке.</translation>
     </message>
     <message>
         <source>Keep data and skip database initialization.</source>
         <translation>Задржи податке и прескочи иницирање базе података.</translation>
+    </message>
+    <message>
+        <source>It can take some time initializing the database so please be patient and wait until the new page is finished.</source>
+        <translation type="obsolete">Иницирање базе података може потрајати па Вас молимо да будете стрпљиви и причекате док нова страница не буде готова. </translation>
     </message>
     <message>
         <source>Type</source>
@@ -20312,6 +23623,10 @@ The default code was made from the basic parameters you chose.</source>
         <translation>која мора бити доступна на серверу или</translation>
     </message>
     <message>
+        <source>If you need help with eZ publish, you can go to %ezlink and get help in the forums.  If you find a bug (error), please go to %buglink and report it.  With your help we can fix the errors eZ publish might have and implement new features.</source>
+        <translation type="obsolete">Ако Вам је потребна помоћ с eZ publish програмом, посетите %ezlink и потражите помоћ у форумима.Ако пронађете грешку (буг), молим да га пријавите на %buglink.Uz Вашу помоћ можемо поправити евентуалне грешке које садржи eZ publish те увести нове карактеристике. </translation>
+    </message>
+    <message>
         <source>ez.no</source>
         <translation>ез.но</translation>
     </message>
@@ -20333,23 +23648,27 @@ The default code was made from the basic parameters you chose.</source>
     </message>
     <message>
         <source>The database would not accept the connection, please review your settings and try again.</source>
-        <translation>База података није прихватила везу, молимо прегледајте своја подешавања и покушајте поново. </translation>
+        <translation type="unfinished">База података није прихватила везу, молимо прегледајте своја подешавања и покушајте поново. </translation>
     </message>
     <message>
         <source>Password entries did not match.</source>
-        <translation>Унесене лозинке нису одговарале.</translation>
+        <translation type="unfinished">Унесене лозинке нису одговарале.</translation>
     </message>
     <message>
         <source>The selected database was not empty, please choose from the alternatives below.</source>
-        <translation>Одабрана база података није била празна, молимо изаберите међу ниже понуђеним алтернативама. </translation>
+        <translation type="unfinished">Одабрана база података није била празна, молимо изаберите међу ниже понуђеним алтернативама. </translation>
+    </message>
+    <message>
+        <source>The selected selected user has not got access to any databases. Change user or create a database for the user.</source>
+        <translation type="obsolete">Изабрани корисник нема приступ ни једној од база података. Промени корисника или креирај базу података за корисника.</translation>
     </message>
     <message>
         <source>Database initalization</source>
-        <translation>Иницирање базе података</translation>
+        <translation type="unfinished">Иницирање базе података</translation>
     </message>
     <message>
         <source>Email settings</source>
-        <translation>Подешавања електронске поште</translation>
+        <translation type="unfinished">Подешавања електронске поште</translation>
     </message>
     <message>
         <source>Finished</source>
@@ -20357,31 +23676,39 @@ The default code was made from the basic parameters you chose.</source>
     </message>
     <message>
         <source>Language options</source>
-        <translation>Језичне могућности</translation>
+        <translation type="unfinished">Језичне могућности</translation>
     </message>
     <message>
         <source>Registration</source>
-        <translation>Регистрација</translation>
+        <translation type="unfinished">Регистрација</translation>
     </message>
     <message>
         <source>Securing site</source>
-        <translation>Заштита странице</translation>
+        <translation type="unfinished">Заштита странице</translation>
     </message>
     <message>
         <source>Site access</source>
-        <translation>Приступ страници</translation>
+        <translation type="unfinished">Приступ страници</translation>
     </message>
     <message>
         <source>Site details</source>
         <translation>Детаљи странице</translation>
     </message>
     <message>
+        <source>No templates choosen.</source>
+        <translation type="obsolete">Није изабран шаблон.</translation>
+    </message>
+    <message>
         <source>Site template selection</source>
-        <translation>Избор шаблона странице</translation>
+        <translation type="unfinished">Избор шаблона странице</translation>
     </message>
     <message>
         <source>System check</source>
         <translation>Провера система</translation>
+    </message>
+    <message>
+        <source>Welcome to eZ publish</source>
+        <translation type="obsolete">Добродошли у eZ publish</translation>
     </message>
     <message>
         <source>Choose database system</source>
@@ -20391,6 +23718,14 @@ The default code was made from the basic parameters you chose.</source>
         <source>Next</source>
         <comment>next button in installation</comment>
         <translation>Следећи</translation>
+    </message>
+    <message>
+        <source>PostgreSQL or MySQL &gt;= 4.1 are required for unicode support in eZ publish.</source>
+        <translation type="obsolete">Потребна је PostgreSQL ор MySQL &gt;= 4.1 за уницоде подршку у eZ publish. </translation>
+    </message>
+    <message>
+        <source>More information about eZ publish and unicode support can be found %1.</source>
+        <translation type="obsolete">Детаљније информације о eZ publish и уницоде подршци можете пронаћи %1.</translation>
     </message>
     <message>
         <source>here</source>
@@ -20430,12 +23765,33 @@ The default code was made from the basic parameters you chose.</source>
         <translation>Обавезно посетите интернет страницу %1 и %2.</translation>
     </message>
     <message>
+        <source>eZ publish</source>
+        <comment>eZ publish 3 link</comment>
+        <translation type="obsolete">eZ издаваштво</translation>
+    </message>
+    <message>
         <source>No Unicode support</source>
         <translation>Не подржава Unicode</translation>
     </message>
     <message>
+        <source>The database server you connected to does not support Unicode which means that you cannot choose all the languages as you did.To fix this problem you must do one of the following:</source>
+        <translation type="obsolete">Сервер базе података који сте одабрали не подржава Unicode, што значи да не можете изабрати све језике које сте одабрали.Да би решили тај проблем морате учинити следеће:</translation>
+    </message>
+    <message>
+        <source>Choose only languages that use similar characters, for instance: English and Norwegian will work together while English and Russian won&apos;t work.</source>
+        <translation type="obsolete">Изаберите само језике који користе сличне знакове, нпр. Енглески и Норвешки језик ће добро одговарати док Енглески и Руски језик неће добро одговарати. </translation>
+    </message>
+    <message>
         <source>Make sure the database server is configured to use Unicode or that it has the latest software which supports Unicode.</source>
         <translation>Побрините се да је сервер базе података конфигурисан за коришћење Unicode-а или да има најновије рачунарске програме који подржавају Unicode. </translation>
+    </message>
+    <message>
+        <source>Primary/Additional</source>
+        <translation type="obsolete">Примаран/Додатни</translation>
+    </message>
+    <message>
+        <source>eZ publish supports multiple languages.</source>
+        <translation type="obsolete">eZ publish подржава неколико језика. </translation>
     </message>
     <message>
         <source>These and other additional languages can also be installed later.</source>
@@ -20449,6 +23805,10 @@ The default code was made from the basic parameters you chose.</source>
     <message>
         <source>Site registration</source>
         <translation>Регистрација странице</translation>
+    </message>
+    <message>
+        <source>By sending registration the following data will be sent to eZ systems</source>
+        <translation type="obsolete">Слањем регистрације следећи подаци биће послани eZ систему</translation>
     </message>
     <message>
         <source>Site access configuration</source>
@@ -20516,6 +23876,10 @@ The default code was made from the basic parameters you chose.</source>
         <translation>Оставите податке и не чините ништа</translation>
     </message>
     <message>
+        <source>I&apos;ve chosen a new database</source>
+        <translation type="obsolete">Одабрао сам нову базу података</translation>
+    </message>
+    <message>
         <source>documentation</source>
         <comment>site access documentation link</comment>
         <translation>Документација</translation>
@@ -20531,6 +23895,10 @@ The default code was made from the basic parameters you chose.</source>
     <message>
         <source>Ignore this test</source>
         <translation>Занемарите овај тест</translation>
+    </message>
+    <message>
+        <source>Welcome to eZ publish %1</source>
+        <translation type="obsolete">Добродошли на eZ publish %1</translation>
     </message>
     <message>
         <source>which will relay the emails. If unsure what to use, ask your webhost. Some webhosts do not support</source>
@@ -20559,6 +23927,10 @@ The default code was made from the basic parameters you chose.</source>
         <translation>Ниже наведени сажетак ће садржати податке о конфигурисаним подешавањима. </translation>
     </message>
     <message>
+        <source>Information about how to set up eZ publish manually is available %1.</source>
+        <translation type="obsolete">Подаци о томе како ручно прилагодити eZ publish доступни су на %1. </translation>
+    </message>
+    <message>
         <source>here</source>
         <comment>manual installation link</comment>
         <translation>овде</translation>
@@ -20568,12 +23940,32 @@ The default code was made from the basic parameters you chose.</source>
         <translation>У Вашем систему пронађена је и MySQL и PostgreSQL подршка. Молимо изаберите базу података коју желите користити. </translation>
     </message>
     <message>
+        <source>eZ publish supports both MySQL and PostgreSQL.</source>
+        <translation type="obsolete">eZ publish подржава и MySQL и PostgreSQL.</translation>
+    </message>
+    <message>
         <source>Please input database access information in the form below.</source>
         <translation>Молимо да унесете податке о приступу бази података у ниже наведени образац. </translation>
     </message>
     <message>
+        <source>If you don&apos;t have access to a database, you should obtain access now. eZ publish is capable of running multiple sites, each site needs its own database. This means that you need to create several databases if you plan to run multiple sites. Please refer to the database system user manual if you&apos;re unsure about how to create a database.</source>
+        <translation type="obsolete">Ако немате приступ бази података, требали бисте сад добити приступ. eZ publish може управљати с више страница, свакој страници треба властита база података. То значи да морате креирати неколико база података ако желите управљати неколицином страница. Молимо да се проверите у корисничком приручнику базе података ако нисте сигурни како креирати базу података. </translation>
+    </message>
+    <message>
+        <source>Outgoing E-mail</source>
+        <translation type="obsolete">Излазна пошта</translation>
+    </message>
+    <message>
+        <source>This section is used to configure how eZ publish delivers its outgoing E-mail.</source>
+        <translation type="obsolete">Овај сегмент се користи за конфигурацију начина на који ће eZ publish доставити излазну пошту. </translation>
+    </message>
+    <message>
         <source>SMTP is recommended for MS Windows users.</source>
         <translation>За кориснике MS Windows-а препоручујемо SMTP. </translation>
+    </message>
+    <message>
+        <source>E-mail delivery</source>
+        <translation type="obsolete">Достава електронске поште</translation>
     </message>
     <message>
         <source>Server name: </source>
@@ -20588,12 +23980,32 @@ The default code was made from the basic parameters you chose.</source>
         <translation>Лозинка (није обвезна):</translation>
     </message>
     <message>
+        <source>The eZ publish system uses E-mail to send out important notices such as user registration and content approval. On Linux/UNIX: try to use sendmail. On Windows: use an SMTP server.</source>
+        <translation type="obsolete">Систем eZ publish користи e-mail за слање важних обавештења као што су регистрација корисника и одобравање садржаја. У Linux/Unix: пробајте користити сендmail. У Windowsима: користите SMTP сервер. </translation>
+    </message>
+    <message>
+        <source>&lt;b&gt;SMTP:&lt;/b&gt;&lt;br&gt;Mail is delivered through an SMTP server. At the minimum, the hostname of the SMTP server must be specified. Hint: check the SMTP settings in your E-mail application.</source>
+        <translation type="obsolete">&lt;б&gt;SMTP:&lt;/б&gt;&lt;бр&gt; Маил се доставља преко SMTP сервера. Треба бити барем одређено име хоста SMTP сервера. Савет: проверите SMTP подешавања у Вашој E-mail апликацији.</translation>
+    </message>
+    <message>
         <source>Email is used for sending out important notices such as user registration and content approval.</source>
         <translation>Електронска пошта користи се за слање важних обавештења као што је регистрација корисника или одобрење садржаја. </translation>
     </message>
     <message>
         <source>Most Unix systems support sendmail, while windows users must choose SMTP.</source>
         <translation>Већина Unix система подржава сендmail команду, док корисници Windows-а морају изабрати SMTP.</translation>
+    </message>
+    <message>
+        <source>&lt;b&gt;SMTP&lt;/b&gt;: If you&apos;re unsure what to enter, take a look at the settings in your e-mail application.</source>
+        <translation type="obsolete">&lt;б&gt;SMTP&lt;/б&gt;: Ако нисте сигурни шта унети, погледајте подешавања у својој e-mail апликацији.</translation>
+    </message>
+    <message>
+        <source>eZ publish has been installed with the following sites. You will find the username and password mentioned for each site.</source>
+        <translation type="obsolete">eZ publish инсталиран је на следећим страницама. Добит ћете корисничко име и лозинку за сваку страницу. </translation>
+    </message>
+    <message>
+        <source>Tip: Store this page as an html file by clicking Save-As in your web browser menu, alternatively you may write down the urls for your sites.</source>
+        <translation type="obsolete">Савет: снимите ову страницу као хтмл датотеку избором дугмета Сними као на менију интернет претраживања, евентуално можете записати URL адресе Ваших страница.</translation>
     </message>
     <message>
         <source>forums</source>
@@ -20605,12 +24017,20 @@ The default code was made from the basic parameters you chose.</source>
         <translation>Језична подршка</translation>
     </message>
     <message>
+        <source>Use the radio buttons to choose the primary language, and the checkboxes to choose additional languages. You may choose more than one additional language.</source>
+        <translation type="obsolete">Користите радио дугмад да би одабрали главни језик те checkboxове да би одабрали додатне језике. Можете изабрати више од једног додатног језика.</translation>
+    </message>
+    <message>
         <source>The selected languages are used to determine character sets, date / number formats, etc.</source>
         <translation>Изабрани језици користе се да би се одредили скупови знакова, формат датума/ бројева итд. </translation>
     </message>
     <message>
         <source>For more information about language customization, please refer to the %1.</source>
         <translation>За више података о прилагођавању језика молимо да погледате %1.</translation>
+    </message>
+    <message>
+        <source>If you wish, you can also add some comments, which will be included in the registration E-mail.</source>
+        <translation type="obsolete">Ако желите, можете додати коментаре који ће бити укључени у регистрациони e-mail. </translation>
     </message>
     <message>
         <source>Send registration</source>
@@ -20641,8 +24061,20 @@ The default code was made from the basic parameters you chose.</source>
         <translation>Изабрани језик</translation>
     </message>
     <message>
+        <source>This data will help to improve future releases of eZ publish.</source>
+        <translation type="obsolete">Ови подаци помоћи ће при побољшању будућих верзија eZ  publish.-а.</translation>
+    </message>
+    <message>
         <source>Site security</source>
         <translation>Сигурност странице</translation>
+    </message>
+    <message>
+        <source>Your site is not running in a virtual host mode, this is insecure. It is recommended to run eZ publish in virtual host mode. If you do not have the possibility to use virtual host mode, you should follow the instructions below about how to install an .htaccess file. The .htaccess file tells the web server to restrict the access to certain files.</source>
+        <translation type="obsolete">Ваш web није подешен као виртуелни хост. Препоручује се конфигурација виртуелног хоста.</translation>
+    </message>
+    <message>
+        <source>If you have shell access, you can run the following commmands.</source>
+        <translation type="obsolete">Ако имате приступ схеллу, можете извршити следеће наредбе. </translation>
     </message>
     <message>
         <source>If you do not have shell access, you will have to copy the file using an FTP client or ask your hosting provider to do this for you.</source>
@@ -20651,6 +24083,10 @@ The default code was made from the basic parameters you chose.</source>
     <message>
         <source>This security tweak takes care of protecting configuration files and other important files.</source>
         <translation>Овај сигурносни тwеак брине се за заштиту конфигурационих и осталих важних датотека.</translation>
+    </message>
+    <message>
+        <source>Please choose the access method you wish to use for your site. The access method determines how the site will be accessed from within a web browser. If unsure: choose URL.</source>
+        <translation type="obsolete">Молимо изаберите методу приступа коју желите користити на својој страници. Метода приступа одређује како ће се приступати страници из web претраживача. Ако нисте сигурни: изаберите URL. </translation>
     </message>
     <message>
         <source>Port*</source>
@@ -20667,6 +24103,10 @@ The default code was made from the basic parameters you chose.</source>
     <message>
         <source>* Requires DNS setup.</source>
         <translation>* Тражи DNS setup.</translation>
+    </message>
+    <message>
+        <source>For more detailed information on site access, please refer to the %1</source>
+        <translation type="obsolete">За детаљније информације о приступу страници, молимо да се обратите </translation>
     </message>
     <message>
         <source>User path</source>
@@ -20697,6 +24137,10 @@ The default code was made from the basic parameters you chose.</source>
         <translation>Можете изменити детаље за сваку страницу. </translation>
     </message>
     <message>
+        <source>For more information about how to configure site access, please refer to the %1</source>
+        <translation type="obsolete">Да бисте добили више информација о томе како конфигурисати приступ страници, молимо обратите се %1</translation>
+    </message>
+    <message>
         <source>Use the refresh button to update the database listing.</source>
         <translation>Притисните дугме Освежи да би ажурирали листу базе података. </translation>
     </message>
@@ -20719,6 +24163,18 @@ The default code was made from the basic parameters you chose.</source>
     <message>
         <source>The system check page is being displayed. This means that there are some problems/issues present.</source>
         <translation>Приказана је страница провере система. То значи да постоје неки проблеми/питања. </translation>
+    </message>
+    <message>
+        <source>These issues have to be resolved/fixed, or else, eZ publish will not function properly.</source>
+        <translation type="obsolete">Ова је питања потребно решити јер иначе eZ publish неће добро радити. </translation>
+    </message>
+    <message>
+        <source>The problems are usually file-system related and can be easily fixed by copy / paste / run-ing the suggested commands in a system shell.</source>
+        <translation type="obsolete">Проблеми су обично повезани с датотеком-системом те их је могуће лагано решити копирањем/лепљењем/ обављањем сугерисаних наредби у љусци система.</translation>
+    </message>
+    <message>
+        <source>Welcome to the eZ publish content management system and development framework. This wizard will help you set up eZ publish.&lt;br&gt;Click &lt;i&gt;Next&lt;/i&gt; to continue.</source>
+        <translation type="obsolete">Добродошли у eZ publish CMS. чаробњак ће Вам помоћи поставити eZ publish.&lt;бр&gt;притисни &lt;и&gt;следећи&lt;/и&gt; за наставак.</translation>
     </message>
     <message>
         <source>No data will be stored in the database until the final step of the setup.</source>
@@ -20778,16 +24234,36 @@ The default code was made from the basic parameters you chose.</source>
         <translation>Приказана је страница за фино подешавање. То значи да постоје неки проблеми које је могуће решити како би се побољшао учинак или карактеристике система. </translation>
     </message>
     <message>
+        <source>These issues do not need to be resolved/fixed. eZ publish will function properly without them.</source>
+        <translation type="obsolete">Ова питања није потребно решити/поправити јер ће eZ publish и без њих добро радити. </translation>
+    </message>
+    <message>
+        <source>Welcome to the eZ publish content management system and development framework. This wizard will help you set up eZ publish.&lt;br&gt;Your system is not optimal, if you wish you can click the &lt;i&gt;Finetune&lt;/i&gt; button. This will present hints on how to fix these issues.&lt;br/&gt; Click &lt;i&gt;Next&lt;/i&gt; to continue without finetuning.</source>
+        <translation type="obsolete">Добродошли у eZ publish систем управљања садржајима и развојни оквир. Чаробњак ће Вам помоћи поставити eZ publish.&lt;бр&gt; Ваш систем није оптималан, ако желите можете притиснути дугме &lt;и&gt;Finetune&lt;/и&gt;. Појавиће се сугестије како поправити те проблеме. &lt;бр/&gt; Притисните &lt;и&gt;Следећи&lt;/и&gt; за наставак без детаљног прилагођавања.</translation>
+    </message>
+    <message>
         <source>Site administrator</source>
         <translation>Администратор странице</translation>
+    </message>
+    <message>
+        <source>No packages choosen.</source>
+        <translation type="obsolete">Није изабран пакет.</translation>
     </message>
     <message>
         <source>Site functionality</source>
         <translation>Функционалности странице</translation>
     </message>
     <message>
+        <source>No site choosen.</source>
+        <translation type="obsolete">Није изабрана страница.</translation>
+    </message>
+    <message>
         <source>Site selection</source>
-        <translation>Избор странице</translation>
+        <translation type="unfinished">Избор странице</translation>
+    </message>
+    <message>
+        <source>This page lets you modify the administrator for your site. This ensures that your site is secure and has proper name and E-mail set.</source>
+        <translation type="obsolete">Ова Вам страница омогућује да промените администратора за своју страницу. Тиме је осигурана сигурност Ваше странице те правилно одређивање имена и електронске поште. </translation>
     </message>
     <message>
         <source>You need to fill in the first name.</source>
@@ -20796,6 +24272,14 @@ The default code was made from the basic parameters you chose.</source>
     <message>
         <source>You need to fill in the last name.</source>
         <translation>Морате уписати презиме.</translation>
+    </message>
+    <message>
+        <source>You need to fill in an e-mail address.</source>
+        <translation type="obsolete">Морате уписати e-mail адресу.</translation>
+    </message>
+    <message>
+        <source>You need to fill in a valid e-mail address.</source>
+        <translation type="obsolete">Морате уписати исправну e-mail адресу.</translation>
     </message>
     <message>
         <source>You need to fill in a password.</source>
@@ -20808,6 +24292,26 @@ The default code was made from the basic parameters you chose.</source>
     <message>
         <source>Login</source>
         <translation>Пријава</translation>
+    </message>
+    <message>
+        <source>E-mail address</source>
+        <translation type="obsolete">E-mail адреса</translation>
+    </message>
+    <message>
+        <source>The login name is fixed and cannot be changed.After the setup is done you can login with %admin_login and your password.</source>
+        <translation type="obsolete">Име пријаве је задано и није га могуће променити.Након setup-а можете се пријавити %admin_login и Вашом лозинком. </translation>
+    </message>
+    <message>
+        <source>This page lets you modify information about the site you&apos;ve chosen to install. In addition, it also lets you choose a database for the site.</source>
+        <translation type="obsolete">Ова страница омогућује Вам промени података о страници коју сте одлучили инсталирати. Уз то, она Вам омогућује избор базе података.</translation>
+    </message>
+    <message>
+        <source>Host names should not include underscores (&apos;_&apos;), as this violates the DNS RFC and will cause problems with Internet Explorer. They have been converted to dashes (&apos;-&apos;).</source>
+        <translation type="obsolete">Име хоста не сме укључивати знак (&apos;_&apos;) јер то крши DNS RFC те ће стварати проблеме Интернет Еxплореру. Ти су знакови претворени у цртице (&apos;-&apos;). </translation>
+    </message>
+    <message>
+        <source>Your database already contain data.The setup can continue with the initialization but may damage the present data.</source>
+        <translation type="obsolete">Ваша база података већ садржи податке.Setup може наставити иницијализацију, али може оштетити постојеће податке. </translation>
     </message>
     <message>
         <source>Select what to do from the drop-down box.</source>
@@ -20826,12 +24330,36 @@ The default code was made from the basic parameters you chose.</source>
         <translation>Молимо изаберите додатну функцију</translation>
     </message>
     <message>
+        <source>Each site comes with a predefined set of functionality, however it is possible to add extra functionality.This functionality is also available at a later time from the administration interface.</source>
+        <translation type="obsolete">Свака страница долази с унапред дефинисаним сетом функција, међутим могуће је и додати још једну функцију. Ова је функција доступна и касније с администраторског интерфејса. </translation>
+    </message>
+    <message>
+        <source>Site type</source>
+        <translation type="obsolete">Врста странице</translation>
+    </message>
+    <message>
+        <source>The type of site will choose some basic settings for toolbars, menus, color and functionality.It is possible to change these settings at a later time.</source>
+        <translation type="obsolete">Врста страница повезана је с основним подешавањима алатне траке, менија, боја и функција.Могуће је накнадно изменити те подешавања. </translation>
+    </message>
+    <message>
+        <source>The first time the user or admin site is accessed it will take some time (30 to 60 seconds). This is because eZ publish prepares the site for your machine.</source>
+        <translation type="obsolete">При првом уласку на корисничку или администрациону страницу биће потребно одређено време (30 до 60 секунди). Разлог томе јест то што eZ publish припрема страницу за Ваш рачунар. </translation>
+    </message>
+    <message>
+        <source>If you want you can let the setup add some demo data to your database, this demo data will give a good demonstration of the capabilities of eZ publish</source>
+        <translation type="obsolete">Ако желите можете пустити setup и неке демо податке у базу. Демо подаци ће вам демонстрирати могућности EZ-а.</translation>
+    </message>
+    <message>
         <source>First time users are advised to install the demo data.</source>
         <translation>Корисници који користе први пут EZ се саветују да инсталирају демо податке.</translation>
     </message>
     <message>
         <source>Note</source>
         <translation>Напомена</translation>
+    </message>
+    <message>
+        <source>The database was sucessfully initialized. You are now ready for some post configuration of the site.</source>
+        <translation type="obsolete">База података је успешно иницијализована. Спремни сте да даље конфигурисање сајта.</translation>
     </message>
     <message>
         <source>PostgreSQL username and password is not tested until database names are selected.</source>
@@ -20842,6 +24370,10 @@ The default code was made from the basic parameters you chose.</source>
         <translation>Опционо ово можете онемогућити ручно, измените &lt;и&gt;settings/site.ini&lt;/и&gt; фајл и потражите линију на којој пише</translation>
     </message>
     <message>
+        <source>Sending e-mail failed</source>
+        <translation type="obsolete">Слање emailа није успело</translation>
+    </message>
+    <message>
         <source>Failed to send the registration email using</source>
         <translation>Неуспешно слање регистрационог emailа користећи</translation>
     </message>
@@ -20850,29 +24382,57 @@ The default code was made from the basic parameters you chose.</source>
         <translation>Ако некад пожелите да поново покренете setup, измените фајл %filename и потражите линију на којој пише</translation>
     </message>
     <message>
+        <source>If you wish, you can register this installation by sending some information to eZ systems. No confidential data will be transmitted and eZ systems will not use or sell your details for unsolicited e-mails.</source>
+        <translation type="obsolete">Ако желите, можете регистровати инсталацију шаљући неке информације на eZ systems. Никакви поверљиви подаци неће бити пренесени и eZ systems неће користити или продавати ваше детаље на недозвољене emailове.</translation>
+    </message>
+    <message>
+        <source>The registration e-mail</source>
+        <translation type="obsolete">Регистрациони email</translation>
+    </message>
+    <message>
+        <source>Sending out the e-mail and generating your site will take about 10 to 30 seconds depending on your machine. Please wait until the next page loads. Clicking the button again will only send out duplicate e-mails, and may corrupt the installation.</source>
+        <translation type="obsolete">Слање emailа и генерисање вашег сајта ће трајати између 10 и 30 секунди у зависности од ваше машине. Молимо сачекајте док се следећа страница учита. Ако поново кликнете дугме само ће се још једном послати emailови, и може се покварити инсталација.</translation>
+    </message>
+    <message>
         <source>Creating sites</source>
         <translation>Креирање сајтова</translation>
     </message>
     <message>
         <source>Please make sure that the username and the password is correct. Verify that your PostgreSQL database is configured correctly.&lt;br&gt;See the PHP documentation for more information about this.&lt;br&gt;Remember to start postmaster with the -i option.&lt;br&gt;Note that PostgreSQL 7.2 is not supported.</source>
-        <translation>Молимо проверите да ли су корисничко име и лозинка исправни. Проверите да ли је ваша PostgreSQL база података исправно конфигурисана.&lt;бр&gt;Погледајте PHP документацију за више информација о овоме.&lt;бр&gt;Запамтите да покренете постмастер са -и опцијом.&lt;бр&gt;Знајте да PostgreSQL 7.2 није подржан.</translation>
+        <translation type="unfinished">Молимо проверите да ли су корисничко име и лозинка исправни. Проверите да ли је ваша PostgreSQL база података исправно конфигурисана.&lt;бр&gt;Погледајте PHP документацију за више информација о овоме.&lt;бр&gt;Запамтите да покренете постмастер са -и опцијом.&lt;бр&gt;Знајте да PostgreSQL 7.2 није подржан.</translation>
+    </message>
+    <message>
+        <source>The &apos;digest&apos; procedure is not available in your database, you cannot run eZ publish without this. Visit the FAQ for more information.</source>
+        <translation type="obsolete">Процедура &apos;дигест&apos; није доступна на вашој бази података, не можете користити eZ publish без овога. Погледајте FAQ за више информација.</translation>
     </message>
     <message>
         <source>Your database version %version does not fit the minimum requirement which is %req_version.</source>
-        <translation>Верзија %version ваше базе података не испуњава минимум захтева које захтева %req_version.</translation>
+        <translation type="unfinished">Верзија %version ваше базе података не испуњава минимум захтева које захтева %req_version.</translation>
     </message>
     <message>
         <source>The setup wizard was not able to complete the creation of your selected sites.</source>
         <translation>Setup чаробњак није био у могућности да заврши креирање ваших изабраних сајтова.</translation>
     </message>
     <message>
+        <source>If you think you have fixed the errors you can try and click the &quot;Retry&quot; button.</source>
+        <translation type="obsolete">Ако мислите да сте поправили грешке, можете покушати и кликните &quot;Понови&quot; дугме.</translation>
+    </message>
+    <message>
         <source>The setup wizard failed to create the sites.</source>
         <translation>Setup чаробњак није успео да креира сајтове.</translation>
+    </message>
+    <message>
+        <source>If possible try to fix these errors and click &quot;Retry&quot;.</source>
+        <translation type="obsolete">Ако је могуће, покушајте да исправите ове грешке и кликните на дугме &quot;Понови&quot;.</translation>
     </message>
     <message>
         <source>Retry</source>
         <comment>Retry button in installation</comment>
         <translation>Понови</translation>
+    </message>
+    <message>
+        <source>The database %database_name cannot be used, it uses the character set %charset which is different from the requested charset %req_charset.</source>
+        <translation type="obsolete">База података %database_name не може бити коришћена, користи кодни распоред %charset који је другачији од захтеваног кодног распореда %req_charset.</translation>
     </message>
     <message>
         <source>The following errors were detected</source>
@@ -20891,12 +24451,20 @@ The default code was made from the basic parameters you chose.</source>
         <translation>&lt;б&gt;Sendmail/МТА:&lt;/б&gt;&lt;бр&gt;Маил је послан користећи mail агент за трансфер. Најчешће коришћени агент, сендmail, је обично доступан на већини Linux/UNIX система. Ако mail трансфер агент није доступан онда би требали користити SMTP.</translation>
     </message>
     <message>
+        <source>The access values must not be named &apos;admin&apos; or &apos;user&apos; and each value must be unique. Please change invalid values on site indicated by *</source>
+        <translation type="obsolete">Приступна имена се не смеју звати &apos;admin&apos; или &apos;user&apos; и свака вредност мора бити јединствена. Молимо измените неисправне вредности на сајту означене са *</translation>
+    </message>
+    <message>
         <source>The selected user has not got access to any databases. Change user or create a database for the user.</source>
-        <translation>Изабрани корисник нема приступ базама. Замените корисника или му направите базу.</translation>
+        <translation type="unfinished">Изабрани корисник нема приступ базама. Замените корисника или му направите базу.</translation>
+    </message>
+    <message>
+        <source>The &apos;digest&apos; procedure is not available in your database, you cannot run eZ Publish without this. Visit the FAQ for more information.</source>
+        <translation type="obsolete">Процедура &apos;digest&apos; не постоји у вашој бази података, а без ње не можете користити eZ Publish. Посетите FAQ за више детаља.</translation>
     </message>
     <message>
         <source>The database [%database_name] cannot be used, the setup wizard wants to create the site in [%req_charset] but the database has been created using character set [%charset]. You will have to choose a database having support for [%req_charset] or modify [%database_name] .</source>
-        <translation>База података [%database_name] не може бити коришћена, користи кодни распоред [%charset] који се разликује од захтеваног кодног распореда [%req_charset]. Морате изабрати базу података која подржава [%req_charset] или преправите [%database_name].</translation>
+        <translation type="unfinished">База података [%database_name] не може бити коришћена, користи кодни распоред [%charset] који се разликује од захтеваног кодног распореда [%req_charset]. Морате изабрати базу података која подржава [%req_charset] или преправите [%database_name].</translation>
     </message>
     <message>
         <source>Package language options</source>
@@ -20904,55 +24472,55 @@ The default code was made from the basic parameters you chose.</source>
     </message>
     <message>
         <source>No packages chosen.</source>
-        <translation>Пакет није изабран.</translation>
+        <translation type="unfinished">Пакет није изабран.</translation>
     </message>
     <message>
         <source>No templates chosen.</source>
-        <translation>Нису изабрани шаблони.</translation>
+        <translation type="unfinished">Нису изабрани шаблони.</translation>
     </message>
     <message>
         <source>Cannot write to file</source>
-        <translation>Неможе писати у документ</translation>
+        <translation type="unfinished">Неможе писати у документ</translation>
     </message>
     <message>
         <source>Failed to copy %url to local file %filename</source>
-        <translation>Неуспешно копирање %url на локалну датотеку %filename</translation>
+        <translation type="unfinished">Неуспешно копирање %url на локалну датотеку %filename</translation>
     </message>
     <message>
         <source>Download of package &apos;%pkg&apos; failed. You may upload the package manually.</source>
-        <translation>Скидање пакета &apos;%pkg&apos; је пропало. Учитајте пакет ручно.</translation>
+        <translation type="unfinished">Скидање пакета &apos;%pkg&apos; је пропало. Учитајте пакет ручно.</translation>
     </message>
     <message>
         <source>Invalid package</source>
-        <translation>Неисправан пакет</translation>
+        <translation type="unfinished">Неисправан пакет</translation>
     </message>
     <message>
         <source>No package selected for upload</source>
-        <translation>Није изабран ни један пакет за учитавање</translation>
+        <translation type="unfinished">Није изабран ни један пакет за учитавање</translation>
     </message>
     <message>
         <source>Failed fetching upload package file</source>
-        <translation>Приступ учитаној пакет-датотеци није успео</translation>
+        <translation type="unfinished">Приступ учитаној пакет-датотеци није успео</translation>
     </message>
     <message>
         <source>Uploaded file is not an eZ Publish package</source>
-        <translation>Учитана датотека није eZ Publish пакет</translation>
+        <translation type="unfinished">Учитана датотека није eZ Publish пакет</translation>
     </message>
     <message>
         <source>No site package chosen.</source>
-        <translation>Није изабран пакет за сајт.</translation>
+        <translation type="unfinished">Није изабран пакет за сајт.</translation>
     </message>
     <message>
         <source>Package &apos;%packageName&apos; and it&apos;s dependencies have been downloaded successfully. Press &apos;Next&apos; to continue.</source>
-        <translation>Пакет &apos;%packageName&apos; и његове зависности су успешно прибављене. Притисните &apos;Даље&apos; за наставак.</translation>
+        <translation type="unfinished">Пакет &apos;%packageName&apos; и његове зависности су успешно прибављене. Притисните &apos;Даље&apos; за наставак.</translation>
     </message>
     <message>
         <source>Retrieving remote site packages list failed. You may upload packages manually.</source>
-        <translation>Добављање удаљених сајт-пакета није успело. Учитајте пакете ручно.</translation>
+        <translation type="unfinished">Добављање удаљених сајт-пакета није успело. Учитајте пакете ручно.</translation>
     </message>
     <message>
         <source>Welcome to eZ Publish</source>
-        <translation>Добродошли у eZ Publish</translation>
+        <translation type="unfinished">Добродошли у eZ Publish</translation>
     </message>
     <message>
         <source>If you think you have fixed the errors you can try then click the &quot;Retry&quot; button.</source>
@@ -21333,15 +24901,15 @@ It is possible to change these settings at a later time.</source>
         <translation>Упуство како да ручно инсталирате eZ publish доступни су на %1. </translation>
     </message>
     <message>
-        <source>The &apos;digest&apos; function is not available in your database, you cannot run eZ Publish without this. See the documentation for more information.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>MySQL support was detected on your system. Please choose the database driver you would like to use.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>PostgreSQL support was detected on your system. Please choose the database driver you would like to use.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The &apos;digest&apos; function is not available in your database, you cannot run eZ Publish without this. See the documentation for more information.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -21356,8 +24924,16 @@ It is possible to change these settings at a later time.</source>
         <translation>По основној поставци конструктор не чини ништа.</translation>
     </message>
     <message>
+        <source>\return an array with the template operator name.</source>
+        <translation type="obsolete">\враћа матрицу са називом оператора шаблона.</translation>
+    </message>
+    <message>
         <source>Executes the PHP function for the operator cleanup and modifies \a $operatorValue.</source>
         <translation>Извршава PHP функцију за оператора чишћења и мења \а $operatorValue.</translation>
+    </message>
+    <message>
+        <source>Example code, this code must be modified to do what the operator should do, currently it only trims text.</source>
+        <translation type="obsolete">Пример кода, овај код мора бити модификован да би обављао функцију оператора, тренутно едитује текст. </translation>
     </message>
     <message>
         <source>\\return an array with the template operator name.</source>
@@ -21401,6 +24977,10 @@ It is possible to change these settings at a later time.</source>
     <message>
         <source>Login</source>
         <translation>Пријава</translation>
+    </message>
+    <message>
+        <source>E-mail</source>
+        <translation type="obsolete">Електронска пошта</translation>
     </message>
     <message>
         <source>Full name</source>
@@ -21470,12 +25050,40 @@ It is possible to change these settings at a later time.</source>
         <source>Email</source>
         <translation>Електронска пошта</translation>
     </message>
+    <message>
+        <source>Not all timed out sessions were successfully removed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The operation were cut short in order to avoid execution timeout.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Your alternatives are to:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Repeat the operation several times to complete it.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Clear the timed out session data from command-line using: &amp;gt;php bin/php/ezsessiongc.php</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Install the session cleanup cronjob &apos;session_gc.php&apos; and run on nightly intervals (see cronjob.ini or doc for how)</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>design/standard/setup/tests</name>
     <message>
         <source>Missing database handlers</source>
         <translation>Недостају управљачи базе</translation>
+    </message>
+    <message>
+        <source>Your PHP does not have support for all databases that eZ publish support.</source>
+        <translation type="obsolete">Ваш PHP нема подршку за све базе података које подржава eZ publish. </translation>
     </message>
     <message>
         <source>Also some databases has more advanced features, such as charset, than others.</source>
@@ -21490,12 +25098,20 @@ It is possible to change these settings at a later time.</source>
         <translation>Недостаје управљач базе</translation>
     </message>
     <message>
+        <source>No supported database handlers were found. eZ publish requires a database to store it&apos;s data, without one the system will fail.</source>
+        <translation type="obsolete">Није пронађена подршка за базе података. Потребна је база података за eZ publish.</translation>
+    </message>
+    <message>
         <source>To obtain database support you need to recompile PHP, the exact recompile options are specified below.</source>
         <translation>За коришћење базе морате прекомпајлирати PHP.</translation>
     </message>
     <message>
         <source>Insufficient directory permissions</source>
         <translation>Недовољна овлашћења</translation>
+    </message>
+    <message>
+        <source>eZ publish cannot write to some important directories, without this the setup cannot finish and parts of eZ publish will fail.</source>
+        <translation type="obsolete">eZ publish не може писати појединим важним директоријима, без тога setup не може завршити те неки делови eZ publish-а неће радити. </translation>
     </message>
     <message>
         <source>It&apos;s recommended that you fix this by running the commands below.</source>
@@ -21508,6 +25124,10 @@ It is possible to change these settings at a later time.</source>
     <message>
         <source>File uploading is disabled</source>
         <translation>Учитавање датотеке је онемогућено</translation>
+    </message>
+    <message>
+        <source>File uploading is not enabled which means that it&apos;s impossible for eZ publish to handle file uploading. All other parts of eZ publish will still work fine but it&apos;s recommended to enable file uploads.</source>
+        <translation type="obsolete">Учитавање датотеке није омогућено што значи да је eZ publishу немогуће обавити учитавање датотеке. Сви остали делови eZ publishа ће и даље добро радити, но препоручујемо да омогућите учитавање датотека.</translation>
     </message>
     <message>
         <source>Configuration</source>
@@ -21526,6 +25146,10 @@ It is possible to change these settings at a later time.</source>
         <translation>Недостаје подршка за претварање слика</translation>
     </message>
     <message>
+        <source>No image conversion capabilities was detected, this means that eZ publish cannot scale any images or detect their type. This is vital functionality in eZ publish and must be supported.</source>
+        <translation type="obsolete">Нису откривене могућности претварања слика, то значи да eZ publish не може мењати величину слика или открити њихову врсту.То је витална функција у eZ publish програму те је он мора подржавати.</translation>
+    </message>
+    <message>
         <source>template operator will not be available.</source>
         <translation>оператор шаблона неће бити доступан. </translation>
     </message>
@@ -21534,8 +25158,20 @@ It is possible to change these settings at a later time.</source>
         <translation>Пази:</translation>
     </message>
     <message>
+        <source>Future releases of eZ publish will have more advanced image support by using the imagegd extension.</source>
+        <translation type="obsolete">Следеће верзије eZ publish-а имаће напреднију графичку подршку коришћењем графичке екстензије. </translation>
+    </message>
+    <message>
         <source>Missing ImageMagick program</source>
         <translation>Недостаје програм Image Magic </translation>
+    </message>
+    <message>
+        <source>The ImageMagick program is not available to eZ publish. Without it eZ publish will not be able to do image conversion unless the imagegd extension is available.</source>
+        <translation type="obsolete">Програм ImageMagic није доступан eZ publishу. Без њега eZ publish неће моћи мењати величину слика осим ако није доступна екстензија imagegd.</translation>
+    </message>
+    <message>
+        <source>If you known where the program is installed (the executable is called</source>
+        <translation type="obsolete">Ако знате где је програм инсталиран (извшни код назива се</translation>
     </message>
     <message>
         <source>or</source>
@@ -21566,6 +25202,14 @@ It is possible to change these settings at a later time.</source>
         <translation>Недостаје MBString екстензија</translation>
     </message>
     <message>
+        <source>eZ publish comes with a good list of supported charsets by default, however they can be a bit slow due to being made in pure PHP code. Luckily eZ publish supports the mbstring extension for handling some of the charsets.</source>
+        <translation type="obsolete">eZ publish се испоручује с великом листом знакова које подржава у склопу основног подешавања, међутим они могу бити нешто спорији јер су израђени у чистом PHP коду. Насрећу, eZ publish подржава екстензију mbstring за управљање неким знаковима. </translation>
+    </message>
+    <message>
+        <source>By enabling the mbstring extension eZ publish will have access to more charsets and also be able to process some of them faster, such as Unicode and iso-8859-*. This is recommended for multilingual sites and sites with more exotic charsets.</source>
+        <translation type="obsolete">Активирањем mbstring екстензије eZ publish ће имати приступ већем броју знакова те ће бити у могућности брже их обрађивати, као нпр. Unicode и iso-8859-*. Препоручено код вишејезичних страница и страница с егзотичним знаковима. </translation>
+    </message>
+    <message>
         <source>Installation of the mbstring extension is done by compiling PHP with the</source>
         <translation>Инсталација mbstring екстензије обавља се компилирањем PHP-а с </translation>
     </message>
@@ -21578,12 +25222,20 @@ It is possible to change these settings at a later time.</source>
         <translation>Више о активирању екстенције можете пронаћи у </translation>
     </message>
     <message>
+        <source>Do not enable mbstring function overloading, eZ publish will only use the extension whenever it&apos;s needed.</source>
+        <translation type="obsolete">Немојте омогућавати заобилажење mbstring функције, eZ publish ће користити само ову екстензију кад год је могуће.</translation>
+    </message>
+    <message>
         <source>PHP option</source>
         <translation>PHP опција</translation>
     </message>
     <message>
         <source>is enabled</source>
         <translation>је омогућена</translation>
+    </message>
+    <message>
+        <source>eZ publish will work with this option on however it will lead to some minor performance issues since all input variables need to be be converted back to</source>
+        <translation type="obsolete">eZ publish ће радити уз ову опцију међутим то ће довести до неких проблема с перформансом пошто ће све варијабле уноса морати бити претворене назад у </translation>
     </message>
     <message>
         <source>normal</source>
@@ -21610,12 +25262,20 @@ It is possible to change these settings at a later time.</source>
         <translation>Морате унапредити свој програм на најмање верзију</translation>
     </message>
     <message>
+        <source>eZ publish cannot write to the</source>
+        <translation type="obsolete">eZ издаваштво не може писати </translation>
+    </message>
+    <message>
         <source>directory, without this the setup cannot disable itself.</source>
         <translation>директоријум, без тога setup се не може деактивирати. </translation>
     </message>
     <message>
         <source>Missing zlib extension</source>
         <translation>Недостаје злиб екстензија</translation>
+    </message>
+    <message>
+        <source>The zlib extension is not available to eZ publish. Without it eZ publish will not be able to install the demo data, however if you do not wish the demo data you can safely ignore this.</source>
+        <translation type="obsolete">eZ publishу није доступна злиб екстензија. Без њега eZ publish неће моћи инсталирати демонстрациони приказ, међутим, ако не желите демонстрациони приступ можете занемарити ову поруку.</translation>
     </message>
     <message>
         <source>To enable zlib you need to recompile PHP with support for it. You will need to configure PHP with</source>
@@ -21634,12 +25294,24 @@ It is possible to change these settings at a later time.</source>
         <translation>PHP опција %1 је активирана</translation>
     </message>
     <message>
+        <source>eZ publish will work with this option on however it will lead to some minor performance issues since all input variables will be made global on each script execution.</source>
+        <translation type="obsolete">eZ publish ће радити ако је укључена ова опција, међутим, то ће довести до неких проблема с извршењем пошто ће варијабле уноса бити објављене глобално код сваког извршења плана.</translation>
+    </message>
+    <message>
         <source>It&apos;s recommended that the option is turned off. To turn it off edit your %1 configuration and set %2 to %3.</source>
         <translation>Препоручујемо да искључите ту опцију. Да би је искључили измените своју %1 конфигурацију и поставите %2 на %3. </translation>
     </message>
     <message>
         <source>PHP safe mode is enabled</source>
         <translation>Активирана је PHP сигурносна функција</translation>
+    </message>
+    <message>
+        <source>Insufficient execution time allowed to install eZ publish</source>
+        <translation type="obsolete">Недовољно време дозвољено за инсталирање eZ publish програма</translation>
+    </message>
+    <message>
+        <source>eZ publish will not work correctly with a execution time limit of %1.</source>
+        <translation type="obsolete">eZ publish неће добро радити с временским ограничењем  извршења од %1.</translation>
     </message>
     <message>
         <source>It&apos;s highly recommended that you fix this.</source>
@@ -21658,8 +25330,28 @@ It is possible to change these settings at a later time.</source>
         <translation>Следећи</translation>
     </message>
     <message>
+        <source>If you are running eZ publish in a shared host environment, contant your ISP to perform the changes</source>
+        <translation type="obsolete">Ако користите eZ publish у дељеном хост окружењу, контактирајте ваш ИСП та извршите промене</translation>
+    </message>
+    <message>
+        <source>Insufficient memory allocated to install eZ publish</source>
+        <translation type="obsolete">Недовољна меморија за инсталацију eZ publish-а</translation>
+    </message>
+    <message>
+        <source>eZ publish will not work correctly with a memory limit of %1.</source>
+        <translation type="obsolete">eZ неће правилно радити с меморијским ограничењем од %1.</translation>
+    </message>
+    <message>
         <source>Open the php.ini file and change the memory_limit value to at least %1, and press %2</source>
         <translation>Отворите php.ini датотеку и промените вредност memory_limit на најмање %1, те притисните %2</translation>
+    </message>
+    <message>
+        <source>It&apos;s recommended that the option is turned off. To turn it off edit your %phpini configuration and set %magic_quotes_gpc and %magic_quotes_runtime to %offtext.</source>
+        <translation type="obsolete">Препоручујемо да искључите ту опцију. Да би је искључили измените своју %phpini конфигурацију и поставите %magic_quotes_gpc анд %magic_quotes_runtime то %offtext.</translation>
+    </message>
+    <message>
+        <source>eZ publish will not work properly with this option on.</source>
+        <translation type="obsolete">eZ publish неће правилно радити уз ову опцију.</translation>
     </message>
     <message>
         <source>To turn it off edit your %phpini configuration and set %magic_quotes_runtime to %offtext.</source>
@@ -21694,6 +25386,10 @@ It is possible to change these settings at a later time.</source>
         <translation>Недостаје imagegd2 екстензија</translation>
     </message>
     <message>
+        <source>The imagegd2 extension is not available to eZ publish. Without it eZ publish will only be able to do conversion using ImageMagick and the</source>
+        <translation type="obsolete">eZ publish-у није доступна imagegd2 екстензија. Без ње eZ publish ће моћи обављати промене само уз помоћ Image Magick-а и </translation>
+    </message>
+    <message>
         <source>To enable imagegd2 you need to recompile PHP with support for it, more information on that subject is available at</source>
         <translation></translation>
     </message>
@@ -21714,6 +25410,10 @@ It is possible to change these settings at a later time.</source>
         <translation>Недостаје екстензија за сесије</translation>
     </message>
     <message>
+        <source>Your PHP module does not have session support, without this eZ publish will not work properly.</source>
+        <translation type="obsolete">Ваш PHP модул не подржава сесије. Без сесија eZ publish неће исправно радити.</translation>
+    </message>
+    <message>
         <source>To enable session support you will have recompile your PHP module without the %session_disable switch.</source>
         <translation>За активирање сесија мора се прекомпајлирати PHP.</translation>
     </message>
@@ -21722,8 +25422,20 @@ It is possible to change these settings at a later time.</source>
         <translation>Ако је ваш сајт на дељеном хостингу морате контактирати администратора хостинг компаније.</translation>
     </message>
     <message>
+        <source>, but the latest released PHP 4.3.x version is highly recommended.</source>
+        <translation type="obsolete">, али последња издата PHP верзија PHP 4.3.x је препоручљива.</translation>
+    </message>
+    <message>
+        <source>Although eZ publish will work without it, it might be that you want to have support for this database.</source>
+        <translation type="obsolete">Мада eZ publish може радити без ње, могуће је да ћете хтети подршку за ту базу података.</translation>
+    </message>
+    <message>
         <source>The affected directories are: %dir_list</source>
         <translation>Погођени директоријуми су: %dir_list</translation>
+    </message>
+    <message>
+        <source>These shell commands will give proper permission to the webserver.</source>
+        <translation type="obsolete">Ове команде ће вам дати одговарајуће привилегије на webсерверу.</translation>
     </message>
     <message>
         <source>Alternative shell commands</source>
@@ -21734,20 +25446,44 @@ It is possible to change these settings at a later time.</source>
         <translation>Ако немате овлачћења да измените власника, можете покушати са овим командама.</translation>
     </message>
     <message>
+        <source>eZ publish could not detect the user and group of the webserver.If you know the user and group of the webserver it&apos;s recommended to change the ownership of the files to match this user and group.To do this you need to change the %chown commands under Alternative shell commands.</source>
+        <translation type="obsolete">eZ publish не може детектовати корисника и групу на webсерверу.Ако знате корисника и групу на webсерверу препоручљиво је да промените власника фајлова да би се поклопили корисник и група.Да би ово користили морате изменити %chown команде у алтернативним командама.</translation>
+    </message>
+    <message>
+        <source>These commands will setup the permission more correctly, but require knowledge about the running webserver.</source>
+        <translation type="obsolete">Ове команде ће поставити привилегије коректније, али захтевају познавање webservera на којем се ради.</translation>
+    </message>
+    <message>
         <source>Note</source>
         <translation>Напомена</translation>
+    </message>
+    <message>
+        <source>The %user_expr must be changed to your webserver username and groupname.</source>
+        <translation type="obsolete">Корисник %user_expr мора бити измењен на корисника и назив групе webservera.</translation>
     </message>
     <message>
         <source>File uploading is not possible</source>
         <translation>Уплоад фајла није могућ</translation>
     </message>
     <message>
+        <source>The PHP upload directory %upload_dir does not exists or is not accessible, without this you will not be able to upload files or images to eZ publish.</source>
+        <translation type="obsolete">PHP upload директоријум %upload_dir не постоји или не може да му се приступи, без овога нећете моћи да uploadујете слике или фајлове на eZ publish.</translation>
+    </message>
+    <message>
         <source>Create the directory %upload_dir on your system. If you do not have the possibility to create this yourself ask the administrator to create it for you.</source>
         <translation>Креирајте директоријум %upload_dir на вашем систему. Ако немате могућности да га сами креирате, тражите од администратора да га креира за вас.</translation>
     </message>
     <message>
+        <source>The upload directory is currently placed in the directory of the root user.This is a security problem and should be changed to another global temporary directory</source>
+        <translation type="obsolete">Уплоад директоријум је тренутно смештен у директоријуму root корисника.Ово је безбедоносни проблем и требао би бити промењен на други глобални привремени директоријум</translation>
+    </message>
+    <message>
         <source>This shell command will create the upload directory.</source>
         <translation>Ова команда ће вам креирати upload директоријум.</translation>
+    </message>
+    <message>
+        <source>The PHP upload directory %upload_dir is not writeable. This means that it will be impossible to upload files or images to eZ publish.</source>
+        <translation type="obsolete">У PHP upload директоријум %upload_dir не може да се пише. То значи да се неће моћи вршити upload слика и фајлова на eZ publish.</translation>
     </message>
     <message>
         <source>You must change the permission on the directory %upload_dir. If you do not have the possibility to create this yourself ask the administrator to do this for you.</source>
@@ -21762,8 +25498,16 @@ It is possible to change these settings at a later time.</source>
         <translation>Ако немате право да мењате власника, можете покушати са овом командом.</translation>
     </message>
     <message>
+        <source>eZ publish could not detect the user and group of the webserver.If you know the user and group of the webserver it&apos;s recommended to change the ownership of the upload directory to match this user and group.To do this you need to change the %chown commands under Alternative shell commands.</source>
+        <translation type="obsolete">eZ publish није могао открити корисника и групу на webсерверу.Ако знате корисника и групу на webсерверу препоручљиво је да промените власника upload директоријума да би се поклопили корисник и група.Да би ово изменили морате користити %chown команду у алтернативним командама.</translation>
+    </message>
+    <message>
         <source>This shell command will give proper permission to the upload directory.</source>
         <translation>Ова команда ће вам дати одговарајуће дозволе за upload директоријум.</translation>
+    </message>
+    <message>
+        <source>If you know the user and group of the webserver you can try this command. Replace apache:apache with the user and group.</source>
+        <translation type="obsolete">Ако знате корисника и групу на webсерверу можете покушати ову команду. Замените apache:apache са корисником и групом.</translation>
     </message>
     <message>
         <source>The complete list of charsets mbstring supports are</source>
@@ -21774,12 +25518,24 @@ It is possible to change these settings at a later time.</source>
         <translation>пример php.ini</translation>
     </message>
     <message>
+        <source>Alternatively you may create a file called %1 in your eZ publish root folder and add the following</source>
+        <translation type="obsolete">Као алтернативу можете креирати фајл назван %1 у вашем eZ publish root директоријуму и додати следеће</translation>
+    </message>
+    <message>
         <source>.htaccess example</source>
         <translation>.хтаццесс пример</translation>
     </message>
     <message>
+        <source>eZ publish may work with safe mode on, however there might be several features that will be unavailable. Some of the things that might occur are</source>
+        <translation type="obsolete">eZ publish може радити са safe mode, али може се десити да неке опције неће бити доступне. Неке од ствари које се могу десити су</translation>
+    </message>
+    <message>
         <source>You need to enable AcceptPathInfo in your Apache config file, if you&apos;re using apache 2.x.</source>
         <translation>Морате да омогућите AcceptPathInfo у вашем Apache config фајлу, ако користите apache 2.x.</translation>
+    </message>
+    <message>
+        <source>If you&apos;re running apache 1.3, eZ publish will not run in CGI mode.</source>
+        <translation type="obsolete">Ако користите apache 1.3, eZ publish неће радити у CGI моду.</translation>
     </message>
     <message>
         <source>allow_url_fopen ini setting is disabled</source>
@@ -21988,6 +25744,10 @@ To do this you need to change the %chown commands under Alternative shell comman
         <translation>Ваш PHP модул не подржава сесије. Без сесија eZ publish неће исправно радити.</translation>
     </message>
     <message>
+        <source>, but the latest released PHP 4.4.x version is highly recommended.</source>
+        <translation type="obsolete">, али последња издата PHP верзија PHP 4.4.x је препоручљива.</translation>
+    </message>
+    <message>
         <source>eZ Publish may work with safe mode on, however there might be several features that will be unavailable. Some of the things that might occur are</source>
         <translation>eZ Publish можда буде радио са укљученим safe mode, међутим више функција ће постати недоступне. Неке од ствари које могу да се десе су</translation>
     </message>
@@ -22052,10 +25812,6 @@ To do this you need to change the %chown commands under Alternative shell comman
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>To fix this, edit your php.ini configuration and add E to the variables_order setting.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Wrong eZ Components version detected</source>
         <translation type="unfinished"></translation>
     </message>
@@ -22085,6 +25841,14 @@ To do this you need to change the %chown commands under Alternative shell comman
     </message>
     <message>
         <source>, but the latest released stable PHP version is always recommended.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Since some extensions might use $_ENV it is recomended to fix it unless you have full controll over all extensions you use!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>To fix this, edit your php.ini configuration and add E to the variables_order setting and restart your webserver.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -22274,6 +26038,10 @@ To do this you need to change the %chown commands under Alternative shell comman
         <translation>Унос није одобрен, испуни сва поља</translation>
     </message>
     <message>
+        <source>VAT Types</source>
+        <translation type="obsolete">Врсте ПДВ-а</translation>
+    </message>
+    <message>
         <source>Wish list</source>
         <translation>Листа жеља</translation>
     </message>
@@ -22308,6 +26076,14 @@ To do this you need to change the %chown commands under Alternative shell comman
     <message>
         <source>Discount</source>
         <translation>Попуст</translation>
+    </message>
+    <message>
+        <source>Total Price ex. VAT</source>
+        <translation type="obsolete">Укупна цена без ПДВ-а</translation>
+    </message>
+    <message>
+        <source>Total Price inc. VAT</source>
+        <translation type="obsolete">Укупна цена са ПДВ-ом</translation>
     </message>
     <message>
         <source>Discount groups</source>
@@ -22379,6 +26155,10 @@ To do this you need to change the %chown commands under Alternative shell comman
         <translation>Укупно наруџбе</translation>
     </message>
     <message>
+        <source>Percentage</source>
+        <translation type="obsolete">Проценат</translation>
+    </message>
+    <message>
         <source>First name</source>
         <translation>Име</translation>
     </message>
@@ -22393,6 +26173,10 @@ To do this you need to change the %chown commands under Alternative shell comman
     <message>
         <source>Address</source>
         <translation>Адреса</translation>
+    </message>
+    <message>
+        <source>Payment was cancelled for an unknown reason. Please try to buy again.</source>
+        <translation type="obsolete">Уплата је одбијена из непознатог разлога. Молимо покушајте поново.</translation>
     </message>
     <message>
         <source>Order summary</source>
@@ -22459,6 +26243,14 @@ To do this you need to change the %chown commands under Alternative shell comman
         <translation>Износ</translation>
     </message>
     <message>
+        <source>All Year</source>
+        <translation type="obsolete">Целу годину</translation>
+    </message>
+    <message>
+        <source>All Month</source>
+        <translation type="obsolete">Цели месец</translation>
+    </message>
+    <message>
         <source>View</source>
         <translation>Приказ</translation>
     </message>
@@ -22513,6 +26305,30 @@ To do this you need to change the %chown commands under Alternative shell comman
     <message>
         <source>State</source>
         <translation>Регија</translation>
+    </message>
+    <message>
+        <source>Country</source>
+        <translation type="obsolete">Земља</translation>
+    </message>
+    <message>
+        <source>The following items were removed from your basket, because the products were changed</source>
+        <translation type="obsolete">Производи су уклоњени из ваше корпе јер је дошло до промена на производима</translation>
+    </message>
+    <message>
+        <source>Subtotal Ex. VAT</source>
+        <translation type="obsolete">Међузбир без ПДВ-а</translation>
+    </message>
+    <message>
+        <source>Subtotal Inc. VAT</source>
+        <translation type="obsolete">Међузбир укључујући ПДВ</translation>
+    </message>
+    <message>
+        <source>SUM</source>
+        <translation type="obsolete">УКУПНО</translation>
+    </message>
+    <message>
+        <source>E-mail</source>
+        <translation type="obsolete">E-mail</translation>
     </message>
     <message>
         <source>Comment</source>
@@ -22899,8 +26715,16 @@ To do this you need to change the %chown commands under Alternative shell comman
         <translation>Изабери клијенте</translation>
     </message>
     <message>
+        <source>Please choose the customers you want to add to discount group %groupname.    Select your customers and click the %buttonname button.    Using the recent and bookmark items for quick selection is also possible.    Click on object names to change the browse listing.</source>
+        <translation type="obsolete">Молимо изаберите клијенте које желите додати у групу с попустом %groupname.Izaberite клијенте и притисните дугме %buttonname.Moguća је и употреба недавно изабраних и означених елемената за брзи избор.Притисните име објеката и промените прегледну листу. </translation>
+    </message>
+    <message>
         <source>Choose product for discount</source>
         <translation>Изабери производе за попуст</translation>
+    </message>
+    <message>
+        <source>Please choose the products you want to add to discount rule %discountname in discount group %groupname.    Select your products and click the %buttonname button.    Using the recent and bookmark items for quick selection is also possible.    Click on product names to change the browse listing.</source>
+        <translation type="obsolete">Молимо изаберите производе које желите додати у групу с попустом %groupname.Izaberite производе и притисните дугме %buttonname.Moguća је и употреба недавно изабраних и означених елемената за брзи избор.Притисните име објеката и промените прегледну листу.</translation>
     </message>
     <message>
         <source>Please choose the customers you want to add to discount group %groupname.
@@ -22995,7 +26819,7 @@ To do this you need to change the %chown commands under Alternative shell comman
     <name>design/standard/toolbar</name>
     <message>
         <source>Toolbar management</source>
-        <translation>Управљање алатном траком</translation>
+        <translation type="unfinished">Управљање алатном траком</translation>
     </message>
     <message>
         <source>There are %logged_in_count registered and %anonymous_count anonymous users online.</source>
@@ -23068,6 +26892,10 @@ To do this you need to change the %chown commands under Alternative shell comman
     <message>
         <source>Notification</source>
         <translation>Обавештење</translation>
+    </message>
+    <message>
+        <source>My Notifications</source>
+        <translation type="obsolete">Моја обавештења</translation>
     </message>
     <message>
         <source>User information</source>
@@ -23407,6 +27235,10 @@ To do this you need to change the %chown commands under Alternative shell comman
         <translation>Молимо поново упишите стару лозинку.</translation>
     </message>
     <message>
+        <source>Password didn&apos;t match, please retype your new password.</source>
+        <translation type="obsolete">Лозинка не одговара, молимо да поново упишете своју нову лозинку.</translation>
+    </message>
+    <message>
         <source>Password successfully updated.</source>
         <translation>Лозинка је успешно ажурирана.</translation>
     </message>
@@ -23435,6 +27267,10 @@ To do this you need to change the %chown commands under Alternative shell comman
         <translation>Поново упишите лозинку</translation>
     </message>
     <message>
+        <source>Your account was successfully created. An e-mail will be sent to the specifiede-mail address. You need to follow the instructions in that mail to activateyour account.</source>
+        <translation type="obsolete">Ваш кориснички рачун је успешно креиран. Послан вам је email на адресу коју сте навелипри регистрацији. Следите упуте у том emailу да би активирали вашкориснички рачун.</translation>
+    </message>
+    <message>
         <source>Forgot your password?</source>
         <translation>Заборавили сте лозинку?</translation>
     </message>
@@ -23451,6 +27287,10 @@ To do this you need to change the %chown commands under Alternative shell comman
         <translation>Корисничко име</translation>
     </message>
     <message>
+        <source>E-mail</source>
+        <translation type="obsolete">E-mail</translation>
+    </message>
+    <message>
         <source>Username</source>
         <comment>User name</comment>
         <translation>Корисничко име</translation>
@@ -23465,7 +27305,7 @@ To do this you need to change the %chown commands under Alternative shell comman
     </message>
     <message>
         <source>The node (%1) specified in [UserSettings].DefaultUserPlacement setting in site.ini does not exist!</source>
-        <translation>Чвор (%1) наведен у [UserSettings].DefaultUserPlacement подешавању у site.ini не постоји!</translation>
+        <translation type="unfinished">Чвор (%1) наведен у [UserSettings].DefaultUserPlacement подешавању у site.ini не постоји!</translation>
     </message>
     <message>
         <source>Your account is already active.</source>
@@ -23499,19 +27339,35 @@ your account.</source>
         <source>Try again</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>The new password must be at least %1 characters long. Please retype your new password.</source>
+        <translation type="unfinished">Нова лозинка мора бити дугачка најмање %1 симбола. Изнова упишите нову лозинку.</translation>
+    </message>
 </context>
 <context>
     <name>design/standard/user/</name>
     <message>
         <source>The new password must be at least %1 characters long. Please retype your new password.</source>
-        <translation>Нова лозинка мора бити дугачка најмање %1 симбола. Изнова упишите нову лозинку.</translation>
+        <translation type="obsolete">Нова лозинка мора бити дугачка најмање %1 симбола. Изнова упишите нову лозинку.</translation>
     </message>
 </context>
 <context>
     <name>design/standard/user/forgotpassword</name>
     <message>
+        <source>A mail has been sent to the following e-mail address: %1. This e-mail contains a link you need to click so that we can confirm that the correct user is getting the new password.</source>
+        <translation type="obsolete">Послан вам је email на следећу адресу: %1. Тај mail садржи линк на који морате кликнути да би потврдили нову лозинку.</translation>
+    </message>
+    <message>
+        <source>There is no registered user with that e-mail address.</source>
+        <translation type="obsolete">Нема регистрованог корисника са том e-mail адресом.</translation>
+    </message>
+    <message>
         <source>Have you forgotten your password?</source>
         <translation>Заборавили сте лозинку?</translation>
+    </message>
+    <message>
+        <source>If you have forgotten your password we can generate a new one for you. All you need to do is to enter your e-mail address and we will create a new password for you.</source>
+        <translation type="obsolete">Ако сте заборавили лозинку генерисати ћемо вам нову. Све што требате учинити је уписати ваш e-mail и ми ћемо креирати нову лозинку за вас.</translation>
     </message>
     <message>
         <source>Generate new password</source>
@@ -23528,6 +27384,10 @@ your account.</source>
     <message>
         <source>The key is invalid or has been used. </source>
         <translation>Кључ је неисправан или је већ коришћен.</translation>
+    </message>
+    <message>
+        <source>E-mail</source>
+        <translation type="obsolete">E-mail</translation>
     </message>
     <message>
         <source>%siteurl new password</source>
@@ -23605,6 +27465,10 @@ your account.</source>
         <translation>Корисничко име</translation>
     </message>
     <message>
+        <source>E-mail</source>
+        <translation type="obsolete">E-mail</translation>
+    </message>
+    <message>
         <source>Username</source>
         <comment>Login name</comment>
         <translation>Корисничко име</translation>
@@ -23615,6 +27479,10 @@ your account.</source>
     <message>
         <source>Menu management</source>
         <translation>Управљање менијем</translation>
+    </message>
+    <message>
+        <source>SiteAccess</source>
+        <translation type="obsolete">Siteaccess</translation>
     </message>
     <message>
         <source>Set</source>
@@ -23739,12 +27607,20 @@ your account.</source>
         <translation>Кликните на дугме за снимање садржаја текстуалног поља у датотеку шаблона.</translation>
     </message>
     <message>
+        <source>You do not have permissions to save the contents of the text field above to the template file.</source>
+        <translation type="obsolete">Немате овлашћења за снимање садржаја текстуалног поља у датотеку шаблона.</translation>
+    </message>
+    <message>
         <source>Back to overrides</source>
         <translation>Повратак на заобиласке</translation>
     </message>
     <message>
         <source>Back to override overview.</source>
         <translation>Назад на преглед заобилазака.</translation>
+    </message>
+    <message>
+        <source>The template can not be edited.</source>
+        <translation type="obsolete">Шаблон не може бити мењан.</translation>
     </message>
     <message>
         <source>The web server does not have write access to the requested template.</source>
@@ -23769,6 +27645,10 @@ your account.</source>
     <message>
         <source>Siteaccess</source>
         <translation>Приступ сајту</translation>
+    </message>
+    <message>
+        <source>Overrides template</source>
+        <translation type="obsolete">Заобилази шаблон</translation>
     </message>
     <message>
         <source>Open as read only</source>
@@ -23823,6 +27703,10 @@ your account.</source>
     <message>
         <source>The following files and override rules could not be removed because of insufficient file permissions</source>
         <translation>Немате одговарајућа овлашћења за уклањање датотека и заобилазних улога</translation>
+    </message>
+    <message>
+        <source>The override.ini file could not be modified because of insufficient permissions.</source>
+        <translation type="obsolete">Немате одговарајућа овлашћења за уклањање override.ini датотеке.</translation>
     </message>
     <message>
         <source>Overrides for &lt;%template_name&gt; template in &lt;%current_siteaccess&gt; siteaccess [%override_count]</source>
@@ -23900,6 +27784,10 @@ your account.</source>
 <context>
     <name>design/standard/visual/toolbar</name>
     <message>
+        <source>Tool List for &lt;Toolbar_%toolbar_position&gt;</source>
+        <translation type="obsolete">Листа алата за &lt;Toolbar_%toolbar_position&gt;</translation>
+    </message>
+    <message>
         <source>Browse</source>
         <translation>Листај</translation>
     </message>
@@ -23954,6 +27842,10 @@ your account.</source>
     <message>
         <source>Toolbar management</source>
         <translation>Управљање алатном траком</translation>
+    </message>
+    <message>
+        <source>SiteAccess</source>
+        <translation type="obsolete">Приступ сајту</translation>
     </message>
     <message>
         <source>Current siteaccess</source>
@@ -24259,6 +28151,10 @@ your account.</source>
         <translation>Врста</translation>
     </message>
     <message>
+        <source>Class Attributes</source>
+        <translation type="obsolete">Атрибути класе</translation>
+    </message>
+    <message>
         <source>Affected languages</source>
         <translation>Обухваћени језици</translation>
     </message>
@@ -24273,6 +28169,10 @@ your account.</source>
 </context>
 <context>
     <name>design/standard/workflow/eventtype/view</name>
+    <message>
+        <source>Editor</source>
+        <translation type="obsolete">Уредник</translation>
+    </message>
     <message>
         <source>Sections</source>
         <translation>Сегменти</translation>
@@ -24323,73 +28223,88 @@ your account.</source>
     </message>
 </context>
 <context>
+    <name>homepage/textmodules</name>
+    <message>
+        <source>Check out our latest modules</source>
+        <translation type="obsolete">Погледајте наше најновије модуле</translation>
+    </message>
+</context>
+<context>
     <name>kernel/cache</name>
     <message>
         <source>Content view cache</source>
-        <translation>Cache приказа садржаја</translation>
+        <translation type="unfinished">Cache приказа садржаја</translation>
     </message>
     <message>
         <source>Global INI cache</source>
-        <translation>Глобални INI cache</translation>
+        <translation type="unfinished">Глобални INI cache</translation>
     </message>
     <message>
         <source>INI cache</source>
-        <translation>INI cache</translation>
+        <translation type="unfinished">INI cache</translation>
     </message>
     <message>
         <source>Codepage cache</source>
-        <translation>Cache језика</translation>
+        <translation type="unfinished">Cache језика</translation>
+    </message>
+    <message>
+        <source>Expiry cache</source>
+        <translation type="obsolete">Истицање cache-а</translation>
     </message>
     <message>
         <source>Class identifier cache</source>
-        <translation>Cache идентификатора класа</translation>
+        <translation type="unfinished">Cache идентификатора класа</translation>
     </message>
     <message>
         <source>Sort key cache</source>
-        <translation>Cache сортирања</translation>
+        <translation type="unfinished">Cache сортирања</translation>
     </message>
     <message>
         <source>URL alias cache</source>
-        <translation>Cache URL</translation>
+        <translation type="unfinished">Cache URL</translation>
     </message>
     <message>
         <source>Image alias</source>
-        <translation>Алијас слике</translation>
+        <translation type="unfinished">Алијас слике</translation>
     </message>
     <message>
         <source>Template cache</source>
-        <translation>Cache шаблона</translation>
+        <translation type="unfinished">Cache шаблона</translation>
     </message>
     <message>
         <source>Template block cache</source>
-        <translation>Cache блока шаблона</translation>
+        <translation type="unfinished">Cache блока шаблона</translation>
     </message>
     <message>
         <source>Template override cache</source>
-        <translation>Cache заобиђених шаблона</translation>
+        <translation type="unfinished">Cache заобиђених шаблона</translation>
     </message>
     <message>
         <source>RSS cache</source>
-        <translation>Cache RSS</translation>
+        <translation type="unfinished">Cache RSS</translation>
     </message>
     <message>
         <source>Character transformation cache</source>
-        <translation>Cache карактера</translation>
+        <translation type="unfinished">Cache карактера</translation>
     </message>
     <message>
         <source>User info cache</source>
-        <translation>Cache података корисника</translation>
+        <translation type="unfinished">Cache података корисника</translation>
     </message>
     <message>
         <source>Content tree menu (browser cache)</source>
-        <translation>Мени стабла садржаја (кеш browser-а)</translation>
+        <translation type="unfinished">Мени стабла садржаја (кеш browser-а)</translation>
+    </message>
+    <message>
+        <source>Text to image cache</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>State limitations cache</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Text to image cache</source>
+        <source>Design base cache</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -24397,200 +28312,241 @@ your account.</source>
     <name>kernel/class</name>
     <message>
         <source>Class list of group</source>
-        <translation>Листа класа унутар групе</translation>
+        <translation type="unfinished">Листа класа унутар групе</translation>
     </message>
     <message>
         <source>Class group list</source>
-        <translation>Листа група класа</translation>
+        <translation type="unfinished">Листа група класа</translation>
     </message>
     <message>
         <source>Remove class</source>
-        <translation>Уклони класу</translation>
+        <translation type="unfinished">Уклони класу</translation>
     </message>
     <message>
         <source>Class edit</source>
-        <translation>Уређење класе</translation>
+        <translation type="obsolete">Уређење класе</translation>
     </message>
     <message>
         <source>Classes</source>
-        <translation>Класе</translation>
+        <translation type="obsolete">Класе</translation>
     </message>
     <message>
         <source>Class list</source>
-        <translation>Листа класа</translation>
+        <translation type="unfinished">Листа класа</translation>
     </message>
     <message>
         <source>(no classes)</source>
-        <translation>(нема класа)</translation>
+        <translation type="unfinished">(нема класа)</translation>
     </message>
     <message>
         <source>Remove class groups</source>
-        <translation>Уклони групе класа</translation>
+        <translation type="unfinished">Уклони групе класа</translation>
     </message>
     <message>
         <source>You have to have at least one group that the class belongs to!</source>
-        <translation>Морате имати барем једну групу којој класа припада!</translation>
+        <translation type="unfinished">Морате имати барем једну групу којој класа припада!</translation>
     </message>
     <message>
         <source>Remove classes %class_id</source>
-        <translation>Уклони класе %class_id</translation>
+        <translation type="unfinished">Уклони класе %class_id</translation>
     </message>
     <message>
         <source>Copy of %class_name</source>
-        <translation>Копија %class_name</translation>
+        <translation type="unfinished">Копија %class_name</translation>
     </message>
     <message>
         <source>The class should have nonempty &apos;Name&apos; attribute.</source>
-        <translation>Класа не сме имати празан &apos;Назив&apos; атрибут.</translation>
+        <translation type="unfinished">Класа не сме имати празан &apos;Назив&apos; атрибут.</translation>
     </message>
     <message>
         <source>The class should have at least one attribute.</source>
-        <translation>Класа мора имати барем један атрибут.</translation>
+        <translation type="unfinished">Класа мора имати барем један атрибут.</translation>
     </message>
     <message>
         <source>There is a class already having the same identifier.</source>
-        <translation>Већ постоји класа са истим идентификатором.</translation>
+        <translation type="unfinished">Већ постоји класа са истим идентификатором.</translation>
     </message>
     <message>
         <source>Could not load datatype: </source>
-        <translation>Није могуће учитати тип података:</translation>
+        <translation type="unfinished">Није могуће учитати тип података:</translation>
     </message>
     <message>
         <source>Editing this content class may cause data corruption in your system.</source>
-        <translation>Уређивање ове класе може изазвати квар података у вашем систему.</translation>
+        <translation type="unfinished">Уређивање ове класе може изазвати квар података у вашем систему.</translation>
     </message>
     <message>
         <source>Press &quot;Cancel&quot; to safely exit this operation.</source>
-        <translation>Притисните &quot;Поништи&quot; да безбедно напустите ову операцију.</translation>
+        <translation type="unfinished">Притисните &quot;Поништи&quot; да безбедно напустите ову операцију.</translation>
     </message>
     <message>
         <source>Please contact your eZ Publish administrator to solve this problem.</source>
-        <translation>Контактирајте вашег eZ Publish администратора за решавање овог проблема.</translation>
+        <translation type="unfinished">Контактирајте вашег eZ Publish администратора за решавање овог проблема.</translation>
     </message>
     <message>
         <source>duplicate attribute placement</source>
-        <translation>дупли смештај атрибута</translation>
+        <translation type="unfinished">дупли смештај атрибута</translation>
     </message>
     <message>
         <source>duplicate attribute identifier</source>
-        <translation>дупли идентификатор атрибута</translation>
+        <translation type="unfinished">дупли идентификатор атрибута</translation>
     </message>
     <message>
         <source>Remove translation</source>
-        <translation>Уклони превод</translation>
+        <translation type="unfinished">Уклони превод</translation>
+    </message>
+    <message>
+        <source>Class groups</source>
+        <translation type="unfinished">Групе класа</translation>
+    </message>
+    <message>
+        <source>Remove classes</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>kernel/class/edit</name>
     <message>
         <source>New Class</source>
-        <translation>Нова класа</translation>
+        <translation type="unfinished">Нова класа</translation>
     </message>
     <message>
         <source>new attribute</source>
-        <translation>нови атрибут</translation>
+        <translation type="unfinished">нови атрибут</translation>
     </message>
 </context>
 <context>
     <name>kernel/class/groupedit</name>
     <message>
         <source>New Group</source>
-        <translation>Нова група</translation>
+        <translation type="unfinished">Нова група</translation>
+    </message>
+</context>
+<context>
+    <name>kernel/classe/datatypes/ezbinaryfile</name>
+    <message>
+        <source>Failed to store file %filename. Please contact the site administrator.</source>
+        <translation type="obsolete">Датотека %filename није снимљена. Молимо %1kontaktirajte2% администратора.</translation>
+    </message>
+</context>
+<context>
+    <name>kernel/classe/datatypes/ezimage</name>
+    <message>
+        <source>Failed to fetch Image Handler. Please contact the site administrator.</source>
+        <translation type="obsolete">Слика није узета. Молимо %1kontaktirajte2% администратора.</translation>
+    </message>
+</context>
+<context>
+    <name>kernel/classe/datatypes/ezmedia</name>
+    <message>
+        <source>Failed to store media file %filename. Please contact the site administrator.</source>
+        <translation type="obsolete">Мултимедијална датотека %filename није снимљена. Молимо %1kontaktirajte2% администратора.</translation>
     </message>
 </context>
 <context>
     <name>kernel/classes</name>
     <message>
         <source>Approval</source>
-        <translation>Одобрење</translation>
+        <translation type="unfinished">Одобрење</translation>
     </message>
     <message>
         <source>Standard</source>
-        <translation>Стандардно</translation>
+        <translation type="unfinished">Стандардно</translation>
     </message>
     <message>
         <source>Observer</source>
-        <translation>Посматрач</translation>
+        <translation type="unfinished">Посматрач</translation>
     </message>
     <message>
         <source>Owner</source>
-        <translation>Власник</translation>
+        <translation type="unfinished">Власник</translation>
     </message>
     <message>
         <source>Approver</source>
-        <translation>Одобрио</translation>
+        <translation type="unfinished">Одобрио</translation>
     </message>
     <message>
         <source>Author</source>
-        <translation>Аутор</translation>
+        <translation type="unfinished">Аутор</translation>
     </message>
     <message>
         <source>Inbox</source>
-        <translation>Улазна пошта</translation>
+        <translation type="unfinished">Улазна пошта</translation>
     </message>
     <message>
         <source>No state yet</source>
-        <translation>Без стања</translation>
+        <translation type="unfinished">Без стања</translation>
     </message>
     <message>
         <source>Workflow running</source>
-        <translation>Тренутни радни ток</translation>
+        <translation type="unfinished">Тренутни радни ток</translation>
     </message>
     <message>
         <source>Workflow done</source>
-        <translation>Радни ток извршен</translation>
+        <translation type="unfinished">Радни ток извршен</translation>
     </message>
     <message>
         <source>Workflow failed an event</source>
-        <translation>Догађај радног тока није успео</translation>
+        <translation type="unfinished">Догађај радног тока није успео</translation>
     </message>
     <message>
         <source>Workflow event deferred to cron job</source>
-        <translation>Догађај радног тока одгођен за црон јоб</translation>
+        <translation type="unfinished">Догађај радног тока одгођен за црон јоб</translation>
+    </message>
+    <message>
+        <source>Workflow was cancelled</source>
+        <translation type="obsolete">Радни ток је отказан</translation>
     </message>
     <message>
         <source>Workflow was reset for reuse</source>
-        <translation>Радни ток је поново покренут за поново коришћење</translation>
+        <translation type="unfinished">Радни ток је поново покренут за поново коришћење</translation>
     </message>
     <message>
         <source>Accepted event</source>
-        <translation>Прихваћен догађај</translation>
+        <translation type="unfinished">Прихваћен догађај</translation>
     </message>
     <message>
         <source>Rejected event</source>
-        <translation>Одбачен догађај</translation>
+        <translation type="unfinished">Одбачен догађај</translation>
     </message>
     <message>
         <source>Event deferred to cron job</source>
-        <translation>Догађај одгођен за црон јоб</translation>
+        <translation type="unfinished">Догађај одгођен за црон јоб</translation>
     </message>
     <message>
         <source>Event deferred to cron job, event will be rerun</source>
-        <translation>Догађај одгођен за црон јоб, догађај ће бити поновљен</translation>
+        <translation type="unfinished">Догађај одгођен за црон јоб, догађај ће бити поновљен</translation>
     </message>
     <message>
         <source>Event runs a sub event</source>
-        <translation>Догађај извршава ниже рангирани догађај</translation>
+        <translation type="unfinished">Догађај извршава ниже рангирани догађај</translation>
+    </message>
+    <message>
+        <source>Cancelled whole workflow</source>
+        <translation type="obsolete">Поништен цели радни ток</translation>
     </message>
     <message>
         <source>Workflow fetches template</source>
-        <translation>Радни ток обухвата шаблон</translation>
+        <translation type="unfinished">Радни ток обухвата шаблон</translation>
     </message>
     <message>
         <source>Workflow redirects user view</source>
-        <translation>Радни ток преусмерава на кориснички приказ</translation>
+        <translation type="unfinished">Радни ток преусмерава на кориснички приказ</translation>
     </message>
     <message>
         <source>New RSS Export</source>
-        <translation>Нови RSS извоз</translation>
+        <translation type="unfinished">Нови RSS извоз</translation>
     </message>
     <message>
         <source>Workflow was canceled</source>
-        <translation>Радни ток је прекинут</translation>
+        <translation type="unfinished">Радни ток је прекинут</translation>
     </message>
     <message>
         <source>Canceled whole workflow</source>
-        <translation>Цео радни ток прекинут</translation>
+        <translation type="unfinished">Цео радни ток прекинут</translation>
+    </message>
+    <message>
+        <source>Keep existing and create a new one</source>
+        <translation type="unfinished">Задржи постојећи и направи нов</translation>
     </message>
     <message>
         <source>Replace existing object</source>
@@ -24601,10 +28557,6 @@ your account.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Keep existing and create a new one</source>
-        <translation type="unfinished">Задржи постојећи и направи нов</translation>
-    </message>
-    <message>
         <source>Update existing object</source>
         <translation type="unfinished"></translation>
     </message>
@@ -24613,294 +28565,318 @@ your account.</source>
     <name>kernel/classes/datatypes</name>
     <message>
         <source>Missing date input.</source>
-        <translation>Недостаје датум.</translation>
+        <translation type="unfinished">Недостаје датум.</translation>
     </message>
     <message>
         <source>Missing datetime input.</source>
-        <translation>Недостаје датум и сат.</translation>
+        <translation type="unfinished">Недостаје датум и сат.</translation>
     </message>
     <message>
         <source>At least one author is required.</source>
-        <translation>Потребно је уписати барем једног аутора. </translation>
+        <translation type="unfinished">Потребно је уписати барем једног аутора. </translation>
     </message>
     <message>
         <source>A valid file is required.</source>
-        <translation>Потребно је унети исправну датотеку.</translation>
+        <translation type="unfinished">Потребно је унети исправну датотеку.</translation>
     </message>
     <message>
         <source>Checkbox</source>
         <comment>Datatype name</comment>
-        <translation>Цхецкбоx</translation>
+        <translation type="unfinished">Цхецкбоx</translation>
     </message>
     <message>
         <source>Enum</source>
         <comment>Datatype name</comment>
-        <translation>Број</translation>
+        <translation type="unfinished">Број</translation>
     </message>
     <message>
         <source>At least one field should be chosen.</source>
-        <translation>Најмање једно поље мора бити изабрано.</translation>
+        <translation type="unfinished">Најмање једно поље мора бити изабрано.</translation>
     </message>
     <message>
         <source>Float</source>
         <comment>Datatype name</comment>
-        <translation>Float</translation>
+        <translation type="unfinished">Float</translation>
     </message>
     <message>
         <source>Image</source>
         <comment>Datatype name</comment>
-        <translation>Слика</translation>
+        <translation type="unfinished">Слика</translation>
     </message>
     <message>
         <source>Integer</source>
         <comment>Datatype name</comment>
-        <translation>Integer</translation>
+        <translation type="unfinished">Integer</translation>
     </message>
     <message>
         <source>ISBN</source>
         <comment>Datatype name</comment>
-        <translation>ИСБН</translation>
+        <translation type="unfinished">ИСБН</translation>
     </message>
     <message>
         <source>Matrix</source>
         <comment>Datatype name</comment>
-        <translation>Матрица</translation>
+        <translation type="unfinished">Матрица</translation>
     </message>
     <message>
         <source>Media</source>
         <comment>Datatype name</comment>
-        <translation>Медиа</translation>
+        <translation type="unfinished">Медиа</translation>
     </message>
     <message>
         <source>Object relation</source>
         <comment>Datatype name</comment>
-        <translation>Релациони објект</translation>
+        <translation type="unfinished">Релациони објект</translation>
     </message>
     <message>
         <source>Option</source>
         <comment>Datatype name</comment>
-        <translation>Могућност</translation>
+        <translation type="unfinished">Могућност</translation>
     </message>
     <message>
         <source>At least one option is required.</source>
-        <translation>Потребно је одредити барем једну могућност.</translation>
+        <translation type="unfinished">Потребно је одредити барем једну могућност.</translation>
     </message>
     <message>
         <source>Price</source>
         <comment>Datatype name</comment>
-        <translation>Цена</translation>
+        <translation type="unfinished">Цена</translation>
     </message>
     <message>
         <source>Add to basket</source>
-        <translation>Додај у корпу</translation>
+        <translation type="unfinished">Додај у корпу</translation>
     </message>
     <message>
         <source>Add to wish list</source>
-        <translation>Додај на листу жеља</translation>
+        <translation type="unfinished">Додај на листу жеља</translation>
     </message>
     <message>
         <source>Range option</source>
         <comment>Datatype name</comment>
-        <translation>Избор опсега</translation>
+        <translation type="unfinished">Избор опсега</translation>
     </message>
     <message>
         <source>Selection</source>
         <comment>Datatype name</comment>
-        <translation>Избор</translation>
+        <translation type="unfinished">Избор</translation>
     </message>
     <message>
         <source>Text line</source>
         <comment>Datatype name</comment>
-        <translation>Текст ред</translation>
+        <translation type="unfinished">Текст ред</translation>
     </message>
     <message>
         <source>Subtree subscription</source>
         <comment>Datatype name</comment>
-        <translation>Упис подстабла</translation>
+        <translation type="unfinished">Упис подстабла</translation>
     </message>
     <message>
         <source>URL</source>
         <comment>Datatype name</comment>
-        <translation>URL</translation>
+        <translation type="unfinished">URL</translation>
     </message>
     <message>
         <source>User account</source>
         <comment>Datatype name</comment>
-        <translation>Кориснички рачун</translation>
+        <translation type="unfinished">Кориснички рачун</translation>
     </message>
     <message>
         <source>A user with this email already exists.</source>
-        <translation>Већ постоји корисник с истом e-mail адресом. </translation>
+        <translation type="unfinished">Већ постоји корисник с истом e-mail адресом. </translation>
+    </message>
+    <message>
+        <source>Object %1 does not exist.</source>
+        <translation type="obsolete">Објект %1 не постоји.</translation>
+    </message>
+    <message>
+        <source>Link %1 does not exist.</source>
+        <translation type="obsolete">Веза %1 не постоји.</translation>
     </message>
     <message>
         <source>Identifier</source>
         <comment>Datatype name</comment>
-        <translation>Идентификатор</translation>
+        <translation type="unfinished">Идентификатор</translation>
     </message>
     <message>
         <source>image</source>
         <comment>Default image name</comment>
-        <translation>слика</translation>
+        <translation type="unfinished">слика</translation>
     </message>
     <message>
         <source>Ini Setting</source>
         <comment>Datatype name</comment>
-        <translation>Ini поставка</translation>
+        <translation type="unfinished">Ini поставка</translation>
     </message>
     <message>
         <source>Package</source>
         <comment>Datatype name</comment>
-        <translation>Пакет</translation>
+        <translation type="unfinished">Пакет</translation>
     </message>
     <message>
         <source>Send</source>
         <comment>Datatype information collector action</comment>
-        <translation>Пошаљи</translation>
+        <translation type="unfinished">Пошаљи</translation>
     </message>
     <message>
         <source>Missing objectrelation input.</source>
-        <translation>Недостаје унос релације објекта.</translation>
+        <translation type="unfinished">Недостаје унос релације објекта.</translation>
     </message>
     <message>
         <source>Invalid time.</source>
-        <translation>Погрешно време.</translation>
+        <translation type="unfinished">Погрешно време.</translation>
     </message>
     <message>
         <source>The author name must be provided.</source>
-        <translation>Потребно је уписати име аутора.</translation>
+        <translation type="unfinished">Потребно је уписати име аутора.</translation>
     </message>
     <message>
         <source>The email address is not valid.</source>
-        <translation>Еmail адреса није исправна.</translation>
+        <translation type="unfinished">Еmail адреса није исправна.</translation>
     </message>
     <message>
         <source>File uploading is not enabled. Please contact the site administrator to enable it.</source>
-        <translation>Увоз датотека није дозвољен. Молимо контактирајте администратора.</translation>
+        <translation type="unfinished">Увоз датотека није дозвољен. Молимо контактирајте администратора.</translation>
     </message>
     <message>
         <source>The size of the uploaded file exceeds the limit set by the upload_max_filesize directive in php.ini.</source>
-        <translation>Величина увезене датотеке већа је од допуштене у php.ini датотеци.</translation>
+        <translation type="unfinished">Величина увезене датотеке већа је од допуштене у php.ini датотеци.</translation>
     </message>
     <message>
         <source>The size of the uploaded file exceeds the maximum upload size: %1 bytes.</source>
-        <translation>Величина слике премашује задано ограничење: %1 бyтова.</translation>
+        <translation type="unfinished">Величина слике премашује задано ограничење: %1 бyтова.</translation>
     </message>
     <message>
         <source>The email address is empty.</source>
-        <translation>E-mail адреса је празна.</translation>
+        <translation type="unfinished">E-mail адреса је празна.</translation>
     </message>
     <message>
         <source>The given input is not a floating point number.</source>
-        <translation>Унос није децимални број.</translation>
+        <translation type="unfinished">Унос није децимални број.</translation>
     </message>
     <message>
         <source>The input must be greater than %1</source>
-        <translation>Унос мора бити већи од %1</translation>
+        <translation type="unfinished">Унос мора бити већи од %1</translation>
     </message>
     <message>
         <source>The input must be less than %1</source>
-        <translation>Унос мора бити мањи од %1</translation>
+        <translation type="unfinished">Унос мора бити мањи од %1</translation>
     </message>
     <message>
         <source>The input is not in defined range %1 - %2</source>
-        <translation>Унос није у заданом распону %1-%2</translation>
+        <translation type="unfinished">Унос није у заданом распону %1-%2</translation>
     </message>
     <message>
         <source>A valid image file is required.</source>
-        <translation>Потребно је унети исправну графичку датотеку.</translation>
+        <translation type="unfinished">Потребно је унети исправну графичку датотеку.</translation>
     </message>
     <message>
         <source>The size of the uploaded image exceeds limit set by upload_max_filesize directive in php.ini. Please contact the site administrator.</source>
-        <translation>Величина увезене слике прелази ограничење подешено у php.ini датотеци.</translation>
+        <translation type="unfinished">Величина увезене слике прелази ограничење подешено у php.ini датотеци.</translation>
     </message>
     <message>
         <source>The size of the uploaded file exceeds the limit set for this site: %1 bytes.</source>
-        <translation>Величина слике премашује задано ограничење: %1 бyтова.</translation>
+        <translation type="unfinished">Величина слике премашује задано ограничење: %1 бyтова.</translation>
     </message>
     <message>
         <source>Could not locate the ini file.</source>
-        <translation>Није могуће лоцирати ini датотеку.</translation>
+        <translation type="unfinished">Није могуће лоцирати ini датотеку.</translation>
     </message>
     <message>
         <source>The input is not a valid integer.</source>
-        <translation>Унос није цели број.</translation>
+        <translation type="unfinished">Унос није цели број.</translation>
     </message>
     <message>
         <source>The number must be greater than %1</source>
-        <translation>Број мора бити већи од %1</translation>
+        <translation type="unfinished">Број мора бити већи од %1</translation>
     </message>
     <message>
         <source>The number must be less than %1</source>
-        <translation>Број мора бити мањи од %1</translation>
+        <translation type="unfinished">Број мора бити мањи од %1</translation>
     </message>
     <message>
         <source>The number is not within the required range %1 - %2</source>
-        <translation>Број није у распону од %1-%2</translation>
+        <translation type="unfinished">Број није у распону од %1-%2</translation>
     </message>
     <message>
         <source>The ISBN number is not correct. Please check the input for mistakes.</source>
-        <translation>ИСБН број није исправан. Молимо исправите унос.</translation>
+        <translation type="unfinished">ИСБН број није исправан. Молимо исправите унос.</translation>
     </message>
     <message>
         <source>A valid media file is required.</source>
-        <translation>Потребно је унети исправну мултимедијалну датотеку.</translation>
+        <translation type="unfinished">Потребно је унети исправну мултимедијалну датотеку.</translation>
     </message>
     <message>
         <source>The size of the uploaded file exceeds the limit set by upload_max_filesize directive in php.ini. Please contact the site administrator.</source>
-        <translation>Величина увезене датотеке прелази ограничење подешено у php.ini датотеци.</translation>
+        <translation type="unfinished">Величина увезене датотеке прелази ограничење подешено у php.ini датотеци.</translation>
     </message>
     <message>
         <source>The size of the uploaded file exceeds site maximum: %1 bytes.</source>
-        <translation>Величина увезене датотеке премашује задано ограничење: %1 бyтова.</translation>
+        <translation type="unfinished">Величина увезене датотеке премашује задано ограничење: %1 бyтова.</translation>
     </message>
     <message>
         <source>The option value must be provided.</source>
-        <translation>Мора бити понуђена нека вредност.</translation>
+        <translation type="unfinished">Мора бити понуђена нека вредност.</translation>
     </message>
     <message>
         <source>The additional price for the multioption value is not valid.</source>
-        <translation>Додатна цена за multioption вредност није добра.</translation>
+        <translation type="unfinished">Додатна цена за multioption вредност није добра.</translation>
     </message>
     <message>
         <source>The Additional price value is not valid.</source>
-        <translation>Додатна вредност цене није добра.</translation>
+        <translation type="unfinished">Додатна вредност цене није добра.</translation>
     </message>
     <message>
         <source>Input required.</source>
-        <translation>Потребан је унос.</translation>
+        <translation type="unfinished">Потребан је унос.</translation>
     </message>
     <message>
         <source>The input text is too long. The maximum number of characters allowed is %1.</source>
-        <translation>Унесени текст је предуг. Максималан број унешени знакова износи %1.</translation>
+        <translation type="unfinished">Унесени текст је предуг. Максималан број унешени знакова износи %1.</translation>
     </message>
     <message>
         <source>Time input required.</source>
-        <translation>Потребно је унети време.</translation>
+        <translation type="unfinished">Потребно је унети време.</translation>
     </message>
     <message>
         <source>The username must be specified.</source>
-        <translation>Није унесено корисничко име.</translation>
+        <translation type="unfinished">Није унесено корисничко име.</translation>
     </message>
     <message>
         <source>The username already exists, please choose another one.</source>
-        <translation>Такво корисничко име већ постоји, молимо изаберите неко друго.</translation>
+        <translation type="unfinished">Такво корисничко име већ постоји, молимо изаберите неко друго.</translation>
     </message>
     <message>
         <source>The passwords do not match.</source>
         <comment>eZUserType</comment>
-        <translation>Лозинке се не подударају.</translation>
+        <translation type="unfinished">Лозинке се не подударају.</translation>
+    </message>
+    <message>
+        <source>The password must be at least 3 characters long.</source>
+        <translation type="obsolete">Лозинка мора садржати барем 3 знака.</translation>
     </message>
     <message>
         <source>Cannot remove the account:</source>
-        <translation>Није могуће уклонити овај кориснички рачун:</translation>
+        <translation type="unfinished">Није могуће уклонити овај кориснички рачун:</translation>
     </message>
     <message>
         <source>The account owner is currently logged in.</source>
-        <translation>Власник корисничког рачуна је пријављен на систем.</translation>
+        <translation type="unfinished">Власник корисничког рачуна је пријављен на систем.</translation>
     </message>
     <message>
         <source>The account is currently used by the anonymous user.</source>
-        <translation>Рачун тренутно користи анонимни корисник.</translation>
+        <translation type="unfinished">Рачун тренутно користи анонимни корисник.</translation>
+    </message>
+    <message>
+        <source>The account is currenty used the administrator user.</source>
+        <translation type="obsolete">Рачун тренутно користи администратор.</translation>
+    </message>
+    <message>
+        <source>You can not remove the last class holding user accounts.</source>
+        <translation type="obsolete">Не можеш уклонити задњу класу која садржи корисничке рачуне.</translation>
+    </message>
+    <message>
+        <source>The link %1 does not exist.</source>
+        <translation type="obsolete">Линк %1 не постоји.</translation>
     </message>
     <message>
         <source>Input required</source>
@@ -24909,206 +28885,232 @@ your account.</source>
     <message>
         <source>Multi-option</source>
         <comment>Datatype name</comment>
-        <translation>Мулти-оптион</translation>
+        <translation type="unfinished">Мулти-оптион</translation>
     </message>
     <message>
         <source>Authors</source>
         <comment>Datatype name</comment>
-        <translation>Аутори</translation>
+        <translation type="unfinished">Аутори</translation>
     </message>
     <message>
         <source>File</source>
         <comment>Datatype name</comment>
-        <translation>Датотека</translation>
+        <translation type="unfinished">Датотека</translation>
     </message>
     <message>
         <source>Date</source>
         <comment>Datatype name</comment>
-        <translation>Датум</translation>
+        <translation type="unfinished">Датум</translation>
     </message>
     <message>
         <source>Date and time</source>
         <comment>Datatype name</comment>
-        <translation>Датум и сат</translation>
+        <translation type="unfinished">Датум и сат</translation>
+    </message>
+    <message>
+        <source>E-mail</source>
+        <comment>Datatype name</comment>
+        <translation type="obsolete">E-mail</translation>
     </message>
     <message>
         <source>Keywords</source>
         <comment>Datatype name</comment>
-        <translation>Кључне речи</translation>
+        <translation type="unfinished">Кључне речи</translation>
     </message>
     <message>
         <source>Object relations</source>
         <comment>Datatype name</comment>
-        <translation>Релациони објекти</translation>
+        <translation type="unfinished">Релациони објекти</translation>
     </message>
     <message>
         <source>Text block</source>
         <comment>Datatype name</comment>
-        <translation>Текстуални блок</translation>
+        <translation type="unfinished">Текстуални блок</translation>
     </message>
     <message>
         <source>Time</source>
         <comment>Datatype name</comment>
-        <translation>Време</translation>
+        <translation type="unfinished">Време</translation>
     </message>
     <message>
         <source>XML block</source>
         <comment>Datatype name</comment>
-        <translation>XML блок</translation>
+        <translation type="unfinished">XML блок</translation>
     </message>
     <message>
         <source>Object %1 can not be embeded to itself.</source>
-        <translation>Објект %1 не може бити укључен у самога себе.</translation>
+        <translation type="unfinished">Објект %1 не може бити укључен у самога себе.</translation>
+    </message>
+    <message>
+        <source>Node %1 does not exist.</source>
+        <translation type="obsolete">Чвор %1 не постоји.</translation>
+    </message>
+    <message>
+        <source>Node &apos;%1&apos; does not exist.</source>
+        <translation type="obsolete">Чвор &apos;%1&apos; не постоји.</translation>
+    </message>
+    <message>
+        <source>Invalid reference in &lt;embed&gt; tag. Note that &lt;embed&gt; tag supports only &apos;eznode&apos; and &apos;ezobject&apos; protocols.</source>
+        <translation type="obsolete">Неисправна веза у &lt;embed&gt; тагу. Таг &lt;embed&gt; подржава само &apos;eznode&apos; и &apos;ezobject&apos; протоколе.</translation>
+    </message>
+    <message>
+        <source>No &apos;href&apos; attribute in &apos;embed&apos; tag.</source>
+        <translation type="obsolete">Недостаје &apos;href&apos; атрибут у &apos;embed&apos; тагу.</translation>
     </message>
     <message>
         <source>Date is not valid.</source>
-        <translation>Датум није исправан.</translation>
+        <translation type="unfinished">Датум није исправан.</translation>
     </message>
     <message>
         <source>The image file must have non-zero size.</source>
-        <translation>Слика мора имати не-нула величину.</translation>
+        <translation type="unfinished">Слика мора имати не-нула величину.</translation>
     </message>
     <message>
         <source>Invalid price.</source>
-        <translation>Неисправна цена.</translation>
+        <translation type="unfinished">Неисправна цена.</translation>
     </message>
     <message>
         <source>Missing matrix input.</source>
-        <translation>Недостаје унос матрице.</translation>
+        <translation type="unfinished">Недостаје унос матрице.</translation>
     </message>
     <message>
         <source>Missing objectrelation list input.</source>
-        <translation>Недостаје унос листе у релацији објекта.</translation>
+        <translation type="unfinished">Недостаје унос листе у релацији објекта.</translation>
     </message>
     <message>
         <source>NAME is required.</source>
-        <translation>ИМЕ је обавезно.</translation>
+        <translation type="unfinished">ИМЕ је обавезно.</translation>
     </message>
     <message>
         <source>Country</source>
         <comment>Datatype name</comment>
-        <translation>Земља</translation>
+        <translation type="unfinished">Земља</translation>
     </message>
     <message>
         <source>Time is not valid.</source>
-        <translation>Датум није исправан.</translation>
+        <translation type="unfinished">Датум није исправан.</translation>
     </message>
     <message>
         <source>Email</source>
         <comment>Datatype name</comment>
-        <translation>E-mail</translation>
+        <translation type="unfinished">E-mail</translation>
     </message>
     <message>
         <source>Wrong text field value.</source>
-        <translation>Погрешна вредност поља за текст.</translation>
+        <translation type="unfinished">Погрешна вредност поља за текст.</translation>
     </message>
     <message>
         <source>The registrant element of the ISBN number does not exist.</source>
-        <translation>Елемент регистра из ISBN броја не постоји.</translation>
+        <translation type="unfinished">Елемент регистра из ISBN броја не постоји.</translation>
     </message>
     <message>
         <source>The ISBN number has a incorrect registration group number.</source>
-        <translation>ISBN број има нетачан број регистрационе групе.</translation>
+        <translation type="unfinished">ISBN број има нетачан број регистрационе групе.</translation>
     </message>
     <message>
         <source>The group element of the ISBN number does not exist.</source>
-        <translation>Елемент групе из ISBN броја не постоји.</translation>
+        <translation type="unfinished">Елемент групе из ISBN броја не постоји.</translation>
     </message>
     <message>
         <source>%1 is not a valid prefix of the ISBN number.</source>
-        <translation>%1 није важећи префикс за ISBN број.</translation>
+        <translation type="unfinished">%1 није важећи префикс за ISBN број.</translation>
     </message>
     <message>
         <source>All ISBN 13 characters need to be numeric</source>
-        <translation>Свих 13 симбола за ISBN морају бити цифре</translation>
+        <translation type="unfinished">Свих 13 симбола за ISBN морају бити цифре</translation>
     </message>
     <message>
         <source>13 digit ISBN must start with 978 or 979</source>
-        <translation>13-оцифрени ISBN број мора почети са 978 или 979</translation>
+        <translation type="unfinished">13-оцифрени ISBN број мора почети са 978 или 979</translation>
     </message>
     <message>
         <source>ISBN length is invalid</source>
-        <translation>Неодговарајућа дужина ISBN кода</translation>
+        <translation type="unfinished">Неодговарајућа дужина ISBN кода</translation>
     </message>
     <message>
         <source>Bad checksum, last digit should be %1</source>
-        <translation>Провера није успела, последња цифра мора бити %1</translation>
+        <translation type="unfinished">Провера није успела, последња цифра мора бити %1</translation>
     </message>
     <message>
         <source>The ISBN number should be ISBN13, but seems to be ISBN10.</source>
-        <translation>ISBN број треба да буде ISBN13, али изгледа да је ISBN10.</translation>
+        <translation type="unfinished">ISBN број треба да буде ISBN13, али изгледа да је ISBN10.</translation>
     </message>
     <message>
         <source>The ISBN number is not correct. </source>
-        <translation>ISBN број није тачан.</translation>
+        <translation type="unfinished">ISBN број није тачан.</translation>
     </message>
     <message>
         <source>Option set name is required.</source>
-        <translation>Могућност поставке имена је обавезна.</translation>
+        <translation type="unfinished">Могућност поставке имена је обавезна.</translation>
     </message>
     <message>
         <source>Multi-option2</source>
         <comment>Datatype name</comment>
-        <translation>Мулти-оптион2</translation>
+        <translation type="unfinished">Мулти-оптион2</translation>
     </message>
     <message>
         <source>You cannot choose option value &quot;%1&quot; from &quot;%2&quot; because it is unselectable </source>
-        <translation>Не можете изабрати вредност &quot;%1&quot; од &quot;%2&quot; јер тако нешто није могуће</translation>
+        <translation type="unfinished">Не можете изабрати вредност &quot;%1&quot; од &quot;%2&quot; јер тако нешто није могуће</translation>
     </message>
     <message>
         <source>You cannot choose option value &quot;%1&quot; from &quot;%2&quot;  
  if you selected option &quot;%3&quot; from &quot;%4&quot; </source>
-        <translation>Не можете изабрати вредност &quot;%1&quot; од &quot;%2&quot;  
+        <translation type="unfinished">Не можете изабрати вредност &quot;%1&quot; од &quot;%2&quot;  
 уколико изаберете вредност &quot;%3&quot; од &quot;%4&quot;</translation>
     </message>
     <message>
         <source>Multi-price</source>
         <comment>Datatype name</comment>
-        <translation>Multi-price</translation>
+        <translation type="unfinished">Multi-price</translation>
     </message>
     <message>
         <source>Dynamic VAT cannot be included.</source>
-        <translation>Динамични ПДВ не може бити прикључен.</translation>
+        <translation type="unfinished">Динамични ПДВ не може бити прикључен.</translation>
     </message>
     <message>
         <source>Invalid price for &apos;%currencyCode&apos; currency </source>
-        <translation>Неважећа цена за &apos;%currencyCode&apos; валуту </translation>
+        <translation type="unfinished">Неважећа цена за &apos;%currencyCode&apos; валуту </translation>
     </message>
     <message>
         <source>Product category</source>
         <comment>Datatype name</comment>
-        <translation>Категорије производа</translation>
+        <translation type="unfinished">Категорије производа</translation>
     </message>
     <message>
         <source>Missing range option input.</source>
-        <translation>Недостаје унос опсега избора.</translation>
+        <translation type="unfinished">Недостаје унос опсега избора.</translation>
     </message>
     <message>
         <source>The password must be at least %1 characters long.</source>
-        <translation>Лозинка мора имати најмање %1 симбола.</translation>
+        <translation type="unfinished">Лозинка мора имати најмање %1 симбола.</translation>
     </message>
     <message>
         <source>The password must not be &quot;password&quot;.</source>
-        <translation>Лозинка не сме бити &quot;password&quot;.</translation>
+        <translation type="unfinished">Лозинка не сме бити &quot;password&quot;.</translation>
     </message>
     <message>
         <source>The account is currently used the administrator user.</source>
-        <translation>Рачун тренутно користи администратор.</translation>
+        <translation type="unfinished">Рачун тренутно користи администратор.</translation>
     </message>
     <message>
         <source>You cannot remove the last class holding user accounts.</source>
-        <translation>Не можете уклонити последњу класу која садржи корисничке налоге.</translation>
+        <translation type="unfinished">Не можете уклонити последњу класу која садржи корисничке налоге.</translation>
     </message>
     <message>
         <source>Content required</source>
-        <translation>Садржина је неопходна</translation>
+        <translation type="unfinished">Садржина је неопходна</translation>
     </message>
     <message>
         <source>Invalid reference in &amp;lt;embed&amp;gt; tag. Note that &lt;embed&gt; tag supports only &apos;eznode&apos; and &apos;ezobject&apos; protocols.</source>
-        <translation>Неважећи унос у &amp;lt;embed&amp;gt; таг. Таг &lt;embed&gt; прихвата само &apos;eznode&apos; и &apos;ezobject&apos; протоколе.</translation>
+        <translation type="unfinished">Неважећи унос у &amp;lt;embed&amp;gt; таг. Таг &lt;embed&gt; прихвата само &apos;eznode&apos; и &apos;ezobject&apos; протоколе.</translation>
     </message>
     <message>
         <source>Missing email input.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The password cannot be empty.</source>
+        <comment>eZUserType</comment>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -25116,290 +29118,306 @@ your account.</source>
     <name>kernel/classes/datatypes/ezbinaryfile</name>
     <message>
         <source>Failed to store file %filename. Please contact the site administrator.</source>
-        <translation>Документ %filename није сачуван. Контактирајте администратора сајта.</translation>
+        <translation type="unfinished">Документ %filename није сачуван. Контактирајте администратора сајта.</translation>
     </message>
 </context>
 <context>
     <name>kernel/classes/datatypes/ezimage</name>
     <message>
         <source>Failed to fetch Image Handler. Please contact the site administrator.</source>
-        <translation>Слика није узета. Контактирајте администратора сајта.</translation>
+        <translation type="unfinished">Слика није узета. Контактирајте администратора сајта.</translation>
     </message>
 </context>
 <context>
     <name>kernel/classes/datatypes/ezmedia</name>
     <message>
         <source>Failed to store media file %filename. Please contact the site administrator.</source>
-        <translation>Мултимедијална датотека %filename није сачувана. Контактирајте администратора сајта.</translation>
+        <translation type="unfinished">Мултимедијална датотека %filename није сачувана. Контактирајте администратора сајта.</translation>
     </message>
 </context>
 <context>
     <name>kernel/classes/datatypes/ezxmltext</name>
     <message>
         <source>Wrong closing tag</source>
-        <translation>Погрешан таг за затварање</translation>
+        <translation type="unfinished">Погрешан таг за затварање</translation>
     </message>
     <message>
         <source>Wrong closing tag : &amp;lt;/%1&amp;gt;.</source>
-        <translation>Погрешан таг за затварање : &amp;lt;/%1&amp;gt;.</translation>
+        <translation type="unfinished">Погрешан таг за затварање : &amp;lt;/%1&amp;gt;.</translation>
     </message>
     <message>
         <source>Wrong opening tag</source>
-        <translation>Погрешан таг за отварање</translation>
+        <translation type="unfinished">Погрешан таг за отварање</translation>
     </message>
     <message>
         <source>Unknown tag: &amp;lt;%1&amp;gt;.</source>
-        <translation>Непознат таг: &amp;lt;%1&amp;gt;.</translation>
+        <translation type="unfinished">Непознат таг: &amp;lt;%1&amp;gt;.</translation>
     </message>
     <message>
         <source>Can&apos;t convert tag&apos;s name: &amp;lt;%1&amp;gt;.</source>
-        <translation>Није могуће преправити назив тага: &amp;lt;%1&amp;gt;.</translation>
+        <translation type="unfinished">Није могуће преправити назив тага: &amp;lt;%1&amp;gt;.</translation>
     </message>
     <message>
         <source>Class &apos;%1&apos; is not allowed for element &amp;lt;%2&amp;gt; (check content.ini).</source>
-        <translation>Класу &apos;%1 није могуће доделити елементу &amp;lt;%2&amp;gt; (консултујте content.ini).</translation>
+        <translation type="unfinished">Класу &apos;%1 није могуће доделити елементу &amp;lt;%2&amp;gt; (консултујте content.ini).</translation>
     </message>
     <message>
         <source>Required attribute &apos;%1&apos; is not presented in tag &amp;lt;%2&amp;gt;.</source>
-        <translation>Потребни атрибут &apos;%1&apos; је изостављен из тага &amp;lt;%2&amp;gt;.</translation>
+        <translation type="unfinished">Потребни атрибут &apos;%1&apos; је изостављен из тага &amp;lt;%2&amp;gt;.</translation>
     </message>
     <message>
         <source>Custom tag &apos;%1&apos; is not allowed.</source>
-        <translation>Посебни таг &apos;%1&apos; није дозвољен.</translation>
+        <translation type="unfinished">Посебни таг &apos;%1&apos; није дозвољен.</translation>
     </message>
     <message>
         <source>&amp;lt;%1&amp;gt; tag can&apos;t be empty.</source>
-        <translation>Таг &amp;lt;%1&amp;gt; не може бити празан.</translation>
+        <translation type="unfinished">Таг &amp;lt;%1&amp;gt; не може бити празан.</translation>
     </message>
     <message>
         <source>%1 is not allowed to be a child of &amp;lt;%2&amp;gt;.</source>
-        <translation>За %1 није могуће да буде поделемент &amp;lt;%2&amp;gt;.</translation>
+        <translation type="unfinished">За %1 није могуће да буде поделемент &amp;lt;%2&amp;gt;.</translation>
     </message>
     <message>
         <source>Attribute &apos;%1&apos; is not allowed in &amp;lt;%2&amp;gt; element.</source>
-        <translation>Атрибут &apos;%1&apos; није допуштен у елементу &amp;lt;%2&amp;gt;.</translation>
+        <translation type="unfinished">Атрибут &apos;%1&apos; није допуштен у елементу &amp;lt;%2&amp;gt;.</translation>
     </message>
     <message>
         <source>Incorrect headers nesting</source>
-        <translation>Неправилно умрежавање тагова заглавља</translation>
+        <translation type="unfinished">Неправилно умрежавање тагова заглавља</translation>
     </message>
     <message>
         <source>Node &apos;%1&apos; does not exist.</source>
-        <translation>Чвор &apos;%1&apos; не постоји.</translation>
+        <translation type="unfinished">Чвор &apos;%1&apos; не постоји.</translation>
     </message>
     <message>
         <source>Using scripts in links is not allowed, link &apos;%1&apos; has been removed</source>
-        <translation>Употреба скрипти у везама није дозвољена, веза &apos;%1&apos; је уклоњена</translation>
+        <translation type="unfinished">Употреба скрипти у везама није дозвољена, веза &apos;%1&apos; је уклоњена</translation>
     </message>
     <message>
         <source>Invalid e-mail address: &apos;%1&apos;</source>
-        <translation>Неисправна е-mail адреса: &apos;%1&apos;</translation>
+        <translation type="unfinished">Неисправна е-mail адреса: &apos;%1&apos;</translation>
     </message>
     <message>
         <source>Object %1 can not be embeded to itself.</source>
-        <translation>Објект %1 не може бити укључен у самога себе.</translation>
+        <translation type="unfinished">Објект %1 не може бити укључен у самога себе.</translation>
     </message>
 </context>
 <context>
     <name>kernel/collaboration</name>
     <message>
         <source>Collaboration custom action</source>
-        <translation>Акција сарадње</translation>
+        <translation type="unfinished">Акција сарадње</translation>
     </message>
     <message>
         <source>Collaboration</source>
-        <translation>Сарадња</translation>
+        <translation type="unfinished">Сарадња</translation>
     </message>
 </context>
 <context>
     <name>kernel/content</name>
     <message>
         <source>Search</source>
-        <translation>Тражи</translation>
+        <translation type="unfinished">Тражи</translation>
     </message>
     <message>
         <source>Advanced</source>
-        <translation>Напредно претраживање</translation>
+        <translation type="unfinished">Напредно претраживање</translation>
     </message>
     <message>
         <source>No main node selected, please select one.</source>
-        <translation>Није изабран главни чвор, молимо изаберите неки чвор.</translation>
+        <translation type="unfinished">Није изабран главни чвор, молимо изаберите неки чвор.</translation>
     </message>
     <message>
         <source>Content</source>
-        <translation>Садржај</translation>
+        <translation type="unfinished">Садржај</translation>
     </message>
     <message>
         <source>Copy</source>
-        <translation>Копирај</translation>
+        <translation type="unfinished">Копирај</translation>
     </message>
     <message>
         <source>My drafts</source>
-        <translation>Моје скице</translation>
+        <translation type="unfinished">Моје скице</translation>
     </message>
     <message>
         <source>Remove editing version</source>
-        <translation>Уклони верзију за едитовање</translation>
+        <translation type="unfinished">Уклони верзију за едитовање</translation>
     </message>
     <message>
         <source>Remove object</source>
-        <translation>Уклони објект</translation>
+        <translation type="unfinished">Уклони објект</translation>
+    </message>
+    <message>
+        <source>Translate</source>
+        <translation type="obsolete">Преведи</translation>
     </message>
     <message>
         <source>Translation</source>
-        <translation>Превод</translation>
+        <translation type="unfinished">Превод</translation>
     </message>
     <message>
         <source>Content translations</source>
-        <translation>Преводи садржаја</translation>
+        <translation type="unfinished">Преводи садржаја</translation>
     </message>
     <message>
         <source>Trash</source>
-        <translation>Смеће</translation>
+        <translation type="unfinished">Смеће</translation>
     </message>
     <message>
         <source>Versions</source>
-        <translation>Верзије</translation>
+        <translation type="unfinished">Верзије</translation>
     </message>
     <message>
         <source>My bookmarks</source>
-        <translation>Моје ознаке за књигу</translation>
+        <translation type="unfinished">Моје ознаке за књигу</translation>
     </message>
     <message>
         <source>Tip from %1: %2</source>
-        <translation>Обавештење од %1: %2</translation>
+        <translation type="unfinished">Обавештење од %1: %2</translation>
     </message>
     <message>
         <source>The email address of the sender is not valid</source>
-        <translation>Адреса електронске поште пошиљаоца није исправна</translation>
+        <translation type="unfinished">Адреса електронске поште пошиљаоца није исправна</translation>
     </message>
     <message>
         <source>The email address of the receiver is not valid</source>
-        <translation>Адреса електронске поште примаоца није исправна</translation>
+        <translation type="unfinished">Адреса електронске поште примаоца није исправна</translation>
     </message>
     <message>
         <source>Tip a friend</source>
-        <translation>Пошаљите на mail</translation>
+        <translation type="unfinished">Пошаљите на mail</translation>
     </message>
     <message>
         <source>My pending list</source>
-        <translation>Моја листа чекања</translation>
+        <translation type="unfinished">Моја листа чекања</translation>
+    </message>
+    <message>
+        <source>URL translator</source>
+        <translation type="obsolete">URL преводилац</translation>
     </message>
     <message>
         <source>Keywords</source>
-        <translation>Кључне речи</translation>
+        <translation type="unfinished">Кључне речи</translation>
     </message>
     <message>
         <source>Media</source>
-        <translation>Мултимедија</translation>
+        <translation type="unfinished">Мултимедија</translation>
     </message>
     <message>
         <source>New content</source>
-        <translation>Нови садржај</translation>
+        <translation type="unfinished">Нови садржај</translation>
     </message>
     <message>
         <source>Remove location</source>
-        <translation>Уклони локацију</translation>
+        <translation type="unfinished">Уклони локацију</translation>
     </message>
     <message>
         <source>You are not allowed to place this object under: %1</source>
-        <translation>Немате овлашћења за стављање овог објекта унутар: %1</translation>
+        <translation type="unfinished">Немате овлашћења за стављање овог објекта унутар: %1</translation>
     </message>
     <message>
         <source>Top Level Nodes</source>
-        <translation>Чворови главног нивоа</translation>
+        <translation type="unfinished">Чворови главног нивоа</translation>
     </message>
     <message>
         <source>Hidden</source>
-        <translation>Скривен</translation>
+        <translation type="unfinished">Скривен</translation>
     </message>
     <message>
         <source>Hidden by superior</source>
-        <translation>Сакривено од </translation>
+        <translation type="unfinished">Сакривено од </translation>
     </message>
     <message>
         <source>Visible</source>
-        <translation>Видљиво</translation>
+        <translation type="unfinished">Видљиво</translation>
+    </message>
+    <message>
+        <source>Copy Subtree</source>
+        <translation type="obsolete">Копирај подстабло</translation>
+    </message>
+    <message>
+        <source>The receiver has already received the maximimum number of tipafriend mails the last hours</source>
+        <translation type="obsolete">Прималац је већ примио максималан број посланих порука у задњем сату</translation>
     </message>
     <message>
         <source>A node in the node assignment list has been deleted.</source>
-        <translation>Чвор у листи чворова за доделу је обрисан.</translation>
+        <translation type="unfinished">Чвор у листи чворова за доделу је обрисан.</translation>
     </message>
     <message>
         <source>&quot;$contentObjectName&quot;: Sub items that are used by other objects</source>
-        <translation>&quot;$contentObjectName&quot;: Поделементи које користе други објекти</translation>
+        <translation type="unfinished">&quot;$contentObjectName&quot;: Поделементи које користе други објекти</translation>
     </message>
     <message>
         <source>Copy subtree</source>
-        <translation>Копирај подстабло</translation>
+        <translation type="unfinished">Копирај подстабло</translation>
     </message>
     <message>
         <source>Differences</source>
-        <translation>Разлике</translation>
+        <translation type="unfinished">Разлике</translation>
     </message>
     <message>
         <source>Edit</source>
-        <translation>Измени</translation>
+        <translation type="unfinished">Измени</translation>
     </message>
     <message>
         <source>Class identifier</source>
-        <translation>Идентификатор класе</translation>
+        <translation type="unfinished">Идентификатор класе</translation>
     </message>
     <message>
         <source>Class name</source>
-        <translation>Назив класе</translation>
+        <translation type="unfinished">Назив класе</translation>
     </message>
     <message>
         <source>Depth</source>
-        <translation>Дубина</translation>
+        <translation type="unfinished">Дубина</translation>
     </message>
     <message>
         <source>Modified</source>
-        <translation>Промењено</translation>
+        <translation type="unfinished">Промењено</translation>
     </message>
     <message>
         <source>Name</source>
-        <translation>Назив</translation>
+        <translation type="unfinished">Назив</translation>
     </message>
     <message>
         <source>Path String</source>
-        <translation>Path String</translation>
+        <translation type="unfinished">Path String</translation>
     </message>
     <message>
         <source>Priority</source>
-        <translation>Приоритет</translation>
+        <translation type="unfinished">Приоритет</translation>
     </message>
     <message>
         <source>Published</source>
-        <translation>Објављено</translation>
+        <translation type="unfinished">Објављено</translation>
     </message>
     <message>
         <source>Section</source>
-        <translation>Сегмент</translation>
+        <translation type="unfinished">Сегмент</translation>
     </message>
     <message>
         <source>History</source>
-        <translation>Историјат</translation>
+        <translation type="unfinished">Историјат</translation>
     </message>
     <message>
         <source>The receiver has already received the maximum number of tipafriend mails the last hours</source>
-        <translation>Прималац је већ добио максималан број порука типа &quot;обавести пријатеља&quot; у последњих сат времена</translation>
+        <translation type="unfinished">Прималац је већ добио максималан број порука типа &quot;обавести пријатеља&quot; у последњих сат времена</translation>
     </message>
     <message>
         <source>Remove translation</source>
-        <translation>Уклони превод</translation>
+        <translation type="unfinished">Уклони превод</translation>
     </message>
     <message>
         <source>Languages</source>
-        <translation>Језици</translation>
+        <translation type="unfinished">Језици</translation>
     </message>
     <message>
         <source>You do not have enough rights to access the requested node</source>
-        <translation>Немате овлашћења да приступите траженом чвору</translation>
+        <translation type="unfinished">Немате овлашћења да приступите траженом чвору</translation>
     </message>
     <message>
         <source>Version preview</source>
-        <translation>Преглед верзије</translation>
+        <translation type="unfinished">Преглед верзије</translation>
     </message>
     <message>
         <source>Error</source>
@@ -25410,6 +29428,10 @@ your account.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Dashboard</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>You have already sent a tipafriend mail to this reciver regarding &apos;$nodeName&apos; content</source>
         <translation type="unfinished"></translation>
     </message>
@@ -25417,64 +29439,88 @@ your account.</source>
 <context>
     <name>kernel/content/copysubtree</name>
     <message>
+        <source>Object (ID = %1) was not copied: you don&apos;t have permissions to read object.</source>
+        <translation type="obsolete">Објекат (ID = %1) није копиран: немате овлашћења да учитате објекат.</translation>
+    </message>
+    <message>
+        <source>Node (ID = %1) was not copied: you don&apos;t have permissions to read object (ID = %2).</source>
+        <translation type="obsolete">Чвор (ID = %1) није копиран: немате овлашћења да учитате објекат (ID = %2).</translation>
+    </message>
+    <message>
+        <source>Node (ID = %1) wasn&apos;t copied: parent node (ID = %2) wasn&apos;t copied.</source>
+        <translation type="obsolete">Чвор (ID = %1) није коприан: родитељски чвор (ID = %2) није копиран.</translation>
+    </message>
+    <message>
+        <source>Node (ID = %1) was not copied: you don&apos;t have permissions to create.</source>
+        <translation type="obsolete">Чвор (ID = %1) није копиран: немате овлашћења за креирање.</translation>
+    </message>
+    <message>
+        <source>Object (ID = %1) was not copied: no one nodes of object wasn&apos;t copied.</source>
+        <translation type="obsolete">Објекат (ID = %1) није копиран: ниједан чвор од објекта није копиран.</translation>
+    </message>
+    <message>
         <source>Cannot publish object (ID = %1).</source>
-        <translation>Не може се објавити објекат (ID = %1).</translation>
+        <translation type="unfinished">Не може се објавити објекат (ID = %1).</translation>
     </message>
     <message>
         <source>Fatal error: cannot get subtree main node (ID = %1).</source>
-        <translation>Грешка: не може се добити подстабло главног чвора (ID = %1).</translation>
+        <translation type="unfinished">Грешка: не може се добити подстабло главног чвора (ID = %1).</translation>
     </message>
     <message>
         <source>Fatal error: cannot get destination node (ID = %1).</source>
-        <translation>Грешка: не може се добити циљни чвор (ID = %1).</translation>
+        <translation type="unfinished">Грешка: не може се добити циљни чвор (ID = %1).</translation>
     </message>
     <message>
         <source>Number of nodes of source subtree - %1</source>
-        <translation>Број чворова изворног подстабла - %1</translation>
+        <translation type="unfinished">Број чворова изворног подстабла - %1</translation>
     </message>
     <message>
         <source>Subtree was not copied.</source>
-        <translation>Подстабло није копирано.</translation>
+        <translation type="unfinished">Подстабло није копирано.</translation>
     </message>
     <message>
         <source>Number of copied nodes - %1</source>
-        <translation>Број копираних чворова - %1</translation>
+        <translation type="unfinished">Број копираних чворова - %1</translation>
     </message>
     <message>
         <source>Number of copied contentobjects - %1</source>
-        <translation>Број копираних објеката садржаја - %1</translation>
+        <translation type="unfinished">Број копираних објеката садржаја - %1</translation>
     </message>
     <message>
         <source>Cannot create instance of eZDB to fix local links (related objects).</source>
-        <translation>Не могу креирати инстанцу eZBD да би поправио локалне линкове (повезане објекте).</translation>
+        <translation type="unfinished">Не могу креирати инстанцу eZBD да би поправио локалне линкове (повезане објекте).</translation>
+    </message>
+    <message>
+        <source>Successfuly DONE.</source>
+        <translation type="obsolete">Успешно ИЗВРШЕНО.</translation>
     </message>
     <message>
         <source>You are trying to copy a subtree that contains more than the maximum possible nodes for subtree copying. You can copy this subtree using Subtree Copy script.</source>
-        <translation>Покушавате копирати подстабло које садржи више од максималног дозвољеног броја чворова за копирање подстабла. Можете копирати подстабло користећи скрипту за копирање подстабла.</translation>
+        <translation type="unfinished">Покушавате копирати подстабло које садржи више од максималног дозвољеног броја чворова за копирање подстабла. Можете копирати подстабло користећи скрипту за копирање подстабла.</translation>
     </message>
     <message>
         <source>Object (ID = %1) was not copied: you do not have permission to read the object.</source>
-        <translation>Објекат (ID = %1) није копиран: немате дозволу за читање објекта.</translation>
+        <translation type="unfinished">Објекат (ID = %1) није копиран: немате дозволу за читање објекта.</translation>
     </message>
     <message>
         <source>Node (ID = %1) was not copied: you do not have permission to read object (ID = %2).</source>
-        <translation>Чвор (ID = %1) није копиран: немате дозволу за читање објекта (ID = %2).</translation>
+        <translation type="unfinished">Чвор (ID = %1) није копиран: немате дозволу за читање објекта (ID = %2).</translation>
     </message>
     <message>
         <source>Node (ID = %1) was not copied: parent node (ID = %2) was not copied.</source>
-        <translation>Чвор (ID = %1) није копиран: родитељски чвор (ID = %2) није копиран.</translation>
+        <translation type="unfinished">Чвор (ID = %1) није копиран: родитељски чвор (ID = %2) није копиран.</translation>
     </message>
     <message>
         <source>Node (ID = %1) was not copied: you do not have permission to create.</source>
-        <translation>Чвор (ID = %1) није копиран: немате дозволу за креирање.</translation>
+        <translation type="unfinished">Чвор (ID = %1) није копиран: немате дозволу за креирање.</translation>
     </message>
     <message>
         <source>Object (ID = %1) was not copied: no one nodes of object was not copied.</source>
-        <translation>Објекат (ID = %1) није копиран: ни један чвор објекта није копиран.</translation>
+        <translation type="unfinished">Објекат (ID = %1) није копиран: ни један чвор објекта није копиран.</translation>
     </message>
     <message>
         <source>Successfully DONE.</source>
-        <translation>Успешно ОБАВЉЕНО.</translation>
+        <translation type="unfinished">Успешно ОБАВЉЕНО.</translation>
     </message>
 </context>
 <context>
@@ -25482,179 +29528,186 @@ your account.</source>
     <message>
         <source>child</source>
         <comment>1 child</comment>
-        <translation>потомак</translation>
+        <translation type="unfinished">потомак</translation>
     </message>
     <message>
         <source>children</source>
         <comment>several children</comment>
-        <translation>потомци</translation>
+        <translation type="unfinished">потомци</translation>
     </message>
 </context>
 <context>
     <name>kernel/content/restore</name>
     <message>
         <source>Restore object</source>
-        <translation>Поврати објекат</translation>
+        <translation type="unfinished">Поврати објекат</translation>
     </message>
 </context>
 <context>
     <name>kernel/content/upload</name>
     <message>
         <source>The file %filename does not exist, cannot insert file.</source>
-        <translation>Фајл %filename не потоји, не могу унети фајл.</translation>
+        <translation type="unfinished">Фајл %filename не потоји, не могу унети фајл.</translation>
     </message>
     <message>
         <source>No matching class identifier found.</source>
-        <translation>Није пронађен идентификатор класе.</translation>
+        <translation type="unfinished">Није пронађен идентификатор класе.</translation>
     </message>
     <message>
         <source>The class %class_identifier does not exist.</source>
-        <translation>Идентификатор класе %class_identifier не постоји.</translation>
+        <translation type="unfinished">Идентификатор класе %class_identifier не постоји.</translation>
     </message>
     <message>
         <source>Was not able to figure out placement of object.</source>
-        <translation>Немогуће одлучивање о смештању објекта.</translation>
+        <translation type="unfinished">Немогуће одлучивање о смештању објекта.</translation>
     </message>
     <message>
         <source>No configuration group in upload.ini for class identifier %class_identifier.</source>
-        <translation>Нема конфиграционе групе у upload.ini за идентификатор класе %class_identifier.</translation>
+        <translation type="unfinished">Нема конфиграционе групе у upload.ini за идентификатор класе %class_identifier.</translation>
     </message>
     <message>
         <source>No matching file attribute found, cannot create content object without this.</source>
-        <translation>Није пронађен атрибут фајла, не може се креирати објекат без овога.</translation>
+        <translation type="unfinished">Није пронађен атрибут фајла, не може се креирати објекат без овога.</translation>
     </message>
     <message>
         <source>No matching name attribute found, cannot create content object without this.</source>
-        <translation>Није пронађен назив атрибута, но може се креирати објекат садржаја без овога.</translation>
+        <translation type="unfinished">Није пронађен назив атрибута, но може се креирати објекат садржаја без овога.</translation>
     </message>
     <message>
         <source>The attribute %class_identifier does not support regular file storage.</source>
-        <translation>Атрибут %class_identifier не подржава регуларно смештање фајлова.</translation>
+        <translation type="unfinished">Атрибут %class_identifier не подржава регуларно смештање фајлова.</translation>
     </message>
     <message>
         <source>The attribute %class_identifier does not support simple string storage.</source>
-        <translation>Атрибут %class_identifier не подржава једноставно смештање стрингова.</translation>
+        <translation type="unfinished">Атрибут %class_identifier не подржава једноставно смештање стрингова.</translation>
     </message>
     <message>
         <source>The attribute %class_identifier does not support HTTP file storage.</source>
-        <translation>Атрибут %class_identifier не подржава HTTP смештање фајлова.</translation>
+        <translation type="unfinished">Атрибут %class_identifier не подржава HTTP смештање фајлова.</translation>
     </message>
     <message>
         <source>Publishing of content object was halted.</source>
-        <translation>Објављивање објекта садржаја је прекинуто.</translation>
+        <translation type="unfinished">Објављивање објекта садржаја је прекинуто.</translation>
     </message>
     <message>
         <source>Publish process was cancelled.</source>
-        <translation>Процес објављивања је прекинут.</translation>
+        <translation type="unfinished">Процес објављивања је прекинут.</translation>
     </message>
     <message>
         <source>A file is required for upload, no file were found.</source>
-        <translation>Фајл је потребан за upload, није пронађен фајл.</translation>
+        <translation type="unfinished">Фајл је потребан за upload, није пронађен фајл.</translation>
     </message>
     <message>
         <source>Expected a eZHTTPFile object but got nothing.</source>
-        <translation>Очекиван је објекат ezHTTPFile али није ништа нађено.</translation>
+        <translation type="unfinished">Очекиван је објекат ezHTTPFile али није ништа нађено.</translation>
     </message>
     <message>
         <source>No HTTP file found, cannot fetch uploaded file.</source>
-        <translation>Није нађен HTTP фајл, не могу учитати uploadован фајл.</translation>
+        <translation type="unfinished">Није нађен HTTP фајл, не могу учитати uploadован фајл.</translation>
     </message>
     <message>
         <source>Permission denied</source>
-        <translation>Дозвола није омогућена</translation>
+        <translation type="unfinished">Дозвола није омогућена</translation>
     </message>
     <message>
         <source>There was an error trying to instantiate content upload handler.</source>
-        <translation>Дошло је до грешке код покушаја инстанцирања хендлера за upload садржаја.</translation>
+        <translation type="unfinished">Дошло је до грешке код покушаја инстанцирања хендлера за upload садржаја.</translation>
     </message>
     <message>
         <source>Could not find content upload handler &apos;%handler_name&apos;</source>
-        <translation>Нисам могао наћи хендлер за upload садржаја &apos;%handler_name&apos;</translation>
+        <translation type="unfinished">Нисам могао наћи хендлер за upload садржаја &apos;%handler_name&apos;</translation>
     </message>
     <message>
         <source>The size of the uploaded file exceeds the limit set for this site: %1 bytes.</source>
-        <translation>Величина учитаног објекта прелази ограничење задато за овај сајт: %1 бyтова.</translation>
+        <translation type="unfinished">Величина учитаног објекта прелази ограничење задато за овај сајт: %1 бyтова.</translation>
     </message>
 </context>
 <context>
     <name>kernel/content/urlalias_global</name>
     <message>
         <source>Global URL aliases</source>
-        <translation>Глобални URL алијаси</translation>
+        <translation type="unfinished">Глобални URL алијаси</translation>
     </message>
 </context>
 <context>
     <name>kernel/content/urlalias_wildcard</name>
     <message>
         <source>URL wildcard aliases</source>
-        <translation>URL wildcard алијаси</translation>
+        <translation type="unfinished">URL wildcard алијаси</translation>
     </message>
 </context>
 <context>
     <name>kernel/contentclass</name>
     <message>
         <source>New %1</source>
-        <translation>Ново: %1</translation>
+        <translation type="unfinished">Ново: %1</translation>
     </message>
     <message>
         <source>Cannot remove class &apos;%class_name&apos;:</source>
-        <translation>Не могу уклонити класу &apos;%class_name&apos;:</translation>
+        <translation type="unfinished">Не могу уклонити класу &apos;%class_name&apos;:</translation>
     </message>
     <message>
         <source>The class is used by a top-level node and cannot be removed.</source>
-        <translation>Класу користи главни чвор и не може бити уклоњена.</translation>
+        <translation type="unfinished">Класу користи главни чвор и не може бити уклоњена.</translation>
     </message>
 </context>
 <context>
     <name>kernel/design</name>
     <message>
         <source>Template list</source>
-        <translation>Листа шаблона</translation>
+        <translation type="unfinished">Листа шаблона</translation>
     </message>
     <message>
         <source>Template view</source>
-        <translation>Приказ шаблона</translation>
+        <translation type="unfinished">Приказ шаблона</translation>
     </message>
     <message>
         <source>Create new template</source>
-        <translation>Креирај нови шаблон</translation>
+        <translation type="unfinished">Креирај нови шаблон</translation>
     </message>
     <message>
         <source>Template edit</source>
-        <translation>Измена шаблона</translation>
+        <translation type="unfinished">Измена шаблона</translation>
     </message>
     <message>
         <source>Toolbar list</source>
-        <translation>Листа алатне траке</translation>
+        <translation type="unfinished">Листа алатне траке</translation>
     </message>
 </context>
 <context>
     <name>kernel/error</name>
     <message>
         <source>Error</source>
-        <translation>Грешка</translation>
+        <translation type="unfinished">Грешка</translation>
     </message>
 </context>
 <context>
     <name>kernel/ezinfo</name>
     <message>
         <source>Info</source>
-        <translation>Информације</translation>
+        <translation type="unfinished">Информације</translation>
     </message>
     <message>
         <source>About</source>
-        <translation>О</translation>
+        <translation type="unfinished">О</translation>
     </message>
     <message>
         <source>Copyright</source>
-        <translation>Ауторска права</translation>
+        <translation type="unfinished">Ауторска права</translation>
+    </message>
+</context>
+<context>
+    <name>kernel/form</name>
+    <message>
+        <source>Form processing</source>
+        <translation type="obsolete">Обрада формулара</translation>
     </message>
 </context>
 <context>
     <name>kernel/infocollector</name>
     <message>
         <source>Collected information</source>
-        <translation>Скупљене информације</translation>
+        <translation type="unfinished">Скупљене информације</translation>
     </message>
 </context>
 <context>
@@ -25662,343 +29715,379 @@ your account.</source>
     <message>
         <source>Content structure</source>
         <comment>Navigation part</comment>
-        <translation>Структура садржаја</translation>
+        <translation type="unfinished">Структура садржаја</translation>
     </message>
     <message>
         <source>Media library</source>
         <comment>Navigation part</comment>
-        <translation>Библиотека медија</translation>
+        <translation type="unfinished">Библиотека медија</translation>
     </message>
     <message>
         <source>User accounts</source>
         <comment>Navigation part</comment>
-        <translation>Кориснички рачуни</translation>
+        <translation type="unfinished">Кориснички рачуни</translation>
     </message>
     <message>
         <source>Webshop</source>
         <comment>Navigation part</comment>
-        <translation>Интернет продавница</translation>
+        <translation type="unfinished">Интернет продавница</translation>
     </message>
     <message>
         <source>Design</source>
         <comment>Navigation part</comment>
-        <translation>Дизајн</translation>
+        <translation type="unfinished">Дизајн</translation>
     </message>
     <message>
         <source>Setup</source>
         <comment>Navigation part</comment>
-        <translation>Подешавање</translation>
+        <translation type="unfinished">Подешавање</translation>
     </message>
     <message>
         <source>My account</source>
         <comment>Navigation part</comment>
-        <translation>Мој рачун</translation>
+        <translation type="unfinished">Мој рачун</translation>
     </message>
 </context>
 <context>
     <name>kernel/notification</name>
     <message>
         <source>Notification settings</source>
-        <translation>Подешавања обавештења</translation>
+        <translation type="unfinished">Подешавања обавештења</translation>
     </message>
 </context>
 <context>
     <name>kernel/package</name>
     <message>
         <source>Packages</source>
-        <translation>Пакети</translation>
+        <translation type="unfinished">Пакети</translation>
     </message>
     <message>
         <source>Upload</source>
-        <translation>Учитати</translation>
+        <translation type="unfinished">Учитати</translation>
     </message>
     <message>
         <source>Package information</source>
-        <translation>Подаци о пакету</translation>
+        <translation type="unfinished">Подаци о пакету</translation>
     </message>
     <message>
         <source>Package maintainer</source>
-        <translation>Одржавање пакета</translation>
+        <translation type="unfinished">Одржавање пакета</translation>
     </message>
     <message>
         <source>Package changelog</source>
-        <translation>Информације о изменама пакета</translation>
+        <translation type="unfinished">Информације о изменама пакета</translation>
     </message>
     <message>
         <source>Package thumbnail</source>
-        <translation>Минијатура пакета</translation>
+        <translation type="unfinished">Минијатура пакета</translation>
     </message>
     <message>
         <source>Package name</source>
-        <translation>Име пакета</translation>
+        <translation type="unfinished">Име пакета</translation>
     </message>
     <message>
         <source>Package name is missing</source>
-        <translation>Недостаје име пакета</translation>
+        <translation type="unfinished">Недостаје име пакета</translation>
     </message>
     <message>
         <source>A package named %packagename already exists, please give another name</source>
-        <translation>Пакет под именом %packagename већ постоји, молимо доделите друго име</translation>
+        <translation type="unfinished">Пакет под именом %packagename већ постоји, молимо доделите друго име</translation>
     </message>
     <message>
         <source>Summary</source>
-        <translation>Укратко</translation>
+        <translation type="unfinished">Укратко</translation>
     </message>
     <message>
         <source>Summary is missing</source>
-        <translation>Недостаје сажетак</translation>
+        <translation type="unfinished">Недостаје сажетак</translation>
     </message>
     <message>
         <source>Version</source>
-        <translation>Верзија</translation>
+        <translation type="unfinished">Верзија</translation>
     </message>
     <message>
         <source>Name</source>
-        <translation>Име</translation>
+        <translation type="unfinished">Име</translation>
     </message>
     <message>
         <source>You must enter a name for the changelog</source>
-        <translation>Морате унети име за датотеку измена</translation>
+        <translation type="unfinished">Морате унети име за датотеку измена</translation>
+    </message>
+    <message>
+        <source>E-Mail</source>
+        <translation type="obsolete">Електронска пошта</translation>
+    </message>
+    <message>
+        <source>You must enter an e-mail for the changelog</source>
+        <translation type="obsolete">За датотеку измена потребно је унети e-mail адресу</translation>
     </message>
     <message>
         <source>Changelog</source>
-        <translation>Датотека измена</translation>
+        <translation type="unfinished">Датотека измена</translation>
     </message>
     <message>
         <source>You must supply some text for the changelog entry</source>
-        <translation>Морате унети неки текст као унос у датотеку измена</translation>
+        <translation type="unfinished">Морате унети неки текст као унос у датотеку измена</translation>
     </message>
     <message>
         <source>You must enter a name of the maintainer</source>
-        <translation>Морате унети име одржаваоца</translation>
+        <translation type="unfinished">Морате унети име одржаваоца</translation>
+    </message>
+    <message>
+        <source>You must enter an e-mail address of the maintainer</source>
+        <translation type="obsolete">Морате унети e-mail адресу одржаваоца</translation>
     </message>
     <message>
         <source>Content classes to include</source>
-        <translation>Класе садржаја које треба укључити</translation>
+        <translation type="unfinished">Класе садржаја које треба укључити</translation>
     </message>
     <message>
         <source>Content class export</source>
-        <translation>Извоз садржаја класа</translation>
+        <translation type="unfinished">Извоз садржаја класа</translation>
     </message>
     <message>
         <source>Class list</source>
-        <translation>Листа класа</translation>
+        <translation type="unfinished">Листа класа</translation>
     </message>
     <message>
         <source>You must select at least one class for inclusion</source>
-        <translation>Морате изабрати барем једну класу </translation>
+        <translation type="unfinished">Морате изабрати барем једну класу </translation>
     </message>
     <message>
         <source>CSS file</source>
-        <translation>CSS датотека</translation>
+        <translation type="unfinished">CSS датотека</translation>
     </message>
     <message>
         <source>Image files</source>
-        <translation>Датотеке са сликама</translation>
+        <translation type="unfinished">Датотеке са сликама</translation>
     </message>
     <message>
         <source>Site style</source>
-        <translation>Стил странице</translation>
+        <translation type="unfinished">Стил странице</translation>
     </message>
     <message>
         <source>File did not have a .css suffix, this is most likely not a CSS file</source>
-        <translation>Датотека није имала наставак .цсс па се највероватније не ради о CSS датотеци</translation>
+        <translation type="unfinished">Датотека није имала наставак .цсс па се највероватније не ради о CSS датотеци</translation>
+    </message>
+    <message>
+        <source>Content class %classname (%classidentifier)</source>
+        <translation type="obsolete">Класа садржаја %classname (%classidentifier)</translation>
     </message>
     <message>
         <source>Create package</source>
-        <translation>Креирај пакет</translation>
+        <translation type="unfinished">Креирај пакет</translation>
     </message>
     <message>
         <source>Install</source>
-        <translation>Инсталирај</translation>
+        <translation type="unfinished">Инсталирај</translation>
     </message>
     <message>
         <source>Uninstall</source>
-        <translation>Уклони</translation>
+        <translation type="unfinished">Уклони</translation>
     </message>
     <message>
         <source>Package %packagename already exists, cannot import the package</source>
-        <translation>Пакет %packagename већ постоји, није могуће увести пакет</translation>
+        <translation type="unfinished">Пакет %packagename већ постоји, није могуће увести пакет</translation>
     </message>
     <message>
         <source>Local</source>
-        <translation>Локалан</translation>
+        <translation type="unfinished">Локалан</translation>
+    </message>
+    <message>
+        <source>Styles</source>
+        <translation type="obsolete">Стилови</translation>
+    </message>
+    <message>
+        <source>Addons</source>
+        <translation type="obsolete">Додаци </translation>
     </message>
     <message>
         <source>The version must only contain numbers (optionally followed by text) and must be delimited by dots (.), e.g. 1.0, 3.4.0beta1</source>
-        <translation>Верзија може само садржати бројеве (које може пратити текст) те мора бити разграничена тачкама (.), нпр. 1.0,3.4.0бета1</translation>
+        <translation type="unfinished">Верзија може само садржати бројеве (које може пратити текст) те мора бити разграничена тачкама (.), нпр. 1.0,3.4.0бета1</translation>
     </message>
     <message>
         <source>Content objects to include</source>
-        <translation>Објекти садржаја које треба укључити</translation>
+        <translation type="unfinished">Објекти садржаја које треба укључити</translation>
     </message>
     <message>
         <source>Content object limits</source>
-        <translation>Ограничења објеката садржаја</translation>
+        <translation type="unfinished">Ограничења објеката садржаја</translation>
     </message>
     <message>
         <source>Content object export</source>
-        <translation>Извоз објеката садржаја</translation>
+        <translation type="unfinished">Извоз објеката садржаја</translation>
     </message>
     <message>
         <source>Selected nodes</source>
-        <translation>Изабрани чворови</translation>
+        <translation type="unfinished">Изабрани чворови</translation>
     </message>
     <message>
         <source>You must select one or more node(s)/subtree(s) for export.</source>
-        <translation>Потребно је изабрати један или више чворова/подстабала за извоз.</translation>
+        <translation type="unfinished">Потребно је изабрати један или више чворова/подстабала за извоз.</translation>
     </message>
     <message>
         <source>You must choose one or more languages.</source>
-        <translation>Потребно је изабрати један или више језика.</translation>
+        <translation type="unfinished">Потребно је изабрати један или више језика.</translation>
     </message>
     <message>
         <source>You must choose one or more site access.</source>
-        <translation>Потребно је изабрати један или више приступа страници.</translation>
+        <translation type="unfinished">Потребно је изабрати један или више приступа страници.</translation>
     </message>
     <message>
         <source>CSS files</source>
-        <translation>CSS датотеке</translation>
+        <translation type="unfinished">CSS датотеке</translation>
     </message>
     <message>
         <source>You must upload both CSS files</source>
-        <translation>Морате учитати обе CSS датотеке</translation>
+        <translation type="unfinished">Морате учитати обе CSS датотеке</translation>
     </message>
     <message>
         <source>Content object %objectname</source>
-        <translation>Објект садржаја %objectname</translation>
+        <translation type="unfinished">Објект садржаја %objectname</translation>
     </message>
     <message>
         <source>Site access mapping</source>
-        <translation>Подешавања приступа</translation>
+        <translation type="unfinished">Подешавања приступа</translation>
     </message>
     <message>
         <source>Top node placements</source>
-        <translation>Места главног чвора</translation>
+        <translation type="unfinished">Места главног чвора</translation>
     </message>
     <message>
         <source>Content object import</source>
-        <translation>Увоз објеката садржаја</translation>
+        <translation type="unfinished">Увоз објеката садржаја</translation>
     </message>
     <message>
         <source>Select parent nodes</source>
-        <translation>Изаберите родитељске чворове</translation>
+        <translation type="unfinished">Изаберите родитељске чворове</translation>
     </message>
     <message>
         <source>You must assign all nodes to new parent nodes.</source>
-        <translation>Потребно је прикључити све чворове новим родитељским чворовима.</translation>
+        <translation type="unfinished">Потребно је прикључити све чворове новим родитељским чворовима.</translation>
     </message>
     <message>
         <source>Lead</source>
-        <translation>Главни</translation>
+        <translation type="unfinished">Главни</translation>
     </message>
     <message>
         <source>Developer</source>
-        <translation>Девелопер</translation>
+        <translation type="unfinished">Девелопер</translation>
     </message>
     <message>
         <source>Designer</source>
-        <translation>Дизајнер</translation>
+        <translation type="unfinished">Дизајнер</translation>
     </message>
     <message>
         <source>Contributor</source>
-        <translation>Сарадник</translation>
+        <translation type="unfinished">Сарадник</translation>
     </message>
     <message>
         <source>Tester</source>
-        <translation>Тестер</translation>
+        <translation type="unfinished">Тестер</translation>
     </message>
     <message>
         <source>The package name %packagename is not valid, it can only contain characters in the range a-z, 0-9 and underscore.</source>
-        <translation>Назив пакета %packagename није исправан, назив сме садржати само карактере од a-z, 0-9 и доњу црту.</translation>
+        <translation type="unfinished">Назив пакета %packagename није исправан, назив сме садржати само карактере од a-z, 0-9 и доњу црту.</translation>
     </message>
     <message>
         <source>Email</source>
-        <translation>Електронска пошта</translation>
+        <translation type="unfinished">Електронска пошта</translation>
     </message>
     <message>
         <source>You must enter an email for the changelog</source>
-        <translation>Морате унети адресу е-поште за лог измена</translation>
+        <translation type="unfinished">Морате унети адресу е-поште за лог измена</translation>
     </message>
     <message>
         <source>You must enter an email address of the maintainer</source>
-        <translation>Морате унети адресу е-поште особе задужене за одржавање</translation>
+        <translation type="unfinished">Морате унети адресу е-поште особе задужене за одржавање</translation>
+    </message>
+    <message>
+        <source>Select an extension to be exported</source>
+        <translation type="obsolete">Изаберите екстензију за извоз</translation>
     </message>
     <message>
         <source>Extension export</source>
-        <translation>Извоз екстензије</translation>
+        <translation type="unfinished">Извоз екстензије</translation>
+    </message>
+    <message>
+        <source>Extension:</source>
+        <translation type="obsolete">Екстензија:</translation>
+    </message>
+    <message>
+        <source>You must select an extension</source>
+        <translation type="obsolete">Морате изабрати екстензију</translation>
     </message>
     <message>
         <source>Content class &apos;%classname&apos; (%classidentifier)</source>
-        <translation>Класа садржаја &apos;%classname&apos; (%classidentifier)</translation>
+        <translation type="unfinished">Класа садржаја &apos;%classname&apos; (%classidentifier)</translation>
     </message>
     <message>
         <source>Removing class &apos;%classname&apos; will result in the removal of %objectscount object(s) of this class and all their sub-items. Are you sure you want to uninstall it?</source>
-        <translation>Уклањање класе &apos;%classname&apos; имаће за последицу брисање %objectscount објеката ове класе и свих њихових поделемената. Јесте ли сигурни да желите да уклоните класу?</translation>
+        <translation type="unfinished">Уклањање класе &apos;%classname&apos; имаће за последицу брисање %objectscount објеката ове класе и свих њихових поделемената. Јесте ли сигурни да желите да уклоните класу?</translation>
     </message>
     <message>
         <source>Class &apos;%classname&apos; already exists.</source>
-        <translation>Класа &apos;%classname&apos; већ постоји.</translation>
+        <translation type="unfinished">Класа &apos;%classname&apos; већ постоји.</translation>
     </message>
     <message>
         <source>Replace existing class</source>
-        <translation>Замени постојећу класу</translation>
+        <translation type="unfinished">Замени постојећу класу</translation>
     </message>
     <message>
         <source>(Warning! $objectsCount content object(s) and their sub-items will be removed)</source>
-        <translation>(УПОЗОРЕЊЕ! $objectsCount објеката садржаја и њихових поделемената ће бити уклоњено)</translation>
+        <translation type="unfinished">(УПОЗОРЕЊЕ! $objectsCount објеката садржаја и њихових поделемената ће бити уклоњено)</translation>
     </message>
     <message>
         <source>Skip installing this class</source>
-        <translation>Прескочи инсталирање ове класе</translation>
+        <translation type="unfinished">Прескочи инсталирање ове класе</translation>
     </message>
     <message>
         <source>Keep existing and create a new one</source>
-        <translation>Задржи постојећи и направи нов</translation>
+        <translation type="unfinished">Задржи постојећи и направи нов</translation>
     </message>
     <message>
         <source>%number content objects</source>
-        <translation>%number објеката садржине</translation>
+        <translation type="unfinished">%number објеката садржине</translation>
     </message>
     <message>
         <source>Object &apos;%objectname&apos; has been modified since installation. Are you sure you want to remove it?</source>
-        <translation>Објекат &apos;%objectname&apos; је мењан од инсталације. Јесте ли сигурни да желите да га склоните?</translation>
+        <translation type="unfinished">Објекат &apos;%objectname&apos; је мењан од инсталације. Јесте ли сигурни да желите да га склоните?</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation>Уклони</translation>
+        <translation type="unfinished">Уклони</translation>
     </message>
     <message>
         <source>Keep object</source>
-        <translation>Задржи објекат</translation>
+        <translation type="unfinished">Задржи објекат</translation>
     </message>
     <message>
         <source>Object &apos;%objectname&apos; has %childrencount sub-item(s) that will be removed.</source>
-        <translation>Објекат &apos;%objectname&apos; садржи %childrencount поделемената који ће бити обрисани.</translation>
+        <translation type="unfinished">Објекат &apos;%objectname&apos; садржи %childrencount поделемената који ће бити обрисани.</translation>
     </message>
     <message>
         <source>Remove object and its sub-item(s)</source>
-        <translation>Уклони објекте и њихове поделементе</translation>
+        <translation type="unfinished">Уклони објекте и њихове поделементе</translation>
     </message>
     <message>
         <source>Extension &apos;%extensionname&apos;</source>
-        <translation>Екстензија &apos;%extensionname&apos;</translation>
+        <translation type="unfinished">Екстензија &apos;%extensionname&apos;</translation>
     </message>
     <message>
         <source>Extension &apos;%extensionname&apos; already exists.</source>
-        <translation>Екстензија &apos;%extensionname&apos; већ постоји.</translation>
+        <translation type="unfinished">Екстензија &apos;%extensionname&apos; већ постоји.</translation>
     </message>
     <message>
         <source>Replace extension</source>
-        <translation>Замени екстензију</translation>
+        <translation type="unfinished">Замени екстензију</translation>
     </message>
     <message>
         <source>Skip</source>
-        <translation>Прескочи</translation>
+        <translation type="unfinished">Прескочи</translation>
     </message>
     <message>
         <source>Install script: %description</source>
-        <translation>Инсталирај скрипту: %description</translation>
+        <translation type="unfinished">Инсталирај скрипту: %description</translation>
     </message>
     <message>
         <source>Extensions to include</source>
@@ -26013,11 +30102,11 @@ your account.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Advanced options</source>
+        <source>Package contains an invalid extension name: %extensionname</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Package contains an invalid extension name: %extensionname</source>
+        <source>Advanced options</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -26029,90 +30118,97 @@ your account.</source>
     <name>kernel/pdf</name>
     <message>
         <source>PDF Export</source>
-        <translation>PDF извоз</translation>
+        <translation type="unfinished">PDF извоз</translation>
     </message>
     <message>
         <source>An export with such filename already exists.</source>
-        <translation>Већ постоји извоз са тим именом.</translation>
+        <translation type="unfinished">Већ постоји извоз са тим именом.</translation>
     </message>
 </context>
 <context>
     <name>kernel/pdfexport</name>
     <message>
         <source>New PDF Export</source>
-        <translation>Нови PDF извоз</translation>
+        <translation type="unfinished">Нови PDF извоз</translation>
+    </message>
+</context>
+<context>
+    <name>kernel/reference</name>
+    <message>
+        <source>Reference documentation</source>
+        <translation type="obsolete">Референтна документација</translation>
     </message>
 </context>
 <context>
     <name>kernel/role</name>
     <message>
         <source>Role list</source>
-        <translation>Листа улога</translation>
+        <translation type="unfinished">Листа улога</translation>
     </message>
     <message>
         <source>Editing policy</source>
-        <translation>Измена политике </translation>
+        <translation type="unfinished">Измена политике </translation>
     </message>
     <message>
         <source>Limit on section</source>
-        <translation>Ограничи на сегменту</translation>
+        <translation type="unfinished">Ограничи на сегменту</translation>
     </message>
     <message>
         <source>Create new policy, step 2: select function</source>
-        <translation>Креирање нове политике, корак 2: изабери функцију</translation>
+        <translation type="unfinished">Креирање нове политике, корак 2: изабери функцију</translation>
     </message>
     <message>
         <source>Create new policy, step three: set function limitations</source>
-        <translation>Креирање нове политике, корак трећи: одреди ограничења функције</translation>
+        <translation type="unfinished">Креирање нове политике, корак трећи: одреди ограничења функције</translation>
     </message>
     <message>
         <source>Create new policy, step two: select function</source>
-        <translation>Креирање нове политике, корак други: изабери функцију</translation>
+        <translation type="unfinished">Креирање нове политике, корак други: изабери функцију</translation>
     </message>
     <message>
         <source>Create new policy, step one: select module</source>
-        <translation>Креирање нове политике, корак први: изабери модул</translation>
+        <translation type="unfinished">Креирање нове политике, корак први: изабери модул</translation>
     </message>
 </context>
 <context>
     <name>kernel/role/edit</name>
     <message>
         <source>New role</source>
-        <translation>Нова улога</translation>
+        <translation type="unfinished">Нова улога</translation>
     </message>
     <message>
         <source>Copy of %rolename</source>
-        <translation>Копија улоге %rolename</translation>
+        <translation type="unfinished">Копија улоге %rolename</translation>
     </message>
 </context>
 <context>
     <name>kernel/rss</name>
     <message>
         <source>Really Simple Syndication</source>
-        <translation>RSS</translation>
+        <translation type="unfinished">RSS</translation>
     </message>
     <message>
         <source>New RSS Export</source>
-        <translation>Нови RSS извоз</translation>
+        <translation type="unfinished">Нови RSS извоз</translation>
     </message>
     <message>
         <source>New RSS Import</source>
-        <translation>Нови RSS увоз</translation>
+        <translation type="unfinished">Нови RSS увоз</translation>
     </message>
 </context>
 <context>
     <name>kernel/rss/edit_export</name>
     <message>
         <source>Selected class does not exist</source>
-        <translation>Изабрана класа не постоји</translation>
+        <translation type="unfinished">Изабрана класа не постоји</translation>
     </message>
     <message>
         <source>Invalid selection for title class %1 does not have attribute &quot;%2&quot;</source>
-        <translation>Неисправан избор за наслов класа %1 нема атрибут &quot;%2&quot;</translation>
+        <translation type="unfinished">Неисправан избор за наслов класа %1 нема атрибут &quot;%2&quot;</translation>
     </message>
     <message>
         <source>Invalid selection for description class %1 does not have attribute &quot;%2&quot;</source>
-        <translation>Неисправан избор за опис класа %1 нема атрибут &quot;%2&quot;</translation>
+        <translation type="unfinished">Неисправан избор за опис класа %1 нема атрибут &quot;%2&quot;</translation>
     </message>
     <message>
         <source>Invalid selection for category class %1 does not have attribute &quot;%2&quot;</source>
@@ -26123,280 +30219,280 @@ your account.</source>
     <name>kernel/search</name>
     <message>
         <source>Search stats</source>
-        <translation>Статистика претраживања</translation>
+        <translation type="unfinished">Статистика претраживања</translation>
     </message>
 </context>
 <context>
     <name>kernel/section</name>
     <message>
         <source>Edit Section</source>
-        <translation>Уреди Секцију</translation>
+        <translation type="obsolete">Уреди Секцију</translation>
     </message>
     <message>
         <source>Sections</source>
-        <translation>Секције</translation>
+        <translation type="unfinished">Секције</translation>
     </message>
     <message>
         <source>View section</source>
-        <translation>Прикажи секцију</translation>
+        <translation type="obsolete">Прикажи секцију</translation>
     </message>
     <message>
         <source>New section</source>
-        <translation>Нова секција</translation>
+        <translation type="unfinished">Нова секција</translation>
     </message>
     <message>
         <source>Assign section</source>
-        <translation>Додели сегмент</translation>
+        <translation type="unfinished">Додели сегмент</translation>
     </message>
 </context>
 <context>
     <name>kernel/setup</name>
     <message>
         <source>Cache admin</source>
-        <translation>Администрација cache-а</translation>
+        <translation type="unfinished">Администрација cache-а</translation>
     </message>
     <message>
         <source>Template operator wizard</source>
-        <translation>Чаробњак за шаблоне</translation>
+        <translation type="unfinished">Чаробњак за шаблоне</translation>
     </message>
     <message>
         <source>Extension configuration</source>
-        <translation>Конфигурација екстензија</translation>
+        <translation type="unfinished">Конфигурација екстензија</translation>
     </message>
     <message>
         <source>System information</source>
-        <translation>Подаци о систему</translation>
+        <translation type="unfinished">Подаци о систему</translation>
     </message>
     <message>
         <source>Rapid Application Development</source>
-        <translation>Rapid Application Development</translation>
+        <translation type="unfinished">Rapid Application Development</translation>
     </message>
     <message>
         <source>Setup menu</source>
-        <translation>Setup мени</translation>
+        <translation type="unfinished">Setup мени</translation>
     </message>
     <message>
         <source>System Upgrade</source>
-        <translation>Унапређивање система</translation>
+        <translation type="unfinished">Унапређивање система</translation>
     </message>
     <message>
         <source>Session admin</source>
-        <translation>Администратор сесија</translation>
+        <translation type="unfinished">Администратор сесија</translation>
     </message>
     <message>
         <source>File %1 does not exist. You should copy it from the recent eZ Publish distribution.</source>
-        <translation>Датотека %1 не постоји. Мораш је копирати са задње eZ Publish дистрибуције.</translation>
+        <translation type="unfinished">Датотека %1 не постоји. Мораш је копирати са задње eZ Publish дистрибуције.</translation>
     </message>
     <message>
         <source>Datatype wizard</source>
-        <translation>Дататип чаробњак</translation>
+        <translation type="unfinished">Дататип чаробњак</translation>
     </message>
 </context>
 <context>
     <name>kernel/shop</name>
     <message>
         <source>Basket</source>
-        <translation>Корпа</translation>
+        <translation type="unfinished">Корпа</translation>
     </message>
     <message>
         <source>Confirm order</source>
-        <translation>Потврди наруџбу</translation>
+        <translation type="unfinished">Потврди наруџбу</translation>
     </message>
     <message>
         <source>Discount group</source>
-        <translation>Група попуста</translation>
+        <translation type="unfinished">Група попуста</translation>
     </message>
     <message>
         <source>Group view of discount rule</source>
-        <translation>Групни приказ дисцоунт улоге</translation>
+        <translation type="unfinished">Групни приказ дисцоунт улоге</translation>
     </message>
     <message>
         <source>Editing rule</source>
-        <translation>Правило едитовања</translation>
+        <translation type="unfinished">Правило едитовања</translation>
     </message>
     <message>
         <source>Order list</source>
-        <translation>Листа наруџби</translation>
+        <translation type="unfinished">Листа наруџби</translation>
     </message>
     <message>
         <source>Enter account information</source>
-        <translation>Унеси податке о рачуну</translation>
+        <translation type="unfinished">Унеси податке о рачуну</translation>
     </message>
     <message>
         <source>VAT types</source>
-        <translation>Врсте ПДВ-а</translation>
+        <translation type="unfinished">Врсте ПДВ-а</translation>
     </message>
     <message>
         <source>Checkout</source>
-        <translation>Провера</translation>
+        <translation type="unfinished">Провера</translation>
     </message>
     <message>
         <source>Customer list</source>
-        <translation>Листа клијената</translation>
+        <translation type="unfinished">Листа клијената</translation>
     </message>
     <message>
         <source>Remove order</source>
-        <translation>Уклони наруџбу</translation>
+        <translation type="unfinished">Уклони наруџбу</translation>
     </message>
     <message>
         <source>Statistics</source>
-        <translation>Статистика</translation>
+        <translation type="unfinished">Статистика</translation>
     </message>
     <message>
         <source>VAT type</source>
-        <translation>Врста ПДВ-а</translation>
+        <translation type="unfinished">Врста ПДВ-а</translation>
     </message>
     <message>
         <source>Classes</source>
-        <translation>Класе</translation>
+        <translation type="unfinished">Класе</translation>
     </message>
     <message>
         <source>Any class</source>
-        <translation>Све класе</translation>
+        <translation type="unfinished">Све класе</translation>
     </message>
     <message>
         <source>in sections</source>
-        <translation>у сегментима</translation>
+        <translation type="unfinished">у сегментима</translation>
     </message>
     <message>
         <source>in any section</source>
-        <translation>у свим сегментима</translation>
+        <translation type="unfinished">у свим сегментима</translation>
     </message>
     <message>
         <source>Products</source>
-        <translation>Производи</translation>
+        <translation type="unfinished">Производи</translation>
     </message>
     <message>
         <source>Any product</source>
-        <translation>Сви производи</translation>
+        <translation type="unfinished">Сви производи</translation>
     </message>
     <message>
         <source>Order status</source>
-        <translation>Статус наруџбе</translation>
+        <translation type="unfinished">Статус наруџбе</translation>
     </message>
     <message>
         <source>Undefined</source>
-        <translation>Недефинисано</translation>
+        <translation type="unfinished">Недефинисано</translation>
     </message>
     <message>
         <source>The confirm order operation was canceled. Try to checkout again.</source>
-        <translation>Потврда наруџбе је прекинута. Покушајте да наручите поново.</translation>
+        <translation type="unfinished">Потврда наруџбе је прекинута. Покушајте да наручите поново.</translation>
     </message>
     <message>
         <source>Order #%order_id</source>
-        <translation>Наруџба #%order_id</translation>
+        <translation type="unfinished">Наруџба #%order_id</translation>
     </message>
     <message>
         <source>New order status was successfully added.</source>
-        <translation>Нови статус наруџбе је успешно додан.</translation>
+        <translation type="unfinished">Нови статус наруџбе је успешно додан.</translation>
     </message>
     <message>
         <source>Changes to order status were successfully stored.</source>
-        <translation>Промене статуса наруџбе су успешно сачуване.</translation>
+        <translation type="unfinished">Промене статуса наруџбе су успешно сачуване.</translation>
     </message>
     <message>
         <source>Selected order statuses were successfully removed.</source>
-        <translation>Изабрани статуси наруџби су успешно уклоњени.</translation>
+        <translation type="unfinished">Изабрани статуси наруџби су успешно уклоњени.</translation>
     </message>
     <message>
         <source>Internal orders cannot be removed.</source>
-        <translation>Интерне наруџбе не могу бити уклоњене.</translation>
+        <translation type="unfinished">Интерне наруџбе не могу бити уклоњене.</translation>
     </message>
     <message>
         <source>Status</source>
-        <translation>Статус</translation>
+        <translation type="unfinished">Статус</translation>
     </message>
     <message>
         <source>Customer order view</source>
-        <translation>Преглед клијентске наруџбе</translation>
+        <translation type="unfinished">Преглед клијентске наруџбе</translation>
     </message>
     <message>
         <source>Any</source>
-        <translation>Било који</translation>
+        <translation type="unfinished">Било који</translation>
     </message>
     <message>
         <source>None</source>
-        <translation>Нема</translation>
+        <translation type="unfinished">Нема</translation>
     </message>
     <message>
         <source>&apos;Autorates&apos; were retrieved successfully</source>
-        <translation>&apos;Аутокурсеви&apos; су успешно преузети</translation>
+        <translation type="unfinished">&apos;Аутокурсеви&apos; су успешно преузети</translation>
     </message>
     <message>
         <source>Unknown body format in HTTP response. Expected &apos;text/xml&apos;</source>
-        <translation>Непознат формат у HTTP одговору. Очекиван је &apos;text/xml&apos;</translation>
+        <translation type="unfinished">Непознат формат у HTTP одговору. Очекиван је &apos;text/xml&apos;</translation>
     </message>
     <message>
         <source>Invalid HTTP response</source>
-        <translation>Неисправан HTTP одзив</translation>
+        <translation type="unfinished">Неисправан HTTP одзив</translation>
     </message>
     <message>
         <source>Unable to send http request: %1:%2/%3</source>
-        <translation>Није могуће послати http захтев: %1:%2/%3</translation>
+        <translation type="unfinished">Није могуће послати http захтев: %1:%2/%3</translation>
     </message>
     <message>
         <source>eZExchangeRatesUpdateHandler: you should reimplement &apos;requestRates&apos; method</source>
-        <translation>eZExchangeRatesUpdateHandler: треба изнова да примените &apos;requestRates&apos; метод</translation>
+        <translation type="unfinished">eZExchangeRatesUpdateHandler: треба изнова да примените &apos;requestRates&apos; метод</translation>
     </message>
     <message>
         <source>&apos;Auto&apos; prices were updated successfully.</source>
-        <translation>&apos;Аутоматске&apos; цене се успешно обновљене.</translation>
+        <translation type="unfinished">&apos;Аутоматске&apos; цене се успешно обновљене.</translation>
     </message>
     <message>
         <source>&apos;Auto&apos; rates were updated successfully.</source>
-        <translation>&apos;Аутоматски&apos; курсеви су успешно обновљени.</translation>
+        <translation type="unfinished">&apos;Аутоматски&apos; курсеви су успешно обновљени.</translation>
     </message>
     <message>
         <source>Unable to calculate cross-rate for currency-pair &apos;%1&apos;/&apos;%2&apos;</source>
-        <translation>Није могуће прерачунати курсеве за &apos;%1&apos;/&apos;%2&apos;</translation>
+        <translation type="unfinished">Није могуће прерачунати курсеве за &apos;%1&apos;/&apos;%2&apos;</translation>
     </message>
     <message>
         <source>Unable to determine currency for retrieved rates.</source>
-        <translation>Није могуће утврдити валуту за добијене курсеве.</translation>
+        <translation type="unfinished">Није могуће утврдити валуту за добијене курсеве.</translation>
     </message>
     <message>
         <source>Retrieved empty list of rates.</source>
-        <translation>Добијена празна курсна листа.</translation>
+        <translation type="unfinished">Добијена празна курсна листа.</translation>
     </message>
     <message>
         <source>Unable to create handler to update auto rates.</source>
-        <translation>Није могуће направити управљач за аутоматско обнављање курсева.</translation>
+        <translation type="unfinished">Није могуће направити управљач за аутоматско обнављање курсева.</translation>
     </message>
     <message>
         <source>Changes were stored successfully.</source>
-        <translation>Измене су успешно сачуване.</translation>
+        <translation type="unfinished">Измене су успешно сачуване.</translation>
     </message>
     <message>
         <source>Available currency list</source>
-        <translation>Листа доступних валута</translation>
+        <translation type="unfinished">Листа доступних валута</translation>
     </message>
     <message>
         <source>Edit currency</source>
-        <translation>Измените валуту</translation>
+        <translation type="unfinished">Измените валуту</translation>
     </message>
     <message>
         <source>Create new currency</source>
-        <translation>Направите нову валуту</translation>
+        <translation type="unfinished">Направите нову валуту</translation>
     </message>
     <message>
         <source>Error checking out</source>
-        <translation>Грешка на каси</translation>
+        <translation type="unfinished">Грешка на каси</translation>
     </message>
     <message>
         <source>Unable to calculate VAT percentage because your country is unknown. You can either fill country manually in your account information (if you are a registered user) or contact site administrator.</source>
-        <translation>Није могуће израчунати проценат ПДВ-а јер немамо податак о вашој земљи. Можете допунити тај податак сами у информацијама о рачуну (уколико сте регистровани корисник) или контактирајте администратора сајта.</translation>
+        <translation type="unfinished">Није могуће израчунати проценат ПДВ-а јер немамо податак о вашој земљи. Можете допунити тај податак сами у информацијама о рачуну (уколико сте регистровани корисник) или контактирајте администратора сајта.</translation>
     </message>
     <message>
         <source>Preferred currency</source>
-        <translation>Жељена валута</translation>
+        <translation type="unfinished">Жељена валута</translation>
     </message>
     <message>
         <source>Products overview</source>
-        <translation>Преглед производа</translation>
+        <translation type="unfinished">Преглед производа</translation>
     </message>
     <message>
         <source>Wishlist</source>
-        <translation>Листа жеља</translation>
+        <translation type="unfinished">Листа жеља</translation>
     </message>
     <message>
         <source>&apos;%value&apos; is not a valid custom rate value (positive number expected)</source>
@@ -26411,110 +30507,102 @@ your account.</source>
     <name>kernel/shop/classes/ezcurrencydata</name>
     <message>
         <source>Invalid characters in currency code.</source>
-        <translation>Неисправни симболи у валутном коду.</translation>
+        <translation type="unfinished">Неисправни симболи у валутном коду.</translation>
     </message>
     <message>
         <source>Currency already exists.</source>
-        <translation>Валута већ постоји.</translation>
+        <translation type="unfinished">Валута већ постоји.</translation>
     </message>
     <message>
         <source>Unknown error.</source>
-        <translation>Непозната грешка.</translation>
+        <translation type="unfinished">Непозната грешка.</translation>
     </message>
 </context>
 <context>
     <name>kernel/shop/discountgroup</name>
     <message>
         <source>New discount group</source>
-        <translation>Нова група попуста</translation>
+        <translation type="unfinished">Нова група попуста</translation>
     </message>
     <message>
         <source>New Discount Rule</source>
-        <translation>Ново правило попуста</translation>
+        <translation type="unfinished">Ново правило попуста</translation>
     </message>
 </context>
 <context>
     <name>kernel/shop/editvatrule</name>
     <message>
         <source>Invalid data entered</source>
-        <translation>Унесен неисправан податак</translation>
+        <translation type="unfinished">Унесен неисправан податак</translation>
     </message>
     <message>
         <source>Choose a country.</source>
-        <translation>Изаберите државу.</translation>
+        <translation type="unfinished">Изаберите државу.</translation>
     </message>
     <message>
         <source>Choose a VAT type.</source>
-        <translation>Изаберите врсту ПДВ-а.</translation>
+        <translation type="unfinished">Изаберите врсту ПДВ-а.</translation>
     </message>
     <message>
         <source>Conflicting rule</source>
-        <translation>Правило у сукобу</translation>
+        <translation type="unfinished">Правило у сукобу</translation>
     </message>
     <message>
         <source>Default rule for any country already exists.</source>
-        <translation>Подразумевано правило за земље већ постоји.</translation>
+        <translation type="unfinished">Подразумевано правило за земље већ постоји.</translation>
     </message>
     <message>
         <source>Rule not found</source>
-        <translation>Правило није пронађено</translation>
+        <translation type="unfinished">Правило није пронађено</translation>
     </message>
     <message>
         <source>Edit VAT charging rule</source>
-        <translation>Измени правило наплате ПДВ-а</translation>
+        <translation type="unfinished">Измени правило наплате ПДВ-а</translation>
     </message>
     <message>
         <source>Create new VAT charging rule</source>
-        <translation>Направи ново правило наплате ПДВ-а</translation>
+        <translation type="unfinished">Направи ново правило наплате ПДВ-а</translation>
     </message>
 </context>
 <context>
     <name>kernel/shop/productcategories</name>
     <message>
         <source>Product category</source>
-        <translation>Категорија производа</translation>
+        <translation type="unfinished">Категорија производа</translation>
     </message>
     <message>
         <source>Empty category names are not allowed (corrected).</source>
-        <translation>Није дозвољено оставити празан назив категорије (исправљено).</translation>
+        <translation type="unfinished">Није дозвољено оставити празан назив категорије (исправљено).</translation>
     </message>
     <message>
         <source>Product categories</source>
-        <translation>Категорије производа</translation>
+        <translation type="unfinished">Категорије производа</translation>
     </message>
 </context>
 <context>
     <name>kernel/shop/vatrules</name>
     <message>
         <source>No default rule found. Please add rule having &quot;Any&quot; country and &quot;Any&quot; category.</source>
-        <translation>Није нађено подразумевано правило. Додајте правило за &quot;било коју&quot; земљу и &quot;било коју&quot; категорију.</translation>
+        <translation type="unfinished">Није нађено подразумевано правило. Додајте правило за &quot;било коју&quot; земљу и &quot;било коју&quot; категорију.</translation>
     </message>
     <message>
         <source>VAT rules</source>
-        <translation>ПДВ правила</translation>
+        <translation type="unfinished">ПДВ правила</translation>
     </message>
 </context>
 <context>
     <name>kernel/shop/vattype</name>
     <message>
         <source>Empty VAT type names are not allowed (corrected).</source>
-        <translation>Није дозвољено оставити празан назив врсте ПДВ-а (исправљено).</translation>
+        <translation type="unfinished">Није дозвољено оставити празан назив врсте ПДВ-а (исправљено).</translation>
     </message>
     <message>
         <source>Wrong VAT percentage (corrected).</source>
-        <translation>Неисправан проценат ПДВ-а (исправљено).</translation>
+        <translation type="unfinished">Неисправан проценат ПДВ-а (исправљено).</translation>
     </message>
 </context>
 <context>
     <name>kernel/state</name>
-    <message>
-        <source>State</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Edit</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message>
         <source>Groups</source>
         <translation type="unfinished">Групе</translation>
@@ -26524,16 +30612,24 @@ your account.</source>
         <translation type="unfinished">Измена групе</translation>
     </message>
     <message>
-        <source>New</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>New group</source>
         <translation type="unfinished">Нова група</translation>
     </message>
     <message>
         <source>Assign</source>
         <translation type="unfinished">Додели</translation>
+    </message>
+    <message>
+        <source>State</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>New</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -26567,6 +30663,10 @@ your account.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Identifier: identifiers starting with &quot;ez&quot; are reserved.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Name in %language_name is too long. Maximum 45 characters allowed.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -26574,192 +30674,188 @@ your account.</source>
         <source>Name in %language_name: input required</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Identifier: identifiers starting with &quot;ez&quot; are reserved.</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>kernel/trigger</name>
     <message>
         <source>Trigger</source>
-        <translation>Обарач</translation>
+        <translation type="unfinished">Обарач</translation>
     </message>
     <message>
         <source>List</source>
-        <translation>Листа</translation>
+        <translation type="unfinished">Листа</translation>
     </message>
 </context>
 <context>
     <name>kernel/url</name>
     <message>
         <source>URL</source>
-        <translation>URL</translation>
+        <translation type="unfinished">URL</translation>
     </message>
     <message>
         <source>List</source>
-        <translation>Листа</translation>
+        <translation type="unfinished">Листа</translation>
     </message>
     <message>
         <source>View</source>
-        <translation>Приказ</translation>
+        <translation type="unfinished">Приказ</translation>
     </message>
     <message>
         <source>URL edit</source>
-        <translation>Измена URL-а</translation>
+        <translation type="unfinished">Измена URL-а</translation>
     </message>
 </context>
 <context>
     <name>kernel/user</name>
     <message>
         <source>User</source>
-        <translation>Корисник</translation>
+        <translation type="unfinished">Корисник</translation>
     </message>
     <message>
         <source>Login</source>
-        <translation>Пријава</translation>
+        <translation type="unfinished">Пријава</translation>
     </message>
     <message>
         <source>Change password</source>
-        <translation>Промени лозинку</translation>
+        <translation type="unfinished">Промени лозинку</translation>
     </message>
     <message>
         <source>Register</source>
-        <translation>Регистрација</translation>
+        <translation type="unfinished">Регистрација</translation>
     </message>
     <message>
         <source>Forgot password</source>
-        <translation>Заборављена лозинка</translation>
+        <translation type="unfinished">Заборављена лозинка</translation>
     </message>
     <message>
         <source>Activate</source>
-        <translation>Активирај</translation>
+        <translation type="unfinished">Активирај</translation>
     </message>
     <message>
         <source>User profile</source>
-        <translation>Профил корисника</translation>
+        <translation type="unfinished">Профил корисника</translation>
     </message>
     <message>
         <source>Setting</source>
-        <translation>Подешавање</translation>
+        <translation type="unfinished">Подешавање</translation>
     </message>
     <message>
         <source>Success</source>
-        <translation>Успех</translation>
+        <translation type="unfinished">Успех</translation>
     </message>
 </context>
 <context>
     <name>kernel/user/register</name>
     <message>
         <source>Registration info</source>
-        <translation>Подаци о регистрацији</translation>
+        <translation type="unfinished">Подаци о регистрацији</translation>
     </message>
     <message>
         <source>New user registered</source>
-        <translation>Регистрован нови корисник</translation>
+        <translation type="unfinished">Регистрован нови корисник</translation>
     </message>
 </context>
 <context>
     <name>kernel/workflow</name>
     <message>
         <source>Edit workflow</source>
-        <translation>Измени радни ток</translation>
+        <translation type="unfinished">Измени радни ток</translation>
     </message>
     <message>
         <source>Workflow</source>
-        <translation>Радни ток</translation>
+        <translation type="unfinished">Радни ток</translation>
     </message>
     <message>
         <source>Edit</source>
-        <translation>Измена</translation>
+        <translation type="unfinished">Измена</translation>
     </message>
     <message>
         <source>Edit workflow group</source>
-        <translation>Измени групу радног тока</translation>
+        <translation type="unfinished">Измени групу радног тока</translation>
     </message>
     <message>
         <source>Group edit</source>
-        <translation>Измена групе</translation>
+        <translation type="unfinished">Измена групе</translation>
     </message>
     <message>
         <source>Workflow group list</source>
-        <translation>Групна листа радног тока</translation>
+        <translation type="unfinished">Групна листа радног тока</translation>
     </message>
     <message>
         <source>Group list</source>
-        <translation>Листа групе</translation>
+        <translation type="unfinished">Листа групе</translation>
     </message>
     <message>
         <source>Workflow list</source>
-        <translation>Попис радног догађаја</translation>
+        <translation type="unfinished">Попис радног догађаја</translation>
     </message>
     <message>
         <source>Workflow list of group</source>
-        <translation>Попис радног догађаја групе</translation>
+        <translation type="unfinished">Попис радног догађаја групе</translation>
     </message>
     <message>
         <source>List</source>
-        <translation>Листа</translation>
+        <translation type="unfinished">Листа</translation>
     </message>
     <message>
         <source>View</source>
-        <translation>Приказ</translation>
+        <translation type="unfinished">Приказ</translation>
     </message>
     <message>
         <source>You have to have at least one group that the workflow belongs to!</source>
-        <translation>Морате имати барем једну групу којој радни ток припада!</translation>
+        <translation type="unfinished">Морате имати барем једну групу којој радни ток припада!</translation>
     </message>
     <message>
         <source>Process list</source>
-        <translation>Списак процеса</translation>
+        <translation type="unfinished">Списак процеса</translation>
     </message>
 </context>
 <context>
     <name>kernel/workflow/edit</name>
     <message>
         <source>New Workflow</source>
-        <translation>Нови радни ток</translation>
+        <translation type="unfinished">Нови радни ток</translation>
     </message>
 </context>
 <context>
     <name>kernel/workflow/event</name>
     <message>
         <source>Event</source>
-        <translation>Догађај</translation>
+        <translation type="unfinished">Догађај</translation>
     </message>
     <message>
         <source>Approve</source>
-        <translation>Одобри</translation>
+        <translation type="unfinished">Одобри</translation>
     </message>
     <message>
         <source>Multiplexer</source>
-        <translation>Мултиплеxер</translation>
+        <translation type="unfinished">Мултиплеxер</translation>
     </message>
     <message>
         <source>Simple shipping</source>
-        <translation>Једноставна отпрема</translation>
+        <translation type="unfinished">Једноставна отпрема</translation>
     </message>
     <message>
         <source>Wait until date</source>
-        <translation>Причекајте до </translation>
+        <translation type="unfinished">Причекајте до </translation>
     </message>
     <message>
         <source>Payment Gateway</source>
-        <translation>Капија за плаћање</translation>
+        <translation type="unfinished">Капија за плаћање</translation>
     </message>
 </context>
 <context>
     <name>kernel/workflow/group</name>
     <message>
         <source>Group</source>
-        <translation>Група</translation>
+        <translation type="unfinished">Група</translation>
     </message>
 </context>
 <context>
     <name>kernel/workflow/groupedit</name>
     <message>
         <source>New WorkflowGroup</source>
-        <translation>Нова група радних токова</translation>
+        <translation type="unfinished">Нова група радних токова</translation>
     </message>
 </context>
 <context>
@@ -26767,62 +30863,70 @@ your account.</source>
     <message>
         <source>Contents</source>
         <comment>Table of contents</comment>
-        <translation>Садржај</translation>
+        <translation type="unfinished">Садржај</translation>
     </message>
     <message>
         <source>Index</source>
         <comment>Keyword index name</comment>
-        <translation>Индекс</translation>
+        <translation type="unfinished">Индекс</translation>
     </message>
 </context>
 <context>
     <name>lib/eztemplate</name>
     <message>
+        <source>Some template errors occured, see debug for more information.</source>
+        <translation type="obsolete">Дошло је до грешака у шаблону, види алат за откривање грешака ради више информација.</translation>
+    </message>
+    <message>
         <source>Some template errors occurred, see debug for more information.</source>
-        <translation>Дошло је до грешака у шаблонима, погледајте debug за више информација.</translation>
+        <translation type="unfinished">Дошло је до грешака у шаблонима, погледајте debug за више информација.</translation>
     </message>
 </context>
 <context>
     <name>lib/template</name>
     <message>
+        <source>The maximum nesting level of 40 has been reached. The execution is stopped to avoid infinite recursion.</source>
+        <translation type="obsolete">Максималан број нивоа од 40 је достигнут. Извршавање је заустављено да би се избегло бесконачно извршавање.</translation>
+    </message>
+    <message>
         <source>The maximum nesting level of %max has been reached. The execution is stopped to avoid infinite recursion.</source>
-        <translation>Достигнут је највећи дозвољени ниво гранања %max. Извршење је обустављено да не би дошло до бесконачног понављања.</translation>
+        <translation type="unfinished">Достигнут је највећи дозвољени ниво гранања %max. Извршење је обустављено да не би дошло до бесконачног понављања.</translation>
     </message>
 </context>
 <context>
     <name>pdf/edit</name>
     <message>
         <source>PDF Export</source>
-        <translation>Извоз PDF-а</translation>
+        <translation type="unfinished">Извоз PDF-а</translation>
     </message>
 </context>
 <context>
     <name>settings/edit</name>
     <message>
         <source>Settings</source>
-        <translation>Подешавања </translation>
+        <translation type="unfinished">Подешавања </translation>
     </message>
     <message>
         <source>Edit</source>
-        <translation>Измена</translation>
+        <translation type="unfinished">Измена</translation>
     </message>
 </context>
 <context>
     <name>settings/view</name>
     <message>
         <source>Settings</source>
-        <translation>Подешавања</translation>
+        <translation type="unfinished">Подешавања</translation>
     </message>
     <message>
         <source>View</source>
-        <translation>Приказ</translation>
+        <translation type="unfinished">Приказ</translation>
     </message>
 </context>
 <context>
     <name>shop</name>
     <message>
         <source>Remove orders</source>
-        <translation>Уклони наредбе</translation>
+        <translation type="unfinished">Уклони наредбе</translation>
     </message>
 </context>
 <context>

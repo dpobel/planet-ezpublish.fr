@@ -2,7 +2,7 @@
 /**
  * Autoloader definition for eZ Publish
  *
- * @copyright Copyright (C) 1999-2009 eZ Systems AS. All rights reserved.
+ * @copyright Copyright (C) 1999-2010 eZ Systems AS. All rights reserved.
  * @license http://ez.no/licenses/gnu_gpl GNU GPLv2
  *
  */
@@ -87,8 +87,12 @@ class ezpAutoloader
 
             if ( defined( 'EZP_AUTOLOAD_ALLOW_KERNEL_OVERRIDE' ) and EZP_AUTOLOAD_ALLOW_KERNEL_OVERRIDE )
             {
-                $ezpKernelOverrideClasses = require 'var/autoload/ezp_override.php';
-                self::$ezpClasses = array_merge( self::$ezpClasses, $ezpKernelOverrideClasses );
+                // won't work, as eZDebug isn't initialized yet at that time
+                // eZDebug::writeError( "Kernel override is enabled, but var/autoload/ezp_override.php has not been generated\nUse bin/php/ezpgenerateautoloads.php -o", 'autoload.php' );
+                if ( $ezpKernelOverrideClasses = include 'var/autoload/ezp_override.php' )
+                {
+                    self::$ezpClasses = array_merge( self::$ezpClasses, $ezpKernelOverrideClasses );
+                }
             }
         }
 
@@ -101,7 +105,7 @@ class ezpAutoloader
     /**
      * Resets the local, in-memory autoload cache.
      *
-     * If the autoload arrays are extended during a requsts lifetime, this
+     * If the autoload arrays are extended during a requests lifetime, this
      * method must be called, to make them available.
      *
      * @return void

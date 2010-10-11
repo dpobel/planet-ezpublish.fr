@@ -6,7 +6,7 @@
     {default current_user=fetch('user','current_user')}
     {cache-block keys=array($tool_id, $current_user.role_id_list|implode( ',' ), $current_user.limited_assignment_value_list|implode( ',' ))}
     {default limit=5}
-    {section show=$sort_by|count|eq( 0 )}{set sort_by='published'}{/section}
+    {if $sort_by|count|eq( 0 )}{set sort_by='published'}{/if}
     {let node_list=cond( $treelist_check|eq( 'yes' ),
                              fetch( content, tree, hash( parent_node_id, $parent_node,
                                     limit, $limit,
@@ -22,7 +22,7 @@
         <div class="toollist-design">
         <h2>{$title}</h2>
         <div class="content-view-children">
-        {section name=Node loop=$node_list sequence=array(bglight,bgdark)}
+        {section name=Node loop=$node_list}
             {node_view_gui view=listitem content_node=$Node:item}
         {/section}
         </div>

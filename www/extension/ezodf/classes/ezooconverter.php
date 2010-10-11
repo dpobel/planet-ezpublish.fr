@@ -4,10 +4,10 @@
 //
 // Created on: <21-Jan-2005 09:52:07 bf>
 //
+// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.2.0
-// BUILD VERSION: 24182
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 4.3.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS.
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -24,6 +24,8 @@
 //   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 //   MA 02110-1301, USA.
 //
+//
+// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
 /*! \file ezooconverter.php
@@ -138,7 +140,10 @@ class eZOOConverter
                 {
                     $originalImage = $attribute->content()->attribute( 'original' );
 
-                    $imageArray = array( "FileName" => $originalImage['url'],
+                    $fileHandler = eZClusterFileHandler::instance( $originalImage['url'] );
+                    $uniqueFile = $fileHandler->fetchUnique();
+
+                    $imageArray = array( "FileName" => $uniqueFile,
                                          "Alignment" => "center",
                                          "DisplayWidth" => $originalImage['width'],
                                          "DisplayHeight" => $originalImage['height'] );
@@ -322,10 +327,14 @@ class eZOOConverter
 
                                 $imageHandler = $imageAttribute->content();
                                 $originalImage = $imageHandler->attribute( 'original' );
+
+                                $fileHandler = eZClusterFileHandler::instance( $originalImage['url'] );
+                                $uniqueFile = $fileHandler->fetchUnique();
+
                                 $displayImage = $imageHandler->attribute( $imageSize );
                                 $displayWidth = $displayImage['width'];
                                 $displayHeight = $displayImage['height'];
-                                $imageArray[] = array( "FileName" => $originalImage['url'],
+                                $imageArray[] = array( "FileName" => $uniqueFile,
                                                        "Alignment" => $imageAlignment,
                                                        "DisplayWidth" => $displayWidth,
                                                        "DisplayHeight" => $displayHeight );
@@ -511,10 +520,14 @@ class eZOOConverter
 
                         $imageHandler = $imageAttribute->content();
                         $originalImage = $imageHandler->attribute( 'original' );
+
+                        $fileHandler = eZClusterFileHandler::instance( $originalImage['url'] );
+                        $uniqueFile = $fileHandler->fetchUnique();
+
                         $displayImage = $imageHandler->attribute( $imageSize );
                         $displayWidth = $displayImage['width'];
                         $displayHeight = $displayImage['height'];
-                        $imageArray[] = array( "FileName" => $originalImage['url'],
+                        $imageArray[] = array( "FileName" => $uniqueFile,
                                                "Alignment" => $imageAlignment,
                                                "DisplayWidth" => $displayWidth,
                                                "DisplayHeight" => $displayHeight );

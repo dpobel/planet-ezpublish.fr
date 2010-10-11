@@ -30,10 +30,11 @@
 eZOEPopupUtils.settings.customAttributeInitHandler['{$custom_attribute_id}_source'] = {literal} function( el, value )
 {
     el.value = ez.num( value, 0, 'int' );
-    var selid = el.id.replace('_source', '_sizetype');
-    ez.$( selid ).el.selectedIndex = ez.$$('#' + selid + ' option').map(function( o ){
-        return o.el.value;
-    }).indexOf( value.replace( el.value, '' ) );
+    var selid = el.id.replace('_source', '_sizetype'), size = document.getElementById( selid );
+    size.selectedIndex = jQuery.inArray( value.replace( el.value, '' ), jQuery('#' + selid + ' option').map(function( i, n )
+    {
+        return n.value;
+    }));
 };{/literal}
 
 eZOEPopupUtils.settings.customAttributeSaveHandler['{$custom_attribute_id}_source'] = {literal} function( el, value )

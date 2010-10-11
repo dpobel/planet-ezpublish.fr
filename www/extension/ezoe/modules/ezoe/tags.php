@@ -2,9 +2,10 @@
 //
 // Created on: <15-Feb-2008 00:00:00 ar>
 //
+// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Online Editor extension for eZ Publish
-// SOFTWARE RELEASE: 5.0
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 4.3.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -22,10 +23,9 @@
 //   MA 02110-1301, USA.
 //
 //
+// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
+//
 
-include_once( 'kernel/common/template.php' );
-//include_once( 'kernel/classes/ezcontentobjecttreenode.php' );
-include_once( 'extension/ezoe/classes/ezoeajaxcontent.php' );
 
 $objectID      = isset( $Params['ObjectID'] ) ? (int) $Params['ObjectID'] : 0;
 $objectVersion = isset( $Params['ObjectVersion'] ) ? (int) $Params['ObjectVersion'] : 0;
@@ -130,7 +130,7 @@ else
     else
         $classListDescription = array();
 
-    $classList['0'] = 'None';
+    $classList['-0-'] = 'None';
     if ( $contentIni->hasVariable( $tagName, 'AvailableClasses' ) )
     {
         foreach ( $contentIni->variable( $tagName, 'AvailableClasses' ) as $class )
@@ -143,7 +143,7 @@ else
     }
 }
 
-
+include_once( 'kernel/common/template.php' );
 $tpl = templateInit();
 $tpl->setVariable( 'object', $object );
 $tpl->setVariable( 'object_id', $objectID );
@@ -157,7 +157,7 @@ $tpl->setVariable( 'custom_inline_tags', $customInlineList );
 $tpl->setVariable( 'class_list', $classList );
 
 $ezoeIni = eZINI::instance( 'ezoe.ini' );
-$tpl->setVariable( 'custom_attribute_style_map', eZOEAjaxContent::jsonEncode( $ezoeIni->variable('EditorSettings', 'CustomAttributeStyleMap' ) ) );
+$tpl->setVariable( 'custom_attribute_style_map', json_encode( $ezoeIni->variable('EditorSettings', 'CustomAttributeStyleMap' ) ) );
 
 // use persistent_variable like content/view does, sending parameters
 // to pagelayout as a hash.
@@ -174,7 +174,7 @@ if ( $tagName === 'td' || $tagName === 'th' )
 {
     // generate javascript data for td / th classes
     $tagName2 = $tagName === 'td' ? 'th' : 'td';
-    $cellClassList = array( $tagName => $classList, $tagName2 => array('0' => 'None') );
+    $cellClassList = array( $tagName => $classList, $tagName2 => array('-0-' => 'None') );
 
     if ( $contentIni->hasVariable( $tagName2, 'ClassDescription' ) )
         $classListDescription = $contentIni->variable( $tagName2, 'ClassDescription' );
@@ -191,7 +191,7 @@ if ( $tagName === 'td' || $tagName === 'th' )
                 $cellClassList[$tagName2][$class] = $class;
         }
     }
-    $tpl->setVariable( 'cell_class_list', eZOEAjaxContent::jsonEncode( $cellClassList ) );
+    $tpl->setVariable( 'cell_class_list', json_encode( $cellClassList ) );
 }
 
 // run template and return result

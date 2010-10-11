@@ -4,10 +4,10 @@
 //
 // Created on: <16-Apr-2002 11:08:14 amos>
 //
+// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.2.0
-// BUILD VERSION: 24182
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 4.3.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -25,14 +25,14 @@
 //   MA 02110-1301, USA.
 //
 //
+// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
+//
 
 //!! eZKernel
 //! The class eZWorkflowType does
 /*!
 
 */
-
-require_once( "kernel/common/i18n.php" );
 
 class eZWorkflowType
 {
@@ -389,14 +389,14 @@ class eZWorkflowType
      */
     static function statusNameMap()
     {
-        return array( self::STATUS_NONE => ezi18n( 'kernel/classes', 'No state yet' ),
-                      self::STATUS_ACCEPTED => ezi18n( 'kernel/classes', 'Accepted event' ),
-                      self::STATUS_REJECTED => ezi18n( 'kernel/classes', 'Rejected event' ),
-                      self::STATUS_DEFERRED_TO_CRON => ezi18n( 'kernel/classes', 'Event deferred to cron job' ),
-                      self::STATUS_DEFERRED_TO_CRON_REPEAT => ezi18n( 'kernel/classes', 'Event deferred to cron job, event will be rerun' ),
-                      self::STATUS_RUN_SUB_EVENT => ezi18n( 'kernel/classes', 'Event runs a sub event' ),
-                      self::STATUS_WORKFLOW_CANCELLED => ezi18n( 'kernel/classes', 'Canceled whole workflow' ),
-                      self::STATUS_WORKFLOW_RESET => ezi18n( 'kernel/classes', 'Workflow was reset for reuse' ) );
+        return array( self::STATUS_NONE => ezpI18n::tr( 'kernel/classes', 'No state yet' ),
+                      self::STATUS_ACCEPTED => ezpI18n::tr( 'kernel/classes', 'Accepted event' ),
+                      self::STATUS_REJECTED => ezpI18n::tr( 'kernel/classes', 'Rejected event' ),
+                      self::STATUS_DEFERRED_TO_CRON => ezpI18n::tr( 'kernel/classes', 'Event deferred to cron job' ),
+                      self::STATUS_DEFERRED_TO_CRON_REPEAT => ezpI18n::tr( 'kernel/classes', 'Event deferred to cron job, event will be rerun' ),
+                      self::STATUS_RUN_SUB_EVENT => ezpI18n::tr( 'kernel/classes', 'Event runs a sub event' ),
+                      self::STATUS_WORKFLOW_CANCELLED => ezpI18n::tr( 'kernel/classes', 'Canceled whole workflow' ),
+                      self::STATUS_WORKFLOW_RESET => ezpI18n::tr( 'kernel/classes', 'Workflow was reset for reuse' ) );
     }
 
     /// \privatesection

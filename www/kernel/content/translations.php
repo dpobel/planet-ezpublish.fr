@@ -2,12 +2,12 @@
 //
 // Definition of Translations class
 //
-// Created on: <23-ñÎ×-2003 12:52:42 sp>
+// Created on: <23-ï¿½ï¿½ï¿½-2003 12:52:42 sp>
 //
+// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.2.0
-// BUILD VERSION: 24182
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 4.3.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -25,12 +25,14 @@
 //   MA 02110-1301, USA.
 //
 //
+// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
+//
 
 /*! \file
 */
 
-require_once( 'kernel/common/template.php' );
-$tpl = templateInit();
+
+$tpl = eZTemplate::factory();
 $http = eZHTTPTool::instance();
 $Module = $Params['Module'];
 
@@ -42,7 +44,7 @@ if ( $Module->isCurrentAction( 'New' ) /*or
 {
     $tpl->setVariable( 'is_edit', $Module->isCurrentAction( 'Edit' ) );
     $Result['content'] = $tpl->fetch( 'design:content/translationnew.tpl' );
-    $Result['path'] = array( array( 'text' => ezi18n( 'kernel/content', 'Translation' ),
+    $Result['path'] = array( array( 'text' => ezpI18n::tr( 'kernel/content', 'Translation' ),
                                     'url' => false ),
                              array( 'text' => 'New',
                                     'url' => false ) );
@@ -82,7 +84,7 @@ if ( $Module->isCurrentAction( 'StoreNew' ) /* || $http->hasPostVariable( 'Store
             // The locale cannot be used so we show the edit page again.
             $tpl->setVariable( 'is_edit', $Module->isCurrentAction( 'Edit' ) );
             $Result['content'] = $tpl->fetch( 'design:content/translationnew.tpl' );
-            $Result['path'] = array( array( 'text' => ezi18n( 'kernel/content', 'Translation' ),
+            $Result['path'] = array( array( 'text' => ezpI18n::tr( 'kernel/content', 'Translation' ),
                                             'url' => false ),
                                      array( 'text' => 'New',
                                             'url' => false ) );
@@ -102,7 +104,7 @@ if ( $Module->isCurrentAction( 'StoreNew' ) /* || $http->hasPostVariable( 'Store
             // The locale cannot be used so we show the edit page again.
             $tpl->setVariable( 'is_edit', $Module->isCurrentAction( 'Edit' ) );
             $Result['content'] = $tpl->fetch( 'design:content/translationnew.tpl' );
-            $Result['path'] = array( array( 'text' => ezi18n( 'kernel/content', 'Translation' ),
+            $Result['path'] = array( array( 'text' => ezpI18n::tr( 'kernel/content', 'Translation' ),
                                             'url' => false ),
                                      array( 'text' => 'New',
                                             'url' => false ) );
@@ -138,7 +140,7 @@ if ( $Params['TranslationID'] )
     $tpl->setVariable( 'translation',  $translation );
 
     $Result['content'] = $tpl->fetch( 'design:content/translationview.tpl' );
-    $Result['path'] = array( array( 'text' => ezi18n( 'kernel/content', 'Content translations' ),
+    $Result['path'] = array( array( 'text' => ezpI18n::tr( 'kernel/content', 'Content translations' ),
                                     'url' => 'content/translations' ),
                              array( 'text' => $translation->attribute( 'name' ),
                                     'url' => false ) );
@@ -150,7 +152,7 @@ $availableTranslations = eZContentLanguage::fetchList();
 $tpl->setVariable( 'available_translations', $availableTranslations );
 
 $Result['content'] = $tpl->fetch( 'design:content/translations.tpl' );
-$Result['path'] = array( array( 'text' => ezi18n( 'kernel/content', 'Languages' ),
+$Result['path'] = array( array( 'text' => ezpI18n::tr( 'kernel/content', 'Languages' ),
                                 'url' => false ) );
 
 ?>

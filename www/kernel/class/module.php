@@ -2,10 +2,10 @@
 //
 // Created on: <17-Apr-2002 11:05:08 amos>
 //
+// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.2.0
-// BUILD VERSION: 24182
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 4.3.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -23,6 +23,8 @@
 //   MA 02110-1301, USA.
 //
 //
+// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
+//
 
 $Module = array( "name" => "eZContentClass" );
 
@@ -38,7 +40,8 @@ $ViewList["view"] = array(
     "script" => "view.php",
     "default_navigation_part" => 'ezsetupnavigationpart',
     "params" => array( "ClassID" ),
-    'unordered_params' => array( 'language' => 'Language' ) );
+    'unordered_params' => array( 'language' => 'Language',
+                                 'scriptid' => 'ScheduledScriptID' ) );
 $ViewList["copy"] = array(
     "script" => "copy.php",
     'ui_context' => 'edit',

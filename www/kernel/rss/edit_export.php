@@ -4,10 +4,10 @@
 //
 // Created on: <18-Sep-2003 14:49:54 kk>
 //
+// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.2.0
-// BUILD VERSION: 24182
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 4.3.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -25,10 +25,12 @@
 //   MA 02110-1301, USA.
 //
 //
+// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
+//
 
 $Module = $Params['Module'];
 
-require_once( 'kernel/common/template.php' );
+
 $http = eZHTTPTool::instance();
 
 $valid = true;
@@ -97,7 +99,8 @@ if ( $http->hasPostVariable( 'Item_Count' ) )
     {
         if ( $http->hasPostVariable( 'SourceBrowse_'.$itemCount ) )
         {
-            eZRSSEditFunction::storeRSSExport( $Module, $http );
+            $skipValues = $http->hasPostVariable( 'Ignore_Values_On_Browse_' . $itemCount ) && $http->postVariable( 'Ignore_Values_On_Browse_' . $itemCount );
+            eZRSSEditFunction::storeRSSExport( $Module, $http, false, $skipValues ? $http->postVariable( 'Item_ID_'.$itemCount ) : null );//
             eZContentBrowse::browse( array( 'action_name' => 'RSSObjectBrowse',
                                             'description_template' => 'design:rss/browse_source.tpl',
                                             'from_page' => '/rss/edit_export/'. $RSSExportID .'/'. $http->postVariable( 'Item_ID_'.$itemCount ) .'/NodeSource' ),
@@ -139,7 +142,7 @@ if ( is_numeric( $RSSExportID ) )
              $rssExport->attribute( 'modified' ) + $timeOut > time() )
         {
             // locked editing
-            $tpl = templateInit();
+            $tpl = eZTemplate::factory();
 
             $tpl->setVariable( 'rss_export', $rssExport );
             $tpl->setVariable( 'rss_export_id', $rssExportID );
@@ -148,7 +151,7 @@ if ( is_numeric( $RSSExportID ) )
             $Result = array();
             $Result['content'] = $tpl->fetch( 'design:rss/edit_export_denied.tpl' );
             $Result['path'] = array( array( 'url' => false,
-                                            'text' => ezi18n( 'kernel/rss', 'Really Simple Syndication' ) ) );
+                                            'text' => ezpI18n::tr( 'kernel/rss', 'Really Simple Syndication' ) ) );
             return $Result;
         }
         else if ( $timeOut > 0 && $rssExport->attribute( 'modified' ) + $timeOut < time() )
@@ -189,6 +192,12 @@ if ( is_numeric( $RSSExportID ) )
             {
                 $rssExportItem = eZRSSExportItem::fetch( $Params['RSSExportItemID'], true, eZRSSExport::STATUS_DRAFT );
                 $rssExportItem->setAttribute( 'source_node_id', $nodeIDArray[0] );
+                
+                if ( $rssExportItem->attribute('title') == '' && $rssExportItem->attribute('description') == '' )
+                {
+                    eZRSSEditFunction::setItemDefaults( $rssExportItem );
+                }
+
                 $rssExportItem->store();
             }
         } break;
@@ -224,7 +233,7 @@ else // New RSSExport
     $db->commit();
 }
 
-$tpl = templateInit();
+$tpl = eZTemplate::factory();
 $config = eZINI::instance( 'site.ini' );
 
 $rssVersionArray = $config->variable( 'RSSSettings', 'AvailableVersionList' );
@@ -253,7 +262,7 @@ $tpl->setVariable( 'validation_errors', $validationErrors );
 $Result = array();
 $Result['content'] = $tpl->fetch( "design:rss/edit_export.tpl" );
 $Result['path'] = array( array( 'url' => false,
-                                'text' => ezi18n( 'kernel/rss', 'Really Simple Syndication' ) ) );
+                                'text' => ezpI18n::tr( 'kernel/rss', 'Really Simple Syndication' ) ) );
 
 
 ?>

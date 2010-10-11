@@ -3,10 +3,10 @@
 //
 // Created on: <26-Aug-2003 15:15:32 kk>
 //
+// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.2.0
-// BUILD VERSION: 24182
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 4.3.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -23,6 +23,8 @@
 //   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 //   MA 02110-1301, USA.
 //
+//
+// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
 /*! \file
@@ -174,7 +176,7 @@ class Cezpdf extends Cpdf
     }
 
 // ------------------------------------------------------------------------------
-// 2003-11-04 Kåre Køhler Høvik ( eZ Systems, http://ez.no )
+// 2003-11-04 Kï¿½re Kï¿½hler Hï¿½vik ( eZ Systems, http://ez.no )
 // Set fontsize
 
     function setFontSize( $size )
@@ -183,7 +185,7 @@ class Cezpdf extends Cpdf
     }
 
 // ------------------------------------------------------------------------------
-// 2003-11-06 Kåre Køhler Høvik ( eZ Systems, http://ez.no )
+// 2003-11-06 Kï¿½re Kï¿½hler Hï¿½vik ( eZ Systems, http://ez.no )
 // Set justification
 
     function setJustification( $align )
@@ -192,7 +194,7 @@ class Cezpdf extends Cpdf
     }
 
 // ------------------------------------------------------------------------------
-// 2003-11-06 Kåre Køhler Høvik ( eZ Systems, http://ez.no )
+// 2003-11-06 Kï¿½re Kï¿½hler Hï¿½vik ( eZ Systems, http://ez.no )
 // Get justification
 
     function justification()
@@ -201,7 +203,7 @@ class Cezpdf extends Cpdf
     }
 
 // ------------------------------------------------------------------------------
-// 2003-11-04 Kåre Køhler Høvik ( eZ Systems, http://ez.no )
+// 2003-11-04 Kï¿½re Kï¿½hler Hï¿½vik ( eZ Systems, http://ez.no )
 // Get fontsize
 
     function fontSize()
@@ -1329,7 +1331,7 @@ class Cezpdf extends Cpdf
     }
 
 // ------------------------------------------------------------------------------
-// 2003-11-04 Kåre Køhler Høvik ( eZ Systems, http://ez.no )
+// 2003-11-04 Kï¿½re Kï¿½hler Hï¿½vik ( eZ Systems, http://ez.no )
 // Set fontsize
 
     function strike( $info )

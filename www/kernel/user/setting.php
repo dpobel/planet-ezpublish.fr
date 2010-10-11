@@ -2,10 +2,10 @@
 //
 // Created on: <01-Aug-2002 09:58:09 bf>
 //
+// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.2.0
-// BUILD VERSION: 24182
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 4.3.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -22,6 +22,8 @@
 //   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 //   MA 02110-1301, USA.
 //
+//
+// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
 $Module = $Params['Module'];
@@ -87,8 +89,8 @@ $maxFailedLoginAttempts = eZUser::maxNumberOfFailedLogin();
 
 $Module->setTitle( "Edit user settings" );
 // Template handling
-require_once( "kernel/common/template.php" );
-$tpl = templateInit();
+
+$tpl = eZTemplate::factory();
 $tpl->setVariable( "module", $Module );
 $tpl->setVariable( "http", $http );
 $tpl->setVariable( "userID", $UserID );
@@ -99,9 +101,9 @@ $tpl->setVariable( "max_failed_login_attempts", $maxFailedLoginAttempts );
 
 $Result = array();
 $Result['content'] = $tpl->fetch( "design:user/setting.tpl" );
-$Result['path'] = array( array( 'text' => ezi18n( 'kernel/user', 'User' ),
+$Result['path'] = array( array( 'text' => ezpI18n::tr( 'kernel/user', 'User' ),
                                 'url' => false ),
-                         array( 'text' => ezi18n( 'kernel/user', 'Setting' ),
+                         array( 'text' => ezpI18n::tr( 'kernel/user', 'Setting' ),
                                 'url' => false ) );
 
 ?>

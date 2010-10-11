@@ -4,10 +4,10 @@
 //
 // Created on: <07-Jul-2003 10:06:19 wy>
 //
+// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.2.0
-// BUILD VERSION: 24182
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 4.3.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -24,6 +24,8 @@
 //   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 //   MA 02110-1301, USA.
 //
+//
+// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
 /*! \file
@@ -58,6 +60,7 @@ $fileDir = $logFileIni->variable( 'AccessLogFileSettings', 'StorageDir' );
 $fileName = $logFileIni->variable( 'AccessLogFileSettings', 'LogFileName' );
 
 $prefixes = $logFileIni->variable( 'AccessLogFileSettings', 'SitePrefix' );
+$pathPrefixes = $logFileIni->variable( 'AccessLogFileSettings', 'PathPrefix' );
 
 $ini = eZINI::instance();
 $logDir = $ini->variable( 'FileSettings', 'LogDir' );
@@ -133,7 +136,7 @@ if ( is_file( $logFilePath ) )
                         }
                     }
 
-                    if ( preg_match( "/content\/view\/full\//", $url ) )
+                    if ( strpos( $url, 'content/view/full/' ) !== false )
                     {
                         $url = str_replace( "content/view/full/", "", $url );
                         $url = str_replace( "/", "", $url );
@@ -158,8 +161,24 @@ if ( is_file( $logFilePath ) )
                             {
                                 $pathIdentificationString = $db->escapeString( $firstElement );
 
-                                //check in database, if fount, add to contentArray, else add to nonContentArray.
+                                //check in database, if found, add to contentArray, else add to nonContentArray.
                                 $result = eZURLAliasML::fetchNodeIDByPath( $pathIdentificationString );
+
+                                // Fix for sites using PathPrefix
+                                $pathPrefixIndex = 0;
+                                while ( !$result )
+                                {
+                                    if ( $pathPrefixIndex < count( $pathPrefixes ) )
+                                    {
+                                        // Try prepending each of the existing pathPrefixes, to see if one of them matches an existing node
+                                        $pathIdentificationString = $db->escapeString( $pathPrefixes[$pathPrefixIndex] . '/' . $firstElement );
+                                        $result = eZURLAliasML::fetchNodeIDByPath( $pathIdentificationString );
+                                    }
+                                    else
+                                        break;
+                                    $pathPrefixIndex++;
+                                }
+
                                 if ( $result )
                                 {
                                     $contentArray[] = $firstElement;

@@ -2,10 +2,10 @@
 //
 // Created on: <30-Apr-2003 13:40:19 bf>
 //
+// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.2.0
-// BUILD VERSION: 24182
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 4.3.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -23,6 +23,8 @@
 //   MA 02110-1301, USA.
 //
 //
+// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
+//
 
 $module = $Params['Module'];
 $mode = $Params['Mode'];
@@ -33,10 +35,10 @@ if ( $mode and $mode === 'php' )
     eZExecution::cleanExit();
 }
 
-require_once( "kernel/common/template.php" );
+
 $http = eZHTTPTool::instance();
 $ini = eZINI::instance();
-$tpl = templateInit();
+$tpl = eZTemplate::factory();
 $db = eZDB::instance();
 
 try
@@ -52,26 +54,26 @@ catch ( ezcSystemInfoReaderCantScanOSException $e )
 if ( $info instanceof ezcSystemInfo )
 {
     // Workaround until ezcTemplate is used, as properties can not be accessed directly in ezp templates.
-	$systemInfo = array(
+    $systemInfo = array(
         'cpu_type' => $info->cpuType,
         'cpu_speed' => $info->cpuSpeed,
         'cpu_count' =>$info->cpuCount,
         'memory_size' => $info->memorySize
     );
 
-	if ( $info->phpAccelerator !== null )
-	{
-	    $phpAcceleratorInfo = array(   'name' => $info->phpAccelerator->name,
-	                                   'url' => $info->phpAccelerator->url,
-	                                   'enabled' => $info->phpAccelerator->isEnabled,
-	                                   'version_integer' => $info->phpAccelerator->versionInt,
-	                                   'version_string' => $info->phpAccelerator->versionString
-	    );
-	}
-	else
-	{
-		$phpAcceleratorInfo = array();
-	}
+    if ( $info->phpAccelerator !== null )
+    {
+        $phpAcceleratorInfo = array(   'name' => $info->phpAccelerator->name,
+                                       'url' => $info->phpAccelerator->url,
+                                       'enabled' => $info->phpAccelerator->isEnabled,
+                                       'version_integer' => $info->phpAccelerator->versionInt,
+                                       'version_string' => $info->phpAccelerator->versionString
+        );
+    }
+    else
+    {
+        $phpAcceleratorInfo = array();
+    }
 }
 else
 {
@@ -127,6 +129,6 @@ $tpl->setVariable( 'php_ini', $phpINI );
 $Result = array();
 $Result['content'] = $tpl->fetch( "design:setup/info.tpl" );
 $Result['path'] = array( array( 'url' => false,
-                                'text' => ezi18n( 'kernel/setup', 'System information' ) ) );
+                                'text' => ezpI18n::tr( 'kernel/setup', 'System information' ) ) );
 
 ?>

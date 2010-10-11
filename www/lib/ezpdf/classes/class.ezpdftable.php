@@ -3,10 +3,10 @@
 //
 // Created on: <01-Sep-2003 13:23:32 kk>
 //
+// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.2.0
-// BUILD VERSION: 24182
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 4.3.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -23,6 +23,8 @@
 //   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 //   MA 02110-1301, USA.
 //
+//
+// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
 /*! \file
@@ -1180,8 +1182,7 @@ class eZPDFTable extends Cezpdf
                 $newFilename = eZSys::cacheDirectory() . '/' . md5( mt_rand() ) . '.jpg';
             }
 
-            require_once( 'kernel/common/image.php' );
-            $img = imageInit();
+            $img = eZImageManager::factory();
             $newImg = $img->convert( $filename,
                                      $newFilename,
                                      false,
@@ -1272,8 +1273,7 @@ class eZPDFTable extends Cezpdf
                 }
                 $newMimetype = eZMimeType::findByURL( $newFilename );
 
-                require_once( 'kernel/common/image.php' );
-                $img = imageInit();
+                $img = eZImageManager::factory();
                 $newImg = $img->convert( $mimetype,
                                          $newMimetype,
                                          false,
@@ -1382,7 +1382,7 @@ class eZPDFTable extends Cezpdf
         $sizes = isset( $params['size'] ) ? explode( ',', $params['size'] ) : '';
         $indents = isset( $params['indent'] ) ? explode( ',', $params['indent'] ) : '';
         $dots = isset( $params['dots'] ) ? $params['dots'] : '';
-        $contentText = isset( $params['contentText'] ) ? $params['contentText'] : ezi18n( 'lib/ezpdf/classes', 'Contents', 'Table of contents' );
+        $contentText = isset( $params['contentText'] ) ? $params['contentText'] : ezpI18n::tr( 'lib/ezpdf/classes', 'Contents', 'Table of contents' );
 
         $this->insertTOC( $sizes, $indents, $dots, $contentText );
     }
@@ -1399,7 +1399,7 @@ class eZPDFTable extends Cezpdf
     {
         $this->ezNewPage();
         $fontSize = $this->fontSize();
-        Cezpdf::ezText( ezi18n( 'lib/ezpdf/classes', 'Index', 'Keyword index name' ) . '<C:callInsertTOC:Index,1>'."\n", 26, array('justification'=>'centre'));
+        Cezpdf::ezText( ezpI18n::tr( 'lib/ezpdf/classes', 'Index', 'Keyword index name' ) . '<C:callInsertTOC:Index,1>'."\n", 26, array('justification'=>'centre'));
 
         if ( count( $this->KeywordArray ) == 0 )
             return;

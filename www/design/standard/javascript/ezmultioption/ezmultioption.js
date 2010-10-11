@@ -1,10 +1,10 @@
 //
 // Created on: <22-Jun-2007 14:18:58 sp>
 //
+// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.2.0
-// BUILD VERSION: 24182
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.x
+// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -21,6 +21,8 @@
 //   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 //   MA 02110-1301, USA.
 //
+//
+// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
 /*! \file ezmultioption.js
@@ -40,10 +42,10 @@ function getAllImageOptions()
     for ( i = 0; i < allItputEl.length; i++ )
     {
         if ( allItputEl[i].name.slice( 0, 8 ) == 'eZOption' )
-	{
-	    imageOptions[counter] = allItputEl[i];
-	    counter++;
-	}
+        {
+            imageOptions[counter] = allItputEl[i];
+            counter++;
+        }
     }
     return imageOptions;
 }
@@ -55,10 +57,10 @@ function getAllOptionSelects()
     for ( i = 0; i < allSelectEl.length; i++ )
     {
         if ( allSelectEl[i].name.slice( 0, 8 ) == 'eZOption' )
-	{
-	    selectOptions[counter] = allSelectEl[i];
-	    counter++;
-	}
+        {
+            selectOptions[counter] = allSelectEl[i];
+            counter++;
+        }
     }
     return selectOptions;
 
@@ -82,12 +84,12 @@ function validate_options( event )
     imageOptions = getAllImageOptions();
     for( var j = 0; j < imageOptions.length; j++ )
     {
-	if ( imageOptions[j].checked && imageOptions[j].disabled )
-	{
-	   optionText = document.getElementById( 'td-' + imageOptions[j].id ).childNodes[0].textContent;
+        if ( imageOptions[j].checked && imageOptions[j].disabled )
+        {
+           optionText = document.getElementById( 'td-' + imageOptions[j].id ).childNodes[0].textContent;
            alert( "Incorrect selection \""  + optionText + "\"" );
            validated = false;
-	}
+        }
     }
     return validated;
 }
@@ -143,7 +145,7 @@ function checkOptionsToEnable( rules, value, attributeID, node )
 
     for(  var i = 0; i < rules.length; i++ )
     {
-        for (  var j = 0; j < rules[i][1].	length; j++ )
+        for (  var j = 0; j < rules[i][1].      length; j++ )
         {
             moption = rules[i][1][j][0];
             if ( moptionid == moption )
@@ -238,14 +240,14 @@ function ezmultioption_check_option( node, rules, attributeID )
     var oldValue;
     if ( node.type == 'radio' )
     {
-	oldValue = OldValues[ node.name ];
+        oldValue = OldValues[ node.name ];
     }
     else
         oldValue = OldValues[ node.id ];
 
     if ( node.value == oldValue )
     {
-	return true;
+        return true;
     }
 
     if ( oldValue != null )
@@ -264,7 +266,7 @@ function ezmultioption_check_option( node, rules, attributeID )
     else
     {
         if( /MSIE [567]/.test( navigator.appVersion ) )
-	{
+        {
             disableOptions( node );
         }
         OldValues[ node.id ] = node.value;

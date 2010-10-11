@@ -4,10 +4,10 @@
 //
 // Created on: <22-Jan-2003 16:24:33 amos>
 //
+// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.2.0
-// BUILD VERSION: 24182
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 4.3.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -24,6 +24,8 @@
 //   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 //   MA 02110-1301, USA.
 //
+//
+// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
 /*! \file
@@ -156,8 +158,7 @@ class eZCollaborationItemHandler
         if ( count( $userIDList ) > 0 )
         {
             $db = eZDB::instance();
-            $userIDListText = implode( "', '", $userIDList );
-            $userIDListText = "'$userIDListText'";
+            $userIDListText = $db->generateSQLINStatement( $userIDList, 'contentobject_id', false, false, 'int' );
             $userList = $db->arrayQuery( "SELECT contentobject_id, email FROM ezuser WHERE contentobject_id IN ( $userIDListText )" );
         }
         else
@@ -170,8 +171,7 @@ class eZCollaborationItemHandler
         $db->begin();
         if ( $collectionHandling == self::NOTIFICATION_COLLECTION_ONE_FOR_ALL )
         {
-            require_once( 'kernel/common/template.php' );
-            $tpl = templateInit();
+            $tpl = eZTemplate::factory();
             $tpl->resetVariables();
             $tpl->setVariable( 'collaboration_item', $item );
             $result = $tpl->fetch( 'design:notification/handler/ezcollaboration/view/plain.tpl' );
@@ -215,8 +215,7 @@ class eZCollaborationItemHandler
                 $userCollection[$participantRole][] = $userItem;
             }
 
-            require_once( 'kernel/common/template.php' );
-            $tpl = templateInit();
+            $tpl = eZTemplate::factory();
             $tpl->resetVariables();
             foreach( $userCollection as $participantRole => $collectionItems )
             {

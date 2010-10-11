@@ -4,10 +4,10 @@
 //
 // Created on: <06-Nov-2002 15:10:02 wy>
 //
+// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.2.0
-// BUILD VERSION: 24182
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 4.3.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -24,6 +24,8 @@
 //   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 //   MA 02110-1301, USA.
 //
+//
+// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
 /*! \file
@@ -46,7 +48,6 @@ class eZXMLOutputHandler
     {
         $this->XMLData = $xmlData;
         $this->AliasedHandler = null;
-        // use of $aliasedType is deprecated as of 4.1 and setting is ignored in aliased_handler
         $this->AliasedType = $aliasedType;
 
         if ( is_object( $contentObjectAttribute ) )
@@ -100,7 +101,6 @@ class eZXMLOutputHandler
             } break;
             case 'aliased_type':
             {
-                eZDebug::writeWarning( "'aliased_type' is deprecated as of 4.1 and not in use anymore, meaning it will always return false.", __METHOD__ );
                 return $this->AliasedType;
             } break;
             case 'view_template_name':
@@ -180,7 +180,7 @@ class eZXMLOutputHandler
             return $output;
         }
 
-        $this->Tpl = templateInit();
+        $this->Tpl = eZTemplate::factory();
         $this->Res = eZTemplateDesignResource::instance();
         if ( $this->ContentObjectAttribute )
         {

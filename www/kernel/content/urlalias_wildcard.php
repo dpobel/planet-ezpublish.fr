@@ -2,10 +2,10 @@
 //
 // Created on: <14-Nov-2007 11:27:10 dl>
 //
+// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.2.0
-// BUILD VERSION: 24182
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 4.3.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -23,10 +23,12 @@
 //   MA 02110-1301, USA.
 //
 //
+// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
+//
 
 /*! \file
 */
-require_once( 'kernel/common/template.php' );
+
 
 $Module =& $Params['Module'];
 $http = eZHTTPTool::instance();
@@ -37,7 +39,7 @@ if ( $Module->hasActionParameter( 'Offset' ) )
     $Offset = $Module->actionParameter( 'Offset' );
 }
 
-$tpl = templateInit();
+$tpl = eZTemplate::factory();
 $limit = 20;
 
 $infoCode = 'no-errors'; // This will be modified if info/warning is given to user.
@@ -150,7 +152,7 @@ $viewParameters = array( 'offset' => $Offset );
 
 $path = array();
 $path[] = array( 'url'  => false,
-                 'text' => ezi18n( 'kernel/content/urlalias_wildcard', 'URL wildcard aliases' ) );
+                 'text' => ezpI18n::tr( 'kernel/content/urlalias_wildcard', 'URL wildcard aliases' ) );
 
 $tpl->setVariable( 'wildcard_list', $wildcardList );
 $tpl->setVariable( 'wildcards_limit', $wildcardsLimit );

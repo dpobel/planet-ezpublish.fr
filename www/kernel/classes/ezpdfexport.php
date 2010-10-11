@@ -4,10 +4,10 @@
 //
 // Created on: <21-Nov-2003 15:59:56 kk>
 //
+// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.2.0
-// BUILD VERSION: 24182
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 4.3.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -24,6 +24,8 @@
 //   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 //   MA 02110-1301, USA.
 //
+//
+// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
 /*! \file
@@ -60,7 +62,7 @@ class eZPDFExport extends eZPersistentObject
                                                         'required' => true ),
                                          'title' => array( 'name' => 'Title',
                                                            'datatype' => 'string',
-                                                           'default' => ezi18n( 'kernel/pdfexport', 'New PDF Export' ),
+                                                           'default' => ezpI18n::tr( 'kernel/pdfexport', 'New PDF Export' ),
                                                            'required' => true ),
                                          'show_frontpage' => array( 'name' => 'DisplayFrontpage',
                                                                        'datatype' => 'integer',
@@ -148,7 +150,7 @@ class eZPDFExport extends eZPersistentObject
         $config = eZINI::instance( 'site.ini' );
         $dateTime = time();
         $row = array( 'id' => null,
-                      'title' => ezi18n( 'kernel/pdfexport', 'New PDF Export' ),
+                      'title' => ezpI18n::tr( 'kernel/pdfexport', 'New PDF Export' ),
                       'show_frontpage' => 1,
                       'intro_text' => '',
                       'sub_text' => '',

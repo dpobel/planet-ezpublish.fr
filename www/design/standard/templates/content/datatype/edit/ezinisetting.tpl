@@ -25,24 +25,24 @@
 {* Boolean: enabled/disabled. *}
 {case match=2}
     <select id="ezcoa-{if ne( $attribute_base, 'ContentObjectAttribute' )}{$attribute_base}-{/if}{$attribute.contentclassattribute_id}_{$attribute.contentclass_attribute_identifier}" class="ezcc-{$attribute.object.content_class.identifier} ezcca-{$attribute.object.content_class.identifier}_{$attribute.contentclass_attribute_identifier}" name="{$attribute_base}_ini_setting_{$attribute.id}">
-        <option value="enabled" {section show=$attribute.data_text|eq( 'enabled' )}selected="selected"{/section}>{'Enabled'|i18n( 'design/standard/class/datatype' )}</option>
-        <option value="disabled" {section show=$attribute.data_text|eq( 'disabled' )}selected="selected"{/section}>{'Disabled'|i18n( 'design/standard/class/datatype' )}</option>
+        <option value="enabled" {if $attribute.data_text|eq( 'enabled' )}selected="selected"{/if}>{'Enabled'|i18n( 'design/standard/class/datatype' )}</option>
+        <option value="disabled" {if $attribute.data_text|eq( 'disabled' )}selected="selected"{/if}>{'Disabled'|i18n( 'design/standard/class/datatype' )}</option>
     </select>
 {/case}
 
 {* Boolean: true/false. *}
 {case match=3}
     <select id="ezcoa-{if ne( $attribute_base, 'ContentObjectAttribute' )}{$attribute_base}-{/if}{$attribute.contentclassattribute_id}_{$attribute.contentclass_attribute_identifier}" class="ezcc-{$attribute.object.content_class.identifier} ezcca-{$attribute.object.content_class.identifier}_{$attribute.contentclass_attribute_identifier}" name="{$attribute_base}_ini_setting_{$attribute.id}">
-        <option value="true" {section show=$attribute.data_text|eq( 'true' )}selected="selected"{/section}>{'True'|i18n( 'design/standard/class/datatype' )}</option>
-        <option value="false" {section show=$attribute.data_text|eq( 'false' )}selected="selected"{/section}>{'False'|i18n( 'design/standard/class/datatype' )}</option>
+        <option value="true" {if $attribute.data_text|eq( 'true' )}selected="selected"{/if}>{'True'|i18n( 'design/standard/class/datatype' )}</option>
+        <option value="false" {if $attribute.data_text|eq( 'false' )}selected="selected"{/if}>{'False'|i18n( 'design/standard/class/datatype' )}</option>
     </select>
 {/case}
 
 {* Array. *}
 {case match=6}
     <div class="block">
-        <label>{'Make empty array'|i18n( 'design/standard/class/datatype' )}:</label>
-        <input id="ezcoa-{if ne( $attribute_base, 'ContentObjectAttribute' )}{$attribute_base}-{/if}{$attribute.contentclassattribute_id}_{$attribute.contentclass_attribute_identifier}" class="ezcc-{$attribute.object.content_class.identifier} ezcca-{$attribute.object.content_class.identifier}_{$attribute.contentclass_attribute_identifier}" type="checkbox" name="{$attribute_base}_ini_setting_make_empty_array_{$attribute.id}" {$attribute.data_int|choose( '', 'checked=checked' )} />
+        <label for="ezcoa-{if ne( $attribute_base, 'ContentObjectAttribute' )}{$attribute_base}-{/if}{$attribute.contentclassattribute_id}_{$attribute.contentclass_attribute_identifier}_make_empty">{'Make empty array'|i18n( 'design/standard/class/datatype' )}:</label>
+        <input id="ezcoa-{if ne( $attribute_base, 'ContentObjectAttribute' )}{$attribute_base}-{/if}{$attribute.contentclassattribute_id}_{$attribute.contentclass_attribute_identifier}_make_empty" class="ezcc-{$attribute.object.content_class.identifier} ezcca-{$attribute.object.content_class.identifier}_{$attribute.contentclass_attribute_identifier}" type="checkbox" name="{$attribute_base}_ini_setting_make_empty_array_{$attribute.id}" {$attribute.data_int|choose( '', 'checked=checked' )} />
     </div>
     <textarea id="ezcoa-{if ne( $attribute_base, 'ContentObjectAttribute' )}{$attribute_base}-{/if}{$attribute.contentclassattribute_id}_{$attribute.contentclass_attribute_identifier}" class="box ezcc-{$attribute.object.content_class.identifier} ezcca-{$attribute.object.content_class.identifier}_{$attribute.contentclass_attribute_identifier}" name="{$attribute_base}_ini_setting_{$attribute.id}" cols="97" rows="5">{$attribute.data_text|wash}</textarea>
 {/case}

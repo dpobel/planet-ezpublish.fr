@@ -9,15 +9,28 @@
 {* DESIGN: Header START *}<div class="box-header"><div class="box-tc"><div class="box-ml"><div class="box-mr"><div class="box-tl"><div class="box-tr">
 
 {let hide_status=""}
-{section show=$node.is_invisible}
+{if $node.is_invisible}
 {set hide_status=concat( '(', $node.hidden_status_string, ')' )}
-{/section}
+{/if}
 
 
 {def $js_class_languages = $node.object.content_class.prioritized_languages_js_array
-     $disable_another_language = cond( eq( 0, count( $node.object.content_class.can_create_languages ) ),"'edit-class-another-language'", '-1' ) }
+     $disable_another_language = cond( eq( 0, count( $node.object.content_class.can_create_languages ) ),"'edit-class-another-language'", '-1' )
+     $disabled_sub_menu = "['class-createnodefeed', 'class-removenodefeed']"}
 
-<h1 class="context-title"><a href={concat( '/class/view/', $node.object.contentclass_id )|ezurl} onclick="ezpopmenu_showTopLevel( event, 'ClassMenu', ez_createAArray( new Array( '%classID%', {$node.object.contentclass_id}, '%objectID%', {$node.contentobject_id}, '%nodeID%', {$node.node_id}, '%currentURL%', '{$node.url|wash( javascript )}', '%languages%', {$js_class_languages} ) ), '{$node.class_name|wash(javascript)}', -1, {$disable_another_language} ); return false;">{$node.class_identifier|class_icon( normal, $node.class_name )}</a>&nbsp;{$node.name|wash}&nbsp;[{$node.class_name|wash}]&nbsp;{$hide_status}</h1>
+{* Check if user has rights and if there are any RSS/ATOM Feed exports for current node *}
+{if is_set( ezini( 'RSSSettings', 'DefaultFeedItemClasses', 'site.ini' )[ $node.class_identifier ] )}
+    {def $create_rss_access = fetch( 'user', 'has_access_to', hash( 'module', 'rss', 'function', 'edit' ) )}
+    {if $create_rss_access}
+        {if fetch( 'rss', 'has_export_by_node', hash( 'node_id', $node.node_id ) )}
+            {set $disabled_sub_menu = "'class-createnodefeed'"}
+        {else}
+            {set $disabled_sub_menu = "'class-removenodefeed'"}
+        {/if}
+    {/if}
+{/if}
+
+<h1 class="context-title"><a href={concat( '/class/view/', $node.object.contentclass_id )|ezurl} onclick="ezpopmenu_showTopLevel( event, 'ClassMenu', ez_createAArray( new Array( '%classID%', {$node.object.contentclass_id}, '%objectID%', {$node.contentobject_id}, '%nodeID%', {$node.node_id}, '%currentURL%', '{$node.url|wash( javascript )}', '%languages%', {$js_class_languages} ) ), '{$node.class_name|wash(javascript)}', {$disabled_sub_menu}, {$disable_another_language} ); return false;">{$node.class_identifier|class_icon( normal, $node.class_name )}</a>&nbsp;{$node.name|wash}&nbsp;[{$node.class_name|wash}]&nbsp;{$hide_status}</h1>
 
 {undef $js_class_languages $disable_another_language}
 
@@ -37,7 +50,7 @@
 </div>
 
 {* Content preview in content window. *}
-{section show=ezpreference( 'admin_navigation_content'  )}
+{if ezpreference( 'admin_navigation_content'  )}
 <div class="mainobject-window" title="{$node.name|wash} {'Node ID'|i18n( 'design/admin/node/view/full' )}: {$node.node_id}, {'Object ID'|i18n( 'design/admin/node/view/full' )}: {$node.object.id}">
 <div class="fixedsize">{* Fix for overflow bug in Opera *}
 <div class="holdinplace">{* Fix for some width bugs in IE *}
@@ -46,7 +59,7 @@
 </div>
 <div class="break"></div>{* Terminate overflow bug fix *}
 </div>
-{/section}
+{/if}
 
 </div></div>
 
@@ -57,7 +70,7 @@
 
 <input type="hidden" name="TopLevelNode" value="{$node.object.main_node_id}" />
 <input type="hidden" name="ContentNodeID" value="{$node.node_id}" />
-<input type="hidden" name="ContentObjectID" value="{$node.object.id}" />
+<input type="hidden" name="ContentObjectID" value="{$node.contentobject_id}" />
 
 <div class="block">
 
@@ -65,7 +78,7 @@
 {* Edit button. *}
 {def $can_create_languages = $node.object.can_create_languages
      $languages            = fetch( 'content', 'prioritized_languages' )}
-{section show=$node.can_edit}
+{if $node.can_edit}
     {if and(eq( $languages|count, 1 ), is_set( $languages[0] ) )}
             <input name="ContentObjectLanguageCode" value="{$languages[0].locale}" type="hidden" />
     {else}
@@ -79,34 +92,38 @@
             </select>
     {/if}
     <input class="button" type="submit" name="EditButton" value="{'Edit'|i18n( 'design/admin/node/view/full' )}" title="{'Edit the contents of this item.'|i18n( 'design/admin/node/view/full' )}" />
-{section-else}
+{else}
     <select name="ContentObjectLanguageCode" disabled="disabled">
         <option value="">{'Not available'|i18n( 'design/admin/node/view/full')}</option>
     </select>
     <input class="button-disabled" type="submit" name="EditButton" value="{'Edit'|i18n( 'design/admin/node/view/full' )}" title="{'You do not have permission to edit this item.'|i18n( 'design/admin/node/view/full' )}" disabled="disabled" />
-{/section}
+{/if}
 {undef $can_create_languages}
 
 {* Move button. *}
-{section show=$node.can_move}
+{if $node.can_move}
     <input class="button" type="submit" name="MoveNodeButton" value="{'Move'|i18n( 'design/admin/node/view/full' )}" title="{'Move this item to another location.'|i18n( 'design/admin/node/view/full' )}" />
-{section-else}
+{else}
     <input class="button-disabled" type="submit" name="MoveNodeButton" value="{'Move'|i18n( 'design/admin/node/view/full' )}" title="{'You do not have permission to move this item to another location.'|i18n( 'design/admin/node/view/full' )}" disabled="disabled" />
-{/section}
+{/if}
 
 {* Remove button. *}
-{section show=$node.can_remove}
+{if $node.can_remove}
     <input class="button" type="submit" name="ActionRemove" value="{'Remove'|i18n( 'design/admin/node/view/full' )}" title="{'Remove this item.'|i18n( 'design/admin/node/view/full' )}" />
-{section-else}
+{else}
     <input class="button-disabled" type="submit" name="ActionRemove" value="{'Remove'|i18n( 'design/admin/node/view/full' )}" title="{'You do not have permission to remove this item.'|i18n( 'design/admin/node/view/full' )}" disabled="disabled" />
-{/section}
+{/if}
 </div>
 
-{* Custom content action buttons. *}
 <div class="right">
-{section var=ContentActions loop=$node.object.content_action_list}
-    <input class="button" type="submit" name="{$ContentActions.item.action}" value="{$ContentActions.item.name}" />
-{/section}
+
+        {* Link to manage versions *}
+        <a href={concat("content/history/", $node.contentobject_id )|ezurl} title="{'View and manage (copy, delete, etc.) the versions of this object.'|i18n( 'design/admin/content/edit' )}">{'Manage versions'|i18n( 'design/admin/content/edit' )}</a>
+        
+        {* Custom content action buttons. *}
+        {section var=ContentActions loop=$node.object.content_action_list}
+            <input class="button" type="submit" name="{$ContentActions.item.action}" value="{$ContentActions.item.name}" />
+        {/section}
 </div>
 
 {* The preview button has been commented out. Might be absent until better preview functionality is implemented. *}

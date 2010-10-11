@@ -4,10 +4,10 @@
 //
 // Created on: <29-Jul-2004 15:52:24 gv>
 //
+// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.2.0
-// BUILD VERSION: 24182
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 4.3.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -24,6 +24,8 @@
 //   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 //   MA 02110-1301, USA.
 //
+//
+// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
 /*!
@@ -73,9 +75,9 @@
              ----------------------
              |                 |\/|
              ----------------------
-             | Model - A £ 100.00 |
-             | Model - B £ 200.00 |
-             | Model - C £ 300.00 |
+             | Model - A ï¿½ 100.00 |
+             | Model - B ï¿½ 200.00 |
+             | Model - C ï¿½ 300.00 |
              ----------------------
 
              Color

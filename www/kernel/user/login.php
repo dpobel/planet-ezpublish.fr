@@ -2,10 +2,10 @@
 //
 // Created on: <02-May-2002 16:24:15 bf>
 //
+// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.2.0
-// BUILD VERSION: 24182
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 4.3.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -23,8 +23,10 @@
 //   MA 02110-1301, USA.
 //
 //
+// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
+//
 
-require_once( 'kernel/common/template.php' );
+
 //$Module->setExitStatus( EZ_MODULE_STATUS_SHOW_LOGIN_PAGE );
 
 $Module = $Params['Module'];
@@ -304,7 +306,7 @@ if ( $loginWarning and isset( $GLOBALS['eZFailedLoginAttemptUserID'] ) )
         $userIsNotAllowedToLogin = true;
 }
 
-$tpl = templateInit();
+$tpl = eZTemplate::factory();
 
 $tpl->setVariable( 'login', $userLogin, 'User' );
 $tpl->setVariable( 'post_data', $postData, 'User' );
@@ -321,9 +323,9 @@ $tpl->setVariable( 'max_num_of_failed_login', $maxNumOfFailedLogin, 'User' );
 
 $Result = array();
 $Result['content'] = $tpl->fetch( 'design:user/login.tpl' );
-$Result['path'] = array( array( 'text' => ezi18n( 'kernel/user', 'User' ),
+$Result['path'] = array( array( 'text' => ezpI18n::tr( 'kernel/user', 'User' ),
                                 'url' => false ),
-                         array( 'text' => ezi18n( 'kernel/user', 'Login' ),
+                         array( 'text' => ezpI18n::tr( 'kernel/user', 'Login' ),
                                 'url' => false ) );
 if ( $ini->variable( 'SiteSettings', 'LoginPage' ) == 'custom' )
     $Result['pagelayout'] = 'loginpagelayout.tpl';

@@ -4,7 +4,7 @@
 {* Current file. *}
 <div class="block">
 <label>{'Current file'|i18n( 'design/standard/content/datatype' )}:</label>
-{section show=$attribute.content}
+{if $attribute.content}
 <table class="list" cellspacing="0">
 <tr>
 <th>{'Filename'|i18n( 'design/standard/content/datatype' )}</th>
@@ -17,20 +17,20 @@
 <td>{$attribute.content.filesize|si( byte )}</td>
 </tr>
 </table>
-{section-else}
+{else}
 <p>{'There is no file.'|i18n( 'design/standard/content/datatype' )}</p>
-{/section}
+{/if}
 
-{section show=$attribute.content}
+{if $attribute.content}
 <input class="button" type="submit" name="CustomActionButton[{$attribute.id}_delete_binary]" value="{'Remove'|i18n( 'design/standard/content/datatype' )}" title="{'Remove the file from this draft.'|i18n( 'design/standard/content/datatype' )}" />
-{section-else}
+{else}
 <input class="button-disabled" type="submit" name="CustomActionButton[{$attribute.id}_delete_binary]" value="{'Remove'|i18n( 'design/standard/content/datatype' )}" disabled="disabled" />
-{/section}
+{/if}
 </div>
 
 {* New file. *}
 <div class="block">
-<label>{'New file for upload'|i18n( 'design/standard/content/datatype' )}:</label>
+<label for="ezcoa-{if ne( $attribute_base, 'ContentObjectAttribute' )}{$attribute_base}-{/if}{$attribute.contentclassattribute_id}_{$attribute.contentclass_attribute_identifier}">{'New file for upload'|i18n( 'design/standard/content/datatype' )}:</label>
 <input type="hidden" name="MAX_FILE_SIZE" value="{$attribute.contentclass_attribute.data_int1}000000"/>
 <input id="ezcoa-{if ne( $attribute_base, 'ContentObjectAttribute' )}{$attribute_base}-{/if}{$attribute.contentclassattribute_id}_{$attribute.contentclass_attribute_identifier}" class="box ezcc-{$attribute.object.content_class.identifier} ezcca-{$attribute.object.content_class.identifier}_{$attribute.contentclass_attribute_identifier}" name="{$attribute_base}_data_binaryfilename_{$attribute.id}" type="file" />
 </div>

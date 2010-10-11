@@ -2,10 +2,10 @@
 //
 // Created on: <16-Apr-2002 12:37:51 amos>
 //
+// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.2.0
-// BUILD VERSION: 24182
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 4.3.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -23,48 +23,19 @@
 //   MA 02110-1301, USA.
 //
 //
+// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
+//
 
-
+/**
+ * Function to get template instance, load autoloads (operators) and set default settings.
+ *
+ * @deprecated Deprecated as of 4.3, use {@see eZTemplate::factory()} instead
+ * @param string $name (Not supported as it was prevoisly set on same instance anyway)
+ * @return eZTemplate
+ */
 function templateInit( $name = false )
 {
-    if ( $name === false &&
-         isset( $GLOBALS['eZPublishTemplate'] ) )
-    {
-        return $GLOBALS['eZPublishTemplate'];
-    }
-    if ( isset( $GLOBALS["eZPublishTemplate_$name"] ) )
-    {
-        return $GLOBALS["eZPublishTemplate_$name"];
-    }
-    $tpl = eZTemplate::instance();
-
-    $ini = eZINI::instance();
-    if ( $ini->variable( 'TemplateSettings', 'Debug' ) == 'enabled' )
-        eZTemplate::setIsDebugEnabled( true );
-
-    $compatAutoLoadPath = $ini->variableArray( 'TemplateSettings', 'AutoloadPath' );
-    $autoLoadPathList = $ini->variable( 'TemplateSettings', 'AutoloadPathList' );
-
-    $extensionAutoloadPath = $ini->variable( 'TemplateSettings', 'ExtensionAutoloadPath' );
-    $extensionPathList = eZExtension::expandedPathList( $extensionAutoloadPath, 'autoloads' );
-
-    $autoLoadPathList = array_unique( array_merge( $compatAutoLoadPath, $autoLoadPathList, $extensionPathList ) );
-
-    $tpl->setAutoloadPathList( $autoLoadPathList );
-    $tpl->autoload();
-
-    $tpl->registerResource( eZTemplateDesignResource::instance() );
-
-    if ( $name === false )
-    {
-        $GLOBALS['eZPublishTemplate'] = $tpl;
-    }
-    else
-    {
-        $GLOBALS["eZPublishTemplate_$name"] = $tpl;
-    }
-
-    return $tpl;
+    return eZTemplate::factory();
 }
 
 

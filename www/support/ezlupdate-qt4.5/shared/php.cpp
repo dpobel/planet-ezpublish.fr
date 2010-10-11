@@ -10,7 +10,7 @@
 // ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
 // SOFTWARE RELEASE: 4.1.x
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -125,6 +125,10 @@ static uint getToken()
                         return Tok_i18n;
                     else if ( strcmp(yyIdent + 1, "zx18n") == 0 )
                         return Tok_x18n;
+                    break;
+                case 't':
+                    if ( strcmp(yyIdent + 1, "r") == 0 )
+                        return Tok_i18n;
                     break;
             }
             return Tok_Ident;

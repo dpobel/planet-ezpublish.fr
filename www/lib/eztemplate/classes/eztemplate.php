@@ -4,10 +4,10 @@
 //
 // Created on: <01-Mar-2002 13:49:57 amos>
 //
+// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.2.0
-// BUILD VERSION: 24182
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 4.3.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -24,6 +24,8 @@
 //   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 //   MA 02110-1301, USA.
 //
+//
+// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
 /*! \file
@@ -349,8 +351,8 @@ class eZTemplate
         $ini = eZINI::instance( 'template.ini' );
         if ( $ini->hasVariable( 'ControlSettings', 'MaxLevel' ) )
              $this->MaxLevel = $ini->variable( 'ControlSettings', 'MaxLevel' );
-        require_once('kernel/common/i18n.php');
-        $this->MaxLevelWarning = ezi18n( 'lib/template',
+
+        $this->MaxLevelWarning = ezpI18n::tr( 'lib/template',
                                          'The maximum nesting level of %max has been reached. The execution is stopped to avoid infinite recursion.',
                                          '',
                                          array( '%max' => $this->MaxLevel ) );
@@ -2138,7 +2140,7 @@ class eZTemplate
                 {
                     eZAppendWarningItem( array( 'error' => array( 'type' => 'template',
                                                                   'number' => eZTemplate::FILE_ERRORS ),
-                                                'text' => ezi18n( 'lib/eztemplate', 'Some template errors occurred, see debug for more information.' ) ) );
+                                                'text' => ezpI18n::tr( 'lib/eztemplate', 'Some template errors occurred, see debug for more information.' ) ) );
                     $hasAppendWarning = true;
                 }
             }
@@ -2324,20 +2326,71 @@ class eZTemplate
      *
      * @return eZTemplate
      */
-    static function instance()
+    public static function instance()
     {
-        if ( !isset( $GLOBALS['eZTemplateInstance'] ) )
+        if ( self::$instance === null )
         {
-            $GLOBALS['eZTemplateInstance'] = new eZTemplate();
+            self::$instance = new eZTemplate();
         }
-
-        return $GLOBALS['eZTemplateInstance'];
+        return self::$instance;
     }
 
-    /*!
-     Returns the INI object for the template.ini file.
-    */
-    function ini()
+    /**
+     * Returns a shared instance of the eZTemplate class with
+     * default settings applied, like:
+     * - Autoload operators loaded
+     * - Debug mode set
+     * - eZTemplateDesignResource::instance registered
+     *
+     * @since 4.3
+     * @return eZTemplate
+     */
+    public static function factory()
+    {
+        if ( self::$factory === false )
+        {
+            // Make sure self::$instance is set
+            self::instance();
+
+            $ini = eZINI::instance();
+            if ( $ini->variable( 'TemplateSettings', 'Debug' ) == 'enabled' )
+                eZTemplate::setIsDebugEnabled( true );
+
+            $compatAutoLoadPath = $ini->variableArray( 'TemplateSettings', 'AutoloadPath' );
+            $autoLoadPathList = $ini->variable( 'TemplateSettings', 'AutoloadPathList' );
+
+            $extensionAutoloadPath = $ini->variable( 'TemplateSettings', 'ExtensionAutoloadPath' );
+            $extensionPathList = eZExtension::expandedPathList( $extensionAutoloadPath, 'autoloads' );
+
+            $autoLoadPathList = array_unique( array_merge( $compatAutoLoadPath, $autoLoadPathList, $extensionPathList ) );
+
+            self::$instance->setAutoloadPathList( $autoLoadPathList );
+            self::$instance->autoload();
+
+            self::$instance->registerResource( eZTemplateDesignResource::instance() );
+            self::$factory = true;
+        }
+        return self::instance();
+    }
+
+    /**
+     * Reset shared instance of the eZTemplate class and factory flag
+     * as used by {@see eZTemplate::instance()} and {@see eZTemplate::factory()}
+     *
+     * @since 4.3
+     */
+    public static function resetInstance()
+    {
+        self::$instance = null;
+        self::$factory  = false;
+    }
+
+    /**
+     * Returns the eZINI object instance for the template.ini file.
+     *
+     * @return eZINI
+     */
+    public function ini()
     {
         return eZINI::instance( "template.ini" );
     }
@@ -2610,6 +2663,22 @@ class eZTemplate
 
     // Flag for setting compilation in test mode
     public $TestCompile;
+
+    /**
+     * Singelton instance of eZTemplate used by {@see eZTemplate::instance()}
+     * Reset with {@see eZTemplate::resetInstance()}
+     *
+     * @var null|eZTemplate
+     */
+    protected static $instance;
+
+    /**
+     * Factory flag as used by {@see eZTemplate::factory()}
+     * Reset with {@see eZTemplate::resetInstance()}
+     *
+     * @var bool
+     */
+    protected static $factory = false;
 
 //     public $CurrentRelatedResource;
 //     public $CurrentRelatedTemplateName;

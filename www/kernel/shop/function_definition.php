@@ -1,11 +1,11 @@
 <?php
 //
-// Created on: <06-æÅ×-2003 10:28:49 sp>
+// Created on: <06-feb-2003 10:28:49 sp>
 //
+// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.2.0
-// BUILD VERSION: 24182
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 4.3.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -22,6 +22,8 @@
 //   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 //   MA 02110-1301, USA.
 //
+//
+// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
 /*! \file
@@ -108,6 +110,22 @@ $FunctionList['wish_list_count'] = array( 'name' => 'wish_list_count',
                                           'parameters' => array( array( 'name' => 'production_id',
                                                                         'type' => 'integer',
                                                                         'required' => true ) ) );
+
+$FunctionList['current_wish_list'] = array( 'name' => 'current_wish_list',
+                                            'operation_types' => array( 'read' ),
+                                            'call_method' => array( 'class' => 'eZShopFunctionCollection',
+                                                                    'method' => 'fetchCurrentWishList' ),
+                                            'parameter_type' => 'standard',
+                                            'parameters' => array() );
+
+$FunctionList['order'] = array( 'name' => 'order',
+                                'operation_types' => array( 'read' ),
+                                'call_method' => array( 'class' => 'eZShopFunctionCollection',
+                                                        'method' => 'fetchOrder' ),
+                                'parameter_type' => 'standard',
+                                'parameters' => array( array( 'name' => 'order_id',
+                                                              'type' => 'integer',
+                                                              'required' => true ) ) );
 $FunctionList['order_status_history_count'] = array( 'name' => 'order_status_history_count',
                                                      'operation_types' => array( 'read' ),
                                                      'call_method' => array( 'class' => 'eZShopFunctionCollection',

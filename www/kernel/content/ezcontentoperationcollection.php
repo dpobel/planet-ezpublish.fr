@@ -4,10 +4,10 @@
 //
 // Created on: <01-Nov-2002 13:51:17 amos>
 //
+// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.2.0
-// BUILD VERSION: 24182
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 4.3.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -24,6 +24,8 @@
 //   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 //   MA 02110-1301, USA.
 //
+//
+// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
 /*! \file
@@ -318,7 +320,7 @@ class eZContentOperationCollection
             {
                 if ( $fromNodeID == 0 || $fromNodeID == -1 )
                 {
-                    eZDebug::writeError( "NodeAssignment '", $nodeAssignment->attribute( 'id' ), "' is marked with op_code='$opCode' but has no data in from_node_id. Cannot use it for moving node." );
+                    eZDebug::writeError( "NodeAssignment '" . $nodeAssignment->attribute( 'id' ) . "' is marked with op_code='$opCode' but has no data in from_node_id. Cannot use it for moving node.", __METHOD__ );
                 }
                 else
                 {
@@ -709,7 +711,7 @@ class eZContentOperationCollection
        if( !eZContentObjectTreeNodeOperations::move( $nodeID, $newParentNodeID ) )
        {
            eZDebug::writeError( "Failed to move node $nodeID as child of parent node $newParentNodeID",
-                                'content/action' );
+                                __METHOD__ );
 
            return array( 'status' => false );
        }
@@ -811,6 +813,8 @@ class eZContentOperationCollection
     /**
      * Removes a nodeAssignment or a list of nodeAssigments
      *
+     * @deprecated
+     *
      * @param int $nodeID
      * @param int $objectID
      * @param array $removeList
@@ -882,6 +886,86 @@ class eZContentOperationCollection
         if ( in_array( $object->attribute( 'contentclass_id' ), $userClassIDArray ) )
         {
             eZUser::cleanupCache();
+        }
+
+        // we don't clear template block cache here since it's cleared in eZContentObjectTreeNode::removeNode()
+
+        return array( 'status' => true );
+    }
+
+    /**
+     * Removes nodes
+     *
+     * This function does not check about permissions, this is the responsibility of the caller!
+     *
+     * @param array $removeNodeIdList Array of Node ID to remove
+     *
+     * @return array An array with operation status, always true
+     */
+    static public function removeNodes( array $removeNodeIdList )
+    {
+        $mainNodeChanged      = array();
+        $nodeAssignmentIdList = array();
+        $objectIdList         = array();
+
+        $db = eZDB::instance();
+        $db->begin();
+
+        foreach ( $removeNodeIdList as $nodeId )
+        {
+            $node     = eZContentObjectTreeNode::fetch($nodeId);
+            $objectId = $node->attribute( 'contentobject_id' );
+            foreach ( eZNodeAssignment::fetchForObject( $objectId,
+                                                        eZContentObject::fetch( $objectId )->attribute( 'current_version' ),
+                                                        0, false ) as $nodeAssignmentKey => $nodeAssignment )
+            {
+                if ( $nodeAssignment['parent_node'] == $node->attribute( 'parent_node_id' ) )
+                {
+                    $nodeAssignmentIdList[$nodeAssignment['id']] = 1;
+                }
+            }
+
+            if ( $nodeId == $node->attribute( 'main_node_id' ) )
+                $mainNodeChanged[$objectId] = 1;
+            $node->removeThis();
+
+            if ( !isset( $objectIdList[$objectId] ) )
+                $objectIdList[$objectId] = eZContentObject::fetch( $objectId );
+        }
+
+        // Give other search engines that the default one a chance to reindex
+        // when removing locations.
+        if ( !eZSearch::getEngine() instanceof eZSearchEngine )
+        {
+            foreach ( $objectIdList as $objectId => $object )
+                eZContentOperationCollection::registerSearchObject( $objectId, $object->attribute( 'current_version' ) );
+        }
+
+        eZNodeAssignment::purgeByID( array_keys( $nodeAssignmentIdList ) );
+
+        foreach ( array_keys( $mainNodeChanged ) as $objectId )
+        {
+            $allNodes = $objectIdList[$objectId]->assignedNodes();
+            // Registering node that will be promoted as 'main'
+            $mainNodeChanged[$objectId] = $allNodes[0];
+            eZContentObjectTreeNode::updateMainNodeID( $allNodes[0]->attribute( 'node_id' ), $objectId, false, $allNodes[0]->attribute( 'parent_node_id' ) );
+        }
+
+        $db->commit();
+
+        //call appropriate method from search engine
+        eZSearchEngine::removeNodes( $removeNodeIdList );
+
+        $userClassIdList = eZUser::contentClassIDs();
+        foreach ( $objectIdList as $objectId => $object )
+        {
+            eZContentCacheManager::clearObjectViewCacheIfNeeded( $objectId );
+
+            // clear user policy cache if this was a user object
+            if ( in_array( $object->attribute( 'contentclass_id' ), $userClassIdList ) )
+            {
+                eZUser::cleanupCache();
+            }
         }
 
         // we don't clear template block cache here since it's cleared in eZContentObjectTreeNode::removeNode()
@@ -1227,7 +1311,7 @@ class eZContentOperationCollection
             if ( !$object->removeTranslation( $languageID ) )
             {
                 eZDebug::writeError( "Object with id $objectID: cannot remove the translation with language id $languageID!",
-                                     'content/translation' );
+                                     __METHOD__ );
             }
         }
 
@@ -1283,6 +1367,127 @@ class eZContentOperationCollection
     static public function executePrePublishTrigger( $objectID, $version )
     {
 
+    }
+
+    /**
+    * Creates a RSS/ATOM Feed export for a node
+    *
+    * @param int $nodeID Node ID
+    *
+    * @since 4.3
+    **/
+    static public function createFeedForNode( $nodeID )
+    {
+        $hasExport = eZRSSFunctionCollection::hasExportByNode( $nodeID );
+        if ( isset( $hasExport['result'] ) && $hasExport['result'] )
+        {
+            eZDebug::writeError( 'There is already a rss/atom export feed for this node: ' . $nodeID, __METHOD__ );
+            return array( 'status' => false );
+        }
+
+        $node = eZContentObjectTreeNode::fetch( $nodeID );
+        $currentClassIdentifier = $node->attribute( 'class_identifier' );
+
+        $config = eZINI::instance( 'site.ini' );
+        $feedItemClasses = $config->variable( 'RSSSettings', 'DefaultFeedItemClasses' );
+
+        if ( !$feedItemClasses || !isset( $feedItemClasses[ $currentClassIdentifier ] ) )
+        {
+            eZDebug::writeError( "EnableRSS: content class $currentClassIdentifier is not defined in site.ini[RSSSettings]DefaultFeedItemClasses[<class_id>].", __METHOD__ );
+            return array( 'status' => false );
+        }
+
+        $object = $node->object();
+        $objectID = $object->attribute('id');
+        $currentUserID = eZUser::currentUserID();
+        $rssExportItems = array();
+
+        $db = eZDB::instance();
+        $db->begin();
+
+        $rssExport = eZRSSExport::create( $currentUserID );
+        $rssExport->setAttribute( 'access_url', 'rss_feed_' . $nodeID );
+        $rssExport->setAttribute( 'node_id', $nodeID );
+        $rssExport->setAttribute( 'main_node_only', '1' );
+        $rssExport->setAttribute( 'number_of_objects', $config->variable( 'RSSSettings', 'NumberOfObjectsDefault' ) );
+        $rssExport->setAttribute( 'rss_version', $config->variable( 'RSSSettings', 'DefaultVersion' ) );
+        $rssExport->setAttribute( 'status', eZRSSExport::STATUS_VALID );
+        $rssExport->setAttribute( 'title', $object->name() );
+        $rssExport->store();
+
+        $rssExportID = $rssExport->attribute( 'id' );
+
+        foreach( explode( ';', $feedItemClasses[$currentClassIdentifier] ) as $classIdentifier )
+        {
+            $iniSection = 'RSSSettings_' . $classIdentifier;
+            if ( $config->hasVariable( $iniSection, 'FeedObjectAttributeMap' ) )
+            {
+                $feedObjectAttributeMap = $config->variable( $iniSection, 'FeedObjectAttributeMap' );
+                $subNodesMap = $config->hasVariable( $iniSection, 'Subnodes' ) ? $config->variable( $iniSection, 'Subnodes' ) : array();
+    
+                $rssExportItem = eZRSSExportItem::create( $rssExportID );
+                $rssExportItem->setAttribute( 'class_id', eZContentObjectTreeNode::classIDByIdentifier( $classIdentifier ) );
+                $rssExportItem->setAttribute( 'title', $feedObjectAttributeMap['title'] );
+                if ( isset( $feedObjectAttributeMap['description'] ) )
+                    $rssExportItem->setAttribute( 'description', $feedObjectAttributeMap['description'] );
+        
+                if ( isset( $feedObjectAttributeMap['category'] ) )
+                    $rssExportItem->setAttribute( 'category', $feedObjectAttributeMap['category'] );
+
+                if ( isset( $feedObjectAttributeMap['enclosure'] ) )
+                    $rssExportItem->setAttribute( 'enclosure', $feedObjectAttributeMap['enclosure'] );
+
+                $rssExportItem->setAttribute( 'source_node_id', $nodeID );
+                $rssExportItem->setAttribute( 'status', eZRSSExport::STATUS_VALID );
+                $rssExportItem->setAttribute( 'subnodes', isset( $subNodesMap[$currentClassIdentifier] ) && $subNodesMap[$currentClassIdentifier] === 'true' );
+                $rssExportItem->store();
+            }
+            else
+            {
+                eZDebug::writeError( "site.ini[$iniSection]Source[] setting is not defined.", __METHOD__ );
+            }
+        }
+
+        $db->commit();
+        
+        eZContentCacheManager::clearContentCacheIfNeeded( $objectID );
+
+        return array( 'status' => true );
+    }
+
+    /**
+    * Removes a RSS/ATOM Feed export for a node
+    *
+    * @param int $nodeID Node ID
+    *
+    * @since 4.3
+    **/
+    static public function removeFeedForNode( $nodeID )
+    {
+        $rssExport = eZPersistentObject::fetchObject( eZRSSExport::definition(),
+                                                null,
+                                                array( 'node_id' => $nodeID,
+                                                       'status' => eZRSSExport::STATUS_VALID ),
+                                                true );
+        if ( !$rssExport instanceof eZRSSExport )
+        {
+            eZDebug::writeError( 'DisableRSS: There is no rss/atom feeds left to delete for this node: '. $nodeID, __METHOD__ );
+            return array( 'status' => false );
+        }
+
+        $node = eZContentObjectTreeNode::fetch( $nodeID );
+        if ( !$node instanceof eZContentObjectTreeNode )
+        {
+            eZDebug::writeError( 'DisableRSS: Could not fetch node: '. $nodeID, __METHOD__ );
+            return array( 'status' => false );
+        }
+
+        $objectID = $node->attribute('contentobject_id');
+        $rssExport->removeThis();
+
+        eZContentCacheManager::clearContentCacheIfNeeded( $objectID );
+
+        return array( 'status' => true );
     }
 }
 ?>

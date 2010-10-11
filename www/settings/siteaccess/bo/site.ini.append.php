@@ -12,7 +12,8 @@ RelatedSiteAccessList[]=bo
 ShowHiddenNodes=true
 
 [DesignSettings]
-SiteDesign=admin
+SiteDesign=admin2
+AdditionalSiteDesignList[]=admin
 
 [RegionalSettings]
 Locale=fre-FR

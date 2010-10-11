@@ -1,4 +1,13 @@
-<!DOCTYPE TS><TS>
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE TS>
+<TS version="2.0">
+<context>
+    <name></name>
+    <message>
+        <source>Max file size</source>
+        <translation type="obsolete">最大檔案容量</translation>
+    </message>
+</context>
 <context>
     <name>contentstructuremenu/show_content_structure</name>
     <message>
@@ -116,8 +125,20 @@
         <translation>在 &lt;%class_group_name&gt; 內建立新的類別。</translation>
     </message>
     <message>
+        <source>Use this menu to select the language you wish use for the creation and click the &quot;New class&quot; button. The item will be created within the current location.</source>
+        <translation type="obsolete">請選取語言，並按一下「新增類別」按鈕。</translation>
+    </message>
+    <message>
         <source>Use this menu to select the language you to want use then click the &quot;New class&quot; button. The item will be created within the current location.</source>
         <translation type="unfinished">請選取語言，並按一下「新增類別」按鈕。</translation>
+    </message>
+    <message>
+        <source>Classes inside &lt;%group_name&gt; (%class_count)</source>
+        <translation>類別 &lt;%group_name&gt; (%class_count)</translation>
+    </message>
+    <message>
+        <source>List of classes inside %group_name class group (%class_count)</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -125,6 +146,10 @@
     <message>
         <source>Choose node for default selection</source>
         <translation>請選取節點的預定值</translation>
+    </message>
+    <message>
+        <source>Select the item that you want to be the default selection and click &quot;OK&quot;.</source>
+        <translation type="obsolete">請選取用於預設選擇的選項,  並按一下「確認」按鈕。</translation>
     </message>
     <message>
         <source>Navigate using the available tabs (above), the tree menu (left) and the content list (middle).</source>
@@ -140,6 +165,10 @@
     <message>
         <source>Choose initial location</source>
         <translation>請選取初始位置</translation>
+    </message>
+    <message>
+        <source>Select the location that should be the default location and click &quot;OK&quot;.</source>
+        <translation type="obsolete">請選取位置的預定值, 並按一下「確認」按鈕。</translation>
     </message>
     <message>
         <source>Navigate using the available tabs (above), the tree menu (left) and the content list (middle).</source>
@@ -241,6 +270,22 @@
         <translation>請使用此欄位設定類別的別名名稱 (可以包含空白和特殊字元)。</translation>
     </message>
     <message>
+        <source>Use this field to set the internal name of the class. The identifier will be used in templates and in PHP code. Allowed characters: letters, numbers and underscore.</source>
+        <translation type="obsolete">請輸入類別的內部名稱 (此內部名稱將會用於範本和 PHP 程式碼之中, 所允許的字元包括: 字母、數字和底線)。</translation>
+    </message>
+    <message>
+        <source>Use this field to configure how the name of the objects are generated (also applies to nice URLs). Type in the identifiers of the attributes that should be used. The identifiers must be enclosed in angle brackets. Text outside angle brackets will be included as is.</source>
+        <translation type="obsolete">請輸入屬性識別碼, 以配置產生物件名稱的方式 (將套用到網址上)。識別碼必須被夾於角括號內, 角括號之外的文字將會以原來樣式被包含。</translation>
+    </message>
+    <message>
+        <source>Use this checkbox to allow instances of the class to have sub items. If checked, it will be possible to create new sub-items. If not checked, the sub items will not be displayed.</source>
+        <translation type="obsolete">是否允許類別具有子項目, 如果勾選，允許子項目, 否則, 不顯示子項目。</translation>
+    </message>
+    <message>
+        <source>Select attribute for removal. Click the &quot;Remove selected attributes&quot; button to actually remove the selected attributes.</source>
+        <translation type="obsolete">請選取要刪除的屬性, 並按一下「刪除所選的屬性」按鈕確認刪除。</translation>
+    </message>
+    <message>
         <source>Use the order buttons to set the order of the class attributes. The up arrow moves the attribute one place up. The down arrow moves the attribute one place down.</source>
         <translation>請使用排序按鈕設定排列次序: 按一次向上的箭頭將屬性上移一位, 向下的箭頭將屬性下移一位。</translation>
     </message>
@@ -249,8 +294,28 @@
         <translation>請設定屬性的別名 (可以包含空白和特殊字元)。</translation>
     </message>
     <message>
+        <source>Use this field to set the internal name of the attribute. The identifier will be used in templates and in PHP code. Allowed characters: letters, numbers and underscore.</source>
+        <translation type="obsolete">請設定屬性的內部名稱 (此識別碼將會用於範本和 PHP 程式碼之中, 所允許的字元包括: 字母、數字和底線)。</translation>
+    </message>
+    <message>
+        <source>Use this checkbox to control if the user should be forced to enter information into the attribute.</source>
+        <translation type="obsolete">請使用此核取方塊強制使用者必須輸入屬性。</translation>
+    </message>
+    <message>
+        <source>Use this checkbox to control if the contents of the attribute should be indexed by the search engine.</source>
+        <translation type="obsolete">請使用此核取方塊強制屬性的內容必須經由搜尋引擎進行索引。</translation>
+    </message>
+    <message>
         <source>The &lt;%datatype_name&gt; datatype does not support search indexing.</source>
         <translation>&lt;%datatype_name&gt; 資料型態不支援搜尋索引。</translation>
+    </message>
+    <message>
+        <source>Use this checkbox to control if the attribute should collect input from users.</source>
+        <translation type="obsolete">請使用此核取方塊強制使用者必須輸入屬性。</translation>
+    </message>
+    <message>
+        <source>The &lt;%datatype_name&gt; datatype can not be used as an information collector.</source>
+        <translation type="obsolete">&lt;%datatype_name&gt; 資料型態無法讓資訊收集器使用。</translation>
     </message>
     <message>
         <source>Use this checkbox for attributes that contain non-translatable content.</source>
@@ -279,6 +344,10 @@
     <message>
         <source>The class definition contains the following errors</source>
         <translation>類別定義含有下列錯誤</translation>
+    </message>
+    <message>
+        <source>Use this checkbox to set the default availability for the objects of this class. The availablility controls wether an object should be shown even if it does not exist in one of the languages specified by the &quot;SiteLanguageList&quot; setting. If this is the case, the system will use the main language of the object.</source>
+        <translation type="obsolete">預設此物件的可用性  (可用性決定當它不存在於「SiteLanguageList」內時,  系統是否使用預設的主要語言來顯示它)。</translation>
     </message>
     <message>
         <source>Use these controls to set the default sorting method for the sub items of instances of the content class.</source>
@@ -348,6 +417,42 @@
         <source>The &lt;%datatype_name&gt; datatype cannot be used as an information collector.</source>
         <translation type="unfinished">&lt;%datatype_name&gt; 資料型態無法讓資訊收集器使用。</translation>
     </message>
+    <message>
+        <source>Edit &lt;%class_name&gt; (%object_count)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Description</source>
+        <translation type="unfinished">描述</translation>
+    </message>
+    <message>
+        <source>Use this field to set the informal description of the class. The description field can contain whitespaces and special characters.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>List of class attributes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Class attribute item</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use this field to set the informal description of the attribute. This field can contain whitespaces and special characters.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use this category to group attributes together in edit interface, some categories might also be hidden in full view if they are for instance only meta attributes.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Default</source>
+        <translation type="unfinished">預設</translation>
+    </message>
+    <message>
+        <source>Category</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>design/admin/class/edit_denied</name>
@@ -358,6 +463,10 @@
     <message>
         <source>This class is already being edited by someone else.</source>
         <translation>此類別已經被他人編輯過。</translation>
+    </message>
+    <message>
+        <source>The class is temporarly locked and thus it can not be edited by you.</source>
+        <translation type="obsolete">該類別被暫時被鎖住，因而無法讓你編輯。</translation>
     </message>
     <message>
         <source>Possible actions</source>
@@ -386,6 +495,10 @@
     <message>
         <source>Unlock time</source>
         <translation>解除鎖住時間</translation>
+    </message>
+    <message>
+        <source>The class will be available for editing once it has been stored by the current modifier or when it is unlocked by the system.</source>
+        <translation type="obsolete">一旦類別由目前修改者所儲存，或者系統解除了該鎖住，才可以編輯。</translation>
     </message>
     <message>
         <source>Retry</source>
@@ -496,6 +609,22 @@
         <source>Edit the &lt;%class_name&gt; class.</source>
         <translation>編輯 &lt;%class_name&gt; 。</translation>
     </message>
+    <message>
+        <source>Class groups (%group_count)</source>
+        <translation>組別 (%group_count)</translation>
+    </message>
+    <message>
+        <source>List of class groups</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>List of recently modified classes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Objects</source>
+        <translation type="unfinished">物件</translation>
+    </message>
 </context>
 <context>
     <name>design/admin/class/removeclass</name>
@@ -520,12 +649,24 @@
         <translation>確認要刪除類別？</translation>
     </message>
     <message>
+        <source>You do not have permissions to remove classes.</source>
+        <translation type="obsolete">你沒有權限刪除類別。</translation>
+    </message>
+    <message>
         <source>The %1 class was already removed from the group but still exists in other groups.</source>
         <translation>%1 類別已經從組別中刪除，但它仍然存在於其他組別中。</translation>
     </message>
     <message>
         <source>The %1 classes were already removed from the group but still exist in other groups.</source>
         <translation>%1 類別已經從組別中刪除，但它仍然存在於其他組別中。</translation>
+    </message>
+    <message>
+        <source>Removing class &lt;%1&gt; will result in the removal of %2 object and all it&apos;s sub-items.</source>
+        <translation type="obsolete">刪除類別 &lt;%1&gt; 將導致 %2 和它所有的子項目被刪除。</translation>
+    </message>
+    <message>
+        <source>Removing class &lt;%1&gt; will result in the removal of %2 objects and all their sub-items.</source>
+        <translation type="obsolete">刪除類別 &lt;%1&gt; 將導致 %2 物件和它們所有的子項目被刪除。</translation>
     </message>
     <message>
         <source>You do not have permission to remove classes.</source>
@@ -759,6 +900,10 @@
         <translation>從所選組別刪除 &lt;%class_name&gt; 類別。</translation>
     </message>
     <message>
+        <source>Select a group which the &lt;%class_name&gt; class should be added to.</source>
+        <translation type="obsolete">請選取 &lt;%class_name&gt; 應該加入的組別。</translation>
+    </message>
+    <message>
         <source>Add to class group</source>
         <translation>加入到組別</translation>
     </message>
@@ -855,6 +1000,18 @@
         <translation>設定為主要</translation>
     </message>
     <message>
+        <source>Select the desired main language using the radio buttons above and click this button to store the setting.</source>
+        <translation type="obsolete">儲存選取的主要語言。</translation>
+    </message>
+    <message>
+        <source>You can not change the main language because the object is not translated to any other languages.</source>
+        <translation type="obsolete">你無法變更主要語言，因為物件並未翻譯到任何其他語言。</translation>
+    </message>
+    <message>
+        <source>Use this menu to select the language you wish use for the editing and click the &quot;Edit&quot; button.</source>
+        <translation type="obsolete">請選取進行編輯的語言，並且按一下「編輯」按鈕。</translation>
+    </message>
+    <message>
         <source>Another language</source>
         <translation>其他語言</translation>
     </message>
@@ -918,6 +1075,42 @@
         <source>Use this menu to select the language you want to use for editing then click the &quot;Edit&quot; button.</source>
         <translation type="unfinished">請選取進行編輯的語言，並且按一下「編輯」按鈕。</translation>
     </message>
+    <message>
+        <source>Class storing deferred</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The storing of the class has been deferred because existing objects need to be updated. The process has been scheduled to run in the background and will be started automatically. Please do not edit the class again until the process has finished. You can monitor the progress of the background process here:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Background process monitor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Class name and number of objects</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Member of class groups (%group_count)</source>
+        <translation>組別成員 (%group_count)</translation>
+    </message>
+    <message>
+        <source>Override templates (%1)</source>
+        <translation>變更範本 (%1)</translation>
+    </message>
+    <message>
+        <source>Translations (%translations)</source>
+        <translation>翻譯 (%translations)</translation>
+    </message>
+    <message>
+        <source>Description</source>
+        <translation type="unfinished">描述</translation>
+    </message>
+    <message>
+        <source>Category</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>design/admin/collaboration</name>
@@ -959,6 +1152,10 @@
         <translation> %1 等待發佈許可。</translation>
     </message>
     <message>
+        <source>If you wish you may send a message to the person approving it?</source>
+        <translation type="obsolete">希望傳送資訊給批核人嗎？</translation>
+    </message>
+    <message>
         <source>The content object %1 needs your approval before it can be published.</source>
         <translation>%1 需要你的發佈許可。</translation>
     </message>
@@ -967,12 +1164,28 @@
         <translation>你同意發佈內容物件嗎？</translation>
     </message>
     <message>
+        <source>The content object %1 was approved and will be published once the publishing workflow continues.</source>
+        <translation type="obsolete">%1 已獲同意，一旦發佈作業流程就緒將被發佈。</translation>
+    </message>
+    <message>
+        <source>The content object %1 was not accepted but is available as a draft again.</source>
+        <translation type="obsolete">%1 未被接受，但仍可做為有效的草稿。</translation>
+    </message>
+    <message>
+        <source>You may reedit the draft and publish it, in which case an approval is required again.</source>
+        <translation type="obsolete">你必須重編輯草稿，並得到同意後才能發佈。</translation>
+    </message>
+    <message>
         <source>Edit the object</source>
         <translation>編輯物件</translation>
     </message>
     <message>
         <source>The content object %1 was not accepted but will be available as a draft for the author.</source>
         <translation>%1 未被接受，但仍可做為有效的草稿。</translation>
+    </message>
+    <message>
+        <source>The author can reedit the draft and publish it again, in which a new approval item is made.</source>
+        <translation type="obsolete">作者可以修改草稿，並重新推出等候批准。</translation>
     </message>
     <message>
         <source>Comment</source>
@@ -1146,6 +1359,10 @@
         <translation>編輯 &lt;%bookmark_name&gt;。</translation>
     </message>
     <message>
+        <source>You do not have permissions to edit the contents of &lt;%bookmark_name&gt;.</source>
+        <translation type="obsolete">你沒有權限編輯 &lt;%bookmark_name&gt; 內容。</translation>
+    </message>
+    <message>
         <source>Remove selected bookmarks.</source>
         <translation>刪除所選書籤。</translation>
     </message>
@@ -1165,6 +1382,10 @@
         <source>You do not have permission to edit the contents of &lt;%bookmark_name&gt;.</source>
         <translation type="unfinished">你沒有權限編輯 &lt;%bookmark_name&gt; 內容。</translation>
     </message>
+    <message>
+        <source>My bookmarks (%bookmark_count)</source>
+        <translation>我的書籤 (%bookmark_count)</translation>
+    </message>
 </context>
 <context>
     <name>design/admin/content/browse</name>
@@ -1175,6 +1396,10 @@
     <message>
         <source>Top level</source>
         <translation>頂層</translation>
+    </message>
+    <message>
+        <source>To select an object that is a child of one of the displayed objects, click the object name and you will get a list of the children of the object.</source>
+        <translation type="obsolete">請點選物件名稱顯示子物件的清單。</translation>
     </message>
     <message>
         <source>Back</source>
@@ -1213,6 +1438,10 @@
         <translation>顯示子項目縮圖。</translation>
     </message>
     <message>
+        <source>To select objects, choose the appropriate radiobutton or checkbox(es), and click the &quot;Select&quot; button.</source>
+        <translation type="obsolete">請選取物件，並按一下「選取」按鈕。</translation>
+    </message>
+    <message>
         <source>Search result</source>
         <translation>搜尋結果</translation>
     </message>
@@ -1244,6 +1473,10 @@
         <translation>請使用上方的頁籤、左側樹狀選單 和中間內容清單 來四處巡覽。</translation>
     </message>
     <message>
+        <source>Select the items that you want to bookmark using the checkboxes and click &quot;Select&quot;.</source>
+        <translation type="obsolete">請選取加入書籤的項目，並且按一下「選取」。</translation>
+    </message>
+    <message>
         <source>Select the items that you want to bookmark using the checkboxes then click &quot;Select&quot;.</source>
         <translation type="unfinished">請選取加入書籤的項目，並且按一下「選取」。</translation>
     </message>
@@ -1259,8 +1492,16 @@
         <translation>請選取 &lt;%object_name&gt; 複本的位置</translation>
     </message>
     <message>
+        <source>Choose a new location for the copy of &lt;%object_name&gt; using the radio buttons and click &quot;Select&quot;.</source>
+        <translation type="obsolete">請使用單選按鈕選取新的位置用於複製的 &lt;%object_name&gt; 並按一下「選取」。</translation>
+    </message>
+    <message>
         <source>Choose location for the copy of subtree of node &lt;%node_name&gt;</source>
         <translation>請選取子樹節點&lt;%node_name&gt; 複本的位置</translation>
+    </message>
+    <message>
+        <source>Choose a new location for the copy of subtree of node &lt;%node_name&gt; using the radio buttons and click &quot;Select&quot;.</source>
+        <translation type="obsolete">請選取 &lt;%node_name&gt; 子樹複本的新位置,  並按一下「選取」</translation>
     </message>
     <message>
         <source>Choose a new location for the copy of &lt;%object_name&gt; using the radio buttons then click &quot;Select&quot;.</source>
@@ -1282,6 +1523,10 @@
         <translation>請使用上方的頁籤、左側樹狀選單 和中間內容清單 來四處巡覽。</translation>
     </message>
     <message>
+        <source>Select the item that you want to export using the checkboxes and click &quot;Select&quot;.</source>
+        <translation type="obsolete">請選取你要匯出的項目, 並按一下「選取」。</translation>
+    </message>
+    <message>
         <source>Select the item that you want to export using the checkboxes then click &quot;Select&quot;.</source>
         <translation type="unfinished">請選取你要匯出的項目, 並按一下「選取」。</translation>
     </message>
@@ -1297,6 +1542,10 @@
         <translation>請使用上方的頁籤、左側樹狀選單 和中間內容清單 來四處巡覽。</translation>
     </message>
     <message>
+        <source>Choose a location for the new &lt;%classname&gt; using the radiobuttons and click &quot;Select&quot;.</source>
+        <translation type="obsolete">請選取位置用於新的 &lt;%classname&gt;, 並按一下「選取」。</translation>
+    </message>
+    <message>
         <source>Choose a location for the new &lt;%classname&gt; using the radio buttons then click &quot;Select&quot;.</source>
         <translation type="unfinished">請選取位置用於新的 &lt;%classname&gt;, 並按一下「選取」。</translation>
     </message>
@@ -1310,6 +1559,10 @@
     <message>
         <source>Choose a new location for &lt;%object_name&gt;</source>
         <translation>請選取 &lt;%object_name&gt; 的新位置</translation>
+    </message>
+    <message>
+        <source>Choose a new location for &lt;%object_name&gt; using the radio buttons and click &quot;Select&quot;.</source>
+        <translation type="obsolete">請選取 &lt;%object_name&gt; 的新位置，並按一下「選取」。</translation>
     </message>
     <message>
         <source>Choose a new location for &lt;%object_name&gt; using the radio buttons then click &quot;Select&quot;.</source>
@@ -1331,6 +1584,10 @@
         <translation>請使用上方的頁籤、左側樹狀選單 和中間內容清單 來四處巡覽。</translation>
     </message>
     <message>
+        <source>Choose a new location for &lt;%version_name&gt; using the radio buttons and click &quot;Select&quot;.</source>
+        <translation type="obsolete">請選取 &lt;%version_name&gt; 的新位置，並按一下「選取」。</translation>
+    </message>
+    <message>
         <source>Choose a new location for &lt;%version_name&gt; using the radio buttons then click &quot;Select&quot;.</source>
         <translation type="unfinished">請選取 &lt;%version_name&gt; 的新位置，並按一下「選取」。</translation>
     </message>
@@ -1346,12 +1603,24 @@
         <translation>請使用上方的頁籤、左側樹狀選單 和中間內容清單 來四處巡覽。</translation>
     </message>
     <message>
+        <source>Choose locations for &lt;%version_name&gt; using the checkboxes and click &quot;Select&quot;.</source>
+        <translation type="obsolete">請選取 &lt;%version_name&gt; 的位置，並按一下「選取」。</translation>
+    </message>
+    <message>
         <source>Choose locations for &lt;%version_name&gt; using the checkboxes then click &quot;Select&quot;.</source>
         <translation type="unfinished">請選取 &lt;%version_name&gt; 的位置，並按一下「選取」。</translation>
     </message>
 </context>
 <context>
     <name>design/admin/content/browse_related</name>
+    <message>
+        <source>Choose objects that you wish to relate to &lt;%version_name&gt;</source>
+        <translation type="obsolete">請選取希望關聯到 &lt;%version_name&gt; 的物件</translation>
+    </message>
+    <message>
+        <source>Use the checkboxes to choose the objects that you wish to relate to &lt;%version_name&gt;.</source>
+        <translation type="obsolete">請選取希望關聯到 &lt;%version_name&gt; 的物件。</translation>
+    </message>
     <message>
         <source>Navigate using the available tabs (above), the tree menu (left) and the content list (middle).</source>
         <translation>請使用上方的頁籤、左側樹狀選單 和中間內容清單 來四處巡覽。</translation>
@@ -1367,6 +1636,14 @@
 </context>
 <context>
     <name>design/admin/content/browse_swap_node</name>
+    <message>
+        <source>Choose the exchanging node for &lt;%object_name&gt;</source>
+        <translation type="obsolete">請選取 &lt;%object_name&gt; 的交換節點</translation>
+    </message>
+    <message>
+        <source>Use the radio buttons to choose the node with which you want to swap &lt;%object_name&gt;.</source>
+        <translation type="obsolete">請選取你要交換 &lt;%object_name&gt; 的節點。</translation>
+    </message>
     <message>
         <source>Navigate using the available tabs (above), the tree menu (left) and the content list (middle).</source>
         <translation>請使用上方的頁籤、左側樹狀選單 和中間內容清單 來四處巡覽。</translation>
@@ -1387,6 +1664,10 @@
         <translation>項目</translation>
     </message>
     <message>
+        <source>Objects referring to this one</source>
+        <translation type="obsolete">引用</translation>
+    </message>
+    <message>
         <source>Objects referring to this item</source>
         <translation type="unfinished">引用</translation>
     </message>
@@ -1396,6 +1677,14 @@
     <message>
         <source>Feedback for %feedbackname</source>
         <translation>%feedbackname 的回饋意見</translation>
+    </message>
+    <message>
+        <source>You have already submitted data to this feedback. The previously submitted data was the following.</source>
+        <translation type="obsolete">你已經提交資料到此回饋意見, 下列是之前提交的資料。</translation>
+    </message>
+    <message>
+        <source>Thanks for your feedback, the following information was collected.</source>
+        <translation type="obsolete">已收集到下列資訊，感謝你的回饋意見。</translation>
     </message>
     <message>
         <source>Return to site</source>
@@ -1421,6 +1710,10 @@
         <translation>收集到的資訊</translation>
     </message>
     <message>
+        <source>You have already submitted data to this form. The previously submitted data was the following.</source>
+        <translation type="obsolete">你已提交資料到此表單, 下列是之前提交的資料。</translation>
+    </message>
+    <message>
         <source>Back</source>
         <translation>上一步</translation>
     </message>
@@ -1434,6 +1727,14 @@
     <message>
         <source>Poll %pollname</source>
         <translation>意見調查 %pollname</translation>
+    </message>
+    <message>
+        <source>Anonymous users are not allowed to vote on this poll, please login.</source>
+        <translation type="obsolete">匿名使用者不允許投票，請登入。</translation>
+    </message>
+    <message>
+        <source>You have already voted for this poll.</source>
+        <translation type="obsolete">你已經投票。</translation>
     </message>
     <message>
         <source>Poll results</source>
@@ -1486,6 +1787,10 @@
         <translation>請選取語言</translation>
     </message>
     <message>
+        <source>You do not have permissions to create an object of the requested class in any language.</source>
+        <translation type="obsolete">你你沒有權限以任何語言建立物件。</translation>
+    </message>
+    <message>
         <source>Select the language in which you want to create the object</source>
         <translation>請選取你要建立物件的語言</translation>
     </message>
@@ -1500,6 +1805,13 @@
     <message>
         <source>You do not have permission to create an object of the requested class in any language.</source>
         <translation type="unfinished">你你沒有權限以任何語言建立物件。</translation>
+    </message>
+</context>
+<context>
+    <name>design/admin/content/dashboard</name>
+    <message>
+        <source>Dashboard</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1590,6 +1902,10 @@
         <source>New version</source>
         <translation>新版本</translation>
     </message>
+    <message>
+        <source>Versions for &lt;%object_name&gt; (%version_count)</source>
+        <translation>&lt;%object_name&gt; 的版本 (%version_count)</translation>
+    </message>
 </context>
 <context>
     <name>design/admin/content/draft</name>
@@ -1661,6 +1977,10 @@
         <source>Language</source>
         <translation>語言</translation>
     </message>
+    <message>
+        <source>My drafts (%draft_count)</source>
+        <translation>我的草稿 (%draft_count)</translation>
+    </message>
 </context>
 <context>
     <name>design/admin/content/edit</name>
@@ -1675,6 +1995,10 @@
     <message>
         <source>Send for publishing</source>
         <translation>發稿發佈</translation>
+    </message>
+    <message>
+        <source>Publish the contents of the draft that is being edited. The draft will thus become the published version of the object.</source>
+        <translation type="obsolete">發佈編輯過的草稿內容, 草稿將成為已發佈版本。</translation>
     </message>
     <message>
         <source>Store draft</source>
@@ -1707,6 +2031,14 @@
     <message>
         <source>Name</source>
         <translation>名稱</translation>
+    </message>
+    <message>
+        <source>Class Identifier</source>
+        <translation type="obsolete">類別識別代號</translation>
+    </message>
+    <message>
+        <source>Class Name</source>
+        <translation type="obsolete">類別名稱</translation>
     </message>
     <message>
         <source>Priority</source>
@@ -1745,8 +2077,20 @@
         <translation>主體</translation>
     </message>
     <message>
+        <source>You do not have permissions to remove this location.</source>
+        <translation type="obsolete">你沒有權限刪除此位置。</translation>
+    </message>
+    <message>
         <source>Select location for removal.</source>
         <translation>請選取要刪除的位置。</translation>
+    </message>
+    <message>
+        <source>Use this menu to set the sorting method for the sub items of the respective location.</source>
+        <translation type="obsolete">請使用此選單以設定各自位置子項目的排序方法。</translation>
+    </message>
+    <message>
+        <source>Use this menu to set the sorting direction for the sub items of the respective location.</source>
+        <translation type="obsolete">請使用此選單以設定各自位置子項目的排序方向。</translation>
     </message>
     <message>
         <source>Desc.</source>
@@ -1797,6 +2141,10 @@
         <translation>加入一個或更多被編輯物件的位置。</translation>
     </message>
     <message>
+        <source>You can not add or remove locations because the object being edited belongs to a top node.</source>
+        <translation type="obsolete">你無法加入或刪除位置，因為被編輯的物件屬於頂端節點。</translation>
+    </message>
+    <message>
         <source>Object information</source>
         <translation>物件資訊</translation>
     </message>
@@ -1823,6 +2171,10 @@
     <message>
         <source>View and manage (copy, delete, etc.) the versions of this object.</source>
         <translation>檢視和管理 (複製、刪除…等) 此物件的版本。</translation>
+    </message>
+    <message>
+        <source>You can not manage the versions of this object because there is only one version available (the one that is being edited).</source>
+        <translation type="obsolete">你無需管理此物件的版本，因為只有一個版本可用 (被編輯的這一個)。</translation>
     </message>
     <message>
         <source>Current draft</source>
@@ -1937,6 +2289,26 @@
         <translation>取消被編輯的草稿。這也將取消屬於該草稿的翻譯 (如果有的話)。</translation>
     </message>
     <message>
+        <source>You do not have sufficient permissions to view this object</source>
+        <translation type="obsolete">你沒有權限以檢視此物件</translation>
+    </message>
+    <message>
+        <source>This location will remain unchanged when object is published.</source>
+        <translation type="obsolete">物件發佈時，此位置將保持不變更。</translation>
+    </message>
+    <message>
+        <source>This location will be created when object is published.</source>
+        <translation type="obsolete">物件發佈時，此位置將會被建立。</translation>
+    </message>
+    <message>
+        <source>This location will be moved when object is published.</source>
+        <translation type="obsolete">物件發佈時，此位置將會被移動。</translation>
+    </message>
+    <message>
+        <source>This location will be removed when object is published.</source>
+        <translation type="obsolete">物件發佈時，此位置將會被刪除。</translation>
+    </message>
+    <message>
         <source>Translate from</source>
         <translation>翻譯自</translation>
     </message>
@@ -2048,6 +2420,58 @@
         <source>The following data is invalid according to the custom validation rules</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Toggle fullscreen editing!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Store draft and exit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Store the draft that is being edited and exit from edit mode. Use when you need to exit your work and return later to continue.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit &lt;%object_name&gt; (%class_name)</source>
+        <translation>編輯 &lt;%object_name&gt; (%class_name)</translation>
+    </message>
+    <message>
+        <source>Locations (%locations)</source>
+        <translation>位置 (%locations)</translation>
+    </message>
+    <message>
+        <source>Preview</source>
+        <translation type="unfinished">預覽</translation>
+    </message>
+    <message>
+        <source>Existing translations</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Base translation on</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>None</source>
+        <translation type="unfinished">無</translation>
+    </message>
+    <message>
+        <source>Related objects (%related_objects)</source>
+        <translation>相關的物件 (%related_objects)</translation>
+    </message>
+    <message>
+        <source>Related images (%related_images)</source>
+        <translation>相關的圖像 (%related_images)</translation>
+    </message>
+    <message>
+        <source>Related files (%related_files)</source>
+        <translation>相關的檔案 (%related_files)</translation>
+    </message>
+    <message>
+        <source>Related content (%related_objects)</source>
+        <translation>相關的內容 (%related_objects)</translation>
+    </message>
 </context>
 <context>
     <name>design/admin/content/edit_attribute</name>
@@ -2155,6 +2579,10 @@
         <translation>請選取草稿版本 #%version 進行編輯。</translation>
     </message>
     <message>
+        <source>You can not select draft version #%version for editing because it belongs to another user. Please select a draft that belongs to you or create a new draft and then edit it.</source>
+        <translation type="obsolete">你無法選取草稿版本 #%version 進行編輯，因為它屬於其他使用者。請選取屬於你的草稿，或是建立新的草稿再來編輯它。</translation>
+    </message>
+    <message>
         <source>View the contents of version #%version_number. Translation: %translation.</source>
         <translation>檢視版本 #%version_number 的內容。翻譯：%translation。</translation>
     </message>
@@ -2167,8 +2595,16 @@
         <translation>編輯所選草稿。</translation>
     </message>
     <message>
+        <source>You can not edit any of the drafts because none of them belong to you. Hint: Create a new draft, select it and edit it.</source>
+        <translation type="obsolete">你無法編輯任何草稿，因為它們沒有任何一個屬於你。提示：建立新的草稿、選取它並編輯它。</translation>
+    </message>
+    <message>
         <source>New draft</source>
         <translation>新草稿</translation>
+    </message>
+    <message>
+        <source>Create a new draft. The contents of the new draft will copied from the published version.</source>
+        <translation type="obsolete">建立新的草稿。新草稿的內容將從發佈的版本複製。</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -2213,6 +2649,14 @@
     <message>
         <source>You cannot edit any of the drafts because none of them belong to you. You can create a new draft, select it and then edit it.</source>
         <translation type="unfinished">你無法編輯任何草稿，因為它們沒有任何一個屬於你。提示：建立新的草稿、選取它並編輯它。</translation>
+    </message>
+    <message>
+        <source>Conflicting versions (%draft_count)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Current drafts (%draft_count)</source>
+        <translation>目前草稿 (%draft_count)</translation>
     </message>
 </context>
 <context>
@@ -2270,6 +2714,14 @@
         <translation>無</translation>
     </message>
     <message>
+        <source>You do not have sufficient permissions to create a translation in another language.</source>
+        <translation type="obsolete">你沒有充分的權限以其他語言建立翻譯。</translation>
+    </message>
+    <message>
+        <source>However you can select one of the following languages for editing</source>
+        <translation type="obsolete">然而編輯時你可以選取下列語言之一</translation>
+    </message>
+    <message>
         <source>You do not have permission to edit the object in any available languages.</source>
         <translation>你沒有權限以任何可用語言去編輯物件。</translation>
     </message>
@@ -2292,6 +2744,26 @@
     <message>
         <source>However you can select one of the following languages for editing.</source>
         <translation type="unfinished">然而編輯時你可以選取下列語言之一</translation>
+    </message>
+    <message>
+        <source>Existing translations</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select the translation you want to edit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>New translation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select the translation you want to add</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Translate based on</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2319,6 +2791,26 @@
     <message>
         <source>Published version</source>
         <translation>發佈的版本</translation>
+    </message>
+    <message>
+        <source>Version not a draft</source>
+        <translation type="obsolete">這版本不是草稿</translation>
+    </message>
+    <message>
+        <source>Version %1 is not available for editing anymore, only drafts can be edited.</source>
+        <translation type="obsolete">版本 %1 不能再被編輯，只能編輯草稿。</translation>
+    </message>
+    <message>
+        <source>To edit this version create a copy of it.</source>
+        <translation type="obsolete">為了能編輯此版本，建立一個複製。</translation>
+    </message>
+    <message>
+        <source>Version not yours</source>
+        <translation type="obsolete">不是你的版本</translation>
+    </message>
+    <message>
+        <source>Version %1 was not created by you, only your own drafts can be edited.</source>
+        <translation type="obsolete">版本 %1 不是由你建立，你只能編輯自己的草稿。</translation>
     </message>
     <message>
         <source>Unable to create new version</source>
@@ -2353,6 +2845,10 @@
         <translation>請選取要刪除的版本 #%version_number。</translation>
     </message>
     <message>
+        <source>Version #%version_number can not be removed because it is either the published version of the object or because you do not have permissions to remove it.</source>
+        <translation type="obsolete">無法刪除版本 #%version_number，因為它若非已發佈版本，就是由於你沒有權限去刪除它。</translation>
+    </message>
+    <message>
         <source>View the contents of version #%version_number. Translation: %translation.</source>
         <translation>檢視版本 #%version_number 的內容。翻譯：%translation。</translation>
     </message>
@@ -2385,8 +2881,16 @@
         <translation>建立版本 #%version_number 的複本。</translation>
     </message>
     <message>
+        <source>You can not make copies of versions because you do not have permissions to edit the object.</source>
+        <translation type="obsolete">你無法製作版本的複本，因為你沒有權限去編輯物件。</translation>
+    </message>
+    <message>
         <source>Edit the contents of version #%version_number.</source>
         <translation>編輯版本 #%version_number 的內容。</translation>
+    </message>
+    <message>
+        <source>You can not edit the contents of version #%version_number either because it is not a draft or because you do not have permissions to edit the object.</source>
+        <translation type="obsolete">你無法編輯版本 #%version_number 的內容，若非因為它不是草稿，就是因為你沒有權限去編輯物件。</translation>
     </message>
     <message>
         <source>This object does not have any versions.</source>
@@ -2488,6 +2992,14 @@
         <source>You cannot edit the contents of version #%version_number either because it is not a draft or because you do not have permission to edit the object.</source>
         <translation type="unfinished">你不能編輯版本 #%version_number，因為這不是草稿或是你沒有權限編輯這稿件。</translation>
     </message>
+    <message>
+        <source>Versions for &lt;%object_name&gt; (%version_count)</source>
+        <translation>&lt;%object_name&gt; 的版本 (%version_count)</translation>
+    </message>
+    <message>
+        <source>New drafts (%newerDraftCount)</source>
+        <translation>新增草稿 (%newerDraftCount)</translation>
+    </message>
 </context>
 <context>
     <name>design/admin/content/pendinglist</name>
@@ -2518,6 +3030,10 @@
     <message>
         <source>Unknown</source>
         <translation>不明</translation>
+    </message>
+    <message>
+        <source>My pending items (%pending_count)</source>
+        <translation>我的擱置項目 (%pending_count)</translation>
     </message>
 </context>
 <context>
@@ -2579,6 +3095,10 @@
         <translation>確認要刪除位置以及它們的內容？</translation>
     </message>
     <message>
+        <source>The locations marked with red contain items that you do not have permissions to remove.</source>
+        <translation type="obsolete">以紅色標記的位置包含了你沒有權限刪除的項目。</translation>
+    </message>
+    <message>
         <source>Click the &quot;Cancel&quot; button and try removing only the locations that you are allowed to remove.</source>
         <translation>按一下「取消」按鈕，並試著只刪除你有權限刪除的位置。</translation>
     </message>
@@ -2605,6 +3125,10 @@
     <message>
         <source>Remove the locations along with all the sub items.</source>
         <translation>刪除位置以及所有子項目。</translation>
+    </message>
+    <message>
+        <source>You can not continue because you do not have permissions to remove some of the selected locations.</source>
+        <translation type="obsolete">你無法繼續，因為你沒有權限以刪除某些所選位置。</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -2704,6 +3228,10 @@
         <translation>還原到原來的位置 (&lt;%nodeName&gt; 之下)。</translation>
     </message>
     <message>
+        <source>The system will let you specify a location by browsing the tree.</source>
+        <translation type="obsolete">系統將讓你藉由瀏覽樹狀圖來指定位置。</translation>
+    </message>
+    <message>
         <source>Select a location.</source>
         <translation>請選取位置。</translation>
     </message>
@@ -2740,6 +3268,10 @@
         <translation>還原原來的位置 &lt;%nodeName&gt;</translation>
     </message>
     <message>
+        <source>The system will let you browse for a location for the object.</source>
+        <translation type="obsolete">系統將讓你瀏覽以尋找物件的位置。</translation>
+    </message>
+    <message>
         <source>Browse for location</source>
         <translation>瀏覽以尋找位置</translation>
     </message>
@@ -2769,6 +3301,10 @@
     <message>
         <source>This subtree/item has no external relations.</source>
         <translation>這個子樹/項目沒有外部關聯。</translation>
+    </message>
+    <message>
+        <source>&quot;%contentObjectName&quot; (%children_count): Sub items that are used by other objects </source>
+        <translation>「%contentObjectName」(%children_count)：由其他物件所使用的子項目 </translation>
     </message>
 </context>
 <context>
@@ -2809,6 +3345,10 @@
     <message>
         <source>Try more general keywords.</source>
         <translation>請使用更籠統的關鍵詞。</translation>
+    </message>
+    <message>
+        <source>Fewer keywords gives more results, try reducing keywords until you get a result.</source>
+        <translation type="obsolete">請使用更少的關鍵詞直到你搜尋到結果。</translation>
     </message>
     <message>
         <source>Search for &lt;%1&gt; returned %2 matches</source>
@@ -2919,6 +3459,10 @@
         <translation>下列字詞已從搜尋中排除</translation>
     </message>
     <message>
+        <source>Try changing some keywords e.g. car instead of cars.</source>
+        <translation type="obsolete">試試變更某些關鍵字，例如：以 car 取代 cars。</translation>
+    </message>
+    <message>
         <source>Try changing some keywords e.g. &amp;quot;car&amp;quot; instead of &amp;quot;cars&amp;quot;.</source>
         <translation type="unfinished">試試變更某些關鍵字，例如：以 car 取代 cars。</translation>
     </message>
@@ -2965,6 +3509,10 @@
         <translation>語言</translation>
     </message>
     <message>
+        <source>Country</source>
+        <translation type="obsolete">國家</translation>
+    </message>
+    <message>
         <source>Locale</source>
         <translation>語區</translation>
     </message>
@@ -3001,6 +3549,10 @@
         <translation>加入新的語言。並可以使用新的語言來翻譯內容。</translation>
     </message>
     <message>
+        <source>The language can not be removed because it is in use.</source>
+        <translation type="obsolete">語言無法被刪除，因為它為請使用中。</translation>
+    </message>
+    <message>
         <source>Classes translations</source>
         <translation type="unfinished">類別 翻譯</translation>
     </message>
@@ -3011,6 +3563,14 @@
     <message>
         <source>The language cannot be removed because it is in use.</source>
         <translation type="unfinished">使用中的語言不能被刪除。</translation>
+    </message>
+    <message>
+        <source>Available languages for translation of content (%translations_count)</source>
+        <translation>內容翻譯時的可用語言 (%translations_count)</translation>
+    </message>
+    <message>
+        <source>Toggle all.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3046,6 +3606,22 @@
     <message>
         <source>Allowed charsets</source>
         <translation>允許的字元集</translation>
+    </message>
+    <message>
+        <source>Country name</source>
+        <translation type="obsolete">國家名稱</translation>
+    </message>
+    <message>
+        <source>Country comment</source>
+        <translation type="obsolete">國家評論和註釋</translation>
+    </message>
+    <message>
+        <source>Country code</source>
+        <translation type="obsolete">國碼</translation>
+    </message>
+    <message>
+        <source>Country variation</source>
+        <translation type="obsolete">國家變化</translation>
     </message>
     <message>
         <source>Language name</source>
@@ -3175,6 +3751,10 @@
         <translation>反向選擇。</translation>
     </message>
     <message>
+        <source>Use these checkboxes to mark items for removal. Click the &quot;Remove selected&quot; button to actually remove the selected items.</source>
+        <translation type="obsolete">請使用這些核取方塊以標記要刪除的項目。按一下「刪除所選」按鈕以實際刪除所選項目。</translation>
+    </message>
+    <message>
         <source>Remove selected</source>
         <translation>刪除所選</translation>
     </message>
@@ -3221,6 +3801,10 @@
     <message>
         <source>Use these checkboxes to mark items for removal. Click the &quot;Remove selected&quot; button to remove the selected items.</source>
         <translation type="unfinished">請使用這些核取方塊以標記要刪除的項目。按一下「刪除所選」按鈕以實際刪除所選項目。</translation>
+    </message>
+    <message>
+        <source>Trash (%list_count)</source>
+        <translation>垃圾桶 (%list_count)</translation>
     </message>
 </context>
 <context>
@@ -3274,6 +3858,10 @@
         <translation>檔案上傳</translation>
     </message>
     <message>
+        <source>Choose a file from your local machine and click the &quot;Upload&quot; button. An object will be created according to file type and placed in your chosen location.</source>
+        <translation type="obsolete">從你的本機電腦選取檔案，再按一下「上傳」按鈕。物件將會根據檔案類型而建立，並且擺放在你所選的位置中。</translation>
+    </message>
+    <message>
         <source>Upload file</source>
         <translation>上傳檔案</translation>
     </message>
@@ -3294,6 +3882,10 @@
         <translation>檔案</translation>
     </message>
     <message>
+        <source>Select the file that you wish to upload.</source>
+        <translation type="obsolete">請選取你希望上傳的檔案。</translation>
+    </message>
+    <message>
         <source>Upload</source>
         <translation>上傳</translation>
     </message>
@@ -3304,6 +3896,10 @@
     <message>
         <source>Cancel</source>
         <translation>取消</translation>
+    </message>
+    <message>
+        <source>Abort the upload operation and go back to where you came from.</source>
+        <translation type="obsolete">放棄上傳作業並回到你之前的地方。</translation>
     </message>
     <message>
         <source>Name</source>
@@ -3337,8 +3933,16 @@
         <translation>檔案上傳之後，物件將會根據檔案型態而建立。</translation>
     </message>
     <message>
+        <source>The newly created object will be placed within the chosen location.</source>
+        <translation type="obsolete">新建立的物件將會被放在所選的位置之內。</translation>
+    </message>
+    <message>
         <source>The newly created object will be automatically related to the draft being edited (&lt;%version_name&gt;).</source>
         <translation>新建立的物件將會自動關聯到編輯過的草稿 (&lt;%version_name&gt;)。</translation>
+    </message>
+    <message>
+        <source>Select the file you wish to upload and click the &quot;Upload&quot; button.</source>
+        <translation type="obsolete">請選取你希望上傳的檔案，並按一下「上傳」按鈕。</translation>
     </message>
     <message>
         <source>The newly created object will be placed within the specified location.</source>
@@ -3456,6 +4060,22 @@
         <translation type="unfinished">輸入新別名的 URL。使用向前的斜線(/)建立支項。</translation>
     </message>
     <message>
+        <source>Relative aliases start from the parent of the current node while non-relative aliases start from the root of the site.</source>
+        <translation type="obsolete">相關的別名從所在節點的上層開始，不相關的別名從下層開始。</translation>
+    </message>
+    <message>
+        <source>Relative to parent</source>
+        <translation type="obsolete">與上層相關</translation>
+    </message>
+    <message>
+        <source>Create</source>
+        <translation type="obsolete">建立</translation>
+    </message>
+    <message>
+        <source>Create a new URL alias for this node.</source>
+        <translation type="obsolete">建立這個節點的新 URL。</translation>
+    </message>
+    <message>
         <source>Generated aliases [%count]</source>
         <translation type="unfinished">產生別名[%count]</translation>
     </message>
@@ -3497,7 +4117,7 @@
     </message>
     <message>
         <source>Direct</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">方向</translation>
     </message>
     <message>
         <source>URL alias name:</source>
@@ -3537,6 +4157,14 @@
     </message>
     <message>
         <source>&lt;em&gt;Un-check&lt;/em&gt; to create the new alias under %link. Leave it checked and the new alias will be created on &lt;em&gt;&lt;a href=&apos;/&apos;&gt;%siteroot&lt;/a&gt;&lt;/em&gt;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>URL aliases for &lt;%node_name&gt; (%alias_count)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Generated aliases (%count)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3679,6 +4307,10 @@
         <translation type="unfinished">輸入新別名的 URL。使用向前的斜線(/)建立支項。</translation>
     </message>
     <message>
+        <source>Destination (path to existing funtionality or resource)</source>
+        <translation type="obsolete">目標（指向現有的功能或源檔）</translation>
+    </message>
+    <message>
         <source>Enter the destination URL for the new alias. Use forward slashes (/) to create subentries.</source>
         <translation type="unfinished">輸入新別名的目標 URL。使用向前的斜線(/)建立支項。</translation>
     </message>
@@ -3712,10 +4344,14 @@
     </message>
     <message>
         <source>Direct</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">方向</translation>
     </message>
     <message>
         <source>Destination (path to existing functionality or resource)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Globally defined URL aliases (%alias_count)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3826,6 +4462,14 @@
         <translation type="unfinished">新 URL 萬用字元</translation>
     </message>
     <message>
+        <source>Enter the URL for the new wildcard. Example: /developer/*</source>
+        <translation type="obsolete">輸入新萬用字元的 URL。範例： /developer/*</translation>
+    </message>
+    <message>
+        <source>Enter the destination URL for the new wildcard. Example: /dev/{1\}</source>
+        <translation type="obsolete">輸入新萬用字元的目標 URL。範例： /dev/{1\}</translation>
+    </message>
+    <message>
         <source>Perform redirecting.</source>
         <translation type="unfinished">執行重新導向</translation>
     </message>
@@ -3845,9 +4489,196 @@
         <source>Enter the destination URL for the new wildcard. Example: dev/{1\}</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Defined URL aliases with wildcard(%wildcard_count)</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>design/admin/content/urltranslator</name>
+    <message>
+        <source>The requested URL forwarding could not be created.</source>
+        <translation type="obsolete">無法建立所要求的 URL 轉送。</translation>
+    </message>
+    <message>
+        <source>The destination URL &lt;%destination_url&gt; does not exist in the system.</source>
+        <translation type="obsolete">目的 URL &lt;%destination_url&gt; 不存在於系統之中。</translation>
+    </message>
+    <message>
+        <source>System URL</source>
+        <translation type="obsolete">系統 URL</translation>
+    </message>
+    <message>
+        <source>Example: /services</source>
+        <translation type="obsolete">範例：/services</translation>
+    </message>
+    <message>
+        <source>Example: /content/view/full/42</source>
+        <translation type="obsolete">範例：/content/view/full/42</translation>
+    </message>
+    <message>
+        <source>Add</source>
+        <translation type="obsolete">加入</translation>
+    </message>
+    <message>
+        <source>Existing virtual URL</source>
+        <translation type="obsolete">現有的虛擬 URL</translation>
+    </message>
+    <message>
+        <source>Example: /about/service</source>
+        <translation type="obsolete">範例：/about/service</translation>
+    </message>
+    <message>
+        <source>Example: /developer/*</source>
+        <translation type="obsolete">範例：/developer/*</translation>
+    </message>
+    <message>
+        <source>Custom URL translations [%alias_count]</source>
+        <translation type="obsolete">自訂 URL 翻譯 [%alias_count]</translation>
+    </message>
+    <message>
+        <source>Type</source>
+        <translation type="obsolete">類型</translation>
+    </message>
+    <message>
+        <source>Forwards to</source>
+        <translation type="obsolete">轉寄到</translation>
+    </message>
+    <message>
+        <source>Remove selected</source>
+        <translation type="obsolete">刪除所選</translation>
+    </message>
+    <message>
+        <source>Apply changes</source>
+        <translation type="obsolete">套用變更</translation>
+    </message>
+    <message>
+        <source>New system URL forwarding</source>
+        <translation type="obsolete">新的系統 URL 轉送</translation>
+    </message>
+    <message>
+        <source>Use this field to enter an address relative to the root of the system that should be translated into another URL. This address does not have to exist in your current system.</source>
+        <translation type="obsolete">請使用此欄位以輸入相對於系統根目錄的位址，它應該被翻譯為另一個 URL。此位址不須存在於你目前的系統之中。</translation>
+    </message>
+    <message>
+        <source>Use this field to enter a valid system URL. A system URL is easily recognized since it consists of several parts separated by a &quot;/&quot;.</source>
+        <translation type="obsolete">請使用此欄位以輸入有效的系統 URL。系統 URL 是很容易辨識的，因為它由多個部份組成並由「/」所分隔。</translation>
+    </message>
+    <message>
+        <source>Click this button to add a new system URL forwarding. System URL forwarding is used to forward any URL to a system URL in eZ publish.</source>
+        <translation type="obsolete">按一下此按鈕以加入新的系統 URL 轉送。系統 URL 轉送是用來轉送任何 URL 到 eZ publish 中的系統 URL。</translation>
+    </message>
+    <message>
+        <source>New virtual URL forwarding</source>
+        <translation type="obsolete">新增虛擬 URL 轉送</translation>
+    </message>
+    <message>
+        <source>Use this field to enter a valid existing virtual URL in the system. A virtual URL is generated by the system and usually contains part of the content of an object.</source>
+        <translation type="obsolete">請使用此欄位以輸入系統中有效的既存虛擬 URL。虛擬 URL 是由系統所產生，並且通常含有物件的部分內容。</translation>
+    </message>
+    <message>
+        <source>Click this button to add a new virtual URL forwarding. Virtual URL forwarding is used to forward any URL to an existing virtual URL in eZ publish.</source>
+        <translation type="obsolete">按一下此按鈕以加入新的虛擬 URL 轉送。虛擬 URL 轉送是用來轉送任何 URL 到 eZ publish 中的既存虛擬 URL。</translation>
+    </message>
+    <message>
+        <source>New virtual URL forwarding with wildcard</source>
+        <translation type="obsolete">新增附有萬用字元的虛擬 URL 轉送</translation>
+    </message>
+    <message>
+        <source>Redirecting URL</source>
+        <translation type="obsolete">重新導向 URL</translation>
+    </message>
+    <message>
+        <source>Example</source>
+        <translation type="obsolete">範例</translation>
+    </message>
+    <message>
+        <source>Use this field to enter an address relative to the root of the system that should be translated into another URL. This address does not have to exist in your current system. You can place a star anywhere in the URL which will match an arbitrary number of characters.</source>
+        <translation type="obsolete">請使用此欄位以輸入相對於系統根目錄的位址，它應該被翻譯為另一個 URL。此位址不須存在於你目前的系統之中。你可以在 URL 中任何地方放上星號，它將會符合任意數量的字元。</translation>
+    </message>
+    <message>
+        <source>Use this field to enter a valid existing virtual URL in the system. A virtual URL is generated by the system and usually contains part of the content of an object. Any characters matched by a star in the source URL can be transfered to the destination URL by inserting {1\} where appropriate.</source>
+        <translation type="obsolete">請使用此欄位以輸入系統中有效的既存虛擬 URL。虛擬 URL 是由系統所產生，並且通常含有物件的部分內容。任何透過來源 URL 中的星號所符合的字元，可以經由在適當位置插入 {1\} 而轉送到目的 URL。</translation>
+    </message>
+    <message>
+        <source>Use this checkbox to select if eZ publish should perform an internal redirect or a browser redirect. An internal redirect simply redirects the old URL to the new one without notifying the browser. A browser redirect makes the browser abort the current request and reload with the new URL. A browser redirect can be useful if you want the browser URL field to be updated.</source>
+        <translation type="obsolete">請使用此核取方塊以選擇，是否 eZ publish 應該實行內部重新導向或是瀏覽器重新導向。內部重新導向簡單地將舊的 URL 重新導向到新的而不需通知瀏覽器。瀏覽器重新導向將使瀏覽器放棄目前的要求，並且重新以新的 URL 載入。如果你想要更新瀏覽器的 URL 欄位，就會用得到瀏覽器重新導向。</translation>
+    </message>
+    <message>
+        <source>Click this button to add a new virtual URL forwarding with wildcard match. Virtual URL forwarding is used to forward any URL to an existing virtual URL in eZ publish. The wildcard match is useful if you have moved a complete tree from one place to another.</source>
+        <translation type="obsolete">按一下此按鈕以加入新的附有萬用字元匹配的虛擬 URL 轉送。虛擬 URL 轉送是用來轉寄任何 URL 到 eZ publish 中的現有虛擬 URL。如果你已經從一個地點移動了完整的樹狀系統到其他地點，那麼將會用到萬用字元匹配。</translation>
+    </message>
+    <message>
+        <source>Invert selection.</source>
+        <translation type="obsolete">反向選擇。</translation>
+    </message>
+    <message>
+        <source>Source URL</source>
+        <translation type="obsolete">來源 URL</translation>
+    </message>
+    <message>
+        <source>Destination URL</source>
+        <translation type="obsolete">目的 URL</translation>
+    </message>
+    <message>
+        <source>Select URL translation for removal.</source>
+        <translation type="obsolete">請選取要刪除的 URL 翻譯。</translation>
+    </message>
+    <message>
+        <source>Wildcard forwarding</source>
+        <translation type="obsolete">萬用字元轉送</translation>
+    </message>
+    <message>
+        <source>System forwarding</source>
+        <translation type="obsolete">系統轉送</translation>
+    </message>
+    <message>
+        <source>Virtual forwarding</source>
+        <translation type="obsolete">虛擬轉送</translation>
+    </message>
+    <message>
+        <source>There are no custom URL translations.</source>
+        <translation type="obsolete">沒有自訂的 URL 翻譯。</translation>
+    </message>
+    <message>
+        <source>Remove selected URL translations.</source>
+        <translation type="obsolete">刪除所選 URL 翻譯。</translation>
+    </message>
+    <message>
+        <source>Click this button to store changes if you have modified any of the fields in the list above.</source>
+        <translation type="obsolete">如果你已經修改以上清單中的任何欄位，按一下此按鈕以儲存變更。</translation>
+    </message>
+    <message>
+        <source>New virtual URL</source>
+        <translation type="obsolete">新增虛擬 URL</translation>
+    </message>
+    <message>
+        <source>New virtual URL wildcard</source>
+        <translation type="obsolete">新增虛擬 URL 萬用字元</translation>
+    </message>
 </context>
 <context>
     <name>design/admin/content/versions</name>
+    <message>
+        <source>Version not a draft</source>
+        <translation type="obsolete">不是草稿的版本</translation>
+    </message>
+    <message>
+        <source>Version %1 is not available for editing anymore, only drafts can be edited.</source>
+        <translation type="obsolete">版本 %1 不能再被編輯，只有草稿可以被編輯。</translation>
+    </message>
+    <message>
+        <source>To edit this version create a copy of it.</source>
+        <translation type="obsolete">為了編輯此版本而建立一份複本。</translation>
+    </message>
+    <message>
+        <source>Version not yours</source>
+        <translation type="obsolete">不是你的版本</translation>
+    </message>
+    <message>
+        <source>Version %1 was not created by you, only your own drafts can be edited.</source>
+        <translation type="obsolete">版本 %1 不是你所建立，你只能編輯自己的草稿。</translation>
+    </message>
     <message>
         <source>Unable to create new version</source>
         <translation>不能建立新版本</translation>
@@ -3933,6 +4764,10 @@
         <translation>請選取要刪除的版本 #%version_number。</translation>
     </message>
     <message>
+        <source>Version #%version_number can not be removed because it is either the published version of the object or because you do not have permissions to remove it.</source>
+        <translation type="obsolete">版本 #%version_number 無法刪除，因為它若非物件已發佈的版本，就是因為你沒有權限刪除它。</translation>
+    </message>
+    <message>
         <source>View the contents of version #%version_number. Translation: %translation.</source>
         <translation>檢視版本 #%version_number 的內容。翻譯：%translation。</translation>
     </message>
@@ -3945,8 +4780,16 @@
         <translation>建立版本 #%version_number 的複本。</translation>
     </message>
     <message>
+        <source>You can not make copies of versions because you do not have permissions to edit the object.</source>
+        <translation type="obsolete">你無法製作版本複本，因為你沒有權限編輯物件。</translation>
+    </message>
+    <message>
         <source>Edit the contents of version #%version_number.</source>
         <translation>編輯版本 #%version_number 的內容。</translation>
+    </message>
+    <message>
+        <source>You can not edit the contents of version #%version_number either because it is not a draft or because you do not have permissions to edit the object.</source>
+        <translation type="obsolete">你無法編輯版本 #%version_number 的內容，若非因為它不是草稿，就是因為你沒有權限編輯物件。</translation>
     </message>
     <message>
         <source>This object does not have any versions.</source>
@@ -4004,6 +4847,10 @@
         <source>You cannot edit the contents of version #%version_number either because it is not a draft or because you do not have permission to edit the object.</source>
         <translation type="unfinished">你不能編輯版本 #%version_number，因為這不是草稿或是你沒有權限編輯這稿件。</translation>
     </message>
+    <message>
+        <source>Versions for &lt;%object_name&gt; (%version_count)</source>
+        <translation>版本用於 &lt;%object_name&gt; (%version_count)</translation>
+    </message>
 </context>
 <context>
     <name>design/admin/content/view/versionview</name>
@@ -4038,6 +4885,10 @@
     <message>
         <source>View and manage (copy, delete, etc.) the versions of this object.</source>
         <translation>檢視和管理 (複製、刪除…等等) 此物件的版本。</translation>
+    </message>
+    <message>
+        <source>You can not manage the versions of this object because there is only one version available (the one that is being displayed).</source>
+        <translation type="obsolete">你無法管理此物件的版本，因為有只有一個可用版本 (正被顯示的這一個)。</translation>
     </message>
     <message>
         <source>Version information</source>
@@ -4108,6 +4959,10 @@
         <translation>編輯正被顯示的草稿。</translation>
     </message>
     <message>
+        <source>This version is not a draft and thus it can not be edited.</source>
+        <translation type="obsolete">此版本並非草稿，因而無法編輯它。</translation>
+    </message>
+    <message>
         <source>Siteaccess</source>
         <translation>存取網址</translation>
     </message>
@@ -4135,12 +4990,24 @@
         <source>Your selected translation does not match the language of your selected siteaccess. This may lead to unexpected results in the preview, however it may also be what you intended.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Back to edit</source>
+        <translation type="unfinished">回到編輯</translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>design/admin/contentstructuremenu</name>
     <message>
         <source>Fold/Unfold</source>
         <translation>折疊/展開</translation>
+    </message>
+    <message>
+        <source>[%classname] Click on the icon to get a context sensitive menu.</source>
+        <translation type="obsolete">[%classname] 在圖示上按一下以得到上下文相關的選單。</translation>
     </message>
     <message>
         <source>Click on the icon to display a context-sensitive menu.</source>
@@ -4182,6 +5049,176 @@
         <source>[%classname] Click on the icon to display a context-sensitive menu.</source>
         <translation type="unfinished">[%classname] 在圖示上按一下以顯示上下文相關的選單。</translation>
     </message>
+    <message>
+        <source>Object ID</source>
+        <translation type="unfinished">物件 ID</translation>
+    </message>
+</context>
+<context>
+    <name>design/admin/dashboard/all_latest_content</name>
+    <message>
+        <source>All latest content</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Type</source>
+        <translation type="unfinished">類型</translation>
+    </message>
+    <message>
+        <source>Published</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Author</source>
+        <translation type="unfinished">作者</translation>
+    </message>
+    <message>
+        <source>Edit</source>
+        <translation type="unfinished">編輯</translation>
+    </message>
+    <message>
+        <source>Edit &lt;%child_name&gt;.</source>
+        <translation type="unfinished">編輯 &lt;%child_name&gt;。</translation>
+    </message>
+    <message>
+        <source>You do not have permission to edit &lt;%child_name&gt;.</source>
+        <translation type="unfinished">你沒有權限編輯 &lt;%child_name&gt;。</translation>
+    </message>
+    <message>
+        <source>Latest content list is empty.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>design/admin/dashboard/drafts</name>
+    <message>
+        <source>My drafts</source>
+        <translation type="unfinished">我的草稿</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Type</source>
+        <translation type="unfinished">類型</translation>
+    </message>
+    <message>
+        <source>Version</source>
+        <translation type="unfinished">版本</translation>
+    </message>
+    <message>
+        <source>Modified</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit &lt;%draft_name&gt;.</source>
+        <translation type="unfinished">編輯 &lt;%draft_name&gt;。</translation>
+    </message>
+    <message>
+        <source>Edit</source>
+        <translation type="unfinished">編輯</translation>
+    </message>
+    <message>
+        <source>Currently you do not have any drafts available.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>design/admin/dashboard/latest_content</name>
+    <message>
+        <source>My latest content</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Type</source>
+        <translation type="unfinished">類型</translation>
+    </message>
+    <message>
+        <source>Modified</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit</source>
+        <translation type="unfinished">編輯</translation>
+    </message>
+    <message>
+        <source>Edit &lt;%child_name&gt;.</source>
+        <translation type="unfinished">編輯 &lt;%child_name&gt;。</translation>
+    </message>
+    <message>
+        <source>You do not have permission to edit &lt;%child_name&gt;.</source>
+        <translation type="unfinished">你沒有權限編輯 &lt;%child_name&gt;。</translation>
+    </message>
+    <message>
+        <source>Your latest content list is empty.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>design/admin/dashboard/maintenance</name>
+    <message>
+        <source>Software update and Maintenance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Your installation: &lt;span id=&quot;ez-version&quot;&gt;%1&lt;/span&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>If your installation is not running eZ Publish Premium, it might not be up to date with the latest maintenance service packs. Contact eZ Systems.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>design/admin/dashboard/pending_list</name>
+    <message>
+        <source>My pending items</source>
+        <translation type="unfinished">我的擱置項目</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Type</source>
+        <translation type="unfinished">類型</translation>
+    </message>
+    <message>
+        <source>Modified</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Currently you do not have any pending items available.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>design/admin/dashboard/wishlist</name>
+    <message>
+        <source>Wish list</source>
+        <translation type="unfinished">願望清單</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Type</source>
+        <translation type="unfinished">類型</translation>
+    </message>
+    <message>
+        <source>Currently you do not have any products on your wish list.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>design/admin/error/kernel</name>
@@ -4200,6 +5237,10 @@
     <message>
         <source>Your account does not have the proper privileges to access the requested page.</source>
         <translation>你的帳號沒有適當權限存取要求的頁面。</translation>
+    </message>
+    <message>
+        <source>You are not logged into the system. Please log in.</source>
+        <translation type="obsolete">你尚未登入系統。請登入。</translation>
     </message>
     <message>
         <source>The requested page does not exist. Try changing the URL.</source>
@@ -4263,6 +5304,10 @@
         <translation>沒有任何 &lt;%module&gt; 模組可用於此站台。</translation>
     </message>
     <message>
+        <source>The site is using URL matching to determine which siteaccess to use, but the name of the siteaccess is missing from the URL. Try to add the name of the siteaccess, it should be specified before the name of the module.</source>
+        <translation type="obsolete">站台使用 URL 匹配以決定要使用何種方式存取網址，但是在 URL 中缺少了存取網址的名稱。請試著加入存取網址的名稱，它應該在模組名稱之前被指定。</translation>
+    </message>
+    <message>
         <source>The requested page could not be displayed. (21)</source>
         <translation>無法顯示要求的頁面。(21)</translation>
     </message>
@@ -4283,12 +5328,32 @@
         <translation>無法顯示要求的頁面。(22)</translation>
     </message>
     <message>
+        <source>The requested view can not be accessed.</source>
+        <translation type="obsolete">無法存取要求的檢視。</translation>
+    </message>
+    <message>
+        <source>The &lt;%view&gt; within the &lt;%module&gt; is disabled and thus it can not be accessed.</source>
+        <translation type="obsolete">在 &lt;%module&gt; 之內的 &lt;%view&gt; 已停用，因而無法存取。</translation>
+    </message>
+    <message>
+        <source>The requested module can not be accessed.</source>
+        <translation type="obsolete">無法存取要求的模組。</translation>
+    </message>
+    <message>
+        <source>The &lt;%module&gt; module is disabled and thus it can not be accessed.</source>
+        <translation type="obsolete">&lt;%module&gt; 模組已停用，因而無法存取。</translation>
+    </message>
+    <message>
         <source>The requested page could not be displayed. (3)</source>
         <translation>無法顯示要求的頁面。(3)</translation>
     </message>
     <message>
         <source>The requested object is not available.</source>
         <translation>無法使用要求的物件。</translation>
+    </message>
+    <message>
+        <source>The ID number of the object is incorrect. Please check the URL for spelling mistakes.</source>
+        <translation type="obsolete">物件的 ID 號碼不正確。請檢查 URL 是否有拼寫錯誤。</translation>
     </message>
     <message>
         <source>The object is no longer available.</source>
@@ -4305,6 +5370,10 @@
     <message>
         <source>The system should automatically redirect you to the new location of the object.</source>
         <translation>系統會自動將你重新導向到新的物件位置。</translation>
+    </message>
+    <message>
+        <source>If redirection fails, please click on the following address: %url.</source>
+        <translation type="obsolete">如果重新導向失敗，請在下列位址上按一下：%url。</translation>
     </message>
     <message>
         <source>The draft could not be created. (5)</source>
@@ -4370,8 +5439,16 @@
         <translation>無效的首選貨幣。(3)</translation>
     </message>
     <message>
+        <source>&apos;%1&apos; currency doesn&apos;t exist.</source>
+        <translation type="obsolete">「%1」貨幣不存在。</translation>
+    </message>
+    <message>
         <source>Invalid preferred currency. (4)</source>
         <translation>無效的首選貨幣。(4)</translation>
+    </message>
+    <message>
+        <source>&apos;%1&apos; can&apos;t be used because it&apos;s inactive.</source>
+        <translation type="obsolete">「%1」無法使用，因為它不在啟用狀態。</translation>
     </message>
     <message>
         <source>&apos;%1&apos; currency does not exist.</source>
@@ -4384,6 +5461,10 @@
 </context>
 <context>
     <name>design/admin/ezinfo/about</name>
+    <message>
+        <source>Licence</source>
+        <translation type="obsolete">授權</translation>
+    </message>
     <message>
         <source>Contributors</source>
         <translation>貢獻者</translation>
@@ -4399,6 +5480,14 @@
     <message>
         <source>Extensions</source>
         <translation>擴充功能</translation>
+    </message>
+    <message>
+        <source>eZ publish information: %version</source>
+        <translation type="obsolete">eZ publish 資訊：%version</translation>
+    </message>
+    <message>
+        <source>What is eZ publish?</source>
+        <translation type="obsolete">eZ publish 是什麼？</translation>
     </message>
     <message>
         <source>eZ Publish information: %version</source>
@@ -4458,6 +5547,10 @@
     <message>
         <source>Unknown user</source>
         <translation>不明的使用者</translation>
+    </message>
+    <message>
+        <source>Information collected by &lt;%object_name&gt; (%collection_count)</source>
+        <translation>資訊由 &lt;%object_name&gt; (%collection_count)收集</translation>
     </message>
 </context>
 <context>
@@ -4536,6 +5629,10 @@
     <message>
         <source>Remove all information that was collected by the selected objects.</source>
         <translation>刪除所有由所選物件所收集的資訊。</translation>
+    </message>
+    <message>
+        <source>Objects that have collected information (%object_count)</source>
+        <translation>具有已收集資訊的物件 (%object_count)</translation>
     </message>
 </context>
 <context>
@@ -4641,6 +5738,10 @@
         <translation>你確認要刪除這些項目以及它們的內容嗎？</translation>
     </message>
     <message>
+        <source>The lines marked with red contain items that you do not have permissions to remove.</source>
+        <translation type="obsolete">以紅色標記的列包含了你沒有刪除權限項目。</translation>
+    </message>
+    <message>
         <source>Click the &quot;Cancel&quot; button and try removing only the locations that you are allowed to remove.</source>
         <translation>按一下「取消」按鈕，並試著只刪除允許你刪除的位置。</translation>
     </message>
@@ -4659,6 +5760,10 @@
     <message>
         <source>OK</source>
         <translation>確認</translation>
+    </message>
+    <message>
+        <source>You can not continue because you do not have permissions to remove some of the selected locations.</source>
+        <translation type="obsolete">你無法繼續，因為你沒有權限去刪除某些所選位置。</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -4683,6 +5788,18 @@
     <message>
         <source>Cancel the removal of translations.</source>
         <translation>取消翻譯的刪除。</translation>
+    </message>
+    <message>
+        <source>Please choose the location where you wish to restore &lt;%name&gt;.</source>
+        <translation type="obsolete">請選取你希望還原 &lt;%name&gt; 的位置。</translation>
+    </message>
+    <message>
+        <source>The system will let you restore the object &lt;%name&gt;. Please choose where you wish to restore it to.</source>
+        <translation type="obsolete">系統將讓你還原物件 &lt;%name&gt;。請選取你希望它還原的位置。</translation>
+    </message>
+    <message>
+        <source>The lines marked with red contain more than the maximum possible nodes for subtree removing and will not be deleted. You can remove this subtree using Subtree Remove script.</source>
+        <translation type="obsolete">以紅色標記的列在刪除子樹時，包含超過最大值的可能節點，因而無法刪除。你可以使用子樹刪除命令稿來刪除此子樹。</translation>
     </message>
     <message>
         <source>Some of the subtrees or objects selected for removal are used by other objects. Select the menu from the content tree, and</source>
@@ -4724,12 +5841,24 @@
 <context>
     <name>design/admin/node/view</name>
     <message>
+        <source>Two level index for &lt;%node_name&gt;</source>
+        <translation type="obsolete">兩層索引用於 &lt;%node_name&gt;</translation>
+    </message>
+    <message>
         <source>Two-level index for &lt;%node_name&gt;</source>
         <translation type="unfinished">兩層索引用於 &lt;%node_name&gt;</translation>
     </message>
 </context>
 <context>
     <name>design/admin/node/view/embed</name>
+    <message>
+        <source> - You do not have sufficient permissions to view this object</source>
+        <translation type="obsolete"> - 你沒有充分的權限檢視此物件</translation>
+    </message>
+    <message>
+        <source>You do not have sufficient permissions to view this object</source>
+        <translation type="obsolete">你沒有充分的權限檢視此物件</translation>
+    </message>
     <message>
         <source> - You do not have permission to view this object</source>
         <translation type="unfinished">你沒有權限檢視此物件</translation>
@@ -4830,6 +5959,10 @@
         <translation>從以上的清單刪除所選項目。</translation>
     </message>
     <message>
+        <source>You do not have permissions to remove any of the items from the list above.</source>
+        <translation type="obsolete">你沒有權限從以上的清單去刪除任何項目。</translation>
+    </message>
+    <message>
         <source>Update priorities</source>
         <translation>更新優先等級</translation>
     </message>
@@ -4838,8 +5971,20 @@
         <translation>套用在以上清單中項目優先等級的變更。</translation>
     </message>
     <message>
+        <source>You can not update the priorities because you do not have permissions to edit the current item or because a non-priority sorting method is used.</source>
+        <translation type="obsolete">你無法更新優先等級，因為你沒有權限去編輯目前的項目，或是因為使用了非優先等級的排序方法。</translation>
+    </message>
+    <message>
         <source>Create here</source>
         <translation>在此建立</translation>
+    </message>
+    <message>
+        <source>Create a new item within the current location. Use the menu on the left to select the type of the item.</source>
+        <translation type="obsolete">在目前位置內建立新的項目。使用左側的選單以選取項目的型態。</translation>
+    </message>
+    <message>
+        <source>You do not have permissions to create new items within the current location.</source>
+        <translation type="obsolete">你沒有權限在目前位置內建立新項目。</translation>
     </message>
     <message>
         <source>Depth</source>
@@ -4866,6 +6011,10 @@
         <translation>區段</translation>
     </message>
     <message>
+        <source>You can not set the sorting method for the current location because you do not have permissions to edit the current item.</source>
+        <translation type="obsolete">你無法在目前位置設定排序方法，因為你沒有權限去編輯目前的項目。</translation>
+    </message>
+    <message>
         <source>Set</source>
         <translation>設定</translation>
     </message>
@@ -4878,6 +6027,14 @@
         <translation>修改者</translation>
     </message>
     <message>
+        <source>Use the priority fields to control the order in which the items appear. Use positive and negative integers. Click the &quot;Update priorities&quot; button to apply the changes.</source>
+        <translation type="obsolete">請使用優先權欄位以控制項目出現的順序。使用正整數和負整數。按一下「更新優先等級」按鈕以套用變更。</translation>
+    </message>
+    <message>
+        <source>You are not allowed to update the priorities because you do not have permissions to edit &lt;%node_name&gt;.</source>
+        <translation type="obsolete">你不被允許去更新優先等級，因為你沒有權限編輯 &lt;%node_name&gt;。</translation>
+    </message>
+    <message>
         <source>Copy</source>
         <translation>複製</translation>
     </message>
@@ -4886,12 +6043,24 @@
         <translation>建立 &lt;%child_name&gt; 的複本。</translation>
     </message>
     <message>
+        <source>You can not make a copy of &lt;%child_name&gt; because you do not have create permissions for &lt;%node_name&gt;.</source>
+        <translation type="obsolete">你無法製作 &lt;%child_name&gt; 的複本，因為你沒有權限建立 &lt;%node_name&gt;。</translation>
+    </message>
+    <message>
         <source>Edit</source>
         <translation>編輯</translation>
     </message>
     <message>
         <source>Edit &lt;%child_name&gt;.</source>
         <translation>編輯 &lt;%child_name&gt;。</translation>
+    </message>
+    <message>
+        <source>You do not have permissions to edit &lt;%child_name&gt;.</source>
+        <translation type="obsolete">你沒有權限編輯 &lt;%child_name&gt;。</translation>
+    </message>
+    <message>
+        <source>You do not have permissions to edit %child_name.</source>
+        <translation type="obsolete">你沒有權限編輯 %child_name。</translation>
     </message>
     <message>
         <source>Creator</source>
@@ -4950,12 +6119,28 @@
         <translation>從以上的清單刪除所選位置。</translation>
     </message>
     <message>
+        <source>You can not remove any locations because you do not have permissions to edit the current item.</source>
+        <translation type="obsolete">你無法刪除任何位置，因為你沒有權限編輯目前的項目。</translation>
+    </message>
+    <message>
+        <source>You can not add new locations because you do not have permissions to edit the current item.</source>
+        <translation type="obsolete">你無法加入新的位置，因為你沒有權限編輯目前的項目。</translation>
+    </message>
+    <message>
         <source>Set main</source>
         <translation>設定主要</translation>
     </message>
     <message>
+        <source>You can not set the main location because you do not have permissions to edit the current item.</source>
+        <translation type="obsolete">你無法設定主要位置，因為你沒有權限編輯目前的項目。</translation>
+    </message>
+    <message>
         <source>Last modified</source>
         <translation>最後修改時間</translation>
+    </message>
+    <message>
+        <source>You do not have permissions to edit this item.</source>
+        <translation type="obsolete">你沒有權限去編輯此項目。</translation>
     </message>
     <message>
         <source>Move</source>
@@ -4966,12 +6151,20 @@
         <translation>移動此項目到其他位置。</translation>
     </message>
     <message>
+        <source>You do not have permissions to move this item to another location.</source>
+        <translation type="obsolete">你沒有權限去移動此項目到其他位置。</translation>
+    </message>
+    <message>
         <source>Remove</source>
         <translation>刪除</translation>
     </message>
     <message>
         <source>Remove this item.</source>
         <translation>刪除此項目。</translation>
+    </message>
+    <message>
+        <source>You do not have permissions to remove this item.</source>
+        <translation type="obsolete">你沒有權限去刪除此項目。</translation>
     </message>
     <message>
         <source>Function</source>
@@ -5000,6 +6193,10 @@
     <message>
         <source>The item being viewed does not make use of any other objects.</source>
         <translation>被檢視的項目不利用任何其他物件。</translation>
+    </message>
+    <message>
+        <source>The item being viewed is not in use by any other objects.</source>
+        <translation type="obsolete">被檢視的項目不被任何其他物件所利用。</translation>
     </message>
     <message>
         <source>Assigned roles [%roles_count]</source>
@@ -5070,6 +6267,10 @@
         <translation>以縮圖顯示子項目。</translation>
     </message>
     <message>
+        <source>Use this menu to select the type of item you wish to create and click the &quot;Create here&quot; button. The item will be created within the current location.</source>
+        <translation type="obsolete">請使用此選單以選取你希望建立的項目型態，並且按一下「在此建立」按鈕。項目將會建立於目前位置之內。</translation>
+    </message>
+    <message>
         <source>Not available</source>
         <translation>無法使用</translation>
     </message>
@@ -5102,8 +6303,16 @@
         <translation>類型</translation>
     </message>
     <message>
+        <source>Use these checkboxes to select items for removal. Click the &quot;Remove selected&quot; button to actually remove the selected items.</source>
+        <translation type="obsolete">請使用這些核取方塊選取要刪除的項目。按一下「刪除所選」按鈕以實際刪除所選項目。</translation>
+    </message>
+    <message>
         <source>Move &lt;%child_name&gt; to another location.</source>
         <translation>移動 &lt;%child_name&gt; 到其他位置。</translation>
+    </message>
+    <message>
+        <source>You do not have permissions remove this item.</source>
+        <translation type="obsolete">你沒有權限去刪除此項目。</translation>
     </message>
     <message>
         <source>Locations [%locations]</source>
@@ -5112,6 +6321,10 @@
     <message>
         <source>Sub items</source>
         <translation>子項目</translation>
+    </message>
+    <message>
+        <source>This location can not be removed either because you do not have permissions to remove it or because it is currently being displayed.</source>
+        <translation type="obsolete">此位置無法被刪除，若非因為你沒有權限去刪除它，就是因為它目前正被顯示。</translation>
     </message>
     <message>
         <source>Select location for removal.</source>
@@ -5150,6 +6363,14 @@
         <translation>請使用這些單選按鈕以選取想要的主要位置。</translation>
     </message>
     <message>
+        <source>The item being displayed has only one location and thus it does not make sense to set it.</source>
+        <translation type="obsolete">所顯示的項目只有一個位置，因而設定它不具任何意義。</translation>
+    </message>
+    <message>
+        <source>You can not set the main location because you do not have permissions to edit the item being displayed.</source>
+        <translation type="obsolete">你無法設定主要位置，因為你沒有權限去編輯正在顯示的項目。</translation>
+    </message>
+    <message>
         <source>Add locations</source>
         <translation>加入位置</translation>
     </message>
@@ -5160,6 +6381,14 @@
     <message>
         <source>It is not possible to add locations to a top level node.</source>
         <translation>無法加入位置到頂層節點。</translation>
+    </message>
+    <message>
+        <source>Select the desired main location using the radio buttons above and click this button to store the setting.</source>
+        <translation type="obsolete">請使用以上的單選按鈕選取想要的主要位置，並且按一下此按鈕以儲存設定。</translation>
+    </message>
+    <message>
+        <source>You can not set the main location because there is only one location present.</source>
+        <translation type="obsolete">你無法設定主要位置，因為有只出現一個位置。</translation>
     </message>
     <message>
         <source>The &lt;%class_name&gt; class is not configured to contain any sub items.</source>
@@ -5238,6 +6467,10 @@
         <translation>反向相關的物件 [%related_objects_count]</translation>
     </message>
     <message>
+        <source>Use this menu to select the language you wish use for the creation and click the &quot;Create here&quot; button. The item will be created within the current location.</source>
+        <translation type="obsolete">請使用此選單選取你希望用來建立的語言，並且按一下「在此建立」按鈕。項目將會被建立在目前位置之內。</translation>
+    </message>
+    <message>
         <source>Published at</source>
         <translation>發佈於</translation>
     </message>
@@ -5266,6 +6499,22 @@
         <translation>沒有任何可刪除的語言。</translation>
     </message>
     <message>
+        <source>You can not remove any language because you do not have permissions to edit the current item.</source>
+        <translation type="obsolete">你無法刪除任何語言，因為你沒有權限去編輯目前的項目。</translation>
+    </message>
+    <message>
+        <source>Select the desired main language using the radio buttons above and click this button to store the setting.</source>
+        <translation type="obsolete">請使用以上的單選按鈕選取想要的主要語言，並且按一下此按鈕以儲存設定。</translation>
+    </message>
+    <message>
+        <source>You can not change the main language because the object is not translated to any other languages.</source>
+        <translation type="obsolete">你無法變更主要語言，因為物件並未翻譯到任何其他的語言。</translation>
+    </message>
+    <message>
+        <source>You can not change the main language because you do not have permissions to edit the current item.</source>
+        <translation type="obsolete">你無法變更主要語言，因為你沒有權限去編輯目前的項目。</translation>
+    </message>
+    <message>
         <source>Use the main language if there is no prioritized translation.</source>
         <translation>如果沒有任何優先的翻譯就使用主要語言。</translation>
     </message>
@@ -5276,6 +6525,10 @@
     <message>
         <source>Use this button to store the value of the checkbox above.</source>
         <translation>請使用此按鈕以儲存以上核取方塊的值。</translation>
+    </message>
+    <message>
+        <source>You do not have sufficient permissions to change this setting.</source>
+        <translation type="obsolete">你沒有充分的權限去變更此設定。</translation>
     </message>
     <message>
         <source>(locked)</source>
@@ -5465,9 +6718,133 @@
         <source>Show state assignment widget.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Tab is disabled, enable on dashboard.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Translations (%count)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Locations (%count)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Relations (%count)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Roles (%count)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Policies (%count)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sub items (%children_count)</source>
+        <translation>子項目 (%children_count)</translation>
+    </message>
+    <message>
+        <source>Create</source>
+        <translation type="unfinished">建立</translation>
+    </message>
+    <message>
+        <source>in</source>
+        <translation type="unfinished">於</translation>
+    </message>
+    <message>
+        <source>Here</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Published order</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>List of sub items of current node, with controlls to edit, remove and move them directly.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Node and object details like creator, when it was created, section it belongs to, number of versions and translations, Node ID and Object ID.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Content state</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>States and their states groups for current object.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>State group</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No content object state is configured. This can be done %urlstart here%urlend.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Locations (aka Nodes) for current object.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>New translation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Policy list and the Role that are assignet to current node.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Limited to</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%limitation_identifier %limitation_value</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Object relation list from current object.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Related objects (%related_objects_count)</source>
+        <translation>相關的物件 (%related_objects_count)</translation>
+    </message>
+    <message>
+        <source>Reverse object relation list to current object.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Reverse related objects (%related_objects_count)</source>
+        <translation>反向相關的物件 (%related_objects_count)</translation>
+    </message>
+    <message>
+        <source>List of roles assigned with and without limitations for current node.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Translations (%translations)</source>
+        <translation>翻譯 (%translations)</translation>
+    </message>
+    <message>
+        <source>Existing translations</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Language list of translations for current object.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>design/admin/node/view/line</name>
+    <message>
+        <source>Click on the icon to get a context sensitive menu.</source>
+        <translation type="obsolete">在圖示上按一下以取得上下文相關的選單。</translation>
+    </message>
     <message>
         <source>Node ID: %node_id Visibility: %node_visibility</source>
         <translation>是否顯示  ID：%node_id ：%node_visibility</translation>
@@ -5479,6 +6856,10 @@
 </context>
 <context>
     <name>design/admin/node/view/thumbnail</name>
+    <message>
+        <source>[%classname] Click on the icon to get a context sensitive menu.</source>
+        <translation type="obsolete">[%classname] 在圖示上按一下以取得上下文相關的選單。</translation>
+    </message>
     <message>
         <source>[%classname] Click on the icon to display a context-sensitive menu.</source>
         <translation type="unfinished">在圖示上按一下以顯示上下文相關的選單。</translation>
@@ -5508,6 +6889,10 @@
     <message>
         <source>Collaboration notification</source>
         <translation>合作通知</translation>
+    </message>
+    <message>
+        <source>Choose which collaboration items you wish to get notifications for.</source>
+        <translation type="obsolete">選擇那些你想得到通知的合作項目.</translation>
     </message>
     <message>
         <source>Choose which collaboration items you want to get notifications for.</source>
@@ -5591,6 +6976,10 @@
         <source>Unknown</source>
         <translation>不明</translation>
     </message>
+    <message>
+        <source>My item notifications (%notification_count)</source>
+        <translation>我的項目通知 (%notification_count)</translation>
+    </message>
 </context>
 <context>
     <name>design/admin/notification/runfilter</name>
@@ -5645,6 +7034,10 @@
         <translation>於列首以記號來開始一個條目 (%emstart-%emend (減號) 或 %emstart*%emend (星號))。變更將延續到下一個變更的記號。</translation>
     </message>
     <message>
+        <source>Please provide some basic information for your package.</source>
+        <translation type="obsolete">請提供關於你套件的某些基本資訊。</translation>
+    </message>
+    <message>
         <source>Package name</source>
         <translation>套件名稱</translation>
     </message>
@@ -5661,12 +7054,20 @@
         <translation>版本</translation>
     </message>
     <message>
+        <source>Licence</source>
+        <translation type="obsolete">授權</translation>
+    </message>
+    <message>
         <source>Package host</source>
         <translation>套件主機</translation>
     </message>
     <message>
         <source>Packager</source>
         <translation>套件製作者</translation>
+    </message>
+    <message>
+        <source>Please provide information on the maintainer of the package.</source>
+        <translation type="obsolete">請提供套件維護者的資訊。</translation>
     </message>
     <message>
         <source>Role</source>
@@ -5696,6 +7097,10 @@
     <message>
         <source>Include class definitions.</source>
         <translation>包含類別定義。</translation>
+    </message>
+    <message>
+        <source>Include templates related exported objects.</source>
+        <translation type="obsolete">包含範本相關的匯出物件。</translation>
     </message>
     <message>
         <source>Select templates from the following siteaccesses</source>
@@ -5742,6 +7147,10 @@
         <translation>無</translation>
     </message>
     <message>
+        <source>Please choose objects you wish to include in the package.</source>
+        <translation type="obsolete">請選取你希望包含在套件中的物件。</translation>
+    </message>
+    <message>
         <source>Selected nodes</source>
         <translation>所選節點</translation>
     </message>
@@ -5756,6 +7165,10 @@
     <message>
         <source>Export type</source>
         <translation>匯出型態</translation>
+    </message>
+    <message>
+        <source>There are currently no objects selected for exportation</source>
+        <translation type="obsolete">目前沒有任何物件被選取用於匯出</translation>
     </message>
     <message>
         <source>Remove selected</source>
@@ -5778,6 +7191,12 @@
         <translation>請選取要包含在套件中的類別 CSS 檔案。</translation>
     </message>
     <message>
+        <source>Select an image file to be included in the package and click Next.
+Click &quot;Next&quot; without choosing an image to continue to the next step.</source>
+        <translation type="obsolete">請選取包含在套件中的圖像檔案，並且按「下一個」，
+而不需選取圖像以繼續到下一個步驟。</translation>
+    </message>
+    <message>
         <source>Currently added image files</source>
         <translation>目前已加入的圖像檔</translation>
     </message>
@@ -5788,6 +7207,12 @@
     <message>
         <source>Install package</source>
         <translation>安裝套件</translation>
+    </message>
+    <message>
+        <source>The package can be installed on your system, installing the package will copy files, create content classes etc. all depending on the package.
+If you do not wish to install the package at this time you can do so later on the view page for the package.</source>
+        <translation type="obsolete">套件可以被安裝於你的系統，安裝套件將會複製所有依存於套件的檔案、建立內容類別…等等。
+如果這一次你不希望安裝套件，你可以稍後在套件的檢視頁面再做。</translation>
     </message>
     <message>
         <source>Install items</source>
@@ -5812,6 +7237,10 @@
     <message>
         <source>Upload package</source>
         <translation>上傳套件</translation>
+    </message>
+    <message>
+        <source>Select the file containing your package and click the upload button</source>
+        <translation type="obsolete">選擇含有你的套件檔案並點選上傳鍵</translation>
     </message>
     <message>
         <source>Import package</source>
@@ -5858,6 +7287,10 @@
         <translation>維護者</translation>
     </message>
     <message>
+        <source>Regarding eZ publish package &apos;%packagename&apos;</source>
+        <translation type="obsolete">關於 eZ publish 套件「%packagename」</translation>
+    </message>
+    <message>
         <source>Documents</source>
         <translation>文件</translation>
     </message>
@@ -5872,6 +7305,14 @@
     <message>
         <source>Uninstall package</source>
         <translation>解除套件安裝</translation>
+    </message>
+    <message>
+        <source>The package can be uninstalled from your system, uninstalling the package will remove any installed files, content classes etc. all depending on the package.
+If you do not wish to uninstall the package at this time you can do so later on the view page for the package.
+You may also remove the package without uninstalling it from the package list.</source>
+        <translation type="obsolete">套件可以從你的系統被解除安裝，解除套件安裝將會刪除任何已安裝的檔案、內容類別…等等所有依存於套件的項目。
+如果你這一次不希望解除套件安裝，你可以稍後在套件的檢視頁面再做。
+你也可以刪除套件而不需將它從套件清單解除安裝。</translation>
     </message>
     <message>
         <source>Uninstall items</source>
@@ -5966,6 +7407,14 @@ You can also remove the package without uninstalling it from the package list.</
         <translation>套件的刪除</translation>
     </message>
     <message>
+        <source>Are you sure you wish to remove the following packages?
+The packages will be lost forever.
+Note: The packages will not be uninstalled.</source>
+        <translation type="obsolete">你確定要刪除下列套件嗎？
+套件將會永久失去。
+注意：套件將無法被解除安裝。</translation>
+    </message>
+    <message>
         <source>OK</source>
         <translation>確認</translation>
     </message>
@@ -6049,6 +7498,10 @@ Note: The packages will not be uninstalled.</source>
 套件將會永久失去。
 注意：套件將無法被解除安裝。</translation>
     </message>
+    <message>
+        <source>Remove</source>
+        <translation type="unfinished">刪除</translation>
+    </message>
 </context>
 <context>
     <name>design/admin/pagelayout</name>
@@ -6074,31 +7527,31 @@ Note: The packages will not be uninstalled.</source>
     </message>
     <message>
         <source>Content structure</source>
-        <translation>內容結構</translation>
+        <translation type="unfinished">內容結構</translation>
     </message>
     <message>
         <source>Media library</source>
-        <translation>媒體功能庫</translation>
+        <translation type="unfinished">媒體功能庫</translation>
     </message>
     <message>
         <source>User accounts</source>
-        <translation>請使用者帳號</translation>
+        <translation type="unfinished">請使用者帳號</translation>
     </message>
     <message>
         <source>Webshop</source>
-        <translation>網路商店</translation>
+        <translation type="unfinished">網路商店</translation>
     </message>
     <message>
         <source>Setup</source>
-        <translation>設定</translation>
+        <translation type="unfinished">設定</translation>
     </message>
     <message>
         <source>Design</source>
-        <translation>設計</translation>
+        <translation type="unfinished">設計</translation>
     </message>
     <message>
         <source>My account</source>
-        <translation>我的帳號</translation>
+        <translation type="obsolete">我的帳號</translation>
     </message>
     <message>
         <source>Current user</source>
@@ -6138,31 +7591,31 @@ Note: The packages will not be uninstalled.</source>
     </message>
     <message>
         <source>Manage the main content structure of the site.</source>
-        <translation>管理站台的主要內容結構。</translation>
+        <translation type="unfinished">管理站台的主要內容結構。</translation>
     </message>
     <message>
         <source>Manage images, files, documents, etc.</source>
-        <translation>管理圖像、檔案、文件…等項目。</translation>
+        <translation type="unfinished">管理圖像、檔案、文件…等項目。</translation>
     </message>
     <message>
         <source>Manage users, user groups and permission settings.</source>
-        <translation>管理使用者、使用者組別和權限設定值。</translation>
+        <translation type="unfinished">管理使用者、使用者組別和權限設定值。</translation>
     </message>
     <message>
         <source>Manage customers, orders, discounts and VAT types; view sales statistics.</source>
-        <translation>管理客戶、訂單、折扣和稅別；檢視銷售統計。</translation>
+        <translation type="unfinished">管理客戶、訂單、折扣和稅別；檢視銷售統計。</translation>
     </message>
     <message>
         <source>Manage templates, menus, toolbars and other things related to appearence.</source>
-        <translation>管理範本、選單、工具列和其他與外觀有關的東西。</translation>
+        <translation type="unfinished">管理範本、選單、工具列和其他與外觀有關的東西。</translation>
     </message>
     <message>
         <source>Configure settings and manage advanced functionality.</source>
-        <translation>配置設定值和管理進階功能。</translation>
+        <translation type="unfinished">配置設定值和管理進階功能。</translation>
     </message>
     <message>
         <source>Manage items and settings that belong to your account.</source>
-        <translation>管理屬於你帳號的項目和設定值。</translation>
+        <translation type="unfinished">管理屬於你帳號的項目和設定值。</translation>
     </message>
     <message>
         <source>Change password for &lt;%username&gt;.</source>
@@ -6191,6 +7644,10 @@ Note: The packages will not be uninstalled.</source>
     <message>
         <source>Manage your personal bookmarks.</source>
         <translation>管理你的個人書籤。</translation>
+    </message>
+    <message>
+        <source>[%classname] Click on the icon to get a context sensitive menu.</source>
+        <translation type="obsolete">[%classname] 在圖示上按一下以取得上下文相關的選單。</translation>
     </message>
     <message>
         <source>Show bookmarks.</source>
@@ -6235,6 +7692,40 @@ Note: The packages will not be uninstalled.</source>
     <message>
         <source>[%classname] Click on the icon to display a context-sensitive menu.</source>
         <translation type="unfinished">在圖示上按一下以顯示上下文相關的選單。</translation>
+    </message>
+    <message>
+        <source>Search in all content</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Search in &apos;%node&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>User perferences</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dashboard</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>design/admin/pagelayout/path</name>
+    <message>
+        <source>You are here:</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>design/admin/pagelayout/rightmenu</name>
+    <message>
+        <source>Show / Hide rightmenu</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Hide / Show rightmenu</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -6282,6 +7773,10 @@ Note: The packages will not be uninstalled.</source>
     <message>
         <source>Show content structure.</source>
         <translation>顯示內容結構。</translation>
+    </message>
+    <message>
+        <source>Site structure</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -6390,12 +7885,40 @@ Note: The packages will not be uninstalled.</source>
         <translation>重新編輯</translation>
     </message>
     <message>
+        <source>Disable Back to edit checkbox when editing content.</source>
+        <translation type="obsolete">編輯內容時停用回到編輯核取方塊。</translation>
+    </message>
+    <message>
+        <source>Enable Back to edit checkbox when editing content.</source>
+        <translation type="obsolete">編輯內容時啟用回到編輯核取方塊。</translation>
+    </message>
+    <message>
         <source>Disable &amp;quot;Back to edit&amp;quot; checkbox when editing content.</source>
         <translation type="unfinished">編輯內容時停用 &amp;quot;Back to edit&amp;quot; 核取方塊。</translation>
     </message>
     <message>
         <source>Enable &amp;quot;Back to edit&amp;quot; checkbox when editing content.</source>
         <translation type="unfinished">編輯內容時啟用 &amp;quot;Back to edit&amp;quot; 核取方塊。</translation>
+    </message>
+    <message>
+        <source>Edit profile</source>
+        <translation type="unfinished">編輯規範檔案</translation>
+    </message>
+    <message>
+        <source>Dashboard</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Preview tab</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Disable &amp;quot;Preview tab&amp;quot; while browsing content.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enable &amp;quot;Preview tab&amp;quot; while browsing content.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -6586,7 +8109,7 @@ Note: The packages will not be uninstalled.</source>
     </message>
     <message>
         <source>Manage permission settings.</source>
-        <translation>管理權限設定值。</translation>
+        <translation type="obsolete">管理權限設定值。</translation>
     </message>
     <message>
         <source>Roles and policies</source>
@@ -6758,6 +8281,10 @@ Note: The packages will not be uninstalled.</source>
 <context>
     <name>design/admin/pdf/list</name>
     <message>
+        <source>PDF Exports [%export_count]</source>
+        <translation type="obsolete">PDF 匯出 [%export_count]</translation>
+    </message>
+    <message>
         <source>PDF Export</source>
         <translation>PDF 匯出</translation>
     </message>
@@ -6812,6 +8339,10 @@ Note: The packages will not be uninstalled.</source>
     <message>
         <source>PDF exports [%export_count]</source>
         <translation type="unfinished">PDF 匯出 [%export_count]</translation>
+    </message>
+    <message>
+        <source>PDF exports (%export_count)</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -6901,8 +8432,16 @@ Note: The packages will not be uninstalled.</source>
         <translation>新增節點變更</translation>
     </message>
     <message>
+        <source>Copy Subtree</source>
+        <translation type="obsolete">複製子樹</translation>
+    </message>
+    <message>
         <source>Remove bookmark</source>
         <translation>刪除書籤</translation>
+    </message>
+    <message>
+        <source>Choose SiteAccess</source>
+        <translation type="obsolete">選取存取網址</translation>
     </message>
     <message>
         <source>Reverse related for subtree</source>
@@ -6939,6 +8478,18 @@ Note: The packages will not be uninstalled.</source>
     <message>
         <source>Choose siteaccess</source>
         <translation type="unfinished">選取存取網址</translation>
+    </message>
+    <message>
+        <source>Create RSS/ATOM feed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove RSS/ATOM feed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>New translation</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -6988,6 +8539,10 @@ Note: The packages will not be uninstalled.</source>
     <message>
         <source>Recipient</source>
         <translation>收件者</translation>
+    </message>
+    <message>
+        <source>Your Email address</source>
+        <translation type="obsolete">你的電子郵件地址</translation>
     </message>
     <message>
         <source>Your email address</source>
@@ -7072,12 +8627,20 @@ Note: The packages will not be uninstalled.</source>
         <translation>給 &lt;%role_name&gt; 角色建立新的策略</translation>
     </message>
     <message>
+        <source>Welcome to the policy wizard. This three step wizard will help you create a new policy which will be added to the role that is currently being edited. The wizard can be aborted at any stage by using the &quot;Cancel&quot; button.</source>
+        <translation type="obsolete">歡迎來到策略精靈。這個三步驟的精靈將協助你建立新的策略，它將被加入目前被編輯的角色。在任何階段都可以藉由使用「取消」按鈕來放棄精靈。</translation>
+    </message>
+    <message>
         <source>Step one: select module</source>
         <translation>步驟一：選取模組</translation>
     </message>
     <message>
         <source>Instructions</source>
         <translation>指令</translation>
+    </message>
+    <message>
+        <source>Use the drop-down menu to select the module that you wish to grant access to.</source>
+        <translation type="obsolete">請使用下拉式功能表以選取你希望授與存取的模組。</translation>
     </message>
     <message>
         <source>Click one of the &quot;Grant..&quot; buttons (explained below) in order to go to the next step.</source>
@@ -7119,9 +8682,17 @@ Note: The packages will not be uninstalled.</source>
         <source>Use the drop-down menu to select the module that you want to grant access to.</source>
         <translation type="unfinished">請使用下拉式功能表以選取你希望授與存取權限的模組。</translation>
     </message>
+    <message>
+        <source>Every function</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>design/admin/role/createpolicystep2</name>
+    <message>
+        <source>Welcome to the policy wizard. This three step wizard will help you set up a new policy. The policy will be added to the role that is currently being edited. The wizard can be aborted at any stage by using the &quot;Cancel&quot; button.</source>
+        <translation type="obsolete">歡迎來到策略精靈。這個三步驟的精靈將協助你設置新的策略。策略將會加入目前被編輯的角色。在任何階段都可以藉由使用「取消」按鈕來放棄精靈。</translation>
+    </message>
     <message>
         <source>Step one: select module [completed]</source>
         <translation>步驟一：選取模組 [已完成]</translation>
@@ -7151,6 +8722,14 @@ Note: The packages will not be uninstalled.</source>
         <translation>指令</translation>
     </message>
     <message>
+        <source>Use the drop-down menu to select the function that you wish to grant access to.</source>
+        <translation type="obsolete">請使用下拉式功能表以選取你希望授與存取權限的功能。</translation>
+    </message>
+    <message>
+        <source>The &quot;Grant full access&quot; button will create a policy that grants unlimited access to the selected function within the module that was specified in step one. If you wish to limit the access method in some way, click the &quot;Grant limited access&quot; button. Function limitation is only supported by some functions. If unsupported, eZ publish will simply set up a policy with unlimited access to the selected function.</source>
+        <translation type="obsolete">「授與全部存取權限」按鈕將建立一個策略，它會授與無限制的存取權限，給在步驟一中所指定模組之內的所選功能。如果你希望以某種方式限制存取方法，就按一下「授與限制存取權限」按鈕。功能限制只由某些功能所支援。如果不支援，eZ publish 僅會設置具備無限制存取權限的策略給所選功能。</translation>
+    </message>
+    <message>
         <source>Function</source>
         <translation>功能</translation>
     </message>
@@ -7161,6 +8740,10 @@ Note: The packages will not be uninstalled.</source>
     <message>
         <source>Grant limited access</source>
         <translation>授與限制存取權限</translation>
+    </message>
+    <message>
+        <source>It is unfortunately not possible to grant limited access to all modules at once. To grant unlimited access to all modules and their functions, go back to step one and select &quot;Grant access to all functions&quot;. In order to grant limited access to different functions within different modules, you need to set up a collection of policies.</source>
+        <translation type="obsolete">不幸地，無法一次就授與限制存取權限給所有模組。要授與無限制的存取權限給所有模組和它們的功能，請回到步驟一並選取「授與存取權限給所有功能」。要授與限制存取權限給不同模組內的不同功能，你需要設置一組策略。</translation>
     </message>
     <message>
         <source>The selected module (%module_name) does not support limitations on the function level. Please go back to step one and use the &quot;Grant access to all functions&quot; option instead.</source>
@@ -7208,6 +8791,10 @@ Note: The packages will not be uninstalled.</source>
     <message>
         <source>Create a new policy for the &lt;%role_name&gt; role</source>
         <translation>給 &lt;%role_name&gt;角色建立新的策略</translation>
+    </message>
+    <message>
+        <source>Welcome to the policy wizard. This three step wizard will help you set up a new policy. The policy will be added to the role that is currently being edited. The wizard can be aborted at any stage by using the &quot;Cancel&quot; button.</source>
+        <translation type="obsolete">歡迎來到策略精靈。這個三步驟的精靈將協助你設置新的策略。策略將被加入目前被編輯的角色。在任何階段都可以藉由使用「取消」按鈕來放棄精靈。</translation>
     </message>
     <message>
         <source>Step one: select module [completed]</source>
@@ -7313,6 +8900,18 @@ Note: The packages will not be uninstalled.</source>
         <source>Welcome to the policy wizard. This three-step wizard will help you set up a new policy. The policy will be added to the role that is currently being edited. The wizard can be aborted at any stage by using the &quot;Cancel&quot; button.</source>
         <translation type="unfinished">歡迎來到策略精靈。這個三步驟的精靈將協助你設置新的策略。策略將被加入目前被編輯的角色。在任何階段都可以藉由使用「取消」按鈕來放棄精靈。</translation>
     </message>
+    <message>
+        <source>Properties</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Nodes (%node_count)</source>
+        <translation>節點 (%node_count)</translation>
+    </message>
+    <message>
+        <source>Subtrees (%subtree_count)</source>
+        <translation>子樹 (%subtree_count)</translation>
+    </message>
 </context>
 <context>
     <name>design/admin/role/edit</name>
@@ -7400,6 +8999,14 @@ Note: The packages will not be uninstalled.</source>
         <source>Create a new policy.</source>
         <translation>建立新的策略。</translation>
     </message>
+    <message>
+        <source>Save</source>
+        <translation type="unfinished">儲存</translation>
+    </message>
+    <message>
+        <source>Save policy changes to this role</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>design/admin/role/list</name>
@@ -7463,6 +9070,10 @@ Note: The packages will not be uninstalled.</source>
         <source>Copy the &lt;%role_name&gt; role.</source>
         <translation>複製 &lt;%role_name&gt; 角色。</translation>
     </message>
+    <message>
+        <source>Roles (%role_count)</source>
+        <translation>角色 (%role_count)</translation>
+    </message>
 </context>
 <context>
     <name>design/admin/role/policyedit</name>
@@ -7523,6 +9134,10 @@ Note: The packages will not be uninstalled.</source>
         <translation>加入子樹</translation>
     </message>
     <message>
+        <source>The function limitations of this policy can not be edited. This is either because the function simply does not support limitations or because the function was assigned without limitations when the policy was created.</source>
+        <translation type="obsolete">無法編輯此策略的功能限制。可能因為功能不支援限制，或是建立策略時，功能被指派為不需要限制。</translation>
+    </message>
+    <message>
         <source>OK</source>
         <translation>確認</translation>
     </message>
@@ -7533,6 +9148,14 @@ Note: The packages will not be uninstalled.</source>
     <message>
         <source>The function limitations of this policy cannot be edited. This is either because the function does not support limitations or because the function was assigned without limitations when the policy was created.</source>
         <translation type="unfinished">無法編輯此策略的功能限制。可能因為功能不支援限制，或是建立策略時，功能被指派為不需要限制。</translation>
+    </message>
+    <message>
+        <source>Nodes (%node_count)</source>
+        <translation>節點 (%node_count)</translation>
+    </message>
+    <message>
+        <source>Subtrees (%subtree_count)</source>
+        <translation>子樹 (%subtree_count)</translation>
     </message>
 </context>
 <context>
@@ -7645,12 +9268,28 @@ Note: The packages will not be uninstalled.</source>
         <source>Name</source>
         <translation>名稱</translation>
     </message>
+    <message>
+        <source>Policies (%policies_count)</source>
+        <translation>策略 (%policies_count)</translation>
+    </message>
+    <message>
+        <source>Path: &apos;/%path_string&apos;, Class identifier: &apos;%class_identifier&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Users and groups using the &lt;%role_name&gt; role (%users_count)</source>
+        <translation>請使用者和組別請使用 &lt;%role_name&gt; 角色 (%users_count)</translation>
+    </message>
 </context>
 <context>
     <name>design/admin/rss/browse_destination</name>
     <message>
         <source>Choose a destination for RSS import</source>
         <translation>請選取 RSS 匯入目的</translation>
+    </message>
+    <message>
+        <source>Use the radio buttons to choose a destination location for RSS import and click &quot;OK&quot;.</source>
+        <translation type="obsolete">請選取用於 RSS 匯入的目的位置，並按一下「確認」按鈕。</translation>
     </message>
     <message>
         <source>Navigate using the available tabs (above), the tree menu (left) and the content list (middle).</source>
@@ -7668,6 +9307,10 @@ Note: The packages will not be uninstalled.</source>
         <translation>請選取用於 RSS 匯出的圖像</translation>
     </message>
     <message>
+        <source>Use the radio buttons to choose an image to use in the RSS export and click &quot;OK&quot;.</source>
+        <translation type="obsolete">請選取用於 RSS 匯出的圖像，並按一下「確認」按鈕。</translation>
+    </message>
+    <message>
         <source>Navigate using the available tabs (above), the tree menu (left) and the content list (middle).</source>
         <translation>請使用上方的頁籤、左側樹狀選單 和中間內容清單 來四處巡覽。</translation>
     </message>
@@ -7683,6 +9326,10 @@ Note: The packages will not be uninstalled.</source>
         <translation>請選取用於 RSS 匯出的來源</translation>
     </message>
     <message>
+        <source>Use the radio buttons to choose the item that you wish to export using RSS and click &quot;OK&quot;.</source>
+        <translation type="obsolete">請選取你希望使用 RSS 匯出的項目，並按一下「確認」按鈕。</translation>
+    </message>
+    <message>
         <source>Navigate using the available tabs (above), the tree menu (left) and the content list (middle).</source>
         <translation>請使用上方的頁籤、左側樹狀選單 和中間內容清單 來四處巡覽。</translation>
     </message>
@@ -7696,6 +9343,10 @@ Note: The packages will not be uninstalled.</source>
     <message>
         <source>Choose owner for RSS imported objects</source>
         <translation>請選取 RSS 匯入物件的擁有者</translation>
+    </message>
+    <message>
+        <source>Use the radio buttons to choose a user and click &quot;OK&quot;. The user will become the owner of the objects that were imported using RSS.</source>
+        <translation type="obsolete">請選取使用者並按一下「確認」按鈕。使用者將成為被使用 RSS 所匯入物件的擁有者。</translation>
     </message>
     <message>
         <source>Navigate using the available tabs (above), the tree menu (left) and the content list (middle).</source>
@@ -7773,6 +9424,10 @@ Note: The packages will not be uninstalled.</source>
         <translation>編輯 &lt;%rss_export_name&gt; [RSS 匯出]</translation>
     </message>
     <message>
+        <source>Name of the RSS export. This name is used in the administration interface only, to distinguish the different exports from each other.</source>
+        <translation type="obsolete">RSS 匯出的名稱。此名稱只用於管理介面，以區別各個不同的匯出。</translation>
+    </message>
+    <message>
         <source>Use the description field to write a text explaining what users can expect from the RSS export.</source>
         <translation>請使用描述欄位以寫入使用者可以預期從 RSS 匯出什麼的解釋文字。</translation>
     </message>
@@ -7797,6 +9452,26 @@ Note: The packages will not be uninstalled.</source>
         <translation>來源</translation>
     </message>
     <message>
+        <source>Click this button to select the source node for RSS export source. Objects of the type selected in the drop down below published as sub-items of the selected node will be included in the RSS export.</source>
+        <translation type="obsolete">按一下此按鈕以選取用於 RSS 匯出來的源節點。在下拉選單中做為所選節點的子項目而發佈的已選取物件類型，將會包含在 RSS 匯出之中。</translation>
+    </message>
+    <message>
+        <source>Use this drop down to select the type of object that triggers the export. Click the &quot;Set&quot; button to load the correct attribute types for the remaining fields.</source>
+        <translation type="obsolete">請使用此下拉選單以選取會觸發匯出的物件型態。按一下「設定」按鈕以載入其餘欄位的正確屬性類型。</translation>
+    </message>
+    <message>
+        <source>Click this button to load the correct values into the drop-down fields below. Use the drop-down menu on the left to select the correct class type.</source>
+        <translation type="obsolete">按一下此按鈕以載入下拉式欄位的正確值。使用左側的下拉式功能表以選取正確類別。</translation>
+    </message>
+    <message>
+        <source>Use this drop-down to select which attribute that should be exported as the title of the RSS export entry.</source>
+        <translation type="obsolete">請使用此下拉式選單以選取應該匯出的屬性，做為 RSS 匯出項目的標題。</translation>
+    </message>
+    <message>
+        <source>Use this drop-down to select which attribute that should be exported as the description of the RSS export entry.</source>
+        <translation type="obsolete">請使用此下拉式選單以選取應該匯出的屬性，做為 RSS 匯出項目的描述。</translation>
+    </message>
+    <message>
         <source>Click to remove this source from the RSS export.</source>
         <translation>按一下以從 RSS 匯出刪除此來源。</translation>
     </message>
@@ -7817,12 +9492,24 @@ Note: The packages will not be uninstalled.</source>
         <translation>取消變更並返回 RSS 概觀。</translation>
     </message>
     <message>
+        <source>Invalid Input</source>
+        <translation type="obsolete">無效的輸入</translation>
+    </message>
+    <message>
         <source>If RSS Export is Active then a valid Access URL is required.</source>
         <translation>如果 RSS 匯出為啟動狀態，那麼就一定需要有效的存取 URL。</translation>
     </message>
     <message>
+        <source>Use this field to enter the base URL of your site. It is used to produce the URLs in the export, composed by the Site URL (e.g. &quot;http://www.example.com/index.php&quot;) and the path to the object (e.g. &quot;/articles/my_article&quot;). The Site URL depends on your Webserver and eZ publish configuration.</source>
+        <translation type="obsolete">請使用此欄位以輸入你站台的基準 URL。它是用來在匯出中產生網址，由站台 URL (例如：「http://www.example.com/index.php」) 和物件路徑 (例如：「/articles/my_article」) 所組成。站台 URL 取決於你的網頁伺服器和 eZ publish 配置。</translation>
+    </message>
+    <message>
         <source>Number of objects</source>
         <translation>物件數量</translation>
+    </message>
+    <message>
+        <source>Use this drop-down menu to select the maximum number of objects included in the RSS feed.</source>
+        <translation type="obsolete">請使用此下拉式功能表以選取包含在 RSS 饋送中的最大物件數量。</translation>
     </message>
     <message>
         <source>Main node only</source>
@@ -7835,6 +9522,10 @@ Note: The packages will not be uninstalled.</source>
     <message>
         <source>Subnodes</source>
         <translation>子節點</translation>
+    </message>
+    <message>
+        <source>Activate this checkbox if also objects from the subnodes of the source should be feeded.</source>
+        <translation type="obsolete">如果從來源子節點而來的物件也應該被饋送，就啟用此核取方塊。</translation>
     </message>
     <message>
         <source>Remove image</source>
@@ -7904,6 +9595,18 @@ Note: The packages will not be uninstalled.</source>
         <source>Skip</source>
         <translation type="unfinished">跳過</translation>
     </message>
+    <message>
+        <source>Enclosure (media)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use this drop-down to select the attribute that should be exported as the enclosure of the RSS export entry, enclosures are direct link to a media file, so use a media/image/file datatype .</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Field data</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>design/admin/rss/edit_import</name>
@@ -7960,6 +9663,10 @@ Note: The packages will not be uninstalled.</source>
         <translation>編輯 &lt;%rss_import_name&gt; [RSS 匯入]</translation>
     </message>
     <message>
+        <source>Name of the RSS import. This name is used in the administration interface only, to distinguish the different imports from each other.</source>
+        <translation type="obsolete">RSS 匯入的名稱。此名稱只有使用在管理介面之中，以區別各個不同的匯入。</translation>
+    </message>
+    <message>
         <source>Use this field to enter the source URL of the RSS feed to import.</source>
         <translation>請使用此欄位以輸入要匯入 RSS 饋送的來源 URL。</translation>
     </message>
@@ -7970,6 +9677,14 @@ Note: The packages will not be uninstalled.</source>
     <message>
         <source>Click this button to select the user who should own the objects created by the import.</source>
         <translation>按一下此按鈕以選取應該擁有由匯入所建立物件的使用者。</translation>
+    </message>
+    <message>
+        <source>Use this drop down to select the type of object the import should create. Click the &quot;Set&quot; button to load the correct attribute types for the remaining fields.</source>
+        <translation type="obsolete">請使用此下拉選單以選取匯入時應該建立的物件型態。按一下「設定」按鈕以載入其餘欄位的正確屬性類型。</translation>
+    </message>
+    <message>
+        <source>Click this button to load the correct values into the drop-down fields below. Use the drop-down menu on the left to select the correct class type.</source>
+        <translation type="obsolete">按一下此按鈕以在下面的下拉式欄位中載入正確值。使用左側的下拉式功能表以選取正確的類別。</translation>
     </message>
     <message>
         <source>Use this checkbox to control if the RSS feed is active or not. An inactive feed will not be automatically updated.</source>
@@ -7988,8 +9703,16 @@ Note: The packages will not be uninstalled.</source>
         <translation>更新</translation>
     </message>
     <message>
+        <source>Click this button to proceede, and analyze the import feed.</source>
+        <translation type="obsolete">按一下此按鈕以繼續，並分析匯入的饋送。</translation>
+    </message>
+    <message>
         <source>RSS Version</source>
         <translation>RSS 版本</translation>
+    </message>
+    <message>
+        <source>Class Attributes</source>
+        <translation type="obsolete">類別屬性</translation>
     </message>
     <message>
         <source>Use this drop-down menu to select the attribute that should bet set as information from the RSS stream.</source>
@@ -8126,6 +9849,14 @@ Note: The packages will not be uninstalled.</source>
         <source>Create a new RSS import.</source>
         <translation>建立新的 RSS 匯入。</translation>
     </message>
+    <message>
+        <source>RSS exports (%exports_count)</source>
+        <translation>RSS 匯出 (%exports_count)</translation>
+    </message>
+    <message>
+        <source>RSS imports (%imports_count)</source>
+        <translation>RSS 匯入 (%imports_count)</translation>
+    </message>
 </context>
 <context>
     <name>design/admin/search/stats</name>
@@ -8192,6 +9923,10 @@ Note: The packages will not be uninstalled.</source>
         <translation>請選取應該指派了 &lt;%section_name&gt; 區段的項目。</translation>
     </message>
     <message>
+        <source>Keep in mind that the section assignment of the sub items will also be changed.</source>
+        <translation type="obsolete">請留意，子項目的區段指派也將被變更。</translation>
+    </message>
+    <message>
         <source>Navigate using the available tabs (above), the tree menu (left) and the content list (middle).</source>
         <translation>請使用上方的頁籤、左側樹狀選單 和中間內容清單 來四處巡覽。</translation>
     </message>
@@ -8215,6 +9950,10 @@ Note: The packages will not be uninstalled.</source>
         <translation>確認區段刪除</translation>
     </message>
     <message>
+        <source>Are you sure you want to remove the section?</source>
+        <translation type="obsolete">確認要刪除區段？</translation>
+    </message>
+    <message>
         <source>Are you sure you want to remove the sections?</source>
         <translation>確認要刪除區段？</translation>
     </message>
@@ -8225,6 +9964,14 @@ Note: The packages will not be uninstalled.</source>
     <message>
         <source>Warning</source>
         <translation>警告</translation>
+    </message>
+    <message>
+        <source>Removing a section may corrupt permission settings, template output and other things in the system.</source>
+        <translation type="obsolete">刪除區段也許會損壞權限設定值、範本輸出和系統中的其他項目。</translation>
+    </message>
+    <message>
+        <source>Proceed only if you know what you are doing.</source>
+        <translation type="obsolete">只有當你知道你在做什麼時才繼續。</translation>
     </message>
     <message>
         <source>The following sections cannot be removed because they are either assigned to objects or used in role and policy limitations</source>
@@ -8256,6 +10003,10 @@ Note: The packages will not be uninstalled.</source>
     <message>
         <source>Name</source>
         <translation>名稱</translation>
+    </message>
+    <message>
+        <source>Navigation Part</source>
+        <translation type="obsolete">瀏覽部份</translation>
     </message>
     <message>
         <source>OK</source>
@@ -8332,6 +10083,14 @@ Note: The packages will not be uninstalled.</source>
         <source>You are not allowed to assign the &lt;%section_name&gt; section.</source>
         <translation type="unfinished">你不被允許指派 &lt;%section_name&gt; 區段。</translation>
     </message>
+    <message>
+        <source>Sections (%section_count)</source>
+        <translation>區段 (%section_count)</translation>
+    </message>
+    <message>
+        <source>Assign a subtree to the &lt;%section_name&gt; section.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>design/admin/section/view</name>
@@ -8395,6 +10154,26 @@ Note: The packages will not be uninstalled.</source>
         <source>This section is not assigned to any objects.</source>
         <translation>此區段並未指派給任何物件。</translation>
     </message>
+    <message>
+        <source>Roles containing limitations associated with this section (%number_of_roles)</source>
+        <translation>角色包含與此區段 (%number_of_roles) 相關聯的限制</translation>
+    </message>
+    <message>
+        <source>Users and user groups with role limitations associated with this section (%number_of_roles)</source>
+        <translation>與此區段 (%number_of_roles) 相關聯，並具有角色限制的使用者和使用者組別</translation>
+    </message>
+    <message>
+        <source>Objects within this section (%number_of_objects)</source>
+        <translation>在此區段之內的物件 (%number_of_objects)</translation>
+    </message>
+    <message>
+        <source>Assign subtree</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Assign subtree of objects to this section</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>design/admin/settings</name>
@@ -8419,6 +10198,14 @@ Note: The packages will not be uninstalled.</source>
         <translation>設定：&lt;新增設定&gt;</translation>
     </message>
     <message>
+        <source>INI File</source>
+        <translation type="obsolete">INI 檔案</translation>
+    </message>
+    <message>
+        <source>SiteAccess</source>
+        <translation type="obsolete">存取網址</translation>
+    </message>
+    <message>
         <source>Change setting type</source>
         <translation>變更設定型態</translation>
     </message>
@@ -8437,6 +10224,10 @@ Note: The packages will not be uninstalled.</source>
     <message>
         <source>Override setting (global)</source>
         <translation>變更設定 (全域)</translation>
+    </message>
+    <message>
+        <source>Setting Name</source>
+        <translation type="obsolete">設定名稱</translation>
     </message>
     <message>
         <source>Setting value</source>
@@ -8479,12 +10270,20 @@ Note: The packages will not be uninstalled.</source>
         <translation>變數 %valfield 已經存在於區段 %block 中</translation>
     </message>
     <message>
+        <source>Please choose another name that is not already taken</source>
+        <translation type="obsolete">請選取其他未被取用的名稱</translation>
+    </message>
+    <message>
         <source>%valfield is not allowed to contain spaces</source>
         <translation>%valfield 不允許包含空格</translation>
     </message>
     <message>
         <source>Writing setting: %setting_name to file: %filename failed.</source>
         <translation>寫入設定：%setting_name 到檔案：%filename 失敗。</translation>
+    </message>
+    <message>
+        <source>Make sure you have proper permissions to %path and try again.</source>
+        <translation type="obsolete">確認你有適當權限去 %path 並再次嘗試。</translation>
     </message>
     <message>
         <source>Name contains illegal character(s).</source>
@@ -8525,6 +10324,10 @@ Note: The packages will not be uninstalled.</source>
     <message>
         <source>%ini_file consist of %blocks section(s) and %setting_count different setting(s)</source>
         <translation>%ini_file 由 %blocks 個區段和 %setting_count 個不同的設定所組成</translation>
+    </message>
+    <message>
+        <source>Please select an ini file from the dropdown below</source>
+        <translation type="obsolete">請從下面的下拉式選單中選取一個 ini 檔案</translation>
     </message>
     <message>
         <source>Select ini file to view</source>
@@ -8579,6 +10382,10 @@ Note: The packages will not be uninstalled.</source>
         <translation>無設定值</translation>
     </message>
     <message>
+        <source>Values for each location setting are shown. The first values are lowest priority, and the values towards the end will have higher priority than the first ones.</source>
+        <translation type="obsolete">將會顯示每個位置的設定值。第一個值有最低的優先權，接近底部的值則有比前列者更高的優先權。</translation>
+    </message>
+    <message>
         <source>Ini File</source>
         <translation type="unfinished">Ini 檔案</translation>
     </message>
@@ -8618,6 +10425,10 @@ Note: The packages will not be uninstalled.</source>
         <translation>檔案一致性檢查正常。</translation>
     </message>
     <message>
+        <source>Warning, it is not safe to upgrade without checking the modifications done to the following files</source>
+        <translation type="obsolete">警告，升級而不檢查修改是不安全的，已完成下列檔案</translation>
+    </message>
+    <message>
         <source>Database check OK.</source>
         <translation>資料庫檢查正常。</translation>
     </message>
@@ -8634,12 +10445,32 @@ Note: The packages will not be uninstalled.</source>
         <translation>系統升級檢查</translation>
     </message>
     <message>
+        <source>Before upgrading eZ publish to a newer version, it is important to check that the current installation is ready for upgrading.</source>
+        <translation type="obsolete">升級 eZ publish 到較新版本之前，檢查目前的安裝已準備好升級是相當地重要。</translation>
+    </message>
+    <message>
+        <source>Remember to make a backup of the eZ publish directory and the database before you upgrade.</source>
+        <translation type="obsolete">記住要在你升級之前，備份 eZ publish 的目錄和資料庫。</translation>
+    </message>
+    <message>
         <source>File consistency check</source>
         <translation>檔案一致性檢查</translation>
     </message>
     <message>
+        <source>The file consistency tool checks if you have altered any of the files that came with the current installation. Altered files may be replaced by new versions which contain bugfixes, new features, etc. Make sure that you backup and then merge in your custom changes into the new versions of the files.</source>
+        <translation type="obsolete">檔案一致性工具會檢查是否你有改變任何隨目前安裝而來的檔案。已改變的檔案也許會由包含錯誤修正、新增特徵…等項目的新版本所置換。確認你做了備份，並將你的自訂變更合併進檔案的新版本。</translation>
+    </message>
+    <message>
         <source>Database consistency check</source>
         <translation>資料庫一致性檢查</translation>
+    </message>
+    <message>
+        <source>The database consistency tool checks if the current database is consistent with the database schema that came with the eZ publish distribution. If there are any inconsistencies, the tool will suggest the necessary SQL statements that should be ran in order to bring the database into a consistent state. Please run the suggested SQL statements before upgrading.</source>
+        <translation type="obsolete">資料庫一致性工具會檢查是否目前資料庫與隨著 eZ publish 發行版而來的資料庫結構描述一致。如果有任何不一致，工具將會建議必要的 SQL 敘述，以便執行後能引導資料庫進入一致的狀態。請在升級之前運行所建議的 SQL 敘述。</translation>
+    </message>
+    <message>
+        <source>The upgrade checking tools require a lot of resources and it may take some time to run them.</source>
+        <translation type="obsolete">升級檢查工具要求很多的資源，而它的運行也許會需要一些時間。</translation>
     </message>
     <message>
         <source>Check file consistency</source>
@@ -8713,6 +10544,10 @@ Note: The packages will not be uninstalled.</source>
         <translation>清空內容快取</translation>
     </message>
     <message>
+        <source>Clear ini caches</source>
+        <translation type="obsolete">清空 ini 快取</translation>
+    </message>
+    <message>
         <source>Clear all caches</source>
         <translation>清空所有快取</translation>
     </message>
@@ -8737,12 +10572,28 @@ Note: The packages will not be uninstalled.</source>
         <translation>清空快取</translation>
     </message>
     <message>
+        <source>This operation will clear all the template override caches and the compiled templates. It may lead to weaker performance until the caches are up and running again.</source>
+        <translation type="obsolete">此作業將清除所有範本變更快取和編譯過的範本。它也許會導致較差的效能，直到再次啟動並執行快取。</translation>
+    </message>
+    <message>
+        <source>This operation will clear all caches that are related to either template views or cache blocks inside the pagelayout template. Use it if you have modified templates or if you have changed something inside a cache block.</source>
+        <translation type="obsolete">此作業將清空所有快取該是相關的到若非範本檢視或快取區塊內部 pagelayout 範本。如果你已修改範本或如果你在快取區塊裏作了變更，請使用它。</translation>
+    </message>
+    <message>
         <source>Configuration (ini) caches</source>
         <translation>配置 (ini) 快取</translation>
     </message>
     <message>
+        <source>This operation will clear all the configuration caches. Use it to force the system to re-read the configuration files if you have changed some settings.</source>
+        <translation type="obsolete">此作業將清除所有配置快取。如果你變更了某些設定值，就使用它以強制系統去重新讀取配置檔案。</translation>
+    </message>
+    <message>
         <source>Everything</source>
         <translation>所有東西</translation>
+    </message>
+    <message>
+        <source>This operation will clear ALL the caches and may lead to long response times until the caches are up and running again.</source>
+        <translation type="obsolete">此作業將清空所有快取，同時也許會導致較長回應時間，直到再次啟動並執行快取。</translation>
     </message>
     <message>
         <source>Fine-grained cache control</source>
@@ -8755,6 +10606,10 @@ Note: The packages will not be uninstalled.</source>
     <message>
         <source>Select the &lt;%cache_name&gt; for clearing.</source>
         <translation>請選取 &lt;%cache_name&gt; 以清除。</translation>
+    </message>
+    <message>
+        <source>The &lt;%cache_name&gt; is disabled and thus it can not be marked for clearing.</source>
+        <translation type="obsolete">&lt;%cache_name&gt; 已停用，因而無法標記它以便清除。</translation>
     </message>
     <message>
         <source>Clear the selected caches.</source>
@@ -8771,6 +10626,10 @@ Note: The packages will not be uninstalled.</source>
     <message>
         <source>Regenerate static content cache</source>
         <translation>重新產生靜態內容快取</translation>
+    </message>
+    <message>
+        <source>This operation will regenerate all the static content caches that are configured. This action can take quite some time depending on the specifications of the server and the number of locations that are configured to be statically cached. If you encounter time-out problems, please use the &amp;quot;bin/php/makestaticcache.php&amp;quot; shell script.</source>
+        <translation type="obsolete">此作業將重新產生所有已配置的靜態內容快取。依據伺服器的規格和已配置為靜態快取的位置數量，此動作可能需要花費相當一段時間。如果你遇到逾時的問題，請使用 &amp;quot;bin/php/makestaticcache.php&amp;quot; shell 命令稿。</translation>
     </message>
     <message>
         <source>Create new</source>
@@ -8803,6 +10662,14 @@ Note: The packages will not be uninstalled.</source>
     <message>
         <source>This operation will regenerate all the static content caches that are configured. This action can take  some time depending on the specifications of the server and the number of locations that are configured to be statically cached. If you encounter time-out problems, use the &amp;quot;bin/php/makestaticcache.php&amp;quot; shell script.</source>
         <translation type="unfinished">此作業將重新產生所有已配置的靜態內容快取。依據伺服器的規格和已配置為靜態快取的位置數量，此動作可能需要花費相當一段時間。如果你遇到逾時的問題，請使用 &amp;quot;bin/php/makestaticcache.php&amp;quot; shell 命令稿。</translation>
+    </message>
+    <message>
+        <source>Categories</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source></source>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -8854,6 +10721,18 @@ Note: The packages will not be uninstalled.</source>
         <source>Problems detected during autoload generation:</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Available extensions (%extension_count)</source>
+        <translation>可用的擴充功能 (%extension_count)</translation>
+    </message>
+    <message>
+        <source>Invert selection.</source>
+        <translation type="unfinished">反向選擇。</translation>
+    </message>
+    <message>
+        <source>Activate</source>
+        <translation type="unfinished">啟用</translation>
+    </message>
 </context>
 <context>
     <name>design/admin/setup/info</name>
@@ -8864,6 +10743,21 @@ Note: The packages will not be uninstalled.</source>
     <message>
         <source>Site</source>
         <translation>站台</translation>
+    </message>
+    <message>
+        <source>Version</source>
+        <comment>eZ publish version</comment>
+        <translation type="obsolete">版本</translation>
+    </message>
+    <message>
+        <source>SVN revision</source>
+        <comment>eZ publish version</comment>
+        <translation type="obsolete">SVN 修訂版</translation>
+    </message>
+    <message>
+        <source>Extensions</source>
+        <comment>eZ publish extensions</comment>
+        <translation type="obsolete">擴充功能</translation>
     </message>
     <message>
         <source>Miscellaneous</source>
@@ -8912,6 +10806,20 @@ Note: The packages will not be uninstalled.</source>
     <message>
         <source>Maximum execution time is %1 seconds.</source>
         <translation>最長執行時間是 %1 秒。</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <comment>Webserver name</comment>
+        <translation type="obsolete">名稱</translation>
+    </message>
+    <message>
+        <source>Modules</source>
+        <comment>Webserver modules</comment>
+        <translation type="obsolete">模組</translation>
+    </message>
+    <message>
+        <source>eZ publish was unable to extract information from the webserver.</source>
+        <translation type="obsolete">eZ publish 無法從網頁伺服器擷取資訊。</translation>
     </message>
     <message>
         <source>Version information could not be detected.</source>
@@ -8981,12 +10889,34 @@ Note: The packages will not be uninstalled.</source>
         <translation>沒有任何從屬資料庫在使用中。</translation>
     </message>
     <message>
+        <source>eZ publish</source>
+        <translation type="obsolete">eZ publish</translation>
+    </message>
+    <message>
         <source>PHP</source>
         <translation>PHP</translation>
     </message>
     <message>
         <source>PHP Accelerator</source>
         <translation>PHP 加速功能</translation>
+    </message>
+    <message>
+        <source>A known and active PHP accelerator could not be found.</source>
+        <translation type="obsolete">無法找到已知並啟動的 PHP 加速功能。</translation>
+    </message>
+    <message>
+        <source>Webserver (software)</source>
+        <comment>Webserver title</comment>
+        <translation type="obsolete">網頁伺服器 (軟體)</translation>
+    </message>
+    <message>
+        <source>The modules of the webserver could not be detected.</source>
+        <comment>Webserver modules</comment>
+        <translation type="obsolete">無法偵測到網頁伺服器的模組。</translation>
+    </message>
+    <message>
+        <source>Webserver (hardware)</source>
+        <translation type="obsolete">網頁伺服器 (硬體)</translation>
     </message>
     <message>
         <source>CPU</source>
@@ -8997,6 +10927,10 @@ Note: The packages will not be uninstalled.</source>
         <source>Memory</source>
         <comment>Memory info</comment>
         <translation>記憶體</translation>
+    </message>
+    <message>
+        <source>Script memory limit is Unlimited.</source>
+        <translation type="obsolete">命令稿使用記憶體無限制。</translation>
     </message>
     <message>
         <source>Version</source>
@@ -9017,6 +10951,11 @@ Note: The packages will not be uninstalled.</source>
         <source>Version</source>
         <comment>PHP Accelerator version</comment>
         <translation type="unfinished">版本</translation>
+    </message>
+    <message>
+        <source>Version</source>
+        <comment>Webserver version</comment>
+        <translation type="obsolete">版本</translation>
     </message>
     <message>
         <source>Database</source>
@@ -9104,8 +11043,16 @@ Note: The packages will not be uninstalled.</source>
         <translation>建構子，預設不做任何事。</translation>
     </message>
     <message>
+        <source>\return an array with the template operator name.</source>
+        <translation type="obsolete">回傳有範例</translation>
+    </message>
+    <message>
         <source>Executes the PHP function for the operator cleanup and modifies \a $operatorValue.</source>
         <translation>執行 PHP 用於清理運算子和修改\a $operatorValue 的功能。</translation>
+    </message>
+    <message>
+        <source>Example code, this code must be modified to do what the operator should do, currently it only trims text.</source>
+        <translation type="obsolete">範例程式碼，這些程式碼必須被修改以執行運算子應該做的工作，目前它只會修剪文字。</translation>
     </message>
     <message>
         <source>Example code. This code must be modified to do what the operator should do. Currently it only trims text.</source>
@@ -9123,6 +11070,10 @@ Note: The packages will not be uninstalled.</source>
         <translation>快速程式開發工具</translation>
     </message>
     <message>
+        <source>The rapid application development (RAD) tools make the creation of new/extended functionality for eZ publish easier. Currently there are two RAD tools available: the template operator wizard and the datatype wizard. The template operator wizard basically generates a valid framework (PHP code) for a new template operator. The datatype wizard generates a valid framework (PHP code) for a new datatype.</source>
+        <translation type="obsolete">快速應用程式開發 (RAD) 工具讓建立新的/進階的 eZ publish 功能時較為容易。目前有兩種 RAD 工具可用：範本運算子精靈和資料型態精靈。範本運算子精靈基本上會產生用於新範本運算子的有效框架 (PHP 編碼)。資料型態精靈則產生用於新資料型態的有效框架 (PHP 編碼)。</translation>
+    </message>
+    <message>
         <source>Available RAD tools</source>
         <translation>可用的 RAD 工具</translation>
     </message>
@@ -9137,6 +11088,10 @@ Note: The packages will not be uninstalled.</source>
     <message>
         <source>Template operator wizard (step 1 of 3)</source>
         <translation>範本運算子精靈 (三步驟之一)</translation>
+    </message>
+    <message>
+        <source>Welcome to the template operator wizard. Template operators are usually used for manipulating template variables. However, they can also be used to generate or fetch data. This wizard will take you through a couple of steps with some basic choices. When finished, eZ publish will generate a PHP framework for the a new operator (which will be available for download).</source>
+        <translation type="obsolete">歡迎來到範本運算子精靈。範本運算子通常用於操控範本變數。然而，它們也可以用來產生或擷取資料。此精靈將引導你完成幾個步驟與某些基本選擇。完成時，eZ publish 將產生用於新運算子 (可供下載) 的 PHP 框架。</translation>
     </message>
     <message>
         <source>Restart</source>
@@ -9194,6 +11149,10 @@ Note: The packages will not be uninstalled.</source>
         <translation>類別名稱</translation>
     </message>
     <message>
+        <source>Constant name</source>
+        <translation type="obsolete">常數名稱</translation>
+    </message>
+    <message>
         <source>The creator of the datatype</source>
         <translation>資料類型建立者</translation>
     </message>
@@ -9212,6 +11171,10 @@ Note: The packages will not be uninstalled.</source>
     <message>
         <source>Finish and generate</source>
         <translation>完成並產生</translation>
+    </message>
+    <message>
+        <source>Welcome to the wizard for creating a new datatypes. Everything you store in your content objects are called attributes. These attributes are defined as a data types. To be able to customize the storing and validation of these attributes, you can create your own data types.</source>
+        <translation type="obsolete">歡迎來到用於建立新資料型態的精靈。所有你儲存在物件內容中的東西都被稱為屬性。這些屬性被定義為一種資料型態。要能夠自訂這些屬性的儲存和驗證，你可以建立你自己的資料型態。</translation>
     </message>
     <message>
         <source>Welcome to the wizard for creating a new datatype. Everything stored in a content object are called attributes. Attributes are defined as data types. To customize storing and validation of attributes, you can create your own data types.</source>
@@ -9427,6 +11390,30 @@ Note: The packages will not be uninstalled.</source>
         <source>Email</source>
         <translation>電子郵件</translation>
     </message>
+    <message>
+        <source>Not all timed out sessions were successfully removed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The operation were cut short in order to avoid execution timeout.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Your alternatives are to:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Repeat the operation several times to complete it.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Clear the timed out session data from command-line using: &amp;gt;php bin/php/ezsessiongc.php</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Install the session cleanup cronjob &apos;session_gc.php&apos; and run on nightly intervals (see cronjob.ini or doc for how)</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>design/admin/shop/accounthandlers/html/ez</name>
@@ -9457,6 +11444,10 @@ Note: The packages will not be uninstalled.</source>
     <message>
         <source>State</source>
         <translation>狀態</translation>
+    </message>
+    <message>
+        <source>Country</source>
+        <translation type="obsolete">國家</translation>
     </message>
     <message>
         <source>Email</source>
@@ -9524,6 +11515,10 @@ Note: The packages will not be uninstalled.</source>
     <message>
         <source>Unarchive selected orders.</source>
         <translation>將所選訂單取消歸檔。</translation>
+    </message>
+    <message>
+        <source>Archived orders (%count)</source>
+        <translation>歸檔的訂單 (%count)</translation>
     </message>
 </context>
 <context>
@@ -9621,6 +11616,18 @@ Note: The packages will not be uninstalled.</source>
         <translation>繼續進行簽出，並購買購物籃中的項目。</translation>
     </message>
     <message>
+        <source>You can not remove any items because there are no items in the basket.</source>
+        <translation type="obsolete">你無法刪除任何項目，因為購物籃中沒有任何項目。</translation>
+    </message>
+    <message>
+        <source>You can not store any changes because the basket is empty.</source>
+        <translation type="obsolete">你無法儲存任何變更，因為購物籃是空的。</translation>
+    </message>
+    <message>
+        <source>You can not check out because the basket is empty.</source>
+        <translation type="obsolete">你無法簽出，因為購物籃是空的。</translation>
+    </message>
+    <message>
         <source>Subtotal of items</source>
         <translation>項目小計</translation>
     </message>
@@ -9647,6 +11654,14 @@ Note: The packages will not be uninstalled.</source>
     <message>
         <source>unknown</source>
         <translation>不明</translation>
+    </message>
+    <message>
+        <source>Sub total Ex VAT</source>
+        <translation type="obsolete">稅前小計</translation>
+    </message>
+    <message>
+        <source>Shipping total Ex VAT</source>
+        <translation type="obsolete">稅前運費小計</translation>
     </message>
     <message>
         <source>Total VAT</source>
@@ -9833,6 +11848,10 @@ Note: The packages will not be uninstalled.</source>
         <translation>匯率</translation>
     </message>
     <message>
+        <source>Use these checkboxes to select items for removal. Click the &quot;Remove selected&quot; button to actually remove the selected items.</source>
+        <translation type="obsolete">請使用這些核取方塊以選取要刪除的項目。按一下「刪除所選」按鈕來實際刪除所選項目。</translation>
+    </message>
+    <message>
         <source>Edit</source>
         <translation>編輯</translation>
     </message>
@@ -9935,6 +11954,10 @@ Note: The packages will not be uninstalled.</source>
         <source>Customers [%customers]</source>
         <translation>客戶 [%customers]</translation>
     </message>
+    <message>
+        <source>Customers (%customers)</source>
+        <translation>客戶 (%customers)</translation>
+    </message>
 </context>
 <context>
     <name>design/admin/shop/customerorderview</name>
@@ -9977,6 +12000,14 @@ Note: The packages will not be uninstalled.</source>
     <message>
         <source>Status</source>
         <translation>狀態</translation>
+    </message>
+    <message>
+        <source>Orders (%order_count)</source>
+        <translation>訂單 (%order_count)</translation>
+    </message>
+    <message>
+        <source>Purchased products (%product_count)</source>
+        <translation>購買的產品 (%product_count)</translation>
     </message>
 </context>
 <context>
@@ -10024,6 +12055,10 @@ Note: The packages will not be uninstalled.</source>
     <message>
         <source>Create a new discount group.</source>
         <translation>建立新的折扣組別。</translation>
+    </message>
+    <message>
+        <source>Discount groups (%discount_groups)</source>
+        <translation>折扣組別 (%discount_groups)</translation>
     </message>
 </context>
 <context>
@@ -10143,6 +12178,14 @@ Note: The packages will not be uninstalled.</source>
         <source>Add users and/or user groups to the &lt;%discount_group_name&gt; discount group.</source>
         <translation>加入使用者和/或使用者組別到 &lt;%discount_group_name&gt; 折扣組別。</translation>
     </message>
+    <message>
+        <source>Discount rules (%rule_count)</source>
+        <translation>折扣規則 (%rule_count)</translation>
+    </message>
+    <message>
+        <source>Customers (users and user groups) (%customer_count)</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>design/admin/shop/discountruleedit</name>
@@ -10172,7 +12215,7 @@ Note: The packages will not be uninstalled.</source>
     </message>
     <message>
         <source>New discount rule</source>
-        <translation>新增折扣規則</translation>
+        <translation type="unfinished">新增折扣規則</translation>
     </message>
     <message>
         <source>Product types</source>
@@ -10289,6 +12332,10 @@ Note: The packages will not be uninstalled.</source>
         <translation>建立新的扣稅規則</translation>
     </message>
     <message>
+        <source>Country</source>
+        <translation type="obsolete">國家</translation>
+    </message>
+    <message>
         <source>Any</source>
         <translation>任何</translation>
     </message>
@@ -10399,6 +12446,10 @@ Note: The packages will not be uninstalled.</source>
         <source>( removed )</source>
         <translation>( 刪除 )</translation>
     </message>
+    <message>
+        <source>Orders (%count)</source>
+        <translation>訂單 (%count)</translation>
+    </message>
 </context>
 <context>
     <name>design/admin/shop/orderstatistics</name>
@@ -10443,6 +12494,18 @@ Note: The packages will not be uninstalled.</source>
         <translation>清單是空的。</translation>
     </message>
     <message>
+        <source>Select the year for which you wish to view statistics.</source>
+        <translation type="obsolete">請選取你希望檢視統計的年份。</translation>
+    </message>
+    <message>
+        <source>Select the month for which you wish to view statistics.</source>
+        <translation type="obsolete">請選取你希望檢視統計的月份。</translation>
+    </message>
+    <message>
+        <source>Update the list using the values specified by the menus on the left.</source>
+        <translation type="obsolete">請使用由左側選單所指定的值來更新清單。</translation>
+    </message>
+    <message>
         <source>Select the year for which you want to view statistics.</source>
         <translation type="unfinished">請選取你希望檢視統計的年份。</translation>
     </message>
@@ -10453,6 +12516,10 @@ Note: The packages will not be uninstalled.</source>
     <message>
         <source>Update the list using the values specified by the menus to the left.</source>
         <translation type="unfinished">請使用由左側選單所指定的值來更新清單。</translation>
+    </message>
+    <message>
+        <source>Product statistics (%count)</source>
+        <translation>產品統計 (%count)</translation>
     </message>
 </context>
 <context>
@@ -10490,6 +12557,14 @@ Note: The packages will not be uninstalled.</source>
         <translation>折扣</translation>
     </message>
     <message>
+        <source>Total Price ex. VAT</source>
+        <translation type="obsolete">稅前總價</translation>
+    </message>
+    <message>
+        <source>Total Price inc. VAT</source>
+        <translation type="obsolete">稅後總價</translation>
+    </message>
+    <message>
         <source>Order summary</source>
         <translation>訂貨概要</translation>
     </message>
@@ -10522,6 +12597,10 @@ Note: The packages will not be uninstalled.</source>
         <translation>人員</translation>
     </message>
     <message>
+        <source>This is the person which modified the status of the order. Click to view the user information.</source>
+        <translation type="obsolete">此為修改了訂單狀態的人員。按一下以檢視使用者資訊。</translation>
+    </message>
+    <message>
         <source>Selected options</source>
         <translation>所選選項</translation>
     </message>
@@ -10540,6 +12619,10 @@ Note: The packages will not be uninstalled.</source>
     <message>
         <source>This is the person who modified the status of the order. Click to view the user information.</source>
         <translation type="unfinished">此為修改了訂單狀態的人員。按一下以檢視使用者資訊。</translation>
+    </message>
+    <message>
+        <source>Status history (%status_count)</source>
+        <translation>狀態歷史 (%status_count)</translation>
     </message>
 </context>
 <context>
@@ -10598,6 +12681,10 @@ Note: The packages will not be uninstalled.</source>
     <message>
         <source>Input did not validate</source>
         <translation>輸入並未核實</translation>
+    </message>
+    <message>
+        <source>Product categories (%categories)</source>
+        <translation>產品分類 (%categories)</translation>
     </message>
 </context>
 <context>
@@ -10796,6 +12883,10 @@ Note: The packages will not be uninstalled.</source>
         <translation>刪除稅別 &lt;%1&gt; 將導致重新設置一項產品的稅別為它的預設值。</translation>
     </message>
     <message>
+        <source>Removing VAT type &lt;%1&gt; will result in resetting VAT type for %2 products to its default value.</source>
+        <translation type="obsolete">刪除稅別 &lt;%1&gt; 將導致重新設置 %2 項產品的稅別為它的預設值。</translation>
+    </message>
+    <message>
         <source>OK</source>
         <translation>確認</translation>
     </message>
@@ -10870,6 +12961,10 @@ Note: The packages will not be uninstalled.</source>
         <source>Order status [%order_status]</source>
         <translation>訂單狀態 [%order_status]</translation>
     </message>
+    <message>
+        <source>Order status (%order_status)</source>
+        <translation>訂單狀態 (%order_status)</translation>
+    </message>
 </context>
 <context>
     <name>design/admin/shop/userregister</name>
@@ -10878,8 +12973,16 @@ Note: The packages will not be uninstalled.</source>
         <translation>缺少必要的資訊…</translation>
     </message>
     <message>
+        <source>Please please fill in the fields that are marked with a star.</source>
+        <translation type="obsolete">請填寫以星號標記的欄位。</translation>
+    </message>
+    <message>
         <source>Account information</source>
         <translation>帳戶資訊</translation>
+    </message>
+    <message>
+        <source>Please fill in the necessary information. Required fields are marked with a star.</source>
+        <translation type="obsolete">請填入必要的資訊。必要的欄位是星號做標記。</translation>
     </message>
     <message>
         <source>First name</source>
@@ -10908,6 +13011,10 @@ Note: The packages will not be uninstalled.</source>
     <message>
         <source>State</source>
         <translation>省州</translation>
+    </message>
+    <message>
+        <source>Country</source>
+        <translation type="obsolete">國家</translation>
     </message>
     <message>
         <source>Comments</source>
@@ -10947,6 +13054,10 @@ Note: The packages will not be uninstalled.</source>
     <message>
         <source>Invert selection.</source>
         <translation>反向選擇。</translation>
+    </message>
+    <message>
+        <source>Country</source>
+        <translation type="obsolete">國家</translation>
     </message>
     <message>
         <source>Product categories</source>
@@ -11004,6 +13115,10 @@ Note: The packages will not be uninstalled.</source>
         <source>Country/region</source>
         <translation type="unfinished">國家／地區</translation>
     </message>
+    <message>
+        <source>VAT charging rules (%rules)</source>
+        <translation>扣稅規則 (%rules)</translation>
+    </message>
 </context>
 <context>
     <name>design/admin/shop/vattype</name>
@@ -11058,6 +13173,10 @@ Note: The packages will not be uninstalled.</source>
     <message>
         <source>Input did not validate</source>
         <translation>輸入並未核實</translation>
+    </message>
+    <message>
+        <source>VAT types (%vat_types)</source>
+        <translation>稅別 (%vat_types)</translation>
     </message>
 </context>
 <context>
@@ -11129,6 +13248,10 @@ Note: The packages will not be uninstalled.</source>
     <message>
         <source>Click this button to store changes if you have modified quantity and/or option values.</source>
         <translation>如果你已修改數量和/或選項值，按一下此按鈕以儲存變更。</translation>
+    </message>
+    <message>
+        <source>My wish list (%item_count)</source>
+        <translation>我的願望清單 (%item_count)</translation>
     </message>
 </context>
 <context>
@@ -11247,6 +13370,10 @@ Note: The packages will not be uninstalled.</source>
     <message>
         <source>Description</source>
         <translation type="unfinished">描述</translation>
+    </message>
+    <message>
+        <source>Object states in this group (%state_count)</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -11380,6 +13507,10 @@ Note: The packages will not be uninstalled.</source>
         <source>Content object state groups [%group_count]</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Content object state groups (%group_count)</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>design/admin/trigger/list</name>
@@ -11418,6 +13549,10 @@ Note: The packages will not be uninstalled.</source>
     <message>
         <source>Click this button to store changes if you have modified any of the fields above.</source>
         <translation>如果你已修改任何以上的欄位，按一下此按鈕以儲存變更。</translation>
+    </message>
+    <message>
+        <source>Workflow triggers (%trigger_count)</source>
+        <translation>工作流程觸發 (%trigger_count)</translation>
     </message>
 </context>
 <context>
@@ -11533,6 +13668,18 @@ Note: The packages will not be uninstalled.</source>
         <source>The requested list is empty.</source>
         <translation>要求的清單是空的。</translation>
     </message>
+    <message>
+        <source>Valid URLs (%url_list_count)</source>
+        <translation>有效網址 (%url_list_count)</translation>
+    </message>
+    <message>
+        <source>Invalid URLs (%url_list_count)</source>
+        <translation>無效網址 (%url_list_count)</translation>
+    </message>
+    <message>
+        <source>All URLs (%url_list_count)</source>
+        <translation>所有網址 (%url_list_count)</translation>
+    </message>
 </context>
 <context>
     <name>design/admin/url/view</name>
@@ -11636,6 +13783,10 @@ Note: The packages will not be uninstalled.</source>
         <source>View the contents of version #%version_number.</source>
         <translation>檢視版本 #%version_number 的內容。</translation>
     </message>
+    <message>
+        <source>Objects using URL #%url_id (%url_count)</source>
+        <translation>物件請使用 URL #%url_id (%url_count)</translation>
+    </message>
 </context>
 <context>
     <name>design/admin/user</name>
@@ -11665,6 +13816,14 @@ Note: The packages will not be uninstalled.</source>
     </message>
     <message>
         <source>Your account was successfully created. An email will be sent to the specified
+email address. You need to follow the instructions in that mail to activate
+your account.</source>
+        <translation type="obsolete">你的帳號已成功建立。一封電子郵件將被發送到指定的
+電子郵件地址。你需要照著郵件中的指令以啟動
+你的帳號。</translation>
+    </message>
+    <message>
+        <source>Your account was successfully created. An email will be sent to the specified
 email address. Follow the instructions in that mail to activate
 your account.</source>
         <translation type="unfinished">你的帳號已成功建立。一封電子郵件將被發送到指定的
@@ -11683,6 +13842,10 @@ your account.</source>
         <translation>確認使用者名稱和密碼都正確。</translation>
     </message>
     <message>
+        <source>All letters must be typed in using the correct case.</source>
+        <translation type="obsolete">所有字母必須使用正確大小寫輸入。</translation>
+    </message>
+    <message>
         <source>Please try again or contact the site administrator.</source>
         <translation>請再次嘗試，或是連絡網站管理者。</translation>
     </message>
@@ -11691,8 +13854,20 @@ your account.</source>
         <translation>存取被拒！</translation>
     </message>
     <message>
+        <source>You do not have permissions to access &lt;%siteaccess_name&gt;.</source>
+        <translation type="obsolete">你沒有權限存取 &lt;%siteaccess_name&gt;。</translation>
+    </message>
+    <message>
         <source>Please contact the site administrator.</source>
         <translation>請連絡網站管理者。</translation>
+    </message>
+    <message>
+        <source>Log in to the administration interface of eZ publish</source>
+        <translation type="obsolete">登入 eZ publish 的管理介面</translation>
+    </message>
+    <message>
+        <source>Please enter a valid username/password combination and click &quot;Log in&quot;.</source>
+        <translation type="obsolete">請輸入有效使用者名稱/密碼組合，並按一下「登入」。</translation>
     </message>
     <message>
         <source>Use the &quot;Register&quot; button to create a new account.</source>
@@ -11703,8 +13878,16 @@ your account.</source>
         <translation>請使用者名稱</translation>
     </message>
     <message>
+        <source>Enter a valid username into this field.</source>
+        <translation type="obsolete">在此欄位中輸入有效使用者名稱。</translation>
+    </message>
+    <message>
         <source>Password</source>
         <translation>密碼</translation>
+    </message>
+    <message>
+        <source>Enter a valid password into this field.</source>
+        <translation type="obsolete">在此欄位中輸入有效密碼。</translation>
     </message>
     <message>
         <source>Log in</source>
@@ -11723,6 +13906,10 @@ your account.</source>
     <message>
         <source>Click here to create a new account.</source>
         <translation>按一下這裏以建立新的帳號。</translation>
+    </message>
+    <message>
+        <source>&quot;%user_login&quot; is not allowed to login because count of failed login attempts for this user exceeded max number of failed login attempts!</source>
+        <translation type="obsolete">「%user_login」並未允許登入，因為這個使用者試圖登入的失敗次數，已超出試圖登入的最大失敗次數！</translation>
     </message>
     <message>
         <source>The user will not be allowed to login after &lt;b&gt;%max_number_failed&lt;/b&gt; failed login attempts.</source>
@@ -11816,6 +14003,10 @@ your account.</source>
         <translation>確認新的密碼</translation>
     </message>
     <message>
+        <source>The password must be at least 3 characters long.</source>
+        <translation type="obsolete">密碼長度必須至少 3 個字元。</translation>
+    </message>
+    <message>
         <source>The password must be at least %1 characters long.</source>
         <translation type="unfinished">密碼長度必須至少 %1 個字元。</translation>
     </message>
@@ -11886,6 +14077,10 @@ your account.</source>
         <translation>&lt;%user_name&gt; 的使用者設定值</translation>
     </message>
     <message>
+        <source>Account has been locked after %max_failed_login failed login attempts!</source>
+        <translation type="obsolete">%max_failed_login 次試圖登入失敗之後，帳號已鎖住！</translation>
+    </message>
+    <message>
         <source>Maximum number of failed login attempts</source>
         <translation>最大的試圖登入失敗數量</translation>
     </message>
@@ -11907,6 +14102,10 @@ your account.</source>
     <message>
         <source>Menu management</source>
         <translation>選單管理</translation>
+    </message>
+    <message>
+        <source>SiteAccess</source>
+        <translation type="obsolete">存取網址</translation>
     </message>
     <message>
         <source>Set</source>
@@ -12035,6 +14234,14 @@ your account.</source>
         <translation>回到變更概觀。</translation>
     </message>
     <message>
+        <source>You do not have permissions to save the contents of the text field above to the template file.</source>
+        <translation type="obsolete">你沒有權限以儲存以上的文字欄位內容到範本檔案。</translation>
+    </message>
+    <message>
+        <source>The template can not be edited.</source>
+        <translation type="obsolete">無法編輯範本。</translation>
+    </message>
+    <message>
         <source>The web server does not have write access to the requested template.</source>
         <translation>網頁伺服器沒有存取權限以寫入要求的範本。</translation>
     </message>
@@ -12057,6 +14264,10 @@ your account.</source>
     <message>
         <source>Siteaccess</source>
         <translation>存取網址</translation>
+    </message>
+    <message>
+        <source>Overrides template</source>
+        <translation type="obsolete">變更範本</translation>
     </message>
     <message>
         <source>Open as read only</source>
@@ -12173,6 +14384,10 @@ your account.</source>
         <translation>無法刪除下列檔案和變更規則，因為檔案權限不足</translation>
     </message>
     <message>
+        <source>The override.ini file could not be modified because of insufficient permissions.</source>
+        <translation type="obsolete">無法修改 override.ini 檔案，因為權限不足。</translation>
+    </message>
+    <message>
         <source>No file matched</source>
         <translation>沒有符合的檔案</translation>
     </message>
@@ -12184,9 +14399,17 @@ your account.</source>
         <source>The override.ini file could not be modified because of insufficient permission.</source>
         <translation type="unfinished">無法修改 override.ini 檔案，因為權限不足。</translation>
     </message>
+    <message>
+        <source>Overrides for &lt;%template_name&gt; template in &lt;%current_siteaccess&gt; siteaccess (%override_count)</source>
+        <translation>用於 &lt;%current_siteaccess&gt; 存取網址 (%override_count) 中 &lt;%template_name&gt; 範本的變更</translation>
+    </message>
 </context>
 <context>
     <name>design/admin/visual/toolbar</name>
+    <message>
+        <source>Tool List for &lt;Toolbar_%toolbar_position&gt;</source>
+        <translation type="obsolete">&lt;Toolbar_%toolbar_position&gt; 的工具清單</translation>
+    </message>
     <message>
         <source>Browse</source>
         <translation>瀏覽</translation>
@@ -12242,6 +14465,10 @@ your account.</source>
     <message>
         <source>Toolbar management</source>
         <translation>工具列管理</translation>
+    </message>
+    <message>
+        <source>SiteAccess</source>
+        <translation type="obsolete">存取網址</translation>
     </message>
     <message>
         <source>Current siteaccess</source>
@@ -12394,8 +14621,16 @@ your account.</source>
         <translation>修改物件的發佈日期</translation>
     </message>
     <message>
+        <source>There are no payment Gateway extensions installed.</source>
+        <translation type="obsolete">沒有安裝付款管道的擴充功能。</translation>
+    </message>
+    <message>
         <source>Please install a payment extension first.</source>
         <translation>請先安裝付款擴充功能。</translation>
+    </message>
+    <message>
+        <source>Users who approves content</source>
+        <translation type="obsolete">負責認可內容的使用者</translation>
     </message>
     <message>
         <source>User</source>
@@ -12408,6 +14643,10 @@ your account.</source>
     <message>
         <source>Add users</source>
         <translation>加入使用者</translation>
+    </message>
+    <message>
+        <source>Groups who approves content</source>
+        <translation type="obsolete">負責認可內容的組別</translation>
     </message>
     <message>
         <source>Group</source>
@@ -12442,6 +14681,10 @@ your account.</source>
         <translation>你必須在使用此事件之前建立工作流程。</translation>
     </message>
     <message>
+        <source>Affected Versions</source>
+        <translation type="obsolete">受影響的版本</translation>
+    </message>
+    <message>
         <source>All versions</source>
         <translation>所有版本</translation>
     </message>
@@ -12468,6 +14711,10 @@ your account.</source>
     <message>
         <source>There are no payment gateway extensions installed.</source>
         <translation type="unfinished">沒有安裝付款管道的擴充功能。</translation>
+    </message>
+    <message>
+        <source>Class/attribute combinations (%count)</source>
+        <translation>類別/屬性組合 (%count)</translation>
     </message>
 </context>
 <context>
@@ -12535,6 +14782,10 @@ your account.</source>
         <source>Create a new workflow group.</source>
         <translation>建立新的工作流程組別。</translation>
     </message>
+    <message>
+        <source>Workflow groups (%groups_count)</source>
+        <translation>工作流程組別 (%groups_count)</translation>
+    </message>
 </context>
 <context>
     <name>design/admin/workflow/proccesslist</name>
@@ -12576,6 +14827,14 @@ your account.</source>
     <message>
         <source>Current event</source>
         <translation>目前事件</translation>
+    </message>
+    <message>
+        <source>Workflow processes (%trigger_count)</source>
+        <translation>工作流程處理 (%trigger_count)</translation>
+    </message>
+    <message>
+        <source>(%process_count)</source>
+        <translation>(%process_count)</translation>
     </message>
 </context>
 <context>
@@ -12647,6 +14906,14 @@ your account.</source>
     <message>
         <source>Additional information</source>
         <translation>附加資訊</translation>
+    </message>
+    <message>
+        <source>Member of groups (%group_count)</source>
+        <translation>組別的成員 (%group_count)</translation>
+    </message>
+    <message>
+        <source>Events (%event_count)</source>
+        <translation>事件 (%event_count)</translation>
     </message>
 </context>
 <context>
@@ -12726,6 +14993,10 @@ your account.</source>
     <message>
         <source>Create a new workflow.</source>
         <translation>建立新的工作流程。</translation>
+    </message>
+    <message>
+        <source>Workflows (%workflow_count)</source>
+        <translation>工作流程 (%workflow_count)</translation>
     </message>
 </context>
 <context>
@@ -12811,6 +15082,10 @@ your account.</source>
         <translation>請通知我最新的變更</translation>
     </message>
     <message>
+        <source>You need to be logged in to get access to the forums. You can do so %login_link_start%here%login_link_end%</source>
+        <translation type="obsolete">你需要登入以取得論壇的存取權限。你可以如此做 %login_link_start%這裏%login_link_end%</translation>
+    </message>
+    <message>
         <source>Topic</source>
         <translation>主題</translation>
     </message>
@@ -12845,6 +15120,10 @@ your account.</source>
     <message>
         <source>New reply</source>
         <translation>新增回覆</translation>
+    </message>
+    <message>
+        <source>You need to be logged in to get access to the forums. You can do so</source>
+        <translation type="obsolete">你需要登入以取論壇的得存取權限。你可以做</translation>
     </message>
     <message>
         <source>here</source>
@@ -12943,6 +15222,10 @@ your account.</source>
         <translation>檢視評論和註釋</translation>
     </message>
     <message>
+        <source>Powered by %linkStartTag eZ publish&amp;reg;&amp;trade; open source content management system %linkEndTag and development framework.</source>
+        <translation type="obsolete">運行於 %linkStartTag eZ publish &amp;reg;&amp;trade; 開放原始碼內容管理系統 %linkEndTag 和軟體開發框架。</translation>
+    </message>
+    <message>
         <source>Top menu</source>
         <translation>頂端選單</translation>
     </message>
@@ -12959,6 +15242,10 @@ your account.</source>
         <translation>左側子選單</translation>
     </message>
     <message>
+        <source>Powered by %linkStartTag eZ publish&amp;reg; open source content management system %linkEndTag and development framework.</source>
+        <translation type="obsolete">運行於 %linkStartTag eZ publish &amp;reg; 開放原始碼內容管理系統 %linkEndTag 和軟體開發框架。</translation>
+    </message>
+    <message>
         <source>Details...</source>
         <translation>詳細資料…</translation>
     </message>
@@ -12969,6 +15256,14 @@ your account.</source>
     <message>
         <source>Results</source>
         <translation>結果</translation>
+    </message>
+    <message>
+        <source>Anonymous users are not allowed to vote on this poll, please login.</source>
+        <translation type="obsolete">匿名使用者不被允許對此意見調查投票，請登入。</translation>
+    </message>
+    <message>
+        <source>You have already voted for this poll.</source>
+        <translation type="obsolete">對此意見調查你已經投過票。</translation>
     </message>
     <message>
         <source>Votes</source>
@@ -13096,8 +15391,16 @@ your account.</source>
         <translation>檢查關鍵詞拼寫。</translation>
     </message>
     <message>
+        <source>Try changing some keywords eg. car instead of cars.</source>
+        <translation type="obsolete">請試試變更關鍵詞，例如使用 car 取代 cars。</translation>
+    </message>
+    <message>
         <source>Try more general keywords.</source>
         <translation>請使用更籠統的關鍵詞。</translation>
+    </message>
+    <message>
+        <source>Fewer keywords gives more results, try reducing keywords until you get a result.</source>
+        <translation type="obsolete">關鍵詞越少,結果越多。請減少關鍵詞直到你搜尋出結果。</translation>
     </message>
     <message>
         <source>Search for &quot;%1&quot; returned %2 matches</source>
@@ -13120,6 +15423,10 @@ your account.</source>
         <translation>無法取得</translation>
     </message>
     <message>
+        <source>Your Email address</source>
+        <translation type="obsolete">你的電子郵件地址</translation>
+    </message>
+    <message>
         <source>Enter forum</source>
         <translation type="unfinished">進入論壇</translation>
     </message>
@@ -13134,6 +15441,10 @@ your account.</source>
     <message>
         <source>Your email address</source>
         <translation type="unfinished">你的電子郵件地址</translation>
+    </message>
+    <message>
+        <source>You need to be logged in to get access to the forums. Log in %login_link_start%here%login_link_end%</source>
+        <translation type="obsolete">你需要登入以取論壇的得存取權限。登入 %login_link_start%here%login_link_end%</translation>
     </message>
     <message>
         <source>You need to be logged in to get access to the forums. Log in</source>
@@ -13171,8 +15482,16 @@ your account.</source>
         <translation>價格</translation>
     </message>
     <message>
+        <source>Total Price</source>
+        <translation type="obsolete">價格總計</translation>
+    </message>
+    <message>
         <source>Basket</source>
         <translation>購物籃</translation>
+    </message>
+    <message>
+        <source>The following items were removed from your basket, because the products were changed</source>
+        <translation type="obsolete">因為產品變動，下列項目將從你的購物籃中刪除</translation>
     </message>
     <message>
         <source>VAT</source>
@@ -13189,6 +15508,10 @@ your account.</source>
     <message>
         <source>Selected options</source>
         <translation>所選選項</translation>
+    </message>
+    <message>
+        <source>Subtotal Inc. VAT</source>
+        <translation type="obsolete">稅後小計</translation>
     </message>
     <message>
         <source>Checkout</source>
@@ -13259,6 +15582,30 @@ your account.</source>
         <translation>購物籃概要</translation>
     </message>
     <message>
+        <source>Shipping total Inc. VAT</source>
+        <translation type="obsolete">稅後運費小計</translation>
+    </message>
+    <message>
+        <source>Item total Inc. VAT</source>
+        <translation type="obsolete">稅後品項總計</translation>
+    </message>
+    <message>
+        <source>Total Inc. VAT</source>
+        <translation type="obsolete">稅後總計</translation>
+    </message>
+    <message>
+        <source>Subtotal of items Ex VAT</source>
+        <translation type="obsolete">稅前品項小計</translation>
+    </message>
+    <message>
+        <source>Shipping total Ex VAT</source>
+        <translation type="obsolete">稅前運費小計</translation>
+    </message>
+    <message>
+        <source>Item total Ex. VAT</source>
+        <translation type="obsolete">稅前品項總計</translation>
+    </message>
+    <message>
         <source>Total VAT</source>
         <translation>稅額總計</translation>
     </message>
@@ -13297,6 +15644,29 @@ your account.</source>
     <message>
         <source>Item total ex. VAT</source>
         <translation type="unfinished">稅前項目總計</translation>
+    </message>
+</context>
+<context>
+    <name>design/ezwebin/content/datatype</name>
+    <message>
+        <source>Year</source>
+        <translation type="unfinished">年</translation>
+    </message>
+    <message>
+        <source>Month</source>
+        <translation type="unfinished">月</translation>
+    </message>
+    <message>
+        <source>Day</source>
+        <translation type="unfinished">日</translation>
+    </message>
+    <message>
+        <source>Hour</source>
+        <translation type="unfinished">小時</translation>
+    </message>
+    <message>
+        <source>Minute</source>
+        <translation type="unfinished">分鐘</translation>
     </message>
 </context>
 <context>
@@ -13401,6 +15771,14 @@ your account.</source>
     <message>
         <source>QuickTime</source>
         <translation>QuickTime</translation>
+    </message>
+    <message>
+        <source>Real player</source>
+        <translation type="obsolete">Real player</translation>
+    </message>
+    <message>
+        <source>Windows media player</source>
+        <translation type="obsolete">Windows media player</translation>
     </message>
     <message>
         <source>Price inc. VAT</source>
@@ -13563,6 +15941,10 @@ your account.</source>
         <translation>請選取使用者可以建立的類別</translation>
     </message>
     <message>
+        <source>Package Type</source>
+        <translation type="obsolete">套件型態</translation>
+    </message>
+    <message>
         <source>Checked</source>
         <translation>已選取</translation>
     </message>
@@ -13575,8 +15957,16 @@ your account.</source>
         <translation>單一選擇</translation>
     </message>
     <message>
+        <source>Warning, the ini file settings value and object value does not match.</source>
+        <translation type="obsolete">警告，ini 檔案設定值和物件值不符合。</translation>
+    </message>
+    <message>
         <source>The ini file has probably been modified manually since last time.</source>
         <translation>ini 檔案從上一次起大概已經被手動修改過。</translation>
+    </message>
+    <message>
+        <source>Ini File : </source>
+        <translation type="obsolete">Ini 檔案：</translation>
     </message>
     <message>
         <source>Ini Value: </source>
@@ -13609,6 +15999,14 @@ your account.</source>
     <message>
         <source>Browse</source>
         <translation>瀏覽</translation>
+    </message>
+    <message>
+        <source>Dropdown list</source>
+        <translation type="obsolete">下拉式清單</translation>
+    </message>
+    <message>
+        <source>Dropdown tree</source>
+        <translation type="obsolete">下拉式樹</translation>
     </message>
     <message>
         <source>Remove selection</source>
@@ -13645,6 +16043,10 @@ your account.</source>
     <message>
         <source>Minute</source>
         <translation>分鐘</translation>
+    </message>
+    <message>
+        <source>View Mode</source>
+        <translation type="obsolete">檢視模式</translation>
     </message>
     <message>
         <source>Drop-down list</source>
@@ -13733,6 +16135,14 @@ your account.</source>
     <message>
         <source>Style</source>
         <translation>樣式</translation>
+    </message>
+    <message>
+        <source>Checkboxes / radiobuttons</source>
+        <translation type="obsolete">核取方塊/單選按鈕</translation>
+    </message>
+    <message>
+        <source>Dropdown menu / multi menu</source>
+        <translation type="obsolete">下拉式選單/多重選單</translation>
     </message>
     <message>
         <source>Elements</source>
@@ -13827,6 +16237,14 @@ your account.</source>
         <translation>介面</translation>
     </message>
     <message>
+        <source>Dropdown menu / multiselect</source>
+        <translation type="obsolete">下拉式選單/多重選擇</translation>
+    </message>
+    <message>
+        <source>Radiobuttons / checkboxes</source>
+        <translation type="obsolete">單選按鈕/核取方塊</translation>
+    </message>
+    <message>
         <source>Yes</source>
         <translation>是</translation>
     </message>
@@ -13855,6 +16273,10 @@ your account.</source>
         <translation>價格</translation>
     </message>
     <message>
+        <source>For more options, set &quot;AdvancedObjectRelationList&quot; to &quot;enabled&quot; in a configuration override for &quot;site.ini&quot;.</source>
+        <translation type="obsolete">為了獲得更多選項，在「site.ini」的配置變更中，設定「AdvancedObjectRelationList」為「啟用」。</translation>
+    </message>
+    <message>
         <source>Default currency</source>
         <translation>預設貨幣</translation>
     </message>
@@ -13869,6 +16291,10 @@ your account.</source>
     <message>
         <source>List with radio buttons</source>
         <translation>具備單選按鈕清單</translation>
+    </message>
+    <message>
+        <source>List with Check boxes</source>
+        <translation type="obsolete">具備核取方塊的清單</translation>
     </message>
     <message>
         <source>Multiple selection list</source>
@@ -14057,6 +16483,10 @@ your account.</source>
         <translation>取消</translation>
     </message>
     <message>
+        <source>Discard Changes</source>
+        <translation type="obsolete">放棄變更</translation>
+    </message>
+    <message>
         <source>Are you sure you want to remove these classes?</source>
         <translation>你確認要刪除這些類別嗎？</translation>
     </message>
@@ -14125,6 +16555,18 @@ your account.</source>
         <translation>由 %username 於 %time 修改</translation>
     </message>
     <message>
+        <source>Is Container Class</source>
+        <translation type="obsolete">為容器類別</translation>
+    </message>
+    <message>
+        <source>Use this menu to select the type of attribute you wish to create. Click the &quot;add attribute&quot; button. The attribute will be appended to the bottom of the list of attributes.</source>
+        <translation type="obsolete">請使用此選單以選取你希望建立的屬性型態。按一下「加入屬性」按鈕。屬性將會附加到屬性清單的底部。</translation>
+    </message>
+    <message>
+        <source>The class should have at least one attribute and nonempty &apos;Name&apos; attribute</source>
+        <translation type="obsolete">類別應該至少有一個屬性和非空的「名稱」屬性</translation>
+    </message>
+    <message>
         <source>The class %1 was already removed from the group but still exists in others.</source>
         <translation>類別 %1 已經從組別刪除，但是仍然存在其他物件中。</translation>
     </message>
@@ -14155,6 +16597,61 @@ your account.</source>
     <message>
         <source>Discard changes</source>
         <translation type="unfinished">放棄變更</translation>
+    </message>
+    <message>
+        <source>Description</source>
+        <translation type="unfinished">描述</translation>
+    </message>
+    <message>
+        <source>Use this field to set the informal description of the class. The description field can contain whitespaces and special characters.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>design/standard/class/edit_locked</name>
+    <message>
+        <source>Class locked</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This class has pending modifications defered to cronjob and thus it cannot be edited.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Wait until the script is finished. You might see the status in the %urlstart script monitor%urlend&lt;/a&gt;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>To force the modification of the class you may run the following command</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit &lt;%class_name&gt; [Class]</source>
+        <translation type="unfinished">編輯 &lt;%class_name&gt; [類別]</translation>
+    </message>
+    <message>
+        <source>Class</source>
+        <translation type="unfinished">類別</translation>
+    </message>
+    <message>
+        <source>Last modifier</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Last modified on</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The class will be available for editing after the script has been run by the cronjob.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Retry</source>
+        <translation type="unfinished">重試</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">取消</translation>
     </message>
 </context>
 <context>
@@ -14299,6 +16796,10 @@ your account.</source>
         <translation>變更範本</translation>
     </message>
     <message>
+        <source>SiteAccess</source>
+        <translation type="obsolete">存取網址</translation>
+    </message>
+    <message>
         <source>Override</source>
         <translation>變更</translation>
     </message>
@@ -14317,6 +16818,10 @@ your account.</source>
     <message>
         <source>Siteaccess</source>
         <translation type="unfinished">存取網址</translation>
+    </message>
+    <message>
+        <source>Description</source>
+        <translation type="unfinished">描述</translation>
     </message>
 </context>
 <context>
@@ -14385,12 +16890,20 @@ your account.</source>
         <translation>內容物件 %1 等待它的發表認可。</translation>
     </message>
     <message>
+        <source>If you wish you may send a message to the person approving it?</source>
+        <translation type="obsolete">如果你希望，你要送訊息給同意它的人？</translation>
+    </message>
+    <message>
         <source>The content object %1 needs your approval before it can be published.</source>
         <translation>內容物件 %1 需要你的發表認可。</translation>
     </message>
     <message>
         <source>Do you approve of the content object being published?</source>
         <translation>你同意發表內容物件嗎？</translation>
+    </message>
+    <message>
+        <source>The content object %1 was approved and will be published once the publishing workflow continues.</source>
+        <translation type="obsolete">內容物件 %1 已獲同意，並且一旦作業流程就緒就會發表。</translation>
     </message>
     <message>
         <source>Comment</source>
@@ -14421,6 +16934,10 @@ your account.</source>
         <translation>編輯物件</translation>
     </message>
     <message>
+        <source>The content object %1 was not accepted but is available as a draft again.</source>
+        <translation type="obsolete">%1 沒有被接受，但仍可做為有效的草稿。.</translation>
+    </message>
+    <message>
         <source>The content object %1 was not accepted but will be available as a draft for the author.</source>
         <translation>%1 沒有被接受，但仍可做為有效的草稿。</translation>
     </message>
@@ -14429,12 +16946,30 @@ your account.</source>
         <translation>[%sitename] 「%objectname」的批准正等待你的認可</translation>
     </message>
     <message>
+        <source>This email is to inform you that &quot;%objectname&quot; awaits your attention at %sitename.
+The publishing process has been halted and it is up to you to decide if it should continue or stop.
+The approval can viewed by using the URL below.</source>
+        <translation type="obsolete">這封郵件通知你「%objectname」在 %sitename 等待你的發表認可。
+發表程序已暫停，你可以再啟動或完全停止。
+檢視發表認可，請點選下面的 URL。</translation>
+    </message>
+    <message>
         <source>[%sitename] &quot;%objectname&quot; awaits approval</source>
         <translation>[%sitename]「%objectname」等待發表認可</translation>
     </message>
     <message>
+        <source>This email is to inform you that &quot;%objectname&quot; awaits approval at %sitename before it is published.
+If you wish to send comments to the approver or view the status use the URL below.</source>
+        <translation type="obsolete">這封郵件通知你「%objectname」等待你的發表認可。
+如果你想傳送評論給批准者或檢視狀態，請點選下面的 URL。</translation>
+    </message>
+    <message>
         <source>You may re-edit the draft and publish it, in which case an approval is required again.</source>
         <translation>你可以重新編輯草稿並發佈它，在這種情況下必需要再次認可。</translation>
+    </message>
+    <message>
+        <source>The author can re-edit the draft and publish it again, in which a new approval item is made.</source>
+        <translation type="obsolete">作者可以重新編輯草稿並再次發佈它，其中要經過新的認可。</translation>
     </message>
     <message>
         <source>This email is to inform you that &quot;%objectname&quot; awaits your attention at %sitename.
@@ -14537,6 +17072,10 @@ If you want to send comments to the approver or view the status use the URL belo
         <translation>建立</translation>
     </message>
     <message>
+        <source>Below you will find a list of active translations which content objects may be translated into.</source>
+        <translation type="obsolete">你在下面將發現啟用的翻譯清單。此翻譯表可能是由內容物件翻譯而來。</translation>
+    </message>
+    <message>
         <source>Edit</source>
         <translation>編輯</translation>
     </message>
@@ -14561,12 +17100,28 @@ If you want to send comments to the approver or view the status use the URL belo
         <translation>語言</translation>
     </message>
     <message>
+        <source>Country</source>
+        <translation type="obsolete">國家</translation>
+    </message>
+    <message>
         <source>Remove</source>
         <translation>刪除</translation>
     </message>
     <message>
         <source>Removing &apos;%1&apos; will remove the translation itself and %2 translated versions!</source>
         <translation>刪除 %1 將會刪除這份翻譯和 %2 份翻譯版本！</translation>
+    </message>
+    <message>
+        <source>URL translator</source>
+        <translation type="obsolete">URL 翻譯</translation>
+    </message>
+    <message>
+        <source>Store</source>
+        <translation type="obsolete">儲存</translation>
+    </message>
+    <message>
+        <source>Add</source>
+        <translation type="obsolete">添加</translation>
     </message>
     <message>
         <source>Below you will find a list of active translations that content objects may be translated into.</source>
@@ -14586,6 +17141,10 @@ If you want to send comments to the approver or view the status use the URL belo
     <message>
         <source>Browse</source>
         <translation>瀏覽</translation>
+    </message>
+    <message>
+        <source>To select an object that is a child of one of the displayed objects, click the object name and you will get a list of the children of the object.</source>
+        <translation type="obsolete">要選擇已顯示物件的子物件，請點選物件名稱，你將得到子物件的清單。</translation>
     </message>
     <message>
         <source>Name</source>
@@ -14648,6 +17207,10 @@ If you want to send comments to the approver or view the status use the URL belo
         <translation>新增</translation>
     </message>
     <message>
+        <source>To select objects, choose the appropriate radiobutton or checkbox(es), and click the &quot;Select&quot; button.</source>
+        <translation type="obsolete">要選取物件，就選取適當的單選按鈕或核取方塊，並且按一下「選取」按鈕。</translation>
+    </message>
+    <message>
         <source>To select objects, choose the appropriate radio button or checkbox(es), then click the &quot;Select&quot; button.</source>
         <translation type="unfinished">要選取物件，就選取適當的單選按鈕或核取方塊，並且按一下「選取」按鈕。</translation>
     </message>
@@ -14679,6 +17242,10 @@ If you want to send comments to the approver or view the status use the URL belo
         <translation>複製 %1</translation>
     </message>
     <message>
+        <source>Version count is %1, and current version is %2.</source>
+        <translation type="obsolete">版本數是 %1，而目前版本是 %2。</translation>
+    </message>
+    <message>
         <source>Version count is %1 and current version is %2.</source>
         <translation type="unfinished">版本數是 %1，而目前版本是 %2。</translation>
     </message>
@@ -14696,6 +17263,10 @@ If you want to send comments to the approver or view the status use the URL belo
     <message>
         <source>Copy current version.</source>
         <translation>複製目前版本。</translation>
+    </message>
+    <message>
+        <source>Keep creators of content objects being copied unchaged.</source>
+        <translation type="obsolete">保持內容物件的建立者在複製時不被改變。</translation>
     </message>
     <message>
         <source>Set new creator for content objects being copied.</source>
@@ -14724,6 +17295,10 @@ If you want to send comments to the approver or view the status use the URL belo
 </context>
 <context>
     <name>design/standard/content/copy_subtree_notification</name>
+    <message>
+        <source>Copy Subtree Notification</source>
+        <translation type="obsolete">複製子樹的通知</translation>
+    </message>
     <message>
         <source>OK</source>
         <translation>確認</translation>
@@ -14942,6 +17517,10 @@ If you want to send comments to the approver or view the status use the URL belo
         <translation>刪除物件</translation>
     </message>
     <message>
+        <source>Edit</source>
+        <translation type="obsolete">編輯</translation>
+    </message>
+    <message>
         <source>No media file is available.</source>
         <translation>無媒體檔案可用。</translation>
     </message>
@@ -15100,6 +17679,14 @@ If you want to send comments to the approver or view the status use the URL belo
     <message>
         <source>QuickTime</source>
         <translation>QuickTime</translation>
+    </message>
+    <message>
+        <source>Real player</source>
+        <translation type="obsolete">Real player</translation>
+    </message>
+    <message>
+        <source>Windows media player</source>
+        <translation type="obsolete">Windows media player</translation>
     </message>
     <message>
         <source>Unknown</source>
@@ -15389,6 +17976,18 @@ If you want to send comments to the approver or view the status use the URL belo
         <source>Silverlight</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>There are no related object.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Find object</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Find objects</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>design/standard/content/diff</name>
@@ -15494,6 +18093,14 @@ If you want to send comments to the approver or view the status use the URL belo
     <message>
         <source>Depth</source>
         <translation>深度</translation>
+    </message>
+    <message>
+        <source>Class Identifier</source>
+        <translation type="obsolete">類別代號</translation>
+    </message>
+    <message>
+        <source>Class Name</source>
+        <translation type="obsolete">類別名稱</translation>
     </message>
     <message>
         <source>Priority</source>
@@ -15636,6 +18243,12 @@ If you want to send comments to the approver or view the status use the URL belo
         <translation>物件是由 %owner 所擁有。</translation>
     </message>
     <message>
+        <source>This object is already being edited by someone else including you.
+    You can either continue editing one of your drafts or you can create a new draft.</source>
+        <translation type="obsolete">此物件正在被包含你的某人編輯。
+    你可以繼續編輯一個你的草稿，或是建立新的草稿。</translation>
+    </message>
+    <message>
         <source>This object is already being edited by you.
         You can either continue editing one of your drafts or you can create a new draft.</source>
         <translation>此物件正在被你編輯。
@@ -15729,6 +18342,14 @@ If you want to send comments to the approver or view the status use the URL belo
         <translation>請選取加入的翻譯所基於的語言</translation>
     </message>
     <message>
+        <source>use an empty, untranslated draft</source>
+        <translation type="obsolete">請使用空的、未翻譯的草稿</translation>
+    </message>
+    <message>
+        <source>You do not have sufficient permissions to create a translation in another language.</source>
+        <translation type="obsolete">你沒有充分的權限以其他語言建立翻譯。</translation>
+    </message>
+    <message>
         <source>However you can select one of the following languages for editing</source>
         <translation>然而你可以選取下列進行編輯的語言之一</translation>
     </message>
@@ -15767,8 +18388,16 @@ If you want to send comments to the approver or view the status use the URL belo
         <translation>對於 %feedbackname 的回饋意見</translation>
     </message>
     <message>
+        <source>Thanks for your feedback, the following information was collected.</source>
+        <translation type="obsolete">已收集到下列資訊，感謝你的回饋意見。</translation>
+    </message>
+    <message>
         <source>Return to site</source>
         <translation>回傳到站台</translation>
+    </message>
+    <message>
+        <source>You have already submitted data to this feedback. The previously submitted data was the following.</source>
+        <translation type="obsolete">你已提交過回饋意見。之前提交的資料如下列。</translation>
     </message>
     <message>
         <source>You have already submitted feedback. The previously submitted data was:</source>
@@ -15790,6 +18419,10 @@ If you want to send comments to the approver or view the status use the URL belo
         <translation>回傳到站台</translation>
     </message>
     <message>
+        <source>You have already submitted data to this form. The previously submitted data was the following.</source>
+        <translation type="obsolete">你已提交過資料給此表單。之前提交的資料如下列。</translation>
+    </message>
+    <message>
         <source>Collected information</source>
         <translation>已收集的資訊</translation>
     </message>
@@ -15800,6 +18433,26 @@ If you want to send comments to the approver or view the status use the URL belo
 </context>
 <context>
     <name>design/standard/content/history</name>
+    <message>
+        <source>Version not a draft</source>
+        <translation type="obsolete">不是草稿的版本</translation>
+    </message>
+    <message>
+        <source>Version %1 is not available for editing anymore, only drafts can be edited.</source>
+        <translation type="obsolete">版本 %1 不能再被編輯，只有草稿能被編輯。</translation>
+    </message>
+    <message>
+        <source>To edit this version create a copy of it.</source>
+        <translation type="obsolete">為了編輯此版本而建立一份複本。</translation>
+    </message>
+    <message>
+        <source>Version not yours</source>
+        <translation type="obsolete">不是你的版本</translation>
+    </message>
+    <message>
+        <source>Version %1 was not created by you, only your own drafts can be edited.</source>
+        <translation type="obsolete">版本 %1 不是你所建立，你只能編輯自己的草稿。</translation>
+    </message>
     <message>
         <source>Unable to create new version</source>
         <translation>不能建立新版本</translation>
@@ -15841,6 +18494,10 @@ If you want to send comments to the approver or view the status use the URL belo
         <translation>請選取要刪除的版本 #%version_number。</translation>
     </message>
     <message>
+        <source>Version #%version_number can not be removed because it is either the published version of the object or because you do not have permissions to remove it.</source>
+        <translation type="obsolete">無法刪除版本 #%version_number，因為它若不是已發佈的物件版本，就是你沒有權限去刪除它。</translation>
+    </message>
+    <message>
         <source>View the contents of version #%version_number. Translation: %translation.</source>
         <translation>檢視版本 #%version_number 的內容。翻譯：%translation。</translation>
     </message>
@@ -15873,8 +18530,16 @@ If you want to send comments to the approver or view the status use the URL belo
         <translation>建立版本 #%version_number 的複本。</translation>
     </message>
     <message>
+        <source>You can not make copies of versions because you do not have permissions to edit the object.</source>
+        <translation type="obsolete">你無法製作版本複本，因為你沒有編輯物件的權限。</translation>
+    </message>
+    <message>
         <source>Edit the contents of version #%version_number.</source>
         <translation>編輯版本 #%version_number 的內容。</translation>
+    </message>
+    <message>
+        <source>You can not edit the contents of version #%version_number either because it is not a draft or because you do not have permissions to edit the object.</source>
+        <translation type="obsolete">你無法編輯版本 #%version_number 的內容，若非因為它不是草稿，就是因為你沒有編輯物件的權限。</translation>
     </message>
     <message>
         <source>This object does not have any versions.</source>
@@ -15995,6 +18660,10 @@ If you want to send comments to the approver or view the status use the URL belo
 <context>
     <name>design/standard/content/pdf</name>
     <message>
+        <source>eZ publish PDF export</source>
+        <translation type="obsolete">eZ publish PDF 匯出</translation>
+    </message>
+    <message>
         <source>#page of #total</source>
         <translation>#total 頁之 #page</translation>
     </message>
@@ -16032,6 +18701,14 @@ If you want to send comments to the approver or view the status use the URL belo
     <message>
         <source>Poll results</source>
         <translation>意見調查結果</translation>
+    </message>
+    <message>
+        <source>Anonymous users are not allowed to vote on this poll, please login.</source>
+        <translation type="obsolete">匿名使用者不被允許對此意見調查投票，請登入。</translation>
+    </message>
+    <message>
+        <source>You have already voted for this poll.</source>
+        <translation type="obsolete">對此意見調查你已經投了票。</translation>
     </message>
     <message>
         <source>Anonymous users are not allowed to vote in this poll. Please log in.</source>
@@ -16181,8 +18858,16 @@ If you want to send comments to the approver or view the status use the URL belo
         <translation>檢查關鍵詞拼寫。</translation>
     </message>
     <message>
+        <source>Try changing some keywords eg. car instead of cars.</source>
+        <translation type="obsolete">變更關鍵詞，例如用 car 取代 cars。</translation>
+    </message>
+    <message>
         <source>Try more general keywords.</source>
         <translation>請使用更籠統的關鍵詞。</translation>
+    </message>
+    <message>
+        <source>Fewer keywords gives more results, try reducing keywords until you get a result.</source>
+        <translation type="obsolete">請使用更少的關鍵詞直到你搜尋出結果。</translation>
     </message>
     <message>
         <source>Any attribute</source>
@@ -16326,6 +19011,10 @@ If you want to send comments to the approver or view the status use the URL belo
         <translation>上傳檔案</translation>
     </message>
     <message>
+        <source>Choose a file from your locale machine and click the &quot;Upload&quot; button. An object will be created according to file type and placed in your chosen location.</source>
+        <translation type="obsolete">從你本機選取檔案並按一下「上傳」按鈕。物件將根據檔案類型而建立，並且放置在你所選的位置中。</translation>
+    </message>
+    <message>
         <source>Some errors occurred</source>
         <translation>發生某些錯誤</translation>
     </message>
@@ -16361,8 +19050,20 @@ If you want to send comments to the approver or view the status use the URL belo
 <context>
     <name>design/standard/content/version</name>
     <message>
+        <source>Version not a draft</source>
+        <translation type="obsolete">不是草稿的版本</translation>
+    </message>
+    <message>
         <source>Version</source>
         <translation>版本</translation>
+    </message>
+    <message>
+        <source>To edit this version create a copy of it.</source>
+        <translation type="obsolete">要編輯此版本，請先建立一個複本。</translation>
+    </message>
+    <message>
+        <source>Version not yours</source>
+        <translation type="obsolete">不是你的版本</translation>
     </message>
     <message>
         <source>Edit</source>
@@ -16375,6 +19076,10 @@ If you want to send comments to the approver or view the status use the URL belo
     <message>
         <source>Versions for: %1</source>
         <translation>%1 的版本：</translation>
+    </message>
+    <message>
+        <source>Version %1 was not created by you, only your own drafts can be edited.</source>
+        <translation type="obsolete">版本 %1 不是你所建立，你只能編輯自己的草稿。</translation>
     </message>
     <message>
         <source>Unable to create new version</source>
@@ -16511,6 +19216,18 @@ If you want to send comments to the approver or view the status use the URL belo
         <translation>選擇最初位置</translation>
     </message>
     <message>
+        <source>Please choose where you want to place the new %classname.
+
+    Select the placement and click the %buttonname button.
+    Using the recent and bookmark items for quick placement is also possible.
+    Click on placement names to change the browse listing.</source>
+        <translation type="obsolete">請選擇哪兒你想放置這個新的 %classname。
+
+     選擇位置，並點選按鈕 %buttonname。
+     可用最新加入的書籤來快速選擇。
+     點選位置名稱來變更瀏覽清單。</translation>
+    </message>
+    <message>
         <source>My bookmarks</source>
         <translation>我的書籤</translation>
     </message>
@@ -16527,16 +19244,66 @@ If you want to send comments to the approver or view the status use the URL belo
         <translation>選擇加入書籤的項目</translation>
     </message>
     <message>
+        <source>Please choose the items you want to add to your bookmark list.
+
+     Select your items and click the %buttonname button.
+     Using the recent and bookmark items for quick selection is also possible.
+     Click on item names to change the browse listing.</source>
+        <translation type="obsolete">請選取你想加入書籤的項目。
+
+    選取放置位址並按一下 %buttonname 按鈕。
+    也可以使用最近開啟和書籤中的項目來快速放置。
+    按一下放置位址名稱以變更瀏覽清單。</translation>
+    </message>
+    <message>
         <source>Choose new placement</source>
         <translation>選取新位置</translation>
+    </message>
+    <message>
+        <source>Please choose the new placement for %name.
+      The previous placement was in %placementname.
+
+      Select the placement and click the %buttonname button.
+      Using the recent and bookmark items for quick placement is also possible.
+      Click on placement names to change the browse listing.</source>
+        <translation type="obsolete">請選取 %name 的新位置。
+     以前的位置在 %placementname。
+
+    選取放置位址並按一下 %buttonname 按鈕。
+    也可以使用最近開啟和書籤中的項目來快速放置。
+    按一下放置位址名稱以變更瀏覽清單。</translation>
     </message>
     <message>
         <source>Choose placements</source>
         <translation>選擇位置</translation>
     </message>
     <message>
+        <source>Please choose where you want to place %name.
+
+    Select your placements and click the %buttonname button.
+    Using the recent and bookmark items for quick placement is also possible.
+    Click on placement names to change the browse listing.</source>
+        <translation type="obsolete">請選取你想放置 %name 的位置。
+
+    選取放置位址並按一下 %buttonname 按鈕。
+    也可以使用最近開啟和書籤中的項目來快速放置。
+    按一下放置位址名稱以變更瀏覽清單。</translation>
+    </message>
+    <message>
         <source>Choose related objects</source>
         <translation>選擇相關的物件</translation>
+    </message>
+    <message>
+        <source>Please choose objects which you want to relate to %name.
+
+    Select your objects and click the %buttonname button.
+    Using the recent and bookmark items for quick selection is also possible.
+    Click on object names to change the browse listing.</source>
+        <translation type="obsolete">請選取 %name 的相關物件。
+
+    選取放置位址並按一下 %buttonname 按鈕。
+    也可以使用最近開啟和書籤中的項目來快速放置。
+    按一下放置位址名稱以變更瀏覽清單。</translation>
     </message>
     <message>
         <source>Select all</source>
@@ -16563,8 +19330,30 @@ If you want to send comments to the approver or view the status use the URL belo
         <translation>你的未發表清單是空的</translation>
     </message>
     <message>
+        <source>These are the objects you have bookmarked. Click on an object to view it or if you have sufficient permission you can to edit the object by clicking the edit button.
+      If you want to add more objects to this list click the %emphasize_startAdd bookmarks%emphasize_stop button.
+
+      Removing objects will only remove them from this list.</source>
+        <translation type="obsolete">這些是你已加入書籤的物件。按一下物件以檢視它，或是如果你有充分的權限，你可以藉由按一下編輯按鈕來編輯物件。
+      如果你要加入更多物件到此清單，就按一下 %emphasize_startAdd 書籤 %emphasize_stop 按鈕。
+
+      刪除物件將只會將它們從此清單刪除。</translation>
+    </message>
+    <message>
         <source>Choose node for default selection</source>
         <translation>請選取做為預設選擇的節點</translation>
+    </message>
+    <message>
+        <source>Please choose where you want to the default selection of objectrelation to start from.
+
+    Select the placement and click the %buttonname button.
+    Using the recent and bookmark items for quick placement is also possible.
+    Click on placement names to change the browse listing.</source>
+        <translation type="obsolete">請選取你想要預設物件關聯選擇的開始位置。
+
+    選取放置位址並按一下 %buttonname 按鈕。
+    也可以使用最近開啟和書籤中的項目來快速放置。
+    按一下放置位址名稱以變更瀏覽清單。</translation>
     </message>
     <message>
         <source>Collected info</source>
@@ -16575,8 +19364,71 @@ If you want to send comments to the approver or view the status use the URL belo
         <translation>請選取 %objectname 的新位置</translation>
     </message>
     <message>
+        <source>Please choose where you want to place %objectname.
+
+    Select the new location and click the %buttonname button.
+    Using the recent and bookmark items for quick placement is also possible.
+    Click on placement names to change the browse listing.</source>
+        <translation type="obsolete">請選取你要放置 %objectname 的地方。
+
+    選取新的位置並按一下 %buttonname 按鈕。
+    也可以使用最近開啟和書籤中的項目來快速放置位址。
+    按一下放置位址名稱以變更瀏覽清單。</translation>
+    </message>
+    <message>
         <source>Upload file</source>
         <translation>上傳檔案</translation>
+    </message>
+    <message>
+        <source>Choose the exchanging node for %objectname</source>
+        <translation type="obsolete">請選取 %objectname 的交換節點</translation>
+    </message>
+    <message>
+        <source>Please choose which node you want to exchange %objectname with.
+
+    Select the node and click the %buttonname button.
+    Using the recent and bookmark items for quick placement is also possible.
+    Click on placement names to change the browse listing.</source>
+        <translation type="obsolete">請選取你要跟它交換 %objectname 的節點。
+
+    選取節點並按一下 %buttonname 按鈕。
+    也可以使用最近開啟和書籤中的項目來快速放置位址。
+    按一下放置位址名稱以變更瀏覽清單。</translation>
+    </message>
+    <message>
+        <source>These are the current objects you are working on. The drafts are owned by you and can only be seen by you.
+      You can either edit the drafts or remove them if you don&apos;t need them any more.</source>
+        <translation type="obsolete">這些是你目前操作的物件。草稿由你所擁有，而且只能由你看見。
+      如果你不再需要它們，你可以編輯草稿或是刪除它們。</translation>
+    </message>
+    <message>
+        <source>Choose a file from your locale machine and click the &quot;Upload&quot; button. An object will be created according to file type and placed in your chosen location.
+</source>
+        <translation type="obsolete">從你本機中選取檔案並按一下「上傳」按鈕。物件將被根據檔案類型而建立，並且放置在你所選的位置中。</translation>
+    </message>
+    <message>
+        <source>Please choose where you want to copy %objectname.
+
+    Select the new location and click the %buttonname button.
+    Using the recent and bookmark items for quick placement is also possible.
+    Click on placement names to change the browse listing.</source>
+        <translation type="obsolete">請選取你要複製 %objectname 的位置。
+
+    選取新的位置並按一下 %buttonname 按鈕。
+    也可以使用最近開啟和書籤中的項目來快速放置位址。
+    按一下放置位址名稱以變更瀏覽清單。</translation>
+    </message>
+    <message>
+        <source>Please choose where you want to copy subtree of node %node_name.
+
+    Select the new location and click the %buttonname button.
+    Using the recent and bookmark items for quick placement is also possible.
+    Click on placement names to change the browse listing.</source>
+        <translation type="obsolete">請選取你要複製子樹節點 %node_name 的位置。
+
+    選取新位置並按一下 %buttonname 按鈕。
+    也可以使用最近開啟和書籤中的項目來快速放置位址。
+    按一下放置位址名稱以變更瀏覽清單。</translation>
     </message>
     <message>
         <source>Site Access</source>
@@ -16747,6 +19599,10 @@ If you want to send comments to the approver or view the status use the URL belo
     <message>
         <source>Fold/Unfold</source>
         <translation>折疊/展開</translation>
+    </message>
+    <message>
+        <source>[%classname] Click on the icon to get a context sensitive menu.</source>
+        <translation type="obsolete">[%classname] 在圖示上按一下以取得上下文相關的選單。</translation>
     </message>
     <message>
         <source>[%classname] Click on the icon to display a context-sensitive menu.</source>
@@ -16972,6 +19828,10 @@ If you want to send comments to the approver or view the status use the URL belo
         <translation>工具列管理</translation>
     </message>
     <message>
+        <source>SiteAccess</source>
+        <translation type="obsolete">存取網址</translation>
+    </message>
+    <message>
         <source>Current siteaccess</source>
         <translation>目前存取網址</translation>
     </message>
@@ -17008,6 +19868,10 @@ If you want to send comments to the approver or view the status use the URL belo
     <message>
         <source>Access denied</source>
         <translation>存取被拒</translation>
+    </message>
+    <message>
+        <source>You don&apos;t have permission to access this area.</source>
+        <translation type="obsolete">你沒有權限存取這個區域。</translation>
     </message>
     <message>
         <source>Not found</source>
@@ -17131,6 +19995,10 @@ If you want to send comments to the approver or view the status use the URL belo
         <translation>模組名稱被拼錯，試試變更 URL。</translation>
     </message>
     <message>
+        <source>This site uses siteaccess matching in the URL and you didn&apos;t supply one, try inserting a siteaccess name before the module in the URL .</source>
+        <translation type="obsolete">此站台在 URL 中使用存取網址來匹配，而你並未提供一個，試試在 URL 中的模組之前插入存取網址名稱。</translation>
+    </message>
+    <message>
         <source>The view name was misspelled, try changing the URL.</source>
         <translation>檢視名稱被拼錯，試試變更 URL。</translation>
     </message>
@@ -17170,6 +20038,14 @@ If you want to send comments to the approver or view the status use the URL belo
         <translation>無效的首選貨幣</translation>
     </message>
     <message>
+        <source>&apos;%1&apos; currency doesn&apos;t exist.</source>
+        <translation type="obsolete">「%1」貨幣不存在。</translation>
+    </message>
+    <message>
+        <source>&apos;%1&apos; can&apos;t be used because it&apos;s inactive.</source>
+        <translation type="obsolete">無法使用「%1」，因為它尚未啟動。</translation>
+    </message>
+    <message>
         <source>&apos;%1&apos; currency does not exist.</source>
         <translation type="unfinished">&apos;%1&apos; 貨幣不存在</translation>
     </message>
@@ -17180,6 +20056,10 @@ If you want to send comments to the approver or view the status use the URL belo
 </context>
 <context>
     <name>design/standard/ezinfo/about</name>
+    <message>
+        <source>Licence</source>
+        <translation type="obsolete">授權</translation>
+    </message>
     <message>
         <source>Contributors</source>
         <translation>貢獻者</translation>
@@ -17197,6 +20077,14 @@ If you want to send comments to the approver or view the status use the URL belo
         <translation>擴充功能</translation>
     </message>
     <message>
+        <source>eZ publish information: %version</source>
+        <translation type="obsolete">eZ publish 資訊：%version</translation>
+    </message>
+    <message>
+        <source>What is eZ publish?</source>
+        <translation type="obsolete">eZ publish 是什麼？</translation>
+    </message>
+    <message>
         <source>eZ Publish information: %version</source>
         <translation type="unfinished">eZ publish 資訊：%version</translation>
     </message>
@@ -17207,6 +20095,17 @@ If you want to send comments to the approver or view the status use the URL belo
     <message>
         <source>License</source>
         <translation type="unfinished">授權</translation>
+    </message>
+</context>
+<context>
+    <name>design/standard/form</name>
+    <message>
+        <source>Thank you for your feedback</source>
+        <translation type="obsolete">感謝你的回饋意見</translation>
+    </message>
+    <message>
+        <source>Your information was successfully received.</source>
+        <translation type="obsolete">已成功收到你的資訊。</translation>
     </message>
 </context>
 <context>
@@ -17221,6 +20120,10 @@ If you want to send comments to the approver or view the status use the URL belo
     <message>
         <source>Sitemap</source>
         <translation>網站導覽</translation>
+    </message>
+    <message>
+        <source>Welcome to eZ publish administration</source>
+        <translation type="obsolete">歡迎來到 eZ publish 管理功能</translation>
     </message>
     <message>
         <source>To log in enter a valid login and password.</source>
@@ -17283,6 +20186,10 @@ If you want to send comments to the approver or view the status use the URL belo
         <translation>搜尋 %sitetitle</translation>
     </message>
     <message>
+        <source>eZ publish redirection - %url</source>
+        <translation type="obsolete">eZ publish 重新導向 - %url</translation>
+    </message>
+    <message>
         <source>Redirecting to %url</source>
         <translation>重新導向 %url</translation>
     </message>
@@ -17337,6 +20244,10 @@ If you do all the children will be removed as well.</source>
     <message>
         <source>Menu management</source>
         <translation>選單管理</translation>
+    </message>
+    <message>
+        <source>SiteAccess</source>
+        <translation type="obsolete">存取網址</translation>
     </message>
     <message>
         <source>Current siteaccess</source>
@@ -17423,6 +20334,10 @@ If you do all the children will be removed as well.</source>
     <message>
         <source>Move to trash</source>
         <translation>丟進垃圾桶</translation>
+    </message>
+    <message>
+        <source>If %trashname is checked you will find the removed items in the trash afterwards.</source>
+        <translation type="obsolete">如果 %trashname 已勾選，之後你可以在垃圾桶中找到被刪除的項目。</translation>
     </message>
     <message>
         <source>Note</source>
@@ -17539,6 +20454,12 @@ If you do all the children will be removed as well.</source>
 <context>
     <name>design/standard/notification</name>
     <message>
+        <source>If you do not wish to continue receiving these notifications,
+change your settings at:</source>
+        <translation type="obsolete">如果你不想繼續收到這些通知，
+請在這裏變更你的設定：</translation>
+    </message>
+    <message>
         <source>%sitename notification system</source>
         <translation>%sitename 通知系統</translation>
     </message>
@@ -17619,6 +20540,10 @@ The item can viewed by using the URL below.</source>
     <message>
         <source>Store</source>
         <translation>儲存</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="obsolete">取消</translation>
     </message>
     <message>
         <source>&quot;%name&quot; was updated</source>
@@ -17723,6 +20648,10 @@ The item be can viewed by using the URL below.</source>
         <translation>合作通知</translation>
     </message>
     <message>
+        <source>Choose which collaboration items you wish to get notifications for.</source>
+        <translation type="obsolete">選擇那些你想得到通知的合作項目。</translation>
+    </message>
+    <message>
         <source>Choose which collaboration items you want to get notifications for.</source>
         <translation type="unfinished">選擇那些你想得到通知的合作項目。</translation>
     </message>
@@ -17758,6 +20687,10 @@ The item be can viewed by using the URL below.</source>
         <translation>上傳套件</translation>
     </message>
     <message>
+        <source>Select the file containing your package and click the upload button</source>
+        <translation type="obsolete">選擇含有你套件的檔案並點選上傳鍵</translation>
+    </message>
+    <message>
         <source>Install package</source>
         <translation>安裝套件</translation>
     </message>
@@ -17770,12 +20703,26 @@ The item be can viewed by using the URL below.</source>
         <translation>變更</translation>
     </message>
     <message>
+        <source>Start an entry with a marker ( %emstart-%emend (dash) or %emstart*%emend (asterix) ) at the beginning of the line.
+The change will continue to the next change marker.</source>
+        <translation type="obsolete">於列首以某個記號起始 (%emstart-%emend (減號) 或 %emstart*%emend (星號))。
+變更將繼續到下一個變更記號。</translation>
+    </message>
+    <message>
+        <source>Please provide some basic information for your package.</source>
+        <translation type="obsolete">請提供關於你的套件的一些基本資訊。</translation>
+    </message>
+    <message>
         <source>Package name</source>
         <translation>套件名稱</translation>
     </message>
     <message>
         <source>Description</source>
         <translation>描述</translation>
+    </message>
+    <message>
+        <source>Licence</source>
+        <translation type="obsolete">授權</translation>
     </message>
     <message>
         <source>Package host</source>
@@ -17786,9 +20733,19 @@ The item be can viewed by using the URL below.</source>
         <translation>套件製作者</translation>
     </message>
     <message>
+        <source>Please provide information on the maintainer of the package.</source>
+        <translation type="obsolete">請提供關於套件維護者的資訊。</translation>
+    </message>
+    <message>
         <source>Role</source>
         <comment>Maintainer role</comment>
         <translation>角色</translation>
+    </message>
+    <message>
+        <source>Please select a thumbnail file to be included in the package,
+if you do not wish to have a thumbnail simply click Next.</source>
+        <translation type="obsolete">請選取要包含在套件中的縮圖檔案，
+如果你不希望有縮圖，就按「下一步」。</translation>
     </message>
     <message>
         <source>Create package</source>
@@ -17803,8 +20760,18 @@ The item be can viewed by using the URL below.</source>
         <translation>請選取下列精靈之一以建立套件</translation>
     </message>
     <message>
+        <source>Please choose the content classes you wish to be included in the package.</source>
+        <translation type="obsolete">請選取你希望包含在套件中的內容類別。</translation>
+    </message>
+    <message>
         <source>Class list</source>
         <translation>類別清單</translation>
+    </message>
+    <message>
+        <source>Select an image file to be included in the package and click Next.
+When you are done with adding images click Next without choosing an image.</source>
+        <translation type="obsolete">請選取要包含在套件中的圖像檔案，並按「下一步」。
+當你已完成加入圖像時，按「下一步」而不需再選取圖像。</translation>
     </message>
     <message>
         <source>Currently added image files</source>
@@ -17813,6 +20780,12 @@ The item be can viewed by using the URL below.</source>
     <message>
         <source>Package wizard: %wizardname</source>
         <translation>套件精靈：%wizardname</translation>
+    </message>
+    <message>
+        <source>The package can be installed on your system, installing the package will copy files, create content classes etc. all depending on the package.
+If you do not wish to install the package at this time you can do so later on the view page for the package.</source>
+        <translation type="obsolete">套件可以安裝於你的系統，安裝套件將會複製所有依存於套件的檔案、建立內容類別等等。
+如果這次你不希望安裝套件，你可以稍後在套件的檢視頁面上再做。</translation>
     </message>
     <message>
         <source>Install items</source>
@@ -17827,12 +20800,24 @@ The item be can viewed by using the URL below.</source>
         <translation>套件的刪除</translation>
     </message>
     <message>
+        <source>Are you sure you wish to remove the following packages?
+The packages will be lost forever.
+Note: The packages will not be uninstalled.</source>
+        <translation type="obsolete">確認希望刪除下列套件？
+套件將會永久失去。
+注意：將無法解除套件的安裝。</translation>
+    </message>
+    <message>
         <source>Confirm removal</source>
         <translation>確認刪除</translation>
     </message>
     <message>
         <source>Keep packages</source>
         <translation>保留套件</translation>
+    </message>
+    <message>
+        <source>Package removal was cancelled.</source>
+        <translation type="obsolete">套件刪除已取消。</translation>
     </message>
     <message>
         <source>Selection</source>
@@ -17871,6 +20856,14 @@ The item be can viewed by using the URL below.</source>
         <translation>解除套件安裝</translation>
     </message>
     <message>
+        <source>The package can be uninstalled from your system, uninstalling the package will remove any installed files, content classes etc. all depending on the package.
+If you do not wish to uninstall the package at this time you can do so later on the view page for the package.
+You may also remove the package without uninstalling it from the package list.</source>
+        <translation type="obsolete">套件可以從你的系統解除安裝，解除套件安裝將會刪除任何依存於套件的已安裝檔案、內容類別等等。
+如果這次你不希望解除套件安裝，你可以稍後在套件的檢視頁面上再做。
+你也可以刪除套件而不需從套件清單將它解除安裝。</translation>
+    </message>
+    <message>
         <source>Uninstall items</source>
         <translation>解除安裝項目</translation>
     </message>
@@ -17907,6 +20900,10 @@ The item be can viewed by using the URL below.</source>
         <translation>維護者</translation>
     </message>
     <message>
+        <source>Regarding eZ publish package &apos;%packagename&apos;</source>
+        <translation type="obsolete">關於 eZ publish 套件 &apos;%packagename&apos;</translation>
+    </message>
+    <message>
         <source>Documents</source>
         <translation>文件</translation>
     </message>
@@ -17917,6 +20914,10 @@ The item be can viewed by using the URL below.</source>
     <message>
         <source>File list</source>
         <translation>檔案清單</translation>
+    </message>
+    <message>
+        <source>Please choose objects you wish to include in the package.</source>
+        <translation type="obsolete">請選取你希望包含在套件中的物件。</translation>
     </message>
     <message>
         <source>Selected nodes</source>
@@ -17949,6 +20950,10 @@ If unsure choose the siteaccess which reflects the user part of your site, i.e. 
     <message>
         <source>Please select where you want to place the imported items.</source>
         <translation>請選取你要放置匯入項目的方。</translation>
+    </message>
+    <message>
+        <source>If you wish to change the placement click the browse button.</source>
+        <translation type="obsolete">如果你希望變更放置位址，就按一下瀏覽按鈕。</translation>
     </message>
     <message>
         <source>Place %object_name in node %node_placement</source>
@@ -18007,6 +21012,10 @@ If unsure choose the siteaccess which reflects the user part of your site, i.e. 
         <translation>取消</translation>
     </message>
     <message>
+        <source>Please select an extension to be exported.</source>
+        <translation type="obsolete">請選取要匯出的擴充功能。</translation>
+    </message>
+    <message>
         <source>Installing package</source>
         <translation>正在安裝套件</translation>
     </message>
@@ -18033,6 +21042,14 @@ If unsure choose the siteaccess which reflects the user part of your site, i.e. 
     <message>
         <source>Use this choice for all items</source>
         <translation>對於所有項目使用此選擇</translation>
+    </message>
+    <message>
+        <source>Unhandled installation error has occured.</source>
+        <translation type="obsolete">發生無法處理的安裝錯誤。</translation>
+    </message>
+    <message>
+        <source>Unhandled uninstallation error has occured.</source>
+        <translation type="obsolete">發生無法處理的解除安裝錯誤。</translation>
     </message>
     <message>
         <source>Use this choice for all the items</source>
@@ -18163,12 +21180,20 @@ You can also remove the package without uninstalling it from the package list.</
         <translation>請選取要匯出的子樹</translation>
     </message>
     <message>
+        <source>Specify export properties. Default settings will most likely be suitable for your needs.</source>
+        <translation type="obsolete">指定匯出屬性。預設的設定值就很有可能適於你的需要。</translation>
+    </message>
+    <message>
         <source>Miscellaneous</source>
         <translation>雜項</translation>
     </message>
     <message>
         <source>Include class definitions.</source>
         <translation>包含類別定義。</translation>
+    </message>
+    <message>
+        <source>Include templates related exported objects.</source>
+        <translation type="obsolete">包含範本相關的匯出物件。</translation>
     </message>
     <message>
         <source>Select templates from the following siteaccesses</source>
@@ -18296,6 +21321,14 @@ You can also remove the package without uninstalling it from the package list.</
         <translation>刪除</translation>
     </message>
     <message>
+        <source>PDF Exports</source>
+        <translation type="obsolete">PDF 匯出</translation>
+    </message>
+    <message>
+        <source>New Export</source>
+        <translation type="obsolete">新增匯出</translation>
+    </message>
+    <message>
         <source>PDF exports</source>
         <translation type="unfinished">PDF 匯出</translation>
     </message>
@@ -18361,6 +21394,18 @@ You can also remove the package without uninstalling it from the package list.</
     <message>
         <source>Introduction</source>
         <translation>簡介</translation>
+    </message>
+    <message>
+        <source>The Reference Documentation for eZ publish consists of multiple sections which
+each have a different view on the documentation. The sections can be accessed at
+menu on the top.</source>
+        <translation type="obsolete">eZ publish 的參考資料文件由多種不同部分構成。
+每個部份對資料文件有不同的看法。這些部份可以透過
+頂端的選單存取。</translation>
+    </message>
+    <message>
+        <source>The documentation will give an overview of the API of eZ publish.</source>
+        <translation type="obsolete">這個文件是關於 eZ publish API 的概述。</translation>
     </message>
     <message>
         <source>All reference documentation has been made with %doxygenurl</source>
@@ -18617,6 +21662,18 @@ menu on the top.</source>
         <translation>請選取匯出節點</translation>
     </message>
     <message>
+        <source>Please choose where to export from.
+
+    Select your placements and click the %buttonname button.
+    Using the recent and bookmark items for quick placement is also possible.
+    Click on placement names to change the browse listing.</source>
+        <translation type="obsolete">請選取匯出的來源位置。
+
+    選取你的放置位址並按一下 %buttonname 按鈕。
+    也可以使用最近開啟和書籤中的項目來快速放置位址。
+    按一下放置位址名稱以變更瀏覽清單。</translation>
+    </message>
+    <message>
         <source>Select</source>
         <translation>選擇</translation>
     </message>
@@ -18625,8 +21682,32 @@ menu on the top.</source>
         <translation>請選取匯入目的</translation>
     </message>
     <message>
+        <source>Please choose where to store imported items.
+
+    Select your placements and click the %buttonname button.
+    Using the recent and bookmark items for quick placement is also possible.
+    Click on placement names to change the browse listing.</source>
+        <translation type="obsolete">請選取儲存匯入項目的位置。
+
+    選取你的放置位址並按一下 %buttonname 按鈕。
+    也可以使用最近開啟和書籤中的項目來快速放置位址。
+    按一下放置位址名稱以變更瀏覽清單。</translation>
+    </message>
+    <message>
         <source>Choose RSS image</source>
         <translation>請選取 RSS 圖像</translation>
+    </message>
+    <message>
+        <source>Please choose image to use in RSS export.
+
+    Select your placements and click the %buttonname button.
+    Using the recent and bookmark items for quick placement is also possible.
+    Click on placement names to change the browse listing.</source>
+        <translation type="obsolete">請選取在 RSS 匯出中使用的圖像。
+
+    選取你的放置位址並按一下 %buttonname 按鈕。
+    也可以使用最近開啟和書籤中的項目來快速放置位址。
+    按一下放置位址名稱以變更瀏覽清單。</translation>
     </message>
     <message>
         <source>Choose export source</source>
@@ -18635,6 +21716,18 @@ menu on the top.</source>
     <message>
         <source>Choose owner of imported objects</source>
         <translation>請選取匯入物件的擁有者</translation>
+    </message>
+    <message>
+        <source>Please select the owner of the objects to import
+
+    Select the user and click the %buttonname button.
+    Using the recent and bookmark items for quick selection is also possible.
+    Click on placement names to change the browse listing.</source>
+        <translation type="obsolete">請選取匯入物件的擁有者。
+
+     選取使用者並按一下 %buttonname 按鈕。
+    也可以使用最近開啟和書籤中的項目來快速選擇。
+    按一下放置位址名稱以變更瀏覽清單。</translation>
     </message>
     <message>
         <source>RSS export is locked</source>
@@ -18820,6 +21913,10 @@ menu on the top.</source>
         <translation>匯出類別</translation>
     </message>
     <message>
+        <source>Site access</source>
+        <translation type="obsolete">站台存取</translation>
+    </message>
+    <message>
         <source>Export destination</source>
         <translation>匯出目的</translation>
     </message>
@@ -18836,8 +21933,16 @@ menu on the top.</source>
         <translation>匯出</translation>
     </message>
     <message>
+        <source>Use this field to enter the base URL of your site. It is used to produce the URLs in the export, composed by the Site URL (e.g. &quot;http://www.example.com/index.php&quot;) and the path to the object (e.g. &quot;/articles/my_article&quot;). The Site URL depends on your Webserver and eZ publish configuration.</source>
+        <translation type="obsolete">請使用此欄位以輸入你站台的基準 URL。它用來在匯出時產生網址，由站台 URL (例如「http://www.example.com/index.php」) 和到物件的路徑 (例如「articles/my_article\」) 所組成。站台 URL 取決於你的網頁伺服器和 eZ publish 的配置。</translation>
+    </message>
+    <message>
         <source>Number of objects</source>
         <translation>物件數量</translation>
+    </message>
+    <message>
+        <source>Use this drop-down menu to select the maximum number of objects included in the RSS feed.</source>
+        <translation type="obsolete">請使用此下拉式功能表以選取包含在 RSS 饋送中的最大物件數量。</translation>
     </message>
     <message>
         <source>Main node only</source>
@@ -18850,6 +21955,10 @@ menu on the top.</source>
     <message>
         <source>Subnodes</source>
         <translation>子節點</translation>
+    </message>
+    <message>
+        <source>Activate this checkbox if also objects from the subnodes of the source should be feeded.</source>
+        <translation type="obsolete">如果來自來源子節點的物件也應該被饋送，就啟用此核取方塊。</translation>
     </message>
     <message>
         <source>Use this field to enter the base URL of your site. It is used to produce the URLs in the export, composed by the Site URL (e.g. &quot;http://www.example.com/index.php&quot;) and the path to the object (e.g. &quot;/articles/my_article&quot;). The Site URL depends on your Web server and eZ Publish configuration.</source>
@@ -18874,6 +21983,10 @@ menu on the top.</source>
     <message>
         <source>Skip</source>
         <translation type="unfinished">跳過</translation>
+    </message>
+    <message>
+        <source>Enclosure (media)</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -18913,6 +22026,26 @@ menu on the top.</source>
     <message>
         <source>No</source>
         <translation>否</translation>
+    </message>
+    <message>
+        <source>RSS Feeds</source>
+        <translation type="obsolete">RSS 饋送</translation>
+    </message>
+    <message>
+        <source>RSS Exports</source>
+        <translation type="obsolete">RSS 匯出</translation>
+    </message>
+    <message>
+        <source>New Export</source>
+        <translation type="obsolete">新增匯出</translation>
+    </message>
+    <message>
+        <source>RSS Imports</source>
+        <translation type="obsolete">RSS 匯入</translation>
+    </message>
+    <message>
+        <source>New Import</source>
+        <translation type="obsolete">新增匯入</translation>
     </message>
     <message>
         <source>RSS feeds</source>
@@ -19001,8 +22134,16 @@ menu on the top.</source>
         <translation>取消</translation>
     </message>
     <message>
+        <source>Removing these sections can corrupt permissions, sitedesigns, and other things in the system. Do not do this unless you know exactly what are you doing.</source>
+        <translation type="obsolete">刪除這些區段可能破壞系統的權限、網站設計和其他項目。所以不要動它，除非你確實知道你正在做什麼。</translation>
+    </message>
+    <message>
         <source>Name</source>
         <translation>名稱</translation>
+    </message>
+    <message>
+        <source>Navigation Part</source>
+        <translation type="obsolete">導覽分區</translation>
     </message>
     <message>
         <source>ID</source>
@@ -19017,12 +22158,32 @@ menu on the top.</source>
         <translation>指定</translation>
     </message>
     <message>
+        <source>About Navigation Parts</source>
+        <translation type="obsolete">關於導覽分區</translation>
+    </message>
+    <message>
+        <source>The eZ publish admin interface is divided into navigation parts. This is a way to group different areas of the site administration. Select the navigation part that should be active when this section is browsed.</source>
+        <translation type="obsolete">eZ publish 的使用者介面被分成導覽分區。這是一種把網站管理的不同區域分組的方法。瀏覽此區段時，請選擇應該要啟用的導覽分區。</translation>
+    </message>
+    <message>
         <source>Assign section - %section</source>
         <translation>指定區段 - %section</translation>
     </message>
     <message>
         <source>Choose section assignment</source>
         <translation>選擇指定區段</translation>
+    </message>
+    <message>
+        <source>Please choose where you want to start the section assignment for section %sectionname.
+
+    Select the placements and click the %buttonname button.
+    Using the recent and bookmark items for quick placement is also possible.
+    Click on placement names to change the browse listing.</source>
+        <translation type="obsolete">請選擇從哪兒開始為區段 %sectionname 做區域指定。
+
+     選擇位置，並點選按鈕 %buttonname。
+     可用最新加入的書籤來快速選擇。
+     點選位置名稱來變更瀏覽清單。</translation>
     </message>
     <message>
         <source>Remove selected sections</source>
@@ -19164,6 +22325,11 @@ menu on the top.</source>
         <translation>類別名稱</translation>
     </message>
     <message>
+        <source>Constant name</source>
+        <comment>Datatype</comment>
+        <translation type="obsolete">常數名稱</translation>
+    </message>
+    <message>
         <source>The creator of the datatype</source>
         <comment>Datatype</comment>
         <translation>資料類型建立者</translation>
@@ -19206,6 +22372,21 @@ By using %datatypename you can ...</source>
     <message>
         <source>System information</source>
         <translation>系統資訊</translation>
+    </message>
+    <message>
+        <source>Version</source>
+        <comment>eZ publish version</comment>
+        <translation type="obsolete">版本</translation>
+    </message>
+    <message>
+        <source>SVN revision</source>
+        <comment>eZ publish version</comment>
+        <translation type="obsolete">SVN 修訂版</translation>
+    </message>
+    <message>
+        <source>Extensions</source>
+        <comment>eZ publish extensions</comment>
+        <translation type="obsolete">擴充功能</translation>
     </message>
     <message>
         <source>Safe mode is on.</source>
@@ -19276,6 +22457,10 @@ By using %datatypename you can ...</source>
     <message>
         <source>Rapid Application Development Tools</source>
         <translation>應用軟體快速開發工具</translation>
+    </message>
+    <message>
+        <source>The rapid application development (RAD) tools allow you to easily get started with creating new functionality for eZ publish.</source>
+        <translation type="obsolete">應用軟體快速開發工具允許你更容易建立新的 eZ publish 功能。</translation>
     </message>
     <message>
         <source>Tools</source>
@@ -19412,6 +22597,13 @@ By using %operatorname you can ...</source>
         <source>Example code</source>
         <comment>Template operator</comment>
         <translation>原始碼範例</translation>
+    </message>
+    <message>
+        <source>If you wish you can add some example code to explain how your operator should work.
+The default code was made from the basic parameters you chose.</source>
+        <comment>Template operator</comment>
+        <translation type="obsolete">你可以加入例子來解釋你的操作者應該如何工作。
+預設的例子由你選取的基本參數產生。</translation>
     </message>
     <message>
         <source>Template view</source>
@@ -19553,6 +22745,18 @@ By using %operatorname you can ...</source>
         <translation>範本快取已停用</translation>
     </message>
     <message>
+        <source>INI caches.</source>
+        <translation type="obsolete">INI 快取。</translation>
+    </message>
+    <message>
+        <source>INI caches</source>
+        <translation type="obsolete">INI 快取</translation>
+    </message>
+    <message>
+        <source>INI cache is disabled</source>
+        <translation type="obsolete">INI 快取已停用</translation>
+    </message>
+    <message>
         <source>Selection</source>
         <translation>選擇</translation>
     </message>
@@ -19593,6 +22797,10 @@ By using %operatorname you can ...</source>
         <translation>%name 已清空。</translation>
     </message>
     <message>
+        <source>SiteAccess</source>
+        <translation type="obsolete">存取網址</translation>
+    </message>
+    <message>
         <source>Current siteaccess</source>
         <translation>目前存取網址</translation>
     </message>
@@ -19623,6 +22831,25 @@ By using %operatorname you can ...</source>
     <message>
         <source>Create</source>
         <translation>建立</translation>
+    </message>
+    <message>
+        <source>Webserver</source>
+        <comment>Webserver title</comment>
+        <translation type="obsolete">網頁伺服器</translation>
+    </message>
+    <message>
+        <source>Modules</source>
+        <comment>Webserver modules</comment>
+        <translation type="obsolete">模組</translation>
+    </message>
+    <message>
+        <source>Webserver modules could not be detected</source>
+        <comment>Webserver modules</comment>
+        <translation type="obsolete">無法偵測到網頁伺服器模組</translation>
+    </message>
+    <message>
+        <source>No known information on the webserver</source>
+        <translation type="obsolete">對於網頁伺服器無已知資訊</translation>
     </message>
     <message>
         <source>Here you can activate/deactivate you extensions. Only system wide extensions can be activated, for site access specific extensions, modify these configuration files.</source>
@@ -19667,6 +22894,10 @@ By using %operatorname you can ...</source>
         <translation>站台</translation>
     </message>
     <message>
+        <source>Warning, it is not safe to upgrade without checking the modifications done to the following files </source>
+        <translation type="obsolete">警告：不檢查下列檔案所做的修改就升級是不安全的。</translation>
+    </message>
+    <message>
         <source>To revert your database to distribution setup, run the following SQL queries</source>
         <translation>要回復你的資料庫到發行版設定，執行下列 SQL 查詢指令</translation>
     </message>
@@ -19707,6 +22938,11 @@ By using %operatorname you can ...</source>
         <source>Extensions</source>
         <comment>PHP extensions</comment>
         <translation type="unfinished">擴充功能</translation>
+    </message>
+    <message>
+        <source>Version</source>
+        <comment>Webserver version</comment>
+        <translation type="obsolete">版本</translation>
     </message>
     <message>
         <source>Name</source>
@@ -19874,6 +23110,10 @@ The default code was made from the basic parameters you chose.</source>
         <translation>MySQL 是由 MySQL AB 製作的資料庫管理系統。</translation>
     </message>
     <message>
+        <source>It&apos;s currently one of the most popular databases in the Open Source community and most often on by default in PHP.</source>
+        <translation type="obsolete">它是目前開放原始碼社群中最受歡迎的資料庫之一，並且經常是 PHP 的預設。</translation>
+    </message>
+    <message>
         <source>MySQL is the world&apos;s most popular Open Source Database, designed for speed, power and precision in mission critical, heavy load use.</source>
         <translation>MySQL 是世界上最受喜愛的開放原始碼資料庫。它是為解決速度、功能和準確性而設計的，並用於大量負載的重要任務。</translation>
     </message>
@@ -19908,6 +23148,10 @@ The default code was made from the basic parameters you chose.</source>
     <message>
         <source>PostgreSQL is a database management system developed at the University of California at Berkeley Computer Science Department.</source>
         <translation>PostgreSQL 是由加州大學柏克萊分校資訊科學院開發的資料庫管理系統。</translation>
+    </message>
+    <message>
+        <source>It&apos;s a very popular database in the Open Source community and provides highly advanced database functionality.</source>
+        <translation type="obsolete">它是目前開放原始碼社群中備受歡迎的資料庫，並且提供先進的資料庫功能。</translation>
     </message>
     <message>
         <source>PostgreSQL is a sophisticated Object-Relational DBMS, supporting almost all SQL constructs, including subselects, transactions, and user-defined types and functions. It is the most advanced open-source database available anywhere.</source>
@@ -20068,12 +23312,20 @@ The default code was made from the basic parameters you chose.</source>
         <translation>在你修正問題之後請按</translation>
     </message>
     <message>
+        <source>Rerun System Check</source>
+        <translation type="obsolete">重新執行系統檢查</translation>
+    </message>
+    <message>
         <source>button to re-run the system checking. This is recommended after system changes to check for critical failures. You can also click the</source>
         <translation>按鈕用來重新執行系統檢查。建議於系統變更之後檢查重大的失誤。你也可以按下</translation>
     </message>
     <message>
         <source>Check Again</source>
         <translation>再次檢查</translation>
+    </message>
+    <message>
+        <source>button to rerun the finetuning checks. However if you wish you can skip straight to the next step by clicking the</source>
+        <translation type="obsolete">按鈕來重新執行。然而，如果你希望能直接略過到下一步，就點選</translation>
     </message>
     <message>
         <source>Issues</source>
@@ -20094,6 +23346,10 @@ The default code was made from the basic parameters you chose.</source>
     <message>
         <source>directory. This is required to disable the initialization. Following the instructions found in</source>
         <translation>目錄。這會要求停用初始化。依據的指示位於</translation>
+    </message>
+    <message>
+        <source>to enable write access and click the</source>
+        <translation type="obsolete">要啟用寫入權限並點選</translation>
     </message>
     <message>
         <source>Try Again</source>
@@ -20132,8 +23388,28 @@ The default code was made from the basic parameters you chose.</source>
         <translation>密碼</translation>
     </message>
     <message>
+        <source>Congratulations, eZ publish should now run on your system.</source>
+        <translation type="obsolete">恭喜，現在 eZ publish 應該在你的系統中運行。</translation>
+    </message>
+    <message>
+        <source>eZ publish website</source>
+        <translation type="obsolete">eZ publish 網站</translation>
+    </message>
+    <message>
+        <source>eZ publish bug reports</source>
+        <translation type="obsolete">eZ publish 錯誤報告</translation>
+    </message>
+    <message>
         <source>Done</source>
         <translation>完成</translation>
+    </message>
+    <message>
+        <source>It&apos;s time to select the language this site should support.</source>
+        <translation type="obsolete">是選擇這個網站所支援語言的時候了。</translation>
+    </message>
+    <message>
+        <source>Select your language and click the</source>
+        <translation type="obsolete">選擇你的語言並點選</translation>
     </message>
     <message>
         <source>Summary</source>
@@ -20152,6 +23428,14 @@ The default code was made from the basic parameters you chose.</source>
         <translation>選擇不同語言的按鈕。</translation>
     </message>
     <message>
+        <source>It&apos;s time to select the languages this site should support. Select your primary language and check any additional languages.</source>
+        <translation type="obsolete">是選擇這個網站所支援語言的時候了。選擇你的首要語言並且勾選任何附加語言。</translation>
+    </message>
+    <message>
+        <source>Once you&apos;re done click the</source>
+        <translation type="obsolete">一旦你完成就點選</translation>
+    </message>
+    <message>
         <source>The languages you choose will help determine the charset to use on the site.</source>
         <translation>你選擇的語言將幫助你決定在網站上使用的字元集。</translation>
     </message>
@@ -20162,6 +23446,14 @@ The default code was made from the basic parameters you chose.</source>
     <message>
         <source>Selection</source>
         <translation>選擇</translation>
+    </message>
+    <message>
+        <source>It&apos;s now possible to select a variation for your language. A variation does small adjustments to the language, such as adding Euro support or date format changes. Using variations are optional so you may safely skip this step. Once your&apos;re done click the</source>
+        <translation type="obsolete">現在可以為你的語言選擇一種變異。變異是對語言的小調整，比如增加歐元符號的支援或資料格式的變化。使用變異是種選項，所以你可安全略過這一步。一旦你決定了變異，請點選</translation>
+    </message>
+    <message>
+        <source>It&apos;s now possible to select variations for your languages. Variations do small adjustments to the language, such as adding Euro support or date format changes. Using variations are optional so you may safely skip this step. Once you are done click the</source>
+        <translation type="obsolete">現在可以為你的語言選擇一種變異。變異是對語言的小調整，比如增加歐元符號的支援或資料格式的變化。使用變異是種選項，所以你可安全略過這一步。一旦你決定了變異，請點選</translation>
     </message>
     <message>
         <source>Default</source>
@@ -20288,6 +23580,10 @@ The default code was made from the basic parameters you chose.</source>
         <translation>確認密碼</translation>
     </message>
     <message>
+        <source>The setup will not do an upgrade from older eZ publish versions (such as 2.2.7) if you leave the data as it is. This is only meant for people who have existing data that they don&apos;t want to lose. If you have existing eZ publish 3.0 data (such as from an RC release) you should skip DB initialization, however you will then need to do a manual upgrade.</source>
+        <translation type="obsolete">如果你保留了資料，安裝程式將不從舊的 eZ publish 版本(像是 2.2.7)升級。這是指那些有資料但又不想放棄它們的人。如果你有 eZ publish 版本的資料(比如來自 RC 的資料)，你應該略過資料庫的初始化，但你需要手動升級。</translation>
+    </message>
+    <message>
         <source>which must be available on the server or</source>
         <translation>必然存在於伺服器上或是</translation>
     </message>
@@ -20297,23 +23593,27 @@ The default code was made from the basic parameters you chose.</source>
     </message>
     <message>
         <source>The database would not accept the connection, please review your settings and try again.</source>
-        <translation>資料庫不接受此連線，請檢查你的設定並且重試。</translation>
+        <translation type="unfinished">資料庫不接受此連線，請檢查你的設定並且重試。</translation>
     </message>
     <message>
         <source>Password entries did not match.</source>
-        <translation>密碼不符。</translation>
+        <translation type="unfinished">密碼不符。</translation>
     </message>
     <message>
         <source>The selected database was not empty, please choose from the alternatives below.</source>
-        <translation>選擇的資料庫並非是空的，請從下面的替代項目中選擇。</translation>
+        <translation type="unfinished">選擇的資料庫並非是空的，請從下面的替代項目中選擇。</translation>
+    </message>
+    <message>
+        <source>The selected selected user has not got access to any databases. Change user or create a database for the user.</source>
+        <translation type="obsolete">所選的使用者沒有存取任何資料庫的權限。請改換使用者或為使用者產生一個資料庫。</translation>
     </message>
     <message>
         <source>Database initalization</source>
-        <translation>資料庫初始化</translation>
+        <translation type="unfinished">資料庫初始化</translation>
     </message>
     <message>
         <source>Email settings</source>
-        <translation>電子郵件設定</translation>
+        <translation type="unfinished">電子郵件設定</translation>
     </message>
     <message>
         <source>Finished</source>
@@ -20321,31 +23621,39 @@ The default code was made from the basic parameters you chose.</source>
     </message>
     <message>
         <source>Language options</source>
-        <translation>語言選項</translation>
+        <translation type="unfinished">語言選項</translation>
     </message>
     <message>
         <source>Registration</source>
-        <translation>註冊</translation>
+        <translation type="unfinished">註冊</translation>
     </message>
     <message>
         <source>Securing site</source>
-        <translation>網站保全</translation>
+        <translation type="unfinished">網站保全</translation>
     </message>
     <message>
         <source>Site access</source>
-        <translation>網站存取</translation>
+        <translation type="unfinished">網站存取</translation>
     </message>
     <message>
         <source>Site details</source>
         <translation>網站詳細資料</translation>
     </message>
     <message>
+        <source>No templates choosen.</source>
+        <translation type="obsolete">沒有範本被選。</translation>
+    </message>
+    <message>
         <source>Site template selection</source>
-        <translation>網站範本選擇</translation>
+        <translation type="unfinished">網站範本選擇</translation>
     </message>
     <message>
         <source>System check</source>
         <translation>系統檢查</translation>
+    </message>
+    <message>
+        <source>Welcome to eZ publish</source>
+        <translation type="obsolete">歡迎來到 eZ publish</translation>
     </message>
     <message>
         <source>The database is ready for initialization, click the %1 button when ready.</source>
@@ -20364,8 +23672,20 @@ The default code was made from the basic parameters you chose.</source>
         <translation>保存資料並略過資料庫初始化。</translation>
     </message>
     <message>
+        <source>It can take some time initializing the database so please be patient and wait until the new page is finished.</source>
+        <translation type="obsolete">初始化資料庫可能要花點時間，所以請耐心等待新的頁面完成。</translation>
+    </message>
+    <message>
         <source>Choose database system</source>
         <translation>選擇資料庫系統</translation>
+    </message>
+    <message>
+        <source>PostgreSQL or MySQL &gt;= 4.1 are required for unicode support in eZ publish.</source>
+        <translation type="obsolete">在 eZ publish 中要求 MySQL(&gt;= 4.1)和 PostgreSQL 支援萬國碼。</translation>
+    </message>
+    <message>
+        <source>More information about eZ publish and unicode support can be found %1.</source>
+        <translation type="obsolete">關於 eZ publish 和對萬國碼支援的資訊能在 %1 中找到。</translation>
     </message>
     <message>
         <source>here</source>
@@ -20425,6 +23745,19 @@ The default code was made from the basic parameters you chose.</source>
         <translation>確認想要造訪 %1 和 %2 網站。</translation>
     </message>
     <message>
+        <source>eZ publish</source>
+        <comment>eZ publish 3 link</comment>
+        <translation type="obsolete">eZ publish</translation>
+    </message>
+    <message>
+        <source>If you need help with eZ publish, you can go to %ezlink and get help in the forums.
+  If you find a bug (error), please go to %buglink and report it.
+  With your help we can fix the errors eZ publish might have and implement new features.</source>
+        <translation type="obsolete">如果你需要 eZ publish 的幫助，你可以去 %ezlink 並且在論壇中得到幫助。
+   如果你發現了一個程式錯誤，請到 %buglink 去提報它。
+   藉助你的幫助，我們能夠修正可能存在於 eZ publish 中的錯誤，並且實作新的功能。</translation>
+    </message>
+    <message>
         <source>ez.no</source>
         <translation>ez.no</translation>
     </message>
@@ -20451,8 +23784,16 @@ To fix this problem you must do one of the following:</source>
 要修正這個問題，你必須採行下列步驟之一：</translation>
     </message>
     <message>
+        <source>Choose only languages that use similar characters, for instance: English and Norwegian will work together while English and Russian won&apos;t work.</source>
+        <translation type="obsolete">只選擇使用相同字元集的語言。例如：英文和挪威文可以並用，但英文和俄文就不行。</translation>
+    </message>
+    <message>
         <source>Make sure the database server is configured to use Unicode or that it has the latest software which supports Unicode.</source>
         <translation>確認資料庫伺服器設定為使用萬國碼，或是有支援萬國碼的最新軟體。</translation>
+    </message>
+    <message>
+        <source>eZ publish supports multiple languages.</source>
+        <translation type="obsolete">eZ publish 支援多種語言。</translation>
     </message>
     <message>
         <source>These and other additional languages can also be installed later.</source>
@@ -20476,6 +23817,10 @@ To fix this problem you must do one of the following:</source>
     <message>
         <source>Site registration</source>
         <translation>網站註冊</translation>
+    </message>
+    <message>
+        <source>By sending registration the following data will be sent to eZ systems</source>
+        <translation type="obsolete">下列資訊將藉由傳送註冊資料而送到 eZ 系統</translation>
     </message>
     <message>
         <source>Site access configuration</source>
@@ -20543,6 +23888,10 @@ To fix this problem you must do one of the following:</source>
         <translation>僅保留資料</translation>
     </message>
     <message>
+        <source>I&apos;ve chosen a new database</source>
+        <translation type="obsolete">我已經選擇了新資料庫</translation>
+    </message>
+    <message>
         <source>Select which sites you would like to install on your system.</source>
         <translation>選擇你喜歡的網站來安裝你的系統。</translation>
     </message>
@@ -20563,6 +23912,10 @@ To fix this problem you must do one of the following:</source>
         <translation>忽略此測試</translation>
     </message>
     <message>
+        <source>Welcome to eZ publish %1</source>
+        <translation type="obsolete">歡迎來到 eZ publish %1</translation>
+    </message>
+    <message>
         <source>This section will contain information/help about each step in the setup wizard.</source>
         <translation>此區段將包括安裝精靈中每一步的資訊/說明。</translation>
     </message>
@@ -20571,12 +23924,24 @@ To fix this problem you must do one of the following:</source>
         <translation>下面的概要章節將包括配置設定的資訊。</translation>
     </message>
     <message>
+        <source>Information about how to set up eZ publish manually is available %1.</source>
+        <translation type="obsolete">關於如何手動安裝 eZ publish 的資料可見於 %1。</translation>
+    </message>
+    <message>
         <source>Both MySQL and PostgreSQL support was detected on your system. Please choose the database system you would like to use.</source>
         <translation>在你的系統上偵測到對於 MySQL 和 PostgreSQL 兩者的支援。請選取你想要使用的資料庫系統。</translation>
     </message>
     <message>
+        <source>eZ publish supports both MySQL and PostgreSQL.</source>
+        <translation type="obsolete">eZ publish 支援 MySQL 和 PostgreSQL 兩者。</translation>
+    </message>
+    <message>
         <source>Please input database access information in the form below.</source>
         <translation>請在以下表單中輸入資料庫存取資訊。</translation>
+    </message>
+    <message>
+        <source>If you don&apos;t have access to a database, you should obtain access now. eZ publish is capable of running multiple sites, each site needs its own database. This means that you need to create several databases if you plan to run multiple sites. Please refer to the database system user manual if you&apos;re unsure about how to create a database.</source>
+        <translation type="obsolete">如果你沒有資料庫存取權限，你應該先取得它。eZ publish 有能力運行多重站台，每個站台則需要它自己的資料庫。這表示，如果你計畫要運行多重站台，你就需要建立多個資料庫。如果你不確認要如何建立資料庫，請參考資料庫系統使用手冊。</translation>
     </message>
     <message>
         <source>Server name: </source>
@@ -20589,6 +23954,10 @@ To fix this problem you must do one of the following:</source>
     <message>
         <source>Password (optional): </source>
         <translation>密碼 (可選的)：</translation>
+    </message>
+    <message>
+        <source>Tip: Store this page as an html file by clicking Save-As in your web browser menu, alternatively you may write down the urls for your sites.</source>
+        <translation type="obsolete">秘訣：在你的網頁瀏覽器選單中按一下「另存為」來儲存此頁為 html 檔案，你也可以寫下你的站台網址作為替代方案。</translation>
     </message>
     <message>
         <source>forums</source>
@@ -20606,6 +23975,10 @@ To fix this problem you must do one of the following:</source>
     <message>
         <source>For more information about language customization, please refer to the %1.</source>
         <translation>要獲得更多關於語言客製化的資訊，請參考 %1。</translation>
+    </message>
+    <message>
+        <source>If you wish, you can register this installation by sending some information to eZ systems. No confidential data will be transmitted and eZ systems will not use or sell your details for unsolicited emails.</source>
+        <translation type="obsolete">如果你希望，你可以藉由發送一些資訊到 eZ 系統以註冊此次安裝。沒有機密資料會被傳輸出去，而 eZ 系統將不會使用或銷售你的詳細資料給電子郵件廣告。</translation>
     </message>
     <message>
         <source>Send registration</source>
@@ -20636,8 +24009,20 @@ To fix this problem you must do one of the following:</source>
         <translation>所選的語言</translation>
     </message>
     <message>
+        <source>This data will help to improve future releases of eZ publish.</source>
+        <translation type="obsolete">此資料將會協助改善未來釋出的 eZ publish。</translation>
+    </message>
+    <message>
         <source>Site security</source>
         <translation>站台安全</translation>
+    </message>
+    <message>
+        <source>Your site is not running in a virtual host mode, this is insecure. It is recommended to run eZ publish in virtual host mode. If you do not have the possibility to use virtual host mode, you should follow the instructions below about how to install an .htaccess file. The .htaccess file tells the web server to restrict the access to certain files.</source>
+        <translation type="obsolete">你的站台不是在虛擬主機模式中執行，這並不安全。建議在虛擬主機模式中執行 eZ publish。如果你無法使用虛擬主機模式，你應該照著執行下列有關如何安裝.htaccess 檔案的指令。.htaccess 檔案告訴網頁伺服器去限制存取某些檔案。</translation>
+    </message>
+    <message>
+        <source>If you have shell access, you can run the following commmands.</source>
+        <translation type="obsolete">如果你有 shell 存取權限，你可以執行下列命令。</translation>
     </message>
     <message>
         <source>If you do not have shell access, you will have to copy the file using an FTP client or ask your hosting provider to do this for you.</source>
@@ -20646,6 +24031,10 @@ To fix this problem you must do one of the following:</source>
     <message>
         <source>This security tweak takes care of protecting configuration files and other important files.</source>
         <translation>此一安全調校負責保護配置檔案和其他重要檔案。</translation>
+    </message>
+    <message>
+        <source>Please choose the access method you wish to use for your site. The access method determines how the site will be accessed from within a web browser. If unsure: choose URL.</source>
+        <translation type="obsolete">請選取你希望用於你站台的存取方法。存取方法將決定如何從網頁瀏覽器之內存取站台。如果不確認的話：選取 URL。</translation>
     </message>
     <message>
         <source>Port*</source>
@@ -20662,6 +24051,10 @@ To fix this problem you must do one of the following:</source>
     <message>
         <source>* Requires DNS setup.</source>
         <translation>* 需要 DNS 設定。</translation>
+    </message>
+    <message>
+        <source>For more detailed information on site access, please refer to the %1</source>
+        <translation type="obsolete">要獲得關於站台存取的更多詳細資訊，請參考 %1</translation>
     </message>
     <message>
         <source>User path</source>
@@ -20692,6 +24085,10 @@ To fix this problem you must do one of the following:</source>
         <translation>你可以為每個站台修改詳細資料。</translation>
     </message>
     <message>
+        <source>For more information about how to configure site access, please refer to the %1</source>
+        <translation type="obsolete">要獲得關於如何配置站台存取的更多資訊，請參考 %1</translation>
+    </message>
+    <message>
         <source>Use the refresh button to update the database listing.</source>
         <translation>請使用重新整理按鈕以更新資料庫清單。</translation>
     </message>
@@ -20710,6 +24107,18 @@ To fix this problem you must do one of the following:</source>
     <message>
         <source>The system check page is being displayed. This means that there are some problems/issues present.</source>
         <translation>正在顯示系統檢查頁面。這表示有些差錯/問題。</translation>
+    </message>
+    <message>
+        <source>These issues have to be resolved/fixed, or else, eZ publish will not function properly.</source>
+        <translation type="obsolete">這些問題必須要解決/修正，否則，eZ publish 將無法正常作用。</translation>
+    </message>
+    <message>
+        <source>The problems are usually file-system related and can be easily fixed by copy / paste / run-ing the suggested commands in a system shell.</source>
+        <translation type="obsolete">問題常常是與檔案系統相關，並且可以很容易地在系統 shell 中，經由「複製/貼上/執行」建議的命令而修正。</translation>
+    </message>
+    <message>
+        <source>Welcome to the eZ publish content management system and development framework. This wizard will help you set up eZ publish.&lt;br&gt;Click &lt;i&gt;Next&lt;/i&gt; to continue.</source>
+        <translation type="obsolete">歡迎來到 eZ publish 內容管理系統和開發框架。此精靈將協助你設置 eZ publish。&lt;br&gt;按一下&lt;i&gt;下一步&lt;/i&gt;以繼續。</translation>
     </message>
     <message>
         <source>No data will be stored in the database until the final step of the setup.</source>
@@ -20769,8 +24178,20 @@ To fix this problem you must do one of the following:</source>
         <translation>正在顯示系統微調頁面。這表示有些問題可以被解決以改善效能或特性。</translation>
     </message>
     <message>
+        <source>These issues do not need to be resolved/fixed. eZ publish will function properly without them.</source>
+        <translation type="obsolete">這些問題不需要被解決/修正。eZ publish 不需它們就能正常作用。</translation>
+    </message>
+    <message>
+        <source>Welcome to the eZ publish content management system and development framework. This wizard will help you set up eZ publish.&lt;br&gt;Your system is not optimal, if you wish you can click the &lt;i&gt;Finetune&lt;/i&gt; button. This will present hints on how to fix these issues.&lt;br/&gt; Click &lt;i&gt;Next&lt;/i&gt; to continue without finetuning.</source>
+        <translation type="obsolete">歡迎來到 eZ publish 內容管理系統和開發框架。此精靈將協助你設置 eZ publish。&lt;br&gt;你的系統並未最佳化，如果你希望，你可以按一下&lt;i&gt;微調&lt;/i&gt;按鈕。這將會呈現如何修復這些問題的提示。&lt;br/&gt;按一下&lt;i&gt;下一步&lt;/i&gt;以繼續而不需微調。</translation>
+    </message>
+    <message>
         <source>Site administrator</source>
         <translation>網站管理者</translation>
+    </message>
+    <message>
+        <source>No packages choosen.</source>
+        <translation type="obsolete">沒有套件被選取。</translation>
     </message>
     <message>
         <source>Site functionality</source>
@@ -20778,7 +24199,7 @@ To fix this problem you must do one of the following:</source>
     </message>
     <message>
         <source>Site selection</source>
-        <translation>站台選擇</translation>
+        <translation type="unfinished">站台選擇</translation>
     </message>
     <message>
         <source>You need to fill in the first name.</source>
@@ -20807,6 +24228,10 @@ After the setup is done you can login with %admin_login and your password.</sour
 完成設定之後，你可以用 %admin_login 和你的密碼登入。</translation>
     </message>
     <message>
+        <source>This page lets you modify information about the site you&apos;ve chosen to install. In addition, it also lets you choose a database for the site.</source>
+        <translation type="obsolete">此頁讓你修改你所選擇要安裝的站台資訊。另外，它也讓你選取用於站台的資料庫。</translation>
+    </message>
+    <message>
         <source>Your database already contain data.
 The setup can continue with the initialization but may damage the present data.</source>
         <translation>你的資料庫已經包含了資料。
@@ -20829,14 +24254,28 @@ The setup can continue with the initialization but may damage the present data.<
         <translation>請選取額外的功能</translation>
     </message>
     <message>
+        <source>Each site comes with a predefined set of functionality, however it is possible to add extra functionality.
+This functionality is also available at a later time from the administration interface.</source>
+        <translation type="obsolete">每個站台都隨附一組預先定義的功能，然而也有可能加入其他功能。
+這些功能也可稍後從管理介面取得。</translation>
+    </message>
+    <message>
         <source>The type of site will choose some basic settings for toolbars, menus, color and functionality.
 It is possible to change these settings at a later time.</source>
         <translation>站台的型態將會選擇某些基本設定用於工具列、選單、顏色和功能。
 也可以稍後去變更這些設定。</translation>
     </message>
     <message>
+        <source>The first time the user or admin site is accessed it will take some time (30 to 60 seconds). This is because eZ publish prepares the site for your machine.</source>
+        <translation type="obsolete">第一次存取使用者或管理者站台時，將會花費一些時間 (30 到 60 秒)。這是因為 eZ publish 要為你的機器準備站台。</translation>
+    </message>
+    <message>
         <source>Sending out the email and generating your site will take about 10 to 30 seconds depending on your machine. Please wait until the next page loads. Clicking the button again will only send out duplicate emails, and may corrupt the installation.</source>
         <translation>依據你的機器性能，發送電子郵件與產生你的站台將要花費大約 10 到 30 秒。請稍待直到載入下一頁。再按一下按鈕將只會發送重複的電子郵件，而且也許會損壞安裝過程。</translation>
+    </message>
+    <message>
+        <source>If you want you can let the setup add some demo data to your database, this demo data will give a good demonstration of the capabilities of eZ publish</source>
+        <translation type="obsolete">如果你願意，你可以讓設定加入一些展示資料到你的資料庫，這些展示資料將會提供 eZ publish 能力的良好展示</translation>
     </message>
     <message>
         <source>First time users are advised to install the demo data.</source>
@@ -20845,6 +24284,10 @@ It is possible to change these settings at a later time.</source>
     <message>
         <source>Note</source>
         <translation>注意</translation>
+    </message>
+    <message>
+        <source>The database was sucessfully initialized. You are now ready for some post configuration of the site.</source>
+        <translation type="obsolete">資料庫已成功初始化。你現在已經準備好進行一些站台的後期配置。</translation>
     </message>
     <message>
         <source>PostgreSQL username and password is not tested until database names are selected.</source>
@@ -20868,19 +24311,31 @@ It is possible to change these settings at a later time.</source>
     </message>
     <message>
         <source>Please make sure that the username and the password is correct. Verify that your PostgreSQL database is configured correctly.&lt;br&gt;See the PHP documentation for more information about this.&lt;br&gt;Remember to start postmaster with the -i option.&lt;br&gt;Note that PostgreSQL 7.2 is not supported.</source>
-        <translation>請確認使用者名稱和密碼正確。驗證你的 PostgreSQL 資料庫是否正確配置。&lt;br&gt;參看 PHP 文件以獲得更多相關的資訊。&lt;br&gt;記得以 -i 選項來執行 postmaster。&lt;br&gt;要注意的是，並不支援 PostgreSQL 7.2。</translation>
+        <translation type="unfinished">請確認使用者名稱和密碼正確。驗證你的 PostgreSQL 資料庫是否正確配置。&lt;br&gt;參看 PHP 文件以獲得更多相關的資訊。&lt;br&gt;記得以 -i 選項來執行 postmaster。&lt;br&gt;要注意的是，並不支援 PostgreSQL 7.2。</translation>
+    </message>
+    <message>
+        <source>The &apos;digest&apos; procedure is not available in your database, you cannot run eZ publish without this. Visit the FAQ for more information.</source>
+        <translation type="obsolete">你的資料庫中並沒有「摘要」程序，因此你無法執行 eZ publish。造訪 FAQ 以獲得更多資訊。</translation>
     </message>
     <message>
         <source>Your database version %version does not fit the minimum requirement which is %req_version.</source>
-        <translation>你的資料庫版本 %version 不符合 %req_version 的最小需求。</translation>
+        <translation type="unfinished">你的資料庫版本 %version 不符合 %req_version 的最小需求。</translation>
     </message>
     <message>
         <source>The setup wizard was not able to complete the creation of your selected sites.</source>
         <translation>設定精靈無法完成你所選站台的建立。</translation>
     </message>
     <message>
+        <source>If you think you have fixed the errors you can try and click the &quot;Retry&quot; button.</source>
+        <translation type="obsolete">如果你覺得你已修正了錯誤，你可以試著按一下「重試」按鈕。</translation>
+    </message>
+    <message>
         <source>The setup wizard failed to create the sites.</source>
         <translation>設定精靈建立站台時失敗。</translation>
+    </message>
+    <message>
+        <source>If possible try to fix these errors and click &quot;Retry&quot;.</source>
+        <translation type="obsolete">如果可能的話，試著修正這些錯誤並按一下「重試」。</translation>
     </message>
     <message>
         <source>Retry</source>
@@ -20905,23 +24360,35 @@ It is possible to change these settings at a later time.</source>
     </message>
     <message>
         <source>Cannot write to file</source>
-        <translation>無法寫入檔案</translation>
+        <translation type="unfinished">無法寫入檔案</translation>
     </message>
     <message>
         <source>Download of package &apos;%pkg&apos; failed. You may upload the package manually.</source>
-        <translation>下載套件「%pkg」時失敗。你可以手動上傳套件。</translation>
+        <translation type="unfinished">下載套件「%pkg」時失敗。你可以手動上傳套件。</translation>
     </message>
     <message>
         <source>Invalid package</source>
-        <translation>無效的套件</translation>
+        <translation type="unfinished">無效的套件</translation>
     </message>
     <message>
         <source>No package selected for upload</source>
-        <translation>沒有選取任何上傳套件</translation>
+        <translation type="unfinished">沒有選取任何上傳套件</translation>
     </message>
     <message>
         <source>Failed fetching upload package file</source>
-        <translation>擷取上傳套件檔案時失敗</translation>
+        <translation type="unfinished">擷取上傳套件檔案時失敗</translation>
+    </message>
+    <message>
+        <source>Uploaded file is not an eZ publish package</source>
+        <translation type="obsolete">上傳的檔案並非 eZ publish 套件</translation>
+    </message>
+    <message>
+        <source>No site package choosen.</source>
+        <translation type="obsolete">沒有任何站台套件被選取。</translation>
+    </message>
+    <message>
+        <source>Retreiving remote site packages list failed. You may upload packages manually.</source>
+        <translation type="obsolete">擷取遠端站台套件清單時失敗。你可以手動上傳套件。</translation>
     </message>
     <message>
         <source>Site package</source>
@@ -20945,11 +24412,27 @@ It is possible to change these settings at a later time.</source>
     </message>
     <message>
         <source>The database [%database_name] cannot be used, the setup wizard wants to create the site in [%req_charset] but the database has been created using character set [%charset]. You will have to choose a database having support for [%req_charset] or modify [%database_name] .</source>
-        <translation>資料庫 [%database_name] 無法使用，設定精靈要在 [%req_charset] 中建立站台，但是已經使用字元集 [%charset] 來建立資料庫。你必須選取有支援 [%req_charset] 或者修改 [%database_name] 的資料庫。</translation>
+        <translation type="unfinished">資料庫 [%database_name] 無法使用，設定精靈要在 [%req_charset] 中建立站台，但是已經使用字元集 [%charset] 來建立資料庫。你必須選取有支援 [%req_charset] 或者修改 [%database_name] 的資料庫。</translation>
     </message>
     <message>
         <source>Failed to copy %url to local file %filename</source>
-        <translation>複製 %url 到本機檔案 %filename 時失敗</translation>
+        <translation type="unfinished">複製 %url 到本機檔案 %filename 時失敗</translation>
+    </message>
+    <message>
+        <source>Settings</source>
+        <translation type="obsolete">設定值</translation>
+    </message>
+    <message>
+        <source>When selected the wizard sets up the site using Unicode.</source>
+        <translation type="obsolete">如果勾選，精靈就會使用萬國碼來設置站台。</translation>
+    </message>
+    <message>
+        <source>Enable Unicode setup</source>
+        <translation type="obsolete">啟用萬國碼設定</translation>
+    </message>
+    <message>
+        <source>This is disabled since the chosen database cannot use Unicode characters.</source>
+        <translation type="obsolete">由於所選資料庫無法使用萬國碼字元因而停用。</translation>
     </message>
     <message>
         <source>Access method</source>
@@ -20973,7 +24456,7 @@ It is possible to change these settings at a later time.</source>
     </message>
     <message>
         <source>Package &apos;%packageName&apos; and it&apos;s dependencies have been downloaded successfully. Press &apos;Next&apos; to continue.</source>
-        <translation>已成功下載套件「%packageName」和它的相依套件。按「下一步」以繼續。</translation>
+        <translation type="unfinished">已成功下載套件「%packageName」和它的相依套件。按「下一步」以繼續。</translation>
     </message>
     <message>
         <source>Use the radio buttons to choose the default language, and the checkboxes to choose additional languages. You will be able to use any of the selected languages for translating your content. The default language will determine the locale settings and will be used as the most prioritized language for your site.</source>
@@ -20982,6 +24465,10 @@ It is possible to change these settings at a later time.</source>
     <message>
         <source>Default/Additional</source>
         <translation>預設/額外</translation>
+    </message>
+    <message>
+        <source>eZ publish has been installed with your select site setup. You will find the username mentioned in the details below.</source>
+        <translation type="obsolete">eZ publish 已依你所選取的站台設定完成安裝。你將在以下的詳細資料中，找到提及的使用者名稱。</translation>
     </message>
     <message>
         <source>Unknown</source>
@@ -20996,12 +24483,24 @@ It is possible to change these settings at a later time.</source>
         <translation>外送的電子郵件</translation>
     </message>
     <message>
+        <source>This section is used to configure how eZ publish delivers its outgoing Email.</source>
+        <translation type="obsolete">此區段是用來配置 eZ publish 如何投遞它的外送電子郵件。</translation>
+    </message>
+    <message>
         <source>Email delivery</source>
         <translation>電子郵件遞送</translation>
     </message>
     <message>
+        <source>The eZ publish system uses email to send out important notices such as user registration and content approval. On Linux/UNIX: try to use sendmail. On Windows: use an SMTP server.</source>
+        <translation type="obsolete">eZ publish 系統使用電子郵件以發送重要記事，比如使用者註冊和內容認可。於 Linux/UNIX 系統：嘗試使用 sendmail。於 Windows 系統：使用 SMTP 伺服器。</translation>
+    </message>
+    <message>
         <source>&lt;b&gt;SMTP:&lt;/b&gt;&lt;br&gt;Mail is delivered through an SMTP server. At the minimum, the hostname of the SMTP server must be specified. Hint: check the SMTP settings in your email application.</source>
         <translation>&lt;b&gt;SMTP:&lt;/b&gt;&lt;br&gt;郵件透過 SMTP 伺服器投遞。至少，必須指定 SMTP 伺服器的主機名稱。提示：在你的電子郵件應用程式中檢查 SMTP 設定值。</translation>
+    </message>
+    <message>
+        <source>&lt;b&gt;SMTP&lt;/b&gt;: If you&apos;re unsure what to enter, take a look at the settings in your email application.</source>
+        <translation type="obsolete">&lt;b&gt;SMTP&lt;/b&gt;：如果你不確認要輸入什麼，查看一下在你電子郵件應用程式中的設定值。</translation>
     </message>
     <message>
         <source>Sending email failed</source>
@@ -21010,6 +24509,10 @@ It is possible to change these settings at a later time.</source>
     <message>
         <source>The registration email</source>
         <translation>註冊用電子郵件</translation>
+    </message>
+    <message>
+        <source>If you wish, you can also add some comments, which will be included in the registration email.</source>
+        <translation type="obsolete">如果你希望，你也可以加入一些評論和註釋，它將包含在註冊電子郵件之中。</translation>
     </message>
     <message>
         <source>This page lets you modify the administrator for your site. This ensures that your site is secure and has proper name and email set.</source>
@@ -21063,6 +24566,10 @@ It is possible to change these settings at a later time.</source>
         <translation type="unfinished">所選的使用者沒有存取任何資料庫的權限。請改換使用者或為使用者產生一個資料庫。</translation>
     </message>
     <message>
+        <source>The &apos;digest&apos; procedure is not available in your database, you cannot run eZ Publish without this. Visit the FAQ for more information.</source>
+        <translation type="obsolete">你的資料庫中並沒有「摘要」程序，因此你無法執行 eZ publish。造訪 FAQ 以獲得更多資訊。</translation>
+    </message>
+    <message>
         <source>Package language options</source>
         <translation type="unfinished">套件語言選項</translation>
     </message>
@@ -21101,6 +24608,10 @@ It is possible to change these settings at a later time.</source>
     <message>
         <source>If you want you can let the setup add some demo data to your database, this demo data will give a good demonstration of the capabilities of eZ Publish</source>
         <translation type="unfinished">如果你願意，你可以讓設定加入一些展示資料到你的資料庫，這些展示資料將會提供 eZ publish 能力的良好展示</translation>
+    </message>
+    <message>
+        <source>The setup will not do an upgrade from older eZ Publish versions (such as 2.2.7) if you leave the data as it is. This is only meant for people who have existing data that they don&apos;t want to lose. If you have existing eZ Publish 3.0 data (such as from an RC release) you should skip DB initialization, however you will then need to do a manual upgrade.</source>
+        <translation type="obsolete">如果你保留了資料，安裝程式將不從舊的 eZ publish 版本(像是 2.2.7)升級。這是指那些有資料但又不想放棄它們的人。如果你有 eZ publish 版本的資料(比如來自 RC 的資料)，你應該略過資料庫的初始化，但你需要手動升級。</translation>
     </message>
     <message>
         <source>It can take some time to initialize the database so please be patient and wait until the new page is finished.</source>
@@ -21161,6 +24672,11 @@ It is possible to change these settings at a later time.</source>
     <message>
         <source>Tip: Store this page as an html file by clicking Save-As in your web browser menu, alternatively you may write down the URLs for your sites.</source>
         <translation type="unfinished">秘訣：在你的網頁瀏覽器選單中按一下「另存為」來儲存此頁為 html 檔案，你也可以寫下你的站台網址作為替代方案。</translation>
+    </message>
+    <message>
+        <source>eZ Publish</source>
+        <comment>eZ Publish 3 link</comment>
+        <translation type="obsolete">eZ Publish</translation>
     </message>
     <message>
         <source>Congratulations, eZ Publish should now run on your system.</source>
@@ -21334,15 +24850,15 @@ This functionality is also available at a later time from the Administration Int
         <translation type="unfinished">eZ Publish</translation>
     </message>
     <message>
-        <source>The &apos;digest&apos; function is not available in your database, you cannot run eZ Publish without this. See the documentation for more information.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>MySQL support was detected on your system. Please choose the database driver you would like to use.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>PostgreSQL support was detected on your system. Please choose the database driver you would like to use.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The &apos;digest&apos; function is not available in your database, you cannot run eZ Publish without this. See the documentation for more information.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -21357,8 +24873,20 @@ This functionality is also available at a later time from the Administration Int
         <translation>建構程式，預設不做任何事。</translation>
     </message>
     <message>
+        <source>eturn an array with the template operator name.</source>
+        <translation type="obsolete">\回傳具有範本操作者名稱的陣列</translation>
+    </message>
+    <message>
         <source>Executes the PHP function for the operator cleanup and modifies \a $operatorValue.</source>
         <translation>為了清除和修改操作者\a $operatorValue，執行 PHP 功能。</translation>
+    </message>
+    <message>
+        <source>Example code, this code must be modified to do what the operator should do, currently it only trims text.</source>
+        <translation type="obsolete">範例程式碼，此程式碼必須被修改以完成操作者想做的事情，目前它僅是一些文字。</translation>
+    </message>
+    <message>
+        <source>\return an array with the template operator name.</source>
+        <translation type="obsolete">\回傳具有範本運算子名稱的陣列。</translation>
     </message>
     <message>
         <source>Example code. This code must be modified to do what the operator should do. Currently it only trims text.</source>
@@ -21471,12 +24999,40 @@ This functionality is also available at a later time from the Administration Int
         <source>Email</source>
         <translation>電子郵件</translation>
     </message>
+    <message>
+        <source>Not all timed out sessions were successfully removed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The operation were cut short in order to avoid execution timeout.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Your alternatives are to:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Repeat the operation several times to complete it.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Clear the timed out session data from command-line using: &amp;gt;php bin/php/ezsessiongc.php</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Install the session cleanup cronjob &apos;session_gc.php&apos; and run on nightly intervals (see cronjob.ini or doc for how)</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>design/standard/setup/tests</name>
     <message>
         <source>Missing database handlers</source>
         <translation>缺少資料庫的處理程式</translation>
+    </message>
+    <message>
+        <source>Your PHP does not have support for all databases that eZ publish support.</source>
+        <translation type="obsolete">你的 PHP 不支援所有 eZ publish 所支援的資料庫。</translation>
     </message>
     <message>
         <source>Also some databases has more advanced features, such as charset, than others.</source>
@@ -21491,12 +25047,20 @@ This functionality is also available at a later time from the Administration Int
         <translation>缺少資料庫的處理程序</translation>
     </message>
     <message>
+        <source>No supported database handlers were found. eZ publish requires a database to store it&apos;s data, without one the system will fail.</source>
+        <translation type="obsolete">找不到支援的資料庫處理程式。eZ publish 要求一個資料庫來儲存它的資料，如果沒有就會造成系統無法運作。</translation>
+    </message>
+    <message>
         <source>To obtain database support you need to recompile PHP, the exact recompile options are specified below.</source>
         <translation>為了獲得資料庫支援，你需要重新編譯 PHP，下面列出重新編譯的實際選項。</translation>
     </message>
     <message>
         <source>Insufficient directory permissions</source>
         <translation>目錄權限不足</translation>
+    </message>
+    <message>
+        <source>eZ publish cannot write to some important directories, without this the setup cannot finish and parts of eZ publish will fail.</source>
+        <translation type="obsolete">eZ publish 不能寫入某些重要的目錄，如果沒有它，安裝作業將不能完成，部份的 eZ publish 將無法運作。</translation>
     </message>
     <message>
         <source>It&apos;s recommended that you fix this by running the commands below.</source>
@@ -21511,6 +25075,10 @@ This functionality is also available at a later time from the Administration Int
         <translation>缺少圖像換算的支援</translation>
     </message>
     <message>
+        <source>No image conversion capabilities was detected, this means that eZ publish cannot scale any images or detect their type. This is vital functionality in eZ publish and must be supported.</source>
+        <translation type="obsolete">沒偵測到圖像變換能力，這表示 eZ publish 無法伸縮任何圖像或是偵側圖像的格式。這是 eZ publish 中非常重要的功能，而且一定要支援。</translation>
+    </message>
+    <message>
         <source>template operator will not be available.</source>
         <translation>範本操作者將無法使用。</translation>
     </message>
@@ -21519,8 +25087,20 @@ This functionality is also available at a later time from the Administration Int
         <translation>注意：</translation>
     </message>
     <message>
+        <source>Future releases of eZ publish will have more advanced image support by using the imagegd extension.</source>
+        <translation type="obsolete">eZ publish 的未來版本將有更先進的圖像擴充功能。</translation>
+    </message>
+    <message>
         <source>Missing ImageMagick program</source>
         <translation>缺少 ImageMagick 程式</translation>
+    </message>
+    <message>
+        <source>The ImageMagick program is not available to eZ publish. Without it eZ publish will not be able to do image conversion unless the imagegd extension is available.</source>
+        <translation type="obsolete">eZ publish 無法使用 ImageMagick 程式。沒有它，ez publish 將無法做圖像變換，除非能使用 imagegd 擴充功能。</translation>
+    </message>
+    <message>
+        <source>If you known where the program is installed (the executable is called</source>
+        <translation type="obsolete">如果你知道程式安裝地方(可執行程式名為</translation>
     </message>
     <message>
         <source>or</source>
@@ -21551,6 +25131,14 @@ This functionality is also available at a later time from the Administration Int
         <translation>缺少 MBString 的擴充功能</translation>
     </message>
     <message>
+        <source>eZ publish comes with a good list of supported charsets by default, however they can be a bit slow due to being made in pure PHP code. Luckily eZ publish supports the mbstring extension for handling some of the charsets.</source>
+        <translation type="obsolete">eZ publish 預設有一組良好的字元集清單。然而由於以純粹的 PHP 程式碼產生，它們可能會有點慢。幸運的是 eZ publish 支援 mbstring 擴充功能以處理某些字元集。</translation>
+    </message>
+    <message>
+        <source>By enabling the mbstring extension eZ publish will have access to more charsets and also be able to process some of them faster, such as Unicode and iso-8859-*. This is recommended for multilingual sites and sites with more exotic charsets.</source>
+        <translation type="obsolete">藉由啟用 mbstring 擴充功能，eZ publish 可以存取更多字元集，並且也能更快地處理其中一部份，像是萬國碼與 iso-8859-*。建議多語環境或具有更多外來字元集的網站使用。</translation>
+    </message>
+    <message>
         <source>Installation of the mbstring extension is done by compiling PHP with the</source>
         <translation>完成 mbstring 擴充功能的安裝是藉由編譯 PHP 時使用</translation>
     </message>
@@ -21563,12 +25151,20 @@ This functionality is also available at a later time from the Administration Int
         <translation>更多關於啟用擴充功能的資訊位於</translation>
     </message>
     <message>
+        <source>Do not enable mbstring function overloading, eZ publish will only use the extension whenever it&apos;s needed.</source>
+        <translation type="obsolete">不要啟用 mbstring 的過載功能，eZ publish 將僅於它需要擴充功能時使用。</translation>
+    </message>
+    <message>
         <source>PHP option</source>
         <translation>PHP 選項</translation>
     </message>
     <message>
         <source>is enabled</source>
         <translation>已啟用</translation>
+    </message>
+    <message>
+        <source>eZ publish will work with this option on however it will lead to some minor performance issues since all input variables need to be be converted back to</source>
+        <translation type="obsolete">eZ publish 將在此選項開啟下工作。它將導致某些輕微的效能問題，這是由於全部的輸入變數都需要變換回</translation>
     </message>
     <message>
         <source>normal</source>
@@ -21595,12 +25191,20 @@ This functionality is also available at a later time from the Administration Int
         <translation>你必須升級到的版本至少是</translation>
     </message>
     <message>
+        <source>eZ publish cannot write to the</source>
+        <translation type="obsolete">eZ publish 無法寫入</translation>
+    </message>
+    <message>
         <source>directory, without this the setup cannot disable itself.</source>
         <translation>目錄，如果無法做到，安裝程式就不能停用它自己。</translation>
     </message>
     <message>
         <source>Missing zlib extension</source>
         <translation>缺少 zlib 擴充功能</translation>
+    </message>
+    <message>
+        <source>The zlib extension is not available to eZ publish. Without it eZ publish will not be able to install the demo data, however if you do not wish the demo data you can safely ignore this.</source>
+        <translation type="obsolete">eZ publish 無法使用 zlib 擴充功能。沒有它，eZ publish 將無法安裝展示資料。然而，如果你不希望安裝展示資料，你可以安全地忽略它。</translation>
     </message>
     <message>
         <source>To enable zlib you need to recompile PHP with support for it. You will need to configure PHP with</source>
@@ -21613,6 +25217,10 @@ This functionality is also available at a later time from the Administration Int
     <message>
         <source>File uploading is disabled</source>
         <translation>上傳檔案已停用</translation>
+    </message>
+    <message>
+        <source>File uploading is not enabled which means that it&apos;s impossible for eZ publish to handle file uploading. All other parts of eZ publish will still work fine but it&apos;s recommended to enable file uploads.</source>
+        <translation type="obsolete">上傳檔案已停用的意思是 eZ publish 不能處理檔案上傳。eZ publish 的其他部分仍能運作，不過仍然建議能讓它上傳檔案。</translation>
     </message>
     <message>
         <source>Configuration</source>
@@ -21635,12 +25243,24 @@ This functionality is also available at a later time from the Administration Int
         <translation>PHP 選項 %1 已啟用</translation>
     </message>
     <message>
+        <source>eZ publish will work with this option on however it will lead to some minor performance issues since all input variables will be made global on each script execution.</source>
+        <translation type="obsolete">eZ publish 可與此選項開啟時共用。由於全部輸入變數在命令稿執行時將被設定成全域的，它將導致些許的效能問題。</translation>
+    </message>
+    <message>
         <source>It&apos;s recommended that the option is turned off. To turn it off edit your %1 configuration and set %2 to %3.</source>
         <translation>建議關閉選項。要關閉它就編輯你的 %1 配置，並設定 %2、%3 和 %4。</translation>
     </message>
     <message>
         <source>PHP safe mode is enabled</source>
         <translation>啟用 PHP 的安全模式</translation>
+    </message>
+    <message>
+        <source>Insufficient execution time allowed to install eZ publish</source>
+        <translation type="obsolete">允許安裝 eZ publish 的執行時間不足</translation>
+    </message>
+    <message>
+        <source>eZ publish will not work correctly with a execution time limit of %1.</source>
+        <translation type="obsolete">當執行時間限制為 %1 時，eZ publish 將無法正確運作。</translation>
     </message>
     <message>
         <source>It&apos;s highly recommended that you fix this.</source>
@@ -21659,8 +25279,28 @@ This functionality is also available at a later time from the Administration Int
         <translation>下一步</translation>
     </message>
     <message>
+        <source>If you are running eZ publish in a shared host environment, contant your ISP to perform the changes</source>
+        <translation type="obsolete">如果你在共享的主機環境中執行 eZ publish，請聯絡你的 ISP 以實行變更</translation>
+    </message>
+    <message>
+        <source>Insufficient memory allocated to install eZ publish</source>
+        <translation type="obsolete">配置的記憶體不足以安裝 eZ publish</translation>
+    </message>
+    <message>
+        <source>eZ publish will not work correctly with a memory limit of %1.</source>
+        <translation type="obsolete">當記憶體限制為 %1 時，eZ publish 將無法正確運作。</translation>
+    </message>
+    <message>
         <source>Open the php.ini file and change the memory_limit value to at least %1, and press %2</source>
         <translation>開啟 php.ini 檔案並變更 memory_limit 值至少到 %1，並按下 %2</translation>
+    </message>
+    <message>
+        <source>It&apos;s recommended that the option is turned off. To turn it off edit your %phpini configuration and set %magic_quotes_gpc and %magic_quotes_runtime to %offtext.</source>
+        <translation type="obsolete">建議關閉該選項。要關閉它就編輯你的 %phpini 配置，並且設定 %magic_quotes_gpc 和 %magic_quotes_runtime 為 %offtext。</translation>
+    </message>
+    <message>
+        <source>eZ publish will not work properly with this option on.</source>
+        <translation type="obsolete">當開啟這個選項時，eZ publish 將無法正確運作。</translation>
     </message>
     <message>
         <source>To turn it off edit your %phpini configuration and set %magic_quotes_runtime to %offtext.</source>
@@ -21695,6 +25335,10 @@ This functionality is also available at a later time from the Administration Int
         <translation>缺少 imagegd2 擴充功能</translation>
     </message>
     <message>
+        <source>The imagegd2 extension is not available to eZ publish. Without it eZ publish will only be able to do conversion using ImageMagick and the</source>
+        <translation type="obsolete">imagegd2 擴充功能無法在 eZ publish 中使用。如果沒有它，eZ publish 將只能使用 ImageMagick 執行轉檔和</translation>
+    </message>
+    <message>
         <source>To enable imagegd2 you need to recompile PHP with support for it, more information on that subject is available at</source>
         <translation>要啟用 imagegd2 你需要加上對它的支援後重新編譯 PHP，取得關於該主題的更多資訊可於</translation>
     </message>
@@ -21715,6 +25359,10 @@ This functionality is also available at a later time from the Administration Int
         <translation>缺少執行階段擴充功能</translation>
     </message>
     <message>
+        <source>Your PHP module does not have session support, without this eZ publish will not work properly.</source>
+        <translation type="obsolete">你的 PHP 模組不支援執行階段，如果缺少它，eZ publish 將無法正常運作。</translation>
+    </message>
+    <message>
         <source>To enable session support you will have recompile your PHP module without the %session_disable switch.</source>
         <translation>要啟用支援執行階段，你要重新編譯你的 PHP 模組但不設定 %session_disable 切換項目。</translation>
     </message>
@@ -21723,8 +25371,16 @@ This functionality is also available at a later time from the Administration Int
         <translation>如果你的站台位於共享的主機，你必須連絡主機託管公司的系統管理者。</translation>
     </message>
     <message>
+        <source>Although eZ publish will work without it, it might be that you want to have support for this database.</source>
+        <translation type="obsolete">雖然 eZ publish 不需要它就能運作，但仍有可能你想要有對於此資料庫的支援。</translation>
+    </message>
+    <message>
         <source>The affected directories are: %dir_list</source>
         <translation>受影響的目錄是：%dir_list</translation>
+    </message>
+    <message>
+        <source>These shell commands will give proper permission to the webserver.</source>
+        <translation type="obsolete">這些 shell 命令將賦與適當權限給網頁伺服器。</translation>
     </message>
     <message>
         <source>Alternative shell commands</source>
@@ -21735,12 +25391,32 @@ This functionality is also available at a later time from the Administration Int
         <translation>如果你沒有權限去變更所有權，你可以試試這些命令。</translation>
     </message>
     <message>
+        <source>eZ publish could not detect the user and group of the webserver.
+If you know the user and group of the webserver it&apos;s recommended to change the ownership of the files to match this user and group.
+To do this you need to change the %chown commands under Alternative shell commands.</source>
+        <translation type="obsolete">eZ publish 無法偵測網頁伺服器的使用者和組別。
+如果你知道網頁伺服器的使用者和組別，那麼建議去變更檔案的所有權，以符合這個使用者和組別。
+要如此做的話，你需要以替代的 shell 命令去變更 %chown 命令。</translation>
+    </message>
+    <message>
+        <source>These commands will setup the permission more correctly, but require knowledge about the running webserver.</source>
+        <translation type="obsolete">這些命令將會更加正確地設定權限，但是需要關於運行中網頁伺服器的知識。</translation>
+    </message>
+    <message>
         <source>Note</source>
         <translation>注意</translation>
     </message>
     <message>
+        <source>The %user_expr must be changed to your webserver username and groupname.</source>
+        <translation type="obsolete">%user_expr 必須變更為你的網頁伺服器使用者名稱和組別名稱。</translation>
+    </message>
+    <message>
         <source>File uploading is not possible</source>
         <translation>無法檔案上傳</translation>
+    </message>
+    <message>
+        <source>The PHP upload directory %upload_dir does not exists or is not accessible, without this you will not be able to upload files or images to eZ publish.</source>
+        <translation type="obsolete">PHP 上傳目錄 %upload_dir 不存在或是不可存取，缺少這個你將不能上傳檔案或圖像到 eZ publish。</translation>
     </message>
     <message>
         <source>Create the directory %upload_dir on your system. If you do not have the possibility to create this yourself ask the administrator to create it for you.</source>
@@ -21757,6 +25433,10 @@ This is a security problem and should be changed to another global temporary dir
         <translation>此 shell 命令將建立上傳目錄。</translation>
     </message>
     <message>
+        <source>The PHP upload directory %upload_dir is not writeable. This means that it will be impossible to upload files or images to eZ publish.</source>
+        <translation type="obsolete">PHP 上傳目錄 %upload_dir 不可寫入。這表示將無法上傳檔案或圖像到 eZ publish。</translation>
+    </message>
+    <message>
         <source>You must change the permission on the directory %upload_dir. If you do not have the possibility to create this yourself ask the administrator to do this for you.</source>
         <translation>你必須變更目錄 %upload_dir 上的權限。如果你沒有辦法自行建立，請要求管理者為你建立它。</translation>
     </message>
@@ -21769,8 +25449,20 @@ This is a security problem and should be changed to another global temporary dir
         <translation>如果你沒有權限去變更所有權，你可以試試此命令。</translation>
     </message>
     <message>
+        <source>eZ publish could not detect the user and group of the webserver.
+If you know the user and group of the webserver it&apos;s recommended to change the ownership of the upload directory to match this user and group.
+To do this you need to change the %chown commands under Alternative shell commands.</source>
+        <translation type="obsolete">eZ publish 無法偵測網頁伺服器的使用者和組別。
+如果你知道網頁伺服器的使用者和組別，那麼建議去變更上傳目錄的所有權，以符合這個使用者和組別。
+要如此做的話，你需要以替代的 shell 命令去變更 %chown 命令。</translation>
+    </message>
+    <message>
         <source>This shell command will give proper permission to the upload directory.</source>
         <translation>此 shell 命令將賦予適當的權限上傳目錄。</translation>
+    </message>
+    <message>
+        <source>If you know the user and group of the webserver you can try this command. Replace apache:apache with the user and group.</source>
+        <translation type="obsolete">如果你知道網頁伺服器的使用者和組別，你可以試試此命令。將使用者和組別置換為 apache:apache。</translation>
     </message>
     <message>
         <source>The complete list of charsets mbstring supports are</source>
@@ -21781,12 +25473,24 @@ This is a security problem and should be changed to another global temporary dir
         <translation>php.ini 範例</translation>
     </message>
     <message>
+        <source>Alternatively you may create a file called %1 in your eZ publish root folder and add the following</source>
+        <translation type="obsolete">做為替代方案，你可以在你的 eZ publish 根資料夾中建立名為 %1 的檔案，並且加入下列的</translation>
+    </message>
+    <message>
         <source>.htaccess example</source>
         <translation>.htaccess 範例</translation>
     </message>
     <message>
+        <source>eZ publish may work with safe mode on, however there might be several features that will be unavailable. Some of the things that might occur are</source>
+        <translation type="obsolete">eZ publish 可以在安全模式開啟下運作，然而有許多特性將會無法使用。也許會發生的一些事情包括</translation>
+    </message>
+    <message>
         <source>You need to enable AcceptPathInfo in your Apache config file, if you&apos;re using apache 2.x.</source>
         <translation>如果你請使用 apache 2.x，你需要在你的 Apache 配置檔案中啟用 AcceptPathInfo。</translation>
+    </message>
+    <message>
+        <source>If you&apos;re running apache 1.3, eZ publish will not run in CGI mode.</source>
+        <translation type="obsolete">如果你正在執行 apache 1.3，eZ publish 將無法在 CGI 模式中運行。</translation>
     </message>
     <message>
         <source>allow_url_fopen ini setting is disabled</source>
@@ -21799,6 +25503,10 @@ This is a security problem and should be changed to another global temporary dir
     <message>
         <source>Note : Failure here will also cause failure to the accept_path_info test.</source>
         <translation>注意：這裏的失敗也將造成 accept_path_info 測試時的失敗。</translation>
+    </message>
+    <message>
+        <source>, but the latest released PHP 4.4.x version is highly recommended.</source>
+        <translation type="obsolete">，但是強烈建議最近釋出的 PHP 4.4.x 版本。</translation>
     </message>
     <message>
         <source>Missed some directories</source>
@@ -22037,10 +25745,6 @@ To do this you need to change the %chown commands under Alternative shell comman
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>To fix this, edit your php.ini configuration and add E to the variables_order setting.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Missing cURL extension</source>
         <translation type="unfinished"></translation>
     </message>
@@ -22086,6 +25790,14 @@ To do this you need to change the %chown commands under Alternative shell comman
     </message>
     <message>
         <source>, but the latest released stable PHP version is always recommended.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Since some extensions might use $_ENV it is recomended to fix it unless you have full controll over all extensions you use!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>To fix this, edit your php.ini configuration and add E to the variables_order setting and restart your webserver.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -22307,6 +26019,14 @@ To do this you need to change the %chown commands under Alternative shell comman
         <translation>折扣</translation>
     </message>
     <message>
+        <source>Total Price ex. VAT</source>
+        <translation type="obsolete">稅前總價</translation>
+    </message>
+    <message>
+        <source>Total Price inc. VAT</source>
+        <translation type="obsolete">稅後總價</translation>
+    </message>
+    <message>
         <source>Name</source>
         <translation>姓名</translation>
     </message>
@@ -22365,6 +26085,10 @@ To do this you need to change the %chown commands under Alternative shell comman
     <message>
         <source>Address</source>
         <translation>地址</translation>
+    </message>
+    <message>
+        <source>Payment was cancelled for an unknown reason. Please try to buy again.</source>
+        <translation type="obsolete">付款被不確認原因取消。請重新再買。</translation>
     </message>
     <message>
         <source>Order summary</source>
@@ -22513,6 +26237,22 @@ To do this you need to change the %chown commands under Alternative shell comman
     <message>
         <source>State</source>
         <translation>省州</translation>
+    </message>
+    <message>
+        <source>Country</source>
+        <translation type="obsolete">國家</translation>
+    </message>
+    <message>
+        <source>The following items were removed from your basket, because the products were changed</source>
+        <translation type="obsolete">因為產品變動，下列項目已從你的購物籃中刪除</translation>
+    </message>
+    <message>
+        <source>Subtotal Ex. VAT</source>
+        <translation type="obsolete">稅前小計</translation>
+    </message>
+    <message>
+        <source>Subtotal Inc. VAT</source>
+        <translation type="obsolete">稅後小計</translation>
     </message>
     <message>
         <source>Comment</source>
@@ -22900,8 +26640,32 @@ To do this you need to change the %chown commands under Alternative shell comman
         <translation>選擇客戶</translation>
     </message>
     <message>
+        <source>Please choose the customers you want to add to discount group %groupname.
+
+    Select your customers and click the %buttonname button.
+    Using the recent and bookmark items for quick selection is also possible.
+    Click on object names to change the browse listing.</source>
+        <translation type="obsolete">請選擇你想加入折扣組別 %groupname 的客戶。
+
+     選擇你想要的客戶，並點選按鈕 %buttonname。
+     可以最近使用或是書籤來快速選擇。
+     點選物件名稱來變更瀏覽清單。</translation>
+    </message>
+    <message>
         <source>Choose product for discount</source>
         <translation>選擇打折產品</translation>
+    </message>
+    <message>
+        <source>Please choose the products you want to add to discount rule %discountname in discount group %groupname.
+
+    Select your products and click the %buttonname button.
+    Using the recent and bookmark items for quick selection is also possible.
+    Click on product names to change the browse listing.</source>
+        <translation type="obsolete">請選擇你想加入折扣組別 %groupname 中打折規則 %discountname 的產品。
+
+     選擇產品， 並點選按鈕 %buttonname.
+     可以最近使用或是書籤來快速選擇。
+     點選產品名來變更瀏覽清單。</translation>
     </message>
     <message>
         <source>Please choose the customers you want to add to discount group %groupname.
@@ -22996,7 +26760,7 @@ To do this you need to change the %chown commands under Alternative shell comman
     <name>design/standard/toolbar</name>
     <message>
         <source>Toolbar management</source>
-        <translation>工具列管理</translation>
+        <translation type="unfinished">工具列管理</translation>
     </message>
     <message>
         <source>There are %logged_in_count registered and %anonymous_count anonymous users online.</source>
@@ -23069,6 +26833,10 @@ To do this you need to change the %chown commands under Alternative shell comman
     <message>
         <source>Notification</source>
         <translation>通知</translation>
+    </message>
+    <message>
+        <source>My Notifications</source>
+        <translation type="obsolete">我的通知</translation>
     </message>
     <message>
         <source>User information</source>
@@ -23268,6 +27036,10 @@ To do this you need to change the %chown commands under Alternative shell comman
         <translation>物件不存在</translation>
     </message>
     <message>
+        <source>Version</source>
+        <translation type="obsolete">版本</translation>
+    </message>
+    <message>
         <source>The URL is not considered valid any more.</source>
         <translation>URL 已不再視為有效。</translation>
     </message>
@@ -23415,6 +27187,10 @@ To do this you need to change the %chown commands under Alternative shell comman
         <translation>請重新輸入你的舊密碼。</translation>
     </message>
     <message>
+        <source>Password didn&apos;t match, please retype your new password.</source>
+        <translation type="obsolete">密碼不符合， 請重新輸入。</translation>
+    </message>
+    <message>
         <source>Password successfully updated.</source>
         <translation>已成功更新密碼。</translation>
     </message>
@@ -23456,11 +27232,19 @@ To do this you need to change the %chown commands under Alternative shell comman
     </message>
     <message>
         <source>The node (%1) specified in [UserSettings].DefaultUserPlacement setting in site.ini does not exist!</source>
-        <translation>不存在 site.ini 的設定值 [UserSettings].DefaultUserPlacement 中所指定的節點 (%1)！</translation>
+        <translation type="unfinished">不存在 site.ini 的設定值 [UserSettings].DefaultUserPlacement 中所指定的節點 (%1)！</translation>
     </message>
     <message>
         <source>Email</source>
         <translation>電子郵件</translation>
+    </message>
+    <message>
+        <source>Your account was successfully created. An email will be sent to the specified
+email address. You need to follow the instructions in that mail to activate
+your account.</source>
+        <translation type="obsolete">你的帳號已成功建立。一封電子郵件將會發送到所指定的
+電子郵件位址。你需要照著該郵件中的指令以啟動
+你的帳號。</translation>
     </message>
     <message>
         <source>Your account is already active.</source>
@@ -23500,12 +27284,16 @@ your account.</source>
         <source>Try again</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>The new password must be at least %1 characters long. Please retype your new password.</source>
+        <translation type="unfinished">新的密碼長度必須至少有 %1 個字元長。請重新輸入你的新密碼。</translation>
+    </message>
 </context>
 <context>
     <name>design/standard/user/</name>
     <message>
         <source>The new password must be at least %1 characters long. Please retype your new password.</source>
-        <translation type="unfinished">新的密碼長度必須至少有 %1 個字元長。請重新輸入你的新密碼。</translation>
+        <translation type="obsolete">新的密碼長度必須至少有 %1 個字元長。請重新輸入你的新密碼。</translation>
     </message>
 </context>
 <context>
@@ -23616,6 +27404,10 @@ your account.</source>
     <message>
         <source>Menu management</source>
         <translation>選單管理</translation>
+    </message>
+    <message>
+        <source>SiteAccess</source>
+        <translation type="obsolete">存取網址</translation>
     </message>
     <message>
         <source>Set</source>
@@ -23740,12 +27532,20 @@ your account.</source>
         <translation>按一下此按鈕以儲存以上的文字欄位內容到範本檔案。</translation>
     </message>
     <message>
+        <source>You do not have permissions to save the contents of the text field above to the template file.</source>
+        <translation type="obsolete">你沒有權限去儲存以上的文字欄位內容到範本檔案。</translation>
+    </message>
+    <message>
         <source>Back to overrides</source>
         <translation>回到變更</translation>
     </message>
     <message>
         <source>Back to override overview.</source>
         <translation>回到變更概觀。</translation>
+    </message>
+    <message>
+        <source>The template can not be edited.</source>
+        <translation type="obsolete">範本無法編輯。</translation>
     </message>
     <message>
         <source>The web server does not have write access to the requested template.</source>
@@ -23770,6 +27570,10 @@ your account.</source>
     <message>
         <source>Siteaccess</source>
         <translation>存取網址</translation>
+    </message>
+    <message>
+        <source>Overrides template</source>
+        <translation type="obsolete">變更範本</translation>
     </message>
     <message>
         <source>Open as read only</source>
@@ -23824,6 +27628,10 @@ your account.</source>
     <message>
         <source>The following files and override rules could not be removed because of insufficient file permissions</source>
         <translation>由於檔案權限不足，無法刪除下列檔案和變更規則</translation>
+    </message>
+    <message>
+        <source>The override.ini file could not be modified because of insufficient permissions.</source>
+        <translation type="obsolete">由於權限不足，無法修改 override.ini 檔案。</translation>
     </message>
     <message>
         <source>Overrides for &lt;%template_name&gt; template in &lt;%current_siteaccess&gt; siteaccess [%override_count]</source>
@@ -23901,6 +27709,10 @@ your account.</source>
 <context>
     <name>design/standard/visual/toolbar</name>
     <message>
+        <source>Tool List for &lt;Toolbar_%toolbar_position&gt;</source>
+        <translation type="obsolete">&lt;Toolbar_%toolbar_position&gt; 的工具清單</translation>
+    </message>
+    <message>
         <source>Browse</source>
         <translation>瀏覽</translation>
     </message>
@@ -23955,6 +27767,10 @@ your account.</source>
     <message>
         <source>Toolbar management</source>
         <translation>工具列管理</translation>
+    </message>
+    <message>
+        <source>SiteAccess</source>
+        <translation type="obsolete">存取網址</translation>
     </message>
     <message>
         <source>Current siteaccess</source>
@@ -24260,6 +28076,10 @@ your account.</source>
         <translation>類型</translation>
     </message>
     <message>
+        <source>Class Attributes</source>
+        <translation type="obsolete">類別屬性</translation>
+    </message>
+    <message>
         <source>Affected languages</source>
         <translation>受影響的語言</translation>
     </message>
@@ -24327,70 +28147,78 @@ your account.</source>
     <name>kernel/cache</name>
     <message>
         <source>Content view cache</source>
-        <translation>內容檢視快取</translation>
+        <translation type="unfinished">內容檢視快取</translation>
     </message>
     <message>
         <source>Global INI cache</source>
-        <translation>全域 INI 快取</translation>
+        <translation type="unfinished">全域 INI 快取</translation>
     </message>
     <message>
         <source>INI cache</source>
-        <translation>INI 快取</translation>
+        <translation type="unfinished">INI 快取</translation>
     </message>
     <message>
         <source>Codepage cache</source>
-        <translation>編碼頁快取</translation>
+        <translation type="unfinished">編碼頁快取</translation>
+    </message>
+    <message>
+        <source>Expiry cache</source>
+        <translation type="obsolete">逾期快取</translation>
     </message>
     <message>
         <source>Class identifier cache</source>
-        <translation>類別識別項快取</translation>
+        <translation type="unfinished">類別識別項快取</translation>
     </message>
     <message>
         <source>Sort key cache</source>
-        <translation>排序鍵快取</translation>
+        <translation type="unfinished">排序鍵快取</translation>
     </message>
     <message>
         <source>URL alias cache</source>
-        <translation>URL 別名快取</translation>
+        <translation type="unfinished">URL 別名快取</translation>
     </message>
     <message>
         <source>Image alias</source>
-        <translation>圖像別名</translation>
+        <translation type="unfinished">圖像別名</translation>
     </message>
     <message>
         <source>Template cache</source>
-        <translation>範本快取</translation>
+        <translation type="unfinished">範本快取</translation>
     </message>
     <message>
         <source>Template block cache</source>
-        <translation>範本區塊快取</translation>
+        <translation type="unfinished">範本區塊快取</translation>
     </message>
     <message>
         <source>Template override cache</source>
-        <translation>範本變更快取</translation>
+        <translation type="unfinished">範本變更快取</translation>
     </message>
     <message>
         <source>RSS cache</source>
-        <translation>RSS 快取</translation>
+        <translation type="unfinished">RSS 快取</translation>
     </message>
     <message>
         <source>Character transformation cache</source>
-        <translation>字元變換快取</translation>
+        <translation type="unfinished">字元變換快取</translation>
     </message>
     <message>
         <source>User info cache</source>
-        <translation>請使用者資訊快取</translation>
+        <translation type="unfinished">請使用者資訊快取</translation>
     </message>
     <message>
         <source>Content tree menu (browser cache)</source>
         <translation type="unfinished">內容樹狀選單（瀏覽快取）</translation>
     </message>
     <message>
+        <source>Text to image cache</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>State limitations cache</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Text to image cache</source>
+        <source>Design base cache</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -24398,192 +28226,233 @@ your account.</source>
     <name>kernel/class</name>
     <message>
         <source>Class list of group</source>
-        <translation>組別的類別清單</translation>
+        <translation type="unfinished">組別的類別清單</translation>
     </message>
     <message>
         <source>Class group list</source>
-        <translation>組別清單</translation>
+        <translation type="unfinished">組別清單</translation>
     </message>
     <message>
         <source>Class list</source>
-        <translation>類別清單</translation>
+        <translation type="unfinished">類別清單</translation>
     </message>
     <message>
         <source>(no classes)</source>
-        <translation>(沒有任何類別)</translation>
+        <translation type="unfinished">(沒有任何類別)</translation>
     </message>
     <message>
         <source>Remove class groups</source>
-        <translation>刪除組別</translation>
+        <translation type="unfinished">刪除組別</translation>
     </message>
     <message>
         <source>Classes</source>
-        <translation>類別</translation>
+        <translation type="obsolete">類別</translation>
     </message>
     <message>
         <source>Class edit</source>
-        <translation>類別編輯</translation>
+        <translation type="obsolete">類別編輯</translation>
     </message>
     <message>
         <source>Remove class</source>
-        <translation>刪除類別</translation>
+        <translation type="unfinished">刪除類別</translation>
     </message>
     <message>
         <source>You have to have at least one group that the class belongs to!</source>
-        <translation>你必須至少有一個該類別所屬的組別！</translation>
+        <translation type="unfinished">你必須至少有一個該類別所屬的組別！</translation>
     </message>
     <message>
         <source>Remove classes %class_id</source>
-        <translation>刪除類別 %class_id</translation>
+        <translation type="unfinished">刪除類別 %class_id</translation>
     </message>
     <message>
         <source>Copy of %class_name</source>
-        <translation>%class_name 的複本</translation>
+        <translation type="unfinished">%class_name 的複本</translation>
     </message>
     <message>
         <source>The class should have nonempty &apos;Name&apos; attribute.</source>
-        <translation>類別應該有非空的「名稱」屬性。</translation>
+        <translation type="unfinished">類別應該有非空的「名稱」屬性。</translation>
     </message>
     <message>
         <source>The class should have at least one attribute.</source>
-        <translation>類別應該至少有一個屬性。</translation>
+        <translation type="unfinished">類別應該至少有一個屬性。</translation>
     </message>
     <message>
         <source>There is a class already having the same identifier.</source>
-        <translation>已經有相同識別碼的類別。</translation>
+        <translation type="unfinished">已經有相同識別碼的類別。</translation>
     </message>
     <message>
         <source>Remove translation</source>
-        <translation>刪除翻譯</translation>
+        <translation type="unfinished">刪除翻譯</translation>
     </message>
     <message>
         <source>Could not load datatype: </source>
-        <translation>無法載入資料型態：</translation>
+        <translation type="unfinished">無法載入資料型態：</translation>
     </message>
     <message>
         <source>Editing this content class may cause data corruption in your system.</source>
-        <translation>編輯此內容類別也許會造成你系統中的資料損壞。</translation>
+        <translation type="unfinished">編輯此內容類別也許會造成你系統中的資料損壞。</translation>
+    </message>
+    <message>
+        <source>Please contact your eZ publish administrator to solve this problem.</source>
+        <translation type="obsolete">請連絡你的 eZ publish 管理者以解決此問題。</translation>
     </message>
     <message>
         <source>duplicate attribute placement</source>
-        <translation>複製屬性放置位址</translation>
+        <translation type="unfinished">複製屬性放置位址</translation>
     </message>
     <message>
         <source>duplicate attribute identifier</source>
-        <translation>複製屬性識別碼</translation>
+        <translation type="unfinished">複製屬性識別碼</translation>
     </message>
     <message>
         <source>Press &quot;Cancel&quot; to safely exit this operation.</source>
-        <translation>按下「取消」以安全地離開此操作。</translation>
+        <translation type="unfinished">按下「取消」以安全地離開此操作。</translation>
     </message>
     <message>
         <source>Please contact your eZ Publish administrator to solve this problem.</source>
         <translation type="unfinished">請連絡你的 eZ publish 管理者以解決此問題。</translation>
+    </message>
+    <message>
+        <source>Class groups</source>
+        <translation type="unfinished">組別</translation>
+    </message>
+    <message>
+        <source>Remove classes</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>kernel/class/edit</name>
     <message>
         <source>New Class</source>
-        <translation>新增類別</translation>
+        <translation type="unfinished">新增類別</translation>
     </message>
     <message>
         <source>new attribute</source>
-        <translation>新增屬性</translation>
+        <translation type="unfinished">新增屬性</translation>
     </message>
 </context>
 <context>
     <name>kernel/class/groupedit</name>
     <message>
         <source>New Group</source>
-        <translation>新增組別</translation>
+        <translation type="unfinished">新增組別</translation>
+    </message>
+</context>
+<context>
+    <name>kernel/classe/datatypes/ezbinaryfile</name>
+    <message>
+        <source>Failed to store file %filename. Please contact the site administrator.</source>
+        <translation type="obsolete">儲存檔案 %filename 時失敗。請連絡網站管理者。</translation>
+    </message>
+</context>
+<context>
+    <name>kernel/classe/datatypes/ezimage</name>
+    <message>
+        <source>Failed to fetch Image Handler. Please contact the site administrator.</source>
+        <translation type="obsolete">擷取圖像處理常式時失敗。請連絡網站管理者。</translation>
+    </message>
+</context>
+<context>
+    <name>kernel/classe/datatypes/ezmedia</name>
+    <message>
+        <source>Failed to store media file %filename. Please contact the site administrator.</source>
+        <translation type="obsolete">儲存媒體檔案 %filename 時失敗。請連絡網站管理者。</translation>
     </message>
 </context>
 <context>
     <name>kernel/classes</name>
     <message>
         <source>Approval</source>
-        <translation>同意</translation>
+        <translation type="unfinished">同意</translation>
     </message>
     <message>
         <source>Standard</source>
-        <translation>標準</translation>
+        <translation type="unfinished">標準</translation>
     </message>
     <message>
         <source>Observer</source>
-        <translation>觀察者</translation>
+        <translation type="unfinished">觀察者</translation>
     </message>
     <message>
         <source>Owner</source>
-        <translation>擁有者</translation>
+        <translation type="unfinished">擁有者</translation>
     </message>
     <message>
         <source>Approver</source>
-        <translation>同意者</translation>
+        <translation type="unfinished">同意者</translation>
     </message>
     <message>
         <source>Author</source>
-        <translation>作者</translation>
+        <translation type="unfinished">作者</translation>
     </message>
     <message>
         <source>Inbox</source>
-        <translation>收件箱</translation>
+        <translation type="unfinished">收件箱</translation>
     </message>
     <message>
         <source>No state yet</source>
-        <translation>仍未有狀態</translation>
+        <translation type="unfinished">仍未有狀態</translation>
     </message>
     <message>
         <source>Workflow running</source>
-        <translation>工作流程執行中</translation>
+        <translation type="unfinished">工作流程執行中</translation>
     </message>
     <message>
         <source>Workflow done</source>
-        <translation>工作流程結束</translation>
+        <translation type="unfinished">工作流程結束</translation>
     </message>
     <message>
         <source>Workflow failed an event</source>
-        <translation>工作流程發生事件失誤</translation>
+        <translation type="unfinished">工作流程發生事件失誤</translation>
     </message>
     <message>
         <source>Workflow event deferred to cron job</source>
-        <translation>工作流程事件延缓了 cron 工作</translation>
+        <translation type="unfinished">工作流程事件延缓了 cron 工作</translation>
+    </message>
+    <message>
+        <source>Workflow was cancelled</source>
+        <translation type="obsolete">工作流程被取消</translation>
     </message>
     <message>
         <source>Workflow was reset for reuse</source>
-        <translation>為了重新使用而重新安排工作流程</translation>
+        <translation type="unfinished">為了重新使用而重新安排工作流程</translation>
     </message>
     <message>
         <source>Accepted event</source>
-        <translation>被接受的事件</translation>
+        <translation type="unfinished">被接受的事件</translation>
     </message>
     <message>
         <source>Rejected event</source>
-        <translation>被拒絕的事件</translation>
+        <translation type="unfinished">被拒絕的事件</translation>
     </message>
     <message>
         <source>Event deferred to cron job</source>
-        <translation>事件延缓了 cron 工作</translation>
+        <translation type="unfinished">事件延缓了 cron 工作</translation>
     </message>
     <message>
         <source>Event deferred to cron job, event will be rerun</source>
-        <translation>事件延缓了 cron 工作，事件將重新執行</translation>
+        <translation type="unfinished">事件延缓了 cron 工作，事件將重新執行</translation>
     </message>
     <message>
         <source>Event runs a sub event</source>
-        <translation>事件正在執行子事件</translation>
+        <translation type="unfinished">事件正在執行子事件</translation>
+    </message>
+    <message>
+        <source>Cancelled whole workflow</source>
+        <translation type="obsolete">取消了整個工作流程</translation>
     </message>
     <message>
         <source>Workflow fetches template</source>
-        <translation>工作流程調用範本</translation>
+        <translation type="unfinished">工作流程調用範本</translation>
     </message>
     <message>
         <source>Workflow redirects user view</source>
-        <translation>工作流程重導使用者檢視</translation>
+        <translation type="unfinished">工作流程重導使用者檢視</translation>
     </message>
     <message>
         <source>New RSS Export</source>
-        <translation>新增 RSS 匯出</translation>
+        <translation type="unfinished">新增 RSS 匯出</translation>
     </message>
     <message>
         <source>Workflow was canceled</source>
@@ -24594,16 +28463,16 @@ your account.</source>
         <translation type="unfinished">取消整個工作流程</translation>
     </message>
     <message>
+        <source>Keep existing and create a new one</source>
+        <translation type="unfinished">保留現有的並建立一個新的</translation>
+    </message>
+    <message>
         <source>Replace existing object</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Skip object</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Keep existing and create a new one</source>
-        <translation type="unfinished">保留現有的並建立一個新的</translation>
     </message>
     <message>
         <source>Update existing object</source>
@@ -24614,439 +28483,476 @@ your account.</source>
     <name>kernel/classes/datatypes</name>
     <message>
         <source>Missing date input.</source>
-        <translation>缺少日期輸入。</translation>
+        <translation type="unfinished">缺少日期輸入。</translation>
     </message>
     <message>
         <source>Missing datetime input.</source>
-        <translation>缺少時間輸入。</translation>
+        <translation type="unfinished">缺少時間輸入。</translation>
     </message>
     <message>
         <source>At least one author is required.</source>
-        <translation>至少需要一個作者。</translation>
+        <translation type="unfinished">至少需要一個作者。</translation>
     </message>
     <message>
         <source>A valid file is required.</source>
-        <translation>需要一個有效檔案。</translation>
+        <translation type="unfinished">需要一個有效檔案。</translation>
     </message>
     <message>
         <source>Checkbox</source>
         <comment>Datatype name</comment>
-        <translation>核取方框</translation>
+        <translation type="unfinished">核取方框</translation>
     </message>
     <message>
         <source>Enum</source>
         <comment>Datatype name</comment>
-        <translation>列舉</translation>
+        <translation type="unfinished">列舉</translation>
     </message>
     <message>
         <source>At least one field should be chosen.</source>
-        <translation>至少選擇一個欄位。</translation>
+        <translation type="unfinished">至少選擇一個欄位。</translation>
     </message>
     <message>
         <source>Float</source>
         <comment>Datatype name</comment>
-        <translation>浮點小數</translation>
+        <translation type="unfinished">浮點小數</translation>
     </message>
     <message>
         <source>Image</source>
         <comment>Datatype name</comment>
-        <translation>圖像</translation>
+        <translation type="unfinished">圖像</translation>
     </message>
     <message>
         <source>Integer</source>
         <comment>Datatype name</comment>
-        <translation>整數</translation>
+        <translation type="unfinished">整數</translation>
     </message>
     <message>
         <source>ISBN</source>
         <comment>Datatype name</comment>
-        <translation>ISBN</translation>
+        <translation type="unfinished">ISBN</translation>
     </message>
     <message>
         <source>Matrix</source>
         <comment>Datatype name</comment>
-        <translation>矩陣</translation>
+        <translation type="unfinished">矩陣</translation>
     </message>
     <message>
         <source>Media</source>
         <comment>Datatype name</comment>
-        <translation>媒體</translation>
+        <translation type="unfinished">媒體</translation>
     </message>
     <message>
         <source>Object relation</source>
         <comment>Datatype name</comment>
-        <translation>物件關聯</translation>
+        <translation type="unfinished">物件關聯</translation>
     </message>
     <message>
         <source>Option</source>
         <comment>Datatype name</comment>
-        <translation>選項</translation>
+        <translation type="unfinished">選項</translation>
     </message>
     <message>
         <source>At least one option is required.</source>
-        <translation>至少需要一個選項。</translation>
+        <translation type="unfinished">至少需要一個選項。</translation>
     </message>
     <message>
         <source>Price</source>
         <comment>Datatype name</comment>
-        <translation>價格</translation>
+        <translation type="unfinished">價格</translation>
     </message>
     <message>
         <source>Add to basket</source>
-        <translation>加入購物籃</translation>
+        <translation type="unfinished">加入購物籃</translation>
     </message>
     <message>
         <source>Add to wish list</source>
-        <translation>加入願望清單</translation>
+        <translation type="unfinished">加入願望清單</translation>
     </message>
     <message>
         <source>Range option</source>
         <comment>Datatype name</comment>
-        <translation>範圍選項</translation>
+        <translation type="unfinished">範圍選項</translation>
     </message>
     <message>
         <source>Selection</source>
         <comment>Datatype name</comment>
-        <translation>選擇</translation>
+        <translation type="unfinished">選擇</translation>
     </message>
     <message>
         <source>Text line</source>
         <comment>Datatype name</comment>
-        <translation>單列文字</translation>
+        <translation type="unfinished">單列文字</translation>
     </message>
     <message>
         <source>Subtree subscription</source>
         <comment>Datatype name</comment>
-        <translation>子樹訂閱</translation>
+        <translation type="unfinished">子樹訂閱</translation>
     </message>
     <message>
         <source>URL</source>
         <comment>Datatype name</comment>
-        <translation>URL</translation>
+        <translation type="unfinished">URL</translation>
     </message>
     <message>
         <source>User account</source>
         <comment>Datatype name</comment>
-        <translation>請使用者帳號</translation>
+        <translation type="unfinished">請使用者帳號</translation>
     </message>
     <message>
         <source>A user with this email already exists.</source>
-        <translation>具此信箱的使用者已經存在。</translation>
+        <translation type="unfinished">具此信箱的使用者已經存在。</translation>
     </message>
     <message>
         <source>Identifier</source>
         <comment>Datatype name</comment>
-        <translation>識別代號</translation>
+        <translation type="unfinished">識別代號</translation>
     </message>
     <message>
         <source>image</source>
         <comment>Default image name</comment>
-        <translation>圖像</translation>
+        <translation type="unfinished">圖像</translation>
     </message>
     <message>
         <source>Ini Setting</source>
         <comment>Datatype name</comment>
-        <translation>Ini 設定</translation>
+        <translation type="unfinished">Ini 設定</translation>
     </message>
     <message>
         <source>Package</source>
         <comment>Datatype name</comment>
-        <translation>套件</translation>
+        <translation type="unfinished">套件</translation>
     </message>
     <message>
         <source>Send</source>
         <comment>Datatype information collector action</comment>
-        <translation>傳送</translation>
+        <translation type="unfinished">傳送</translation>
     </message>
     <message>
         <source>Content required</source>
-        <translation>必要的內容</translation>
+        <translation type="unfinished">必要的內容</translation>
     </message>
     <message>
         <source>Missing objectrelation input.</source>
-        <translation>缺少物件關聯的輸入。</translation>
+        <translation type="unfinished">缺少物件關聯的輸入。</translation>
     </message>
     <message>
         <source>Invalid time.</source>
-        <translation>無效的時間。</translation>
+        <translation type="unfinished">無效的時間。</translation>
     </message>
     <message>
         <source>The author name must be provided.</source>
-        <translation>必須提供作者名稱。</translation>
+        <translation type="unfinished">必須提供作者名稱。</translation>
     </message>
     <message>
         <source>The email address is not valid.</source>
-        <translation>電子郵件地址無效。</translation>
+        <translation type="unfinished">電子郵件地址無效。</translation>
     </message>
     <message>
         <source>File uploading is not enabled. Please contact the site administrator to enable it.</source>
-        <translation>檔案上傳並未啟用。請連絡網站管理者以啟用它。</translation>
+        <translation type="unfinished">檔案上傳並未啟用。請連絡網站管理者以啟用它。</translation>
     </message>
     <message>
         <source>The size of the uploaded file exceeds the limit set by the upload_max_filesize directive in php.ini.</source>
-        <translation>上傳檔案的大小超出在 php.ini 中由 upload_max_filesize 指令所設定的限制。</translation>
+        <translation type="unfinished">上傳檔案的大小超出在 php.ini 中由 upload_max_filesize 指令所設定的限制。</translation>
     </message>
     <message>
         <source>The size of the uploaded file exceeds the maximum upload size: %1 bytes.</source>
-        <translation>上傳檔案的大小超出上傳大小的最大值：%1 位元組。</translation>
+        <translation type="unfinished">上傳檔案的大小超出上傳大小的最大值：%1 位元組。</translation>
     </message>
     <message>
         <source>The email address is empty.</source>
-        <translation>電子郵件地址是空的。</translation>
+        <translation type="unfinished">電子郵件地址是空的。</translation>
     </message>
     <message>
         <source>The given input is not a floating point number.</source>
-        <translation>所給的輸入並非浮點數字。</translation>
+        <translation type="unfinished">所給的輸入並非浮點數字。</translation>
     </message>
     <message>
         <source>The input must be greater than %1</source>
-        <translation>輸入必須大於 %1</translation>
+        <translation type="unfinished">輸入必須大於 %1</translation>
     </message>
     <message>
         <source>The input must be less than %1</source>
-        <translation>輸入必須小於 %1</translation>
+        <translation type="unfinished">輸入必須小於 %1</translation>
     </message>
     <message>
         <source>The input is not in defined range %1 - %2</source>
-        <translation>輸入並未在定義的 %1 - %2 範圍中</translation>
+        <translation type="unfinished">輸入並未在定義的 %1 - %2 範圍中</translation>
     </message>
     <message>
         <source>A valid image file is required.</source>
-        <translation>需要有效的圖像檔案。</translation>
+        <translation type="unfinished">需要有效的圖像檔案。</translation>
     </message>
     <message>
         <source>The size of the uploaded image exceeds limit set by upload_max_filesize directive in php.ini. Please contact the site administrator.</source>
-        <translation>上傳圖像的大小超出在 php.ini 中由 upload_max_filesize 指令所設定的限制。請連絡網站管理者。</translation>
+        <translation type="unfinished">上傳圖像的大小超出在 php.ini 中由 upload_max_filesize 指令所設定的限制。請連絡網站管理者。</translation>
     </message>
     <message>
         <source>The size of the uploaded file exceeds the limit set for this site: %1 bytes.</source>
-        <translation>上傳檔案的大小超出此站台所設定的限制：%1 位元組。</translation>
+        <translation type="unfinished">上傳檔案的大小超出此站台所設定的限制：%1 位元組。</translation>
     </message>
     <message>
         <source>Could not locate the ini file.</source>
-        <translation>無法定位 ini 檔案。</translation>
+        <translation type="unfinished">無法定位 ini 檔案。</translation>
     </message>
     <message>
         <source>The input is not a valid integer.</source>
-        <translation>輸入不是有效整數。</translation>
+        <translation type="unfinished">輸入不是有效整數。</translation>
     </message>
     <message>
         <source>The number must be greater than %1</source>
-        <translation>數字必須大於 %1</translation>
+        <translation type="unfinished">數字必須大於 %1</translation>
     </message>
     <message>
         <source>The number must be less than %1</source>
-        <translation>數字必須小於 %1</translation>
+        <translation type="unfinished">數字必須小於 %1</translation>
     </message>
     <message>
         <source>The number is not within the required range %1 - %2</source>
-        <translation>數字不在要求的範圍 %1 - %2 之內</translation>
+        <translation type="unfinished">數字不在要求的範圍 %1 - %2 之內</translation>
     </message>
     <message>
         <source>The ISBN number is not correct. Please check the input for mistakes.</source>
-        <translation>ISBN 數字不正確。請檢查輸入是否有錯誤。</translation>
+        <translation type="unfinished">ISBN 數字不正確。請檢查輸入是否有錯誤。</translation>
     </message>
     <message>
         <source>A valid media file is required.</source>
-        <translation>需要有效的媒體檔案。</translation>
+        <translation type="unfinished">需要有效的媒體檔案。</translation>
     </message>
     <message>
         <source>The size of the uploaded file exceeds the limit set by upload_max_filesize directive in php.ini. Please contact the site administrator.</source>
-        <translation>上傳檔案的大小超出在 php.ini 中由 upload_max_filesize 指令所設定的限制。請連絡網站管理者。</translation>
+        <translation type="unfinished">上傳檔案的大小超出在 php.ini 中由 upload_max_filesize 指令所設定的限制。請連絡網站管理者。</translation>
     </message>
     <message>
         <source>The size of the uploaded file exceeds site maximum: %1 bytes.</source>
-        <translation>上傳檔案的大小超出站台的最大值：%1 位元組。</translation>
+        <translation type="unfinished">上傳檔案的大小超出站台的最大值：%1 位元組。</translation>
     </message>
     <message>
         <source>The option value must be provided.</source>
-        <translation>必須提供選項值。</translation>
+        <translation type="unfinished">必須提供選項值。</translation>
     </message>
     <message>
         <source>The additional price for the multioption value is not valid.</source>
-        <translation>多重選項值的額外價格無效。</translation>
+        <translation type="unfinished">多重選項值的額外價格無效。</translation>
     </message>
     <message>
         <source>The Additional price value is not valid.</source>
-        <translation>額外價格值無效。</translation>
+        <translation type="unfinished">額外價格值無效。</translation>
     </message>
     <message>
         <source>Input required.</source>
-        <translation>需要輸入。</translation>
+        <translation type="unfinished">需要輸入。</translation>
     </message>
     <message>
         <source>The input text is too long. The maximum number of characters allowed is %1.</source>
-        <translation>輸入文字太長。允許的最大字元數量為 %1。</translation>
+        <translation type="unfinished">輸入文字太長。允許的最大字元數量為 %1。</translation>
     </message>
     <message>
         <source>Time input required.</source>
-        <translation>需要輸入時間。</translation>
+        <translation type="unfinished">需要輸入時間。</translation>
     </message>
     <message>
         <source>The username must be specified.</source>
-        <translation>必須指定使用者名稱。</translation>
+        <translation type="unfinished">必須指定使用者名稱。</translation>
     </message>
     <message>
         <source>The username already exists, please choose another one.</source>
-        <translation>請使用者名稱已經存在，請選取另外一個。</translation>
+        <translation type="unfinished">請使用者名稱已經存在，請選取另外一個。</translation>
     </message>
     <message>
         <source>The passwords do not match.</source>
         <comment>eZUserType</comment>
-        <translation>密碼不符合。</translation>
+        <translation type="unfinished">密碼不符合。</translation>
     </message>
     <message>
         <source>Cannot remove the account:</source>
-        <translation>無法刪除帳號：</translation>
+        <translation type="unfinished">無法刪除帳號：</translation>
     </message>
     <message>
         <source>The account owner is currently logged in.</source>
-        <translation>帳號擁有者目前已登入。</translation>
+        <translation type="unfinished">帳號擁有者目前已登入。</translation>
     </message>
     <message>
         <source>The account is currently used by the anonymous user.</source>
-        <translation>此帳號目前為匿名使用者所使用。</translation>
+        <translation type="unfinished">此帳號目前為匿名使用者所使用。</translation>
     </message>
     <message>
         <source>The account is currently used the administrator user.</source>
         <translation type="unfinished">此帳號目前為管理者所使用。</translation>
     </message>
     <message>
+        <source>You can not remove the last class holding user accounts.</source>
+        <translation type="obsolete">你無法刪除保有使用者帳號的上一層類別。</translation>
+    </message>
+    <message>
         <source>Multi-option</source>
         <comment>Datatype name</comment>
-        <translation>多重選項</translation>
+        <translation type="unfinished">多重選項</translation>
     </message>
     <message>
         <source>Authors</source>
         <comment>Datatype name</comment>
-        <translation>作者</translation>
+        <translation type="unfinished">作者</translation>
     </message>
     <message>
         <source>File</source>
         <comment>Datatype name</comment>
-        <translation>檔案</translation>
+        <translation type="unfinished">檔案</translation>
     </message>
     <message>
         <source>Date</source>
         <comment>Datatype name</comment>
-        <translation>日期</translation>
+        <translation type="unfinished">日期</translation>
     </message>
     <message>
         <source>Date and time</source>
         <comment>Datatype name</comment>
-        <translation>日期和時間</translation>
+        <translation type="unfinished">日期和時間</translation>
+    </message>
+    <message>
+        <source>E-mail</source>
+        <comment>Datatype name</comment>
+        <translation type="obsolete">電子信箱</translation>
     </message>
     <message>
         <source>Keywords</source>
         <comment>Datatype name</comment>
-        <translation>關鍵字</translation>
+        <translation type="unfinished">關鍵字</translation>
     </message>
     <message>
         <source>Object relations</source>
         <comment>Datatype name</comment>
-        <translation>物件關聯</translation>
+        <translation type="unfinished">物件關聯</translation>
     </message>
     <message>
         <source>Text block</source>
         <comment>Datatype name</comment>
-        <translation>文字區塊</translation>
+        <translation type="unfinished">文字區塊</translation>
     </message>
     <message>
         <source>Time</source>
         <comment>Datatype name</comment>
-        <translation>時間</translation>
+        <translation type="unfinished">時間</translation>
     </message>
     <message>
         <source>XML block</source>
         <comment>Datatype name</comment>
-        <translation>XML 區塊</translation>
+        <translation type="unfinished">XML 區塊</translation>
     </message>
     <message>
         <source>Object %1 can not be embeded to itself.</source>
-        <translation>物件 %1 無法內嵌於它自己。</translation>
+        <translation type="unfinished">物件 %1 無法內嵌於它自己。</translation>
+    </message>
+    <message>
+        <source>Node %1 does not exist.</source>
+        <translation type="obsolete">節點 %1 不存在。</translation>
+    </message>
+    <message>
+        <source>Node &apos;%1&apos; does not exist.</source>
+        <translation type="obsolete">節點「%1」不存在。</translation>
     </message>
     <message>
         <source>Country</source>
         <comment>Datatype name</comment>
-        <translation>國家</translation>
+        <translation type="unfinished">國家</translation>
     </message>
     <message>
         <source>Date is not valid.</source>
-        <translation>日期無效。</translation>
+        <translation type="unfinished">日期無效。</translation>
     </message>
     <message>
         <source>Time is not valid.</source>
-        <translation>時間無效。</translation>
+        <translation type="unfinished">時間無效。</translation>
     </message>
     <message>
         <source>The image file must have non-zero size.</source>
-        <translation>圖像檔案大小必須不是零。</translation>
+        <translation type="unfinished">圖像檔案大小必須不是零。</translation>
     </message>
     <message>
         <source>Wrong text field value.</source>
-        <translation>錯誤的文字欄值。</translation>
+        <translation type="unfinished">錯誤的文字欄值。</translation>
     </message>
     <message>
         <source>Missing matrix input.</source>
-        <translation>缺少矩陣輸入。</translation>
+        <translation type="unfinished">缺少矩陣輸入。</translation>
     </message>
     <message>
         <source>Multi-price</source>
         <comment>Datatype name</comment>
-        <translation>多重價格</translation>
+        <translation type="unfinished">多重價格</translation>
     </message>
     <message>
         <source>Invalid price for &apos;%currencyCode&apos; currency </source>
-        <translation>無效的「%currencyCode」貨幣價格 </translation>
+        <translation type="unfinished">無效的「%currencyCode」貨幣價格 </translation>
     </message>
     <message>
         <source>Missing objectrelation list input.</source>
-        <translation>缺少物件關聯清單的輸入。</translation>
+        <translation type="unfinished">缺少物件關聯清單的輸入。</translation>
     </message>
     <message>
         <source>NAME is required.</source>
-        <translation>需要「名稱」。</translation>
+        <translation type="unfinished">需要「名稱」。</translation>
     </message>
     <message>
         <source>Invalid price.</source>
-        <translation>無效的價格。</translation>
+        <translation type="unfinished">無效的價格。</translation>
     </message>
     <message>
         <source>Product category</source>
         <comment>Datatype name</comment>
-        <translation>產品分類</translation>
+        <translation type="unfinished">產品分類</translation>
+    </message>
+    <message>
+        <source>The password mustn&apos;t be &quot;password&quot;.</source>
+        <translation type="obsolete">密碼必須不是「password」。</translation>
+    </message>
+    <message>
+        <source>Using scripts in links is not allowed, link &apos;%1&apos; has been removed</source>
+        <translation type="obsolete">不允許在鏈結中使用命令稿，鏈結「%1」已刪除</translation>
     </message>
     <message>
         <source>Dynamic VAT cannot be included.</source>
-        <translation>無法包含動態營業稅。</translation>
+        <translation type="unfinished">無法包含動態營業稅。</translation>
     </message>
     <message>
         <source>Missing range option input.</source>
-        <translation>缺少範圍選項的輸入。</translation>
+        <translation type="unfinished">缺少範圍選項的輸入。</translation>
     </message>
     <message>
         <source>Option set name is required.</source>
-        <translation>需要選項設定名稱。</translation>
+        <translation type="unfinished">需要選項設定名稱。</translation>
     </message>
     <message>
         <source>The password must be at least %1 characters long.</source>
-        <translation>密碼長度必須至少 %1 個字元。</translation>
+        <translation type="unfinished">密碼長度必須至少 %1 個字元。</translation>
+    </message>
+    <message>
+        <source>Invalid e-mail address: &apos;%1&apos;</source>
+        <translation type="obsolete">無效的電子郵件位址：「%1」</translation>
     </message>
     <message>
         <source>Invalid reference in &amp;lt;embed&amp;gt; tag. Note that &lt;embed&gt; tag supports only &apos;eznode&apos; and &apos;ezobject&apos; protocols.</source>
-        <translation>&amp;lt;內嵌 &amp;gt;標記中的無效參考。要注意的是，&lt;embed&gt; 標記只支援「eznode」和「ezobject」協定。</translation>
+        <translation type="unfinished">&amp;lt;內嵌 &amp;gt;標記中的無效參考。要注意的是，&lt;embed&gt; 標記只支援「eznode」和「ezobject」協定。</translation>
     </message>
     <message>
         <source>The ISBN number is not correct. </source>
-        <translation>ISBN 數字不正確。</translation>
+        <translation type="unfinished">ISBN 數字不正確。</translation>
     </message>
     <message>
         <source>13 digit ISBN must start with 978 or 979</source>
-        <translation>13 位數的 ISBN 必須以 978 或 979 開始</translation>
+        <translation type="unfinished">13 位數的 ISBN 必須以 978 或 979 開始</translation>
     </message>
     <message>
         <source>ISBN length is invalid</source>
-        <translation>無效的 ISBN 長度</translation>
+        <translation type="unfinished">無效的 ISBN 長度</translation>
+    </message>
+    <message>
+        <source>X not valid in ISBN 13</source>
+        <translation type="obsolete">X 在 ISBN 13 中無效</translation>
+    </message>
+    <message>
+        <source>Bad checksum</source>
+        <translation type="obsolete">不當的總和檢查</translation>
     </message>
     <message>
         <source>Email</source>
@@ -25110,6 +29016,11 @@ your account.</source>
     </message>
     <message>
         <source>Input required</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The password cannot be empty.</source>
+        <comment>eZUserType</comment>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -25205,190 +29116,202 @@ your account.</source>
     <name>kernel/collaboration</name>
     <message>
         <source>Collaboration custom action</source>
-        <translation>合作自訂的行動</translation>
+        <translation type="unfinished">合作自訂的行動</translation>
     </message>
     <message>
         <source>Collaboration</source>
-        <translation>合作</translation>
+        <translation type="unfinished">合作</translation>
     </message>
 </context>
 <context>
     <name>kernel/content</name>
     <message>
         <source>Remove object</source>
-        <translation>刪除物件</translation>
+        <translation type="unfinished">刪除物件</translation>
     </message>
     <message>
         <source>My drafts</source>
-        <translation>我的草稿</translation>
+        <translation type="unfinished">我的草稿</translation>
     </message>
     <message>
         <source>Translation</source>
-        <translation>翻譯</translation>
+        <translation type="unfinished">翻譯</translation>
     </message>
     <message>
         <source>Content translations</source>
-        <translation>内容翻譯</translation>
+        <translation type="unfinished">内容翻譯</translation>
     </message>
     <message>
         <source>Trash</source>
-        <translation>垃圾桶</translation>
+        <translation type="unfinished">垃圾桶</translation>
     </message>
     <message>
         <source>Search</source>
-        <translation>搜尋</translation>
+        <translation type="unfinished">搜尋</translation>
     </message>
     <message>
         <source>Advanced</source>
-        <translation>進階</translation>
+        <translation type="unfinished">進階</translation>
     </message>
     <message>
         <source>Content</source>
-        <translation>内容</translation>
+        <translation type="unfinished">内容</translation>
     </message>
     <message>
         <source>Edit</source>
-        <translation>編輯</translation>
+        <translation type="unfinished">編輯</translation>
     </message>
     <message>
         <source>Copy</source>
-        <translation>複製</translation>
+        <translation type="unfinished">複製</translation>
     </message>
     <message>
         <source>Remove editing version</source>
-        <translation>刪除正在編輯的版本</translation>
+        <translation type="unfinished">刪除正在編輯的版本</translation>
     </message>
     <message>
         <source>Versions</source>
-        <translation>版本</translation>
+        <translation type="unfinished">版本</translation>
     </message>
     <message>
         <source>No main node selected, please select one.</source>
-        <translation>沒選擇主節點，請選擇一個。</translation>
+        <translation type="unfinished">沒選擇主節點，請選擇一個。</translation>
     </message>
     <message>
         <source>Tip from %1: %2</source>
-        <translation>秘訣來自 %1：%2</translation>
+        <translation type="unfinished">秘訣來自 %1：%2</translation>
     </message>
     <message>
         <source>The email address of the sender is not valid</source>
-        <translation>寄信者的電子郵件地址無效</translation>
+        <translation type="unfinished">寄信者的電子郵件地址無效</translation>
     </message>
     <message>
         <source>The email address of the receiver is not valid</source>
-        <translation>收件者的電子郵件地址無效</translation>
+        <translation type="unfinished">收件者的電子郵件地址無效</translation>
     </message>
     <message>
         <source>Tip a friend</source>
-        <translation>告知朋友</translation>
+        <translation type="unfinished">告知朋友</translation>
     </message>
     <message>
         <source>My bookmarks</source>
-        <translation>我的書籤</translation>
+        <translation type="unfinished">我的書籤</translation>
     </message>
     <message>
         <source>My pending list</source>
-        <translation>我的未發表清單</translation>
+        <translation type="unfinished">我的未發表清單</translation>
+    </message>
+    <message>
+        <source>URL translator</source>
+        <translation type="obsolete">URL 翻譯者</translation>
     </message>
     <message>
         <source>Keywords</source>
-        <translation>關鍵字</translation>
+        <translation type="unfinished">關鍵字</translation>
     </message>
     <message>
         <source>Media</source>
-        <translation>媒體</translation>
+        <translation type="unfinished">媒體</translation>
     </message>
     <message>
         <source>New content</source>
-        <translation>新增內容</translation>
+        <translation type="unfinished">新增內容</translation>
     </message>
     <message>
         <source>Remove location</source>
-        <translation>刪除位置</translation>
+        <translation type="unfinished">刪除位置</translation>
     </message>
     <message>
         <source>You are not allowed to place this object under: %1</source>
-        <translation>你不被允許放置此物件於 %1 之下</translation>
+        <translation type="unfinished">你不被允許放置此物件於 %1 之下</translation>
     </message>
     <message>
         <source>Top Level Nodes</source>
-        <translation>頂層節點</translation>
+        <translation type="unfinished">頂層節點</translation>
     </message>
     <message>
         <source>Hidden</source>
-        <translation>隱藏</translation>
+        <translation type="unfinished">隱藏</translation>
     </message>
     <message>
         <source>Hidden by superior</source>
-        <translation>由上層隱藏</translation>
+        <translation type="unfinished">由上層隱藏</translation>
     </message>
     <message>
         <source>Visible</source>
-        <translation>可見的</translation>
+        <translation type="unfinished">可見的</translation>
+    </message>
+    <message>
+        <source>Copy Subtree</source>
+        <translation type="obsolete">複製子樹</translation>
+    </message>
+    <message>
+        <source>The receiver has already received the maximimum number of tipafriend mails the last hours</source>
+        <translation type="obsolete">收件者在前幾個小時已經收到最大數量的告知朋友郵件</translation>
     </message>
     <message>
         <source>A node in the node assignment list has been deleted.</source>
-        <translation>已刪除在節點指派清單中的節點。</translation>
+        <translation type="unfinished">已刪除在節點指派清單中的節點。</translation>
     </message>
     <message>
         <source>&quot;$contentObjectName&quot;: Sub items that are used by other objects</source>
-        <translation>「$contentObjectName」：由其他物件所使用的子項目</translation>
+        <translation type="unfinished">「$contentObjectName」：由其他物件所使用的子項目</translation>
     </message>
     <message>
         <source>Differences</source>
-        <translation>差異</translation>
+        <translation type="unfinished">差異</translation>
     </message>
     <message>
         <source>Remove translation</source>
-        <translation>刪除翻譯</translation>
+        <translation type="unfinished">刪除翻譯</translation>
     </message>
     <message>
         <source>Languages</source>
-        <translation>語言</translation>
+        <translation type="unfinished">語言</translation>
     </message>
     <message>
         <source>Class identifier</source>
-        <translation>類別識別項</translation>
+        <translation type="unfinished">類別識別項</translation>
     </message>
     <message>
         <source>Class name</source>
-        <translation>類別名稱</translation>
+        <translation type="unfinished">類別名稱</translation>
     </message>
     <message>
         <source>Depth</source>
-        <translation>深度</translation>
+        <translation type="unfinished">深度</translation>
     </message>
     <message>
         <source>Modified</source>
-        <translation>已修改</translation>
+        <translation type="unfinished">已修改</translation>
     </message>
     <message>
         <source>Name</source>
-        <translation>名稱</translation>
+        <translation type="unfinished">名稱</translation>
     </message>
     <message>
         <source>Path String</source>
-        <translation>路徑字串</translation>
+        <translation type="unfinished">路徑字串</translation>
     </message>
     <message>
         <source>Priority</source>
-        <translation>優先權</translation>
+        <translation type="unfinished">優先權</translation>
     </message>
     <message>
         <source>Published</source>
-        <translation>已發表</translation>
+        <translation type="unfinished">已發表</translation>
     </message>
     <message>
         <source>Section</source>
-        <translation>區段</translation>
+        <translation type="unfinished">區段</translation>
     </message>
     <message>
         <source>History</source>
-        <translation>歷史記錄</translation>
+        <translation type="unfinished">歷史記錄</translation>
     </message>
     <message>
         <source>Version preview</source>
-        <translation>版本預覽</translation>
+        <translation type="unfinished">版本預覽</translation>
     </message>
     <message>
         <source>Copy subtree</source>
@@ -25411,6 +29334,10 @@ your account.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Dashboard</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>You have already sent a tipafriend mail to this reciver regarding &apos;$nodeName&apos; content</source>
         <translation type="unfinished"></translation>
     </message>
@@ -25418,40 +29345,64 @@ your account.</source>
 <context>
     <name>kernel/content/copysubtree</name>
     <message>
+        <source>Object (ID = %1) was not copied: you don&apos;t have permissions to read object.</source>
+        <translation type="obsolete">並未複製物件 (ID = %1)：你沒有權限去讀取物件。</translation>
+    </message>
+    <message>
+        <source>Node (ID = %1) was not copied: you don&apos;t have permissions to read object (ID = %2).</source>
+        <translation type="obsolete">並未複製節點 (ID = %1)：你沒有權限去讀取物件 (ID = %2)。</translation>
+    </message>
+    <message>
+        <source>Node (ID = %1) wasn&apos;t copied: parent node (ID = %2) wasn&apos;t copied.</source>
+        <translation type="obsolete">並未複製節點 (ID = %1)：並未複製上層節點 (ID = %2)。</translation>
+    </message>
+    <message>
+        <source>Node (ID = %1) was not copied: you don&apos;t have permissions to create.</source>
+        <translation type="obsolete">並未複製節點 (ID = %1)：你沒有建立的權限。</translation>
+    </message>
+    <message>
+        <source>Object (ID = %1) was not copied: no one nodes of object wasn&apos;t copied.</source>
+        <translation type="obsolete">並未複製物件 (ID = %1)：並未複製物件的任何一個節點。</translation>
+    </message>
+    <message>
         <source>Cannot publish object (ID = %1).</source>
-        <translation>無法發佈物件 (ID = %1)。</translation>
+        <translation type="unfinished">無法發佈物件 (ID = %1)。</translation>
     </message>
     <message>
         <source>Fatal error: cannot get subtree main node (ID = %1).</source>
-        <translation>嚴重錯誤：無法取得子樹主要節點 (ID = %1)。</translation>
+        <translation type="unfinished">嚴重錯誤：無法取得子樹主要節點 (ID = %1)。</translation>
     </message>
     <message>
         <source>Fatal error: cannot get destination node (ID = %1).</source>
-        <translation>嚴重錯誤：無法取得目的節點 (ID = %1)。</translation>
+        <translation type="unfinished">嚴重錯誤：無法取得目的節點 (ID = %1)。</translation>
     </message>
     <message>
         <source>Number of nodes of source subtree - %1</source>
-        <translation>來源子樹的節點數量 - %1</translation>
+        <translation type="unfinished">來源子樹的節點數量 - %1</translation>
     </message>
     <message>
         <source>Subtree was not copied.</source>
-        <translation>無法複製子樹。</translation>
+        <translation type="unfinished">無法複製子樹。</translation>
     </message>
     <message>
         <source>Number of copied nodes - %1</source>
-        <translation>已複製的節點數量 - %1</translation>
+        <translation type="unfinished">已複製的節點數量 - %1</translation>
     </message>
     <message>
         <source>Number of copied contentobjects - %1</source>
-        <translation>已複製的內容物件數量 - %1</translation>
+        <translation type="unfinished">已複製的內容物件數量 - %1</translation>
     </message>
     <message>
         <source>Cannot create instance of eZDB to fix local links (related objects).</source>
-        <translation>無法建立 eZDB 的實體以修復本地鏈結 (相關的物件)。</translation>
+        <translation type="unfinished">無法建立 eZDB 的實體以修復本地鏈結 (相關的物件)。</translation>
+    </message>
+    <message>
+        <source>Successfuly DONE.</source>
+        <translation type="obsolete">成功完成。</translation>
     </message>
     <message>
         <source>You are trying to copy a subtree that contains more than the maximum possible nodes for subtree copying. You can copy this subtree using Subtree Copy script.</source>
-        <translation>你正試著複製含有超過最大可能子樹複製節點的子樹。你可以使用子樹複製命令稿以複製此子樹。</translation>
+        <translation type="unfinished">你正試著複製含有超過最大可能子樹複製節點的子樹。你可以使用子樹複製命令稿以複製此子樹。</translation>
     </message>
     <message>
         <source>Object (ID = %1) was not copied: you do not have permission to read the object.</source>
@@ -25483,98 +29434,98 @@ your account.</source>
     <message>
         <source>child</source>
         <comment>1 child</comment>
-        <translation>子節點</translation>
+        <translation type="unfinished">子節點</translation>
     </message>
     <message>
         <source>children</source>
         <comment>several children</comment>
-        <translation>子節點</translation>
+        <translation type="unfinished">子節點</translation>
     </message>
 </context>
 <context>
     <name>kernel/content/restore</name>
     <message>
         <source>Restore object</source>
-        <translation>還原物件</translation>
+        <translation type="unfinished">還原物件</translation>
     </message>
 </context>
 <context>
     <name>kernel/content/upload</name>
     <message>
         <source>The file %filename does not exist, cannot insert file.</source>
-        <translation>檔案 %filename 不存在，無法插入檔案。</translation>
+        <translation type="unfinished">檔案 %filename 不存在，無法插入檔案。</translation>
     </message>
     <message>
         <source>No matching class identifier found.</source>
-        <translation>找不到符合的類別識別項。</translation>
+        <translation type="unfinished">找不到符合的類別識別項。</translation>
     </message>
     <message>
         <source>The class %class_identifier does not exist.</source>
-        <translation>類別 %class_identifier 不存在。</translation>
+        <translation type="unfinished">類別 %class_identifier 不存在。</translation>
     </message>
     <message>
         <source>Was not able to figure out placement of object.</source>
-        <translation>無法猜測出物件的放置位址。</translation>
+        <translation type="unfinished">無法猜測出物件的放置位址。</translation>
     </message>
     <message>
         <source>No configuration group in upload.ini for class identifier %class_identifier.</source>
-        <translation>在 upload.ini 中沒有用於類別識別項 %class_identifier 的配置組別。</translation>
+        <translation type="unfinished">在 upload.ini 中沒有用於類別識別項 %class_identifier 的配置組別。</translation>
     </message>
     <message>
         <source>No matching file attribute found, cannot create content object without this.</source>
-        <translation>找不到符合的檔案屬性，無法沒有它而去建立內容物件。</translation>
+        <translation type="unfinished">找不到符合的檔案屬性，無法沒有它而去建立內容物件。</translation>
     </message>
     <message>
         <source>No matching name attribute found, cannot create content object without this.</source>
-        <translation>找不到符合的名稱屬性，無法沒有它而去建立內容物件。</translation>
+        <translation type="unfinished">找不到符合的名稱屬性，無法沒有它而去建立內容物件。</translation>
     </message>
     <message>
         <source>The attribute %class_identifier does not support regular file storage.</source>
-        <translation>屬性 %class_identifier 不支援標準檔案儲存體。</translation>
+        <translation type="unfinished">屬性 %class_identifier 不支援標準檔案儲存體。</translation>
     </message>
     <message>
         <source>The attribute %class_identifier does not support simple string storage.</source>
-        <translation>屬性 %class_identifier 不支援簡單字串儲存體。</translation>
+        <translation type="unfinished">屬性 %class_identifier 不支援簡單字串儲存體。</translation>
     </message>
     <message>
         <source>The attribute %class_identifier does not support HTTP file storage.</source>
-        <translation>屬性 %class_identifier 不支援 HTTP 檔案儲存體。</translation>
+        <translation type="unfinished">屬性 %class_identifier 不支援 HTTP 檔案儲存體。</translation>
     </message>
     <message>
         <source>Publishing of content object was halted.</source>
-        <translation>已終止內容物件的發佈。</translation>
+        <translation type="unfinished">已終止內容物件的發佈。</translation>
     </message>
     <message>
         <source>Publish process was cancelled.</source>
-        <translation>已取消發佈程序。</translation>
+        <translation type="unfinished">已取消發佈程序。</translation>
     </message>
     <message>
         <source>A file is required for upload, no file were found.</source>
-        <translation>需要一個檔案以供上傳，但找不到任何檔案。</translation>
+        <translation type="unfinished">需要一個檔案以供上傳，但找不到任何檔案。</translation>
     </message>
     <message>
         <source>Expected a eZHTTPFile object but got nothing.</source>
-        <translation>預期會有 eZHTTPFile 物件，但是沒有得到任何東西。</translation>
+        <translation type="unfinished">預期會有 eZHTTPFile 物件，但是沒有得到任何東西。</translation>
     </message>
     <message>
         <source>No HTTP file found, cannot fetch uploaded file.</source>
-        <translation>找不到任何 HTTP 檔案，無法擷取上傳的檔案。</translation>
+        <translation type="unfinished">找不到任何 HTTP 檔案，無法擷取上傳的檔案。</translation>
     </message>
     <message>
         <source>Permission denied</source>
-        <translation>權限被拒</translation>
+        <translation type="unfinished">權限被拒</translation>
     </message>
     <message>
         <source>There was an error trying to instantiate content upload handler.</source>
-        <translation>試著引發一個內容上傳處理常式時出現了錯誤。</translation>
+        <translation type="unfinished">試著引發一個內容上傳處理常式時出現了錯誤。</translation>
     </message>
     <message>
         <source>Could not find content upload handler &apos;%handler_name&apos;</source>
-        <translation>找不到內容上傳處理常式「%handler_name」</translation>
+        <translation type="unfinished">找不到內容上傳處理常式「%handler_name」</translation>
     </message>
     <message>
         <source>The size of the uploaded file exceeds the limit set for this site: %1 bytes.</source>
-        <translation>上傳檔案的大小超出此站台所設定的限制：%1 位元組。</translation>
+        <translation type="unfinished">上傳檔案的大小超出此站台所設定的限制：%1 位元組。</translation>
     </message>
 </context>
 <context>
@@ -25595,67 +29546,74 @@ your account.</source>
     <name>kernel/contentclass</name>
     <message>
         <source>New %1</source>
-        <translation>新 %1</translation>
+        <translation type="unfinished">新 %1</translation>
     </message>
     <message>
         <source>Cannot remove class &apos;%class_name&apos;:</source>
-        <translation>無法刪除類別「%class_name」：</translation>
+        <translation type="unfinished">無法刪除類別「%class_name」：</translation>
     </message>
     <message>
         <source>The class is used by a top-level node and cannot be removed.</source>
-        <translation>類別由頂層節點所使用因而無法刪除。</translation>
+        <translation type="unfinished">類別由頂層節點所使用因而無法刪除。</translation>
     </message>
 </context>
 <context>
     <name>kernel/design</name>
     <message>
         <source>Template list</source>
-        <translation>範本清單</translation>
+        <translation type="unfinished">範本清單</translation>
     </message>
     <message>
         <source>Template view</source>
-        <translation>範本檢視</translation>
+        <translation type="unfinished">範本檢視</translation>
     </message>
     <message>
         <source>Create new template</source>
-        <translation>建立新的範本</translation>
+        <translation type="unfinished">建立新的範本</translation>
     </message>
     <message>
         <source>Template edit</source>
-        <translation>範本編輯</translation>
+        <translation type="unfinished">範本編輯</translation>
     </message>
     <message>
         <source>Toolbar list</source>
-        <translation>工具列清單</translation>
+        <translation type="unfinished">工具列清單</translation>
     </message>
 </context>
 <context>
     <name>kernel/error</name>
     <message>
         <source>Error</source>
-        <translation>錯誤</translation>
+        <translation type="unfinished">錯誤</translation>
     </message>
 </context>
 <context>
     <name>kernel/ezinfo</name>
     <message>
         <source>Info</source>
-        <translation>資訊</translation>
+        <translation type="unfinished">資訊</translation>
     </message>
     <message>
         <source>About</source>
-        <translation>關於</translation>
+        <translation type="unfinished">關於</translation>
     </message>
     <message>
         <source>Copyright</source>
-        <translation>版權</translation>
+        <translation type="unfinished">版權</translation>
+    </message>
+</context>
+<context>
+    <name>kernel/form</name>
+    <message>
+        <source>Form processing</source>
+        <translation type="obsolete">表單處理</translation>
     </message>
 </context>
 <context>
     <name>kernel/infocollector</name>
     <message>
         <source>Collected information</source>
-        <translation>收集的資訊</translation>
+        <translation type="unfinished">收集的資訊</translation>
     </message>
 </context>
 <context>
@@ -25663,323 +29621,355 @@ your account.</source>
     <message>
         <source>Content structure</source>
         <comment>Navigation part</comment>
-        <translation>內容結構</translation>
+        <translation type="unfinished">內容結構</translation>
     </message>
     <message>
         <source>Media library</source>
         <comment>Navigation part</comment>
-        <translation>媒體功能庫</translation>
+        <translation type="unfinished">媒體功能庫</translation>
     </message>
     <message>
         <source>User accounts</source>
         <comment>Navigation part</comment>
-        <translation>請使用者帳號</translation>
+        <translation type="unfinished">請使用者帳號</translation>
     </message>
     <message>
         <source>Webshop</source>
         <comment>Navigation part</comment>
-        <translation>網路商店</translation>
+        <translation type="unfinished">網路商店</translation>
     </message>
     <message>
         <source>Design</source>
         <comment>Navigation part</comment>
-        <translation>設計</translation>
+        <translation type="unfinished">設計</translation>
     </message>
     <message>
         <source>Setup</source>
         <comment>Navigation part</comment>
-        <translation>設定</translation>
+        <translation type="unfinished">設定</translation>
     </message>
     <message>
         <source>My account</source>
         <comment>Navigation part</comment>
-        <translation>我的帳號</translation>
+        <translation type="unfinished">我的帳號</translation>
     </message>
 </context>
 <context>
     <name>kernel/notification</name>
     <message>
         <source>Notification settings</source>
-        <translation>通知設定值</translation>
+        <translation type="unfinished">通知設定值</translation>
     </message>
 </context>
 <context>
     <name>kernel/package</name>
     <message>
         <source>Packages</source>
-        <translation>套件</translation>
+        <translation type="unfinished">套件</translation>
     </message>
     <message>
         <source>Upload</source>
-        <translation>上傳</translation>
+        <translation type="unfinished">上傳</translation>
     </message>
     <message>
         <source>Package information</source>
-        <translation>套件資訊</translation>
+        <translation type="unfinished">套件資訊</translation>
     </message>
     <message>
         <source>Package maintainer</source>
-        <translation>套件維護者</translation>
+        <translation type="unfinished">套件維護者</translation>
     </message>
     <message>
         <source>Package changelog</source>
-        <translation>套件變更記錄</translation>
+        <translation type="unfinished">套件變更記錄</translation>
     </message>
     <message>
         <source>Package thumbnail</source>
-        <translation>套件縮圖</translation>
+        <translation type="unfinished">套件縮圖</translation>
     </message>
     <message>
         <source>Package name</source>
-        <translation>套件名稱</translation>
+        <translation type="unfinished">套件名稱</translation>
     </message>
     <message>
         <source>Package name is missing</source>
-        <translation>缺少套件名稱</translation>
+        <translation type="unfinished">缺少套件名稱</translation>
     </message>
     <message>
         <source>A package named %packagename already exists, please give another name</source>
-        <translation>名為 %packagename 的套件已經存在，請提供另外的名稱</translation>
+        <translation type="unfinished">名為 %packagename 的套件已經存在，請提供另外的名稱</translation>
     </message>
     <message>
         <source>Summary</source>
-        <translation>概要</translation>
+        <translation type="unfinished">概要</translation>
     </message>
     <message>
         <source>Summary is missing</source>
-        <translation>缺少概要</translation>
+        <translation type="unfinished">缺少概要</translation>
     </message>
     <message>
         <source>Version</source>
-        <translation>版本</translation>
+        <translation type="unfinished">版本</translation>
     </message>
     <message>
         <source>Name</source>
-        <translation>名稱</translation>
+        <translation type="unfinished">名稱</translation>
     </message>
     <message>
         <source>You must enter a name for the changelog</source>
-        <translation>你必須輸入用於變更記錄的名稱</translation>
+        <translation type="unfinished">你必須輸入用於變更記錄的名稱</translation>
+    </message>
+    <message>
+        <source>E-Mail</source>
+        <translation type="obsolete">電子郵件</translation>
+    </message>
+    <message>
+        <source>You must enter an e-mail for the changelog</source>
+        <translation type="obsolete">你必須輸入用於變更記錄的電子郵件</translation>
     </message>
     <message>
         <source>Changelog</source>
-        <translation>變更記錄</translation>
+        <translation type="unfinished">變更記錄</translation>
     </message>
     <message>
         <source>You must supply some text for the changelog entry</source>
-        <translation>你必須供應一些做為變更記錄內容的文字</translation>
+        <translation type="unfinished">你必須供應一些做為變更記錄內容的文字</translation>
     </message>
     <message>
         <source>You must enter a name of the maintainer</source>
-        <translation>你必須輸入維護者的名稱</translation>
+        <translation type="unfinished">你必須輸入維護者的名稱</translation>
+    </message>
+    <message>
+        <source>You must enter an e-mail address of the maintainer</source>
+        <translation type="obsolete">你必須輸入維護者的電子郵件位址</translation>
     </message>
     <message>
         <source>Content classes to include</source>
-        <translation>要包含的內容類別</translation>
+        <translation type="unfinished">要包含的內容類別</translation>
     </message>
     <message>
         <source>Content class export</source>
-        <translation>內容類別匯出</translation>
+        <translation type="unfinished">內容類別匯出</translation>
     </message>
     <message>
         <source>Class list</source>
-        <translation>類別清單</translation>
+        <translation type="unfinished">類別清單</translation>
     </message>
     <message>
         <source>You must select at least one class for inclusion</source>
-        <translation>你必須選取至少一個用於包含的類別</translation>
+        <translation type="unfinished">你必須選取至少一個用於包含的類別</translation>
     </message>
     <message>
         <source>CSS file</source>
-        <translation>CSS 檔案</translation>
+        <translation type="unfinished">CSS 檔案</translation>
     </message>
     <message>
         <source>Image files</source>
-        <translation>圖像檔</translation>
+        <translation type="unfinished">圖像檔</translation>
     </message>
     <message>
         <source>Site style</source>
-        <translation>站台樣式</translation>
+        <translation type="unfinished">站台樣式</translation>
     </message>
     <message>
         <source>File did not have a .css suffix, this is most likely not a CSS file</source>
-        <translation>檔案並沒有 .css 字尾，這很有可能不是一個 CSS 檔案</translation>
+        <translation type="unfinished">檔案並沒有 .css 字尾，這很有可能不是一個 CSS 檔案</translation>
+    </message>
+    <message>
+        <source>Content class %classname (%classidentifier)</source>
+        <translation type="obsolete">內容類別 %classname (%classidentifier)</translation>
     </message>
     <message>
         <source>Create package</source>
-        <translation>建立套件</translation>
+        <translation type="unfinished">建立套件</translation>
     </message>
     <message>
         <source>Install</source>
-        <translation>安裝</translation>
+        <translation type="unfinished">安裝</translation>
     </message>
     <message>
         <source>Uninstall</source>
-        <translation>解除安裝</translation>
+        <translation type="unfinished">解除安裝</translation>
     </message>
     <message>
         <source>Package %packagename already exists, cannot import the package</source>
-        <translation>套件 %packagename 已經存在，無法匯入套件</translation>
+        <translation type="unfinished">套件 %packagename 已經存在，無法匯入套件</translation>
     </message>
     <message>
         <source>Local</source>
-        <translation>本地</translation>
+        <translation type="unfinished">本地</translation>
     </message>
     <message>
         <source>The version must only contain numbers (optionally followed by text) and must be delimited by dots (.), e.g. 1.0, 3.4.0beta1</source>
-        <translation>版本編號必須只包含數字 (之後可接文字)，而且必須由點 (.) 所分隔，例如：1.0、3.4.0beta1</translation>
+        <translation type="unfinished">版本編號必須只包含數字 (之後可接文字)，而且必須由點 (.) 所分隔，例如：1.0、3.4.0beta1</translation>
     </message>
     <message>
         <source>Content objects to include</source>
-        <translation>要包含的內容物件</translation>
+        <translation type="unfinished">要包含的內容物件</translation>
     </message>
     <message>
         <source>Content object limits</source>
-        <translation>內容物件限制</translation>
+        <translation type="unfinished">內容物件限制</translation>
     </message>
     <message>
         <source>Content object export</source>
-        <translation>內容物件匯出</translation>
+        <translation type="unfinished">內容物件匯出</translation>
     </message>
     <message>
         <source>Selected nodes</source>
-        <translation>所選節點</translation>
+        <translation type="unfinished">所選節點</translation>
     </message>
     <message>
         <source>You must select one or more node(s)/subtree(s) for export.</source>
-        <translation>你必須選取一個或更多節點/子樹用於匯出。</translation>
+        <translation type="unfinished">你必須選取一個或更多節點/子樹用於匯出。</translation>
     </message>
     <message>
         <source>You must choose one or more languages.</source>
-        <translation>你必須選取一個或更多語言。</translation>
+        <translation type="unfinished">你必須選取一個或更多語言。</translation>
     </message>
     <message>
         <source>You must choose one or more site access.</source>
-        <translation>你必須選取一個或更多站台存取。</translation>
+        <translation type="unfinished">你必須選取一個或更多站台存取。</translation>
     </message>
     <message>
         <source>CSS files</source>
-        <translation>CSS 檔案</translation>
+        <translation type="unfinished">CSS 檔案</translation>
     </message>
     <message>
         <source>You must upload both CSS files</source>
-        <translation>你必須上傳兩個 CSS 檔案</translation>
+        <translation type="unfinished">你必須上傳兩個 CSS 檔案</translation>
     </message>
     <message>
         <source>Content object %objectname</source>
-        <translation>內容物件 %objectname</translation>
+        <translation type="unfinished">內容物件 %objectname</translation>
     </message>
     <message>
         <source>Site access mapping</source>
-        <translation>站台存取對映</translation>
+        <translation type="unfinished">站台存取對映</translation>
     </message>
     <message>
         <source>Top node placements</source>
-        <translation>頂節點放置位址</translation>
+        <translation type="unfinished">頂節點放置位址</translation>
     </message>
     <message>
         <source>Content object import</source>
-        <translation>內容物件匯入</translation>
+        <translation type="unfinished">內容物件匯入</translation>
     </message>
     <message>
         <source>Select parent nodes</source>
-        <translation>請選取上層節點</translation>
+        <translation type="unfinished">請選取上層節點</translation>
     </message>
     <message>
         <source>You must assign all nodes to new parent nodes.</source>
-        <translation>你必須指派所有節點到新的上層節點。</translation>
+        <translation type="unfinished">你必須指派所有節點到新的上層節點。</translation>
     </message>
     <message>
         <source>Lead</source>
-        <translation>計畫主持</translation>
+        <translation type="unfinished">計畫主持</translation>
     </message>
     <message>
         <source>Developer</source>
-        <translation>開發人員</translation>
+        <translation type="unfinished">開發人員</translation>
     </message>
     <message>
         <source>Designer</source>
-        <translation>設計者</translation>
+        <translation type="unfinished">設計者</translation>
     </message>
     <message>
         <source>Contributor</source>
-        <translation>貢獻者</translation>
+        <translation type="unfinished">貢獻者</translation>
     </message>
     <message>
         <source>Tester</source>
-        <translation>測試者</translation>
+        <translation type="unfinished">測試者</translation>
     </message>
     <message>
         <source>The package name %packagename is not valid, it can only contain characters in the range a-z, 0-9 and underscore.</source>
-        <translation>套件名稱 %packagename 無效，它只能包含在範圍 a-z、0-9 和底線中的字元。</translation>
+        <translation type="unfinished">套件名稱 %packagename 無效，它只能包含在範圍 a-z、0-9 和底線中的字元。</translation>
+    </message>
+    <message>
+        <source>Select an extension to be exported</source>
+        <translation type="obsolete">請選取要匯出的擴充功能</translation>
     </message>
     <message>
         <source>Extension export</source>
-        <translation>擴充功能匯出</translation>
+        <translation type="unfinished">擴充功能匯出</translation>
+    </message>
+    <message>
+        <source>Extension:</source>
+        <translation type="obsolete">擴充功能：</translation>
+    </message>
+    <message>
+        <source>You must select an extension</source>
+        <translation type="obsolete">你必須選取擴充功能</translation>
     </message>
     <message>
         <source>%number content objects</source>
-        <translation>%number 內容物件</translation>
+        <translation type="unfinished">%number 內容物件</translation>
     </message>
     <message>
         <source>Extension &apos;%extensionname&apos;</source>
-        <translation>擴充功能「%extensionname」</translation>
+        <translation type="unfinished">擴充功能「%extensionname」</translation>
     </message>
     <message>
         <source>Removing class &apos;%classname&apos; will result in the removal of %objectscount object(s) of this class and all their sub-items. Are you sure you want to uninstall it?</source>
-        <translation>刪除類別「%classname」將導致類別中 %objectscount 個物件和它們所有子項目的刪除。確認要將它解除安裝？</translation>
+        <translation type="unfinished">刪除類別「%classname」將導致類別中 %objectscount 個物件和它們所有子項目的刪除。確認要將它解除安裝？</translation>
     </message>
     <message>
         <source>Class &apos;%classname&apos; already exists.</source>
-        <translation>類別「%classname」已經存在。</translation>
+        <translation type="unfinished">類別「%classname」已經存在。</translation>
     </message>
     <message>
         <source>Replace existing class</source>
-        <translation>置換現有類別</translation>
+        <translation type="unfinished">置換現有類別</translation>
     </message>
     <message>
         <source>(Warning! $objectsCount content object(s) and their sub-items will be removed)</source>
-        <translation>(警告！$objectsCount 個內容物件和它們的子項目將被刪除)</translation>
+        <translation type="unfinished">(警告！$objectsCount 個內容物件和它們的子項目將被刪除)</translation>
     </message>
     <message>
         <source>Skip installing this class</source>
-        <translation>跳過此類別的安裝</translation>
+        <translation type="unfinished">跳過此類別的安裝</translation>
     </message>
     <message>
         <source>Keep existing and create a new one</source>
-        <translation>保留現有的並建立一個新的</translation>
+        <translation type="unfinished">保留現有的並建立一個新的</translation>
     </message>
     <message>
         <source>Object &apos;%objectname&apos; has been modified since installation. Are you sure you want to remove it?</source>
-        <translation>物件「%objectname」於安裝後已被修改。確認要刪除它？</translation>
+        <translation type="unfinished">物件「%objectname」於安裝後已被修改。確認要刪除它？</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation>刪除</translation>
+        <translation type="unfinished">刪除</translation>
     </message>
     <message>
         <source>Keep object</source>
-        <translation>保持物件</translation>
+        <translation type="unfinished">保持物件</translation>
     </message>
     <message>
         <source>Object &apos;%objectname&apos; has %childrencount sub-item(s) that will be removed.</source>
-        <translation>物件「%objectname」的 %childrencount 個子項目該將被刪除。</translation>
+        <translation type="unfinished">物件「%objectname」的 %childrencount 個子項目該將被刪除。</translation>
+    </message>
+    <message>
+        <source>Remove object and it&apos;s sub-item(s)</source>
+        <translation type="obsolete">刪除物件和它的子項目</translation>
     </message>
     <message>
         <source>Extension &apos;%extensionname&apos; already exists.</source>
-        <translation>擴充功能「%extensionname」已經存在。</translation>
+        <translation type="unfinished">擴充功能「%extensionname」已經存在。</translation>
     </message>
     <message>
         <source>Replace extension</source>
-        <translation>置換擴充功能</translation>
+        <translation type="unfinished">置換擴充功能</translation>
     </message>
     <message>
         <source>Skip</source>
-        <translation>跳過</translation>
+        <translation type="unfinished">跳過</translation>
     </message>
     <message>
         <source>Install script: %description</source>
-        <translation>安裝命令稿：%description</translation>
+        <translation type="unfinished">安裝命令稿：%description</translation>
     </message>
     <message>
         <source>Content class &apos;%classname&apos; (%classidentifier)</source>
@@ -26002,18 +29992,6 @@ your account.</source>
         <translation type="unfinished">刪除物件和它的子項目</translation>
     </message>
     <message>
-        <source>Advanced options</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Package contains an invalid extension name: %extensionname</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>The package name %packagename is invalid, cannot import the package</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Extensions to include</source>
         <translation type="unfinished"></translation>
     </message>
@@ -26025,80 +30003,99 @@ your account.</source>
         <source>You must select at least one extension</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Package contains an invalid extension name: %extensionname</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Advanced options</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The package name %packagename is invalid, cannot import the package</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>kernel/pdf</name>
     <message>
         <source>PDF Export</source>
-        <translation>PDF 匯出</translation>
+        <translation type="unfinished">PDF 匯出</translation>
     </message>
     <message>
         <source>An export with such filename already exists.</source>
-        <translation>具有相同檔案名稱的匯出已經存在。</translation>
+        <translation type="unfinished">具有相同檔案名稱的匯出已經存在。</translation>
     </message>
 </context>
 <context>
     <name>kernel/pdfexport</name>
     <message>
         <source>New PDF Export</source>
-        <translation>新增 PDF 匯出</translation>
+        <translation type="unfinished">新增 PDF 匯出</translation>
+    </message>
+</context>
+<context>
+    <name>kernel/reference</name>
+    <message>
+        <source>Reference documentation</source>
+        <translation type="obsolete">參考文獻</translation>
     </message>
 </context>
 <context>
     <name>kernel/role</name>
     <message>
         <source>Role list</source>
-        <translation>角色清單</translation>
+        <translation type="unfinished">角色清單</translation>
     </message>
     <message>
         <source>Editing policy</source>
-        <translation>編輯規則</translation>
+        <translation type="unfinished">編輯規則</translation>
     </message>
     <message>
         <source>Limit on section</source>
-        <translation>限制於區段</translation>
+        <translation type="unfinished">限制於區段</translation>
     </message>
     <message>
         <source>Create new policy, step 2: select function</source>
-        <translation>建立新的策略，步驟二：選取功能</translation>
+        <translation type="unfinished">建立新的策略，步驟二：選取功能</translation>
     </message>
     <message>
         <source>Create new policy, step three: set function limitations</source>
-        <translation>建立新的策略，步驟三：設定功能限制</translation>
+        <translation type="unfinished">建立新的策略，步驟三：設定功能限制</translation>
     </message>
     <message>
         <source>Create new policy, step two: select function</source>
-        <translation>建立新的策略，步驟二：選取功能</translation>
+        <translation type="unfinished">建立新的策略，步驟二：選取功能</translation>
     </message>
     <message>
         <source>Create new policy, step one: select module</source>
-        <translation>建立新的策略，步驟一：選取模組</translation>
+        <translation type="unfinished">建立新的策略，步驟一：選取模組</translation>
     </message>
 </context>
 <context>
     <name>kernel/role/edit</name>
     <message>
         <source>New role</source>
-        <translation>新增角色</translation>
+        <translation type="unfinished">新增角色</translation>
     </message>
     <message>
         <source>Copy of %rolename</source>
-        <translation>%rolename 的複本</translation>
+        <translation type="unfinished">%rolename 的複本</translation>
     </message>
 </context>
 <context>
     <name>kernel/rss</name>
     <message>
         <source>Really Simple Syndication</source>
-        <translation>真正簡單的聯合組織化</translation>
+        <translation type="unfinished">真正簡單的聯合組織化</translation>
     </message>
     <message>
         <source>New RSS Export</source>
-        <translation>新增 RSS 匯出</translation>
+        <translation type="unfinished">新增 RSS 匯出</translation>
     </message>
     <message>
         <source>New RSS Import</source>
-        <translation>新增 RSS 匯入</translation>
+        <translation type="unfinished">新增 RSS 匯入</translation>
     </message>
 </context>
 <context>
@@ -26124,26 +30121,26 @@ your account.</source>
     <name>kernel/search</name>
     <message>
         <source>Search stats</source>
-        <translation>搜尋統計結果</translation>
+        <translation type="unfinished">搜尋統計結果</translation>
     </message>
 </context>
 <context>
     <name>kernel/section</name>
     <message>
         <source>Edit Section</source>
-        <translation>編輯區段</translation>
+        <translation type="obsolete">編輯區段</translation>
     </message>
     <message>
         <source>Sections</source>
-        <translation>區段</translation>
+        <translation type="unfinished">區段</translation>
     </message>
     <message>
         <source>View section</source>
-        <translation>檢視區段</translation>
+        <translation type="obsolete">檢視區段</translation>
     </message>
     <message>
         <source>New section</source>
-        <translation>新增區段</translation>
+        <translation type="unfinished">新增區段</translation>
     </message>
     <message>
         <source>Assign section</source>
@@ -26154,250 +30151,250 @@ your account.</source>
     <name>kernel/setup</name>
     <message>
         <source>Cache admin</source>
-        <translation>快取管理</translation>
+        <translation type="unfinished">快取管理</translation>
     </message>
     <message>
         <source>Template operator wizard</source>
-        <translation>範本操作者精靈</translation>
+        <translation type="unfinished">範本操作者精靈</translation>
     </message>
     <message>
         <source>Extension configuration</source>
-        <translation>擴充功能配置</translation>
+        <translation type="unfinished">擴充功能配置</translation>
     </message>
     <message>
         <source>System information</source>
-        <translation>系統資訊</translation>
+        <translation type="unfinished">系統資訊</translation>
     </message>
     <message>
         <source>Rapid Application Development</source>
-        <translation>快速程式開發</translation>
+        <translation type="unfinished">快速程式開發</translation>
     </message>
     <message>
         <source>Setup menu</source>
-        <translation>設定功能表</translation>
+        <translation type="unfinished">設定功能表</translation>
     </message>
     <message>
         <source>System Upgrade</source>
-        <translation>系統升級</translation>
+        <translation type="unfinished">系統升級</translation>
     </message>
     <message>
         <source>Session admin</source>
-        <translation>執行階段管理</translation>
+        <translation type="unfinished">執行階段管理</translation>
     </message>
     <message>
         <source>File %1 does not exist. You should copy it from the recent eZ Publish distribution.</source>
-        <translation>檔案 %1 不存在。你應該從最近的 eZ publish 發行版來複製它。</translation>
+        <translation type="unfinished">檔案 %1 不存在。你應該從最近的 eZ publish 發行版來複製它。</translation>
     </message>
     <message>
         <source>Datatype wizard</source>
-        <translation>資料類型精靈</translation>
+        <translation type="unfinished">資料類型精靈</translation>
     </message>
 </context>
 <context>
     <name>kernel/shop</name>
     <message>
         <source>Basket</source>
-        <translation>購物籃</translation>
+        <translation type="unfinished">購物籃</translation>
     </message>
     <message>
         <source>Confirm order</source>
-        <translation>確認訂單</translation>
+        <translation type="unfinished">確認訂單</translation>
     </message>
     <message>
         <source>Discount group</source>
-        <translation>折扣組別</translation>
+        <translation type="unfinished">折扣組別</translation>
     </message>
     <message>
         <source>Group view of discount rule</source>
-        <translation>折扣規則組別檢視</translation>
+        <translation type="unfinished">折扣規則組別檢視</translation>
     </message>
     <message>
         <source>Editing rule</source>
-        <translation>編輯規則</translation>
+        <translation type="unfinished">編輯規則</translation>
     </message>
     <message>
         <source>Order list</source>
-        <translation>訂貨清單</translation>
+        <translation type="unfinished">訂貨清單</translation>
     </message>
     <message>
         <source>Enter account information</source>
-        <translation>輸入帳號資訊</translation>
+        <translation type="unfinished">輸入帳號資訊</translation>
     </message>
     <message>
         <source>VAT types</source>
-        <translation>税別</translation>
+        <translation type="unfinished">税別</translation>
     </message>
     <message>
         <source>Checkout</source>
-        <translation>查看</translation>
+        <translation type="unfinished">查看</translation>
     </message>
     <message>
         <source>Customer list</source>
-        <translation>客戶清單</translation>
+        <translation type="unfinished">客戶清單</translation>
     </message>
     <message>
         <source>Remove order</source>
-        <translation>刪除訂單</translation>
+        <translation type="unfinished">刪除訂單</translation>
     </message>
     <message>
         <source>Statistics</source>
-        <translation>統計</translation>
+        <translation type="unfinished">統計</translation>
     </message>
     <message>
         <source>VAT type</source>
-        <translation>稅別</translation>
+        <translation type="unfinished">稅別</translation>
     </message>
     <message>
         <source>Classes</source>
-        <translation>類別</translation>
+        <translation type="unfinished">類別</translation>
     </message>
     <message>
         <source>Any class</source>
-        <translation>任何類別</translation>
+        <translation type="unfinished">任何類別</translation>
     </message>
     <message>
         <source>in sections</source>
-        <translation>在區段中</translation>
+        <translation type="unfinished">在區段中</translation>
     </message>
     <message>
         <source>in any section</source>
-        <translation>在任何區段中</translation>
+        <translation type="unfinished">在任何區段中</translation>
     </message>
     <message>
         <source>Products</source>
-        <translation>產品</translation>
+        <translation type="unfinished">產品</translation>
     </message>
     <message>
         <source>Any product</source>
-        <translation>任何產品</translation>
+        <translation type="unfinished">任何產品</translation>
     </message>
     <message>
         <source>Order status</source>
-        <translation>訂單狀態</translation>
+        <translation type="unfinished">訂單狀態</translation>
     </message>
     <message>
         <source>Undefined</source>
-        <translation>未定義</translation>
+        <translation type="unfinished">未定義</translation>
     </message>
     <message>
         <source>The confirm order operation was canceled. Try to checkout again.</source>
-        <translation>確認訂單作業已取消。試著再次簽出。</translation>
+        <translation type="unfinished">確認訂單作業已取消。試著再次簽出。</translation>
     </message>
     <message>
         <source>Order #%order_id</source>
-        <translation>訂單 #%order_id</translation>
+        <translation type="unfinished">訂單 #%order_id</translation>
     </message>
     <message>
         <source>New order status was successfully added.</source>
-        <translation>已成功加入新增訂單狀態。</translation>
+        <translation type="unfinished">已成功加入新增訂單狀態。</translation>
     </message>
     <message>
         <source>Changes to order status were successfully stored.</source>
-        <translation>已成功儲存訂單狀態變更。</translation>
+        <translation type="unfinished">已成功儲存訂單狀態變更。</translation>
     </message>
     <message>
         <source>Selected order statuses were successfully removed.</source>
-        <translation>已成功刪除所選訂單狀態。</translation>
+        <translation type="unfinished">已成功刪除所選訂單狀態。</translation>
     </message>
     <message>
         <source>Internal orders cannot be removed.</source>
-        <translation>內部訂單無法刪除。</translation>
+        <translation type="unfinished">內部訂單無法刪除。</translation>
     </message>
     <message>
         <source>Status</source>
-        <translation>狀態</translation>
+        <translation type="unfinished">狀態</translation>
     </message>
     <message>
         <source>Customer order view</source>
-        <translation>客戶訂單檢視</translation>
+        <translation type="unfinished">客戶訂單檢視</translation>
     </message>
     <message>
         <source>Any</source>
-        <translation>任何</translation>
+        <translation type="unfinished">任何</translation>
     </message>
     <message>
         <source>Available currency list</source>
-        <translation>可用貨幣清單</translation>
+        <translation type="unfinished">可用貨幣清單</translation>
     </message>
     <message>
         <source>Edit currency</source>
-        <translation>編輯貨幣</translation>
+        <translation type="unfinished">編輯貨幣</translation>
     </message>
     <message>
         <source>Create new currency</source>
-        <translation>建立新貨幣</translation>
+        <translation type="unfinished">建立新貨幣</translation>
     </message>
     <message>
         <source>Preferred currency</source>
-        <translation>首選的貨幣</translation>
+        <translation type="unfinished">首選的貨幣</translation>
     </message>
     <message>
         <source>Products overview</source>
-        <translation>產品概觀</translation>
+        <translation type="unfinished">產品概觀</translation>
     </message>
     <message>
         <source>None</source>
-        <translation>無</translation>
+        <translation type="unfinished">無</translation>
     </message>
     <message>
         <source>Error checking out</source>
-        <translation>簽出時發生錯誤</translation>
+        <translation type="unfinished">簽出時發生錯誤</translation>
     </message>
     <message>
         <source>Unable to calculate VAT percentage because your country is unknown. You can either fill country manually in your account information (if you are a registered user) or contact site administrator.</source>
-        <translation>無法計算營業稅百分比，因為無法識別你的國家。你可以在你的帳號資訊中(如果你是已註冊的使用者)手動填入國家，或是連絡網站管理者。</translation>
+        <translation type="unfinished">無法計算營業稅百分比，因為無法識別你的國家。你可以在你的帳號資訊中(如果你是已註冊的使用者)手動填入國家，或是連絡網站管理者。</translation>
     </message>
     <message>
         <source>Wishlist</source>
-        <translation>願望清單</translation>
+        <translation type="unfinished">願望清單</translation>
     </message>
     <message>
         <source>&apos;Autorates&apos; were retrieved successfully</source>
-        <translation>「Autorates」已成功取回</translation>
+        <translation type="unfinished">「Autorates」已成功取回</translation>
     </message>
     <message>
         <source>Unknown body format in HTTP response. Expected &apos;text/xml&apos;</source>
-        <translation>在 HTTP 回應中有不明的主體格式。預期為「text/xml」</translation>
+        <translation type="unfinished">在 HTTP 回應中有不明的主體格式。預期為「text/xml」</translation>
     </message>
     <message>
         <source>Invalid HTTP response</source>
-        <translation>無效的 HTTP 回應</translation>
+        <translation type="unfinished">無效的 HTTP 回應</translation>
     </message>
     <message>
         <source>Unable to send http request: %1:%2/%3</source>
-        <translation>無法發送 http 要求：%1:%2/%3</translation>
+        <translation type="unfinished">無法發送 http 要求：%1:%2/%3</translation>
     </message>
     <message>
         <source>eZExchangeRatesUpdateHandler: you should reimplement &apos;requestRates&apos; method</source>
-        <translation>eZExchangeRatesUpdateHandler：你應該重新實作「requestRates」方法</translation>
+        <translation type="unfinished">eZExchangeRatesUpdateHandler：你應該重新實作「requestRates」方法</translation>
     </message>
     <message>
         <source>&apos;Auto&apos; prices were updated successfully.</source>
-        <translation>「自動」價格已成功更新。</translation>
+        <translation type="unfinished">「自動」價格已成功更新。</translation>
     </message>
     <message>
         <source>&apos;Auto&apos; rates were updated successfully.</source>
-        <translation>「自動」匯率已成功更新。</translation>
+        <translation type="unfinished">「自動」匯率已成功更新。</translation>
     </message>
     <message>
         <source>Unable to calculate cross-rate for currency-pair &apos;%1&apos;/&apos;%2&apos;</source>
-        <translation>無法計算用於貨幣配對「%1」/「%2」的交叉匯率</translation>
+        <translation type="unfinished">無法計算用於貨幣配對「%1」/「%2」的交叉匯率</translation>
     </message>
     <message>
         <source>Unable to determine currency for retrieved rates.</source>
-        <translation>無法決定用於取回匯率的貨幣。</translation>
+        <translation type="unfinished">無法決定用於取回匯率的貨幣。</translation>
     </message>
     <message>
         <source>Retrieved empty list of rates.</source>
-        <translation>已取回空的匯率清單。</translation>
+        <translation type="unfinished">已取回空的匯率清單。</translation>
     </message>
     <message>
         <source>Unable to create handler to update auto rates.</source>
-        <translation>無法建立處理常式以更新自動匯率。</translation>
+        <translation type="unfinished">無法建立處理常式以更新自動匯率。</translation>
     </message>
     <message>
         <source>Changes were stored successfully.</source>
-        <translation>變更已成功儲存。</translation>
+        <translation type="unfinished">變更已成功儲存。</translation>
     </message>
     <message>
         <source>&apos;%value&apos; is not a valid custom rate value (positive number expected)</source>
@@ -26412,110 +30409,102 @@ your account.</source>
     <name>kernel/shop/classes/ezcurrencydata</name>
     <message>
         <source>Invalid characters in currency code.</source>
-        <translation>貨幣編碼中的無效字元。</translation>
+        <translation type="unfinished">貨幣編碼中的無效字元。</translation>
     </message>
     <message>
         <source>Currency already exists.</source>
-        <translation>貨幣已經存在。</translation>
+        <translation type="unfinished">貨幣已經存在。</translation>
     </message>
     <message>
         <source>Unknown error.</source>
-        <translation>不明的錯誤。</translation>
+        <translation type="unfinished">不明的錯誤。</translation>
     </message>
 </context>
 <context>
     <name>kernel/shop/discountgroup</name>
     <message>
         <source>New discount group</source>
-        <translation>新增折扣組別</translation>
+        <translation type="unfinished">新增折扣組別</translation>
     </message>
     <message>
         <source>New Discount Rule</source>
-        <translation>新增折扣規則</translation>
+        <translation type="unfinished">新增折扣規則</translation>
     </message>
 </context>
 <context>
     <name>kernel/shop/editvatrule</name>
     <message>
         <source>Choose a country.</source>
-        <translation>請選取國家。</translation>
+        <translation type="unfinished">請選取國家。</translation>
     </message>
     <message>
         <source>Choose a VAT type.</source>
-        <translation>請選取營業稅型態。</translation>
+        <translation type="unfinished">請選取營業稅型態。</translation>
     </message>
     <message>
         <source>Rule not found</source>
-        <translation>找不到規則</translation>
+        <translation type="unfinished">找不到規則</translation>
     </message>
     <message>
         <source>Edit VAT charging rule</source>
-        <translation>編輯扣稅規則</translation>
+        <translation type="unfinished">編輯扣稅規則</translation>
     </message>
     <message>
         <source>Create new VAT charging rule</source>
-        <translation>建立新的扣稅規則</translation>
+        <translation type="unfinished">建立新的扣稅規則</translation>
     </message>
     <message>
         <source>Invalid data entered</source>
-        <translation>輸入的資料無效</translation>
+        <translation type="unfinished">輸入的資料無效</translation>
     </message>
     <message>
         <source>Conflicting rule</source>
-        <translation>衝突規則</translation>
+        <translation type="unfinished">衝突規則</translation>
     </message>
     <message>
         <source>Default rule for any country already exists.</source>
-        <translation>用於任何國家的預設規則已經存在。</translation>
+        <translation type="unfinished">用於任何國家的預設規則已經存在。</translation>
     </message>
 </context>
 <context>
     <name>kernel/shop/productcategories</name>
     <message>
         <source>Product categories</source>
-        <translation>產品分類</translation>
+        <translation type="unfinished">產品分類</translation>
     </message>
     <message>
         <source>Product category</source>
-        <translation>產品分類</translation>
+        <translation type="unfinished">產品分類</translation>
     </message>
     <message>
         <source>Empty category names are not allowed (corrected).</source>
-        <translation>不允許空的分類名稱 (已修正)。</translation>
+        <translation type="unfinished">不允許空的分類名稱 (已修正)。</translation>
     </message>
 </context>
 <context>
     <name>kernel/shop/vatrules</name>
     <message>
         <source>No default rule found. Please add rule having &quot;Any&quot; country and &quot;Any&quot; category.</source>
-        <translation>找不到預設規則。請加入包含「任何」國家和「任何」分類的規則。</translation>
+        <translation type="unfinished">找不到預設規則。請加入包含「任何」國家和「任何」分類的規則。</translation>
     </message>
     <message>
         <source>VAT rules</source>
-        <translation>營業稅規則</translation>
+        <translation type="unfinished">營業稅規則</translation>
     </message>
 </context>
 <context>
     <name>kernel/shop/vattype</name>
     <message>
         <source>Empty VAT type names are not allowed (corrected).</source>
-        <translation>不允許空的營業稅型態名稱 (已修正)。</translation>
+        <translation type="unfinished">不允許空的營業稅型態名稱 (已修正)。</translation>
     </message>
     <message>
         <source>Wrong VAT percentage (corrected).</source>
-        <translation>錯誤營業稅百分比 (已修正)。</translation>
+        <translation type="unfinished">錯誤營業稅百分比 (已修正)。</translation>
     </message>
 </context>
 <context>
     <name>kernel/state</name>
-    <message>
-        <source>State</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Assign</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message>
         <source>New</source>
         <translation type="unfinished">新增</translation>
@@ -26529,12 +30518,20 @@ your account.</source>
         <translation type="unfinished">組別</translation>
     </message>
     <message>
-        <source>New group</source>
+        <source>Group edit</source>
+        <translation type="unfinished">編輯組別</translation>
+    </message>
+    <message>
+        <source>State</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Group edit</source>
-        <translation type="unfinished">編輯組別</translation>
+        <source>Assign</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>New group</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -26584,183 +30581,183 @@ your account.</source>
     <name>kernel/trigger</name>
     <message>
         <source>Trigger</source>
-        <translation>觸發器</translation>
+        <translation type="unfinished">觸發器</translation>
     </message>
     <message>
         <source>List</source>
-        <translation>清單</translation>
+        <translation type="unfinished">清單</translation>
     </message>
 </context>
 <context>
     <name>kernel/url</name>
     <message>
         <source>URL</source>
-        <translation>URL</translation>
+        <translation type="unfinished">URL</translation>
     </message>
     <message>
         <source>List</source>
-        <translation>清單</translation>
+        <translation type="unfinished">清單</translation>
     </message>
     <message>
         <source>View</source>
-        <translation>檢視</translation>
+        <translation type="unfinished">檢視</translation>
     </message>
     <message>
         <source>URL edit</source>
-        <translation>URL 編輯</translation>
+        <translation type="unfinished">URL 編輯</translation>
     </message>
 </context>
 <context>
     <name>kernel/user</name>
     <message>
         <source>User</source>
-        <translation>請使用者</translation>
+        <translation type="unfinished">請使用者</translation>
     </message>
     <message>
         <source>Register</source>
-        <translation>註冊</translation>
+        <translation type="unfinished">註冊</translation>
     </message>
     <message>
         <source>Login</source>
-        <translation>登入</translation>
+        <translation type="unfinished">登入</translation>
     </message>
     <message>
         <source>Change password</source>
-        <translation>變更密碼</translation>
+        <translation type="unfinished">變更密碼</translation>
     </message>
     <message>
         <source>Forgot password</source>
-        <translation>忘了密碼</translation>
+        <translation type="unfinished">忘了密碼</translation>
     </message>
     <message>
         <source>User profile</source>
-        <translation>請使用者規範檔案</translation>
+        <translation type="unfinished">請使用者規範檔案</translation>
     </message>
     <message>
         <source>Setting</source>
-        <translation>設定值</translation>
+        <translation type="unfinished">設定值</translation>
     </message>
     <message>
         <source>Activate</source>
-        <translation>啟用</translation>
+        <translation type="unfinished">啟用</translation>
     </message>
     <message>
         <source>Success</source>
-        <translation>成功</translation>
+        <translation type="unfinished">成功</translation>
     </message>
 </context>
 <context>
     <name>kernel/user/register</name>
     <message>
         <source>Registration info</source>
-        <translation>註冊資訊</translation>
+        <translation type="unfinished">註冊資訊</translation>
     </message>
     <message>
         <source>New user registered</source>
-        <translation>新使用者已註冊</translation>
+        <translation type="unfinished">新使用者已註冊</translation>
     </message>
 </context>
 <context>
     <name>kernel/workflow</name>
     <message>
         <source>Edit workflow</source>
-        <translation>編輯工作流程</translation>
+        <translation type="unfinished">編輯工作流程</translation>
     </message>
     <message>
         <source>Workflow</source>
-        <translation>工作流程</translation>
+        <translation type="unfinished">工作流程</translation>
     </message>
     <message>
         <source>Edit</source>
-        <translation>編輯</translation>
+        <translation type="unfinished">編輯</translation>
     </message>
     <message>
         <source>Edit workflow group</source>
-        <translation>編輯工作流程組別</translation>
+        <translation type="unfinished">編輯工作流程組別</translation>
     </message>
     <message>
         <source>Group edit</source>
-        <translation>編輯組別</translation>
+        <translation type="unfinished">編輯組別</translation>
     </message>
     <message>
         <source>Workflow group list</source>
-        <translation>工作流程組別清單</translation>
+        <translation type="unfinished">工作流程組別清單</translation>
     </message>
     <message>
         <source>Group list</source>
-        <translation>組別清單</translation>
+        <translation type="unfinished">組別清單</translation>
     </message>
     <message>
         <source>Workflow list of group</source>
-        <translation>組別的工作流程清單</translation>
+        <translation type="unfinished">組別的工作流程清單</translation>
     </message>
     <message>
         <source>List</source>
-        <translation>清單</translation>
+        <translation type="unfinished">清單</translation>
     </message>
     <message>
         <source>Workflow list</source>
-        <translation>工作流程清單</translation>
+        <translation type="unfinished">工作流程清單</translation>
     </message>
     <message>
         <source>View</source>
-        <translation>檢視</translation>
+        <translation type="unfinished">檢視</translation>
     </message>
     <message>
         <source>You have to have at least one group that the workflow belongs to!</source>
-        <translation>你必須有至少一個該工作流程所屬的組別！</translation>
+        <translation type="unfinished">你必須有至少一個該工作流程所屬的組別！</translation>
     </message>
     <message>
         <source>Process list</source>
-        <translation>處理清單</translation>
+        <translation type="unfinished">處理清單</translation>
     </message>
 </context>
 <context>
     <name>kernel/workflow/edit</name>
     <message>
         <source>New Workflow</source>
-        <translation>新增工作流程</translation>
+        <translation type="unfinished">新增工作流程</translation>
     </message>
 </context>
 <context>
     <name>kernel/workflow/event</name>
     <message>
         <source>Event</source>
-        <translation>事件</translation>
+        <translation type="unfinished">事件</translation>
     </message>
     <message>
         <source>Approve</source>
-        <translation>同意</translation>
+        <translation type="unfinished">同意</translation>
     </message>
     <message>
         <source>Multiplexer</source>
-        <translation>多路器</translation>
+        <translation type="unfinished">多路器</translation>
     </message>
     <message>
         <source>Simple shipping</source>
-        <translation>普通傳送</translation>
+        <translation type="unfinished">普通傳送</translation>
     </message>
     <message>
         <source>Wait until date</source>
-        <translation>等待至日期</translation>
+        <translation type="unfinished">等待至日期</translation>
     </message>
     <message>
         <source>Payment Gateway</source>
-        <translation>付款閘道</translation>
+        <translation type="unfinished">付款閘道</translation>
     </message>
 </context>
 <context>
     <name>kernel/workflow/group</name>
     <message>
         <source>Group</source>
-        <translation>組別</translation>
+        <translation type="unfinished">組別</translation>
     </message>
 </context>
 <context>
     <name>kernel/workflow/groupedit</name>
     <message>
         <source>New WorkflowGroup</source>
-        <translation>新增 WorkflowGroup</translation>
+        <translation type="unfinished">新增 WorkflowGroup</translation>
     </message>
 </context>
 <context>
@@ -26768,16 +30765,20 @@ your account.</source>
     <message>
         <source>Contents</source>
         <comment>Table of contents</comment>
-        <translation>內容</translation>
+        <translation type="unfinished">內容</translation>
     </message>
     <message>
         <source>Index</source>
         <comment>Keyword index name</comment>
-        <translation>索引</translation>
+        <translation type="unfinished">索引</translation>
     </message>
 </context>
 <context>
     <name>lib/eztemplate</name>
+    <message>
+        <source>Some template errors occured, see debug for more information.</source>
+        <translation type="obsolete">某些範本出現錯誤，更多資訊請看除錯程序。</translation>
+    </message>
     <message>
         <source>Some template errors occurred, see debug for more information.</source>
         <translation type="unfinished">某些範本出現錯誤，更多資訊請看除錯程序。</translation>
@@ -26785,6 +30786,10 @@ your account.</source>
 </context>
 <context>
     <name>lib/template</name>
+    <message>
+        <source>The maximum nesting level of 40 has been reached. The execution is stopped to avoid infinite recursion.</source>
+        <translation type="obsolete">已達到巢狀層次的最大值 40。為了避免無限迴圈而停止執行。</translation>
+    </message>
     <message>
         <source>The maximum nesting level of %max has been reached. The execution is stopped to avoid infinite recursion.</source>
         <translation type="unfinished"></translation>
@@ -26794,36 +30799,36 @@ your account.</source>
     <name>pdf/edit</name>
     <message>
         <source>PDF Export</source>
-        <translation>PDF 匯出</translation>
+        <translation type="unfinished">PDF 匯出</translation>
     </message>
 </context>
 <context>
     <name>settings/edit</name>
     <message>
         <source>Settings</source>
-        <translation>設定值</translation>
+        <translation type="unfinished">設定值</translation>
     </message>
     <message>
         <source>Edit</source>
-        <translation>編輯</translation>
+        <translation type="unfinished">編輯</translation>
     </message>
 </context>
 <context>
     <name>settings/view</name>
     <message>
         <source>Settings</source>
-        <translation>設定值</translation>
+        <translation type="unfinished">設定值</translation>
     </message>
     <message>
         <source>View</source>
-        <translation>檢視</translation>
+        <translation type="unfinished">檢視</translation>
     </message>
 </context>
 <context>
     <name>shop</name>
     <message>
         <source>Remove orders</source>
-        <translation>刪除訂單</translation>
+        <translation type="unfinished">刪除訂單</translation>
     </message>
 </context>
 <context>

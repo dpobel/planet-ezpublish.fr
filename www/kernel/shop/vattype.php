@@ -4,10 +4,10 @@
 //
 // Created on: <25-Nov-2002 15:40:10 wy>
 //
+// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.2.0
-// BUILD VERSION: 24182
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 4.3.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -25,11 +25,13 @@
 //   MA 02110-1301, USA.
 //
 //
+// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
+//
 
-require_once( "kernel/common/template.php" );
+
 $module = $Params['Module'];
 $http = eZHTTPTool::instance();
-$tpl = templateInit();
+$tpl = eZTemplate::factory();
 $errors = false;
 
 /*!
@@ -64,9 +66,9 @@ function applyChanges( $module, $http, $vatTypeArray = false )
         if ( !$name || $percentage < 0 || $percentage > 100 )
         {
             if ( !$name )
-                $errors[] = ezi18n( 'kernel/shop/vattype', 'Empty VAT type names are not allowed (corrected).' );
+                $errors[] = ezpI18n::tr( 'kernel/shop/vattype', 'Empty VAT type names are not allowed (corrected).' );
             else
-                $errors[] = ezi18n( 'kernel/shop/vattype', 'Wrong VAT percentage (corrected).' );
+                $errors[] = ezpI18n::tr( 'kernel/shop/vattype', 'Wrong VAT percentage (corrected).' );
 
             continue;
         }
@@ -88,7 +90,7 @@ function applyChanges( $module, $http, $vatTypeArray = false )
  */
 function generateUniqueVatTypeName( $vatTypes )
 {
-    $commonPart = ezi18n( 'kernel/shop', 'VAT type' );
+    $commonPart = ezpI18n::tr( 'kernel/shop', 'VAT type' );
     $maxNumber = 0;
     foreach ( $vatTypes as $type )
     {
@@ -185,7 +187,7 @@ elseif ( $module->isCurrentAction( 'Remove' ) )
                         'If you do not neet to charge any VAT for your ' .
                         'products then just leave one VAT type and set ' .
                         'its percentage to zero.';
-            $errors[] = ezi18n( 'kernel/shop/vattype', $errorMsg );
+            $errors[] = ezpI18n::tr( 'kernel/shop/vattype', $errorMsg );
             $showDeps = false;
         }
 
@@ -194,7 +196,7 @@ elseif ( $module->isCurrentAction( 'Remove' ) )
         $tpl->setVariable( 'errors', $errors ); // array of error messages, false if there are no errors
         $tpl->setVariable( 'dependencies', $deps );
         $tpl->setVariable( 'vat_type_ids', join( ',', $vatIDsToRemove ) );
-        $path = array( array( 'text' => ezi18n( 'kernel/shop', 'VAT types' ),
+        $path = array( array( 'text' => ezpI18n::tr( 'kernel/shop', 'VAT types' ),
                               'url'  => false ) );
 
         $Result = array();
@@ -250,7 +252,7 @@ $tpl->setVariable( "module", $module );
 $tpl->setVariable( 'errors', $errors );
 
 $path = array();
-$path[] = array( 'text' => ezi18n( 'kernel/shop', 'VAT types' ),
+$path[] = array( 'text' => ezpI18n::tr( 'kernel/shop', 'VAT types' ),
                  'url' => false );
 
 

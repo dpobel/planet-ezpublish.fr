@@ -305,6 +305,7 @@ CREATE TABLE ezcontentclass (
   modified int(11) NOT NULL default '0',
   modifier_id int(11) NOT NULL default '0',
   remote_id varchar(100) NOT NULL default '',
+  serialized_description_list longtext,
   serialized_name_list longtext,
   sort_field int(11) NOT NULL default '1',
   sort_order int(11) NOT NULL default '1',
@@ -320,6 +321,7 @@ CREATE TABLE ezcontentclass (
 
 CREATE TABLE ezcontentclass_attribute (
   can_translate int(11) default '1',
+  category varchar(25) NOT NULL default '',
   contentclass_id int(11) NOT NULL default '0',
   data_float1 float default NULL,
   data_float2 float default NULL,
@@ -341,6 +343,8 @@ CREATE TABLE ezcontentclass_attribute (
   is_required int(11) NOT NULL default '0',
   is_searchable int(11) NOT NULL default '0',
   placement int(11) NOT NULL default '0',
+  serialized_data_text longtext,
+  serialized_description_list longtext,
   serialized_name_list longtext NOT NULL,
   version int(11) NOT NULL default '0',
   PRIMARY KEY  (id,version),
@@ -1215,6 +1219,7 @@ CREATE TABLE ezrss_export_item (
   category varchar(255) default NULL,
   class_id int(11) default NULL,
   description varchar(255) default NULL,
+  enclosure varchar(255) default NULL,
   id int(11) NOT NULL auto_increment,
   rssexport_id int(11) default NULL,
   source_node_id int(11) default NULL,
@@ -1247,6 +1252,22 @@ CREATE TABLE ezrss_import (
   status int(11) NOT NULL default '0',
   url longtext,
   PRIMARY KEY  (id,status)
+) ENGINE=InnoDB;
+
+
+
+
+
+CREATE TABLE ezscheduled_script (
+  command varchar(255) NOT NULL default '',
+  id int(11) NOT NULL auto_increment,
+  last_report_timestamp int(11) NOT NULL default '0',
+  name varchar(50) NOT NULL default '',
+  process_id int(11) NOT NULL default '0',
+  progress int(3) default '0',
+  user_id int(11) NOT NULL default '0',
+  PRIMARY KEY  (id),
+  KEY ezscheduled_script_timestamp (last_report_timestamp)
 ) ENGINE=InnoDB;
 
 

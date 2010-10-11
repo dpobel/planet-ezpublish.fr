@@ -2,16 +2,16 @@
 /**
  * File containing the eZDFSFileHandlerNFSMountPointNotFoundException class.
  *
- * @copyright Copyright (C) 1999-2009 eZ Systems AS. All rights reserved.
+ * @copyright Copyright (C) 1999-2010 eZ Systems AS. All rights reserved.
  * @license http://ez.no/licenses/gnu_gpl GNU GPL v2
- * @version //autogentag//
+ * @version 4.3.0
  * @package kernel
  */
 
 /**
  * Class representing a cluster mount point not found exception
  *
- * @version //autogentag//
+ * @version 4.3.0
  * @package kernel
  */
 
@@ -27,7 +27,7 @@ class eZDFSFileHandlerNFSMountPointNotFoundException extends ezcBaseException
      */
     function __construct( $path )
     {
-    	parent::__construct( "Local DFS mount point '{$path}' does not exist" );
+        parent::__construct( "Local DFS mount point '{$path}' does not exist" );
     }
 }
 ?>

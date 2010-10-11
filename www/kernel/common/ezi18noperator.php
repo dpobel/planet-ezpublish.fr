@@ -4,10 +4,10 @@
 //
 // Created on: <18-Apr-2002 12:15:07 amos>
 //
+// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.2.0
-// BUILD VERSION: 24182
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 4.3.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -25,6 +25,8 @@
 //   MA 02110-1301, USA.
 //
 //
+// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
+//
 
 //!! eZKernel
 //! The class eZi18nOperator does
@@ -34,11 +36,14 @@
 
 class eZi18nOperator
 {
-    function eZi18nOperator( $name = 'i18n', $extensionName = 'x18n' )
+    function eZi18nOperator( $name = 'i18n', $extensionName = 'x18n', $dynamicName = 'd18n' )
     {
-        $this->Operators = array( $name, $extensionName );
+        $this->Operators = array( $name, $extensionName, $dynamicName );
         $this->Name = $name;
         $this->ExtensionName = $extensionName;
+        // d18n is a i18n alias for use with dynamic variables as input
+        // where you don't want ezlupdate to pick up the string 
+        $this->DynamicName = $dynamicName;
     }
 
     /*!
@@ -62,7 +67,7 @@ class eZi18nOperator
     */
     function namedParameterList()
     {
-        return array( $this->Name => array( 'context' => array( 'type' => 'string',
+        $def = array( $this->Name => array( 'context' => array( 'type' => 'string',
                                                                 'required' => false,
                                                                 'default' => false ),
                                             'comment' => array( 'type' => 'string',
@@ -83,17 +88,21 @@ class eZi18nOperator
                                                      'arguments' => array( 'type' => 'hash',
                                                                            'required' => false,
                                                                            'default' => false ) ) );
+        $def[ $this->DynamicName ] = $def[ $this->Name ];
+        return $def;
     }
 
     function operatorTemplateHints()
     {
-        return array( $this->Name => array( 'input' => true,
+        $def = array( $this->Name => array( 'input' => true,
                                             'output' => true,
                                             'parameters' => true,
                                             'element-transformation' => true,
                                             'transform-parameters' => true,
                                             'input-as-parameter' => 'always',
                                             'element-transformation-func' => 'i18nTrans') );
+        $def[ $this->DynamicName ] = $def[ $this->Name ];
+        return $def;
     }
 
     function i18nTrans( $operatorName, &$node, $tpl, &$resourceData,
@@ -110,7 +119,6 @@ class eZi18nOperator
             }
         }
 
-        require_once( 'kernel/common/i18n.php' );
         $value = eZTemplateNodeTool::elementStaticValue( $parameters[0] );
 
         $numParameters = count ( $parameters );
@@ -119,7 +127,7 @@ class eZi18nOperator
 
         if ( $numParameters < 4 )
         {
-            return array ( eZTemplateNodeTool::createStringElement( ezi18n( $context, $value, $comment, null ) ) );
+            return array ( eZTemplateNodeTool::createStringElement( ezpI18n::tr( $context, $value, $comment, null ) ) );
         }
 
         $values = array();
@@ -127,7 +135,7 @@ class eZi18nOperator
         $ini = eZINI::instance();
         if ( $ini->variable( 'RegionalSettings', 'TextTranslation' ) != 'disabled' )
         {
-            $language = ezcurrentLanguage();
+            $language = eZLocale::instance()->localeFullCode();
             if ( $language != "eng-GB" ) // eng-GB does not need translation
             {
                 $file = 'translation.ts';
@@ -162,15 +170,15 @@ class eZi18nOperator
 
     function modify( $tpl, $operatorName, $operatorParameters, $rootNamespace, $currentNamespace, &$value, $namedParameters )
     {
-        require_once( 'kernel/common/i18n.php' );
         switch ( $operatorName )
         {
             case $this->Name:
+            case $this->DynamicName:
             {
                 $context = $namedParameters['context'];
                 $comment = $namedParameters['comment'];
                 $arguments = $namedParameters['arguments'];
-                $value = ezi18n( $context, $value, $comment, $arguments );
+                $value = ezpI18n::tr( $context, $value, $comment, $arguments );
             } break;
             case $this->ExtensionName:
             {
@@ -178,7 +186,7 @@ class eZi18nOperator
                 $context = $namedParameters['context'];
                 $comment = $namedParameters['comment'];
                 $arguments = $namedParameters['arguments'];
-                $value = ezx18n( $extension, $context, $value, $comment, $arguments );
+                $value = ezpI18n::tr( $context, $value, $comment, $arguments );
             } break;
         }
     }

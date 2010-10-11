@@ -4,10 +4,10 @@
 //
 // Created on: <01-Aug-2003 14:06:48 wy>
 //
+// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.2.0
-// BUILD VERSION: 24182
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 4.3.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -24,6 +24,8 @@
 //   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 //   MA 02110-1301, USA.
 //
+//
+// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
 /*! \file
@@ -231,7 +233,7 @@ class eZTextFileUser extends eZUser
 
             while ( !feof( $handle ) )
             {
-                $line = fgets( $handle, 4096 );
+                $line = trim( fgets( $handle, 4096 ) );
 
                 if ( $separator == "tab" )
                     $userArray = explode( "\t", $line );
@@ -259,6 +261,9 @@ class eZTextFileUser extends eZUser
                             $defaultSectionID = $ini->variable( "UserSettings", "DefaultSectionID" );
 
                             $remoteID = "TextFile_" . $login;
+
+                            $db->begin();
+
                             // The content object may already exist if this process has failed once before, before the eZUser object was created.
                             // Therefore we try to fetch the eZContentObject before instantiating it.
                             $contentObject = eZContentObject::fetchByRemoteID( $remoteID );
@@ -307,10 +312,15 @@ class eZTextFileUser extends eZUser
 
                             $operationResult = eZOperationHandler::execute( 'content', 'publish', array( 'object_id' => $contentObjectID,
                                                                                                          'version' => 1 ) );
+
+                            $db->commit();
+
                             return $user;
                         }
                         else
                         {
+                            $db->begin();
+
                             // Update user information
                             $userID = $existUser->attribute( 'contentobject_id' );
                             $contentObject = eZContentObject::fetch( $userID );
@@ -348,6 +358,8 @@ class eZTextFileUser extends eZUser
 
                             // Reset number of failed login attempts
                             eZUser::setFailedLoginAttempts( $userID, 0 );
+
+                            $db->commit();
 
                             return $existUser;
                         }

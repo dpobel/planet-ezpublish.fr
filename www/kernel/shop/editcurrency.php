@@ -2,10 +2,10 @@
 //
 // Created on: <08-Nov-2005 13:06:15 dl>
 //
+// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.2.0
-// BUILD VERSION: 24182
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 4.3.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -22,6 +22,8 @@
 //   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 //   MA 02110-1301, USA.
 //
+//
+// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
 /*! \file
@@ -110,7 +112,7 @@ $pathText = '';
 if ( strlen( $originalCurrencyCode ) > 0 )
 {
     // going to edit existing currency
-    $pathText = ezi18n( 'kernel/shop', 'Edit currency' );
+    $pathText = ezpI18n::tr( 'kernel/shop', 'Edit currency' );
 
     if ( $currencyParams['code'] === false )
     {
@@ -135,11 +137,11 @@ if ( strlen( $originalCurrencyCode ) > 0 )
 else
 {
     // going to create new currency
-    $pathText = ezi18n( 'kernel/shop', 'Create new currency' );
+    $pathText = ezpI18n::tr( 'kernel/shop', 'Create new currency' );
 }
 
-require_once( 'kernel/common/template.php' );
-$tpl = templateInit();
+
+$tpl = eZTemplate::factory();
 
 $tpl->setVariable( 'error', $error );
 $tpl->setVariable( 'can_edit', $canEdit );
@@ -166,14 +168,14 @@ function validateCurrencyData( &$currencyData )
     $floatValidator = new eZFloatValidator( 0 );
     if ( $floatValidator->validate( $currencyData['custom_rate_value'] ) == eZInputValidator::STATE_INVALID )
     {
-        $return = ezi18n( 'kernel/shop', "'%value' is not a valid custom rate value (positive number expected)",
+        $return = ezpI18n::tr( 'kernel/shop', "'%value' is not a valid custom rate value (positive number expected)",
             'Error message', array( '%value' => $currencyData['custom_rate_value'] ) );
         $currencyData['custom_rate_value'] = '';
     }
     if ( $floatValidator->validate( $currencyData['rate_factor'] ) == eZInputValidator::STATE_INVALID )
     {
         if ( $return === false )
-            $return = ezi18n( 'kernel/shop', "'%value' is not a valid rate_factor value (positive number expected)",
+            $return = ezpI18n::tr( 'kernel/shop', "'%value' is not a valid rate_factor value (positive number expected)",
                 'Error message', array( '%value' => $currencyData['rate_factor'] ) );
         $currencyData['rate_factor'] = '';
     }

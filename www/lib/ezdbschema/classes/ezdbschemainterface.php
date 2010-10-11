@@ -2,10 +2,10 @@
 //
 // Created on: <21-Apr-2004 11:04:30 kk>
 //
+// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.2.0
-// BUILD VERSION: 24182
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 4.3.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -22,6 +22,8 @@
 //   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 //   MA 02110-1301, USA.
 //
+//
+// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
 /*! \file
@@ -56,7 +58,7 @@
 
   Index structure:
   - type - What kind of index, see Index Types.
-  - fields - Array of field names the index is made on
+  - fields - Array of field names the index is made on, or of sub-arrays where the field name is in the 'name' field
 
   Index Types:
   - primary - A primary key, there can only be one primary key. This key will be named PRIMARY.
@@ -98,8 +100,11 @@ class eZDBSchemaInterface
 
     /*!
      \pure
-     Get SQL db schema
+     Gets SQL db schema definition by analyzing the current DB instance and return
+     it in array format.
+     NB: once the schema is generated, it might be cached.
 
+     \param $params supported options are 'meta_data' and 'format'
      \return DB schema array
     */
     function schema( $params = array() )
@@ -108,13 +113,14 @@ class eZDBSchemaInterface
 
     /*!
      Fetches the data for all tables and returns an array containing the data.
+     NB: once the data is generated, it might be cached.
 
-     \param $schema A schema array which defines tables to fetch from.
+     \param $schema A schema definition array which defines tables to fetch from.
                     If \c false it will call schema() to fetch it.
      \param $tableNameList An array with tables to include, will further narrow
-                           tables in \a $scema. Use \c false to fetch all tables.
+                           tables in \a $schema. Use \c false to fetch all tables.
 
-     \note You shouldn't need to reimplement this method unless since the default
+     \note You shouldn't need to reimplement this method since the default
            code will do simple SELECT queries
      \sa fetchTableData()
     */
@@ -179,11 +185,11 @@ class eZDBSchemaInterface
                 are the same as the order of the data
      - rows - Array with all rows, each row is an indexed array with the data.
 
-     \param $tableInfo Table structure from schema.
+     \param $tableInfo Table structure from schema definition.
      \param $offset Which offset to start from or \c false to start at top
      \param $limit How many rows to fetch or \c false for no limit.
 
-     \note You shouldn't need to reimplement this method unless since the default
+     \note You shouldn't need to reimplement this method since the default
            code will do simple SELECT queries
      \sa data()
     */
@@ -254,7 +260,8 @@ class eZDBSchemaInterface
     }
 
     /*!
-      Write SQL schema definition to file
+      Write SQL schema definition to file.
+      The generated schema is always in 'local' format, as 'generic' SQL does not exist.
 
       \param filename
     */

@@ -40,61 +40,62 @@
 {/case}
 {/switch}
 
-{let version_list=fetch('content','version_list',hash(contentobject, $object,limit,$page_limit,offset,$view_parameters.offset))}
-
 <table class="list" width="100%" cellspacing="0" cellpadding="0" border="0">
 <tr>
-	<th colspan="2">
-	{"Version"|i18n("design/standard/content/version")}:
-	</th>
-	<th>
-	{"Status"|i18n("design/standard/content/version")}:
-	</th>
-	<th>
-	{"Translations"|i18n("design/standard/content/version")}:
-	</th>
-	<th>
-	{"Creator"|i18n("design/standard/content/version")}:
-	</th>
-	{section show=$can_edit}
-	<th colspan="2">
-	{"Modified"|i18n("design/standard/content/version")}:
-	</th>
-	{/section}
+        <th colspan="2">
+        {"Version"|i18n("design/standard/content/version")}:
+        </th>
+        <th>
+        {"Status"|i18n("design/standard/content/version")}:
+        </th>
+        <th>
+        {"Translations"|i18n("design/standard/content/version")}:
+        </th>
+        <th>
+        {"Creator"|i18n("design/standard/content/version")}:
+        </th>
+        {if $can_edit}
+        <th colspan="2">
+        {"Modified"|i18n("design/standard/content/version")}:
+        </th>
+        {/if}
 </tr>
-{section name=Version loop=$version_list sequence=array(bglight,bgdark)}
-<tr>
-    <td class="{$Version:sequence}">
-    {section show=and($Version:item.can_remove,or(eq($Version:item.status,0),eq($Version:item.status,3),eq($Version:item.status,4)))}
-	    <input type="checkbox" name="DeleteIDArray[]" value="{$Version:item.id}" />
-    {/section}
-    </td>
-	<td class="{$Version:sequence}">
-	<a href={concat("/content/versionview/",$object.id,"/",$Version:item.version,"/",$Version:item.initial_language.locale)|ezurl}>{$Version:item.version}</a>
-        {section show=eq($Version:item.version,$object.current_version)}*{/section}
+{if $list_count}
+    {section name=Version loop=fetch( 'content', 'version_list', hash( contentobject, $object, limit, $page_limit, offset, $view_parameters.offset ) )
+            sequence=array(bglight,bgdark)}
+    <tr>
+        <td class="{$Version:sequence}">
+        {if and($Version:item.can_remove,or(eq($Version:item.status,0),eq($Version:item.status,3),eq($Version:item.status,4)))}
+            <input type="checkbox" name="DeleteIDArray[]" value="{$Version:item.id}" />
+        {/if}
+        </td>
+        <td class="{$Version:sequence}">
+        <a href={concat("/content/versionview/",$object.id,"/",$Version:item.version,"/",$Version:item.initial_language.locale)|ezurl}>{$Version:item.version}</a>
+            {if eq($Version:item.version,$object.current_version)}*{/if}
 
-	</td>
-	<td class="{$Version:sequence}">
-	{$Version:item.status|choose("Draft","Published","Pending","Archived","Rejected")}
-	</td>
-	<td class="{$Version:sequence}">
-	{section name=Language loop=$Version:item.language_list}
-        {delimiter},{/delimiter}
-	<a href={concat("/content/versionview/",$object.id,"/",$Version:item.version,"/",$Version:Language:item.language_code)|ezurl}>{$Version:Language:item.locale.intl_language_name}</a>{/section}
-	</td>
-	<td class="{$Version:sequence}">
-	<a href={concat("/content/view/full/",$Version:item.creator.main_node_id,"/")|ezurl}>{$Version:item.creator.name|wash}</a>
-	</td>
-	<td class="{$Version:sequence}">
-	<span class="small">{$Version:item.modified|l10n(shortdatetime)}</span>
-	</td>
-	{section show=$can_edit}
-	<td class="{$Version:sequence}">
-	<input type="radio" name="RevertToVersionID" value="{$Version:item.version}" {section show=eq($Version:item.version,$edit_version)}checked="checked"{/section} />
-	</td>
-	{/section}
-</tr>
-{/section}
+        </td>
+        <td class="{$Version:sequence}">
+        {$Version:item.status|choose("Draft","Published","Pending","Archived","Rejected")}
+        </td>
+        <td class="{$Version:sequence}">
+        {section name=Language loop=$Version:item.language_list}
+            {delimiter},{/delimiter}
+        <a href={concat("/content/versionview/",$object.id,"/",$Version:item.version,"/",$Version:Language:item.language_code)|ezurl}>{$Version:Language:item.locale.intl_language_name}</a>{/section}
+        </td>
+        <td class="{$Version:sequence}">
+        <a href={concat("/content/view/full/",$Version:item.creator.main_node_id,"/")|ezurl}>{$Version:item.creator.name|wash}</a>
+        </td>
+        <td class="{$Version:sequence}">
+        <span class="small">{$Version:item.modified|l10n(shortdatetime)}</span>
+        </td>
+        {if $can_edit}
+        <td class="{$Version:sequence}">
+        <input type="radio" name="RevertToVersionID" value="{$Version:item.version}" {if eq($Version:item.version,$edit_version)}checked="checked"{/if} />
+        </td>
+        {/if}
+    </tr>
+    {/section}
+{/if}
 <tr>
         <td colspan="8">
         {include uri="design:gui/trash.tpl"}
@@ -109,14 +110,13 @@
          view_parameters=$view_parameters
          item_limit=$page_limit}
 
-{section show=$can_edit}
+{if $can_edit}
 <div class="buttonblock" align="right">
 <input class="button" type="submit" name="EditButton" value="{'Edit'|i18n('design/standard/content/version')}" />
 <input class="button" type="submit" name="CopyVersionButton" value="{'Copy and edit'|i18n('design/standard/content/version')}" />
 </div>
-{/section}
+{/if}
 
 </form>
 
-{/let}
 {/let}

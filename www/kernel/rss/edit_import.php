@@ -4,10 +4,10 @@
 //
 // Created on: <24-Sep-2003 13:41:54 kk>
 //
+// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.2.0
-// BUILD VERSION: 24182
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 4.3.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -25,10 +25,12 @@
 //   MA 02110-1301, USA.
 //
 //
+// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
+//
 
 $Module = $Params['Module'];
 
-require_once( "kernel/common/template.php" );
+
 $http = eZHTTPTool::instance();
 
 //Get RSSImport id if it is accessable
@@ -145,7 +147,7 @@ if ( isset( $Params['BrowseType'] ) )
     }
 }
 
-$tpl = templateInit();
+$tpl = eZTemplate::factory();
 
 // Get classes and class attributes
 $classArray = eZContentClass::fetchList();
@@ -157,7 +159,7 @@ $tpl->setVariable( 'step', $step );
 $Result = array();
 $Result['content'] = $tpl->fetch( "design:rss/edit_import.tpl" );
 $Result['path'] = array( array( 'url' => false,
-                                'text' => ezi18n( 'kernel/rss', 'Really Simple Syndication' ) ) );
+                                'text' => ezpI18n::tr( 'kernel/rss', 'Really Simple Syndication' ) ) );
 
 
 
@@ -226,7 +228,7 @@ function checkTimeout( $rssImport )
          $rssImport->attribute( 'modified' ) + $timeOut > time() )
     {
         // locked editing
-        $tpl = templateInit();
+        $tpl = eZTemplate::factory();
 
         $tpl->setVariable( 'rss_import', $rssImport );
         $tpl->setVariable( 'rss_import_id', $rssImportID );
@@ -235,7 +237,7 @@ function checkTimeout( $rssImport )
         $Result = array();
         $Result['content'] = $tpl->fetch( 'design:rss/edit_import_denied.tpl' );
         $Result['path'] = array( array( 'url' => false,
-                                        'text' => ezi18n( 'kernel/rss', 'Really Simple Syndication' ) ) );
+                                        'text' => ezpI18n::tr( 'kernel/rss', 'Really Simple Syndication' ) ) );
         return $Result;
     }
     else if ( $timeOut > 0 && $rssImport->attribute( 'modified' ) + $timeOut < time() )

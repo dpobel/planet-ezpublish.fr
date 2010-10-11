@@ -4,10 +4,10 @@
 //
 // Created on: <05-Mar-2004 12:36:14 wy>
 //
+// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.2.0
-// BUILD VERSION: 24182
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 4.3.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -25,6 +25,8 @@
 //   MA 02110-1301, USA.
 //
 //
+// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
+//
 
 /*! \file
 */
@@ -35,7 +37,7 @@ $module = $Params['Module'];
 $currentSiteAccess = ( $Params['SiteAccess'] ) ? $Params['SiteAccess'] : false;
 $toolbarPosition = ( $Params['Position'] ) ? $Params['Position'] : false;
 
-require_once( "kernel/common/template.php" );
+
 $http = eZHTTPTool::instance();
 
 $siteini = eZINI::instance();
@@ -366,7 +368,7 @@ if ( $toolbarIni->hasVariable( "Tool", "AvailableToolArray" ) )
     $availableToolArray = $toolbarIni->variable( "Tool", "AvailableToolArray" );
 }
 
-$tpl = templateInit();
+$tpl = eZTemplate::factory();
 
 $tpl->setVariable( 'toolbar_position', $toolbarPosition );
 $tpl->setVariable( 'tool_list', $toolList );
@@ -376,7 +378,7 @@ $tpl->setVariable( 'current_siteaccess', $currentSiteAccess );
 $Result = array();
 $Result['content'] = $tpl->fetch( "design:visual/toolbar.tpl" );
 $Result['path'] = array( array( 'url' => 'visual/toolbarlist',
-                                'text' => ezi18n( 'kernel/design', 'Toolbar list' ) ) );
+                                'text' => ezpI18n::tr( 'kernel/design', 'Toolbar list' ) ) );
 
 function removeRelatedCache( $siteAccess )
 {

@@ -4,10 +4,10 @@
 //
 // Created on: <03-Mar-2004 09:45:38 wy>
 //
+// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.2.0
-// BUILD VERSION: 24182
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 4.3.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -25,11 +25,13 @@
 //   MA 02110-1301, USA.
 //
 //
+// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
+//
 
 /*! \file
 */
 
-require_once( "kernel/common/template.php" );
+
 $Module = $Params['Module'];
 $http = eZHTTPTool::instance();
 $deleteIDArray = $http->sessionVariable( "DeleteOrderIDArray" );
@@ -62,14 +64,14 @@ else // no action yet: just displaying the template
     }
     $orderNumbersString = implode( ', ', $orderNumbersArray );
 
-    $Module->setTitle( ezi18n( 'shop', 'Remove orders' ) );
+    $Module->setTitle( ezpI18n::tr( 'shop', 'Remove orders' ) );
 
-    $tpl = templateInit();
+    $tpl = eZTemplate::factory();
     $tpl->setVariable( "module", $Module );
     $tpl->setVariable( "delete_result", $orderNumbersString );
     $Result = array();
 
-    $Result['path'] = array( array( 'text' => ezi18n( 'kernel/shop', 'Remove order' ),
+    $Result['path'] = array( array( 'text' => ezpI18n::tr( 'kernel/shop', 'Remove order' ),
                                     'url' => false ) );
     $Result['content'] = $tpl->fetch( "design:shop/removeorder.tpl" );
 }

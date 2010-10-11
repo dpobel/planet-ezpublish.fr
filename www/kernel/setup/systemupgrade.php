@@ -2,10 +2,10 @@
 //
 // Created on: <04-Feb-2004 21:56:50 kk>
 //
+// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.2.0
-// BUILD VERSION: 24182
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 4.3.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -23,13 +23,15 @@
 //   MA 02110-1301, USA.
 //
 //
+// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
+//
 
 $Module = $Params['Module'];
 
-require_once( "kernel/common/template.php" );
+
 define( 'MD5_SUM_LIST_FILE', 'share/filelist.md5' );
 
-$tpl = templateInit();
+$tpl = eZTemplate::factory();
 
 $tpl->setVariable( 'md5_result', false );
 $tpl->setVariable( 'upgrade_sql', false );
@@ -40,7 +42,7 @@ if ( $Module->isCurrentAction( 'MD5Check' ) )
     {
         $tpl->setVariable( 'md5_result', 'failed' );
         $tpl->setVariable( 'failure_reason',
-                           ezi18n( 'kernel/setup', 'File %1 does not exist. '.
+                           ezpI18n::tr( 'kernel/setup', 'File %1 does not exist. '.
                                     'You should copy it from the recent eZ Publish distribution.',
                                     null, array( MD5_SUM_LIST_FILE ) ) );
     }
@@ -63,7 +65,27 @@ if ( $Module->isCurrentAction( 'DBCheck' ) )
 {
     $db = eZDB::instance();
     $dbSchema = eZDbSchema::instance();
-    $differences = eZDbSchemaChecker::diff( $dbSchema->schema(), eZDbSchema::read( 'share/db_schema.dba' ) );
+    // read original schema from dba file
+    $originalSchema = eZDbSchema::read( 'share/db_schema.dba' );
+
+    // merge schemas from all active extensions that declare some db schema
+    $extensionsdir = eZExtension::baseDirectory();
+    foreach( eZextension::activeExtensions() as $activeextension )
+    {
+        if ( file_exists( $extensionsdir . '/' . $activeextension . '/share/db_schema.dba' ) )
+        {
+            if ( $extensionschema = eZDbSchema::read( $extensionsdir . '/' . $activeextension . '/share/db_schema.dba' ) )
+            {
+                $originalSchema = eZDbSchema::merge( $originalSchema, $extensionschema );
+            }
+        }
+    }
+
+    // transform schema to 'localized' version for current db
+    // (we might as well convert $dbSchema to generic format and diff in generic format,
+    // but eZDbSchemaChecker::diff does not know how to re-localize the generated sql
+    $dbSchema->transformSchema( $originalSchema, true );
+    $differences = eZDbSchemaChecker::diff( $dbSchema->schema( array( 'format' => 'local', 'force_autoincrement_rebuild' => true ) ), $originalSchema );
     $sqlDiff = $dbSchema->generateUpgradeFile( $differences );
 
     if ( strlen( $sqlDiff ) == 0 )
@@ -79,5 +101,5 @@ if ( $Module->isCurrentAction( 'DBCheck' ) )
 $Result = array();
 $Result['content'] = $tpl->fetch( "design:setup/systemupgrade.tpl" );
 $Result['path'] = array( array( 'url' => false,
-                                'text' => ezi18n( 'kernel/setup', 'System Upgrade' ) ) );
+                                'text' => ezpI18n::tr( 'kernel/setup', 'System Upgrade' ) ) );
 ?>

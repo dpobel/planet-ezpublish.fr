@@ -1,10 +1,10 @@
 //
 // Created on: <1-Aug-2002 16:45:00 fh>
 //
+// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.2.0
-// BUILD VERSION: 24182
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 4.1.x
+// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -21,6 +21,8 @@
 //   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 //   MA 02110-1301, USA.
 //
+//
+// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
 /*! \file ezpopupmenu.js
@@ -144,7 +146,7 @@ var EZPOPMENU_SUBTOPOFFSET = 4;
 // Global VARS
 // CurrentNodeID holds id of current node to edit for submenu's
 var CurrentSubstituteValues = -1;
-var CurrentDisableID = -1;
+var CurrentDisableIDList = [];
 // Which Menu should be disabled
 var CurrentDisableMenuID = -1;
 
@@ -185,7 +187,7 @@ function ezpopupmenu_setSubstituteValue( key, value )
    'menuHeader' If the menu has a header it is replaced with this value.
    'disableID' If this id is found in the list of known disabled for this menu the item is disabled.
  */
-function ezpopmenu_showTopLevel( event, menuID, substituteValues, menuHeader, disableID, disableMenuID )
+function ezpopmenu_showTopLevel( event, menuID, substituteValues, menuHeader, disableIDList, disableMenuID )
 {
     if( !document.getElementById( menuID ) ) return;
     ezjslib_mouseHandler( event ); // register new mouse position
@@ -196,9 +198,9 @@ function ezpopmenu_showTopLevel( event, menuID, substituteValues, menuHeader, di
         CurrentSubstituteValues = substituteValues;
     }
 
-    if( disableID != -1 )
+    if( disableIDList != -1 )
     {
-        CurrentDisableID = disableID;
+        CurrentDisableIDList = disableIDList.push !== undefined ? disableIDList : [disableIDList];
     }
 
     CurrentDisableMenuID = disableMenuID;
@@ -304,9 +306,18 @@ function ezpopmenu_doItemSubstitution( menuID, menuHeader )
             hrefElement.innerHTML = content;
         }
 
-        if( ( typeof( menuArray[menuID]['elements'][i]['disabled_class'] ) != 'undefined' &&
-              ( ( typeof( menuArray[menuID]['elements'][i]['disabled_for'] ) != 'undefined' &&
-                  menuArray[menuID]['elements'][i]['disabled_for'][CurrentDisableID] == 'yes' ) ) ||
+        var disabledForElement = false;
+        if ( typeof( menuArray[menuID]['elements'][i]['disabled_for'] ) != 'undefined' && CurrentDisableIDList )
+        {
+                for ( var disI = 0, disL = CurrentDisableIDList.length; disI < disL; disI++ )
+                {
+                        if ( disabledForElement = menuArray[menuID]['elements'][i]['disabled_for'][ CurrentDisableIDList[disI] ] === 'yes'  )
+                                break;
+                }
+        }
+
+        if ( typeof( menuArray[menuID]['elements'][i]['disabled_class'] ) != 'undefined' &&
+              ( disabledForElement ||
               ( CurrentDisableMenuID && hrefElement.id == CurrentDisableMenuID ) ) )
         {
             CurrentDisabledMenusItems[hrefElement.id] = new Array();

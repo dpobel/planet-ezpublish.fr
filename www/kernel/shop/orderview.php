@@ -2,10 +2,10 @@
 //
 // Created on: <31-Jul-2002 16:49:13 bf>
 //
+// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.2.0
-// BUILD VERSION: 24182
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 4.3.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -23,10 +23,12 @@
 //   MA 02110-1301, USA.
 //
 //
+// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
+//
 
 $OrderID = $Params['OrderID'];
 $module = $Params['Module'];
-require_once( "kernel/common/template.php" );
+
 
 $ini = eZINI::instance();
 $http = eZHTTPTool::instance();
@@ -77,7 +79,7 @@ if ( !$access )
 {
      return $module->handleError( eZError::KERNEL_ACCESS_DENIED, 'kernel' );
 }
-$tpl = templateInit();
+$tpl = eZTemplate::factory();
 
 
 $tpl->setVariable( "order", $order );
@@ -85,8 +87,8 @@ $tpl->setVariable( "order", $order );
 $Result = array();
 $Result['content'] = $tpl->fetch( "design:shop/orderview.tpl" );
 $Result['path'] = array( array( 'url' => 'shop/orderlist',
-                                'text' => ezi18n( 'kernel/shop', 'Order list' ) ),
+                                'text' => ezpI18n::tr( 'kernel/shop', 'Order list' ) ),
                          array( 'url' => false,
-                                'text' => ezi18n( 'kernel/shop', 'Order #%order_id', null, array( '%order_id' => $order->attribute( 'order_nr' ) ) ) ) );
+                                'text' => ezpI18n::tr( 'kernel/shop', 'Order #%order_id', null, array( '%order_id' => $order->attribute( 'order_nr' ) ) ) ) );
 
 ?>

@@ -26,6 +26,7 @@ Tool[]=setup_link
 Tool[]
 Tool[]=admin_current_user
 Tool[]=admin_bookmarks
+Tool[]=admin_preferences
 
 [Toolbar_admin_developer]
 Tool[]

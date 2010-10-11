@@ -4,10 +4,10 @@
 //
 // Created on: <18-Sep-2003 13:13:56 kk>
 //
+// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.2.0
-// BUILD VERSION: 24182
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 4.3.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -24,6 +24,8 @@
 //   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 //   MA 02110-1301, USA.
 //
+//
+// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
 /*! \file
@@ -49,7 +51,7 @@ class eZRSSExportItem extends eZPersistentObject
 
     static function definition()
     {
-        return array( "fields" => array( "id" => array( 'name' => 'ID',
+        return array( 'fields' => array( 'id' => array( 'name' => 'ID',
                                                         'datatype' => 'integer',
                                                         'default' => 0,
                                                         'required' => true ),
@@ -86,6 +88,10 @@ class eZRSSExportItem extends eZPersistentObject
                                                            'datatype' => 'string',
                                                            'default' => '',
                                                            'required' => true ),
+                                         'enclosure' => array( 'name' => 'Enclosure',
+                                                           'datatype' => 'string',
+                                                           'default' => '',
+                                                           'required' => false ),
                                          'status' => array( 'name' => 'Status',
                                                             'datatype' => 'integer',
                                                             'default' => 0,
@@ -94,13 +100,13 @@ class eZRSSExportItem extends eZPersistentObject
                                                               'datatype' => 'integer',
                                                               'default' => 0,
                                                               'required' => true ) ),
-                      "keys" => array( "id", 'status' ),
+                      'keys' => array( 'id', 'status' ),
                       'function_attributes' => array( 'class_attributes' => 'classAttributes',
                                                       'source_node' => 'sourceNode',
                                                       'source_path' => 'sourcePath' ),
-                      "increment_key" => "id",
-                      "class_name" => "eZRSSExportItem",
-                      "name" => "ezrss_export_item" );
+                      'increment_key' => 'id',
+                      'class_name' => 'eZRSSExportItem',
+                      'name' => 'ezrss_export_item' );
     }
 
     /*!
@@ -119,6 +125,7 @@ class eZRSSExportItem extends eZPersistentObject
                       'url_id' => '',
                       'description' => '',
                       'title' => '',
+                      'enclosure' => '',
                       'status' => 0,
                       'subnodes' => 0);
         return new eZRSSExportItem( $row );

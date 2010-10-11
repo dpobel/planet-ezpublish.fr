@@ -2,10 +2,10 @@
 //
 // Created on: <18-Nov-2003 10:00:08 amos>
 //
+// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.2.0
-// BUILD VERSION: 24182
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 4.3.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -22,6 +22,8 @@
 //   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 //   MA 02110-1301, USA.
 //
+//
+// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
 $Module = $Params['Module'];
@@ -55,7 +57,7 @@ if ( $http->hasPostVariable( 'RemoveGroupButton' ) && $http->hasPostVariable( 'g
 {
     if ( !eZClassFunctions::removeGroup( $ClassID, $ClassVersion, $http->postVariable( 'group_id_checked' ) ) )
     {
-        $validation['groups'][] = array( 'text' => ezi18n( 'kernel/class', 'You have to have at least one group that the class belongs to!' ) );
+        $validation['groups'][] = array( 'text' => ezpI18n::tr( 'kernel/class', 'You have to have at least one group that the class belongs to!' ) );
         $validation['processed'] = true;
     }
 }
@@ -74,9 +76,7 @@ if ( count( $groupList ) > 0 )
 
 $Module->setTitle( "Edit class " . $class->attribute( "name" ) );
 
-require_once( "kernel/common/template.php" );
-$tpl = templateInit();
-
+$tpl = eZTemplate::factory();
 $res = eZTemplateDesignResource::instance();
 $res->setKeys( array( array( 'class', $class->attribute( "id" ) ),
                       array( 'class_identifier', $class->attribute( 'identifier' ) ) ) );
@@ -87,11 +87,12 @@ $tpl->setVariable( 'class', $class );
 $tpl->setVariable( 'attributes', $attributes );
 $tpl->setVariable( 'datatypes', $datatypes );
 $tpl->setVariable( 'validation', $validation );
+$tpl->setVariable( 'scheduled_script_id', (int) $Params['ScheduledScriptID'] );
 
 $Result = array();
 $Result['content'] = $tpl->fetch( 'design:class/view.tpl' );
 $Result['path'] = array( array( 'url' => '/class/grouplist/',
-                                'text' => ezi18n( 'kernel/class', 'Classes' ) ) );
+                                'text' => ezpI18n::tr( 'kernel/class', 'Class groups' ) ) );
 if ( $mainGroupID !== false )
 {
     $Result['path'][] = array( 'url' => '/class/classlist/' . $mainGroupID,

@@ -1,11 +1,11 @@
 <?php
 //
-// Created on: <07-æÅ×-2003 14:21:36 sp>
+// Created on: <07-ï¿½ï¿½ï¿½-2003 14:21:36 sp>
 //
+// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.2.0
-// BUILD VERSION: 24182
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 4.3.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -22,6 +22,8 @@
 //   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 //   MA 02110-1301, USA.
 //
+//
+// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
 /*! \file
@@ -67,6 +69,7 @@ if ( $order instanceof eZOrder )
             switch( $operationResult['status'] )
             {
                 case eZModuleOperationInfo::STATUS_HALTED:
+                case eZModuleOperationInfo::STATUS_REPEAT:
                 {
                     if (  isset( $operationResult['redirect_url'] ) )
                     {
@@ -97,14 +100,13 @@ if ( $order instanceof eZOrder )
                 case eZModuleOperationInfo::STATUS_CANCELLED:
                 {
                     $Result = array();
-                    require_once( "kernel/common/template.php" );
-                    $tpl = templateInit();
 
+                    $tpl = eZTemplate::factory();
                     $tpl->setVariable( 'operation_result', $operationResult );
 
                     $Result['content'] = $tpl->fetch( "design:shop/cancelcheckout.tpl" ) ;
                     $Result['path'] = array( array( 'url' => false,
-                                                    'text' => ezi18n( 'kernel/shop', 'Checkout' ) ) );
+                                                    'text' => ezpI18n::tr( 'kernel/shop', 'Checkout' ) ) );
 
                     return;
                 }
@@ -134,13 +136,13 @@ if ( $order instanceof eZOrder )
                 if ( $attempt < 4)
                 {
                     $Result = array();
-                    require_once( "kernel/common/template.php" );
-                    $tpl = templateInit();
+
+                    $tpl = eZTemplate::factory();
                     $tpl->setVariable( 'attempt', $attempt );
                     $tpl->setVariable( 'orderID', $orderID );
                     $Result['content'] = $tpl->fetch( "design:shop/checkoutagain.tpl" ) ;
                     $Result['path'] = array( array( 'url' => false,
-                                                    'text' => ezi18n( 'kernel/shop', 'Checkout' ) ) );
+                                                    'text' => ezpI18n::tr( 'kernel/shop', 'Checkout' ) ) );
                     return;
                 }
                 else
@@ -149,14 +151,14 @@ if ( $order instanceof eZOrder )
                     $http->removeSessionVariable( "CheckoutAttempt" );
 
                     $Result = array();
-                    require_once( "kernel/common/template.php" );
-                    $tpl = templateInit();
+
+                    $tpl = eZTemplate::factory();
                     $tpl->setVariable ("ErrorCode", "NO_CALLBACK");
                     $tpl->setVariable ("OrderID", $orderID);
 
                     $Result['content'] = $tpl->fetch( "design:shop/cancelcheckout.tpl" ) ;
                     $Result['path'] = array( array( 'url' => false,
-                                                    'text' => ezi18n( 'kernel/shop', 'Checkout' ) ) );
+                                                    'text' => ezpI18n::tr( 'kernel/shop', 'Checkout' ) ) );
                     return;
                 }
             }

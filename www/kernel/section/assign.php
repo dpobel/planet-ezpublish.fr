@@ -2,10 +2,10 @@
 //
 // Created on: <27-Aug-2002 17:06:06 bf>
 //
+// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.2.0
-// BUILD VERSION: 24182
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 4.3.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -22,6 +22,8 @@
 //   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 //   MA 02110-1301, USA.
 //
+//
+// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
 $http = eZHTTPTool::instance();
@@ -91,8 +93,7 @@ else
                     }
                     if ( count( $deniedNodeIDList ) > 0 )
                     {
-                        require_once( 'kernel/common/template.php' );
-                        $tpl = templateInit();
+                        $tpl = eZTemplate::factory();
                         $tpl->setVariable( 'section_name', $section->attribute( 'name' ) );
                         $tpl->setVariable( 'error_number', 1 );
                         $deniedNodes = eZContentObjectTreeNode::fetch( $deniedNodeIDList );
@@ -101,9 +102,9 @@ else
                         $Result = array();
                         $Result['content'] = $tpl->fetch( "design:section/assign_notification.tpl" );
                         $Result['path'] = array( array( 'url' => false,
-                                                        'text' => ezi18n( 'kernel/section', 'Sections' ) ),
+                                                        'text' => ezpI18n::tr( 'kernel/section', 'Sections' ) ),
                                                  array( 'url' => false,
-                                                        'text' => ezi18n( 'kernel/section', 'Assign section' ) ) );
+                                                        'text' => ezpI18n::tr( 'kernel/section', 'Assign section' ) ) );
                         return;
                     }
                 }
@@ -130,32 +131,30 @@ else
                 }
                 else
                 {
-                    require_once( 'kernel/common/template.php' );
-                    $tpl = templateInit();
+                    $tpl = eZTemplate::factory();
                     $tpl->setVariable( 'section_name', $section->attribute( 'name' ) );
                     $tpl->setVariable( 'error_number', 2 );
                     $Result = array();
                     $Result['content'] = $tpl->fetch( "design:section/assign_notification.tpl" );
                     $Result['path'] = array( array( 'url' => false,
-                                                    'text' => ezi18n( 'kernel/section', 'Sections' ) ),
+                                                    'text' => ezpI18n::tr( 'kernel/section', 'Sections' ) ),
                                              array( 'url' => false,
-                                                    'text' => ezi18n( 'kernel/section', 'Assign section' ) ) );
+                                                    'text' => ezpI18n::tr( 'kernel/section', 'Assign section' ) ) );
                     return;
                 }
             }
         }
         else
         {
-            require_once( 'kernel/common/template.php' );
-            $tpl = templateInit();
+            $tpl = eZTemplate::factory();
             $tpl->setVariable( 'section_name', $section->attribute( 'name' ) );
             $tpl->setVariable( 'error_number', 3 );
             $Result = array();
             $Result['content'] = $tpl->fetch( "design:section/assign_notification.tpl" );
             $Result['path'] = array( array( 'url' => false,
-                                            'text' => ezi18n( 'kernel/section', 'Sections' ) ),
+                                            'text' => ezpI18n::tr( 'kernel/section', 'Sections' ) ),
                                      array( 'url' => false,
-                                            'text' => ezi18n( 'kernel/section', 'Assign section' ) ) );
+                                            'text' => ezpI18n::tr( 'kernel/section', 'Assign section' ) ) );
             return;
         }
     }

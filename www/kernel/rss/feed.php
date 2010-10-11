@@ -2,10 +2,10 @@
 //
 // Created on: <19-Sep-2002 16:45:08 kk>
 //
+// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.2.0
-// BUILD VERSION: 24182
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 4.3.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -22,6 +22,8 @@
 //   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 //   MA 02110-1301, USA.
 //
+//
+// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
 $Module = $Params['Module'];
@@ -49,8 +51,10 @@ $lastModified = gmdate( 'D, d M Y H:i:s', time() ) . ' GMT';
 
 if ( $cacheTime <= 0 )
 {
-    $xmlDoc = $RSSExport->attribute( 'rss-xml' );
-    $rssContent = $xmlDoc->saveXML();
+    // use the new attribute rss-xml-content instead of the deprecated attribute rss-xml
+    // it returns the RSS as an XML string instead of a DomDocument object
+    $xmlDoc = $RSSExport->attribute( 'rss-xml-content' );
+    $rssContent = $xmlDoc;
 }
 else
 {
@@ -67,10 +71,12 @@ else
 
     if ( !$cacheFile->exists() or ( time() - $cacheFile->mtime() > $cacheTime ) )
     {
-        $xmlDoc = $RSSExport->attribute( 'rss-xml' );
+        // use the new attribute rss-xml-content instead of the deprecated attribute rss-xml
+        // it returns the RSS as an XML string instead of a DomDocument object
+        $xmlDoc = $RSSExport->attribute( 'rss-xml-content' );
         // Get current charset
         $charset = eZTextCodec::internalCharset();
-        $rssContent = $xmlDoc->saveXML();
+        $rssContent = trim( $xmlDoc );
         $cacheFile->storeContents( $rssContent, 'rsscache', 'xml' );
     }
     else
@@ -101,8 +107,13 @@ else
 // Set header settings
 $httpCharset = eZTextCodec::httpCharset();
 header( 'Last-Modified: ' . $lastModified );
-header( 'Content-Type: application/rss+xml; charset=' . $httpCharset );
-header( 'Content-Length: '.strlen($rssContent) );
+
+if ( $RSSExport->attribute( 'rss_version' ) === 'ATOM' )
+    header( 'Content-Type: application/xml; charset=' . $httpCharset );
+else
+    header( 'Content-Type: application/rss+xml; charset=' . $httpCharset );
+
+header( 'Content-Length: ' . strlen( $rssContent ) );
 header( 'X-Powered-By: eZ Publish' );
 
 while ( @ob_end_clean() );
@@ -110,5 +121,6 @@ while ( @ob_end_clean() );
 echo $rssContent;
 
 eZExecution::cleanExit();
+
 
 ?>

@@ -2,10 +2,10 @@
 //
 // Created on: <16-Apr-2002 11:00:12 amos>
 //
+// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.2.0
-// BUILD VERSION: 24182
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 4.3.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -22,6 +22,8 @@
 //   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 //   MA 02110-1301, USA.
 //
+//
+// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
 $Module = $Params['Module'];
@@ -44,7 +46,7 @@ else
     $user = eZUser::currentUser();
     $user_id = $user->attribute( "contentobject_id" );
     $workflowGroup = eZWorkflowGroup::create( $user_id );
-    $workflowGroup->setAttribute( "name", ezi18n( 'kernel/workflow/groupedit', "New WorkflowGroup" ) );
+    $workflowGroup->setAttribute( "name", ezpI18n::tr( 'kernel/workflow/groupedit', "New WorkflowGroup" ) );
     $WorkflowGroupID = $workflowGroup->attribute( "id" );
 }
 
@@ -90,12 +92,12 @@ if ( $http->hasPostVariable( "StoreButton" ) )
     return;
 }
 
-$Module->setTitle( ezi18n( 'kernel/workflow', 'Edit workflow group' ) . ' ' .
+$Module->setTitle( ezpI18n::tr( 'kernel/workflow', 'Edit workflow group' ) . ' ' .
                    $workflowGroup->attribute( "name" ) );
 
 // Template handling
-require_once( "kernel/common/template.php" );
-$tpl = templateInit();
+
+$tpl = eZTemplate::factory();
 
 $res = eZTemplateDesignResource::instance();
 $res->setKeys( array( array( "workflow_group", $workflowGroup->attribute( "id" ) ) ) ); // WorkflowGroup ID
@@ -108,9 +110,9 @@ $tpl->setVariable( "workflow_group", $workflowGroup );
 
 $Result = array();
 $Result['content'] = $tpl->fetch( "design:workflow/groupedit.tpl" );
-$Result['path'] = array( array( 'text' => ezi18n( 'kernel/workflow', 'Workflow' ),
+$Result['path'] = array( array( 'text' => ezpI18n::tr( 'kernel/workflow', 'Workflow' ),
                                 'url' => false ),
-                         array( 'text' => ezi18n( 'kernel/workflow', 'Group edit' ),
+                         array( 'text' => ezpI18n::tr( 'kernel/workflow', 'Group edit' ),
                                 'url' => false ) );
 
 

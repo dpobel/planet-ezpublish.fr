@@ -4,10 +4,10 @@
 //
 // Created on: <28-Jan-2003 13:19:47 sp>
 //
+// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.2.0
-// BUILD VERSION: 24182
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 4.3.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -25,11 +25,13 @@
 //   MA 02110-1301, USA.
 //
 //
+// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
+//
 
 /*! \file
 */
 
-require_once( 'kernel/common/template.php' );
+
 $Module = $Params['Module'];
 $Offset = $Params['Offset'];
 if ( isset( $Params['UserParameters'] ) )
@@ -87,20 +89,26 @@ else if ( $http->hasPostVariable( 'EmptyButton' )  )
     $access = $user->hasAccessTo( 'content', 'cleantrash' );
     if ( $access['accessWord'] == 'yes' )
     {
-        $objectList = eZPersistentObject::fetchObjectList( eZContentObject::definition(),
-                                                           null,
-                                                           array( 'status' => eZContentObject::STATUS_ARCHIVED ),
-                                                           null,
-                                                           null,
-                                                           true );
-
         $db = eZDB::instance();
-        $db->begin();
-        foreach ( $objectList as $object )
+        while ( true )
         {
-            $object->purge();
+            // Fetch 100 objects at a time, to limit transaction size
+            $objectList = eZPersistentObject::fetchObjectList( eZContentObject::definition(),
+                                                               null,
+                                                               array( 'status' => eZContentObject::STATUS_ARCHIVED ),
+                                                               null,
+                                                               100,
+                                                               true );
+            if ( count( $objectList ) < 1 )
+                break;
+
+            $db->begin();
+            foreach ( $objectList as $object )
+            {
+                $object->purge();
+            }
+            $db->commit();
         }
-        $db->commit();
     }
     else
     {
@@ -108,12 +116,12 @@ else if ( $http->hasPostVariable( 'EmptyButton' )  )
     }
 }
 
-$tpl = templateInit();
+$tpl = eZTemplate::factory();
 $tpl->setVariable( 'view_parameters', $viewParameters );
 
 $Result = array();
 $Result['content'] = $tpl->fetch( 'design:content/trash.tpl' );
-$Result['path'] = array( array( 'text' => ezi18n( 'kernel/content', 'Trash' ),
+$Result['path'] = array( array( 'text' => ezpI18n::tr( 'kernel/content', 'Trash' ),
                                 'url' => false ) );
 
 

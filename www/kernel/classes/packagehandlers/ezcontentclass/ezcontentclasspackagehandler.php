@@ -4,10 +4,10 @@
 //
 // Created on: <23-Jul-2003 16:11:42 amos>
 //
+// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.2.0
-// BUILD VERSION: 24182
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 4.3.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -24,6 +24,8 @@
 //   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 //   MA 02110-1301, USA.
 //
+//
+// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
 /*! \file
@@ -108,7 +110,7 @@ class eZContentClassPackageHandler extends eZPackageHandler
                     }
                 }
 
-                $description = $explainDescription ? ezi18n( 'kernel/package', "Content class '%classname' (%classidentifier)", false,
+                $description = $explainDescription ? ezpI18n::tr( 'kernel/package', "Content class '%classname' (%classidentifier)", false,
                                                              array( '%classname' => $className,
                                                                     '%classidentifier' => $classIdentifier ) ) : '';
                 $explainInfo = array( 'description' => $description,
@@ -152,7 +154,7 @@ class eZContentClassPackageHandler extends eZPackageHandler
                 {
                     $installParameters['error'] = array( 'error_code' => self::ERROR_HAS_OBJECTS,
                                                          'element_id' => $classRemoteID,
-                                                         'description' => ezi18n( 'kernel/package',
+                                                         'description' => ezpI18n::tr( 'kernel/package',
                                                                                   "Removing class '%classname' will result in the removal of %objectscount object(s) of this class and all their sub-items. Are you sure you want to uninstall it?",
                                                                                   false,
                                                                                   array( '%classname' => $name,
@@ -221,7 +223,7 @@ class eZContentClassPackageHandler extends eZPackageHandler
         if ( $class )
         {
             $className = $class->name();
-            $description = ezi18n( 'kernel/package', "Class '%classname' already exists.", false,
+            $description = ezpI18n::tr( 'kernel/package', "Class '%classname' already exists.", false,
                                    array( '%classname' => $className ) );
 
             $choosenAction = $this->errorChoosenAction( self::ERROR_EXISTS,
@@ -254,14 +256,14 @@ class eZContentClassPackageHandler extends eZPackageHandler
                                                      'actions' => array() );
                 if ( $class->isRemovable() )
                 {
-                    $errorMsg = ezi18n( 'kernel/package', "Replace existing class" );
+                    $errorMsg = ezpI18n::tr( 'kernel/package', "Replace existing class" );
                     $objectsCount = eZContentObject::fetchSameClassListCount( $class->attribute( 'id' ) );
                     if ( $objectsCount )
-                        $errorMsg .= ' ' . ezi18n( 'kernel/package', "(Warning! $objectsCount content object(s) and their sub-items will be removed)" );
+                        $errorMsg .= ' ' . ezpI18n::tr( 'kernel/package', "(Warning! $objectsCount content object(s) and their sub-items will be removed)" );
                     $installParameters['error']['actions'][self::ACTION_REPLACE] = $errorMsg;
                 }
-                $installParameters['error']['actions'][self::ACTION_SKIP] = ezi18n( 'kernel/package', 'Skip installing this class' );
-                $installParameters['error']['actions'][self::ACTION_NEW] = ezi18n( 'kernel/package', 'Keep existing and create a new one' );
+                $installParameters['error']['actions'][self::ACTION_SKIP] = ezpI18n::tr( 'kernel/package', 'Skip installing this class' );
+                $installParameters['error']['actions'][self::ACTION_NEW] = ezpI18n::tr( 'kernel/package', 'Keep existing and create a new one' );
                 return false;
             }
         }
@@ -361,7 +363,7 @@ class eZContentClassPackageHandler extends eZPackageHandler
             $attributeIsTranslatable = strtolower( $classAttributeNode->getAttribute( 'translatable' ) ) == 'true';
             $attributeSerializedNameListNode = $classAttributeNode->getElementsByTagName( 'serialized-name-list' )->item( 0 );
             $attributeSerializedNameListContent = $attributeSerializedNameListNode ? $attributeSerializedNameListNode->textContent : false;
-            $attributeSerializedNameList = new eZContentClassAttributeNameList( $attributeSerializedNameListContent );
+            $attributeSerializedNameList = new eZSerializedObjectNameList( $attributeSerializedNameListContent );
             if ( $attributeSerializedNameList->isEmpty() )
                 $attributeSerializedNameList->initFromString( $classAttributeNode->getElementsByTagName( 'name' )->item( 0 )->textContent ); // for backward compatibility( <= 3.8 )
             $attributeSerializedNameList->validate( );

@@ -1,4 +1,6 @@
-<!DOCTYPE TS><TS>
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE TS>
+<TS version="2.0">
 <context>
     <name>contentstructuremenu/show_content_structure</name>
     <message>
@@ -117,6 +119,14 @@
     </message>
     <message>
         <source>Use this menu to select the language you to want use then click the &quot;New class&quot; button. The item will be created within the current location.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Classes inside &lt;%group_name&gt; (%class_count)</source>
+        <translation>Klase unutar grupe &lt;%group_name&gt; (%class_count)</translation>
+    </message>
+    <message>
+        <source>List of classes inside %group_name class group (%class_count)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -348,6 +358,42 @@
         <source>The &lt;%datatype_name&gt; datatype cannot be used as an information collector.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Edit &lt;%class_name&gt; (%object_count)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Description</source>
+        <translation type="unfinished">Opis</translation>
+    </message>
+    <message>
+        <source>Use this field to set the informal description of the class. The description field can contain whitespaces and special characters.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>List of class attributes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Class attribute item</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use this field to set the informal description of the attribute. This field can contain whitespaces and special characters.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use this category to group attributes together in edit interface, some categories might also be hidden in full view if they are for instance only meta attributes.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Default</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Category</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>design/admin/class/edit_denied</name>
@@ -495,6 +541,22 @@
     <message>
         <source>Edit the &lt;%class_name&gt; class.</source>
         <translation>Izmeni klasu &lt;%class_name&gt;.</translation>
+    </message>
+    <message>
+        <source>Class groups (%group_count)</source>
+        <translation>Grupe klasa (%group_count)</translation>
+    </message>
+    <message>
+        <source>List of class groups</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>List of recently modified classes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Objects</source>
+        <translation type="unfinished">Objekti</translation>
     </message>
 </context>
 <context>
@@ -918,6 +980,42 @@
         <source>Show available translations.</source>
         <translation type="unfinished">Prikaži dostupne prevode.</translation>
     </message>
+    <message>
+        <source>Class storing deferred</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The storing of the class has been deferred because existing objects need to be updated. The process has been scheduled to run in the background and will be started automatically. Please do not edit the class again until the process has finished. You can monitor the progress of the background process here:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Background process monitor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Class name and number of objects</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Member of class groups (%group_count)</source>
+        <translation>Član grupe klasa (%group_count)</translation>
+    </message>
+    <message>
+        <source>Override templates (%1)</source>
+        <translation>Zaobiđi šablone (%1)</translation>
+    </message>
+    <message>
+        <source>Translations (%translations)</source>
+        <translation type="unfinished">Prevodi (%translations)</translation>
+    </message>
+    <message>
+        <source>Description</source>
+        <translation type="unfinished">Opis</translation>
+    </message>
+    <message>
+        <source>Category</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>design/admin/collaboration</name>
@@ -1164,6 +1262,10 @@
     <message>
         <source>You do not have permission to edit the contents of &lt;%bookmark_name&gt;.</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>My bookmarks (%bookmark_count)</source>
+        <translation>Moje oznake za knjigu (%bookmark_count)</translation>
     </message>
 </context>
 <context>
@@ -1503,6 +1605,13 @@
     </message>
 </context>
 <context>
+    <name>design/admin/content/dashboard</name>
+    <message>
+        <source>Dashboard</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>design/admin/content/datatype</name>
     <message>
         <source>No media file is available.</source>
@@ -1590,6 +1699,10 @@
         <source>New version</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Versions for &lt;%object_name&gt; (%version_count)</source>
+        <translation type="unfinished">Verzije za objekt &lt;%object_name&gt; (%version_count)</translation>
+    </message>
 </context>
 <context>
     <name>design/admin/content/draft</name>
@@ -1660,6 +1773,10 @@
     <message>
         <source>Are you sure you want to remove all drafts?</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>My drafts (%draft_count)</source>
+        <translation>Moje skice (%draft_count)</translation>
     </message>
 </context>
 <context>
@@ -2048,6 +2165,58 @@
         <source>States</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Toggle fullscreen editing!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Store draft and exit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Store the draft that is being edited and exit from edit mode. Use when you need to exit your work and return later to continue.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit &lt;%object_name&gt; (%class_name)</source>
+        <translation>Izmena objekta &lt;%object_name&gt; (%class_name)</translation>
+    </message>
+    <message>
+        <source>Locations (%locations)</source>
+        <translation>Lokacije (%locations)</translation>
+    </message>
+    <message>
+        <source>Preview</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Existing translations</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Base translation on</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>None</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Related objects (%related_objects)</source>
+        <translation>Povezani objekti (%related_objects)</translation>
+    </message>
+    <message>
+        <source>Related images (%related_images)</source>
+        <translation>Povezane slike (%related_images)</translation>
+    </message>
+    <message>
+        <source>Related files (%related_files)</source>
+        <translation>Povezane datoteke (%related_files)</translation>
+    </message>
+    <message>
+        <source>Related content (%related_objects)</source>
+        <translation>Povezani sadržaj (%related_objects)</translation>
+    </message>
 </context>
 <context>
     <name>design/admin/content/edit_attribute</name>
@@ -2214,6 +2383,14 @@
         <source>You cannot edit any of the drafts because none of them belong to you. You can create a new draft, select it and then edit it.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Conflicting versions (%draft_count)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Current drafts (%draft_count)</source>
+        <translation>Trenutne skice (%draft_count)</translation>
+    </message>
 </context>
 <context>
     <name>design/admin/content/edit_languages</name>
@@ -2291,6 +2468,26 @@
     </message>
     <message>
         <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Existing translations</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select the translation you want to edit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>New translation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select the translation you want to add</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Translate based on</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2488,6 +2685,14 @@
         <source>Back to history</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Versions for &lt;%object_name&gt; (%version_count)</source>
+        <translation type="unfinished">Verzije za objekt &lt;%object_name&gt; (%version_count)</translation>
+    </message>
+    <message>
+        <source>New drafts (%newerDraftCount)</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>design/admin/content/pendinglist</name>
@@ -2518,6 +2723,10 @@
     <message>
         <source>Unknown</source>
         <translation>Nepoznat</translation>
+    </message>
+    <message>
+        <source>My pending items (%pending_count)</source>
+        <translation>Moji poslovi na čekanju (%pending_count)</translation>
     </message>
 </context>
 <context>
@@ -2770,6 +2979,10 @@
         <source>This subtree/item has no external relations.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>&quot;%contentObjectName&quot; (%children_count): Sub items that are used by other objects </source>
+        <translation>&quot;%contentObjectName&quot; (%children_count): Podelementi koje koriste drugi objekti</translation>
+    </message>
 </context>
 <context>
     <name>design/admin/content/search</name>
@@ -3012,6 +3225,14 @@
         <source>The language cannot be removed because it is in use.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Available languages for translation of content (%translations_count)</source>
+        <translation>Dostupni jezici za prevod sadržaja (%translations_count)</translation>
+    </message>
+    <message>
+        <source>Toggle all.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>design/admin/content/translationview</name>
@@ -3221,6 +3442,10 @@
     <message>
         <source>Restore</source>
         <translation type="unfinished">Obnovi</translation>
+    </message>
+    <message>
+        <source>Trash (%list_count)</source>
+        <translation>Smeće (%list_count)</translation>
     </message>
 </context>
 <context>
@@ -3539,6 +3764,14 @@
         <source>Redirecting URL</source>
         <translation type="unfinished">Preusmereni URL</translation>
     </message>
+    <message>
+        <source>URL aliases for &lt;%node_name&gt; (%alias_count)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Generated aliases (%count)</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>design/admin/content/urlalias_global</name>
@@ -3718,6 +3951,10 @@
         <source>Destination (path to existing functionality or resource)</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Globally defined URL aliases (%alias_count)</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>design/admin/content/urlalias_wildcard</name>
@@ -3843,6 +4080,10 @@
     </message>
     <message>
         <source>Enter the destination URL for the new wildcard. Example: dev/{1\}</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Defined URL aliases with wildcard(%wildcard_count)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4004,6 +4245,10 @@
         <source>Back</source>
         <translation type="unfinished">Nazad</translation>
     </message>
+    <message>
+        <source>Versions for &lt;%object_name&gt; (%version_count)</source>
+        <translation>Verzije za objekt &lt;%object_name&gt; (%version_count)</translation>
+    </message>
 </context>
 <context>
     <name>design/admin/content/view/versionview</name>
@@ -4135,6 +4380,14 @@
         <source>Your selected translation does not match the language of your selected siteaccess. This may lead to unexpected results in the preview, however it may also be what you intended.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Back to edit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished">Nazad</translation>
+    </message>
 </context>
 <context>
     <name>design/admin/contentstructuremenu</name>
@@ -4180,6 +4433,176 @@
     </message>
     <message>
         <source>[%classname] Click on the icon to display a context-sensitive menu.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Object ID</source>
+        <translation type="unfinished">Objekt ID</translation>
+    </message>
+</context>
+<context>
+    <name>design/admin/dashboard/all_latest_content</name>
+    <message>
+        <source>All latest content</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Type</source>
+        <translation type="unfinished">Vrsta</translation>
+    </message>
+    <message>
+        <source>Published</source>
+        <translation type="unfinished">Objavljeno</translation>
+    </message>
+    <message>
+        <source>Author</source>
+        <translation type="unfinished">Autor</translation>
+    </message>
+    <message>
+        <source>Edit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit &lt;%child_name&gt;.</source>
+        <translation type="unfinished">Izmeni &lt;%child_name&gt;.</translation>
+    </message>
+    <message>
+        <source>You do not have permission to edit &lt;%child_name&gt;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Latest content list is empty.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>design/admin/dashboard/drafts</name>
+    <message>
+        <source>My drafts</source>
+        <translation type="unfinished">Moje skice</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Type</source>
+        <translation type="unfinished">Vrsta</translation>
+    </message>
+    <message>
+        <source>Version</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Modified</source>
+        <translation type="unfinished">Promenjeno</translation>
+    </message>
+    <message>
+        <source>Edit &lt;%draft_name&gt;.</source>
+        <translation type="unfinished">Izmeni &lt;%draft_name&gt;.</translation>
+    </message>
+    <message>
+        <source>Edit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Currently you do not have any drafts available.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>design/admin/dashboard/latest_content</name>
+    <message>
+        <source>My latest content</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Type</source>
+        <translation type="unfinished">Vrsta</translation>
+    </message>
+    <message>
+        <source>Modified</source>
+        <translation type="unfinished">Promenjeno</translation>
+    </message>
+    <message>
+        <source>Edit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit &lt;%child_name&gt;.</source>
+        <translation type="unfinished">Izmeni &lt;%child_name&gt;.</translation>
+    </message>
+    <message>
+        <source>You do not have permission to edit &lt;%child_name&gt;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Your latest content list is empty.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>design/admin/dashboard/maintenance</name>
+    <message>
+        <source>Software update and Maintenance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Your installation: &lt;span id=&quot;ez-version&quot;&gt;%1&lt;/span&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>If your installation is not running eZ Publish Premium, it might not be up to date with the latest maintenance service packs. Contact eZ Systems.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>design/admin/dashboard/pending_list</name>
+    <message>
+        <source>My pending items</source>
+        <translation type="unfinished">Lista poslova koji me očekuju</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Type</source>
+        <translation type="unfinished">Vrsta</translation>
+    </message>
+    <message>
+        <source>Modified</source>
+        <translation type="unfinished">Promenjeno</translation>
+    </message>
+    <message>
+        <source>Currently you do not have any pending items available.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>design/admin/dashboard/wishlist</name>
+    <message>
+        <source>Wish list</source>
+        <translation type="unfinished">Lista želja</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Type</source>
+        <translation type="unfinished">Vrsta</translation>
+    </message>
+    <message>
+        <source>Currently you do not have any products on your wish list.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4459,6 +4882,10 @@
         <source>Unknown user</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Information collected by &lt;%object_name&gt; (%collection_count)</source>
+        <translation>Prikupljeni podaci sa &lt;%object_name&gt; (%collection_count)</translation>
+    </message>
 </context>
 <context>
     <name>design/admin/infocollector/confirmremoval</name>
@@ -4536,6 +4963,10 @@
     <message>
         <source>Remove all information that was collected by the selected objects.</source>
         <translation>Ukloni sve informacije koje su prikupljene sa izabranim objektima.</translation>
+    </message>
+    <message>
+        <source>Objects that have collected information (%object_count)</source>
+        <translation>Objekti koji su prikupili informacije (%object_count)</translation>
     </message>
 </context>
 <context>
@@ -5465,6 +5896,126 @@
         <source>Show state assignment widget.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Tab is disabled, enable on dashboard.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Translations (%count)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Locations (%count)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Relations (%count)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Roles (%count)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Policies (%count)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sub items (%children_count)</source>
+        <translation>Podelemenata (%children_count)</translation>
+    </message>
+    <message>
+        <source>Create</source>
+        <translation type="unfinished">Kreiraj</translation>
+    </message>
+    <message>
+        <source>in</source>
+        <translation type="unfinished">u</translation>
+    </message>
+    <message>
+        <source>Here</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Published order</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>List of sub items of current node, with controlls to edit, remove and move them directly.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Node and object details like creator, when it was created, section it belongs to, number of versions and translations, Node ID and Object ID.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Content state</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>States and their states groups for current object.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>State group</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No content object state is configured. This can be done %urlstart here%urlend.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Locations (aka Nodes) for current object.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>New translation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Policy list and the Role that are assignet to current node.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Limited to</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%limitation_identifier %limitation_value</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Object relation list from current object.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Related objects (%related_objects_count)</source>
+        <translation>Povezani objekti (%related_objects_count)</translation>
+    </message>
+    <message>
+        <source>Reverse object relation list to current object.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Reverse related objects (%related_objects_count)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>List of roles assigned with and without limitations for current node.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Translations (%translations)</source>
+        <translation>Prevodi (%translations)</translation>
+    </message>
+    <message>
+        <source>Existing translations</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Language list of translations for current object.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>design/admin/node/view/line</name>
@@ -5590,6 +6141,10 @@
     <message>
         <source>Unknown</source>
         <translation>Nepoznat</translation>
+    </message>
+    <message>
+        <source>My item notifications (%notification_count)</source>
+        <translation>Moja obaveštenja elementa (%notification_count)</translation>
     </message>
 </context>
 <context>
@@ -6043,6 +6598,10 @@ The packages will be lost forever.
 Note: The packages will not be uninstalled.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Remove</source>
+        <translation type="unfinished">Ukloni</translation>
+    </message>
 </context>
 <context>
     <name>design/admin/pagelayout</name>
@@ -6068,31 +6627,31 @@ Note: The packages will not be uninstalled.</source>
     </message>
     <message>
         <source>Content structure</source>
-        <translation>Struktura sadržaja</translation>
+        <translation type="unfinished">Struktura sadržaja</translation>
     </message>
     <message>
         <source>Media library</source>
-        <translation>Biblioteka medija</translation>
+        <translation type="unfinished">Biblioteka medija</translation>
     </message>
     <message>
         <source>User accounts</source>
-        <translation>Korisnički računi</translation>
+        <translation type="unfinished">Korisnički računi</translation>
     </message>
     <message>
         <source>Webshop</source>
-        <translation>Web prodavnica</translation>
+        <translation type="unfinished">Web prodavnica</translation>
     </message>
     <message>
         <source>Setup</source>
-        <translation>Setup</translation>
+        <translation type="unfinished">Setup</translation>
     </message>
     <message>
         <source>Design</source>
-        <translation>Dizajn</translation>
+        <translation type="unfinished">Dizajn</translation>
     </message>
     <message>
         <source>My account</source>
-        <translation>Moj račun</translation>
+        <translation type="obsolete">Moj račun</translation>
     </message>
     <message>
         <source>Current user</source>
@@ -6132,31 +6691,31 @@ Note: The packages will not be uninstalled.</source>
     </message>
     <message>
         <source>Manage the main content structure of the site.</source>
-        <translation>Upravljanje glavnim sadržajem.</translation>
+        <translation type="unfinished">Upravljanje glavnim sadržajem.</translation>
     </message>
     <message>
         <source>Manage images, files, documents, etc.</source>
-        <translation>Upravljanje slikama, dokumentima i sl.</translation>
+        <translation type="unfinished">Upravljanje slikama, dokumentima i sl.</translation>
     </message>
     <message>
         <source>Manage users, user groups and permission settings.</source>
-        <translation>Upravljanje korisnicima, grupama korisnika i dozvolama.</translation>
+        <translation type="unfinished">Upravljanje korisnicima, grupama korisnika i dozvolama.</translation>
     </message>
     <message>
         <source>Manage customers, orders, discounts and VAT types; view sales statistics.</source>
-        <translation>Upravljanje kupcima, sniženjima i porezima.</translation>
+        <translation type="unfinished">Upravljanje kupcima, sniženjima i porezima.</translation>
     </message>
     <message>
         <source>Manage templates, menus, toolbars and other things related to appearence.</source>
-        <translation>Upravljanje šablonima, menijima, alatnim trakama i sl.</translation>
+        <translation type="unfinished">Upravljanje šablonima, menijima, alatnim trakama i sl.</translation>
     </message>
     <message>
         <source>Configure settings and manage advanced functionality.</source>
-        <translation>Konfiguracija podešavanja i upravljanje naprednim opcijama.</translation>
+        <translation type="unfinished">Konfiguracija podešavanja i upravljanje naprednim opcijama.</translation>
     </message>
     <message>
         <source>Manage items and settings that belong to your account.</source>
-        <translation>Upravljanje elementima i podešavanjima koje pripadaju vašem korisničkom računu.</translation>
+        <translation type="unfinished">Upravljanje elementima i podešavanjima koje pripadaju vašem korisničkom računu.</translation>
     </message>
     <message>
         <source>Change password for &lt;%username&gt;.</source>
@@ -6230,6 +6789,40 @@ Note: The packages will not be uninstalled.</source>
         <source>Change name, email, password, etc.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Search in all content</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Search in &apos;%node&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>User perferences</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dashboard</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>design/admin/pagelayout/path</name>
+    <message>
+        <source>You are here:</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>design/admin/pagelayout/rightmenu</name>
+    <message>
+        <source>Show / Hide rightmenu</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Hide / Show rightmenu</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>design/admin/parts/content/menu</name>
@@ -6275,6 +6868,10 @@ Note: The packages will not be uninstalled.</source>
     </message>
     <message>
         <source>Show content structure.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Site structure</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -6389,6 +6986,26 @@ Note: The packages will not be uninstalled.</source>
     </message>
     <message>
         <source>Enable &amp;quot;Back to edit&amp;quot; checkbox when editing content.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit profile</source>
+        <translation type="unfinished">Izmeni profil</translation>
+    </message>
+    <message>
+        <source>Dashboard</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Preview tab</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Disable &amp;quot;Preview tab&amp;quot; while browsing content.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enable &amp;quot;Preview tab&amp;quot; while browsing content.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -6580,7 +7197,7 @@ Note: The packages will not be uninstalled.</source>
     </message>
     <message>
         <source>Manage permission settings.</source>
-        <translation>Upravljanje ovlašćenjima.</translation>
+        <translation type="obsolete">Upravljanje ovlašćenjima.</translation>
     </message>
     <message>
         <source>Roles and policies</source>
@@ -6807,6 +7424,10 @@ Note: The packages will not be uninstalled.</source>
         <source>PDF exports [%export_count]</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>PDF exports (%export_count)</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>design/admin/popupmenu</name>
@@ -6932,6 +7553,18 @@ Note: The packages will not be uninstalled.</source>
     </message>
     <message>
         <source>Choose siteaccess</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Create RSS/ATOM feed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove RSS/ATOM feed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>New translation</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -7111,6 +7744,10 @@ Note: The packages will not be uninstalled.</source>
     </message>
     <message>
         <source>Use the drop-down menu to select the module that you want to grant access to.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Every function</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -7307,6 +7944,18 @@ Note: The packages will not be uninstalled.</source>
         <source>Welcome to the policy wizard. This three-step wizard will help you set up a new policy. The policy will be added to the role that is currently being edited. The wizard can be aborted at any stage by using the &quot;Cancel&quot; button.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Properties</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Nodes (%node_count)</source>
+        <translation>Čvorovi (%node_count)</translation>
+    </message>
+    <message>
+        <source>Subtrees (%subtree_count)</source>
+        <translation>Podstabla (%subtree_count)</translation>
+    </message>
 </context>
 <context>
     <name>design/admin/role/edit</name>
@@ -7394,6 +8043,14 @@ Note: The packages will not be uninstalled.</source>
         <source>Create a new policy.</source>
         <translation>Kreiraj novu politiku.</translation>
     </message>
+    <message>
+        <source>Save</source>
+        <translation type="unfinished">Snimi</translation>
+    </message>
+    <message>
+        <source>Save policy changes to this role</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>design/admin/role/list</name>
@@ -7456,6 +8113,10 @@ Note: The packages will not be uninstalled.</source>
     <message>
         <source>Copy the &lt;%role_name&gt; role.</source>
         <translation>Kopiraj &lt;%role_name&gt; ulogu.</translation>
+    </message>
+    <message>
+        <source>Roles (%role_count)</source>
+        <translation>Uloge (%role_count)</translation>
     </message>
 </context>
 <context>
@@ -7527,6 +8188,14 @@ Note: The packages will not be uninstalled.</source>
     <message>
         <source>The function limitations of this policy cannot be edited. This is either because the function does not support limitations or because the function was assigned without limitations when the policy was created.</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Nodes (%node_count)</source>
+        <translation>Čvorovi (%node_count)</translation>
+    </message>
+    <message>
+        <source>Subtrees (%subtree_count)</source>
+        <translation>Podstabla (%subtree_count)</translation>
     </message>
 </context>
 <context>
@@ -7638,6 +8307,18 @@ Note: The packages will not be uninstalled.</source>
     <message>
         <source>Name</source>
         <translation>Naziv</translation>
+    </message>
+    <message>
+        <source>Policies (%policies_count)</source>
+        <translation>Politike (%policies_count)</translation>
+    </message>
+    <message>
+        <source>Path: &apos;/%path_string&apos;, Class identifier: &apos;%class_identifier&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Users and groups using the &lt;%role_name&gt; role (%users_count)</source>
+        <translation>Korisnici i grupe korisnika koriste &lt;%role_name&gt; ulogu (%users_count)</translation>
     </message>
 </context>
 <context>
@@ -7898,6 +8579,18 @@ Note: The packages will not be uninstalled.</source>
         <source>Skip</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Enclosure (media)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use this drop-down to select the attribute that should be exported as the enclosure of the RSS export entry, enclosures are direct link to a media file, so use a media/image/file datatype .</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Field data</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>design/admin/rss/edit_import</name>
@@ -8120,6 +8813,14 @@ Note: The packages will not be uninstalled.</source>
         <source>Create a new RSS import.</source>
         <translation>Kreiraj novi RSS uvoz.</translation>
     </message>
+    <message>
+        <source>RSS exports (%exports_count)</source>
+        <translation>RSS izvozi (%exports_count)</translation>
+    </message>
+    <message>
+        <source>RSS imports (%imports_count)</source>
+        <translation>RSS uvozi (%imports_count)</translation>
+    </message>
 </context>
 <context>
     <name>design/admin/search/stats</name>
@@ -8326,6 +9027,14 @@ Note: The packages will not be uninstalled.</source>
         <source>You are not allowed to assign the &lt;%section_name&gt; section.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Sections (%section_count)</source>
+        <translation>Segmenti (%section_count)</translation>
+    </message>
+    <message>
+        <source>Assign a subtree to the &lt;%section_name&gt; section.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>design/admin/section/view</name>
@@ -8388,6 +9097,26 @@ Note: The packages will not be uninstalled.</source>
     <message>
         <source>This section is not assigned to any objects.</source>
         <translation>Segment nije dodeljen ni jednom objektu.</translation>
+    </message>
+    <message>
+        <source>Roles containing limitations associated with this section (%number_of_roles)</source>
+        <translation>Uloge sadrže ograničenja s obzirom na segment (%number_of_roles)</translation>
+    </message>
+    <message>
+        <source>Users and user groups with role limitations associated with this section (%number_of_roles)</source>
+        <translation>Korisnici i grupe korisnika sa ograničenim ulogama povezani sa ovim segmentom (%number_of_roles)</translation>
+    </message>
+    <message>
+        <source>Objects within this section (%number_of_objects)</source>
+        <translation>Objekti unutar segmenta (%number_of_objects)</translation>
+    </message>
+    <message>
+        <source>Assign subtree</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Assign subtree of objects to this section</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -8798,6 +9527,14 @@ Note: The packages will not be uninstalled.</source>
         <source>This operation will regenerate all the static content caches that are configured. This action can take  some time depending on the specifications of the server and the number of locations that are configured to be statically cached. If you encounter time-out problems, use the &amp;quot;bin/php/makestaticcache.php&amp;quot; shell script.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Categories</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source></source>
+        <translation></translation>
+    </message>
 </context>
 <context>
     <name>design/admin/setup/datatypecode</name>
@@ -8846,6 +9583,18 @@ Note: The packages will not be uninstalled.</source>
     </message>
     <message>
         <source>Problems detected during autoload generation:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Available extensions (%extension_count)</source>
+        <translation>Dostupne ekstenzije (%extension_count)</translation>
+    </message>
+    <message>
+        <source>Invert selection.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Activate</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -9421,6 +10170,30 @@ Note: The packages will not be uninstalled.</source>
         <source>Email</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Not all timed out sessions were successfully removed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The operation were cut short in order to avoid execution timeout.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Your alternatives are to:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Repeat the operation several times to complete it.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Clear the timed out session data from command-line using: &amp;gt;php bin/php/ezsessiongc.php</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Install the session cleanup cronjob &apos;session_gc.php&apos; and run on nightly intervals (see cronjob.ini or doc for how)</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>design/admin/shop/accounthandlers/html/ez</name>
@@ -9517,6 +10290,10 @@ Note: The packages will not be uninstalled.</source>
     </message>
     <message>
         <source>Unarchive selected orders.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Archived orders (%count)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -9929,6 +10706,10 @@ Note: The packages will not be uninstalled.</source>
         <source>Customers [%customers]</source>
         <translation>Kupci [%customers]</translation>
     </message>
+    <message>
+        <source>Customers (%customers)</source>
+        <translation>Kupci (%customers)</translation>
+    </message>
 </context>
 <context>
     <name>design/admin/shop/customerorderview</name>
@@ -9971,6 +10752,14 @@ Note: The packages will not be uninstalled.</source>
     <message>
         <source>Status</source>
         <translation>Status</translation>
+    </message>
+    <message>
+        <source>Orders (%order_count)</source>
+        <translation>Narudžbe (%order_count)</translation>
+    </message>
+    <message>
+        <source>Purchased products (%product_count)</source>
+        <translation>Kupljeni proizvodi (%product_count)</translation>
     </message>
 </context>
 <context>
@@ -10018,6 +10807,10 @@ Note: The packages will not be uninstalled.</source>
     <message>
         <source>Create a new discount group.</source>
         <translation>Kreiraj novu grupu sniženja.</translation>
+    </message>
+    <message>
+        <source>Discount groups (%discount_groups)</source>
+        <translation>Grupe sniženja (%discount_groups)</translation>
     </message>
 </context>
 <context>
@@ -10137,6 +10930,14 @@ Note: The packages will not be uninstalled.</source>
         <source>Add users and/or user groups to the &lt;%discount_group_name&gt; discount group.</source>
         <translation>Dodaj kupca i-ili grupu kupaca u grupu &lt;%discount_group_name&gt; popusta.</translation>
     </message>
+    <message>
+        <source>Discount rules (%rule_count)</source>
+        <translation>Uloge popusta (%rule_count)</translation>
+    </message>
+    <message>
+        <source>Customers (users and user groups) (%customer_count)</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>design/admin/shop/discountruleedit</name>
@@ -10166,7 +10967,7 @@ Note: The packages will not be uninstalled.</source>
     </message>
     <message>
         <source>New discount rule</source>
-        <translation>Nova uloga popusta</translation>
+        <translation type="unfinished">Nova uloga popusta</translation>
     </message>
     <message>
         <source>Product types</source>
@@ -10393,6 +11194,10 @@ Note: The packages will not be uninstalled.</source>
         <source>Archive selected orders.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Orders (%count)</source>
+        <translation>Narudžbe (%count)</translation>
+    </message>
 </context>
 <context>
     <name>design/admin/shop/orderstatistics</name>
@@ -10447,6 +11252,10 @@ Note: The packages will not be uninstalled.</source>
     <message>
         <source>Update the list using the values specified by the menus to the left.</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Product statistics (%count)</source>
+        <translation>Statistika proizvoda (%count)</translation>
     </message>
 </context>
 <context>
@@ -10535,6 +11344,10 @@ Note: The packages will not be uninstalled.</source>
         <source>This is the person who modified the status of the order. Click to view the user information.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Status history (%status_count)</source>
+        <translation>Istorijat statusa (%status_count)</translation>
+    </message>
 </context>
 <context>
     <name>design/admin/shop/preferredcurrency</name>
@@ -10592,6 +11405,10 @@ Note: The packages will not be uninstalled.</source>
     <message>
         <source>Click this button to store changes if you have modified any of the fields above.</source>
         <translation type="unfinished">Kliknite na dugme za čuvanje izmena ako ste izmenili bilo koje polje.</translation>
+    </message>
+    <message>
+        <source>Product categories (%categories)</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -10864,6 +11681,10 @@ Note: The packages will not be uninstalled.</source>
         <source>Order status [%order_status]</source>
         <translation>Status narudžbe [%order_status]</translation>
     </message>
+    <message>
+        <source>Order status (%order_status)</source>
+        <translation>Status narudžbe (%order_status)</translation>
+    </message>
 </context>
 <context>
     <name>design/admin/shop/userregister</name>
@@ -10998,6 +11819,10 @@ Note: The packages will not be uninstalled.</source>
         <source>Create a new VAT charging rule.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>VAT charging rules (%rules)</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>design/admin/shop/vattype</name>
@@ -11052,6 +11877,10 @@ Note: The packages will not be uninstalled.</source>
     <message>
         <source>Input did not validate</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>VAT types (%vat_types)</source>
+        <translation>Vrste PDV-a (%vat_types)</translation>
     </message>
 </context>
 <context>
@@ -11123,6 +11952,10 @@ Note: The packages will not be uninstalled.</source>
     <message>
         <source>Click this button to store changes if you have modified quantity and/or option values.</source>
         <translation>Kliknite ovo dugme da snimite izmene ako ste menjali količini i/ili sadržaj.</translation>
+    </message>
+    <message>
+        <source>My wish list (%item_count)</source>
+        <translation>Moja lista želja (%item_count)</translation>
     </message>
 </context>
 <context>
@@ -11240,6 +12073,10 @@ Note: The packages will not be uninstalled.</source>
     </message>
     <message>
         <source>Update the order of the content object states in this group.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Object states in this group (%state_count)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -11374,6 +12211,10 @@ Note: The packages will not be uninstalled.</source>
         <source>Content object state groups [%group_count]</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Content object state groups (%group_count)</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>design/admin/trigger/list</name>
@@ -11412,6 +12253,10 @@ Note: The packages will not be uninstalled.</source>
     <message>
         <source>Click this button to store changes if you have modified any of the fields above.</source>
         <translation>Kliknite na dugme za čuvanje izmena ako ste izmenili bilo koje polje.</translation>
+    </message>
+    <message>
+        <source>Workflow triggers (%trigger_count)</source>
+        <translation>Okidači radnog toka (%trigger_count)</translation>
     </message>
 </context>
 <context>
@@ -11527,6 +12372,18 @@ Note: The packages will not be uninstalled.</source>
         <source>The requested list is empty.</source>
         <translation>Zatražena lista je prazna.</translation>
     </message>
+    <message>
+        <source>Valid URLs (%url_list_count)</source>
+        <translation>Važeći URLovi (%url_list_count)</translation>
+    </message>
+    <message>
+        <source>Invalid URLs (%url_list_count)</source>
+        <translation>Nevažeći URLovi (%url_list_count)</translation>
+    </message>
+    <message>
+        <source>All URLs (%url_list_count)</source>
+        <translation>Svi URLovi (%url_list_count)</translation>
+    </message>
 </context>
 <context>
     <name>design/admin/url/view</name>
@@ -11629,6 +12486,10 @@ Note: The packages will not be uninstalled.</source>
     <message>
         <source>View the contents of version #%version_number.</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Objects using URL #%url_id (%url_count)</source>
+        <translation>Objekti koji koriste URL #%url_id (%url_count)</translation>
     </message>
 </context>
 <context>
@@ -12176,6 +13037,10 @@ your account.</source>
         <source>There are no overrides for the &lt;%template_name&gt; template.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Overrides for &lt;%template_name&gt; template in &lt;%current_siteaccess&gt; siteaccess (%override_count)</source>
+        <translation>Zaobilazni šablon &lt;%template_name&gt; u tekućem &lt;%current_siteaccess&gt; (%override_count)</translation>
+    </message>
 </context>
 <context>
     <name>design/admin/visual/toolbar</name>
@@ -12461,6 +13326,10 @@ your account.</source>
         <source>There are no payment gateway extensions installed.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Class/attribute combinations (%count)</source>
+        <translation>Klasa/atribut kombinacija (%count)</translation>
+    </message>
 </context>
 <context>
     <name>design/admin/workflow/groupedit</name>
@@ -12527,6 +13396,10 @@ your account.</source>
         <source>Create a new workflow group.</source>
         <translation>Kreiraj novu grupu radnog toka.</translation>
     </message>
+    <message>
+        <source>Workflow groups (%groups_count)</source>
+        <translation>Grupe radnih tokova (%groups_count)</translation>
+    </message>
 </context>
 <context>
     <name>design/admin/workflow/proccesslist</name>
@@ -12567,6 +13440,14 @@ your account.</source>
     </message>
     <message>
         <source>Current event</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Workflow processes (%trigger_count)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>(%process_count)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -12639,6 +13520,14 @@ your account.</source>
     <message>
         <source>Additional information</source>
         <translation>Dodatni podaci</translation>
+    </message>
+    <message>
+        <source>Member of groups (%group_count)</source>
+        <translation>Pripada grupama (%group_count)</translation>
+    </message>
+    <message>
+        <source>Events (%event_count)</source>
+        <translation>Događaji (%event_count)</translation>
     </message>
 </context>
 <context>
@@ -12718,6 +13607,10 @@ your account.</source>
     <message>
         <source>Create a new workflow.</source>
         <translation>Kreiraj novi radni tok.</translation>
+    </message>
+    <message>
+        <source>Workflows (%workflow_count)</source>
+        <translation>Radni tokovi (%workflow_count)</translation>
     </message>
 </context>
 <context>
@@ -13289,6 +14182,29 @@ your account.</source>
     <message>
         <source>Total VAT</source>
         <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>design/ezwebin/content/datatype</name>
+    <message>
+        <source>Year</source>
+        <translation type="unfinished">Godina</translation>
+    </message>
+    <message>
+        <source>Month</source>
+        <translation type="unfinished">Mesec</translation>
+    </message>
+    <message>
+        <source>Day</source>
+        <translation type="unfinished">Dan</translation>
+    </message>
+    <message>
+        <source>Hour</source>
+        <translation type="unfinished">Sat</translation>
+    </message>
+    <message>
+        <source>Minute</source>
+        <translation type="unfinished">Minut</translation>
     </message>
 </context>
 <context>
@@ -14148,6 +15064,61 @@ your account.</source>
         <source>Discard changes</source>
         <translation type="unfinished">Odbaci promene</translation>
     </message>
+    <message>
+        <source>Description</source>
+        <translation type="unfinished">Opis</translation>
+    </message>
+    <message>
+        <source>Use this field to set the informal description of the class. The description field can contain whitespaces and special characters.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>design/standard/class/edit_locked</name>
+    <message>
+        <source>Class locked</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This class has pending modifications defered to cronjob and thus it cannot be edited.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Wait until the script is finished. You might see the status in the %urlstart script monitor%urlend&lt;/a&gt;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>To force the modification of the class you may run the following command</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit &lt;%class_name&gt; [Class]</source>
+        <translation type="unfinished">Izmeni klasu &lt;%class_name&gt; [Klasa]</translation>
+    </message>
+    <message>
+        <source>Class</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Last modifier</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Last modified on</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The class will be available for editing after the script has been run by the cronjob.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Retry</source>
+        <translation type="unfinished">Ponovi</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>design/standard/class/list</name>
@@ -14309,6 +15280,10 @@ your account.</source>
     <message>
         <source>Siteaccess</source>
         <translation type="unfinished">Siteaccess</translation>
+    </message>
+    <message>
+        <source>Description</source>
+        <translation type="unfinished">Opis</translation>
     </message>
 </context>
 <context>
@@ -15376,6 +16351,18 @@ If you want to send comments to the approver or view the status use the URL belo
     </message>
     <message>
         <source>Option group name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>There are no related object.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Find object</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Find objects</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -17153,6 +18140,17 @@ If you want to send comments to the approver or view the status use the URL belo
     </message>
 </context>
 <context>
+    <name>design/standard/form</name>
+    <message>
+        <source>Thank you for your feedback</source>
+        <translation type="obsolete">Hvala Vam na povratnoj informaciji</translation>
+    </message>
+    <message>
+        <source>Your information was successfully received.</source>
+        <translation type="obsolete">Vaši podaci su primljeni.</translation>
+    </message>
+</context>
+<context>
     <name>design/standard/gui</name>
     <message>
         <source>Delete</source>
@@ -17520,6 +18518,10 @@ Ako uklonite lokacije uklonićete i decu.</translation>
     <message>
         <source>Store</source>
         <translation>Snimi</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="obsolete">Odustani</translation>
     </message>
     <message>
         <source>Notification admin</source>
@@ -18787,6 +19789,10 @@ menu on the top.</source>
     </message>
     <message>
         <source>Skip</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enclosure (media)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -20244,23 +21250,23 @@ The default code was made from the basic parameters you chose.</source>
     </message>
     <message>
         <source>The database would not accept the connection, please review your settings and try again.</source>
-        <translation>Baza podataka nije prihvatila vezu, molimo pregledajte svoja podešavanja i pokušajte ponovo. </translation>
+        <translation type="unfinished">Baza podataka nije prihvatila vezu, molimo pregledajte svoja podešavanja i pokušajte ponovo. </translation>
     </message>
     <message>
         <source>Password entries did not match.</source>
-        <translation>Unesene lozinke nisu odgovarale.</translation>
+        <translation type="unfinished">Unesene lozinke nisu odgovarale.</translation>
     </message>
     <message>
         <source>The selected database was not empty, please choose from the alternatives below.</source>
-        <translation>Odabrana baza podataka nije bila prazna, molimo izaberite među niže ponuđenim alternativama. </translation>
+        <translation type="unfinished">Odabrana baza podataka nije bila prazna, molimo izaberite među niže ponuđenim alternativama. </translation>
     </message>
     <message>
         <source>Database initalization</source>
-        <translation>Iniciranje baze podataka</translation>
+        <translation type="unfinished">Iniciranje baze podataka</translation>
     </message>
     <message>
         <source>Email settings</source>
-        <translation>Podešavanja elektronske pošte</translation>
+        <translation type="unfinished">Podešavanja elektronske pošte</translation>
     </message>
     <message>
         <source>Finished</source>
@@ -20268,19 +21274,19 @@ The default code was made from the basic parameters you chose.</source>
     </message>
     <message>
         <source>Language options</source>
-        <translation>Jezične mogućnosti</translation>
+        <translation type="unfinished">Jezične mogućnosti</translation>
     </message>
     <message>
         <source>Registration</source>
-        <translation>Registracija</translation>
+        <translation type="unfinished">Registracija</translation>
     </message>
     <message>
         <source>Securing site</source>
-        <translation>Zaštita stranice</translation>
+        <translation type="unfinished">Zaštita stranice</translation>
     </message>
     <message>
         <source>Site access</source>
-        <translation>Pristup stranici</translation>
+        <translation type="unfinished">Pristup stranici</translation>
     </message>
     <message>
         <source>Site details</source>
@@ -20288,7 +21294,7 @@ The default code was made from the basic parameters you chose.</source>
     </message>
     <message>
         <source>Site template selection</source>
-        <translation>Izbor šablona stranice</translation>
+        <translation type="unfinished">Izbor šablona stranice</translation>
     </message>
     <message>
         <source>System check</source>
@@ -20704,7 +21710,7 @@ Da bi rešili taj problem morate učiniti sledeće:</translation>
     </message>
     <message>
         <source>Site selection</source>
-        <translation>Izbor stranice</translation>
+        <translation type="unfinished">Izbor stranice</translation>
     </message>
     <message>
         <source>You need to fill in the first name.</source>
@@ -20790,11 +21796,11 @@ Moguće je naknadno izmeniti te podešavanja. </translation>
     </message>
     <message>
         <source>Please make sure that the username and the password is correct. Verify that your PostgreSQL database is configured correctly.&lt;br&gt;See the PHP documentation for more information about this.&lt;br&gt;Remember to start postmaster with the -i option.&lt;br&gt;Note that PostgreSQL 7.2 is not supported.</source>
-        <translation>Molimo proverite da li su korisničko ime i lozinka ispravni. Proverite da li je vaša PostgreSQL baza podataka ispravno konfigurisana.&lt;br&gt;Pogledajte PHP dokumentaciju za više informacija o ovome.&lt;br&gt;Zapamtite da pokrenete postmaster sa -i opcijom.&lt;br&gt;Znajte da PostgreSQL 7.2 nije podržan.</translation>
+        <translation type="unfinished">Molimo proverite da li su korisničko ime i lozinka ispravni. Proverite da li je vaša PostgreSQL baza podataka ispravno konfigurisana.&lt;br&gt;Pogledajte PHP dokumentaciju za više informacija o ovome.&lt;br&gt;Zapamtite da pokrenete postmaster sa -i opcijom.&lt;br&gt;Znajte da PostgreSQL 7.2 nije podržan.</translation>
     </message>
     <message>
         <source>Your database version %version does not fit the minimum requirement which is %req_version.</source>
-        <translation>Verzija %version vaše baze podataka ne ispunjava minimum zahteva koje zahteva %req_version.</translation>
+        <translation type="unfinished">Verzija %version vaše baze podataka ne ispunjava minimum zahteva koje zahteva %req_version.</translation>
     </message>
     <message>
         <source>The setup wizard was not able to complete the creation of your selected sites.</source>
@@ -20826,71 +21832,7 @@ Moguće je naknadno izmeniti te podešavanja. </translation>
         <translation>&lt;b&gt;Sendmail/MTA:&lt;/b&gt;&lt;br&gt;Mail je poslan koristeći mail agent za transfer. Najčešće korišćeni agent, sendmail, je obično dostupan na većini Linux/UNIX sistema. Ako mail transfer agent nije dostupan onda bi trebali koristiti SMTP.</translation>
     </message>
     <message>
-        <source>The selected user has not got access to any databases. Change user or create a database for the user.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>The &apos;digest&apos; function is not available in your database, you cannot run eZ Publish without this. See the documentation for more information.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>The database [%database_name] cannot be used, the setup wizard wants to create the site in [%req_charset] but the database has been created using character set [%charset]. You will have to choose a database having support for [%req_charset] or modify [%database_name] .</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Package language options</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>No packages chosen.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>No templates chosen.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cannot write to file</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Failed to copy %url to local file %filename</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Download of package &apos;%pkg&apos; failed. You may upload the package manually.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Invalid package</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>No package selected for upload</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Failed fetching upload package file</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Uploaded file is not an eZ Publish package</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>No site package chosen.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Package &apos;%packageName&apos; and it&apos;s dependencies have been downloaded successfully. Press &apos;Next&apos; to continue.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Retrieving remote site packages list failed. You may upload packages manually.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Welcome to eZ Publish</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -21253,6 +22195,70 @@ This functionality is also available at a later time from the Administration Int
         <source>PostgreSQL support was detected on your system. Please choose the database driver you would like to use.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>The selected user has not got access to any databases. Change user or create a database for the user.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The &apos;digest&apos; function is not available in your database, you cannot run eZ Publish without this. See the documentation for more information.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The database [%database_name] cannot be used, the setup wizard wants to create the site in [%req_charset] but the database has been created using character set [%charset]. You will have to choose a database having support for [%req_charset] or modify [%database_name] .</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No packages chosen.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No templates chosen.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot write to file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Failed to copy %url to local file %filename</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Download of package &apos;%pkg&apos; failed. You may upload the package manually.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Invalid package</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No package selected for upload</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Failed fetching upload package file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Uploaded file is not an eZ Publish package</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No site package chosen.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Package &apos;%packageName&apos; and it&apos;s dependencies have been downloaded successfully. Press &apos;Next&apos; to continue.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Retrieving remote site packages list failed. You may upload packages manually.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Welcome to eZ Publish</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>design/standard/setup/operatorcode</name>
@@ -21379,6 +22385,30 @@ This functionality is also available at a later time from the Administration Int
         <source>Email</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Not all timed out sessions were successfully removed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The operation were cut short in order to avoid execution timeout.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Your alternatives are to:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Repeat the operation several times to complete it.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Clear the timed out session data from command-line using: &amp;gt;php bin/php/ezsessiongc.php</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Install the session cleanup cronjob &apos;session_gc.php&apos; and run on nightly intervals (see cronjob.ini or doc for how)</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>design/standard/setup/tests</name>
@@ -21445,6 +22475,10 @@ This functionality is also available at a later time from the Administration Int
     <message>
         <source>Missing ImageMagick program</source>
         <translation>Nedostaje program Image Magic </translation>
+    </message>
+    <message>
+        <source>If you known where the program is installed (the executable is called</source>
+        <translation type="obsolete">Ako znate gde je program instaliran (izvšni kod naziva se</translation>
     </message>
     <message>
         <source>or</source>
@@ -21891,6 +22925,10 @@ To do this you need to change the %chown commands under Alternative shell comman
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>, but the latest released PHP 4.4.x version is highly recommended.</source>
+        <translation type="obsolete">, ali poslednja izdata PHP verzija PHP 4.3.x je preporučljiva. {4.4.?}</translation>
+    </message>
+    <message>
         <source>eZ Publish may work with safe mode on, however there might be several features that will be unavailable. Some of the things that might occur are</source>
         <translation type="unfinished"></translation>
     </message>
@@ -21987,7 +23025,11 @@ To do this you need to change the %chown commands under Alternative shell comman
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>To fix this, edit your php.ini configuration and add E to the variables_order setting.</source>
+        <source>Since some extensions might use $_ENV it is recomended to fix it unless you have full controll over all extensions you use!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>To fix this, edit your php.ini configuration and add E to the variables_order setting and restart your webserver.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -22890,7 +23932,7 @@ To do this you need to change the %chown commands under Alternative shell comman
     <name>design/standard/toolbar</name>
     <message>
         <source>Toolbar management</source>
-        <translation>Upravljanje alatnom trakom</translation>
+        <translation type="unfinished">Upravljanje alatnom trakom</translation>
     </message>
     <message>
         <source>There are %logged_in_count registered and %anonymous_count anonymous users online.</source>
@@ -23360,7 +24402,7 @@ To do this you need to change the %chown commands under Alternative shell comman
     </message>
     <message>
         <source>The node (%1) specified in [UserSettings].DefaultUserPlacement setting in site.ini does not exist!</source>
-        <translation>Čvor (%1) naveden u [UserSettings].DefaultUserPlacement podešavanju u site.ini ne postoji!</translation>
+        <translation type="unfinished">Čvor (%1) naveden u [UserSettings].DefaultUserPlacement podešavanju u site.ini ne postoji!</translation>
     </message>
     <message>
         <source>Your account is already active.</source>
@@ -23392,9 +24434,6 @@ your account.</source>
         <source>Try again</source>
         <translation type="unfinished"></translation>
     </message>
-</context>
-<context>
-    <name>design/standard/user/</name>
     <message>
         <source>The new password must be at least %1 characters long. Please retype your new password.</source>
         <translation type="unfinished"></translation>
@@ -24219,59 +25258,63 @@ your account.</source>
     <name>kernel/cache</name>
     <message>
         <source>Content view cache</source>
-        <translation>Cache prikaza sadržaja</translation>
+        <translation type="unfinished">Cache prikaza sadržaja</translation>
     </message>
     <message>
         <source>Global INI cache</source>
-        <translation>Globalni INI cache</translation>
+        <translation type="unfinished">Globalni INI cache</translation>
     </message>
     <message>
         <source>INI cache</source>
-        <translation>INI cache</translation>
+        <translation type="unfinished">INI cache</translation>
     </message>
     <message>
         <source>Codepage cache</source>
-        <translation>Cache jezika</translation>
+        <translation type="unfinished">Cache jezika</translation>
     </message>
     <message>
         <source>Class identifier cache</source>
-        <translation>Cache identifikatora klasa</translation>
+        <translation type="unfinished">Cache identifikatora klasa</translation>
     </message>
     <message>
         <source>Sort key cache</source>
-        <translation>Cache sortiranja</translation>
+        <translation type="unfinished">Cache sortiranja</translation>
     </message>
     <message>
         <source>URL alias cache</source>
-        <translation>Cache URL</translation>
+        <translation type="unfinished">Cache URL</translation>
     </message>
     <message>
         <source>Image alias</source>
-        <translation>Alijas slike</translation>
+        <translation type="unfinished">Alijas slike</translation>
     </message>
     <message>
         <source>Template cache</source>
-        <translation>Cache šablona</translation>
+        <translation type="unfinished">Cache šablona</translation>
     </message>
     <message>
         <source>Template block cache</source>
-        <translation>Cache bloka šablona</translation>
+        <translation type="unfinished">Cache bloka šablona</translation>
     </message>
     <message>
         <source>Template override cache</source>
-        <translation>Cache zaobiđenih šablona</translation>
+        <translation type="unfinished">Cache zaobiđenih šablona</translation>
     </message>
     <message>
         <source>RSS cache</source>
-        <translation>Cache RSS</translation>
+        <translation type="unfinished">Cache RSS</translation>
     </message>
     <message>
         <source>Character transformation cache</source>
-        <translation>Cache karaktera</translation>
+        <translation type="unfinished">Cache karaktera</translation>
     </message>
     <message>
         <source>User info cache</source>
-        <translation>Cache podataka korisnika</translation>
+        <translation type="unfinished">Cache podataka korisnika</translation>
+    </message>
+    <message>
+        <source>Text to image cache</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Content tree menu (browser cache)</source>
@@ -24282,7 +25325,7 @@ your account.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Text to image cache</source>
+        <source>Design base cache</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -24290,59 +25333,63 @@ your account.</source>
     <name>kernel/class</name>
     <message>
         <source>Class list of group</source>
-        <translation>Lista klasa unutar grupe</translation>
+        <translation type="unfinished">Lista klasa unutar grupe</translation>
     </message>
     <message>
         <source>Class group list</source>
-        <translation>Lista grupa klasa</translation>
+        <translation type="unfinished">Lista grupa klasa</translation>
     </message>
     <message>
         <source>Remove class</source>
-        <translation>Ukloni klasu</translation>
+        <translation type="unfinished">Ukloni klasu</translation>
     </message>
     <message>
         <source>Class edit</source>
-        <translation>Uređenje klase</translation>
+        <translation type="obsolete">Uređenje klase</translation>
     </message>
     <message>
         <source>Classes</source>
-        <translation>Klase</translation>
+        <translation type="obsolete">Klase</translation>
     </message>
     <message>
         <source>Class list</source>
-        <translation>Lista klasa</translation>
+        <translation type="unfinished">Lista klasa</translation>
     </message>
     <message>
         <source>(no classes)</source>
-        <translation>(nema klasa)</translation>
+        <translation type="unfinished">(nema klasa)</translation>
     </message>
     <message>
         <source>Remove class groups</source>
-        <translation>Ukloni grupe klasa</translation>
+        <translation type="unfinished">Ukloni grupe klasa</translation>
     </message>
     <message>
         <source>You have to have at least one group that the class belongs to!</source>
-        <translation>Morate imati barem jednu grupu kojoj klasa pripada!</translation>
+        <translation type="unfinished">Morate imati barem jednu grupu kojoj klasa pripada!</translation>
     </message>
     <message>
         <source>Remove classes %class_id</source>
-        <translation>Ukloni klase %class_id</translation>
+        <translation type="unfinished">Ukloni klase %class_id</translation>
     </message>
     <message>
         <source>Copy of %class_name</source>
-        <translation>Kopija %class_name</translation>
+        <translation type="unfinished">Kopija %class_name</translation>
     </message>
     <message>
         <source>The class should have nonempty &apos;Name&apos; attribute.</source>
-        <translation>Klasa ne sme imati prazan &apos;Naziv&apos; atribut.</translation>
+        <translation type="unfinished">Klasa ne sme imati prazan &apos;Naziv&apos; atribut.</translation>
     </message>
     <message>
         <source>The class should have at least one attribute.</source>
-        <translation>Klasa mora imati barem jedan atribut.</translation>
+        <translation type="unfinished">Klasa mora imati barem jedan atribut.</translation>
     </message>
     <message>
         <source>There is a class already having the same identifier.</source>
-        <translation>Već postoji klasa sa istim identifikatorom.</translation>
+        <translation type="unfinished">Već postoji klasa sa istim identifikatorom.</translation>
+    </message>
+    <message>
+        <source>Class groups</source>
+        <translation type="unfinished">Grupe klasa</translation>
     </message>
     <message>
         <source>Could not load datatype: </source>
@@ -24369,6 +25416,10 @@ your account.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Remove classes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Remove translation</source>
         <translation type="unfinished"></translation>
     </message>
@@ -24377,113 +25428,105 @@ your account.</source>
     <name>kernel/class/edit</name>
     <message>
         <source>New Class</source>
-        <translation>Nova klasa</translation>
+        <translation type="unfinished">Nova klasa</translation>
     </message>
     <message>
         <source>new attribute</source>
-        <translation>novi atribut</translation>
+        <translation type="unfinished">novi atribut</translation>
     </message>
 </context>
 <context>
     <name>kernel/class/groupedit</name>
     <message>
         <source>New Group</source>
-        <translation>Nova grupa</translation>
+        <translation type="unfinished">Nova grupa</translation>
     </message>
 </context>
 <context>
     <name>kernel/classes</name>
     <message>
         <source>Approval</source>
-        <translation>Odobrenje</translation>
+        <translation type="unfinished">Odobrenje</translation>
     </message>
     <message>
         <source>Standard</source>
-        <translation>Standardno</translation>
+        <translation type="unfinished">Standardno</translation>
     </message>
     <message>
         <source>Observer</source>
-        <translation>Posmatrač</translation>
+        <translation type="unfinished">Posmatrač</translation>
     </message>
     <message>
         <source>Owner</source>
-        <translation>Vlasnik</translation>
+        <translation type="unfinished">Vlasnik</translation>
     </message>
     <message>
         <source>Approver</source>
-        <translation>Odobrio</translation>
+        <translation type="unfinished">Odobrio</translation>
     </message>
     <message>
         <source>Author</source>
-        <translation>Autor</translation>
+        <translation type="unfinished">Autor</translation>
     </message>
     <message>
         <source>Inbox</source>
-        <translation>Ulazna pošta</translation>
+        <translation type="unfinished">Ulazna pošta</translation>
     </message>
     <message>
         <source>No state yet</source>
-        <translation>Bez stanja</translation>
+        <translation type="unfinished">Bez stanja</translation>
     </message>
     <message>
         <source>Workflow running</source>
-        <translation>Trenutni radni tok</translation>
+        <translation type="unfinished">Trenutni radni tok</translation>
     </message>
     <message>
         <source>Workflow done</source>
-        <translation>Radni tok izvršen</translation>
+        <translation type="unfinished">Radni tok izvršen</translation>
     </message>
     <message>
         <source>Workflow failed an event</source>
-        <translation>Događaj radnog toka nije uspeo</translation>
+        <translation type="unfinished">Događaj radnog toka nije uspeo</translation>
     </message>
     <message>
         <source>Workflow event deferred to cron job</source>
-        <translation>Događaj radnog toka odgođen za cron job</translation>
+        <translation type="unfinished">Događaj radnog toka odgođen za cron job</translation>
     </message>
     <message>
         <source>Workflow was reset for reuse</source>
-        <translation>Radni tok je ponovo pokrenut za ponovo korišćenje</translation>
+        <translation type="unfinished">Radni tok je ponovo pokrenut za ponovo korišćenje</translation>
     </message>
     <message>
         <source>Accepted event</source>
-        <translation>Prihvaćen događaj</translation>
+        <translation type="unfinished">Prihvaćen događaj</translation>
     </message>
     <message>
         <source>Rejected event</source>
-        <translation>Odbačen događaj</translation>
+        <translation type="unfinished">Odbačen događaj</translation>
     </message>
     <message>
         <source>Event deferred to cron job</source>
-        <translation>Događaj odgođen za cron job</translation>
+        <translation type="unfinished">Događaj odgođen za cron job</translation>
     </message>
     <message>
         <source>Event deferred to cron job, event will be rerun</source>
-        <translation>Događaj odgođen za cron job, događaj će biti ponovljen</translation>
+        <translation type="unfinished">Događaj odgođen za cron job, događaj će biti ponovljen</translation>
     </message>
     <message>
         <source>Event runs a sub event</source>
-        <translation>Događaj izvršava niže rangirani događaj</translation>
+        <translation type="unfinished">Događaj izvršava niže rangirani događaj</translation>
     </message>
     <message>
         <source>Workflow fetches template</source>
-        <translation>Radni tok obuhvata šablon</translation>
+        <translation type="unfinished">Radni tok obuhvata šablon</translation>
     </message>
     <message>
         <source>Workflow redirects user view</source>
-        <translation>Radni tok preusmerava na korisnički prikaz</translation>
+        <translation type="unfinished">Radni tok preusmerava na korisnički prikaz</translation>
     </message>
     <message>
         <source>New RSS Export</source>
-        <translation>Novi RSS izvoz</translation>
-    </message>
-    <message>
-        <source>Workflow was canceled</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Canceled whole workflow</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Novi RSS izvoz</translation>
     </message>
     <message>
         <source>Replace existing object</source>
@@ -24501,377 +25544,385 @@ your account.</source>
         <source>Update existing object</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Workflow was canceled</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Canceled whole workflow</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>kernel/classes/datatypes</name>
     <message>
         <source>Missing date input.</source>
-        <translation>Nedostaje datum.</translation>
+        <translation type="unfinished">Nedostaje datum.</translation>
     </message>
     <message>
         <source>Missing datetime input.</source>
-        <translation>Nedostaje datum i sat.</translation>
+        <translation type="unfinished">Nedostaje datum i sat.</translation>
     </message>
     <message>
         <source>At least one author is required.</source>
-        <translation>Potrebno je upisati barem jednog autora. </translation>
+        <translation type="unfinished">Potrebno je upisati barem jednog autora. </translation>
     </message>
     <message>
         <source>A valid file is required.</source>
-        <translation>Potrebno je uneti ispravnu datoteku.</translation>
+        <translation type="unfinished">Potrebno je uneti ispravnu datoteku.</translation>
     </message>
     <message>
         <source>Checkbox</source>
         <comment>Datatype name</comment>
-        <translation>Checkbox</translation>
+        <translation type="unfinished">Checkbox</translation>
     </message>
     <message>
         <source>Enum</source>
         <comment>Datatype name</comment>
-        <translation>Broj</translation>
+        <translation type="unfinished">Broj</translation>
     </message>
     <message>
         <source>At least one field should be chosen.</source>
-        <translation>Najmanje jedno polje mora biti izabrano.</translation>
+        <translation type="unfinished">Najmanje jedno polje mora biti izabrano.</translation>
     </message>
     <message>
         <source>Float</source>
         <comment>Datatype name</comment>
-        <translation>Float</translation>
+        <translation type="unfinished">Float</translation>
     </message>
     <message>
         <source>Image</source>
         <comment>Datatype name</comment>
-        <translation>Slika</translation>
+        <translation type="unfinished">Slika</translation>
     </message>
     <message>
         <source>Integer</source>
         <comment>Datatype name</comment>
-        <translation>Integer</translation>
+        <translation type="unfinished">Integer</translation>
     </message>
     <message>
         <source>ISBN</source>
         <comment>Datatype name</comment>
-        <translation>ISBN</translation>
+        <translation type="unfinished">ISBN</translation>
     </message>
     <message>
         <source>Matrix</source>
         <comment>Datatype name</comment>
-        <translation>Matrica</translation>
+        <translation type="unfinished">Matrica</translation>
     </message>
     <message>
         <source>Media</source>
         <comment>Datatype name</comment>
-        <translation>Media</translation>
+        <translation type="unfinished">Media</translation>
     </message>
     <message>
         <source>Object relation</source>
         <comment>Datatype name</comment>
-        <translation>Relacioni objekt</translation>
+        <translation type="unfinished">Relacioni objekt</translation>
     </message>
     <message>
         <source>Option</source>
         <comment>Datatype name</comment>
-        <translation>Mogućnost</translation>
+        <translation type="unfinished">Mogućnost</translation>
     </message>
     <message>
         <source>At least one option is required.</source>
-        <translation>Potrebno je odrediti barem jednu mogućnost.</translation>
+        <translation type="unfinished">Potrebno je odrediti barem jednu mogućnost.</translation>
     </message>
     <message>
         <source>Price</source>
         <comment>Datatype name</comment>
-        <translation>Cena</translation>
+        <translation type="unfinished">Cena</translation>
     </message>
     <message>
         <source>Add to basket</source>
-        <translation>Dodaj u korpu</translation>
+        <translation type="unfinished">Dodaj u korpu</translation>
     </message>
     <message>
         <source>Add to wish list</source>
-        <translation>Dodaj na listu želja</translation>
+        <translation type="unfinished">Dodaj na listu želja</translation>
     </message>
     <message>
         <source>Range option</source>
         <comment>Datatype name</comment>
-        <translation>Izbor opsega</translation>
+        <translation type="unfinished">Izbor opsega</translation>
     </message>
     <message>
         <source>Selection</source>
         <comment>Datatype name</comment>
-        <translation>Izbor</translation>
+        <translation type="unfinished">Izbor</translation>
     </message>
     <message>
         <source>Text line</source>
         <comment>Datatype name</comment>
-        <translation>Tekst red</translation>
+        <translation type="unfinished">Tekst red</translation>
     </message>
     <message>
         <source>Subtree subscription</source>
         <comment>Datatype name</comment>
-        <translation>Subtree subscription</translation>
+        <translation type="unfinished">Subtree subscription</translation>
     </message>
     <message>
         <source>URL</source>
         <comment>Datatype name</comment>
-        <translation>URL</translation>
+        <translation type="unfinished">URL</translation>
     </message>
     <message>
         <source>User account</source>
         <comment>Datatype name</comment>
-        <translation>Korisnički račun</translation>
+        <translation type="unfinished">Korisnički račun</translation>
     </message>
     <message>
         <source>A user with this email already exists.</source>
-        <translation>Već postoji korisnik s istom e-mail adresom. </translation>
+        <translation type="unfinished">Već postoji korisnik s istom e-mail adresom. </translation>
     </message>
     <message>
         <source>Identifier</source>
         <comment>Datatype name</comment>
-        <translation>Identifikator</translation>
+        <translation type="unfinished">Identifikator</translation>
     </message>
     <message>
         <source>image</source>
         <comment>Default image name</comment>
-        <translation>slika</translation>
+        <translation type="unfinished">slika</translation>
     </message>
     <message>
         <source>Ini Setting</source>
         <comment>Datatype name</comment>
-        <translation>Ini postavka</translation>
+        <translation type="unfinished">Ini postavka</translation>
     </message>
     <message>
         <source>Package</source>
         <comment>Datatype name</comment>
-        <translation>Paket</translation>
+        <translation type="unfinished">Paket</translation>
     </message>
     <message>
         <source>Send</source>
         <comment>Datatype information collector action</comment>
-        <translation>Pošalji</translation>
+        <translation type="unfinished">Pošalji</translation>
     </message>
     <message>
         <source>Missing objectrelation input.</source>
-        <translation>Nedostaje unos relacije objekta.</translation>
+        <translation type="unfinished">Nedostaje unos relacije objekta.</translation>
     </message>
     <message>
         <source>Invalid time.</source>
-        <translation>Pogrešno vreme.</translation>
+        <translation type="unfinished">Pogrešno vreme.</translation>
     </message>
     <message>
         <source>The author name must be provided.</source>
-        <translation>Potrebno je upisati ime autora.</translation>
+        <translation type="unfinished">Potrebno je upisati ime autora.</translation>
     </message>
     <message>
         <source>The email address is not valid.</source>
-        <translation>Email adresa nije ispravna.</translation>
+        <translation type="unfinished">Email adresa nije ispravna.</translation>
     </message>
     <message>
         <source>File uploading is not enabled. Please contact the site administrator to enable it.</source>
-        <translation>Uvoz datoteka nije dozvoljen. Molimo kontaktirajte administratora.</translation>
+        <translation type="unfinished">Uvoz datoteka nije dozvoljen. Molimo kontaktirajte administratora.</translation>
     </message>
     <message>
         <source>The size of the uploaded file exceeds the limit set by the upload_max_filesize directive in php.ini.</source>
-        <translation>Veličina uvezene datoteke veća je od dopuštene u php.ini datoteci.</translation>
+        <translation type="unfinished">Veličina uvezene datoteke veća je od dopuštene u php.ini datoteci.</translation>
     </message>
     <message>
         <source>The size of the uploaded file exceeds the maximum upload size: %1 bytes.</source>
-        <translation>Veličina slike premašuje zadano ograničenje: %1 bytova.</translation>
+        <translation type="unfinished">Veličina slike premašuje zadano ograničenje: %1 bytova.</translation>
     </message>
     <message>
         <source>The email address is empty.</source>
-        <translation>E-mail adresa je prazna.</translation>
+        <translation type="unfinished">E-mail adresa je prazna.</translation>
     </message>
     <message>
         <source>The given input is not a floating point number.</source>
-        <translation>Unos nije decimalni broj.</translation>
+        <translation type="unfinished">Unos nije decimalni broj.</translation>
     </message>
     <message>
         <source>The input must be greater than %1</source>
-        <translation>Unos mora biti veći od %1</translation>
+        <translation type="unfinished">Unos mora biti veći od %1</translation>
     </message>
     <message>
         <source>The input must be less than %1</source>
-        <translation>Unos mora biti manji od %1</translation>
+        <translation type="unfinished">Unos mora biti manji od %1</translation>
     </message>
     <message>
         <source>The input is not in defined range %1 - %2</source>
-        <translation>Unos nije u zadanom rasponu %1-%2</translation>
+        <translation type="unfinished">Unos nije u zadanom rasponu %1-%2</translation>
     </message>
     <message>
         <source>A valid image file is required.</source>
-        <translation>Potrebno je uneti ispravnu grafičku datoteku.</translation>
+        <translation type="unfinished">Potrebno je uneti ispravnu grafičku datoteku.</translation>
     </message>
     <message>
         <source>The size of the uploaded image exceeds limit set by upload_max_filesize directive in php.ini. Please contact the site administrator.</source>
-        <translation>Veličina uvezene slike prelazi ograničenje podešeno u php.ini datoteci.</translation>
+        <translation type="unfinished">Veličina uvezene slike prelazi ograničenje podešeno u php.ini datoteci.</translation>
     </message>
     <message>
         <source>The size of the uploaded file exceeds the limit set for this site: %1 bytes.</source>
-        <translation>Veličina slike premašuje zadano ograničenje: %1 bytova.</translation>
+        <translation type="unfinished">Veličina slike premašuje zadano ograničenje: %1 bytova.</translation>
     </message>
     <message>
         <source>Could not locate the ini file.</source>
-        <translation>Nije moguće locirati ini datoteku.</translation>
+        <translation type="unfinished">Nije moguće locirati ini datoteku.</translation>
     </message>
     <message>
         <source>The input is not a valid integer.</source>
-        <translation>Unos nije celi broj.</translation>
+        <translation type="unfinished">Unos nije celi broj.</translation>
     </message>
     <message>
         <source>The number must be greater than %1</source>
-        <translation>Broj mora biti veći od %1</translation>
+        <translation type="unfinished">Broj mora biti veći od %1</translation>
     </message>
     <message>
         <source>The number must be less than %1</source>
-        <translation>Broj mora biti manji od %1</translation>
+        <translation type="unfinished">Broj mora biti manji od %1</translation>
     </message>
     <message>
         <source>The number is not within the required range %1 - %2</source>
-        <translation>Broj nije u rasponu od %1-%2</translation>
+        <translation type="unfinished">Broj nije u rasponu od %1-%2</translation>
     </message>
     <message>
         <source>The ISBN number is not correct. Please check the input for mistakes.</source>
-        <translation>ISBN broj nije ispravan. Molimo ispravite unos.</translation>
+        <translation type="unfinished">ISBN broj nije ispravan. Molimo ispravite unos.</translation>
     </message>
     <message>
         <source>A valid media file is required.</source>
-        <translation>Potrebno je uneti ispravnu multimedijalnu datoteku.</translation>
+        <translation type="unfinished">Potrebno je uneti ispravnu multimedijalnu datoteku.</translation>
     </message>
     <message>
         <source>The size of the uploaded file exceeds the limit set by upload_max_filesize directive in php.ini. Please contact the site administrator.</source>
-        <translation>Veličina uvezene datoteke prelazi ograničenje podešeno u php.ini datoteci.</translation>
+        <translation type="unfinished">Veličina uvezene datoteke prelazi ograničenje podešeno u php.ini datoteci.</translation>
     </message>
     <message>
         <source>The size of the uploaded file exceeds site maximum: %1 bytes.</source>
-        <translation>Veličina uvezene datoteke premašuje zadano ograničenje: %1 bytova.</translation>
+        <translation type="unfinished">Veličina uvezene datoteke premašuje zadano ograničenje: %1 bytova.</translation>
     </message>
     <message>
         <source>The option value must be provided.</source>
-        <translation>Mora biti ponuđena neka vrednost.</translation>
+        <translation type="unfinished">Mora biti ponuđena neka vrednost.</translation>
     </message>
     <message>
         <source>The additional price for the multioption value is not valid.</source>
-        <translation>Dodatna cena za multioption vrednost nije dobra.</translation>
+        <translation type="unfinished">Dodatna cena za multioption vrednost nije dobra.</translation>
     </message>
     <message>
         <source>The Additional price value is not valid.</source>
-        <translation>Dodatna vrednost cene nije dobra.</translation>
+        <translation type="unfinished">Dodatna vrednost cene nije dobra.</translation>
     </message>
     <message>
         <source>Input required.</source>
-        <translation>Potreban je unos.</translation>
+        <translation type="unfinished">Potreban je unos.</translation>
     </message>
     <message>
         <source>The input text is too long. The maximum number of characters allowed is %1.</source>
-        <translation>Uneseni tekst je predug. Maksimalan broj unešeni znakova iznosi %1.</translation>
+        <translation type="unfinished">Uneseni tekst je predug. Maksimalan broj unešeni znakova iznosi %1.</translation>
     </message>
     <message>
         <source>Time input required.</source>
-        <translation>Potrebno je uneti vreme.</translation>
+        <translation type="unfinished">Potrebno je uneti vreme.</translation>
     </message>
     <message>
         <source>The username must be specified.</source>
-        <translation>Nije uneseno korisničko ime.</translation>
+        <translation type="unfinished">Nije uneseno korisničko ime.</translation>
     </message>
     <message>
         <source>The username already exists, please choose another one.</source>
-        <translation>Takvo korisničko ime već postoji, molimo izaberite neko drugo.</translation>
+        <translation type="unfinished">Takvo korisničko ime već postoji, molimo izaberite neko drugo.</translation>
     </message>
     <message>
         <source>The passwords do not match.</source>
         <comment>eZUserType</comment>
-        <translation>Lozinke se ne podudaraju.</translation>
+        <translation type="unfinished">Lozinke se ne podudaraju.</translation>
     </message>
     <message>
         <source>Cannot remove the account:</source>
-        <translation>Nije moguće ukloniti ovaj korisnički račun:</translation>
+        <translation type="unfinished">Nije moguće ukloniti ovaj korisnički račun:</translation>
     </message>
     <message>
         <source>The account owner is currently logged in.</source>
-        <translation>Vlasnik korisničkog računa je prijavljen na sistem.</translation>
+        <translation type="unfinished">Vlasnik korisničkog računa je prijavljen na sistem.</translation>
     </message>
     <message>
         <source>The account is currently used by the anonymous user.</source>
-        <translation>Račun trenutno koristi anonimni korisnik.</translation>
+        <translation type="unfinished">Račun trenutno koristi anonimni korisnik.</translation>
     </message>
     <message>
         <source>Multi-option</source>
         <comment>Datatype name</comment>
-        <translation>Multi-option</translation>
+        <translation type="unfinished">Multi-option</translation>
     </message>
     <message>
         <source>Authors</source>
         <comment>Datatype name</comment>
-        <translation>Autori</translation>
+        <translation type="unfinished">Autori</translation>
     </message>
     <message>
         <source>File</source>
         <comment>Datatype name</comment>
-        <translation>Datoteka</translation>
+        <translation type="unfinished">Datoteka</translation>
     </message>
     <message>
         <source>Date</source>
         <comment>Datatype name</comment>
-        <translation>Datum</translation>
+        <translation type="unfinished">Datum</translation>
     </message>
     <message>
         <source>Date and time</source>
         <comment>Datatype name</comment>
-        <translation>Datum i sat</translation>
+        <translation type="unfinished">Datum i sat</translation>
     </message>
     <message>
         <source>Keywords</source>
         <comment>Datatype name</comment>
-        <translation>Ključne reči</translation>
+        <translation type="unfinished">Ključne reči</translation>
     </message>
     <message>
         <source>Object relations</source>
         <comment>Datatype name</comment>
-        <translation>Relacioni objekti</translation>
+        <translation type="unfinished">Relacioni objekti</translation>
     </message>
     <message>
         <source>Text block</source>
         <comment>Datatype name</comment>
-        <translation>Tekstualni blok</translation>
+        <translation type="unfinished">Tekstualni blok</translation>
     </message>
     <message>
         <source>Time</source>
         <comment>Datatype name</comment>
-        <translation>Vreme</translation>
+        <translation type="unfinished">Vreme</translation>
     </message>
     <message>
         <source>XML block</source>
         <comment>Datatype name</comment>
-        <translation>XML blok</translation>
+        <translation type="unfinished">XML blok</translation>
     </message>
     <message>
         <source>Object %1 can not be embeded to itself.</source>
-        <translation>Objekt %1 ne može biti uključen u samoga sebe.</translation>
+        <translation type="unfinished">Objekt %1 ne može biti uključen u samoga sebe.</translation>
     </message>
     <message>
         <source>Date is not valid.</source>
-        <translation>Datum nije ispravan.</translation>
+        <translation type="unfinished">Datum nije ispravan.</translation>
     </message>
     <message>
         <source>The image file must have non-zero size.</source>
-        <translation>Slika mora imati ne-nula veličinu.</translation>
+        <translation type="unfinished">Slika mora imati ne-nula veličinu.</translation>
     </message>
     <message>
         <source>Invalid price.</source>
-        <translation>Neispravna cena.</translation>
+        <translation type="unfinished">Neispravna cena.</translation>
     </message>
     <message>
         <source>Missing matrix input.</source>
-        <translation>Nedostaje unos matrice.</translation>
+        <translation type="unfinished">Nedostaje unos matrice.</translation>
     </message>
     <message>
         <source>Missing objectrelation list input.</source>
-        <translation>Nedostaje unos liste u relaciji objekta.</translation>
+        <translation type="unfinished">Nedostaje unos liste u relaciji objekta.</translation>
     </message>
     <message>
         <source>NAME is required.</source>
-        <translation>IME je obavezno.</translation>
+        <translation type="unfinished">IME je obavezno.</translation>
     </message>
     <message>
         <source>Country</source>
@@ -24885,6 +25936,10 @@ your account.</source>
     <message>
         <source>Email</source>
         <comment>Datatype name</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Missing email input.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -24963,12 +26018,21 @@ your account.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Input required</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Product category</source>
         <comment>Datatype name</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Missing range option input.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The password cannot be empty.</source>
+        <comment>eZUserType</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -24995,14 +26059,6 @@ your account.</source>
         <source>Invalid reference in &amp;lt;embed&amp;gt; tag. Note that &lt;embed&gt; tag supports only &apos;eznode&apos; and &apos;ezobject&apos; protocols.</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Missing email input.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Input required</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>kernel/classes/datatypes/ezbinaryfile</name>
@@ -25027,6 +26083,14 @@ your account.</source>
 </context>
 <context>
     <name>kernel/classes/datatypes/ezxmltext</name>
+    <message>
+        <source>Node &apos;%1&apos; does not exist.</source>
+        <translation type="unfinished">Čvor &apos;%1&apos; ne postoji.</translation>
+    </message>
+    <message>
+        <source>Object %1 can not be embeded to itself.</source>
+        <translation type="unfinished">Objekt %1 ne može biti uključen u samoga sebe.</translation>
+    </message>
     <message>
         <source>Wrong closing tag</source>
         <translation type="unfinished"></translation>
@@ -25076,10 +26140,6 @@ your account.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Node &apos;%1&apos; does not exist.</source>
-        <translation type="unfinished">Čvor &apos;%1&apos; ne postoji.</translation>
-    </message>
-    <message>
         <source>Using scripts in links is not allowed, link &apos;%1&apos; has been removed</source>
         <translation type="unfinished"></translation>
     </message>
@@ -25087,151 +26147,135 @@ your account.</source>
         <source>Invalid e-mail address: &apos;%1&apos;</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Object %1 can not be embeded to itself.</source>
-        <translation type="unfinished">Objekt %1 ne može biti uključen u samoga sebe.</translation>
-    </message>
 </context>
 <context>
     <name>kernel/collaboration</name>
     <message>
         <source>Collaboration custom action</source>
-        <translation>Akcija saradnje</translation>
+        <translation type="unfinished">Akcija saradnje</translation>
     </message>
     <message>
         <source>Collaboration</source>
-        <translation>Saradnja</translation>
+        <translation type="unfinished">Saradnja</translation>
     </message>
 </context>
 <context>
     <name>kernel/content</name>
     <message>
         <source>Search</source>
-        <translation>Traži</translation>
+        <translation type="unfinished">Traži</translation>
     </message>
     <message>
         <source>Advanced</source>
-        <translation>Napredno pretraživanje</translation>
+        <translation type="unfinished">Napredno pretraživanje</translation>
     </message>
     <message>
         <source>No main node selected, please select one.</source>
-        <translation>Nije izabran glavni čvor, molimo izaberite neki čvor.</translation>
+        <translation type="unfinished">Nije izabran glavni čvor, molimo izaberite neki čvor.</translation>
     </message>
     <message>
         <source>Content</source>
-        <translation>Sadržaj</translation>
+        <translation type="unfinished">Sadržaj</translation>
     </message>
     <message>
         <source>Copy</source>
-        <translation>Kopiraj</translation>
+        <translation type="unfinished">Kopiraj</translation>
     </message>
     <message>
         <source>My drafts</source>
-        <translation>Moje skice</translation>
+        <translation type="unfinished">Moje skice</translation>
     </message>
     <message>
         <source>Remove editing version</source>
-        <translation>Ukloni verziju za editovanje</translation>
+        <translation type="unfinished">Ukloni verziju za editovanje</translation>
     </message>
     <message>
         <source>Remove object</source>
-        <translation>Ukloni objekt</translation>
+        <translation type="unfinished">Ukloni objekt</translation>
     </message>
     <message>
         <source>Translation</source>
-        <translation>Prevod</translation>
+        <translation type="unfinished">Prevod</translation>
     </message>
     <message>
         <source>Content translations</source>
-        <translation>Prevodi sadržaja</translation>
+        <translation type="unfinished">Prevodi sadržaja</translation>
     </message>
     <message>
         <source>Trash</source>
-        <translation>Smeće</translation>
+        <translation type="unfinished">Smeće</translation>
     </message>
     <message>
         <source>Versions</source>
-        <translation>Verzije</translation>
+        <translation type="unfinished">Verzije</translation>
     </message>
     <message>
         <source>My bookmarks</source>
-        <translation>Moje oznake za knjigu</translation>
+        <translation type="unfinished">Moje oznake za knjigu</translation>
     </message>
     <message>
         <source>Tip from %1: %2</source>
-        <translation>Obaveštenje od %1: %2</translation>
+        <translation type="unfinished">Obaveštenje od %1: %2</translation>
     </message>
     <message>
         <source>The email address of the sender is not valid</source>
-        <translation>Adresa elektronske pošte pošiljaoca nije ispravna</translation>
+        <translation type="unfinished">Adresa elektronske pošte pošiljaoca nije ispravna</translation>
     </message>
     <message>
         <source>The email address of the receiver is not valid</source>
-        <translation>Adresa elektronske pošte primaoca nije ispravna</translation>
+        <translation type="unfinished">Adresa elektronske pošte primaoca nije ispravna</translation>
     </message>
     <message>
         <source>Tip a friend</source>
-        <translation>Pošaljite na mail</translation>
+        <translation type="unfinished">Pošaljite na mail</translation>
     </message>
     <message>
         <source>My pending list</source>
-        <translation>Moja lista čekanja</translation>
+        <translation type="unfinished">Moja lista čekanja</translation>
     </message>
     <message>
         <source>Keywords</source>
-        <translation>Ključne reči</translation>
+        <translation type="unfinished">Ključne reči</translation>
     </message>
     <message>
         <source>Media</source>
-        <translation>Multimedija</translation>
+        <translation type="unfinished">Multimedija</translation>
     </message>
     <message>
         <source>New content</source>
-        <translation>Novi sadržaj</translation>
+        <translation type="unfinished">Novi sadržaj</translation>
     </message>
     <message>
         <source>Remove location</source>
-        <translation>Ukloni lokaciju</translation>
+        <translation type="unfinished">Ukloni lokaciju</translation>
     </message>
     <message>
         <source>You are not allowed to place this object under: %1</source>
-        <translation>Nemate ovlašćenja za stavljanje ovog objekta unutar: %1</translation>
+        <translation type="unfinished">Nemate ovlašćenja za stavljanje ovog objekta unutar: %1</translation>
     </message>
     <message>
         <source>Top Level Nodes</source>
-        <translation>Čvorovi glavnog nivoa</translation>
+        <translation type="unfinished">Čvorovi glavnog nivoa</translation>
     </message>
     <message>
         <source>Hidden</source>
-        <translation>Skriven</translation>
+        <translation type="unfinished">Skriven</translation>
     </message>
     <message>
         <source>Hidden by superior</source>
-        <translation>Sakriveno od </translation>
+        <translation type="unfinished">Sakriveno od </translation>
     </message>
     <message>
         <source>Visible</source>
-        <translation>Vidljivo</translation>
+        <translation type="unfinished">Vidljivo</translation>
     </message>
     <message>
         <source>A node in the node assignment list has been deleted.</source>
-        <translation>Čvor u listi čvorova za dodelu je obrisan.</translation>
+        <translation type="unfinished">Čvor u listi čvorova za dodelu je obrisan.</translation>
     </message>
     <message>
         <source>&quot;$contentObjectName&quot;: Sub items that are used by other objects</source>
-        <translation>&quot;$contentObjectName&quot;: Podelementi koje koriste drugi objekti</translation>
-    </message>
-    <message>
-        <source>Copy subtree</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Differences</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Edit</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&quot;$contentObjectName&quot;: Podelementi koje koriste drugi objekti</translation>
     </message>
     <message>
         <source>Class identifier</source>
@@ -25250,14 +26294,6 @@ your account.</source>
         <translation type="unfinished">Promenjeno</translation>
     </message>
     <message>
-        <source>Name</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Path String</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Priority</source>
         <translation type="unfinished">Prioritet</translation>
     </message>
@@ -25266,11 +26302,51 @@ your account.</source>
         <translation type="unfinished">Objavljeno</translation>
     </message>
     <message>
+        <source>Languages</source>
+        <translation type="unfinished">Jezici</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation type="unfinished">Greška</translation>
+    </message>
+    <message>
+        <source>The request sent to the server was too big to be accepted. This probably means that you uploaded a file which was too big. The maximum allowed request size is %max_size_string.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copy subtree</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dashboard</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Differences</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Path String</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Section</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>History</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You have already sent a tipafriend mail to this reciver regarding &apos;$nodeName&apos; content</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -25282,10 +26358,6 @@ your account.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Languages</source>
-        <translation type="unfinished">Jezici</translation>
-    </message>
-    <message>
         <source>You do not have enough rights to access the requested node</source>
         <translation type="unfinished"></translation>
     </message>
@@ -25293,56 +26365,44 @@ your account.</source>
         <source>Version preview</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Error</source>
-        <translation type="unfinished">Greška</translation>
-    </message>
-    <message>
-        <source>The request sent to the server was too big to be accepted. This probably means that you uploaded a file which was too big. The maximum allowed request size is %max_size_string.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>You have already sent a tipafriend mail to this reciver regarding &apos;$nodeName&apos; content</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>kernel/content/copysubtree</name>
     <message>
         <source>Cannot publish object (ID = %1).</source>
-        <translation>Ne može se objaviti objekat (ID = %1).</translation>
+        <translation type="unfinished">Ne može se objaviti objekat (ID = %1).</translation>
     </message>
     <message>
         <source>Fatal error: cannot get subtree main node (ID = %1).</source>
-        <translation>Greška: ne može se dobiti podstablo glavnog čvora (ID = %1).</translation>
+        <translation type="unfinished">Greška: ne može se dobiti podstablo glavnog čvora (ID = %1).</translation>
     </message>
     <message>
         <source>Fatal error: cannot get destination node (ID = %1).</source>
-        <translation>Greška: ne može se dobiti ciljni čvor (ID = %1).</translation>
+        <translation type="unfinished">Greška: ne može se dobiti ciljni čvor (ID = %1).</translation>
     </message>
     <message>
         <source>Number of nodes of source subtree - %1</source>
-        <translation>Broj čvorova izvornog podstabla - %1</translation>
+        <translation type="unfinished">Broj čvorova izvornog podstabla - %1</translation>
     </message>
     <message>
         <source>Subtree was not copied.</source>
-        <translation>Podstablo nije kopirano.</translation>
+        <translation type="unfinished">Podstablo nije kopirano.</translation>
     </message>
     <message>
         <source>Number of copied nodes - %1</source>
-        <translation>Broj kopiranih čvorova - %1</translation>
+        <translation type="unfinished">Broj kopiranih čvorova - %1</translation>
     </message>
     <message>
         <source>Number of copied contentobjects - %1</source>
-        <translation>Broj kopiranih objekata sadržaja - %1</translation>
+        <translation type="unfinished">Broj kopiranih objekata sadržaja - %1</translation>
     </message>
     <message>
         <source>Cannot create instance of eZDB to fix local links (related objects).</source>
-        <translation>Ne mogu kreirati instancu eZDB da bi popravio lokalne linkove (povezane objekte).</translation>
+        <translation type="unfinished">Ne mogu kreirati instancu eZDB da bi popravio lokalne linkove (povezane objekte).</translation>
     </message>
     <message>
         <source>You are trying to copy a subtree that contains more than the maximum possible nodes for subtree copying. You can copy this subtree using Subtree Copy script.</source>
-        <translation>Pokušavate kopirati podstablo koje sadrži više od maksimalnog dozvoljenog broja čvorova za kopiranje podstabla. Možete kopirati podstablo koristeći skriptu za kopiranje podstabla.</translation>
+        <translation type="unfinished">Pokušavate kopirati podstablo koje sadrži više od maksimalnog dozvoljenog broja čvorova za kopiranje podstabla. Možete kopirati podstablo koristeći skriptu za kopiranje podstabla.</translation>
     </message>
     <message>
         <source>Object (ID = %1) was not copied: you do not have permission to read the object.</source>
@@ -25374,12 +26434,12 @@ your account.</source>
     <message>
         <source>child</source>
         <comment>1 child</comment>
-        <translation>dete</translation>
+        <translation type="unfinished">dete</translation>
     </message>
     <message>
         <source>children</source>
         <comment>several children</comment>
-        <translation>deca</translation>
+        <translation type="unfinished">deca</translation>
     </message>
 </context>
 <context>
@@ -25393,75 +26453,75 @@ your account.</source>
     <name>kernel/content/upload</name>
     <message>
         <source>The file %filename does not exist, cannot insert file.</source>
-        <translation>Fajl %filename ne potoji, ne mogu uneti fajl.</translation>
+        <translation type="unfinished">Fajl %filename ne potoji, ne mogu uneti fajl.</translation>
     </message>
     <message>
         <source>No matching class identifier found.</source>
-        <translation>Nije pronađen identifikator klase.</translation>
+        <translation type="unfinished">Nije pronađen identifikator klase.</translation>
     </message>
     <message>
         <source>The class %class_identifier does not exist.</source>
-        <translation>Identifikator klase %class_identifier ne postoji.</translation>
+        <translation type="unfinished">Identifikator klase %class_identifier ne postoji.</translation>
     </message>
     <message>
         <source>Was not able to figure out placement of object.</source>
-        <translation>Nemoguće odlučivanje o smeštanju objekta.</translation>
+        <translation type="unfinished">Nemoguće odlučivanje o smeštanju objekta.</translation>
     </message>
     <message>
         <source>No configuration group in upload.ini for class identifier %class_identifier.</source>
-        <translation>Nema konfigracione grupe u upload.ini za identifikator klase %class_identifier.</translation>
+        <translation type="unfinished">Nema konfigracione grupe u upload.ini za identifikator klase %class_identifier.</translation>
     </message>
     <message>
         <source>No matching file attribute found, cannot create content object without this.</source>
-        <translation>Nije pronađen atribut fajla, ne može se kreirati objekat bez ovoga.</translation>
+        <translation type="unfinished">Nije pronađen atribut fajla, ne može se kreirati objekat bez ovoga.</translation>
     </message>
     <message>
         <source>No matching name attribute found, cannot create content object without this.</source>
-        <translation>Nije pronađen naziv atributa, no može se kreirati objekat sadržaja bez ovoga.</translation>
+        <translation type="unfinished">Nije pronađen naziv atributa, no može se kreirati objekat sadržaja bez ovoga.</translation>
     </message>
     <message>
         <source>The attribute %class_identifier does not support regular file storage.</source>
-        <translation>Atribut %class_identifier ne podržava regularno smeštanje fajlova.</translation>
+        <translation type="unfinished">Atribut %class_identifier ne podržava regularno smeštanje fajlova.</translation>
     </message>
     <message>
         <source>The attribute %class_identifier does not support simple string storage.</source>
-        <translation>Atribut %class_identifier ne podržava jednostavno smeštanje stringova.</translation>
+        <translation type="unfinished">Atribut %class_identifier ne podržava jednostavno smeštanje stringova.</translation>
     </message>
     <message>
         <source>The attribute %class_identifier does not support HTTP file storage.</source>
-        <translation>Atribut %class_identifier ne podržava HTTP smeštanje fajlova.</translation>
+        <translation type="unfinished">Atribut %class_identifier ne podržava HTTP smeštanje fajlova.</translation>
     </message>
     <message>
         <source>Publishing of content object was halted.</source>
-        <translation>Objavljivanje objekta sadržaja je prekinuto.</translation>
+        <translation type="unfinished">Objavljivanje objekta sadržaja je prekinuto.</translation>
     </message>
     <message>
         <source>Publish process was cancelled.</source>
-        <translation>Proces objavljivanja je prekinut.</translation>
+        <translation type="unfinished">Proces objavljivanja je prekinut.</translation>
     </message>
     <message>
         <source>A file is required for upload, no file were found.</source>
-        <translation>Fajl je potreban za upload, nije pronađen fajl.</translation>
+        <translation type="unfinished">Fajl je potreban za upload, nije pronađen fajl.</translation>
     </message>
     <message>
         <source>Expected a eZHTTPFile object but got nothing.</source>
-        <translation>Očekivan je objekat eZHTTPFile ali nije ništa nađeno.</translation>
+        <translation type="unfinished">Očekivan je objekat eZHTTPFile ali nije ništa nađeno.</translation>
     </message>
     <message>
         <source>No HTTP file found, cannot fetch uploaded file.</source>
-        <translation>Nije nađen HTTP fajl, ne mogu učitati uploadovan fajl.</translation>
+        <translation type="unfinished">Nije nađen HTTP fajl, ne mogu učitati uploadovan fajl.</translation>
     </message>
     <message>
         <source>Permission denied</source>
-        <translation>Dozvola nije omogućena</translation>
+        <translation type="unfinished">Dozvola nije omogućena</translation>
     </message>
     <message>
         <source>There was an error trying to instantiate content upload handler.</source>
-        <translation>Došlo je do greške kod pokušaja instanciranja hendlera za upload sadržaja.</translation>
+        <translation type="unfinished">Došlo je do greške kod pokušaja instanciranja hendlera za upload sadržaja.</translation>
     </message>
     <message>
         <source>Could not find content upload handler &apos;%handler_name&apos;</source>
-        <translation>Nisam mogao naći hendler za upload sadržaja &apos;%handler_name&apos;</translation>
+        <translation type="unfinished">Nisam mogao naći hendler za upload sadržaja &apos;%handler_name&apos;</translation>
     </message>
     <message>
         <source>The size of the uploaded file exceeds the limit set for this site: %1 bytes.</source>
@@ -25486,67 +26546,74 @@ your account.</source>
     <name>kernel/contentclass</name>
     <message>
         <source>New %1</source>
-        <translation>Novo: %1</translation>
+        <translation type="unfinished">Novo: %1</translation>
     </message>
     <message>
         <source>Cannot remove class &apos;%class_name&apos;:</source>
-        <translation>Ne mogu ukloniti klasu &apos;%class_name&apos;:</translation>
+        <translation type="unfinished">Ne mogu ukloniti klasu &apos;%class_name&apos;:</translation>
     </message>
     <message>
         <source>The class is used by a top-level node and cannot be removed.</source>
-        <translation>Klasu koristi glavni čvor i ne može biti uklonjena.</translation>
+        <translation type="unfinished">Klasu koristi glavni čvor i ne može biti uklonjena.</translation>
     </message>
 </context>
 <context>
     <name>kernel/design</name>
     <message>
         <source>Template list</source>
-        <translation>Lista šablona</translation>
+        <translation type="unfinished">Lista šablona</translation>
     </message>
     <message>
         <source>Template view</source>
-        <translation>Prikaz šablona</translation>
+        <translation type="unfinished">Prikaz šablona</translation>
     </message>
     <message>
         <source>Create new template</source>
-        <translation>Kreiraj novi šablon</translation>
+        <translation type="unfinished">Kreiraj novi šablon</translation>
     </message>
     <message>
         <source>Template edit</source>
-        <translation>Izmena šablona</translation>
+        <translation type="unfinished">Izmena šablona</translation>
     </message>
     <message>
         <source>Toolbar list</source>
-        <translation>Lista alatne trake</translation>
+        <translation type="unfinished">Lista alatne trake</translation>
     </message>
 </context>
 <context>
     <name>kernel/error</name>
     <message>
         <source>Error</source>
-        <translation>Greška</translation>
+        <translation type="unfinished">Greška</translation>
     </message>
 </context>
 <context>
     <name>kernel/ezinfo</name>
     <message>
         <source>Info</source>
-        <translation>Informacije</translation>
+        <translation type="unfinished">Informacije</translation>
     </message>
     <message>
         <source>About</source>
-        <translation>O</translation>
+        <translation type="unfinished">O</translation>
     </message>
     <message>
         <source>Copyright</source>
-        <translation>Autorska prava</translation>
+        <translation type="unfinished">Autorska prava</translation>
+    </message>
+</context>
+<context>
+    <name>kernel/form</name>
+    <message>
+        <source>Form processing</source>
+        <translation type="obsolete">Obrada formulara</translation>
     </message>
 </context>
 <context>
     <name>kernel/infocollector</name>
     <message>
         <source>Collected information</source>
-        <translation>Skupljene informacije</translation>
+        <translation type="unfinished">Skupljene informacije</translation>
     </message>
 </context>
 <context>
@@ -25554,256 +26621,260 @@ your account.</source>
     <message>
         <source>Content structure</source>
         <comment>Navigation part</comment>
-        <translation>Struktura sadržaja</translation>
+        <translation type="unfinished">Struktura sadržaja</translation>
     </message>
     <message>
         <source>Media library</source>
         <comment>Navigation part</comment>
-        <translation>Biblioteka medija</translation>
+        <translation type="unfinished">Biblioteka medija</translation>
     </message>
     <message>
         <source>User accounts</source>
         <comment>Navigation part</comment>
-        <translation>Korisnički računi</translation>
+        <translation type="unfinished">Korisnički računi</translation>
     </message>
     <message>
         <source>Webshop</source>
         <comment>Navigation part</comment>
-        <translation>Web prodavnica</translation>
+        <translation type="unfinished">Web prodavnica</translation>
     </message>
     <message>
         <source>Design</source>
         <comment>Navigation part</comment>
-        <translation>Dizajn</translation>
+        <translation type="unfinished">Dizajn</translation>
     </message>
     <message>
         <source>Setup</source>
         <comment>Navigation part</comment>
-        <translation>Setup</translation>
+        <translation type="unfinished">Setup</translation>
     </message>
     <message>
         <source>My account</source>
         <comment>Navigation part</comment>
-        <translation>Moj račun</translation>
+        <translation type="unfinished">Moj račun</translation>
     </message>
 </context>
 <context>
     <name>kernel/notification</name>
     <message>
         <source>Notification settings</source>
-        <translation>Podešavanja obaveštenja</translation>
+        <translation type="unfinished">Podešavanja obaveštenja</translation>
     </message>
 </context>
 <context>
     <name>kernel/package</name>
     <message>
         <source>Packages</source>
-        <translation>Paketi</translation>
+        <translation type="unfinished">Paketi</translation>
     </message>
     <message>
         <source>Upload</source>
-        <translation>Učitati</translation>
+        <translation type="unfinished">Učitati</translation>
     </message>
     <message>
         <source>Package information</source>
-        <translation>Podaci o paketu</translation>
+        <translation type="unfinished">Podaci o paketu</translation>
     </message>
     <message>
         <source>Package maintainer</source>
-        <translation>Održavanje paketa</translation>
+        <translation type="unfinished">Održavanje paketa</translation>
     </message>
     <message>
         <source>Package changelog</source>
-        <translation>Informacije o izmenama paketa</translation>
+        <translation type="unfinished">Informacije o izmenama paketa</translation>
     </message>
     <message>
         <source>Package thumbnail</source>
-        <translation>Minijatura paketa</translation>
+        <translation type="unfinished">Minijatura paketa</translation>
     </message>
     <message>
         <source>Package name</source>
-        <translation>Ime paketa</translation>
+        <translation type="unfinished">Ime paketa</translation>
     </message>
     <message>
         <source>Package name is missing</source>
-        <translation>Nedostaje ime paketa</translation>
+        <translation type="unfinished">Nedostaje ime paketa</translation>
     </message>
     <message>
         <source>A package named %packagename already exists, please give another name</source>
-        <translation>Paket pod imenom %packagename već postoji, molimo dodelite drugo ime</translation>
+        <translation type="unfinished">Paket pod imenom %packagename već postoji, molimo dodelite drugo ime</translation>
     </message>
     <message>
         <source>Summary</source>
-        <translation>Ukratko</translation>
+        <translation type="unfinished">Ukratko</translation>
     </message>
     <message>
         <source>Summary is missing</source>
-        <translation>Nedostaje sažetak</translation>
+        <translation type="unfinished">Nedostaje sažetak</translation>
     </message>
     <message>
         <source>Version</source>
-        <translation>Verzija</translation>
+        <translation type="unfinished">Verzija</translation>
     </message>
     <message>
         <source>Name</source>
-        <translation>Ime</translation>
+        <translation type="unfinished">Ime</translation>
     </message>
     <message>
         <source>You must enter a name for the changelog</source>
-        <translation>Morate uneti ime za datoteku izmena</translation>
+        <translation type="unfinished">Morate uneti ime za datoteku izmena</translation>
     </message>
     <message>
         <source>Changelog</source>
-        <translation>Datoteka izmena</translation>
+        <translation type="unfinished">Datoteka izmena</translation>
     </message>
     <message>
         <source>You must supply some text for the changelog entry</source>
-        <translation>Morate uneti neki tekst kao unos u datoteku izmena</translation>
+        <translation type="unfinished">Morate uneti neki tekst kao unos u datoteku izmena</translation>
     </message>
     <message>
         <source>You must enter a name of the maintainer</source>
-        <translation>Morate uneti ime održavaoca</translation>
+        <translation type="unfinished">Morate uneti ime održavaoca</translation>
     </message>
     <message>
         <source>Content classes to include</source>
-        <translation>Klase sadržaja koje treba uključiti</translation>
+        <translation type="unfinished">Klase sadržaja koje treba uključiti</translation>
     </message>
     <message>
         <source>Content class export</source>
-        <translation>Izvoz sadržaja klasa</translation>
+        <translation type="unfinished">Izvoz sadržaja klasa</translation>
     </message>
     <message>
         <source>Class list</source>
-        <translation>Lista klasa</translation>
+        <translation type="unfinished">Lista klasa</translation>
     </message>
     <message>
         <source>You must select at least one class for inclusion</source>
-        <translation>Morate izabrati barem jednu klasu </translation>
+        <translation type="unfinished">Morate izabrati barem jednu klasu </translation>
     </message>
     <message>
         <source>CSS file</source>
-        <translation>CSS datoteka</translation>
+        <translation type="unfinished">CSS datoteka</translation>
     </message>
     <message>
         <source>Image files</source>
-        <translation>Datoteke sa slikama</translation>
+        <translation type="unfinished">Datoteke sa slikama</translation>
     </message>
     <message>
         <source>Site style</source>
-        <translation>Stil stranice</translation>
+        <translation type="unfinished">Stil stranice</translation>
     </message>
     <message>
         <source>File did not have a .css suffix, this is most likely not a CSS file</source>
-        <translation>Datoteka nije imala nastavak .css pa se najverovatnije ne radi o CSS datoteci</translation>
+        <translation type="unfinished">Datoteka nije imala nastavak .css pa se najverovatnije ne radi o CSS datoteci</translation>
     </message>
     <message>
         <source>Create package</source>
-        <translation>Kreiraj paket</translation>
+        <translation type="unfinished">Kreiraj paket</translation>
     </message>
     <message>
         <source>Install</source>
-        <translation>Instaliraj</translation>
+        <translation type="unfinished">Instaliraj</translation>
     </message>
     <message>
         <source>Uninstall</source>
-        <translation>Ukloni</translation>
+        <translation type="unfinished">Ukloni</translation>
     </message>
     <message>
         <source>Package %packagename already exists, cannot import the package</source>
-        <translation>Paket %packagename već postoji, nije moguće uvesti paket</translation>
+        <translation type="unfinished">Paket %packagename već postoji, nije moguće uvesti paket</translation>
     </message>
     <message>
         <source>Local</source>
-        <translation>Lokalan</translation>
+        <translation type="unfinished">Lokalan</translation>
     </message>
     <message>
         <source>The version must only contain numbers (optionally followed by text) and must be delimited by dots (.), e.g. 1.0, 3.4.0beta1</source>
-        <translation>Verzija može samo sadržati brojeve (koje može pratiti tekst) te mora biti razgraničena tačkama (.), npr. 1.0,
+        <translation type="unfinished">Verzija može samo sadržati brojeve (koje može pratiti tekst) te mora biti razgraničena tačkama (.), npr. 1.0,
 3.4.0beta1</translation>
     </message>
     <message>
         <source>Content objects to include</source>
-        <translation>Objekti sadržaja koje treba uključiti</translation>
+        <translation type="unfinished">Objekti sadržaja koje treba uključiti</translation>
     </message>
     <message>
         <source>Content object limits</source>
-        <translation>Ograničenja objekata sadržaja</translation>
+        <translation type="unfinished">Ograničenja objekata sadržaja</translation>
     </message>
     <message>
         <source>Content object export</source>
-        <translation>Izvoz objekata sadržaja</translation>
+        <translation type="unfinished">Izvoz objekata sadržaja</translation>
     </message>
     <message>
         <source>Selected nodes</source>
-        <translation>Izabrani čvorovi</translation>
+        <translation type="unfinished">Izabrani čvorovi</translation>
     </message>
     <message>
         <source>You must select one or more node(s)/subtree(s) for export.</source>
-        <translation>Potrebno je izabrati jedan ili više čvorova/podstabala za izvoz.</translation>
+        <translation type="unfinished">Potrebno je izabrati jedan ili više čvorova/podstabala za izvoz.</translation>
     </message>
     <message>
         <source>You must choose one or more languages.</source>
-        <translation>Potrebno je izabrati jedan ili više jezika.</translation>
+        <translation type="unfinished">Potrebno je izabrati jedan ili više jezika.</translation>
     </message>
     <message>
         <source>You must choose one or more site access.</source>
-        <translation>Potrebno je izabrati jedan ili više pristupa stranici.</translation>
+        <translation type="unfinished">Potrebno je izabrati jedan ili više pristupa stranici.</translation>
     </message>
     <message>
         <source>CSS files</source>
-        <translation>CSS datoteke</translation>
+        <translation type="unfinished">CSS datoteke</translation>
     </message>
     <message>
         <source>You must upload both CSS files</source>
-        <translation>Morate učitati obe CSS datoteke</translation>
+        <translation type="unfinished">Morate učitati obe CSS datoteke</translation>
     </message>
     <message>
         <source>Content object %objectname</source>
-        <translation>Objekt sadržaja %objectname</translation>
+        <translation type="unfinished">Objekt sadržaja %objectname</translation>
     </message>
     <message>
         <source>Site access mapping</source>
-        <translation>Podešavanja pristupa</translation>
+        <translation type="unfinished">Podešavanja pristupa</translation>
     </message>
     <message>
         <source>Top node placements</source>
-        <translation>Mesta glavnog čvora</translation>
+        <translation type="unfinished">Mesta glavnog čvora</translation>
     </message>
     <message>
         <source>Content object import</source>
-        <translation>Uvoz objekata sadržaja</translation>
+        <translation type="unfinished">Uvoz objekata sadržaja</translation>
     </message>
     <message>
         <source>Select parent nodes</source>
-        <translation>Izaberite roditeljske čvorove</translation>
+        <translation type="unfinished">Izaberite roditeljske čvorove</translation>
     </message>
     <message>
         <source>You must assign all nodes to new parent nodes.</source>
-        <translation>Potrebno je priključiti sve čvorove novim roditeljskim čvorovima.</translation>
+        <translation type="unfinished">Potrebno je priključiti sve čvorove novim roditeljskim čvorovima.</translation>
     </message>
     <message>
         <source>Lead</source>
-        <translation>Glavni</translation>
+        <translation type="unfinished">Glavni</translation>
     </message>
     <message>
         <source>Developer</source>
-        <translation>Developer</translation>
+        <translation type="unfinished">Developer</translation>
     </message>
     <message>
         <source>Designer</source>
-        <translation>Dizajner</translation>
+        <translation type="unfinished">Dizajner</translation>
     </message>
     <message>
         <source>Contributor</source>
-        <translation>Saradnik</translation>
+        <translation type="unfinished">Saradnik</translation>
     </message>
     <message>
         <source>Tester</source>
-        <translation>Tester</translation>
+        <translation type="unfinished">Tester</translation>
     </message>
     <message>
         <source>The package name %packagename is not valid, it can only contain characters in the range a-z, 0-9 and underscore.</source>
-        <translation>Naziv paketa %packagename nije ispravan, naziv sme sadržati samo karaktere od a-z, 0-9 i donju crtu.</translation>
+        <translation type="unfinished">Naziv paketa %packagename nije ispravan, naziv sme sadržati samo karaktere od a-z, 0-9 i donju crtu.</translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation type="unfinished">Ukloni</translation>
     </message>
     <message>
         <source>Email</source>
@@ -25870,10 +26941,6 @@ your account.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Remove</source>
-        <translation type="unfinished">Ukloni</translation>
-    </message>
-    <message>
         <source>Keep object</source>
         <translation type="unfinished"></translation>
     </message>
@@ -25887,6 +26954,10 @@ your account.</source>
     </message>
     <message>
         <source>Extension &apos;%extensionname&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Package contains an invalid extension name: %extensionname</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -25906,10 +26977,6 @@ your account.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Package contains an invalid extension name: %extensionname</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Advanced options</source>
         <translation type="unfinished"></translation>
     </message>
@@ -25922,7 +26989,7 @@ your account.</source>
     <name>kernel/pdf</name>
     <message>
         <source>PDF Export</source>
-        <translation>PDF izvoz</translation>
+        <translation type="unfinished">PDF izvoz</translation>
     </message>
     <message>
         <source>An export with such filename already exists.</source>
@@ -25933,64 +27000,71 @@ your account.</source>
     <name>kernel/pdfexport</name>
     <message>
         <source>New PDF Export</source>
-        <translation>Novi PDF izvoz</translation>
+        <translation type="unfinished">Novi PDF izvoz</translation>
+    </message>
+</context>
+<context>
+    <name>kernel/reference</name>
+    <message>
+        <source>Reference documentation</source>
+        <translation type="obsolete">Referentna dokumentacija</translation>
     </message>
 </context>
 <context>
     <name>kernel/role</name>
     <message>
         <source>Role list</source>
-        <translation>Lista uloga</translation>
+        <translation type="unfinished">Lista uloga</translation>
     </message>
     <message>
         <source>Editing policy</source>
-        <translation>Izmena politike </translation>
+        <translation type="unfinished">Izmena politike </translation>
     </message>
     <message>
         <source>Limit on section</source>
-        <translation>Ograniči na segmentu</translation>
+        <translation type="unfinished">Ograniči na segmentu</translation>
     </message>
     <message>
         <source>Create new policy, step 2: select function</source>
-        <translation>Kreiranje nove politike, korak 2: izaberi funkciju</translation>
+        <translation type="unfinished">Kreiranje nove politike, korak 2: izaberi funkciju</translation>
     </message>
     <message>
         <source>Create new policy, step three: set function limitations</source>
-        <translation>Kreiranje nove politike, korak treći: odredi ograničenja funkcije</translation>
+        <translation type="unfinished">Kreiranje nove politike, korak treći: odredi ograničenja funkcije</translation>
     </message>
     <message>
         <source>Create new policy, step two: select function</source>
-        <translation>Kreiranje nove politike, korak drugi: izaberi funkciju</translation>
+        <translation type="unfinished">Kreiranje nove politike, korak drugi: izaberi funkciju</translation>
     </message>
     <message>
         <source>Create new policy, step one: select module</source>
-        <translation>Kreiranje nove politike, korak prvi: izaberi modul</translation>
+        <translation type="unfinished">Kreiranje nove politike, korak prvi: izaberi modul</translation>
     </message>
 </context>
 <context>
     <name>kernel/role/edit</name>
     <message>
         <source>New role</source>
-        <translation>Nova uloga</translation>
+        <translation type="unfinished">Nova uloga</translation>
     </message>
     <message>
         <source>Copy of %rolename</source>
-        <translation>Kopija uloge %rolename</translation>
+        <translation type="unfinished">Kopija uloge %rolename</translation>
     </message>
 </context>
 <context>
     <name>kernel/rss</name>
     <message>
         <source>Really Simple Syndication</source>
-        <translation>RSS</translation>
+        <translation type="unfinished">RSS</translation>
     </message>
     <message>
         <source>New RSS Export</source>
-        <translation>Novi RSS izvoz</translation>
+        <translation type="unfinished">Novi RSS izvoz</translation>
     </message>
     <message>
         <source>New RSS Import</source>
-        <translation>Novi RSS uvoz</translation>
+        <translation type="unfinished">Novi RSS uvoz</translation>
     </message>
 </context>
 <context>
@@ -26016,26 +27090,26 @@ your account.</source>
     <name>kernel/search</name>
     <message>
         <source>Search stats</source>
-        <translation>Statistike pretraživanja</translation>
+        <translation type="unfinished">Statistike pretraživanja</translation>
     </message>
 </context>
 <context>
     <name>kernel/section</name>
     <message>
         <source>Edit Section</source>
-        <translation>Izmeni odlomak</translation>
+        <translation type="obsolete">Izmeni odlomak</translation>
     </message>
     <message>
         <source>Sections</source>
-        <translation>Segmenti</translation>
+        <translation type="unfinished">Segmenti</translation>
     </message>
     <message>
         <source>View section</source>
-        <translation>Prikaži segment</translation>
+        <translation type="obsolete">Prikaži segment</translation>
     </message>
     <message>
         <source>New section</source>
-        <translation>Novi segment</translation>
+        <translation type="unfinished">Novi segment</translation>
     </message>
     <message>
         <source>Assign section</source>
@@ -26046,162 +27120,162 @@ your account.</source>
     <name>kernel/setup</name>
     <message>
         <source>Cache admin</source>
-        <translation>Administracija cache-a</translation>
+        <translation type="unfinished">Administracija cache-a</translation>
     </message>
     <message>
         <source>Template operator wizard</source>
-        <translation>Čarobnjak za šablone</translation>
+        <translation type="unfinished">Čarobnjak za šablone</translation>
     </message>
     <message>
         <source>Extension configuration</source>
-        <translation>Konfiguracija ekstenzija</translation>
+        <translation type="unfinished">Konfiguracija ekstenzija</translation>
     </message>
     <message>
         <source>System information</source>
-        <translation>Podaci o sistemu</translation>
+        <translation type="unfinished">Podaci o sistemu</translation>
     </message>
     <message>
         <source>Rapid Application Development</source>
-        <translation>Rapid Application Development</translation>
+        <translation type="unfinished">Rapid Application Development</translation>
     </message>
     <message>
         <source>Setup menu</source>
-        <translation>Setup menu</translation>
+        <translation type="unfinished">Setup menu</translation>
     </message>
     <message>
         <source>System Upgrade</source>
-        <translation>Unapređivanje sistema</translation>
+        <translation type="unfinished">Unapređivanje sistema</translation>
     </message>
     <message>
         <source>Session admin</source>
-        <translation>Administrator sesija</translation>
+        <translation type="unfinished">Administrator sesija</translation>
     </message>
     <message>
         <source>File %1 does not exist. You should copy it from the recent eZ Publish distribution.</source>
-        <translation>Datoteka %1 ne postoji. Moraš je kopirati sa zadnje eZ Publish distribucije.</translation>
+        <translation type="unfinished">Datoteka %1 ne postoji. Moraš je kopirati sa zadnje eZ Publish distribucije.</translation>
     </message>
     <message>
         <source>Datatype wizard</source>
-        <translation>Datatip čarobnjak</translation>
+        <translation type="unfinished">Datatip čarobnjak</translation>
     </message>
 </context>
 <context>
     <name>kernel/shop</name>
     <message>
         <source>Basket</source>
-        <translation>Korpa</translation>
+        <translation type="unfinished">Korpa</translation>
     </message>
     <message>
         <source>Confirm order</source>
-        <translation>Potvrdi narudžbu</translation>
+        <translation type="unfinished">Potvrdi narudžbu</translation>
     </message>
     <message>
         <source>Discount group</source>
-        <translation>Grupa popusta</translation>
+        <translation type="unfinished">Grupa popusta</translation>
     </message>
     <message>
         <source>Group view of discount rule</source>
-        <translation>Grupni prikaz discount uloge</translation>
+        <translation type="unfinished">Grupni prikaz discount uloge</translation>
     </message>
     <message>
         <source>Editing rule</source>
-        <translation>Pravilo editovanja</translation>
+        <translation type="unfinished">Pravilo editovanja</translation>
     </message>
     <message>
         <source>Order list</source>
-        <translation>Lista narudžbi</translation>
+        <translation type="unfinished">Lista narudžbi</translation>
     </message>
     <message>
         <source>Enter account information</source>
-        <translation>Unesi podatke o računu</translation>
+        <translation type="unfinished">Unesi podatke o računu</translation>
     </message>
     <message>
         <source>VAT types</source>
-        <translation>Vrste PDV-a</translation>
+        <translation type="unfinished">Vrste PDV-a</translation>
     </message>
     <message>
         <source>Checkout</source>
-        <translation>Provera</translation>
+        <translation type="unfinished">Provera</translation>
     </message>
     <message>
         <source>Customer list</source>
-        <translation>Lista klijenata</translation>
+        <translation type="unfinished">Lista klijenata</translation>
     </message>
     <message>
         <source>Remove order</source>
-        <translation>Ukloni narudžbu</translation>
+        <translation type="unfinished">Ukloni narudžbu</translation>
     </message>
     <message>
         <source>Statistics</source>
-        <translation>Statistika</translation>
+        <translation type="unfinished">Statistika</translation>
     </message>
     <message>
         <source>VAT type</source>
-        <translation>Vrsta PDV-a</translation>
+        <translation type="unfinished">Vrsta PDV-a</translation>
     </message>
     <message>
         <source>Classes</source>
-        <translation>Klase</translation>
+        <translation type="unfinished">Klase</translation>
     </message>
     <message>
         <source>Any class</source>
-        <translation>Sve klase</translation>
+        <translation type="unfinished">Sve klase</translation>
     </message>
     <message>
         <source>in sections</source>
-        <translation>u segmentima</translation>
+        <translation type="unfinished">u segmentima</translation>
     </message>
     <message>
         <source>in any section</source>
-        <translation>u svim segmentima</translation>
+        <translation type="unfinished">u svim segmentima</translation>
     </message>
     <message>
         <source>Products</source>
-        <translation>Proizvodi</translation>
+        <translation type="unfinished">Proizvodi</translation>
     </message>
     <message>
         <source>Any product</source>
-        <translation>Svi proizvodi</translation>
+        <translation type="unfinished">Svi proizvodi</translation>
     </message>
     <message>
         <source>Order status</source>
-        <translation>Status narudžbe</translation>
+        <translation type="unfinished">Status narudžbe</translation>
     </message>
     <message>
         <source>Undefined</source>
-        <translation>Nedefinisano</translation>
+        <translation type="unfinished">Nedefinisano</translation>
     </message>
     <message>
         <source>The confirm order operation was canceled. Try to checkout again.</source>
-        <translation>Potvrda narudžbe je prekinuta. Pokušajte da naručite ponovo.</translation>
+        <translation type="unfinished">Potvrda narudžbe je prekinuta. Pokušajte da naručite ponovo.</translation>
     </message>
     <message>
         <source>Order #%order_id</source>
-        <translation>Narudžba #%order_id</translation>
+        <translation type="unfinished">Narudžba #%order_id</translation>
     </message>
     <message>
         <source>New order status was successfully added.</source>
-        <translation>Novi status narudžbe je uspešno dodan.</translation>
+        <translation type="unfinished">Novi status narudžbe je uspešno dodan.</translation>
     </message>
     <message>
         <source>Changes to order status were successfully stored.</source>
-        <translation>Promene statusa narudžbe su uspešno sačuvane.</translation>
+        <translation type="unfinished">Promene statusa narudžbe su uspešno sačuvane.</translation>
     </message>
     <message>
         <source>Selected order statuses were successfully removed.</source>
-        <translation>Izabrani statusi narudžbi su uspešno uklonjeni.</translation>
+        <translation type="unfinished">Izabrani statusi narudžbi su uspešno uklonjeni.</translation>
     </message>
     <message>
         <source>Internal orders cannot be removed.</source>
-        <translation>Interne narudžbe ne mogu biti uklonjene.</translation>
+        <translation type="unfinished">Interne narudžbe ne mogu biti uklonjene.</translation>
     </message>
     <message>
         <source>Status</source>
-        <translation>Status</translation>
+        <translation type="unfinished">Status</translation>
     </message>
     <message>
         <source>Customer order view</source>
-        <translation>Pregled klijentske narudžbe</translation>
+        <translation type="unfinished">Pregled klijentske narudžbe</translation>
     </message>
     <message>
         <source>Any</source>
@@ -26272,6 +27346,14 @@ your account.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>&apos;%value&apos; is not a valid custom rate value (positive number expected)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&apos;%value&apos; is not a valid rate_factor value (positive number expected)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Error checking out</source>
         <translation type="unfinished"></translation>
     </message>
@@ -26289,14 +27371,6 @@ your account.</source>
     </message>
     <message>
         <source>Wishlist</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&apos;%value&apos; is not a valid custom rate value (positive number expected)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&apos;%value&apos; is not a valid rate_factor value (positive number expected)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -26319,11 +27393,11 @@ your account.</source>
     <name>kernel/shop/discountgroup</name>
     <message>
         <source>New discount group</source>
-        <translation>Nova grupa popusta</translation>
+        <translation type="unfinished">Nova grupa popusta</translation>
     </message>
     <message>
         <source>New Discount Rule</source>
-        <translation>Novo pravilo popusta</translation>
+        <translation type="unfinished">Novo pravilo popusta</translation>
     </message>
 </context>
 <context>
@@ -26401,20 +27475,8 @@ your account.</source>
 <context>
     <name>kernel/state</name>
     <message>
-        <source>State</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Assign</source>
         <translation type="unfinished">Dodeli</translation>
-    </message>
-    <message>
-        <source>New</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Edit</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Groups</source>
@@ -26427,6 +27489,18 @@ your account.</source>
     <message>
         <source>Group edit</source>
         <translation type="unfinished">Izmena grupe</translation>
+    </message>
+    <message>
+        <source>State</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>New</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -26476,57 +27550,53 @@ your account.</source>
     <name>kernel/trigger</name>
     <message>
         <source>Trigger</source>
-        <translation>Obarač</translation>
+        <translation type="unfinished">Obarač</translation>
     </message>
     <message>
         <source>List</source>
-        <translation>Lista</translation>
+        <translation type="unfinished">Lista</translation>
     </message>
 </context>
 <context>
     <name>kernel/url</name>
     <message>
         <source>URL</source>
-        <translation>URL</translation>
+        <translation type="unfinished">URL</translation>
     </message>
     <message>
         <source>List</source>
-        <translation>Lista</translation>
+        <translation type="unfinished">Lista</translation>
     </message>
     <message>
         <source>View</source>
-        <translation>Prikaz</translation>
+        <translation type="unfinished">Prikaz</translation>
     </message>
     <message>
         <source>URL edit</source>
-        <translation>Izmena URL-a</translation>
+        <translation type="unfinished">Izmena URL-a</translation>
     </message>
 </context>
 <context>
     <name>kernel/user</name>
     <message>
         <source>User</source>
-        <translation>Korisnik</translation>
+        <translation type="unfinished">Korisnik</translation>
     </message>
     <message>
         <source>Login</source>
-        <translation>Prijava</translation>
+        <translation type="unfinished">Prijava</translation>
     </message>
     <message>
         <source>Change password</source>
-        <translation>Promeni lozinku</translation>
+        <translation type="unfinished">Promeni lozinku</translation>
     </message>
     <message>
         <source>Register</source>
-        <translation>Registracija</translation>
+        <translation type="unfinished">Registracija</translation>
     </message>
     <message>
         <source>Forgot password</source>
-        <translation>Zaboravljena lozinka</translation>
-    </message>
-    <message>
-        <source>Activate</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Zaboravljena lozinka</translation>
     </message>
     <message>
         <source>User profile</source>
@@ -26537,6 +27607,10 @@ your account.</source>
         <translation type="unfinished">Podešavanje</translation>
     </message>
     <message>
+        <source>Activate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Success</source>
         <translation type="unfinished"></translation>
     </message>
@@ -26545,62 +27619,62 @@ your account.</source>
     <name>kernel/user/register</name>
     <message>
         <source>Registration info</source>
-        <translation>Podaci o registraciji</translation>
+        <translation type="unfinished">Podaci o registraciji</translation>
     </message>
     <message>
         <source>New user registered</source>
-        <translation>Registrovan novi korisnik</translation>
+        <translation type="unfinished">Registrovan novi korisnik</translation>
     </message>
 </context>
 <context>
     <name>kernel/workflow</name>
     <message>
         <source>Edit workflow</source>
-        <translation>Izmeni radni tok</translation>
+        <translation type="unfinished">Izmeni radni tok</translation>
     </message>
     <message>
         <source>Workflow</source>
-        <translation>Radni tok</translation>
+        <translation type="unfinished">Radni tok</translation>
     </message>
     <message>
         <source>Edit</source>
-        <translation>Izmena</translation>
+        <translation type="unfinished">Izmena</translation>
     </message>
     <message>
         <source>Edit workflow group</source>
-        <translation>Izmeni grupu radnog toka</translation>
+        <translation type="unfinished">Izmeni grupu radnog toka</translation>
     </message>
     <message>
         <source>Group edit</source>
-        <translation>Izmena grupe</translation>
+        <translation type="unfinished">Izmena grupe</translation>
     </message>
     <message>
         <source>Workflow group list</source>
-        <translation>Grupna lista radnog toka</translation>
+        <translation type="unfinished">Grupna lista radnog toka</translation>
     </message>
     <message>
         <source>Group list</source>
-        <translation>Lista grupe</translation>
+        <translation type="unfinished">Lista grupe</translation>
     </message>
     <message>
         <source>Workflow list</source>
-        <translation>Popis radnog događaja</translation>
+        <translation type="unfinished">Popis radnog događaja</translation>
     </message>
     <message>
         <source>Workflow list of group</source>
-        <translation>Popis radnog događaja grupe</translation>
+        <translation type="unfinished">Popis radnog događaja grupe</translation>
     </message>
     <message>
         <source>List</source>
-        <translation>Lista</translation>
+        <translation type="unfinished">Lista</translation>
     </message>
     <message>
         <source>View</source>
-        <translation>Prikaz</translation>
+        <translation type="unfinished">Prikaz</translation>
     </message>
     <message>
         <source>You have to have at least one group that the workflow belongs to!</source>
-        <translation>Morate imati barem jednu grupu kojoj radni tok pripada!</translation>
+        <translation type="unfinished">Morate imati barem jednu grupu kojoj radni tok pripada!</translation>
     </message>
     <message>
         <source>Process list</source>
@@ -26611,48 +27685,48 @@ your account.</source>
     <name>kernel/workflow/edit</name>
     <message>
         <source>New Workflow</source>
-        <translation>Novi radni tok</translation>
+        <translation type="unfinished">Novi radni tok</translation>
     </message>
 </context>
 <context>
     <name>kernel/workflow/event</name>
     <message>
         <source>Event</source>
-        <translation>Događaj</translation>
+        <translation type="unfinished">Događaj</translation>
     </message>
     <message>
         <source>Approve</source>
-        <translation>Odobri</translation>
+        <translation type="unfinished">Odobri</translation>
     </message>
     <message>
         <source>Multiplexer</source>
-        <translation>Multiplexer</translation>
+        <translation type="unfinished">Multiplexer</translation>
     </message>
     <message>
         <source>Simple shipping</source>
-        <translation>Jednostavna otprema</translation>
+        <translation type="unfinished">Jednostavna otprema</translation>
     </message>
     <message>
         <source>Wait until date</source>
-        <translation>Pričekajte do </translation>
+        <translation type="unfinished">Pričekajte do </translation>
     </message>
     <message>
         <source>Payment Gateway</source>
-        <translation>gateway za plaćanje</translation>
+        <translation type="unfinished">gateway za plaćanje</translation>
     </message>
 </context>
 <context>
     <name>kernel/workflow/group</name>
     <message>
         <source>Group</source>
-        <translation>Grupa</translation>
+        <translation type="unfinished">Grupa</translation>
     </message>
 </context>
 <context>
     <name>kernel/workflow/groupedit</name>
     <message>
         <source>New WorkflowGroup</source>
-        <translation>Nova grupa radnih tokova</translation>
+        <translation type="unfinished">Nova grupa radnih tokova</translation>
     </message>
 </context>
 <context>
@@ -26660,12 +27734,12 @@ your account.</source>
     <message>
         <source>Contents</source>
         <comment>Table of contents</comment>
-        <translation>Sadržaj</translation>
+        <translation type="unfinished">Sadržaj</translation>
     </message>
     <message>
         <source>Index</source>
         <comment>Keyword index name</comment>
-        <translation>Indeks</translation>
+        <translation type="unfinished">Indeks</translation>
     </message>
 </context>
 <context>
@@ -26686,36 +27760,36 @@ your account.</source>
     <name>pdf/edit</name>
     <message>
         <source>PDF Export</source>
-        <translation>Izvoz PDF-a</translation>
+        <translation type="unfinished">Izvoz PDF-a</translation>
     </message>
 </context>
 <context>
     <name>settings/edit</name>
     <message>
         <source>Settings</source>
-        <translation>Podešavanja </translation>
+        <translation type="unfinished">Podešavanja </translation>
     </message>
     <message>
         <source>Edit</source>
-        <translation>Izmena</translation>
+        <translation type="unfinished">Izmena</translation>
     </message>
 </context>
 <context>
     <name>settings/view</name>
     <message>
         <source>Settings</source>
-        <translation>Podešavanja</translation>
+        <translation type="unfinished">Podešavanja</translation>
     </message>
     <message>
         <source>View</source>
-        <translation>Prikaz</translation>
+        <translation type="unfinished">Prikaz</translation>
     </message>
 </context>
 <context>
     <name>shop</name>
     <message>
         <source>Remove orders</source>
-        <translation>Ukloni naredbe</translation>
+        <translation type="unfinished">Ukloni naredbe</translation>
     </message>
 </context>
 <context>

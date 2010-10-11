@@ -2,12 +2,12 @@
 <label>{$attribute.content.name|wash( xhtml )}:</label>
 {section show=$attribute.content.option_list}
 <select name="eZOption[{$attribute.id}]">
-{section var=Options loop=$attribute.content.option_list sequence=array( bglight, bgdark )}
-    {section show=ne( $Options.item.additional_price, '' )}
+{section var=Options loop=$attribute.content.option_list}
+    {if ne( $Options.item.additional_price, '' )}
         <option value="{$Options.item.id}">{$Options.item.value} - {$Options.item.additional_price|l10n( currency )}</option>
-    {section-else}
+    {else}
         <option value="{$Options.item.id}">{$Options.item.value}</option>
-    {/section}
+    {/if}
 {/section}
 </select>
 {section-else}

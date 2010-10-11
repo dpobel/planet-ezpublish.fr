@@ -2,10 +2,10 @@
 //
 // Created on: <28-Jan-2004 15:46:30 dr>
 //
+// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.2.0
-// BUILD VERSION: 24182
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 4.3.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -22,6 +22,8 @@
 //   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 //   MA 02110-1301, USA.
 //
+//
+// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
 /*!
@@ -155,6 +157,23 @@ class eZDbSchema
         {
             return false;
         }
+    }
+
+    /**
+    * Merges 2 db schemas, basically appending 2nd on top of 1st
+    * @return array the merged schema
+    */
+    static function merge( $schema1, $schema2 )
+    {
+        $merged = $schema1;
+        foreach( $schema2 as $tablename => $tabledef )
+        {
+            if ( $tablename != '_info' )
+            {
+                $merged[$tablename] = $tabledef;
+            }
+        }
+       return $merged;
     }
 }
 ?>

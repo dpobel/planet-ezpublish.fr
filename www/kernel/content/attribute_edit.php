@@ -2,10 +2,10 @@
 //
 // Created on: <17-Apr-2002 10:34:48 bf>
 //
+// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.2.0
-// BUILD VERSION: 24182
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 4.3.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -23,6 +23,8 @@
 //   MA 02110-1301, USA.
 //
 //
+// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
+//
 
 /*!
   \file
@@ -32,7 +34,7 @@
   \param $Module must be set by the code which includes this file
 */
 
-require_once( 'kernel/common/template.php' );
+
 
 if ( isset( $Module ) )
     $Module = $Params['Module'];
@@ -263,8 +265,8 @@ if ( $_SERVER['REQUEST_METHOD'] === 'POST' )
     {
         $validation['attributes'][] = array( 'id' => '1',
                                              'identified' => 'generalid',
-                                             'name' => ezi18n( 'kernel/content', 'Error' ),
-                                             'description' => ezi18n( 'kernel/content', 'The request sent to the server was too big to be accepted. This probably means that you uploaded a file which was too big. The maximum allowed request size is %max_size_string.', null, array( '%max_size_string' => "$postMaxSize $postMaxSizeUnit" ) ) );
+                                             'name' => ezpI18n::tr( 'kernel/content', 'Error' ),
+                                             'description' => ezpI18n::tr( 'kernel/content', 'The request sent to the server was too big to be accepted. This probably means that you uploaded a file which was too big. The maximum allowed request size is %max_size_string.', null, array( '%max_size_string' => "$postMaxSize $postMaxSizeUnit" ) ) );
         $validation['processed'] = true;
     }
 }
@@ -368,7 +370,7 @@ if ( $Module->isCurrentAction( 'Publish' ) )
         // Check that node assignment node exists.
         if ( !$assignments[$key]->attribute( 'parent_node_obj' ) )
         {
-            $validation[ 'placement' ][] = array( 'text' => ezi18n( 'kernel/content', 'A node in the node assignment list has been deleted.' ) );
+            $validation[ 'placement' ][] = array( 'text' => ezpI18n::tr( 'kernel/content', 'A node in the node assignment list has been deleted.' ) );
             $validation[ 'processed' ] = true;
             $inputValidated = false;
             $invalidNodeAssignmentList[] = $assignments[$key]->attribute( 'parent_node' );
@@ -389,7 +391,7 @@ if ( $Module->isCurrentAction( 'Publish' ) )
     {
         if( eZPreferences::value( 'admin_edit_show_locations' ) == '0' )
         {
-            $validation[ 'placement' ][] = array( 'text' => ezi18n( 'kernel/content', 'No main node selected, please select one.' ) );
+            $validation[ 'placement' ][] = array( 'text' => ezpI18n::tr( 'kernel/content', 'No main node selected, please select one.' ) );
             $validation[ 'processed' ] = true;
             $inputValidated = false;
             eZDebugSetting::writeDebug( 'kernel-content-edit', "placement is not validated" );
@@ -415,7 +417,7 @@ if ( isset( $Params['TemplateObject'] ) )
     $tpl = $Params['TemplateObject'];
 
 if ( !isset( $tpl ) || !( $tpl instanceof eZTemplate ) )
-    $tpl = templateInit();
+    $tpl = eZTemplate::factory();
 
 $tpl->setVariable( 'validation', $validation );
 $tpl->setVariable( 'validation_log', $validatedAttributes );
@@ -476,8 +478,10 @@ $tpl->setVariable( 'content_version', $version );
 $tpl->setVariable( 'http', $http );
 $tpl->setVariable( 'content_attributes', $contentObjectAttributes );
 $tpl->setVariable( 'from_content_attributes', $fromContentObjectAttributes );
+$tpl->setVariable( 'from_content_attributes_grouped_data_map', $fromContentObjectAttributes ? eZContentObject::createGroupedDataMap( $fromContentObjectAttributes ) : array() );
 $tpl->setVariable( 'is_translating_content', $isTranslatingContent );
 $tpl->setVariable( 'content_attributes_data_map', $contentObjectDataMap );
+$tpl->setVariable( 'content_attributes_grouped_data_map', eZContentObject::createGroupedDataMap( $contentObjectAttributes ) );
 $tpl->setVariable( 'class', $class );
 $tpl->setVariable( 'object', $object );
 $tpl->setVariable( 'attribute_base', $attributeDataBaseName );
@@ -515,9 +519,9 @@ $tpl->setVariable( 'view_parameters', $viewParameters );
 $Result = array();
 $Result['content'] = $tpl->fetch( $templateName );
 $Result['view_parameters'] = $viewParameters;
-// $Result['path'] = array( array( 'text' => ezi18n( 'kernel/content', 'Content' ),
+// $Result['path'] = array( array( 'text' => ezpI18n::tr( 'kernel/content', 'Content' ),
 //                                 'url' => false ),
-//                          array( 'text' => ezi18n( 'kernel/content', 'Edit' ),
+//                          array( 'text' => ezpI18n::tr( 'kernel/content', 'Edit' ),
 //                                 'url' => false ),
 //                          array( 'text' => $object->attribute( 'name' ),
 //                                 'url' => false ) );

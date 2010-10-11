@@ -7,7 +7,7 @@
 // Gunnstein Lye <gl@ez.no>
 // Created on: <10-Dec-2002 18:46:17 gl>
 //
-// Copyright (C) 1999-2009 eZ Systems AS. All rights reserved.
+// Copyright (C) 1999-2010 eZ Systems AS. All rights reserved.
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -52,7 +52,7 @@ extern void fetchtr_tpl( QFileInfo *fi, MetaTranslator *tor, bool mustExist, boo
 extern void merge( MetaTranslator *tor, const MetaTranslator *virginTor, const QString &language, bool verbose );
 
 static int verbose = 0;
-static QString version = "4.2.0"; // eZ Publish version plus local version
+static QString version = "4.3.0"; // eZ Publish version plus local version
 static QStringList dirs;          // Additional scan directories
 static bool extension = false;    // Extension mode
 static QDir extension_dir;        // Extension directory

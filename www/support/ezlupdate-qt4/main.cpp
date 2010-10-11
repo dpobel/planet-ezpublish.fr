@@ -10,7 +10,7 @@
 // ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
 // SOFTWARE RELEASE: 4.1.x
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -55,7 +55,7 @@ extern void fetchtr_tpl( QFileInfo *fi, MetaTranslator *tor, bool mustExist, boo
 extern void merge( MetaTranslator *tor, const MetaTranslator *virginTor, bool verbose );
 
 static int verbose = 0;
-static QString version = "4.2.0"; // eZ Publish version plus local version
+static QString version = "4.3.0"; // eZ Publish version plus local version
 static QStringList dirs;          // Additional scan directories
 static bool extension = false;    // Extension mode
 static QDir extension_dir;        // Extension directory

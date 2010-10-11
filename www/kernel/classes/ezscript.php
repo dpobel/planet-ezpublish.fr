@@ -4,10 +4,10 @@
 //
 // Created on: <06-Aug-2003 11:06:35 amos>
 //
+// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.2.0
-// BUILD VERSION: 24182
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 4.3.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -24,6 +24,8 @@
 //   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 //   MA 02110-1301, USA.
 //
+//
+// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
 /*! \file
@@ -68,6 +70,7 @@ $script->shutdown(); // Finish execution
 */
 
 require_once( 'access.php' );
+require_once( 'kernel/common/i18n.php' );
 
 class eZScript
 {
@@ -254,7 +257,7 @@ class eZScript
         }
 
         $access = changeAccess( $access );
-        require_once( 'kernel/common/i18n.php' );
+        
 
         if ( $this->UseExtensions )
         {
@@ -732,6 +735,10 @@ class eZScript
             {
                 $generalOptionList[] = array( '-v,--verbose...', "display more information, \nused multiple times will increase amount of information" );
             }
+            if( $useStandardOptions['root'] )
+            {
+                $generalOptionList[] = array( '-r,--allow-root-user', "Allows the script to be run by the root user" );
+            }
         }
         $description = $this->Description;
         $helpText =  "Usage: " . $program;
@@ -855,6 +862,7 @@ class eZScript
                                                       'log' => true,
                                                       'siteaccess' => true,
                                                       'verbose' => true,
+                                                      'root' => true,
                                                       'user' => false ),
                                                $useStandardOptions );
         }
@@ -907,6 +915,13 @@ class eZScript
                 $excludeOptions[] = 'v';
                 $excludeOptions[] = 'verbose';
             }
+            if( $useStandardOptions['root'] )
+            {
+                $optionString .= "[r?|allow-root-user?]";
+                $excludeOptions[] = 'r';
+                $excludeOptions[] = 'allow-root-user';
+            }
+
             $config = eZCLI::parseOptionString( $optionString, $optionConfig );
         }
         $cli = eZCLI::instance();
@@ -923,8 +938,36 @@ class eZScript
                 $this->initialize();
             $this->shutdown( 1 );
         }
+
         if ( $useStandardOptions )
         {
+            if ( function_exists( 'posix_getuid' ) )
+            {
+                if( posix_getuid() === 0 )
+                {
+                    if( !$options['allow-root-user'] )
+                    {
+                        $cli->warning( "Running scripts as root may be dangerous." );
+                        $cli->warning( "If you think you know what you are doing, you can run this script with the " );
+                        $cli->warning( "root account by appending the parameter --allow-root-user." );
+
+                        exit( 1 );
+                    }
+                    else
+                    {
+                        // ho no, you are not going to be quiet while
+                        // running with root priviledges
+                        $this->setIsQuiet( false );
+
+                        $cli = eZCLI::instance();
+
+                        $cli->warning( 'With great power comes great responsibility.' );
+                        $cli->warning( "You have 10 seconds to break the script (press Ctrl-C)." );
+                        sleep( 10 );
+                    }
+                }
+            }
+
             if ( $options['quiet'] )
                 $this->setIsQuiet( true );
             $useColors = true;

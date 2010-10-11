@@ -4,10 +4,10 @@
 //
 // Created on: <05-Mar-2003 10:02:29 amos>
 //
+// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.2.0
-// BUILD VERSION: 24182
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 4.3.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -25,10 +25,15 @@
 //   MA 02110-1301, USA.
 //
 //
+// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
+//
 
-/*! \file
- Contains some useful kernel include functions which are nice to use in extensions.
-*/
+/**
+ * Contains some kernel include functions which was nice to use in extensions prior to autoloading and 4.0.
+ * 
+ * @package kernel
+ * @deprecated ALL functions in this file is deprecated as of 4.3
+ */
 
 function kernel_include( $name )
 {

@@ -1,7 +1,7 @@
 <select id="{$custom_attribute_id}_source_types" class="mceItemSkip" title="{"List of possible link types. Link types that use the '://' format are technically called protocols."|i18n('design/standard/ezoe')}">
 {if ezini_hasvariable( $custom_attribute_settings, 'LinkType', 'ezoe_attributes.ini' )}
 {foreach ezini( $custom_attribute_settings, 'LinkType', 'ezoe_attributes.ini' ) as $custom_value => $custom_name}
-    <option value="{if $custom_value|ne('0')}{$custom_value|wash}{/if}"{if $custom_attribute_default|contains( $custom_value )} selected="selected"{/if}>{$custom_name|wash}</option>
+    <option value="{if $custom_value|ne('-0-')}{$custom_value|wash}{/if}"{if $custom_attribute_default|contains( $custom_value )} selected="selected"{/if}>{$custom_name|wash}</option>
 {/foreach}
 {else}
     <option value="eznode://">{'eznode'|i18n('design/standard/ezoe')}</option>
@@ -33,63 +33,63 @@
 // register function to be called on end of init
 eZOEPopupUtils.settings.onInitDoneArray.push( function( editorElement )
 {
-    var base_id = ezoeLinkAttribute.id, link = ez.$(base_id+'_source_types', base_id+'_source' );
-    link[0].addEvent('change', function( e, el )
+    var lid = ezoeLinkAttribute.id, drop = jQuery( '#'+lid+'_source_types'), inp = jQuery( '#'+lid+'_source' );
+    drop.change(function( e )
     {
-        var base_id = ezoeLinkAttribute.id, inp = document.getElementById( base_id+'_source' );
-        if ( el.value === 'ezobject://' )
+        var lid = ezoeLinkAttribute.id, input = document.getElementById( lid+'_source' );
+        if ( this.value === 'ezobject://' )
         {
-            inp.value = el.value + ezoeLinkAttribute.node['contentobject_id'];
+                input.value = this.value + ezoeLinkAttribute.node['contentobject_id'];
             ezoeLinkAttribute.namePreview( ezoeLinkAttribute.node['name'] );
         }
-        else if ( el.value === 'eznode://' )
+        else if ( this.value === 'eznode://' )
         {
-            inp.value = el.value + ezoeLinkAttribute.node['node_id'];
+                input.value = this.value + ezoeLinkAttribute.node['node_id'];
             ezoeLinkAttribute.namePreview( ezoeLinkAttribute.node['name'] );
         }
         else
         {
-            inp.value = el.value;
+                input.value = this.value;
             ezoeLinkAttribute.namePreview( undefined );
         }
     });
 
     // add event to href input to lookup name on object or nodes
-    link[1].addEvent('keyup', function( e, el ){
+    inp.keyup( function( e )
+    {
         e = e || window.event;
-        var c = e.keyCode || e.which, base_id = ezoeLinkAttribute.id, link = ez.$(base_id+'_source_types', el );
+        var c = e.keyCode || e.which, lid = ezoeLinkAttribute.id, dropdown = jQuery( '#'+lid + '_source_types' );
         clearTimeout( ezoeLinkAttribute.timeOut );
 
         // break if user is pressing arrow keys
         if ( c > 36 && c < 41 ) return true;
 
-        ezoeLinkAttribute.typeSet( link[1], link[0] );
+        ezoeLinkAttribute.typeSet( jQuery( this ), dropdown );
 
-        if ( el.value.indexOf( '://' ) === -1 ) return true;
+        if ( this.value.indexOf( '://' ) === -1 ) return true;
 
-        var url = el.value.split('://'), id = ez.num( url[1], 0, 'int' );
+        var url = this.value.split('://'), id = ez.num( url[1], 0, 'int' );
 
         if ( id === 0 || ( url[0] !== 'eznode' && url[0] !== 'ezobject' ) ) return true;
 
-        ezoeLinkAttribute.timeOut = setTimeout( ez.fn.bind( ezoeLinkAttribute.ajaxCheck, this, url[0] + '_' + id ), 320 );
+        ezoeLinkAttribute.timeOut = setTimeout( eZOEPopupUtils.BIND( ezoeLinkAttribute.ajaxCheck, this, url[0] + '_' + id ), 320 );
         return true;
     });
-    //ezoeLinkAttribute.typeSet( link[1], link[0] );
 
-    if ( link[1].el.value.indexOf( '://' ) !== -1 )
+    if ( inp.val().indexOf( '://' ) !== -1 )
     {
-        var url = link[1].el.value.split('://'), id = ez.num( url[1], 0, 'int' );
+        var url = inp.val().split('://'), id = ez.num( url[1], 0, 'int' );
         if ( id !== 0 && ( url[0] === 'eznode' || url[0] === 'ezobject' ) )
             ezoeLinkAttribute.ajaxCheck( url[0] + '_' + id );
     }
 
     ezoeLinkAttribute.slides = ez.$$('div.panel');//ezoeLinkAttribute.slides is global object used by custom selectByEmbedId function
-    var navigation = ez.$('embed_search_go_back_link', base_id+'_search_link', base_id+'_browse_link', base_id+'_bookmarks_link', 'embed_browse_go_back_link', 'embed_bookmarks_go_back_link' );
+    var navigation = ez.$('embed_search_go_back_link', lid+'_search_link', lid+'_browse_link', lid+'_bookmarks_link', 'embed_browse_go_back_link', 'embed_bookmarks_go_back_link' );
     ezoeLinkAttribute.slides.accordion( navigation, {duration: 100, transition: ez.fx.sinoidal, accordionAutoFocusTag: 'input[type=text]'}, {opacity: 0, display: 'none'} );
-    navigation[4].addEvent('click', ez.fn.bind( ezoeLinkAttribute.slides.accordionGoto, ezoeLinkAttribute.slides, 0 ) ).addClass('accordion_navigation');
-    navigation[5].addEvent('click', ez.fn.bind( ezoeLinkAttribute.slides.accordionGoto, ezoeLinkAttribute.slides, 0 ) ).addClass('accordion_navigation');
+    navigation[4].addEvent('click', eZOEPopupUtils.BIND( ezoeLinkAttribute.slides.accordionGoto, ezoeLinkAttribute.slides, 0 ) ).addClass('accordion_navigation');
+    navigation[5].addEvent('click', eZOEPopupUtils.BIND( ezoeLinkAttribute.slides.accordionGoto, ezoeLinkAttribute.slides, 0 ) ).addClass('accordion_navigation');
 
-    ezoeLinkAttribute.typeSet( link[1], link[0] );
+    ezoeLinkAttribute.typeSet( inp, drop );
 });
 
 
@@ -113,13 +113,13 @@ eZOEPopupUtils.settings.browseLinkGenerator = function( n, mode, ed )
 // override so selected element is redirected to link input
 eZOEPopupUtils.selectByEmbedId = function( object_id, node_id, name )
 {
-    var base_id = ezoeLinkAttribute.id, link = ez.$(base_id+'_source_types', base_id+'_source', base_id+'_source_info');
-    if ( link[0].el.value === 'ezobject://' )
-        link[1].el.value = 'ezobject://' + object_id;
+    var lid = ezoeLinkAttribute.id, drop = jQuery( '#'+lid+'_source_types'), inp = jQuery( '#'+lid+'_source' ), info = jQuery( '#'+lid+'_source_info' )
+    if ( drop.val() === 'ezobject://' )
+        inp.val( 'ezobject://' + object_id );
     else
-        link[1].el.value = 'eznode://' + node_id;
-    ezoeLinkAttribute.typeSet( link[1], link[0] );
-    ezoeLinkAttribute.namePreview( name, link[2].el );
+        inp.val( 'eznode://' + node_id );
+    ezoeLinkAttribute.typeSet( inp, drop );
+    ezoeLinkAttribute.namePreview( name, info );
     ezoeLinkAttribute.slides.accordionGoto.call( ezoeLinkAttribute.slides, 0 );
     ezoeLinkAttribute.node = {'contentobject_id': object_id, 'node_id': node_id, 'name': name }
 };
@@ -158,13 +158,15 @@ var ezoeLinkAttribute = {
     },
     typeSet : function( source, types )
     {
-        var selectedValue = '', sourceValue = source.el.value, options = types.el.options;
-        for ( var i = 0, l = options.length; i < l; i++ )
+        var selectedValue = '', sourceValue = source.val();
+        types.find("option").each( function( i )
         {
-            if ( options[i].value !== '' && sourceValue.indexOf( options[i].value ) === 0 )
-                selectedValue = options[i].value;
-        }
-        types.el.value = selectedValue;
+            if ( this.value !== '' && sourceValue.indexOf( this.value ) === 0 )
+            {
+                selectedValue = this.value;
+            }
+        });
+        types.val( selectedValue );
     }
 };
 

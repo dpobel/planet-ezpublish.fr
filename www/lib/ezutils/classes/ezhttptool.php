@@ -4,10 +4,10 @@
 //
 // Created on: <18-Apr-2002 14:05:21 amos>
 //
+// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.2.0
-// BUILD VERSION: 24182
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 4.3.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -24,6 +24,8 @@
 //   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 //   MA 02110-1301, USA.
 //
+//
+// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
 /*! \defgroup eZHTTP HTTP utilities
@@ -795,7 +797,10 @@ class eZHTTPTool
             if ( $justCheckURL )
             {
                 if ( !curl_exec( $ch ) )
+                {
+                    curl_close( $ch );
                     return false;
+                }
 
                 curl_close( $ch );
                 return true;
@@ -803,7 +808,11 @@ class eZHTTPTool
             // Getting data
             ob_start();
             if ( !curl_exec( $ch ) )
+            {
+                curl_close( $ch );
+                ob_end_clean();
                 return false;
+            }
 
             curl_close ( $ch );
             $data = ob_get_contents();

@@ -1,9 +1,9 @@
 <?php
 //
+// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.2.0
-// BUILD VERSION: 24182
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 4.3.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -20,6 +20,8 @@
 //   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 //   MA 02110-1301, USA.
 //
+//
+// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
 if ( version_compare( PHP_VERSION, '5.1' ) < 0 )
@@ -195,7 +197,18 @@ function eZFatalError()
 {
     header("HTTP/1.1 500 Internal Server Error");
     print( "<b>Fatal error</b>: eZ Publish did not finish its request<br/>" );
-    print( "<p>The execution of eZ Publish was abruptly ended, the debug output is present below.</p>" );
+    if ( ini_get('display_errors') == 1 )
+    {
+        $ini = eZINI::instance();
+        if ( $ini->variable( 'DebugSettings', 'DebugOutput' ) === 'enabled' )
+            print( "<p>The execution of eZ Publish was abruptly ended, the debug output is present below.</p>" );
+        else
+            print( "<p>The execution of eZ Publish was abruptly ended, debug information can be found in the log files normally placed in var/log/*</p>" );
+    }
+    else
+    {
+        print( "<p>The execution of eZ Publish was abruptly ended. Contact website owner with current url and what you did, and owner will be able to debug the issue further.</p>" );
+    }
     $templateResult = null;
     eZDisplayResult( $templateResult );
 }
@@ -229,8 +242,7 @@ function eZDisplayDebug()
              !$GLOBALS['eZRedirection'] )
 
         {
-            require_once( 'kernel/common/template.php' );
-            $tpl = templateInit();
+            $tpl = eZTemplate::factory();
             $result = "<tr><td>" . $tpl->fetch( 'design:setup/debug_toolbar.tpl' ) . "</td></tr>";
             eZDebug::appendTopReport( "Debug toolbar", $result );
         }
@@ -348,7 +360,7 @@ $tplINI = eZINI::instance( 'template.ini' );
 $tplINI->loadCache();
 
 // Check if this should be run in a cronjob
-// Need to be runned before eZHTTPTool::instance() because of eZSessionStart() which
+// Need to be run before eZHTTPTool::instance() because of eZSessionStart() which
 // is called from eZHandlePreChecks() below.
 $useCronjob = $ini->variable( 'Session', 'BasketCleanup' ) == 'cronjob';
 if ( !$useCronjob )
@@ -845,7 +857,7 @@ if ( $module->exitStatus() == eZModule::STATUS_REDIRECT )
                                                               'number' => 1,
                                                               'count' => $GLOBALS['eZDebugErrorCount'] ),
                                             'identifier' => 'ezdebug-first-error',
-                                            'text' => ezi18n( 'index.php', 'Some errors occurred, see debug for more information.' ) ) );
+                                            'text' => ezpI18n::tr( 'index.php', 'Some errors occurred, see debug for more information.' ) ) );
             }
 
             if ( isset( $GLOBALS['eZDebugWarning'] ) and
@@ -855,11 +867,11 @@ if ( $module->exitStatus() == eZModule::STATUS_REDIRECT )
                                                               'number' => 1,
                                                               'count' => $GLOBALS['eZDebugWarningCount'] ),
                                             'identifier' => 'ezdebug-first-warning',
-                                            'text' => ezi18n( 'index.php', 'Some general warnings occured, see debug for more information.' ) ) );
+                                            'text' => ezpI18n::tr( 'index.php', 'Some general warnings occured, see debug for more information.' ) ) );
             }
         }
-        require_once( "kernel/common/template.php" );
-        $tpl = templateInit();
+
+        $tpl = eZTemplate::factory();
         if ( count( $warningList ) == 0 )
             $warningList = false;
         $tpl->setVariable( 'site', $site );
@@ -933,8 +945,7 @@ $templateResult = null;
 eZDebug::setUseExternalCSS( $use_external_css );
 if ( $show_page_layout )
 {
-    require_once( "kernel/common/template.php" );
-    $tpl = templateInit();
+    $tpl = eZTemplate::factory();
     if ( $tpl->hasVariable( 'node' ) )
         $tpl->unsetVariable( 'node' );
 
@@ -994,7 +1005,7 @@ if ( $show_page_layout )
                                                               'number' => 1 ,
                                                               'count' => $GLOBALS['eZDebugErrorCount'] ),
                                             'identifier' => 'ezdebug-first-error',
-                                            'text' => ezi18n( 'index.php', 'Some errors occurred, see debug for more information.' ) ) );
+                                            'text' => ezpI18n::tr( 'index.php', 'Some errors occurred, see debug for more information.' ) ) );
             }
 
             if ( isset( $GLOBALS['eZDebugWarning'] ) and
@@ -1004,7 +1015,7 @@ if ( $show_page_layout )
                                                               'number' => 1,
                                                               'count' => $GLOBALS['eZDebugWarningCount'] ),
                                             'identifier' => 'ezdebug-first-warning',
-                                            'text' => ezi18n( 'index.php', 'Some general warnings occured, see debug for more information.' ) ) );
+                                            'text' => ezpI18n::tr( 'index.php', 'Some general warnings occured, see debug for more information.' ) ) );
             }
         }
 

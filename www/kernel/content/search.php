@@ -2,10 +2,10 @@
 //
 // Created on: <24-Apr-2002 16:06:53 bf>
 //
+// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.2.0
-// BUILD VERSION: 24182
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 4.3.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -23,8 +23,10 @@
 //   MA 02110-1301, USA.
 //
 //
+// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
+//
 
-require_once( "kernel/common/template.php" );
+
 
 /*!
  Get search limit
@@ -60,7 +62,7 @@ if ( !is_numeric( $Offset ) )
     $Offset = 0;
 
 $searchPageLimit = 2;
-$tpl = templateInit();
+$tpl = eZTemplate::factory();
 $ini = eZINI::instance();
 $useSearchCode = $ini->variable( 'SearchSettings', 'SearchViewHandling' ) == 'default';
 $logSearchStats = $ini->variable( 'SearchSettings', 'LogSearchStats' ) == 'enabled';
@@ -200,7 +202,7 @@ else
 
 $Result = array();
 $Result['content'] = $tpl->fetch( "design:content/search.tpl" );
-$Result['path'] = array( array( 'text' => ezi18n( 'kernel/content', 'Search' ),
+$Result['path'] = array( array( 'text' => ezpI18n::tr( 'kernel/content', 'Search' ),
                                 'url' => false ) );
 
 $searchData = false;

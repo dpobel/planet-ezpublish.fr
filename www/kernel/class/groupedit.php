@@ -2,10 +2,10 @@
 //
 // Created on: <16-Apr-2002 11:00:12 amos>
 //
+// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.2.0
-// BUILD VERSION: 24182
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 4.3.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -23,6 +23,8 @@
 //   MA 02110-1301, USA.
 //
 //
+// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
+//
 
 $Module = $Params['Module'];
 $GroupID = null;
@@ -38,7 +40,7 @@ else
     $user = eZUser::currentUser();
     $user_id = $user->attribute( "contentobject_id" );
     $classgroup = eZContentClassGroup::create( $user_id );
-    $classgroup->setAttribute( "name", ezi18n( 'kernel/class/groupedit', "New Group" ) );
+    $classgroup->setAttribute( "name", ezpI18n::tr( 'kernel/class/groupedit', "New Group" ) );
     $classgroup->store();
     $GroupID = $classgroup->attribute( "id" );
     $Module->redirectTo( $Module->functionURI( "groupedit" ) . "/" . $GroupID );
@@ -76,8 +78,7 @@ if ( $http->hasPostVariable( "StoreButton" ) )
 $Module->setTitle( "Edit class group " . $classgroup->attribute( "name" ) );
 
 // Template handling
-require_once( "kernel/common/template.php" );
-$tpl = templateInit();
+$tpl = eZTemplate::factory();
 
 $res = eZTemplateDesignResource::instance();
 $res->setKeys( array( array( "classgroup", $classgroup->attribute( "id" ) ) ) );
@@ -88,5 +89,9 @@ $tpl->setVariable( "classgroup", $classgroup );
 
 $Result = array();
 $Result['content'] = $tpl->fetch( "design:class/groupedit.tpl" );
+$Result['path'] = array( array( 'url' => '/class/grouplist/',
+                                'text' => ezpI18n::tr( 'kernel/class', 'Class groups' ) ),
+                         array( 'url' => false,
+                                'text' => $classgroup->attribute( 'name' ) ) );
 
 ?>

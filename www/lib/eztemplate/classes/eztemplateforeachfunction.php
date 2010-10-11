@@ -4,10 +4,10 @@
 //
 // Created on: <24-Feb-2005 15:47:35 vs>
 //
+// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.2.0
-// BUILD VERSION: 24182
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 4.3.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -24,6 +24,8 @@
 //   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 //   MA 02110-1301, USA.
 //
+//
+// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
 /*!
@@ -174,10 +176,10 @@ class eZTemplateForeachFunction
         $newNodes[] = eZTemplateNodeTool::createCodePieceNode( "if ( \$$offset < 0 || \$$offset >= \$$nItems )\n{\n".
                                                                "    \$$offset = ( \$$offset < 0 ) ? 0 : \$$nItems;\n".
                                                                "    if ( \$$nItems || \$$offset < 0 )\n {\n".
-                                                               "        eZDebug::writeWarning(\"Invalid 'offset' parameter specified.\");   \n}\n}" );
+                                                               "        eZDebug::writeWarning(\"Invalid 'offset' parameter specified. Array count: \$$nItems\");   \n}\n}" );
         // fix definitely incorrect max
         $newNodes[] = eZTemplateNodeTool::createCodePieceNode( "if ( \$$max < 0 || \$$offset + \$$max > \$$nItems )\n{\n".
-                                                               "    if ( \$$max < 0 )\n eZDebug::writeWarning(\"Invalid 'max' parameter specified.\");\n".
+                                                               "    if ( \$$max < 0 )\n eZDebug::writeWarning(\"Invalid 'max' parameter specified: \$$max\");\n".
                                                                "    \$$max = \$$nItems - \$$offset;\n}" );
 
         // initialize first and last indexes to iterate between them

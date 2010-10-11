@@ -3,10 +3,10 @@
 //
 // Created on: <12-Nov-2004 14:13:19 jb>
 //
+// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.2.0
-// BUILD VERSION: 24182
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 4.3.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -23,6 +23,8 @@
 //   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 //   MA 02110-1301, USA.
 //
+//
+// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
 require 'autoload.php';
@@ -43,21 +45,21 @@ $options = $script->getOptions( "[type:][user:][host:][password;][port:][socket:
                                 "[filename][database]",
                                 array( 'type' => ( "Which database type to use, can be one of:\n" .
                                                    "mysql, postgresql or any other supported by extensions" ),
-                                       'host' => "Connect to host source database",
-                                       'user' => "User for login to source database",
-                                       'password' => "Password to use when connecting to source database",
-                                       'port' => 'Port to connect to source database',
-                                       'socket' => 'Socket to connect to match and source database (only for MySQL)',
-                                       'table-type' => ( "The table storage type to use for SQL output when creating tables.\n" .
+                                       'host' => "Connect to host database",
+                                       'user' => "User for login to database",
+                                       'password' => "Password to use when connecting to database",
+                                       'port' => 'Port to connect to database',
+                                       'socket' => 'Socket to connect to match and database (only for MySQL)',
+                                       'table-type' => ( "The table storage type to use when creating tables.\n" .
                                                          "MySQL: bdb, innodb and myisam\n" .
                                                          "PostgreSQL: \n" .
                                                          "Oracle: " ),
                                        'clean-existing' => 'Clean up existing schema (remove all database objects)',
                                        'table-charset' => 'Defines the charset to use on tables, the names of the charset depends on database type',
-                                       'schema-file' => 'The schema file to use when dumping data structures, is only required when dumping from files',
-                                       'allow-multi-insert' => ( 'Will create INSERT statements with multiple data entries (applies to data output only)' . "\n" .
+                                       'schema-file' => 'The schema file to use when importing data structures, is only required when importing a schema',
+                                       'allow-multi-insert' => ( 'Will create INSERT statements with multiple data entries (applies to data import only)' . "\n" .
                                                                  'Multi-inserts will only be created for databases that support it' ),
-                                       'insert-types' => ( "A comma separated list of types to include in dump (default is schema only):\n" .
+                                       'insert-types' => ( "A comma separated list of types to import (default is schema only):\n" .
                                                            "schema - Table schema\n" .
                                                            "data - Table data\n" .
                                                            "all - Both table schema and data\n" .

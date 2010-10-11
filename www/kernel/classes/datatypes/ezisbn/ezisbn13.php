@@ -2,10 +2,10 @@
 //
 // Created on: <17-Apr-2007 11:07:06 bjorn>
 //
+// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.2.0
-// BUILD VERSION: 24182
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 4.3.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -22,6 +22,8 @@
 //   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 //   MA 02110-1301, USA.
 //
+//
+// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
 /*! \file
@@ -293,7 +295,7 @@ class eZISBN13
                             $strictValidation = $ini->variable( 'ISBNSettings', 'StrictValidation' );
                             if ( $strictValidation == 'true' )
                             {
-                                $error = ezi18n( 'kernel/classes/datatypes', 'The registrant element of the ISBN number does not exist.' );
+                                $error = ezpI18n::tr( 'kernel/classes/datatypes', 'The registrant element of the ISBN number does not exist.' );
                                 return false;
                             }
                         }
@@ -303,7 +305,7 @@ class eZISBN13
                         $strictValidation = $ini->variable( 'ISBNSettings', 'StrictValidation' );
                         if ( $strictValidation == 'true' )
                         {
-                            $error = ezi18n( 'kernel/classes/datatypes', 'The ISBN number has a incorrect registration group number.' );
+                            $error = ezpI18n::tr( 'kernel/classes/datatypes', 'The ISBN number has a incorrect registration group number.' );
                             return false;
                         }
                     }
@@ -313,7 +315,7 @@ class eZISBN13
                     $strictValidation = $ini->variable( 'ISBNSettings', 'StrictValidation' );
                     if ( $strictValidation == 'true' )
                     {
-                        $error = ezi18n( 'kernel/classes/datatypes', 'The group element of the ISBN number does not exist.' );
+                        $error = ezpI18n::tr( 'kernel/classes/datatypes', 'The group element of the ISBN number does not exist.' );
                         return false;
                     }
                 }
@@ -323,14 +325,14 @@ class eZISBN13
                 $strictValidation = $ini->variable( 'ISBNSettings', 'StrictValidation' );
                 if ( $strictValidation == 'true' )
                 {
-                    $error = ezi18n( 'kernel/classes/datatypes', '%1 is not a valid prefix of the ISBN number.', null, array( $prefix ) );
+                    $error = ezpI18n::tr( 'kernel/classes/datatypes', '%1 is not a valid prefix of the ISBN number.', null, array( $prefix ) );
                     return false;
                 }
             }
         }
         else
         {
-            $error = ezi18n( 'kernel/classes/datatypes', 'All ISBN 13 characters need to be numeric' );
+            $error = ezpI18n::tr( 'kernel/classes/datatypes', 'All ISBN 13 characters need to be numeric' );
             return false;
         }
         return true;
@@ -369,7 +371,7 @@ class eZISBN13
         if ( substr( $isbnNr, 0, self::PREFIX_LENGTH ) != self::PREFIX_978 and
              substr( $isbnNr, 0, self::PREFIX_LENGTH ) != self::PREFIX_979 )
         {
-            $error = ezi18n( 'kernel/classes/datatypes',
+            $error = ezpI18n::tr( 'kernel/classes/datatypes',
                              '13 digit ISBN must start with 978 or 979' );
             return false;
         }
@@ -378,7 +380,7 @@ class eZISBN13
         $weight13 = 1;
         if ( strlen( $isbnNr ) != self::LENGTH )
         {
-            $error = ezi18n( 'kernel/classes/datatypes', 'ISBN length is invalid' );
+            $error = ezpI18n::tr( 'kernel/classes/datatypes', 'ISBN length is invalid' );
             return false;
         }
 
@@ -389,7 +391,7 @@ class eZISBN13
             $val = $isbnNr{$i};
             if ( !is_numeric( $isbnNr{$i} ) )
             {
-                $error = ezi18n( 'kernel/classes/datatypes', 'All ISBN 13 characters need to be numeric' );
+                $error = ezpI18n::tr( 'kernel/classes/datatypes', 'All ISBN 13 characters need to be numeric' );
                 return false;
             }
             $checksum13 = $checksum13 + $weight13 * $val;
@@ -400,7 +402,7 @@ class eZISBN13
             // Calculate the last digit from the 12 first numbers.
             $checkDigit = ( 10 - ( ( $checksum13 - ( ( $weight13 + 2 ) % 4 ) * $val ) % 10 ) ) % 10;
             //bad checksum
-            $error = ezi18n( 'kernel/classes/datatypes', 'Bad checksum, last digit should be %1', null, array( $checkDigit ) );
+            $error = ezpI18n::tr( 'kernel/classes/datatypes', 'Bad checksum, last digit should be %1', null, array( $checkDigit ) );
             return false;
         }
 

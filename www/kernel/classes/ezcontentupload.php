@@ -4,10 +4,10 @@
 //
 // Created on: <28-Apr-2003 11:04:47 sp>
 //
+// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.2.0
-// BUILD VERSION: 24182
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 4.3.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -24,6 +24,8 @@
 //   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 //   MA 02110-1301, USA.
 //
+//
+// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
 /*! \file
@@ -236,7 +238,7 @@ class eZContentUpload
         if ( !file_exists( $filePath ) )
         {
             $result['errors'][] =
-                array( 'description' => ezi18n( 'kernel/content/upload',
+                array( 'description' => ezpI18n::tr( 'kernel/content/upload',
                                                 'The file %filename does not exist, cannot insert file.', null,
                                                 array( '%filename' => $filePath ) ) );
             return false;
@@ -248,7 +250,7 @@ class eZContentUpload
         if ( $handler === false )
         {
             $result['errors'][] =
-                array( 'description' => ezi18n( 'kernel/content/upload',
+                array( 'description' => ezpI18n::tr( 'kernel/content/upload',
                                                 'There was an error trying to instantiate content upload handler.' ) );
             return false;
         }
@@ -281,7 +283,7 @@ class eZContentUpload
         if ( !$classIdentifier )
         {
             $result['errors'][] =
-                array( 'description' => ezi18n( 'kernel/content/upload',
+                array( 'description' => ezpI18n::tr( 'kernel/content/upload',
                                                 'No matching class identifier found.' ) );
             return false;
         }
@@ -292,7 +294,7 @@ class eZContentUpload
         if ( !$class )
         {
             $result['errors'][] =
-                array( 'description' => ezi18n( 'kernel/content/upload',
+                array( 'description' => ezpI18n::tr( 'kernel/content/upload',
                                                 'The class %class_identifier does not exist.', null,
                                                 array( '%class_identifier' => $classIdentifier ) ) );
             return false;
@@ -308,7 +310,7 @@ class eZContentUpload
             if ( $locationOK === false )
             {
                 $result['errors'][] =
-                    array( 'description' => ezi18n( 'kernel/content/upload',
+                    array( 'description' => ezpI18n::tr( 'kernel/content/upload',
                                                     'Was not able to figure out placement of object.' ) );
                 return false;
             }
@@ -316,7 +318,7 @@ class eZContentUpload
             {
                 $result['status'] = eZContentUpload::STATUS_PERMISSION_DENIED;
                 $result['errors'][] =
-                    array( 'description' => ezi18n( 'kernel/content/upload',
+                    array( 'description' => ezpI18n::tr( 'kernel/content/upload',
                                                     'Permission denied' ) );
                 return false;
             }
@@ -327,7 +329,7 @@ class eZContentUpload
         if ( !$uploadINI->hasGroup( $iniGroup ) )
         {
             $result['errors'][] =
-                array( 'description' => ezi18n( 'kernel/content/upload',
+                array( 'description' => ezpI18n::tr( 'kernel/content/upload',
                                                 'No configuration group in upload.ini for class identifier %class_identifier.', null,
                                                 array( '%class_identifier' => $classIdentifier ) ) );
             return false;
@@ -340,7 +342,7 @@ class eZContentUpload
         if ( !$fileAttribute )
         {
             $result['errors'][] =
-                array( 'description' => ezi18n( 'kernel/content/upload',
+                array( 'description' => ezpI18n::tr( 'kernel/content/upload',
                                                 'No matching file attribute found, cannot create content object without this.' ) );
             return false;
         }
@@ -353,7 +355,7 @@ class eZContentUpload
         if ( !$nameAttribute )
         {
             $result['errors'][] =
-                array( 'description' => ezi18n( 'kernel/content/upload',
+                array( 'description' => ezpI18n::tr( 'kernel/content/upload',
                                                 'No matching name attribute found, cannot create content object without this.' ) );
             return false;
         }
@@ -377,7 +379,7 @@ class eZContentUpload
             {
                 $result['status'] = eZContentUpload::STATUS_PERMISSION_DENIED;
                 $result['errors'][] =
-                    array( 'description' => ezi18n( 'kernel/content/upload',
+                    array( 'description' => ezpI18n::tr( 'kernel/content/upload',
                                                     'Permission denied' ) );
                 return false;
             }
@@ -400,7 +402,7 @@ class eZContentUpload
         if ( $status === null )
         {
             $result['errors'][] =
-                array( 'description' => ezi18n( 'kernel/content/upload',
+                array( 'description' => ezpI18n::tr( 'kernel/content/upload',
                                                 'The attribute %class_identifier does not support regular file storage.', null,
                                                 array( '%class_identifier' => $classIdentifier ) ) );
             return false;
@@ -419,7 +421,7 @@ class eZContentUpload
         if ( $status === null )
         {
             $result['errors'][] =
-                array( 'description' => ezi18n( 'kernel/content/upload',
+                array( 'description' => ezpI18n::tr( 'kernel/content/upload',
                                                 'The attribute %class_identifier does not support simple string storage.', null,
                                                 array( '%class_identifier' => $classIdentifier ) ) );
             return false;
@@ -461,7 +463,7 @@ class eZContentUpload
         if ( !$file )
         {
             $result['errors'][] =
-                array( 'description' => ezi18n( 'kernel/content/upload',
+                array( 'description' => ezpI18n::tr( 'kernel/content/upload',
                                                 'No HTTP file found, cannot fetch uploaded file.' ) );
             return false;
         }
@@ -473,7 +475,7 @@ class eZContentUpload
         if ( $handler === false )
         {
             $result['errors'][] =
-                array( 'description' => ezi18n( 'kernel/content/upload',
+                array( 'description' => ezpI18n::tr( 'kernel/content/upload',
                                                 'There was an error trying to instantiate content upload handler.' ) );
             return false;
         }
@@ -509,7 +511,7 @@ class eZContentUpload
         if ( !$classIdentifier )
         {
             $result['errors'][] =
-                array( 'description' => ezi18n( 'kernel/content/upload',
+                array( 'description' => ezpI18n::tr( 'kernel/content/upload',
                                                 'No matching class identifier found.' ) );
             return false;
         }
@@ -520,7 +522,7 @@ class eZContentUpload
         if ( !$class )
         {
             $result['errors'][] =
-                array( 'description' => ezi18n( 'kernel/content/upload',
+                array( 'description' => ezpI18n::tr( 'kernel/content/upload',
                                                 'The class %class_identifier does not exist.', null,
                                                 array( '%class_identifier' => $classIdentifier ) ) );
             return false;
@@ -537,7 +539,7 @@ class eZContentUpload
             if ( $locationOK === false )
             {
                 $result['errors'][] =
-                    array( 'description' => ezi18n( 'kernel/content/upload',
+                    array( 'description' => ezpI18n::tr( 'kernel/content/upload',
                                                     'Was not able to figure out placement of object.' ) );
                 return false;
             }
@@ -545,7 +547,7 @@ class eZContentUpload
             {
                 $result['status'] = eZContentUpload::STATUS_PERMISSION_DENIED;
                 $result['errors'][] =
-                    array( 'description' => ezi18n( 'kernel/content/upload',
+                    array( 'description' => ezpI18n::tr( 'kernel/content/upload',
                                                     'Permission denied' ) );
                 return false;
             }
@@ -556,7 +558,7 @@ class eZContentUpload
         if ( !$uploadINI->hasGroup( $iniGroup ) )
         {
             $result['errors'][] =
-                array( 'description' => ezi18n( 'kernel/content/upload',
+                array( 'description' => ezpI18n::tr( 'kernel/content/upload',
                                                 'No configuration group in upload.ini for class identifier %class_identifier.', null,
                                                 array( '%class_identifier' => $classIdentifier ) ) );
             return false;
@@ -572,7 +574,7 @@ class eZContentUpload
             if ( $maxSize != 0 && $file->attribute( 'filesize' ) > $maxSize )
             {
                 $result['errors'][] =
-                    array( 'description' => ezi18n( 'kernel/content/upload',
+                    array( 'description' => ezpI18n::tr( 'kernel/content/upload',
                                                     'The size of the uploaded file exceeds the limit set for this site: %1 bytes.', null, array( $maxSize ) ) );
                 return false;
             }
@@ -583,7 +585,7 @@ class eZContentUpload
         if ( !$fileAttribute )
         {
             $result['errors'][] =
-                array( 'description' => ezi18n( 'kernel/content/upload',
+                array( 'description' => ezpI18n::tr( 'kernel/content/upload',
                                                 'No matching file attribute found, cannot create content object without this.' ) );
             return false;
         }
@@ -596,7 +598,7 @@ class eZContentUpload
         if ( !$nameAttribute )
         {
             $result['errors'][] =
-                array( 'description' => ezi18n( 'kernel/content/upload',
+                array( 'description' => ezpI18n::tr( 'kernel/content/upload',
                                                 'No matching name attribute found, cannot create content object without this.' ) );
             return false;
         }
@@ -624,7 +626,7 @@ class eZContentUpload
             {
                 $result['status'] = eZContentUpload::STATUS_PERMISSION_DENIED;
                 $result['errors'][] =
-                    array( 'description' => ezi18n( 'kernel/content/upload',
+                    array( 'description' => ezpI18n::tr( 'kernel/content/upload',
                                                     'Permission denied' ) );
 
                 $db->commit();
@@ -652,7 +654,7 @@ class eZContentUpload
         if ( $status === null )
         {
             $result['errors'][] =
-                array( 'description' => ezi18n( 'kernel/content/upload',
+                array( 'description' => ezpI18n::tr( 'kernel/content/upload',
                                                 'The attribute %class_identifier does not support HTTP file storage.', null,
                                                         array( '%class_identifier' => $classIdentifier ) ) );
             $db->commit();
@@ -673,7 +675,7 @@ class eZContentUpload
         if ( $status === null )
         {
             $result['errors'][] =
-                array( 'description' => ezi18n( 'kernel/content/upload',
+                array( 'description' => ezpI18n::tr( 'kernel/content/upload',
                                                 'The attribute %class_identifier does not support simple string storage.', null,
                                                 array( '%class_identifier' => $classIdentifier ) ) );
             $db->commit();
@@ -738,7 +740,7 @@ class eZContentUpload
                 if ( isset( $operationResult['redirect_url'] ) )
                 {
                     $result['redirect_url'] = $operationResult['redirect_url'];
-                    $notices[] = array( 'description' => ezi18n( 'kernel/content/upload',
+                    $notices[] = array( 'description' => ezpI18n::tr( 'kernel/content/upload',
                                                                  'Publishing of content object was halted.' ) );
                     return true;
                 }
@@ -751,7 +753,7 @@ class eZContentUpload
 
             case eZModuleOperationInfo::STATUS_CANCELLED:
             {
-                $result['result'] = ezi18n( 'kernel/content/upload',
+                $result['result'] = ezpI18n::tr( 'kernel/content/upload',
                                             'Publish process was cancelled.' );
                 return true;
             } break;
@@ -815,7 +817,7 @@ class eZContentUpload
     {
         if ( !eZHTTPFile::canFetch( $httpFileIdentifier ) )
         {
-            $errors[] = array( 'description' => ezi18n( 'kernel/content/upload',
+            $errors[] = array( 'description' => ezpI18n::tr( 'kernel/content/upload',
                                                         'A file is required for upload, no file were found.' ) );
             return false;
         }
@@ -823,7 +825,7 @@ class eZContentUpload
         $file = eZHTTPFile::fetch( $httpFileIdentifier );
         if ( !( $file instanceof eZHTTPFile ) )
         {
-            $errors[] = array( 'description' => ezi18n( 'kernel/content/upload',
+            $errors[] = array( 'description' => ezpI18n::tr( 'kernel/content/upload',
                                                         'Expected a eZHTTPFile object but got nothing.' ) );
             return false;
         }
@@ -1192,7 +1194,7 @@ class eZContentUpload
             if ( is_array( $node ) )
             {
                 $result['status'] = eZContentUpload::STATUS_PERMISSION_DENIED;
-                $errors[] = array( 'description' => ezi18n( 'kernel/content/upload',
+                $errors[] = array( 'description' => ezpI18n::tr( 'kernel/content/upload',
                                                             'Permission denied' ) );
 
                 return $nodeName;
@@ -1335,7 +1337,7 @@ class eZContentUpload
             }
 
             $result['errors'][] =
-                array( 'description' => ezi18n( 'kernel/content/upload',
+                array( 'description' => ezpI18n::tr( 'kernel/content/upload',
                                                 "Could not find content upload handler '%handler_name'",
                                                 null, array( '%handler_name' => $handlerName ) ) );
 

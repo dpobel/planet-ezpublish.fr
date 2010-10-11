@@ -4,10 +4,10 @@
 //
 // Created on: <25-Jun-2002 13:09:57 bf>
 //
+// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.2.0
-// BUILD VERSION: 24182
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 4.3.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -24,6 +24,8 @@
 //   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 //   MA 02110-1301, USA.
 //
+//
+// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
 /*!
@@ -105,7 +107,7 @@ class eZSearchEngine
 
                 foreach( $metaData as $metaDataPart )
                 {
-                    $text = eZSearchEngine::normalizeText( strip_tags(  $metaDataPart['text'] ), true );
+                    $text = eZSearchEngine::normalizeText( htmlspecialchars ($metaDataPart['text'], ENT_NOQUOTES, 'UTF-8' ) , true );
 
                     // Split text on whitespace
                     if ( is_numeric( trim( $text ) ) )
@@ -131,7 +133,7 @@ class eZSearchEngine
                                                    'ContentClassAttributeID' => $attribute->attribute( 'contentclassattribute_id' ),
                                                    'identifier' => $metaDataPart['id'],
                                                    'integer_value' => $integerValue );
-                            $indexArrayOnlyWords[] = $word;
+                            $indexArrayOnlyWords[$word] = 1;
                             $wordCount++;
                             //if we have "www." before word than
                             //treat it as url and add additional entry to the index
@@ -142,7 +144,7 @@ class eZSearchEngine
                                                        'ContentClassAttributeID' => $attribute->attribute( 'contentclassattribute_id' ),
                                                        'identifier' => $metaDataPart['id'],
                                                        'integer_value' => $integerValue );
-                                $indexArrayOnlyWords[] = $additionalUrlWord;
+                                $indexArrayOnlyWords[$additionalUrlWord] = 1;
                                 $wordCount++;
                             }
                         }
@@ -152,9 +154,7 @@ class eZSearchEngine
         }
         eZContentObject::recursionProtectionEnd();
 
-        $indexArrayOnlyWords = array_unique( $indexArrayOnlyWords );
-
-        $wordIDArray = $this->buildWordIDArray( $indexArrayOnlyWords );
+        $wordIDArray = $this->buildWordIDArray( array_keys( $indexArrayOnlyWords ) );
 
         $db = eZDB::instance();
         $db->begin();

@@ -4,10 +4,10 @@
 //
 // Created on: <16-Apr-2002 11:08:14 amos>
 //
+// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.2.0
-// BUILD VERSION: 24182
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 4.3.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -24,6 +24,8 @@
 //   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 //   MA 02110-1301, USA.
 //
+//
+// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
 /*!
@@ -42,7 +44,7 @@ class eZObjectRelationType extends eZDataType
     */
     function eZObjectRelationType()
     {
-        $this->eZDataType( self::DATA_TYPE_STRING, ezi18n( 'kernel/classes/datatypes', "Object relation", 'Datatype name' ),
+        $this->eZDataType( self::DATA_TYPE_STRING, ezpI18n::tr( 'kernel/classes/datatypes', "Object relation", 'Datatype name' ),
                            array( 'serialize_supported' => true ) );
     }
 
@@ -72,14 +74,14 @@ class eZObjectRelationType extends eZDataType
 
             if ( $contentObjectAttribute->validateIsRequired() and $relatedObjectID == 0 )
             {
-                $contentObjectAttribute->setValidationError( ezi18n( 'kernel/classes/datatypes',
+                $contentObjectAttribute->setValidationError( ezpI18n::tr( 'kernel/classes/datatypes',
                                                                      'Missing objectrelation input.' ) );
                 return eZInputValidator::STATE_INVALID;
             }
         }
         else if ( $contentObjectAttribute->validateIsRequired() )
         {
-            $contentObjectAttribute->setValidationError( ezi18n( 'kernel/classes/datatypes', 'Missing objectrelation input.' ) );
+            $contentObjectAttribute->setValidationError( ezpI18n::tr( 'kernel/classes/datatypes', 'Missing objectrelation input.' ) );
             return eZInputValidator::STATE_INVALID;
         }
 
@@ -318,23 +320,31 @@ class eZObjectRelationType extends eZDataType
                 $redirectionURI = $parameters['current-redirection-uri'];
                 $ini = eZINI::instance( 'content.ini' );
 
-                $browseType = 'AddRelatedObjectToDataType';
+                $browseParameters = array( 'action_name' => 'AddRelatedObject_' . $contentObjectAttribute->attribute( 'id' ),
+                                           'type' =>  'AddRelatedObjectToDataType',
+                                           'browse_custom_action' => array( 'name' => 'CustomActionButton[' . $contentObjectAttribute->attribute( 'id' ) . '_set_object_relation]',
+                                                                            'value' => $contentObjectAttribute->attribute( 'id' ) ),
+                                           'persistent_data' => array( 'HasObjectInput' => 0 ),
+                                           'from_page' => $redirectionURI );
                 $browseTypeINIVariable = $ini->variable( 'ObjectRelationDataTypeSettings', 'ClassAttributeStartNode' );
                 foreach( $browseTypeINIVariable as $value )
                 {
                     list( $classAttributeID, $type ) = explode( ';',$value );
                     if ( $classAttributeID == $contentObjectAttribute->attribute( 'contentclassattribute_id' ) && strlen( $type ) > 0 )
                     {
-                        $browseType = $type;
+                        $browseParameters['type'] = $type;
                         break;
                     }
                 }
-                eZContentBrowse::browse( array( 'action_name' => 'AddRelatedObject_' . $contentObjectAttribute->attribute( 'id' ),
-                                                'type' =>  $browseType,
-                                                'browse_custom_action' => array( 'name' => 'CustomActionButton[' . $contentObjectAttribute->attribute( 'id' ) . '_set_object_relation]',
-                                                                                 'value' => $contentObjectAttribute->attribute( 'id' ) ),
-                                                'persistent_data' => array( 'HasObjectInput' => 0 ),
-                                                'from_page' => $redirectionURI ),
+
+                    $nodePlacementName = $parameters['base_name'] . '_browse_for_object_start_node';
+                    if ( $http->hasPostVariable( $nodePlacementName ) )
+                    {
+                        $nodePlacement = $http->postVariable( $nodePlacementName );
+                        if ( isset( $nodePlacement[$contentObjectAttribute->attribute( 'id' )] ) )
+                            $browseParameters['start_node'] = eZContentBrowse::nodeAliasID( $nodePlacement[$contentObjectAttribute->attribute( 'id' )] );
+                    }
+                eZContentBrowse::browse( $browseParameters,
                                          $module );
             } break;
 

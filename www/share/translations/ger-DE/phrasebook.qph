@@ -306,10 +306,6 @@
     <definition>Im Sinne von &quot;Baumstruktur des Inhalts&quot;</definition>
 </phrase>
 <phrase>
-    <source>Try changing the URL.</source>
-    <target>Bitte überprüfen Sie die URL.</target>
-</phrase>
-<phrase>
     <source>unhide</source>
     <target>aufdecken</target>
     <definition>(Gegenteil von &quot;hide&quot;)</definition>
@@ -353,10 +349,6 @@
 <phrase>
     <source>Remove selected</source>
     <target>Ausgewähltes entfernen</target>
-</phrase>
-<phrase>
-    <source>Navigate using the available tabs (above), the tree menu (left) and the content list (middle).</source>
-    <target>Sie können zum Navigieren die Reiter (oben), das Menü (links) und Elemente der Inhaltsliste (in der Mitte) anklicken.</target>
 </phrase>
 <phrase>
     <source>OK</source>
@@ -439,10 +431,6 @@
     <target>Auswählen</target>
 </phrase>
 <phrase>
-    <source>To select an object that is a child of one of the displayed objects, click the object name for a list of the children of the object.</source>
-    <target>Um ein Objekt auszuwählen, das unterhalb eines angezeigten Objekts liegt, klicken Sie auf den Namen. Sie bekommen dann eine Liste der untergeordeneten Objekte angezeigt.</target>
-</phrase>
-<phrase>
     <source>radio button</source>
     <target>Optionsfeld</target>
     <definition>Übersetzung von Microsoft</definition>
@@ -516,8 +504,8 @@
     <target>Veröffentlichen</target>
 </phrase>
 <phrase>
-    <source>user</source>
-    <target>Benutzer</target>
+    <source>instruction</source>
+    <target></target>
 </phrase>
 <phrase>
     <source>previous</source>
@@ -615,10 +603,6 @@
 <phrase>
     <source>Price ex. VAT</source>
     <target>Preis exkl. USt</target>
-</phrase>
-<phrase>
-    <source>Required data is either missing or is invalid</source>
-    <target>Entweder wurden benötigte Felder nicht ausgefüllt oder die Eingaben waren nicht gültig</target>
 </phrase>
 <phrase>
     <source>Save changes</source>
@@ -770,20 +754,12 @@
     <target>URL</target>
 </phrase>
 <phrase>
-    <source>Your passwords do not match.</source>
-    <target>Die Passwörter stimmen nicht überein.</target>
-</phrase>
-<phrase>
     <source>Toolbar management</source>
     <target>Werkzeugleisten Verwaltung</target>
 </phrase>
 <phrase>
     <source>Related objects</source>
     <target>Verknüpfte Objekte</target>
-</phrase>
-<phrase>
-    <source>Use these checkboxes to select items for removal. Click the &quot;Remove selected&quot; button to remove the selected items.</source>
-    <target>Benutzen Sie die Kontrollkästchen, um Elemente zu markieren, die Sie löschen möchten. Klicken Sie danach auf die Schaltfläche &quot;Ausgewähltes entfernen&quot;.</target>
 </phrase>
 <phrase>
     <source>Top node</source>
@@ -810,5 +786,30 @@
 <phrase>
     <source>Send for publishing</source>
     <target>Zur Veröffentlichung schicken</target>
+</phrase>
+<phrase>
+    <source>Class attribute</source>
+    <target>Klassen Attribut</target>
+</phrase>
+<phrase>
+    <source>Dashboard</source>
+    <target>Dashboard</target>
+</phrase>
+<phrase>
+    <source>Author</source>
+    <target>Autor</target>
+</phrase>
+<phrase>
+    <source>Instructions</source>
+    <target>Hinweise</target>
+    <definition>eigentlich &quot;Anweisungen&quot;, aber das ist zu forsch</definition>
+</phrase>
+<phrase>
+    <source>Properties</source>
+    <target>Eigenschaften</target>
+</phrase>
+<phrase>
+    <source>Sub items</source>
+    <target>Unterelemente</target>
 </phrase>
 </QPH>

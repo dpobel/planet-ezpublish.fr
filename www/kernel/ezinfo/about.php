@@ -2,10 +2,10 @@
 //
 // Created on: <17-Apr-2002 11:05:08 amos>
 //
+// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.2.0
-// BUILD VERSION: 24182
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 4.3.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -23,11 +23,13 @@
 //   MA 02110-1301, USA.
 //
 //
+// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
+//
 
 define( 'EZ_ABOUT_CONTRIBUTORS_DIR', 'var/storage/contributors' );
 define( 'EZ_ABOUT_THIRDPARTY_SOFTWARE_FILE', 'var/storage/third_party_software.php' );
 
-require_once( 'kernel/common/template.php' );
+
 /*!
   Returns list of contributors;
   Searches all php files in \a $pathToDir and tries to fetch contributor's info
@@ -135,8 +137,8 @@ PHP projects. Because eZ Publish 4 is a web-based application, it can
 be accessed from anywhere you have an internet connection.';
 
 $license =
-"
-This copy of eZ Publish is distributed under the terms and conditions of
+## BEGIN LICENSE INFO ##
+'This copy of eZ Publish is distributed under the terms and conditions of
 the GNU General Public License (GPL). Briefly summarized, the GPL gives
 you the right to use, modify and share this copy of eZ Publish. If you
 choose to share eZ Publish, you may only share it under the terms and
@@ -144,7 +146,8 @@ conditions of the GPL. If you share a modified version of eZ Publish,
 these modifications must also be placed under the GPL. Read the
 complete legal terms and conditions of the GPL at
 http://www.gnu.org/licenses/gpl.txt or see the file named LICENSE in
-the root directory of this eZ Publish distribution.";
+the root directory of this eZ Publish distribution.';
+## END LICENSE INFO ##
 
 $contributors = getContributors( EZ_ABOUT_CONTRIBUTORS_DIR );
 $thirdPartySoftware = getThirdPartySoftware( EZ_ABOUT_THIRDPARTY_SOFTWARE_FILE );
@@ -162,7 +165,7 @@ list( $whatIsEzPublish,
                                                 'eZ publish' => '<a href="http://ez.no/ezpublish">eZ Publish</a>' ),
                                          array( $whatIsEzPublish, $license, $contributors, $thirdPartySoftware, $extensions ) );
 
-$tpl = templateInit();
+$tpl = eZTemplate::factory();
 $tpl->setVariable( 'ezinfo', $ezinfo );
 $tpl->setVariable( 'what_is_ez_publish', $whatIsEzPublish );
 $tpl->setVariable( 'license', $license );
@@ -173,8 +176,8 @@ $tpl->setVariable( 'extensions', $extensions );
 $Result = array();
 $Result['content'] = $tpl->fetch( "design:ezinfo/about.tpl" );
 $Result['path'] = array( array( 'url' => false,
-                                'text' => ezi18n( 'kernel/ezinfo', 'Info' ) ),
+                                'text' => ezpI18n::tr( 'kernel/ezinfo', 'Info' ) ),
                          array( 'url' => false,
-                                'text' => ezi18n( 'kernel/ezinfo', 'About' ) ) );
+                                'text' => ezpI18n::tr( 'kernel/ezinfo', 'About' ) ) );
 
 ?>

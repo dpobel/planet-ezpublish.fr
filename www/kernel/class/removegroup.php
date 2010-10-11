@@ -1,10 +1,10 @@
 <?php
 //
 //
+// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.2.0
-// BUILD VERSION: 24182
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 4.3.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -22,11 +22,13 @@
 //   MA 02110-1301, USA.
 //
 //
+// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
+//
 
 
 $Module = $Params['Module'];
 $http = eZHTTPTool::instance();
-$deleteIDArray = $http->sessionVariable( "DeleteGroupIDArray" );
+$deleteIDArray = $http->hasSessionVariable( 'DeleteGroupIDArray' ) ? $http->sessionVariable( 'DeleteGroupIDArray' ) : array();
 $groupsInfo = array();
 $deleteResult = array();
 $deleteClassIDList = array();
@@ -54,7 +56,7 @@ foreach ( $deleteIDArray as $deleteID )
             }
         }
         if ( $deletedClassName == '' )
-            $deletedClassName = ezi18n( 'kernel/class', '(no classes)' );
+            $deletedClassName = ezpI18n::tr( 'kernel/class', '(no classes)' );
         $deleteResult[] = array( 'groupName'        => $GroupName,
                                  'deletedClassName' => $deletedClassName );
         $groupsInfo[] = array( 'group_name' => $GroupName,
@@ -83,15 +85,16 @@ if ( $http->hasPostVariable( "CancelButton" ) )
 {
     $Module->redirectTo( '/class/grouplist/' );
 }
-$Module->setTitle( ezi18n( 'kernel/class', 'Remove class groups' ) . ' ' . $GroupName );
-require_once( "kernel/common/template.php" );
-$tpl = templateInit();
+$Module->setTitle( ezpI18n::tr( 'kernel/class', 'Remove class groups' ) . ' ' . $GroupName );
+$tpl = eZTemplate::factory();
 
 $tpl->setVariable( "DeleteResult", $deleteResult );
 $tpl->setVariable( "module", $Module );
 $tpl->setVariable( "groups_info", $groupsInfo );
 $Result = array();
 $Result['content'] = $tpl->fetch( "design:class/removegroup.tpl" );
-$Result['path'] = array( array( 'url' => '/class/removegroup/',
-                                'text' => ezi18n( 'kernel/class', 'Remove class groups' ) ) );
+$Result['path'] = array( array( 'url' => '/class/grouplist/',
+                                'text' => ezpI18n::tr( 'kernel/class', 'Class groups' ) ),
+                         array( 'url' => false,
+                                'text' => ezpI18n::tr( 'kernel/class', 'Remove class groups' ) ) );
 ?>

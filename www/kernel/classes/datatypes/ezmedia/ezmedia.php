@@ -4,10 +4,10 @@
 //
 // Created on: <30-Apr-2002 16:47:08 bf>
 //
+// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.2.0
-// BUILD VERSION: 24182
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 4.3.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -24,6 +24,8 @@
 //   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 //   MA 02110-1301, USA.
 //
+//
+// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
 /*!
@@ -181,6 +183,62 @@ class eZMedia extends eZPersistentObject
                                                            "version" => $version ),
                                                     $asObject );
         }
+    }
+
+    static function fetchByFileName( $filename, $version = null, $asObject = true )
+    {
+        if ( $version == null )
+        {
+            return eZPersistentObject::fetchObjectList( eZMedia::definition(),
+                                                        null,
+                                                        array( 'filename' => $filename ),
+                                                        null,
+                                                        null,
+                                                        $asObject );
+        }
+        else
+        {
+            return eZPersistentObject::fetchObject( eZMedia::definition(),
+                                                    null,
+                                                    array( 'filename' => $filename,
+                                                           'version' => $version ),
+                                                    $asObject );
+        }
+    }
+
+    /**
+     * Fetch media objects by content object id
+     * @param int $contentObjectID contentobject id
+     * @param string $languageCode language code
+     * @param boolean $asObject if return object
+     * @return array
+     */
+    static function fetchByContentObjectID( $contentObjectID, $languageCode = null, $asObject = true )
+    {
+        $condition = array();
+        $condition['contentobject_id'] = $contentObjectID;
+        $condition['data_type_string'] = 'ezmedia';
+        if ( $languageCode != null )
+        {
+            $condition['language_code'] = $languageCode;
+        }
+        $custom = array( array( 'operation' => 'DISTINCT id',
+                             'name' => 'id' ) );
+        $ids = eZPersistentObject::fetchObjectList( eZContentObjectAttribute::definition(),
+                                             array(),
+                                             $condition,
+                                             null,
+                                             null,
+                                             false,
+                                             false,
+                                             $custom );
+        $mediaFiles = array();
+        foreach ( $ids as $id )
+        {
+            $mediaFileObjectAttribute = eZMedia::fetch( $id['id'], null, $asObject );
+            $mediaFiles = array_merge( $mediaFiles, $mediaFileObjectAttribute );
+        }
+        return $mediaFiles;
     }
 
     static function removeByID( $id, $version )

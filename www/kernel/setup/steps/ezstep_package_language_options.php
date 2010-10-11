@@ -4,10 +4,10 @@
 //
 // Created on: <21-Feb-2007 17:27:57 dl>
 //
+// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.2.0
-// BUILD VERSION: 24182
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 4.3.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -25,10 +25,12 @@
 //   MA 02110-1301, USA.
 //
 //
+// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
+//
 
 /*! \file
 */
-require_once( 'kernel/common/i18n.php' );
+
 /*!
   \class eZStepPackageLanguageOptions ezstep_package_language_options.php
   \brief The class eZStepPackageLanguageOptions does
@@ -161,7 +163,7 @@ class eZStepPackageLanguageOptions extends eZStepInstaller
 
         $result = array();
         $result['content'] = $this->Tpl->fetch( "design:setup/init/package_language_options.tpl" );
-        $result['path'] = array( array( 'text' => ezi18n( 'design/standard/setup/init',
+        $result['path'] = array( array( 'text' => ezpI18n::tr( 'design/standard/setup/init',
                                                           'Package language options' ),
                                         'url' => false ) );
         return $result;

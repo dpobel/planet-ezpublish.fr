@@ -4,10 +4,10 @@
 //
 // Created on: <08-Nov-2002 11:00:54 kd>
 //
+// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.2.0
-// BUILD VERSION: 24182
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 4.3.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -24,6 +24,8 @@
 //   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 //   MA 02110-1301, USA.
 //
+//
+// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
 // This file holds the test functions that are used by step 1
@@ -181,26 +183,26 @@ function eZSetupTestFileUpload( $type )
         {
             // Windows machines use the TEMP and TMP env variable.
             // TEMP is checked first.
-            $uploadDir = isset( $_ENV['TEMP'] ) ? $_ENV['TEMP'] : '';
-            if ( strlen( $uploadDir ) == 0 )
+            $uploadDir = eZSys::hasEnvironmentVariable( 'TEMP' ) ? eZSys::environmentVariable( 'TEMP' ) : '';
+            if ( $uploadDir === '' )
             {
-                $uploadDir = isset( $_ENV['TMP'] ) ? $_ENV['TMP'] : '';
+                $uploadDir = eZSys::hasEnvironmentVariable( 'TMP' ) ? eZSys::environmentVariable( 'TMP' ) : '';
             }
             // When TEMP/TMP is not set we have to guess the directory
             // The only valid guess is %SYSTEMROOT%/TEMP
             // If %SYSTEMROOT% is missing we keep the string empty
-            if ( strlen( $uploadDir ) == 0 )
+            if ( $uploadDir === '' )
             {
-                if ( isset( $_ENV['SYSTEMROOT'] ) )
+                if ( eZSys::hasEnvironmentVariable( 'SYSTEMROOT' ) )
                 {
-                    $uploadDir = $_ENV['SYSTEMROOT'] . '/TEMP';
+                    $uploadDir = eZSys::environmentVariable( 'SYSTEMROOT' ) . '/TEMP';
                 }
             }
         }
         else if ( $osType == 'unix' or
                   $osType == 'mac' )
         {
-            $uploadDir = isset( $_ENV['TMPDIR'] ) ? $_ENV['TMPDIR'] : '';
+            $uploadDir = eZSys::hasEnvironmentVariable( 'TMPDIR' ) ? eZSys::environmentVariable( 'TMPDIR' ) : '';
             // When TMPDIR is not set we have to guess the directory
             // On Unix systems we expect /tmp to be used
             if ( strlen( $uploadDir ) == 0 )
@@ -660,7 +662,7 @@ function eZSetupCheckExecutable( $type )
     $filesystemType = eZSys::filesystemType();
     $envSeparator = eZSys::envSeparator();
     $programs = eZSetupConfigVariableArray( $type, $filesystemType . '_Executable' );
-    $systemSearchPaths = explode( $envSeparator, eZSys::path() );
+    $systemSearchPaths = explode( $envSeparator, eZSys::path( true ) );
     $additionalSearchPaths = eZSetupConfigVariableArray( $type, $filesystemType . '_SearchPaths' );
     $excludePaths = eZSetupConfigVariableArray( $type, $filesystemType . '_ExcludePaths' );
     $imageIniPath = eZSetupImageConfigVariableArray( 'ShellSettings', 'ConvertPath' );

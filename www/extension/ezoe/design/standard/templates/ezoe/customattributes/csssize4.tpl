@@ -15,10 +15,10 @@
 <table class="csssize4_input_layout" border="0" cellpadding="0" cellspacing="1" summary="Size inputs for all 4 edges">
 <thead>
 <tr>
-	<td align="center"><label for="{$custom_attribute_id}_source">{'Top'|i18n('design/standard/ezoe')}</label></td>
-	<td align="center"><label for="{$custom_attribute_id}_source_1">{'Right'|i18n('design/standard/ezoe')}</label></td>
-	<td align="center"><label for="{$custom_attribute_id}_source_2">{'Bottom'|i18n('design/standard/ezoe')}</label></td>
-	<td align="center"><label for="{$custom_attribute_id}_source_3">{'Left'|i18n('design/standard/ezoe')}</label></td>
+        <td align="center"><label for="{$custom_attribute_id}_source">{'Top'|i18n('design/standard/ezoe')}</label></td>
+        <td align="center"><label for="{$custom_attribute_id}_source_1">{'Right'|i18n('design/standard/ezoe')}</label></td>
+        <td align="center"><label for="{$custom_attribute_id}_source_2">{'Bottom'|i18n('design/standard/ezoe')}</label></td>
+        <td align="center"><label for="{$custom_attribute_id}_source_3">{'Left'|i18n('design/standard/ezoe')}</label></td>
 </tr>
 </thead>
 <tbody>
@@ -92,27 +92,28 @@
 
 eZOEPopupUtils.settings.customAttributeInitHandler['{$custom_attribute_id}_source'] = {literal} function( el, value )
 {
-    if ( ez.string.trim( value ) === '' ) return;
-    var valArr = (value +'').split(/\s/g), base_id = el.id.replace('_source', ''), inp, sel, tid;
+    if ( jQuery.trim( value ) === '' ) return;
+    var valArr = (value +'').split(/\s/g), base_id = el.id.replace('_source', ''), inp, sel, tid, size;
     for(var i = 0, l = ez.min( valArr.length, 4 ); i < l; i++)
     {
         tid = (i === 0 ? '' : '_' + i);
         inp = ez.$( base_id + '_source' + tid ).el;
         inp.value = ez.num( valArr[i], 0, 'int' );
-        ez.$( base_id + '_sizetype' + tid ).el.selectedIndex = ez.$$('#' + base_id + '_sizetype' + tid + ' option').map(function( o )
+        size = document.getElementById( base_id + '_sizetype' + tid );
+        size.selectedIndex = jQuery.inArray( valArr[i].replace( inp.value, '' ), jQuery('#' + base_id + '_sizetype' + tid + ' option').map(function( i, n )
         {
-            return o.el.value;
-        }).indexOf( valArr[i].replace( inp.value, '' ) );
+            return n.value;
+        }));
     }
 };{/literal}
 
 eZOEPopupUtils.settings.customAttributeSaveHandler['{$custom_attribute_id}_source'] = {literal} function( el, value )
 {
-    var inp, sel, tempval = [], base_id = el.id.replace('_source', ''), tid, hasValue = false;
+    var inp, sel, tempval = [], base_id = '#' + el.id.replace('_source', ''), tid, hasValue = false;
     for(var i = 0; i < 4; i++)
     {
         tid = (i === 0 ? '' : '_' + i);
-        inp = ez.$( base_id + '_source' + tid ).el, sel = ez.$( base_id + '_sizetype' + tid ).el;
+        inp = jQuery( base_id + '_source' + tid )[0], sel = jQuery( base_id + '_sizetype' + tid )[0];
         if ( inp.value !== '' ) hasValue = true;
         tempval.push( inp.value + ( sel.selectedIndex !== -1 ? sel.options[sel.selectedIndex].value : '' ) );
     }

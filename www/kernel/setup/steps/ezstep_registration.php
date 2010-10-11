@@ -4,10 +4,10 @@
 //
 // Created on: <13-Aug-2003 11:17:34 kk>
 //
+// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.2.0
-// BUILD VERSION: 24182
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 4.3.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -25,10 +25,12 @@
 //   MA 02110-1301, USA.
 //
 //
+// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
+//
 
 /*! \file
 */
-require_once( "kernel/common/i18n.php" );
+
 
 /*!
   \class eZStepRegistration ezstep_registration.php
@@ -148,8 +150,7 @@ class eZStepRegistration extends eZStepInstaller
             return true;
         }
 
-        require_once( 'kernel/common/template.php' );
-        $mailTpl = templateInit( 'email' );
+        $mailTpl = eZTemplate::factory();
         $comments = false;
         if ( $this->Http->hasPostVariable( 'eZSetupRegistrationComment' ) )
         {
@@ -185,8 +186,7 @@ class eZStepRegistration extends eZStepInstaller
             {
                 if ( $this->PersistenceList['email_info']['send'] )
                 {
-                    require_once( 'kernel/common/template.php' );
-                    $mailTpl = templateInit( 'email' );
+                    $mailTpl = eZTemplate::factory();
                     $bodyText = $this->generateRegistration( $mailTpl, $comments );
                     $subject = $mailTpl->variable( 'subject' );
 
@@ -217,9 +217,7 @@ class eZStepRegistration extends eZStepInstaller
 
     function display()
     {
-        require_once( 'kernel/common/template.php' );
-
-        $mailTpl  = templateInit( 'email' );
+        $mailTpl = eZTemplate::factory();
 
         $bodyText = $this->generateRegistration( $mailTpl, false );
         $send     = ( isset( $this->PersistenceList['email_info']['send'] ) )     ? $this->PersistenceList['email_info']['send'] : true;
@@ -234,7 +232,7 @@ class eZStepRegistration extends eZStepInstaller
         $result = array();
         // Display template
         $result['content'] = $this->Tpl->fetch( "design:setup/init/registration.tpl" );
-        $result['path'] = array( array( 'text' => ezi18n( 'design/standard/setup/init',
+        $result['path'] = array( array( 'text' => ezpI18n::tr( 'design/standard/setup/init',
                                                           'Registration' ),
                                         'url' => false ) );
         return $result;

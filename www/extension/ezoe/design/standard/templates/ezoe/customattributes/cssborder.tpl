@@ -7,12 +7,12 @@
 {/if}
 {if $custom_attribute_default|ne('')}
     {set $custom_attribute_default = $custom_attribute_default|append(' solid #000000')|explode(' ')}
-	{def $custom_attribute_default_int = $custom_attribute_default.0|int
-	     $custom_attribute_default_type = $custom_attribute_default|explode( $custom_attribute_default_int ).1}
+        {def $custom_attribute_default_int = $custom_attribute_default.0|int
+             $custom_attribute_default_type = $custom_attribute_default|explode( $custom_attribute_default_int ).1}
 {else}
     {set $custom_attribute_default = array('','','')}
-	{def $custom_attribute_default_int = ''
-	     $custom_attribute_default_type = ''}
+        {def $custom_attribute_default_int = ''
+             $custom_attribute_default_type = ''}
 {/if}
 <table cellspacing="1" cellpadding="0" border="0">
 <tr>
@@ -67,12 +67,14 @@ eZOEPopupUtils.settings.customAttributeInitHandler['{$custom_attribute_id}_sourc
     var baseid = el.id.replace('_source', '_'), valArr = value.split(' ');
     el.value = ez.num( valArr[0], 0, 'int' );
     var size = document.getElementById( baseid + 'sizetype' ), border = document.getElementById( baseid+'bordertype' ), color = document.getElementById( baseid+'color' );
-    size.selectedIndex = ez.$$('#' + size.id + ' option').map(function( o ){
-        return o.el.value;
-    }).indexOf( valArr[0].replace( el.value, '' ) );
-    border.selectedIndex = ez.$$('#' + border.id + ' option').map(function( o ){
-        return o.el.value;
-    }).indexOf( valArr[1] || 'solid' );
+    size.selectedIndex = jQuery.inArray( valArr[0].replace( el.value, '' ), jQuery('#' + size.id + ' option').map(function( i, n )
+    {
+        return n.value;
+    }));
+    border.selectedIndex = jQuery.inArray( ( valArr[1] || 'solid' ), jQuery('#' + border.id + ' option').map(function( i, n )
+    {
+        return n.value;
+    }));
     color.value = valArr[2] || '';
     color.onchange();
 };{/literal}

@@ -4,10 +4,10 @@
 //
 // Created on: <07-Mar-2005 17:20:18 jhe>
 //
+// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.2.0
-// BUILD VERSION: 24182
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 4.3.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -24,6 +24,8 @@
 //   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 //   MA 02110-1301, USA.
 //
+//
+// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
 /*!
@@ -301,7 +303,7 @@ class eZOrderStatus extends eZPersistentObject
         $row = array(
             'id' => null,
             'is_active' => true,
-            'name' => ezi18n( 'kernel/shop', 'Order status' ) );
+            'name' => ezpI18n::tr( 'kernel/shop', 'Order status' ) );
         return new eZOrderStatus( $row );
     }
 
@@ -319,7 +321,7 @@ class eZOrderStatus extends eZPersistentObject
                 'id' => null,
                 'status_id' => eZOrderStatus::UNDEFINED,
                 'is_active' => true,
-                'name' => ezi18n( 'kernel/shop', 'Undefined' ) );
+                'name' => ezpI18n::tr( 'kernel/shop', 'Undefined' ) );
             $GLOBALS['eZOrderStatusUndefined'] = new eZOrderStatus( $row );
         }
         return $GLOBALS['eZOrderStatusUndefined'];

@@ -4,10 +4,10 @@
 //
 // Created on: <01-Nov-2002 13:51:17 amos>
 //
+// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.2.0
-// BUILD VERSION: 24182
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 4.3.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -24,6 +24,8 @@
 //   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 //   MA 02110-1301, USA.
 //
+//
+// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
 /*! \file
@@ -89,14 +91,13 @@ class eZShopOperationCollection
         }
         else
         {
-            $header = ezi18n( 'kernel/shop', 'Error checking out' );
-            $msg = ezi18n( 'kernel/shop',
+            $header = ezpI18n::tr( 'kernel/shop', 'Error checking out' );
+            $msg = ezpI18n::tr( 'kernel/shop',
                            'Unable to calculate VAT percentage because your country is unknown. ' .
                            'You can either fill country manually in your account information (if you are a registered user) ' .
                            'or contact site administrator.' );
 
-            require_once( "kernel/common/template.php" );
-            $tpl = templateInit();
+            $tpl = eZTemplate::factory();
             $tpl->setVariable( "error_header",  $header );
             $tpl->setVariable( "error_list", array( $msg ) );
 
@@ -164,7 +165,7 @@ class eZShopOperationCollection
      Operation entry: Adds order item: shipping.
      \params $orderID contains the order id for the shipping handler.
 
-     The function handleShipping() are runned in the process of confirmorder and
+     The function handleShipping() are runn in the process of confirmorder and
      is the final function for creating an order_item in the order confirmation.
 
      An example for an array that should be returned by the function

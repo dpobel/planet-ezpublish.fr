@@ -14,48 +14,104 @@ eZOEPopupUtils.settings.customAttributeStyleMap = {$custom_attribute_style_map};
 eZOEPopupUtils.settings.tagEditTitleText = "{'Edit %tag_name tag'|i18n('design/standard/ezoe', '', hash( '%tag_name', concat('&lt;', $tag_name_alias, '&gt;') ))|wash('javascript')}";
 {literal} 
 
-tinyMCEPopup.onInit.add( ez.fn.bind( eZOEPopupUtils.init, window, {
+tinyMCEPopup.onInit.add( eZOEPopupUtils.BIND( eZOEPopupUtils.init, window, {
     tagName: ezTagName,
     form: 'EditForm',
     cancelButton: 'CancelButton',
     tagAttributeEditor:    function( ed, el, args )
     {
-        var mode = ez.$('cell_args_apply_to').el.value, nodes, x = 0, target = this.settings.tagSelector.el.value;
+        var mode = document.getElementById('cell_args_apply_to').value, nodes = false, x = 0, target = this.settings.tagSelector[0].value;
 
         if ( mode === 'row' )
         {
             // get nodes (cells) in this row
-            nodes = ez.$$('> *', el.parentNode );
+            nodes = jQuery('> *', el.parentNode );
         }
         else if ( mode === 'column' )
         {
-            // figgure out what column we are in
-            for (var i = 0, c = el.parentNode.childNodes, l = c.length; i < l; i++ ) 
+            // Figgure out what column we are in adjusted by cell with colspan
+                var colspans = 1, rowIndex = el.parentNode.rowIndex, skipRows = 0, rowSpanArray = [];
+                for (var i = 0, c = el.parentNode.childNodes, l = c.length; i < l; i++ ) 
+                {
+                    if ( c[i] === el ) x = i + colspans;
+                    else if ( c[i].colSpan > 1 ) colspans += c[i].colSpan -1;
+                };
+
+                // Addjust the column index if any prevous cells in table uses rowspan that might affect it
+                if ( rowIndex > 0 )
+                {
+                var row = el.parentNode, rowSpanOffset = 1;
+                        while ( row = row.previousSibling )
+                        {
+                                jQuery('td[rowspan]', row ).each(function( i, cell ){
+                        if ( cell.rowSpan >  rowSpanOffset )
+                        {
+                            x++;
+                        }
+                                });
+                                rowSpanOffset++;
+                            }
+                    }
+
+            // Get nodes (cells) in this column
+            jQuery('tr', el.parentNode.parentNode ).each( function( trIndex, tr )
             {
-                if ( c[i] === el ) x = i + 1;
-            };
-            // get nodes (cells) in this column
-            nodes = ez.$$('tr > *:nth-child(' + x + ')', el.parentNode.parentNode );
+                // count down rowSpan values and remove the ones that has reached 0
+                for( var i = 0, l = rowSpanArray.length; i < l; i++ )
+                {
+                        rowSpanArray[i]--;
+                        if ( rowSpanArray[i] < 1 ) rowSpanArray.splice( i, 1 );
+                }
+                if ( skipRows === 0 )
+                {
+                        var colIndex = x - rowSpanArray.length;
+                        jQuery('td', tr ).each( function( i, td )
+                        {
+                            if ( colIndex === ( i + 1 ) )
+                            {
+                             // add current cell to selected nodes array
+                             if ( nodes === false ) nodes = jQuery( td );
+                             else nodes.push( td );
+
+                             // If this cell has rowspan, make sure we skip the next rows
+                                 if ( td.rowSpan > 1 ) skipRows = td.rowSpan - 1;
+                            }
+                            else if ( colIndex > ( i + 1 ) )
+                            {
+                            // correct col index when some cells use colSpan
+                                if ( td.colSpan >  1 ) colIndex -= td.colSpan - 1;
+                                // store rowspans that will effect column index in the next rows
+                                if ( td.rowSpan > 1 ) rowSpanArray.push( td.rowSpan);
+                                
+                            }
+                        });
+                }
+                else
+                {
+                        skipRows--;
+                }
+            });
         }
 
-        if ( !nodes )
+        // Apply changes to selected node(s)
+        if ( !nodes || !nodes.size() )
         {
             el = eZOEPopupUtils.switchTagTypeIfNeeded( el, target );
-            ed.dom.setAttribs(el, args);
+            ed.dom.setAttribs( el, args );
         }
-        else nodes.forEach(function( o )
+        else nodes.each( function( i, el )
         {
-            o.el = eZOEPopupUtils.switchTagTypeIfNeeded( o.el, target );
-            ed.dom.setAttribs( o.el, args );
+            el = eZOEPopupUtils.switchTagTypeIfNeeded( el, target );
+            ed.dom.setAttribs( el, args );
         });
     },
     tagSelector: ezTagName + '_tag_source',
-    tagSelectorCallBack: function( e, el )
+    tagSelectorCallBack: function( e )
     {
         if ( e === false ) return false;
-        var classes = ez.$( eZOEPopupUtils.settings.tagName + '_class_source' ).el, editorEl = eZOEPopupUtils.settings.editorElement || false;
+        var classes = jQuery( '#' + eZOEPopupUtils.settings.tagName + '_class_source' )[0], editorEl = eZOEPopupUtils.settings.editorElement || false;
         eZOEPopupUtils.removeChildren( classes );
-        eZOEPopupUtils.addSelectOptions( classes, cellClassList[ el.value ] );
+        eZOEPopupUtils.addSelectOptions( classes, cellClassList[ this.value ] );
         if ( editorEl && editorEl.className )
             classes.value = editorEl.className;
         eZOEPopupUtils.toggleCustomAttributes.call( this );

@@ -1,10 +1,6 @@
 {let page_limit=20
      reply_limit=$page_limit
      reply_offset=$view_parameters.offset
-     reply_list=fetch('content','list', hash( parent_node_id, $node.node_id,
-                                              limit, $reply_limit,
-                                              offset, $reply_offset,
-                                              sort_by, array( array( published, true() ) ) ) )
      reply_count=fetch('content','list_count', hash( parent_node_id, $node.node_id ) )
      previous_topic=fetch_alias( subtree, hash( parent_node_id, $node.parent_node_id,
                                                 class_filter_type, include,
@@ -25,46 +21,46 @@
 
         <h1>{$node.name|wash}</h1>
 
-        {section show=is_unset( $versionview_mode )}
+        {if is_unset( $versionview_mode )}
         <div class="content-navigator">
-            {section show=$previous_topic}
+            {if $previous_topic}
                 <div class="content-navigator-previous">
                     <div class="content-navigator-arrow">&laquo;&nbsp;</div><a href={$previous_topic[0].url_alias|ezurl} title="{$previous_topic[0].name|wash}">{'Previous topic'|i18n( 'design/base' )}</a>
                 </div>
-            {section-else}
+            {else}
                 <div class="content-navigator-previous-disabled">
                     <div class="content-navigator-arrow">&laquo;&nbsp;</div>{'Previous topic'|i18n( 'design/base' )}
                 </div>
-            {/section}
+            {/if}
 
-            {section show=$previous_topic}
+            {if $previous_topic}
                 <div class="content-navigator-separator">|</div>
-            {section-else}
+            {else}
                 <div class="content-navigator-separator-disabled">|</div>
-            {/section}
+            {/if}
 
             {let forum=$node.parent}
                 <div class="content-navigator-forum-link"><a href={$forum.url_alias|ezurl}>{$forum.name|wash}</a></div>
             {/let}
 
-            {section show=$next_topic}
+            {if $next_topic}
                 <div class="content-navigator-separator">|</div>
-            {section-else}
+            {else}
                 <div class="content-navigator-separator-disabled">|</div>
-            {/section}
+            {/if}
 
-            {section show=$next_topic}
+            {if $next_topic}
                 <div class="content-navigator-next">
                     <a href={$next_topic[0].url_alias|ezurl} title="{$next_topic[0].name|wash}">{'Next topic'|i18n( 'design/base' )}</a><div class="content-navigator-arrow">&nbsp;&raquo;</div>
                 </div>
-            {section-else}
+            {else}
                 <div class="content-navigator-next-disabled">
                     {'Next topic'|i18n( 'design/base' )}<div class="content-navigator-arrow">&nbsp;&raquo;</div>
                 </div>
-            {/section}
+            {/if}
         </div>
 
-        {section show=$node.object.can_create}
+        {if $node.object.can_create}
         <form method="post" action={"content/action/"|ezurl}>
             <input class="button forum-new-reply" type="submit" name="NewButton" value="{'New reply'|i18n( 'design/base' )}" />
             <input type="hidden" name="ContentNodeID" value="{$node.node_id}" />
@@ -73,12 +69,12 @@
             <input type="hidden" name="NodeID" value="{$node.node_id}" />
             <input type="hidden" name="ClassIdentifier" value="forum_reply" />
         </form>
-        {section-else}
+        {else}
            <p>
             {"You need to be logged in to get access to the forums. Log in"|i18n("design/base")} <a href={"/user/login/"|ezurl}>{"here"|i18n("design/base")}</a>
            </p>
-        {/section}
-        {/section}
+        {/if}
+        {/if}
 
         <div class="content-view-children">
             <table class="list forum" cellspacing="0">
@@ -92,110 +88,116 @@
             </tr>
             {section show=$view_parameters.offset|lt( 1 )}
             <tr>
-               <td class="author">
-               {let owner=$node.object.owner owner_map=$owner.data_map}
-                   <p class="author">{$owner.name|wash}
-                   {section show=is_set( $owner_map.title )}
-                       <br/>{$owner_map.title.content|wash}
-                   {/section}</p>
-                   {section show=$owner_map.image.has_content}
-                   <div class="authorimage">
-                      {attribute_view_gui attribute=$owner_map.image image_class=small}
-                   </div>
-                   {/section}
+                <td class="author">
+                {let owner=$node.object.owner owner_map=$owner.data_map}
+                    <p class="author">{$owner.name|wash}
+                    {if is_set( $owner_map.title )}
+                        <br/>{$owner_map.title.content|wash}
+                    {/if}</p>
+                    {if $owner_map.image.has_content}
+                    <div class="authorimage">
+                        {attribute_view_gui attribute=$owner_map.image image_class=small}
+                    </div>
+                    {/if}
 
-                   {section show=is_set( $owner_map.location )}
-                       <p>{"Location"|i18n( "design/base" )}: {$owner_map.location.content|wash}</p>
-                   {/section}
-                   <p>
-                      {let owner_id=$node.object.owner_id}
-                          {section var=author loop=$node.object.author_array}
-                              {section show=eq($owner_id,$author.contentobject_id)|not()}
-                                  {"Moderated by"|i18n( "design/base" )}: {$author.contentobject.name|wash}
-                              {/section}
-                          {/section}
-                      {/let}
-                   </p>
+                    {if is_set( $owner_map.location )}
+                        <p>{"Location"|i18n( "design/base" )}: {$owner_map.location.content|wash}</p>
+                    {/if}
+                    <p>
+                        {let owner_id=$node.object.owner_id}
+                            {section var=author loop=$node.object.author_array}
+                                {if eq($owner_id,$author.contentobject_id)|not()}
+                                    {"Moderated by"|i18n( "design/base" )}: {$author.contentobject.name|wash}
+                                {/if}
+                            {/section}
+                        {/let}
+                    </p>
 
-                  {section show=$node.object.can_edit}
-                      <form method="post" action={"content/action/"|ezurl}>
-                          <input type="hidden" name="ContentObjectID" value="{$node.object.id}" />
-                          <input class="button forum-account-edit" type="submit" name="EditButton" value="{'Edit'|i18n('design/base')}" />
-                      </form>
-                  {/section}
-               </td>
-               <td class="message">
-                   <p class="date">{$node.object.published|l10n(datetime)}</p>
-                   <h2>{$node.name|wash}</h2>
-                   <p>
-                       {$node.data_map.message.content|simpletags|wordtoimage|autolink}
-                   </p>
-                   {section show=$owner_map.signature.has_content}
-                       <p class="author-signature">{$owner_map.signature.content|simpletags|autolink}</p>
-                   {/section}
-               </td>
-               {/let}
-           </tr>
-           {/section}
+                    {if $node.object.can_edit}
+                        <form method="post" action={"content/action/"|ezurl}>
+                            <input type="hidden" name="ContentObjectID" value="{$node.object.id}" />
+                            <input class="button forum-account-edit" type="submit" name="EditButton" value="{'Edit'|i18n('design/base')}" />
+                        </form>
+                    {/if}
+                </td>
+                <td class="message">
+                    <p class="date">{$node.object.published|l10n(datetime)}</p>
+                    <h2>{$node.name|wash}</h2>
+                    <p>
+                        {$node.data_map.message.content|simpletags|wordtoimage|autolink}
+                    </p>
+                    {if $owner_map.signature.has_content}
+                        <p class="author-signature">{$owner_map.signature.content|simpletags|autolink}</p>
+                    {/if}
+                </td>
+                {/let}
+            </tr>
+            {/section}
 
-           {section var=reply loop=$reply_list sequence=array( bgdark, bglight )}
-           <tr class="{$reply.sequence}">
-               <td class="author">
-               {let owner=$reply.object.owner owner_map=$owner.data_map}
-                   <p class="author">{$owner.name|wash}
-                   {section show=is_set( $owner_map.title )}
-                       <br/>{$owner_map.title.content|wash}
-                   {/section}</p>
+            {if $reply_count}
+                {section var=reply loop=fetch('content','list', hash( parent_node_id, $node.node_id,
+                                                                      limit, $reply_limit,
+                                                                      offset, $reply_offset,
+                                                                      sort_by, array( array( published, true() ) ) ) )
+                         sequence=array( bgdark, bglight )}
+                <tr class="{$reply.sequence}">
+                    <td class="author">
+                    {let owner=$reply.object.owner owner_map=$owner.data_map}
+                        <p class="author">{$owner.name|wash}
+                        {if is_set( $owner_map.title )}
+                            <br/>{$owner_map.title.content|wash}
+                        {/if}</p>
 
-                   {section show=$owner_map.image.has_content}
-                   <div class="authorimage">
-                      {attribute_view_gui attribute=$owner_map.image image_class=small}
-                   </div>
-                   {/section}
+                        {if $owner_map.image.has_content}
+                        <div class="authorimage">
+                            {attribute_view_gui attribute=$owner_map.image image_class=small}
+                        </div>
+                        {/if}
 
-                   {section show=is_set( $owner_map.location )}
-                       <p>{"Location"|i18n( "design/base" )}: {$owner_map.location.content|wash}</p>
-                   {/section}
+                        {if is_set( $owner_map.location )}
+                            <p>{"Location"|i18n( "design/base" )}: {$owner_map.location.content|wash}</p>
+                        {/if}
 
-                   {let owner_id=$reply.object.owner.id}
-                       {section var=author loop=$reply.object.author_array}
-                           {section show=ne( $reply.object.owner_id, $author.contentobject_id )}
-                               <p>
-                                   {'Moderated by'|i18n( 'design/base' )}: {$author.contentobject.name|wash}
-                               </p>
-                           {/section}
-                       {/section}
-                   {/let}
+                        {let owner_id=$reply.object.owner.id}
+                            {section var=author loop=$reply.object.author_array}
+                                {if ne( $reply.object.owner_id, $author.contentobject_id )}
+                                    <p>
+                                        {'Moderated by'|i18n( 'design/base' )}: {$author.contentobject.name|wash}
+                                    </p>
+                                {/if}
+                            {/section}
+                        {/let}
 
-                   {switch match=$reply.object.can_edit}
-                   {case match=1}
-                       <form method="post" action={"content/action/"|ezurl}>
-                       <input type="hidden" name="ContentObjectID" value="{$reply.object.id}" />
-                       <input class="button" type="submit" name="EditButton" value="{'Edit'|i18n('design/base')}" />
-                       </form>
-                   {/case}
-                   {case match=0}
-                   {/case}
-                   {/switch}
+                        {switch match=$reply.object.can_edit}
+                        {case match=1}
+                            <form method="post" action={"content/action/"|ezurl}>
+                            <input type="hidden" name="ContentObjectID" value="{$reply.object.id}" />
+                            <input class="button" type="submit" name="EditButton" value="{'Edit'|i18n('design/base')}" />
+                            </form>
+                        {/case}
+                        {case match=0}
+                        {/case}
+                        {/switch}
 
-               </td>
-               <td class="message">
-                   <p class="date">{$reply.object.published|l10n( datetime )}</p>
+                    </td>
+                    <td class="message">
+                        <p class="date">{$reply.object.published|l10n( datetime )}</p>
 
-                   <h2 id="msg{$reply.node_id}">{$reply.name|wash}</h2>
-                   <p>
-                       {$reply.object.data_map.message.content|simpletags|wordtoimage|autolink}
-                   </p>
+                        <h2 id="msg{$reply.node_id}">{$reply.name|wash}</h2>
+                        <p>
+                            {$reply.object.data_map.message.content|simpletags|wordtoimage|autolink}
+                        </p>
 
-                   {section show=$owner_map.signature.has_content}
-                       <p class="author-signature">{$owner_map.signature.content|simpletags|autolink}</p>
-                   {/section}
-               {/let}
-               </td>
-           </tr>
-           {/section}
+                        {if $owner_map.signature.has_content}
+                            <p class="author-signature">{$owner_map.signature.content|simpletags|autolink}</p>
+                        {/if}
+                    {/let}
+                    </td>
+                </tr>
+                {/section}
+            {/if}
 
-           </table>
+            </table>
 
         </div>
 

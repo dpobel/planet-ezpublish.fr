@@ -4,10 +4,10 @@
 //
 // Created on: <23-Sep-2004 12:52:38 jb>
 //
+// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.2.0
-// BUILD VERSION: 24182
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 4.3.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -24,6 +24,8 @@
 //   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 //   MA 02110-1301, USA.
 //
+//
+// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
 /*! \file
@@ -728,7 +730,7 @@ class eZContentCacheManager
     {
         $ini = eZINI::instance();
         if ( $ini->variable( 'TemplateSettings', 'TemplateCache' ) === 'enabled' )
-            eZContentCacheManager::clearTemplateBlockCache( $objectID );
+            eZContentCacheManager::clearTemplateBlockCache( $objectID, true );
     }
 
     /*!
@@ -736,7 +738,7 @@ class eZContentCacheManager
      Clears template-block cache and template-block with subtree_expiry parameter caches for specified object
      without checking 'TemplateCache' ini setting. If $objectID is \c false all template block caches will be cleared.
     */
-    static function clearTemplateBlockCache( $objectID )
+    static function clearTemplateBlockCache( $objectID, $checkViewCacheClassSettings = false )
     {
         // ordinary template block cache
         eZContentObject::expireTemplateBlockCache();
@@ -746,8 +748,25 @@ class eZContentCacheManager
         $object = false;
         if ( $objectID )
             $object = eZContentObject::fetch( $objectID );
-        if ( $object )
-            $nodeList = $object->assignedNodes();
+        if ( $object instanceof eZContentObject )
+        {
+            $getAssignedNodes = true;
+            if ( $checkViewCacheClassSettings )
+            {
+                $ini = eZINI::instance('viewcache.ini');
+                $objectClassIdentifier = $object->attribute('class_identifier');
+                if ( $ini->hasVariable( $objectClassIdentifier, 'ClearCacheBlocks' )
+                  && $ini->variable( $objectClassIdentifier, 'ClearCacheBlocks' ) === 'disabled' )
+                {
+                    $getAssignedNodes = false;
+                }
+            }
+
+            if ( $getAssignedNodes )
+            {
+                $nodeList = $object->assignedNodes();
+            }
+        }
 
         eZSubtreeCache::cleanup( $nodeList );
     }
@@ -790,11 +809,10 @@ class eZContentCacheManager
                         eZSys::clearAccessPath();
                         eZSys::addAccessPath( $changeToSiteAccess );
                     }
-    
-                    require_once( 'kernel/common/template.php' );
-                    $tpl = templateInit();
+
+                    $tpl = eZTemplate::factory();
                     $res = eZTemplateDesignResource::instance();
-    
+
                     // Get the sitedesign and cached view preferences for this siteaccess
                     $siteini = eZINI::instance( 'site.ini', 'settings', null, null, false );
                     $siteini->prependOverrideDir( "siteaccess/$changeToSiteAccess", false, 'siteaccess' );

@@ -4,10 +4,10 @@
 //
 // Created on: <14-Dec-2005 12:39:59 ks>
 //
+// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.2.0
-// BUILD VERSION: 24182
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 4.3.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -24,6 +24,8 @@
 //   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 //   MA 02110-1301, USA.
 //
+//
+// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
 /*! \file
@@ -45,7 +47,7 @@ class eZExtensionPackageCreator extends eZPackageCreationHandler
     {
         $steps = array();
         $steps[] = array( 'id' => 'extensionlist',
-                          'name' => ezi18n( 'kernel/package', 'Extensions to include' ),
+                          'name' => ezpI18n::tr( 'kernel/package', 'Extensions to include' ),
                           'methods' => array( 'initialize' => 'initializeExtensionName',
                                               'load' => 'loadExtensionName',
                                               'validate' => 'validateExtensionName',
@@ -55,7 +57,7 @@ class eZExtensionPackageCreator extends eZPackageCreationHandler
         $steps[] = $this->packageMaintainerStep();
         $steps[] = $this->packageChangelogStep();
         $this->eZPackageCreationHandler( $id,
-                                         ezi18n( 'kernel/package', 'Extension export' ),
+                                         ezpI18n::tr( 'kernel/package', 'Extension export' ),
                                          $steps );
     }
 
@@ -118,8 +120,8 @@ class eZExtensionPackageCreator extends eZPackageCreationHandler
         if ( !$http->hasPostVariable( 'PackageExtensionNames' ) ||
              count( $http->postVariable( 'PackageExtensionNames' ) ) == 0 )
         {
-            $errorList[] = array( 'field' => ezi18n( 'kernel/package', 'Extension list' ),
-                                  'description' => ezi18n( 'kernel/package', 'You must select at least one extension' ) );
+            $errorList[] = array( 'field' => ezpI18n::tr( 'kernel/package', 'Extension list' ),
+                                  'description' => ezpI18n::tr( 'kernel/package', 'You must select at least one extension' ) );
             return false;
         }
         return true;

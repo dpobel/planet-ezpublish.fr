@@ -4,49 +4,49 @@
 
         <h1>{$node.data_map.name.content|wash()}</h1>
 
-        {section show=$node.data_map.short_description.content.is_empty|not}
+        {if $node.data_map.short_description.content.is_empty|not}
             <div class="attribute-short">
                 {attribute_view_gui attribute=$node.data_map.short_description}
             </div>
-        {/section}
+        {/if}
 
-        {section show=$node.data_map.description.content.is_empty|not}
+        {if $node.data_map.description.content.is_empty|not}
             <div class="attribute-long">
                 {attribute_view_gui attribute=$node.data_map.description}
             </div>
-        {/section}
+        {/if}
 
         {section show=is_unset( $versionview_mode )}
         {section show=$node.data_map.show_children.content}
             {let page_limit=10
                  list_items=array()
-                 list_count=0}
+                 list_count=fetch_alias( children_count, hash( parent_node_id, $node.node_id ) )}
 
-            {section show=or( $view_parameters.day, $view_parameters.month, $view_parameters.year )}
-                {let time_filter=array( and,
-                                        array( 'published', '>=',
-                                               maketime( 0, 0, 0,
-                                                         $view_parameters.month, cond( $view_parameters.day, $view_parameters.day, 1 ), $view_parameters.year ) ),
-                                        array( 'published', '<=',
-                                               maketime( 23, 59, 59,
-                                                         cond( $view_parameters.day, $view_parameters.month, $view_parameters.month|inc ), cond( $view_parameters.day, $view_parameters.day, 0 ), $view_parameters.year ) ) )}
-                {set list_items=fetch_alias( children, hash( parent_node_id, $node.node_id,
-                                                             offset, $view_parameters.offset,
-                                                             attribute_filter, $time_filter,
-                                                             sort_by, $node.sort_array,
-                                                             limit, $page_limit ) )
-                     list_count=fetch_alias( children_count, hash( parent_node_id, $node.node_id ) )}
-                {/let}
-            {section-else}
-                {set list_items=fetch_alias( children, hash( parent_node_id, $node.node_id,
-                                                             offset, $view_parameters.offset,
-                                                             sort_by, $node.sort_array,
-                                                             limit, $page_limit ) )}
-                {set list_count=fetch_alias( children_count, hash( parent_node_id, $node.node_id ) )}
-            {/section}
+            {if $list_count}
+                {if or( $view_parameters.day, $view_parameters.month, $view_parameters.year )}
+                    {let time_filter=array( and,
+                                            array( 'published', '>=',
+                                                maketime( 0, 0, 0,
+                                                            $view_parameters.month, cond( $view_parameters.day, $view_parameters.day, 1 ), $view_parameters.year ) ),
+                                            array( 'published', '<=',
+                                                maketime( 23, 59, 59,
+                                                            cond( $view_parameters.day, $view_parameters.month, $view_parameters.month|inc ), cond( $view_parameters.day, $view_parameters.day, 0 ), $view_parameters.year ) ) )}
+                    {set list_items=fetch_alias( children, hash( parent_node_id, $node.node_id,
+                                                                offset, $view_parameters.offset,
+                                                                attribute_filter, $time_filter,
+                                                                sort_by, $node.sort_array,
+                                                                limit, $page_limit ) )}
+                    {/let}
+                {else}
+                    {set list_items=fetch_alias( children, hash( parent_node_id, $node.node_id,
+                                                                offset, $view_parameters.offset,
+                                                                sort_by, $node.sort_array,
+                                                                limit, $page_limit ) )}
+                {/if}
+            {/if}
 
             <div class="content-view-children">
-                {section var=child loop=$list_items sequence=array(bglight,bgdark)}
+                {section var=child loop=$list_items}
                     {node_view_gui view=line content_node=$child}
                 {/section}
             </div>

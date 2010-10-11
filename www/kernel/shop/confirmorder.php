@@ -2,10 +2,10 @@
 //
 // Created on: <04-Dec-2002 16:15:49 bf>
 //
+// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.2.0
-// BUILD VERSION: 24182
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 4.3.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -23,12 +23,14 @@
 //   MA 02110-1301, USA.
 //
 //
+// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
+//
 
 $http = eZHTTPTool::instance();
 $module = $Params['Module'];
 
-require_once( 'kernel/common/template.php' );
-$tpl = templateInit();
+
+$tpl = eZTemplate::factory();
 $tpl->setVariable( "module_name", 'shop' );
 
 $orderID = $http->sessionVariable( 'MyTemporaryOrderID' );
@@ -81,10 +83,12 @@ switch( $operationResult['status'] )
             $Result = array();
             $Result['content'] = $tpl->fetch( "design:shop/confirmorder.tpl" );
             $Result['path'] = array( array( 'url' => false,
-                                            'text' => ezi18n( 'kernel/shop', 'Confirm order' ) ) );
+                                            'text' => ezpI18n::tr( 'kernel/shop', 'Confirm order' ) ) );
         }
     }break;
+    
     case eZModuleOperationInfo::STATUS_HALTED:
+    case eZModuleOperationInfo::STATUS_REPEAT:
     {
         if (  isset( $operationResult['redirect_url'] ) )
         {
@@ -119,10 +123,10 @@ switch( $operationResult['status'] )
         if ( isset( $operationResult['result']['content'] ) )
             $Result['content'] = $operationResult['result']['content'];
         else
-            $Result['content'] = ezi18n( 'kernel/shop', "The confirm order operation was canceled. Try to checkout again." );
+            $Result['content'] = ezpI18n::tr( 'kernel/shop', "The confirm order operation was canceled. Try to checkout again." );
 
         $Result['path'] = array( array( 'url' => false,
-                                        'text' => ezi18n( 'kernel/shop', 'Confirm order' ) ) );
+                                        'text' => ezpI18n::tr( 'kernel/shop', 'Confirm order' ) ) );
     }
 
 }
@@ -131,6 +135,6 @@ switch( $operationResult['status'] )
 $Result = array();
 $Result['content'] = $tpl->fetch( "design:shop/confirmorder.tpl" );
 $Result['path'] = array( array( 'url' => false,
-                                'text' => ezi18n( 'kernel/shop', 'Confirm order' ) ) );
+                                'text' => ezpI18n::tr( 'kernel/shop', 'Confirm order' ) ) );
 */
 ?>

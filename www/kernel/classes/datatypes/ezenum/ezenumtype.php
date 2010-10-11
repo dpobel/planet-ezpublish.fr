@@ -2,12 +2,12 @@
 //
 // Definition of eZEnumtype class
 //
-// Created on: <24-ßÂ-2002 14:33:53 wy>
+// Created on: <24-ï¿½ï¿½-2002 14:33:53 wy>
 //
+// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.2.0
-// BUILD VERSION: 24182
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 4.3.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -24,6 +24,8 @@
 //   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 //   MA 02110-1301, USA.
 //
+//
+// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
 
@@ -49,7 +51,7 @@ class eZEnumType extends eZDataType
     */
     function eZEnumType()
     {
-         $this->eZDataType( self::DATA_TYPE_STRING, ezi18n( 'kernel/classes/datatypes', 'Enum', 'Datatype name' ),
+         $this->eZDataType( self::DATA_TYPE_STRING, ezpI18n::tr( 'kernel/classes/datatypes', 'Enum', 'Datatype name' ),
                             array( 'serialize_supported' => true ) );
     }
 
@@ -213,7 +215,7 @@ class eZEnumType extends eZDataType
             {
                 if ( !$http->hasPostVariable( $base . '_select_data_enumelement_' . $contentObjectAttribute->attribute( 'id' ) ) )
                 {
-                    $contentObjectAttribute->setValidationError( ezi18n( 'kernel/classes/datatypes',
+                    $contentObjectAttribute->setValidationError( ezpI18n::tr( 'kernel/classes/datatypes',
                                                                          'At least one field should be chosen.' ) );
                     return eZInputValidator::STATE_INVALID;
                 }
@@ -271,14 +273,13 @@ class eZEnumType extends eZDataType
         $enumRemove = $base . '_data_enumremove_' . $contentClassAttribute->attribute( 'id' );
         $version = $contentClassAttribute->attribute( 'version' );
 
-        $ismultipleValue = $http->hasPostVariable( $ismultiple ) ? 1 : 0;
-        $contentClassAttribute->setAttribute( self::IS_MULTIPLE_FIELD, $ismultipleValue );
-
         if ( $http->hasPostVariable( $isoption ) )
         {
-             $optionValue = $http->postVariable( $isoption );
-             $optionValueSet = $optionValue == 1 ? '1' : '0';
-             $contentClassAttribute->setAttribute( self::IS_OPTION_FIELD, $optionValueSet );
+            $ismultipleValue = $http->hasPostVariable( $ismultiple ) ? 1 : 0;
+            $contentClassAttribute->setAttribute( self::IS_MULTIPLE_FIELD, $ismultipleValue );
+            $optionValue = $http->postVariable( $isoption );
+            $optionValueSet = $optionValue == 1 ? '1' : '0';
+            $contentClassAttribute->setAttribute( self::IS_OPTION_FIELD, $optionValueSet );
         }
 
         if ( $http->hasPostVariable( $enumID ) &&

@@ -22,11 +22,15 @@
          $editor_css_list  = array( concat('skins/', $skin, '/ui.css') )
          $ez_locale        = ezini( 'RegionalSettings', 'Locale', 'site.ini')
          $language         = '-'|concat( $ez_locale )
-         $plugin_js_list   = array( 'ezoe::i18n::'|concat( $language ) )
+         $dependency_js_list   = array( 'ezoe::i18n::'|concat( $language ) )
          $spell_languages = '+English=en'
+         $directionality = 'ltr'
     }
     {if ezini_hasvariable( 'EditorSettings', 'SkinVariant', 'ezoe.ini',,true() )}
         {set $skin_variant = ezini('EditorSettings', 'SkinVariant', 'ezoe.ini',,true() )}
+    {/if}
+    {if ezini_hasvariable( 'EditorSettings', 'Directionality', 'ezoe.ini',,true() )}
+        {set $directionality = ezini('EditorSettings', 'Directionality', 'ezoe.ini',,true() )}
     {/if}
     {if $attribute.language_code|eq( $ez_locale )}
         {def $cur_locale = fetch( 'content', 'locale' )}
@@ -49,17 +53,16 @@
     {/foreach}
 
     {foreach $plugin_list as $plugin}
-        {set $plugin_js_list = $plugin_js_list|append( concat( 'plugins/', $plugin|trim, '/editor_plugin.js' ))}
+        {set $dependency_js_list = $dependency_js_list|append( concat( 'plugins/', $plugin|trim, '/editor_plugin.js' ))}
     {/foreach}
 
     <!-- Load TinyMCE code -->
-    <script id="tinymce_script_loader" type="text/javascript" src={"javascript/tiny_mce.js"|ezdesign}></script>
-    {ezoescript( $plugin_js_list )}
+    {ezscript_require( 'ezjsc::jquery' )}
+    <script id="tinymce_script_loader" type="text/javascript" src={"javascript/tiny_mce_jquery.js"|ezdesign} charset="utf-8"></script>
+    {ezscript( $dependency_js_list )}
     <!-- Init TinyMCE script -->
     <script type="text/javascript">
     <!--
-    
-    if ( window.ez === undefined || ez.version < 0.95 ) document.write('<script type="text/javascript" src={"javascript/ezoe/ez_core.js"|ezdesign}><\/script>');
 
     var eZOeAttributeSettings, eZOeGlobalSettings = {ldelim}
         mode : "none",
@@ -69,6 +72,7 @@
         skin : '{$skin}',
         skin_variant : '{$skin_variant}',
         plugins : "-{$plugin_list|implode(',-')}",
+        directionality : '{$directionality}',
         theme_advanced_buttons2 : "",
         theme_advanced_buttons3 : "",
         theme_advanced_blockformats : "p,pre,h1,h2,h3,h4,h5,h6",
@@ -81,40 +85,54 @@
         theme_advanced_resizing : true,
         valid_elements: "-strong/-b/-bold[class|customattributes],-em/-i/-emphasize[class|customattributes],span[id|type|class|title|customattributes|align],sub[class|customattributes|align],sup[class|customattributes|align],pre[class|title|customattributes],ol[class|customattributes],ul[class|customattributes],li[class|customattributes],a[href|name|target|view|title|class|id|customattributes],p[class|customattributes|align],img[src|class|alt|align|inline|id|customattributes],table[class|border|width|id|title|customattributes|ezborder|bordercolor|align],tr,th[class|width|rowspan|colspan|customattributes|align],td[class|width|rowspan|colspan|customattributes|align],div[id|type|class|title|customattributes|align],h1[class|customattributes|align],h2[class|customattributes|align],h3[class|customattributes|align],h4[class|customattributes|align],h5[class|customattributes|align],h6[class|customattributes|align],br",
         valid_child_elements: "a[%itrans_na],table[tr],tr[td|th],ol/ul[li],h1/h2/h3/h4/h5/h6/pre/strong/b/p/em/i/u/span/sub/sup/li[%itrans|#text]div/pre/td/th[%btrans|%itrans|#text]",
-        cleanup : false,
-        cleanup_serializer : 'xml',    
-        entity_encoding : 'raw',
-        remove_linebreaks : false,
-        apply_source_formatting : false,
+        // cleanup : false,
+        // cleanup_serializer : 'xml',    
+        // entity_encoding : 'raw',
+        // remove_linebreaks : false,
+        // apply_source_formatting : false,
         fix_list_elements : true,
         fix_table_elements : true,
         convert_urls : false,
         inline_styles : false,
         tab_focus : ':prev,:next',
         theme_ez_xml_alias_list : {$input_handler.json_xml_tag_alias},
-        theme_ez_editor_css : '{ezoecss( $editor_css_list, false() )|implode(',')}',
-        theme_ez_content_css : '{ezoecss( $content_css_list, false())|implode(',')}',
+        theme_ez_editor_css : '{ezcssfiles( $editor_css_list, 3, true() )|implode(',')}',
+        theme_ez_content_css : '{ezcssfiles( $content_css_list, 3, true() )|implode(',')}',
         theme_ez_statusbar_open_dialog : {cond( ezini('EditorSettings', 'TagPathOpenDialog', 'ezoe.ini',,true())|eq('enabled'), 'true', 'false' )},
         popup_css : {concat("stylesheets/skins/", $skin, "/dialog.css")|ezdesign},
-        save_callback : "eZOeCleanUpEmbedTags",
+        //popup_css_add : {"stylesheets/core.css"|ezdesign},
+        save_callback : "eZOeSaveCallback",
         gecko_spellcheck : true,
         table_inline_editing : true, // table edit controlls in gecko
         save_enablewhendirty : true,
         ez_root_url : {'/'|ezroot},
         ez_extension_url : {'/ezoe/'|ezurl},
         ez_js_url : {'/extension/ezoe/design/standard/javascript/'|ezroot},
+        /* Used by language pack / plugin url fixer bellow, do not change */
+        ez_tinymce_url : {'javascript/tiny_mce.js'|ezdesign},
         ez_contentobject_id : {$attribute.contentobject_id},
         ez_contentobject_version : {$attribute.version},
         spellchecker_rpc_url : {'/ezoe/spellcheck_rpc'|ezurl},
-        spellchecker_languages : '{$spell_languages}'
+        spellchecker_languages : '{$spell_languages}',
+        atd_rpc_url : {'/ezoe/atd_rpc?url='|ezurl},
+        atd_rpc_id  : "your API key here",
+        /* this list contains the categories of errors we want to show */
+        atd_show_types              : "Bias Language,Cliches,Complex Expression,Double Negatives,Hidden Verbs,Jargon Language,Passive voice,Phrases to Avoid,Redundant Expression, Diacritical Marks",
+        /* strings this plugin should ignore */
+        atd_ignore_strings          : "AtD,rsmudge",
+        /* enable "Ignore Always" menu item, uses cookies by default. Set atd_ignore_rpc_url to a URL AtD should send ignore requests to. */
+        atd_ignore_enable           : "true",
+        /* the URL to the button image to display */
+        //atd_button_url              : "atdbuttontr.gif",
+        atd_css_url : {'javascript/plugins/AtD/css/content.css'|ezdesign}
     {rdelim};
-    
+
     {literal}
 
     // make sure TinyMCE doesn't try to load language pack
     // and set urls for plugins so their dialogs work correctly
     (function(){
-        var uri = document.getElementById('tinymce_script_loader').src, tps = eZOeGlobalSettings.plugins.split(','), pm = tinymce.PluginManager, tp;
+        var uri = document.location.protocol + '//' + document.location.host + eZOeGlobalSettings.ez_tinymce_url, tps = eZOeGlobalSettings.plugins.split(','), pm = tinymce.PluginManager, tp;
         tinymce.ScriptLoader.markDone( uri.replace( 'tiny_mce', 'langs/' + eZOeGlobalSettings.language ) );
         for (var i = 0, l = tps.length; i < l; i++)
         {
@@ -138,29 +156,15 @@
         }
     }
 
-    function eZOeCleanUpEmbedTags( element_id, html, body )
+    // @LS: 10/03/2010
+    // Workaround for issue #16373
+    // If save_callback function is not defined then it is
+    // causing problems with nested ul/ol lists
+    // Might be Tiny MCE bug
+    function eZOeSaveCallback( element_id, html, body )
     {
-        // remove the content of the embed tags that are just there for oe preview
-        // purpose, this is to avoid that the ez xml parsers in some cases 
-        // duplicates the embed tag
-        ez.array.forEach( body.getElementsByTagName('div'), function( node ){
-            if ( node && node.className.indexOf('mceNonEditable') !== -1 )
-                node.innerHTML = '';
-        });
-        ez.array.forEach( body.getElementsByTagName('span'), function( node ){
-            if ( node && node.className.indexOf('mceNonEditable') !== -1 )
-                node.innerHTML = '';
-        });
-
-        // fix link cleanup issues in IE 6 / 7 (it adds the current url before the anchor and invalid urls)
-        var currenthost = document.location.protocol + '//' + document.location.host;
-        ez.array.forEach( body.getElementsByTagName('a'), function( node ){
-            if ( node.href.indexOf( currenthost ) === 0 && node.getAttribute('mce_href') != node.href )
-                node.href = node.getAttribute('mce_href');
-        });
         return body.innerHTML;
     }
-
 
     {/literal}
     //-->
@@ -174,7 +178,9 @@
     </div>
     
     <div class="block">
-        <input class="button{if $layout_settings['buttons']|contains('disable')} hide{/if}" type="submit" name="CustomActionButton[{$attribute.id}_disable_editor]" value="{'Disable editor'|i18n('design/standard/content/datatype')}" />
+        {if $input_handler.can_disable}
+            <input class="button{if $layout_settings['buttons']|contains('disable')} hide{/if}" type="submit" name="CustomActionButton[{$attribute.id}_disable_editor]" value="{'Disable editor'|i18n('design/standard/content/datatype')}" />
+        {/if}
         <script type="text/javascript">
         <!--
         

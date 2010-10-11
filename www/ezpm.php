@@ -3,10 +3,10 @@
 //
 // Created on: <18-Mar-2003 17:06:45 amos>
 //
+// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.2.0
-// BUILD VERSION: 24182
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 4.3.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -24,6 +24,8 @@
 //   MA 02110-1301, USA.
 //
 //
+// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
+//
 
 require 'autoload.php';
 
@@ -34,7 +36,7 @@ $script = eZScript::instance( array( 'debug-message' => '',
                                       'use-extensions' => true ) );
 
 $script->startup();
-require_once( 'kernel/common/i18n.php' );
+
 
 $endl = $cli->endlineString();
 $webOutput = $cli->isWebOutput();

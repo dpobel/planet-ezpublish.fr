@@ -4,10 +4,10 @@
 //
 // Created on: <29-Oct-2003 14:49:54 kk>
 //
+// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.2.0
-// BUILD VERSION: 24182
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 4.3.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -25,8 +25,10 @@
 //   MA 02110-1301, USA.
 //
 //
+// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
+//
 
-require_once( 'kernel/common/template.php' );
+
 $Module = $Params['Module'];
 $http = eZHTTPTool::instance();
 
@@ -53,9 +55,8 @@ if ( isset( $Params['PDFExportID'] ) )
         if ( $pdfExport->attribute( 'modifier_id' ) != $user->attribute( 'contentobject_id' ) &&
              $pdfExport->attribute( 'modified' ) + $timeOut > time() )
         {
-            // TODO: In 3.6
-            // // locked editing
-            // $tpl = templateInit();
+            // @TODO: locked editing
+            // $tpl = eZTemplate::factory();
             // $tpl->setVariable ...
             // $Result = array();
             // $Result['content'] = $tpl->fetch( 'design:pdf/edit_denied.tpl' );
@@ -118,7 +119,7 @@ if ( $Module->isCurrentAction( 'BrowseSource' ) || // Store PDF export objects
         if ( $pdfExport->attribute( 'status' ) == eZPDFExport::CREATE_ONCE
              && $pdfExport->countGeneratingOnceExports() > 0 )
         {
-            $validation[ 'placement' ][] = array( 'text' => ezi18n( 'kernel/pdf', 'An export with such filename already exists.' ) );
+            $validation[ 'placement' ][] = array( 'text' => ezpI18n::tr( 'kernel/pdf', 'An export with such filename already exists.' ) );
             $validation[ 'processed' ] = true;
             $inputValidated = false;
         }
@@ -170,7 +171,7 @@ else if ( $Module->isCurrentAction( 'Discard' ) )
     return $Module->redirect( 'pdf', 'list' );
 }
 
-$tpl = templateInit();
+$tpl = eZTemplate::factory();
 
 $tpl->setVariable( 'set_warning', $setWarning );
 
@@ -190,7 +191,7 @@ if ( !$inputValidated )
 $Result = array();
 $Result['content'] = $tpl->fetch( 'design:pdf/edit.tpl' );
 $Result['path'] = array( array( 'url' => false,
-                                'text' => ezi18n( 'pdf/edit', 'PDF Export' ) ) );
+                                'text' => ezpI18n::tr( 'pdf/edit', 'PDF Export' ) ) );
 
 /*!
  \generate and output PDF data, either to file or stream
@@ -209,7 +210,7 @@ function generatePDF( $pdfExport, $toFile = false )
     {
         $object = $node->attribute( 'object' );
 
-        $tpl = templateInit();
+        $tpl = eZTemplate::factory();
 
         $tpl->setVariable( 'node', $node );
         $tpl->setVariable( 'generate_toc', 1 );

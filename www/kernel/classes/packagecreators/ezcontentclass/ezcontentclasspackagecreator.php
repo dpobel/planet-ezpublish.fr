@@ -4,10 +4,10 @@
 //
 // Created on: <21-Nov-2003 12:39:59 amos>
 //
+// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.2.0
-// BUILD VERSION: 24182
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 4.3.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -24,6 +24,8 @@
 //   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 //   MA 02110-1301, USA.
 //
+//
+// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
 /*! \file
@@ -42,7 +44,7 @@ class eZContentClassPackageCreator extends eZPackageCreationHandler
     {
         $steps = array();
         $steps[] = array( 'id' => 'class',
-                          'name' => ezi18n( 'kernel/package', 'Content classes to include' ),
+                          'name' => ezpI18n::tr( 'kernel/package', 'Content classes to include' ),
                           'methods' => array( 'initialize' => 'initializeClassData',
                                               'validate' => 'validateClassData',
                                               'commit' => 'commitClassData' ),
@@ -51,7 +53,7 @@ class eZContentClassPackageCreator extends eZPackageCreationHandler
         $steps[] = $this->packageMaintainerStep();
         $steps[] = $this->packageChangelogStep();
         $this->eZPackageCreationHandler( $id,
-                                         ezi18n( 'kernel/package', 'Content class export' ),
+                                         ezpI18n::tr( 'kernel/package', 'Content class export' ),
                                          $steps );
     }
 
@@ -106,8 +108,8 @@ class eZContentClassPackageCreator extends eZPackageCreationHandler
         $result = true;
         if ( count( $classList ) == 0 )
         {
-            $errorList[] = array( 'field' => ezi18n( 'kernel/package', 'Class list' ),
-                                  'description' => ezi18n( 'kernel/package', 'You must select at least one class for inclusion' ) );
+            $errorList[] = array( 'field' => ezpI18n::tr( 'kernel/package', 'Class list' ),
+                                  'description' => ezpI18n::tr( 'kernel/package', 'You must select at least one class for inclusion' ) );
             $result = false;
         }
         return $result;

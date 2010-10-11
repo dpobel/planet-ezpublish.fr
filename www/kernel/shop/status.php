@@ -2,10 +2,10 @@
 //
 // Created on: <07-Nov-2005 18:07:10 jhe>
 //
+// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.2.0
-// BUILD VERSION: 24182
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 4.3.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -23,8 +23,10 @@
 //   MA 02110-1301, USA.
 //
 //
+// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
+//
 
-require_once( "kernel/common/template.php" );
+
 $module = $Params['Module'];
 $http = eZHTTPTool::instance();
 $messages = array();
@@ -56,12 +58,12 @@ if ( $http->hasPostVariable( "AddOrderStatusButton" ) )
 {
     $orderStatus = eZOrderStatus::create();
     $orderStatus->storeCustom();
-    $messages[] = array( 'description' => ezi18n( 'kernel/shop', 'New order status was successfully added.' ) );
+    $messages[] = array( 'description' => ezpI18n::tr( 'kernel/shop', 'New order status was successfully added.' ) );
 }
 
 if ( $http->hasPostVariable( "SaveOrderStatusButton" ) )
 {
-    $messages[] = array( 'description' => ezi18n( 'kernel/shop', 'Changes to order status were successfully stored.' ) );
+    $messages[] = array( 'description' => ezpI18n::tr( 'kernel/shop', 'Changes to order status were successfully stored.' ) );
 }
 
 if ( $http->hasPostVariable( "RemoveOrderStatusButton" ) )
@@ -85,22 +87,22 @@ if ( $http->hasPostVariable( "RemoveOrderStatusButton" ) )
         $hasRemoved = true;
     }
     if ( $hasRemoved )
-        $messages[] = array( 'description' => ezi18n( 'kernel/shop', 'Selected order statuses were successfully removed.' ) );
+        $messages[] = array( 'description' => ezpI18n::tr( 'kernel/shop', 'Selected order statuses were successfully removed.' ) );
     if ( $triedRemoveInternal )
-        $messages[] = array( 'description' => ezi18n( 'kernel/shop', 'Internal orders cannot be removed.' ) );
+        $messages[] = array( 'description' => ezpI18n::tr( 'kernel/shop', 'Internal orders cannot be removed.' ) );
 }
 
 $orderStatusArray = eZOrderStatus::fetchList( true, true );
 
-$tpl = templateInit();
+$tpl = eZTemplate::factory();
 $tpl->setVariable( "orderstatus_array", $orderStatusArray );
 $tpl->setVariable( "module", $module );
 $tpl->setVariable( "messages", $messages );
 
 $path = array();
-$path[] = array( 'text' => ezi18n( 'kernel/shop', 'Order list' ),
+$path[] = array( 'text' => ezpI18n::tr( 'kernel/shop', 'Order list' ),
                  'url' => 'shop/orderlist' );
-$path[] = array( 'text' => ezi18n( 'kernel/shop', 'Status' ),
+$path[] = array( 'text' => ezpI18n::tr( 'kernel/shop', 'Status' ),
                  'url' => false );
 
 $Result = array();

@@ -2,10 +2,10 @@
 //
 // Created on: <01-Aug-2002 09:58:09 bf>
 //
+// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.2.0
-// BUILD VERSION: 24182
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 4.3.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -22,6 +22,8 @@
 //   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 //   MA 02110-1301, USA.
 //
+//
+// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
 $ini = eZINI::instance();
@@ -143,8 +145,8 @@ if ( $http->hasPostVariable( "CancelButton" ) )
 
 $Module->setTitle( "Edit user information" );
 // Template handling
-require_once( "kernel/common/template.php" );
-$tpl = templateInit();
+
+$tpl = eZTemplate::factory();
 $tpl->setVariable( "module", $Module );
 $tpl->setVariable( "http", $http );
 $tpl->setVariable( "userID", $UserID );
@@ -158,9 +160,9 @@ $tpl->setVariable( "newPasswordTooShort", $newPasswordTooShort );
 $tpl->setVariable( "message", $message );
 
 $Result = array();
-$Result['path'] = array( array( 'text' => ezi18n( 'kernel/user', 'User' ),
+$Result['path'] = array( array( 'text' => ezpI18n::tr( 'kernel/user', 'User' ),
                                 'url' => false ),
-                         array( 'text' => ezi18n( 'kernel/user', 'Change password' ),
+                         array( 'text' => ezpI18n::tr( 'kernel/user', 'Change password' ),
                                 'url' => false ) );
 $Result['content'] = $tpl->fetch( "design:user/password.tpl" );
 

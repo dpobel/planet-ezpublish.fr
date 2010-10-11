@@ -4,10 +4,10 @@
 //
 // Created on: <01-Apr-2004 12:39:59 kk>
 //
+// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.2.0
-// BUILD VERSION: 24182
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 4.3.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -24,6 +24,8 @@
 //   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 //   MA 02110-1301, USA.
 //
+//
+// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
 /*! \file
@@ -42,24 +44,24 @@ class eZContentObjectPackageInstaller extends eZPackageInstallationHandler
     {
         $steps = array();
         $steps[] = array( 'id' => 'site_access',
-                          'name' => ezi18n( 'kernel/package', 'Site access mapping' ),
+                          'name' => ezpI18n::tr( 'kernel/package', 'Site access mapping' ),
                           'methods' => array( 'initialize' => 'initializeSiteAccess',
                                               'validate' => 'validateSiteAccess' ),
                           'template' => 'site_access.tpl' );
         $steps[] = array( 'id' => 'top_nodes',
-                          'name' => ezi18n( 'kernel/package', 'Top node placements' ),
+                          'name' => ezpI18n::tr( 'kernel/package', 'Top node placements' ),
                           'methods' => array( 'initialize' => 'initializeTopNodes',
                                               'validate' => 'validateTopNodes' ),
                           'template' => 'top_nodes.tpl' );
         $steps[] = array( 'id' => 'advanced_options',
-                          'name' => ezi18n( 'kernel/package', 'Advanced options' ),
+                          'name' => ezpI18n::tr( 'kernel/package', 'Advanced options' ),
                           'methods' => array( 'initialize' => 'initializeAdvancedOptions',
                                               'validate' => 'validateAdvancedOptions' ),
                           'template' => 'advanced_options.tpl' );
         $this->eZPackageInstallationHandler( $package,
                                              $type,
                                              $installItem,
-                                             ezi18n( 'kernel/package', 'Content object import' ),
+                                             ezpI18n::tr( 'kernel/package', 'Content object import' ),
                                              $steps );
     }
 
@@ -180,8 +182,8 @@ class eZContentObjectPackageInstaller extends eZPackageInstallationHandler
         {
             if ( $persistentData['top_nodes_map'][$topNodeArrayKey]['new_node_id'] === false )
             {
-                $errorList[] = array( 'field' => ezi18n( 'kernel/package', 'Select parent nodes' ),
-                                      'description' => ezi18n( 'kernel/package', 'You must assign all nodes to new parent nodes.' ) );
+                $errorList[] = array( 'field' => ezpI18n::tr( 'kernel/package', 'Select parent nodes' ),
+                                      'description' => ezpI18n::tr( 'kernel/package', 'You must assign all nodes to new parent nodes.' ) );
                 $validate = false;
                 break;
             }

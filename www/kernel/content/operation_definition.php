@@ -2,10 +2,10 @@
 //
 // Created on: <01-Nov-2002 13:39:10 amos>
 //
+// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.2.0
-// BUILD VERSION: 24182
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 4.3.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -22,6 +22,8 @@
 //   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 //   MA 02110-1301, USA.
 //
+//
+// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
 /*! \file
@@ -305,41 +307,26 @@ $OperationList['removelocation'] = array(   'name' => 'removelocation',
                                             'default_call_method' => array( 'include_file' => 'kernel/content/ezcontentoperationcollection.php',
                                                                             'class' => 'eZContentOperationCollection' ),
                                             'parameter_type' => 'standard',
-                                            'parameters' => array( array( 'name' => 'node_id',
-                                                                          'type' => 'integer',
-                                                                          'required' => true ),
-                                                                   array( 'name' => 'object_id',
-                                                                          'type' => 'integer',
-                                                                          'required' => true ),
-                                                                   array( 'name' => 'node_list',
-                                                                          'type' => 'array',
-                                                                          'required' => true ),
-                                                                   array( 'name' => 'move_to_trash',
+                                            'parameters' => array( array( 'name' => 'node_list',
                                                                           'type' => 'array',
                                                                           'required' => true ), ),
-                                            'keys' => array( 'node_id', 'object_id', 'node_list', 'move_to_trash' ),
+                                            'keys' => array( 'node_list' ),
 
                                             'body' => array( array( 'type' => 'trigger',
                                                                     'name' => 'pre_removelocation',
-                                                                    'keys' => array( 'node_id',
-                                                                                     'object_id',
-                                                                                     'node_list',
-                                                                                     'move_to_trash'
-                                                                                     ) ),
+                                                                    'keys' => array( 'node_list' )
+                                                                  ),
                                                              array( 'type' => 'method',
                                                                     'name' => 'remove-location',
                                                                     'frequency' => 'once',
-                                                                    'method' => 'removeAssignment',
-                                                                    ),
+                                                                    'method' => 'removeNodes',
+                                                                  ),
                                                              array( 'type' => 'trigger',
                                                                     'name' => 'post_removelocation',
-                                                                    'keys' => array( 'node_id',
-                                                                                     'object_id',
-                                                                                     'node_list',
-                                                                                     'move_to_trash'
-                                                                                    ),
-                                                                             ),
-                                                                         ) );
+                                                                    'keys' => array( 'node_list' ),
+                                                                  ),
+                                                           )
+                                        );
 
 $OperationList['delete'] = array( 'name' => 'delete',
                                             'default_call_method' => array( 'include_file' => 'kernel/content/ezcontentoperationcollection.php',
@@ -690,6 +677,54 @@ $OperationList['updateobjectstate'] = array( 'name' => 'updateobjectstate',
                                                  array( 'type' => 'trigger',
                                                         'name' => 'post_updateobjectstate',
                                                         'keys' => array( 'object_id', 'state_id_list' )
+                                                       )
+                                                 )
+                              );
+
+$OperationList['createnodefeed'] = array( 'name' => 'createnodefeed',
+                                          'default_call_method' => array( 'include_file' => 'kernel/content/ezcontentoperationcollection.php',
+                                          'class' => 'eZContentOperationCollection' ),
+                                'parameter_type' => 'standard',
+                                'parameters' => array(  array( 'name' => 'node_id',
+                                                               'type' => 'integer',
+                                                               'required' => true) ),
+                                'keys' => array( 'node_id' ),
+                                'body' => array( array( 'type' => 'trigger',
+                                                        'name' => 'pre_createnodefeed',
+                                                        'keys' => array( 'node_id' ),
+                                                       ),
+                                                 array( 'type' => 'method',
+                                                        'name' => 'createnodefeed',
+                                                        'frequency' => 'once',
+                                                        'method' => 'createFeedForNode',
+                                                        ),
+                                                 array( 'type' => 'trigger',
+                                                        'name' => 'post_createnodefeed',
+                                                        'keys' => array( 'node_id' )
+                                                       )
+                                                 )
+                              );
+
+$OperationList['removenodefeed'] = array( 'name' => 'removenodefeed',
+                                          'default_call_method' => array( 'include_file' => 'kernel/content/ezcontentoperationcollection.php',
+                                          'class' => 'eZContentOperationCollection' ),
+                                'parameter_type' => 'standard',
+                                'parameters' => array(  array( 'name' => 'node_id',
+                                                               'type' => 'integer',
+                                                               'required' => true) ),
+                                'keys' => array( 'node_id' ),
+                                'body' => array( array( 'type' => 'trigger',
+                                                        'name' => 'pre_removenodefeed',
+                                                        'keys' => array( 'node_id' ),
+                                                       ),
+                                                 array( 'type' => 'method',
+                                                        'name' => 'removenodefeed',
+                                                        'frequency' => 'once',
+                                                        'method' => 'removeFeedForNode',
+                                                        ),
+                                                 array( 'type' => 'trigger',
+                                                        'name' => 'post_removenodefeed',
+                                                        'keys' => array( 'node_id' )
                                                        )
                                                  )
                               );

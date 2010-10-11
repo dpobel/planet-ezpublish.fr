@@ -4,10 +4,10 @@
 //
 // Created on: <10-Jun-2002 17:03:15 bf>
 //
+// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.2.0
-// BUILD VERSION: 24182
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 4.3.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -24,6 +24,8 @@
 //   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 //   MA 02110-1301, USA.
 //
+//
+// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
 /*!
@@ -842,7 +844,7 @@ WHERE user_id = '" . $userID . "' AND
                          strtolower( $ini->variable( 'UserSettings', 'UpdateHash' ) ) == 'true' )
                     {
                         $hashType = eZUser::hashType();
-                        $hash = eZUser::createHash( $login, $password, eZUser::site(),
+                        $hash = eZUser::createHash( $userRow['login'], $password, eZUser::site(),
                                                     $hashType );
                         $db->query( "UPDATE ezuser SET password_hash='$hash', password_hash_type='$hashType' WHERE contentobject_id='$userID'" );
                     }
@@ -1062,6 +1064,9 @@ WHERE user_id = '" . $userID . "' AND
 
         // give user new session id
         eZSession::regenerate();
+        
+        // set the property used to prevent SSO from running again
+        self::$userHasLoggedOut = true;
     }
 
     /**
@@ -1147,8 +1152,11 @@ WHERE user_id = '" . $userID . "' AND
 
         $ini = eZINI::instance();
 
-        // Check if the user is not logged in, and if a automatic single sign on plugin is enabled
-        if ( is_object( $currentUser ) and !$currentUser->isLoggedIn() )
+        // Check if:
+        // - the user has not logged out,
+        // - the user is not logged in,
+        // - and if a automatic single sign on plugin is enabled.
+        if ( !self::$userHasLoggedOut and is_object( $currentUser ) and !$currentUser->isLoggedIn() )
         {
             $ssoHandlerArray = $ini->variable( 'UserSettings', 'SingleSignOnHandlerArray' );
             if ( count( $ssoHandlerArray ) > 0 )
@@ -1202,7 +1210,7 @@ WHERE user_id = '" . $userID . "' AND
 
                     eZUser::updateLastVisit( $currentUser->attribute( 'contentobject_id' ) );
                     eZUser::setCurrentlyLoggedInUser( $currentUser, $currentUser->attribute( 'contentobject_id' ) );
-                    eZHTTPTool::redirect( eZSys::wwwDir() . eZSys::indexFile( false ) . eZSys::requestURI(), array(), 201 );
+                    eZHTTPTool::redirect( eZSys::wwwDir() . eZSys::indexFile( false ) . eZSys::requestURI(), array(), 302 );
 
                 }
             }
@@ -1459,7 +1467,7 @@ WHERE user_id = '" . $userID . "' AND
     */
     static function authenticateHash( $user, $password, $site, $type, $hash )
     {
-        return eZUser::createHash( $user, $password, $site, $type, $hash ) == $hash;
+        return eZUser::createHash( $user, $password, $site, $type, $hash ) === (string) $hash;
     }
 
     /*!
@@ -1878,7 +1886,8 @@ WHERE user_id = '" . $userID . "' AND
     {
         return array( 'content'  => $this->generateAccessArray(),
                       'scope'    => 'user-info-cache',
-                      'datatype' => 'php' );
+                      'datatype' => 'php',
+                      'store'    => true );
     }
 
 
@@ -2886,6 +2895,14 @@ WHERE user_id = '" . $userID . "' AND
     public $Groups;
     public $OriginalPassword;
     public $OriginalPasswordConfirm;
+    
+    /**
+    * Used to keep track that a logout was performed, and therefore prevent
+    * auto-login from happening if an SSO is used
+    * @var bool
+    * @since 4.3
+    **/
+    protected static $userHasLoggedOut = false;
 }
 
 ?>

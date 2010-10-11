@@ -4,10 +4,10 @@
 //
 // Created on: <21-Aug-2009 11:44:49 ar>
 //
+// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.2.0
-// BUILD VERSION: 24182
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 4.3.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -25,6 +25,8 @@
 //   MA 02110-1301, USA.
 //
 //
+// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
+//
 
 /**
  * Cronjob to garbage collect expired sessions as defined by site.ini[Session]SessionTimeout
@@ -38,6 +40,15 @@
  * @see eZsession
  */
 
+
+// Functions for session to make sure baskets are cleaned up
+function eZSessionBasketGarbageCollector( $db, $time )
+{
+    eZBasket::cleanupExpired( $time );
+}
+
+// Fill in hooks
+eZSession::addCallback( 'gc_pre', 'eZSessionBasketGarbageCollector');
 
 eZSession::garbageCollector();
 

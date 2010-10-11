@@ -4,10 +4,10 @@
 //
 // Created on: <02-Jul-2002 15:33:41 sp>
 //
+// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.2.0
-// BUILD VERSION: 24182
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 4.3.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -24,6 +24,8 @@
 //   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 //   MA 02110-1301, USA.
 //
+//
+// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
 /*! \file
@@ -93,6 +95,9 @@ class eZDir
     */
     static function mkdir( $dir, $perm = false, $recursive = false )
     {
+        if ( file_exists( $dir ) )
+            return false;
+
         if ( $perm === false )
         {
             $perm = eZDir::directoryPermission();
@@ -263,39 +268,54 @@ class eZDir
         if ( $includeEndSeparator and
              !$hasEndSeparator )
             $path .= $separator;
-        else if ( !$includeEndSeparator and
-                  $hasEndSeparator )
+        else if ( !$includeEndSeparator &&
+                  $hasEndSeparator &&
+                  $pathLen > 1 )
             $path = substr( $path, 0, $pathLen - 1 );
         return $path;
     }
 
 
-    /*!
-     \static
-     Removes the directory and all it's contents, recursive.
-    */
-    static function recursiveDelete( $dir )
+    /**
+     * Removes a directory and all it's contents, recursively.
+     *
+     * @param string $dir Directory to remove
+     * @param bool $rootCheck Check whether $dir is supposed to be contained in
+     *                        eZ Publish root directory
+     * @return bool True if the operation succeeded, false otherwise
+     */
+    static function recursiveDelete( $dir, $rootCheck = true )
     {
-        if ( $handle = @opendir( $dir ) )
+        // RecursiveDelete fails if ...
+        // $dir is not a directory
+        if ( !is_dir( $dir ) )
+            return false;
+
+        // rootCheck is enabled and $dir is not part of the root directory
+        if ( $rootCheck && strpos( dirname( realpath( $dir ) ) . DIRECTORY_SEPARATOR, realpath( eZSys::rootDir() ) . DIRECTORY_SEPARATOR ) === false )
+            return false;
+
+        // the directory cannot be opened
+        if ( ! ( $handle = @opendir( $dir ) ) )
+            return false;
+
+        while ( ( $file = readdir( $handle ) ) !== false )
         {
-            while ( ( $file = readdir( $handle ) ) !== false )
+            if ( ( $file == "." ) || ( $file == ".." ) )
             {
-                if ( ( $file == "." ) || ( $file == ".." ) )
-                {
-                    continue;
-                }
-                if ( is_dir( $dir . '/' . $file ) )
-                {
-                    eZDir::recursiveDelete( $dir . '/' . $file );
-                }
-                else
-                {
-                    unlink( $dir . '/' . $file );
-                }
+                continue;
             }
-            @closedir( $handle );
-            rmdir( $dir );
+            if ( is_dir( $dir . '/' . $file ) )
+            {
+                eZDir::recursiveDelete( $dir . '/' . $file, false );
+            }
+            else
+            {
+                unlink( $dir . '/' . $file );
+            }
         }
+        @closedir( $handle );
+        return rmdir( $dir );
     }
 
     /*!

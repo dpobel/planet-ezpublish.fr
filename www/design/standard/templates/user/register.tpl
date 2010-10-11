@@ -5,11 +5,11 @@
 <h1>{"Register user"|i18n("design/standard/user")}</h1>
 </div>
 
-{section show=and( and( is_set( $checkErrNodeId ), $checkErrNodeId ), eq( $checkErrNodeId, true ) )}
+{if and( and( is_set( $checkErrNodeId ), $checkErrNodeId ), eq( $checkErrNodeId, true ) )}
     <div class="message-error">
         <h2><span class="time">[{currentdate()|l10n( shortdatetime )}]</span> {$errMsg}</h2>
     </div>
-{/section}
+{/if}
 
 {section show=$validation.processed}
 
@@ -29,7 +29,7 @@
 {/section}
 
 {section show=count($content_attributes)|gt(0)}
-    {section name=ContentObjectAttribute loop=$content_attributes sequence=array(bglight,bgdark)}
+    {section name=ContentObjectAttribute loop=$content_attributes}
     <input type="hidden" name="ContentObjectAttribute_id[]" value="{$ContentObjectAttribute:item.id}" />
     <div class="block">
         <label>{$ContentObjectAttribute:item.contentclass_attribute.name}</label><div class="labelbreak"></div>
@@ -42,19 +42,31 @@
     </div>
 
     <div class="buttonblock">
-    {section show=and( is_set( $checkErrNodeId ), $checkErrNodeId )|not()}
-        <input class="button" type="submit" name="PublishButton" value="{'Register'|i18n('design/standard/user')}" />
-    {section-else}
-        <input class="button" type="submit" name="PublishButton" disabled="disabled" value="{'Register'|i18n('design/standard/user')}" />
-    {/section}
-        <input class="button" type="submit" name="CancelButton" value="{'Discard'|i18n('design/standard/user')}" />
+    {if and( is_set( $checkErrNodeId ), $checkErrNodeId )|not()}
+        <input class="button" type="submit" id="PublishButton" name="PublishButton" value="{'Register'|i18n('design/standard/user')}" onclick="window.setTimeout( disableButtons, 1 ); return true;" />
+    {else}
+        <input class="button" type="submit" id="PublishButton" name="PublishButton" disabled="disabled" value="{'Register'|i18n('design/standard/user')}" onclick="window.setTimeout( disableButtons, 1 ); return true;" />
+    {/if}
+        <input class="button" type="submit" id="CancelButton" name="CancelButton" value="{'Discard'|i18n('design/standard/user')}" onclick="window.setTimeout( disableButtons, 1 ); return true;" />
     </div>
 {section-else}
     <div class="warning">
         <h2>{"Unable to register new user"|i18n("design/standard/user")}</h2>
     </div>
     <div class="buttonblock">
-        <input class="button" type="submit" name="CancelButton" value="{'Back'|i18n('design/standard/user')}" />
+        <input class="button" type="submit" id="CancelButton" name="CancelButton" value="{'Back'|i18n('design/standard/user')}" onclick="window.setTimeout( disableButtons, 1 ); return true;" />
     </div>
 {/section}
 </form>
+
+{literal}
+<script language="JavaScript" type="text/javascript">
+<!--
+    function disableButtons()
+    {
+        document.getElementById( 'PublishButton' ).disabled = true;
+        document.getElementById( 'CancelButton' ).disabled = true;
+    }
+-->
+</script>
+{/literal}

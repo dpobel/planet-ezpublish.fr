@@ -4,10 +4,10 @@
 //
 // Created on: <16-Apr-2002 11:08:14 amos>
 //
+// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.2.0
-// BUILD VERSION: 24182
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 4.3.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -24,6 +24,8 @@
 //   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 //   MA 02110-1301, USA.
 //
+//
+// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
 /*! \defgroup eZDataType Content datatypes */
@@ -664,17 +666,80 @@ class eZDataType
     }
 
 
-    /*!
-     \note Transaction unsafe. If you call several transaction unsafe methods you must enclose
-     the calls within a db transaction; thus within db->begin and db->commit.
+    /**
+     * @note Transaction unsafe. If you call several transaction unsafe methods you must enclose
+     *       the calls within a db transaction; thus within db->begin and db->commit.
+     *
+     * @param eZContentClassAttribute $classAttribute Content class attribute of the datatype
      */
     function storeDefinedClassAttribute( $classAttribute )
     {
     }
 
+    /**
+     * @note Transaction unsafe. If you call several transaction unsafe methods you must enclose
+     *       the calls within a db transaction; thus within db->begin and db->commit.
+     * @param eZContentClassAttribute $classAttribute Content class attribute of the datatype
+     */
+    function storeModifiedClassAttribute( $classAttribute )
+    {
+    }
+
+    /**
+     * @note Transaction unsafe. If you call several transaction unsafe methods you must enclose
+     *       the calls within a db transaction; thus within db->begin and db->commit.
+     * @param eZContentClassAttribute $classAttribute Content class attribute of the datatype
+     * @param int $version Version of the attribute to be stored
+     */
+    function storeVersionedClassAttribute( $classAttribute, $version )
+    {
+        switch ( $version )
+        {
+            case eZContentClass::VERSION_STATUS_DEFINED:
+                $this->storeDefinedClassAttribute( $classAttribute );
+                break;
+
+            case eZContentClass::VERSION_STATUS_MODIFIED:
+                $this->storeModifiedClassAttribute( $classAttribute );
+                break;
+        }
+    }
+
+    /**
+     * @param eZContentClassAttribute $classAttribute Content class attribute of the datatype
+     */
     function preStoreDefinedClassAttribute( $classAttribute )
     {
         $this->preStoreClassAttribute( $classAttribute, $classAttribute->attribute( 'version' ) );
+    }
+
+    /**
+     * @param eZContentClassAttribute $classAttribute Content class attribute of the datatype
+     */
+    function preStoreModifiedClassAttribute( $classAttribute )
+    {
+        $this->preStoreClassAttribute( $classAttribute, $classAttribute->attribute( 'version' ) );
+    }
+
+    /**
+     * Hook function which is called before an content class attribute is stored
+     *
+     * @see eZContentClassAttribute::storeVersioned()
+     * @param eZContentClassAttribute $classAttribute Content class attribute of the datatype
+     * @param int $version Version of the attribute to be stored
+     */
+    function preStoreVersionedClassAttribute( $classAttribute, $version )
+    {
+        switch ( $version )
+        {
+            case eZContentClass::VERSION_STATUS_DEFINED:
+                $this->preStoreDefinedClassAttribute( $classAttribute );
+                break;
+
+            case eZContentClass::VERSION_STATUS_MODIFIED:
+                $this->preStoreModifiedClassAttribute( $classAttribute );
+                break;
+        }
     }
 
     /*!
@@ -854,6 +919,14 @@ class eZDataType
     }
 
     /*!
+     Do any necessary changes to stored object attribute when moving an object to trash.
+     \note Default implementation does nothing.
+    */
+    function trashStoredObjectAttribute( $objectAttribute, $version = null )
+    {
+    }
+
+    /*!
      Clean up stored object attribute
      \note Default implementation does nothing.
     */
@@ -880,7 +953,7 @@ class eZDataType
         {
             if ( $classAttribute->attribute( 'is_information_collector' ) == true )
             {
-                $actionList[] = array( 'name' => ezi18n( 'kernel/classes/datatypes', 'Send', 'Datatype information collector action' ),
+                $actionList[] = array( 'name' => ezpI18n::tr( 'kernel/classes/datatypes', 'Send', 'Datatype information collector action' ),
                                        'action' => 'ActionCollectInformation' );
             }
         }

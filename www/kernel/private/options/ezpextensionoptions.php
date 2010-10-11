@@ -2,7 +2,7 @@
 /**
  * File containing the options object for the eZExtension class
  *
- * @copyright Copyright (C) 1999-2009 eZ Systems AS. All rights reserved.
+ * @copyright Copyright (C) 1999-2010 eZ Systems AS. All rights reserved.
  * @license http://ez.no/licenses/gnu_gpl GNU GPLv2
  * @package kernel
  *
@@ -40,6 +40,9 @@
  *
  * @property string $aliasVariable
  *      Default : null
+ *      
+  * @property string $aliasOptionalIndex
+ *      Default : null
  *
  * @throws ezcBasePropertyNotFoundException
  *         If $options contains an undefined property
@@ -63,6 +66,7 @@ class ezpExtensionOptions extends ezcBaseOptions
         $this->handlerParams  = null;
         $this->aliasSection   = null;
         $this->aliasVariable  = null;
+        $this->aliasOptionalIndex = null;
 
         parent::__construct( $options );
     }
@@ -85,6 +89,7 @@ class ezpExtensionOptions extends ezcBaseOptions
             case 'callMethod':
             case 'aliasSection':
             case 'aliasVariable':
+            case 'aliasOptionalIndex':
                 if( $value !== null and !is_string( $value ) )
                 {
                     throw new ezcBaseValueException( $name, $value );

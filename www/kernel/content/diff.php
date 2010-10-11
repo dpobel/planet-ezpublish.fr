@@ -3,10 +3,10 @@
 //
 // <creation-tag>
 //
+// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.2.0
-// BUILD VERSION: 24182
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 4.3.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -24,8 +24,10 @@
 //   MA 02110-1301, USA.
 //
 //
+// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
+//
 
-require_once( 'kernel/common/template.php' );
+
 
 $Module = $Params['Module'];
 $objectID = $Params['ObjectID'];
@@ -49,7 +51,7 @@ if ( !$contentObject->attribute( 'can_diff' ) )
     return $Module->handleError( eZError::KERNEL_ACCESS_DENIED, 'kernel' );
 
 $http = eZHTTPTool::instance();
-$tpl = templateInit();
+$tpl = eZTemplate::factory();
 
 $res = eZTemplateDesignResource::instance();
 $res->setKeys( array( array( 'object', $contentObject->attribute( 'id' ) ),
@@ -163,6 +165,6 @@ if ( $section )
 
 $Result['content'] = $tpl->fetch( "design:content/diff.tpl" );
 $Result['path'] = array( array( 'url' => false,
-                                'text' => ezi18n( 'kernel/content', 'Differences' ) ) );
+                                'text' => ezpI18n::tr( 'kernel/content', 'Differences' ) ) );
 
 ?>

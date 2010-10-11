@@ -3,10 +3,10 @@
 // Definition of eZTimeType class
 //
 //
+// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.2.0
-// BUILD VERSION: 24182
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 4.3.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -23,6 +23,8 @@
 //   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 //   MA 02110-1301, USA.
 //
+//
+// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
 /*!
@@ -42,7 +44,7 @@ class eZTimeType extends eZDataType
 
     function eZTimeType()
     {
-        $this->eZDataType( self::DATA_TYPE_STRING, ezi18n( 'kernel/classes/datatypes', "Time", 'Datatype name' ),
+        $this->eZDataType( self::DATA_TYPE_STRING, ezpI18n::tr( 'kernel/classes/datatypes', "Time", 'Datatype name' ),
                            array( 'serialize_supported' => true ) );
     }
 
@@ -54,7 +56,7 @@ class eZTimeType extends eZDataType
         $state = eZDateTimeValidator::validateTime( $hours, $minute, $second );
         if ( $state == eZInputValidator::STATE_INVALID )
         {
-            $contentObjectAttribute->setValidationError( ezi18n( 'kernel/classes/datatypes',
+            $contentObjectAttribute->setValidationError( ezpI18n::tr( 'kernel/classes/datatypes',
                                                                  'Invalid time.' ) );
             return eZInputValidator::STATE_INVALID;
         }
@@ -82,7 +84,7 @@ class eZTimeType extends eZDataType
                      ( !$classAttribute->attribute( 'is_information_collector' ) and
                        $contentObjectAttribute->validateIsRequired() ) )
                 {
-                    $contentObjectAttribute->setValidationError( ezi18n( 'kernel/classes/datatypes',
+                    $contentObjectAttribute->setValidationError( ezpI18n::tr( 'kernel/classes/datatypes',
                                                                          'Time input required.' ) );
                     return eZInputValidator::STATE_INVALID;
                 }
@@ -96,7 +98,7 @@ class eZTimeType extends eZDataType
         }
         else if ( !$classAttribute->attribute( 'is_information_collector' ) and $contentObjectAttribute->validateIsRequired() )
         {
-            $contentObjectAttribute->setValidationError( ezi18n( 'kernel/classes/datatypes', 'Time input required.' ) );
+            $contentObjectAttribute->setValidationError( ezpI18n::tr( 'kernel/classes/datatypes', 'Time input required.' ) );
             return eZInputValidator::STATE_INVALID;
         }
         else
@@ -149,7 +151,7 @@ class eZTimeType extends eZDataType
                 if ( !( $hours == '' and $minute == '' and ( !$useSeconds or $second == '' ) ) or
                      $contentObjectAttribute->validateIsRequired() )
                 {
-                    $contentObjectAttribute->setValidationError( ezi18n( 'kernel/classes/datatypes',
+                    $contentObjectAttribute->setValidationError( ezpI18n::tr( 'kernel/classes/datatypes',
                                                                          'Time input required.' ) );
                     return eZInputValidator::STATE_INVALID;
                 }

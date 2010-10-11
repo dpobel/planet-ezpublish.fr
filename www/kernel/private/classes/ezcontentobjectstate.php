@@ -2,16 +2,16 @@
 /**
  * File containing the eZContentObjectState class.
  *
- * @copyright Copyright (C) 1999-2009 eZ Systems AS. All rights reserved.
+ * @copyright Copyright (C) 1999-2010 eZ Systems AS. All rights reserved.
  * @license http://ez.no/licenses/gnu_gpl GNU GPL v2
- * @version //autogentag//
+ * @version 4.3.0
  * @package kernel
  */
 
 /**
  * Class representing a content object state
  *
- * @version //autogentag//
+ * @version 4.3.0
  * @package kernel
  */
 class eZContentObjectState extends eZPersistentObject
@@ -117,9 +117,9 @@ class eZContentObjectState extends eZPersistentObject
 
         $conditionsSQL = implode( ' AND ', $conditions );
 
-        $sql = "SELECT ezcobj_state.*, ezcobj_state_language.* \r\n" .
-               "FROM ezcobj_state, ezcobj_state_group, ezcobj_state_language \r\n" .
-               "WHERE $conditionsSQL \r\n" .
+        $sql = "SELECT ezcobj_state.*, ezcobj_state_language.* " .
+               "FROM ezcobj_state, ezcobj_state_group, ezcobj_state_language " .
+               "WHERE $conditionsSQL " .
                "ORDER BY ezcobj_state.priority";
 
         $rows = $db->arrayQuery( $sql, array( 'limit' => $limit, 'offset' => $offset ) );
@@ -414,7 +414,7 @@ class eZContentObjectState extends eZPersistentObject
         // missing identifier
         if ( !isset( $this->Identifier ) || $this->Identifier == '' )
         {
-            $messages[] = ezi18n( 'kernel/state/edit', 'Identifier: input required' );
+            $messages[] = ezpI18n::tr( 'kernel/state/edit', 'Identifier: input required' );
             $isValid = false;
         }
         else
@@ -425,12 +425,12 @@ class eZContentObjectState extends eZPersistentObject
             if ( strcmp( $validIdentifier, $this->Identifier ) != 0 )
             {
                 // invalid identifier
-                $messages[] = ezi18n( 'kernel/state/edit', 'Identifier: invalid, it can only consist of characters in the range a-z, 0-9 and underscore.' );
+                $messages[] = ezpI18n::tr( 'kernel/state/edit', 'Identifier: invalid, it can only consist of characters in the range a-z, 0-9 and underscore.' );
                 $isValid = false;
             }
             else if ( strlen( $this->Identifier ) > self::MAX_IDENTIFIER_LENGTH )
             {
-                $messages[] = ezi18n( 'kernel/state/edit', 'Identifier: invalid, maximum %max characters allowed.',
+                $messages[] = ezpI18n::tr( 'kernel/state/edit', 'Identifier: invalid, maximum %max characters allowed.',
                                       null, array( '%max' => self::MAX_IDENTIFIER_LENGTH ) );
                 $isValid = false;
             }
@@ -440,7 +440,7 @@ class eZContentObjectState extends eZPersistentObject
                 $existingState = self::fetchByIdentifier( $this->Identifier, $this->GroupID );
                 if ( $existingState && ( !isset( $this->ID ) || $existingState->attribute( 'id' ) !== $this->ID ) )
                 {
-                    $messages[] = ezi18n( 'kernel/state/edit', 'Identifier: a content object state group with this identifier already exists, please give another identifier' );
+                    $messages[] = ezpI18n::tr( 'kernel/state/edit', 'Identifier: a content object state group with this identifier already exists, please give another identifier' );
                     $isValid = false;
                 }
             }
@@ -461,19 +461,19 @@ class eZContentObjectState extends eZPersistentObject
             {
                 // if name nor description are set but translation is specified as main language
                 $isValid = false;
-                $messages[] = ezi18n( 'kernel/state/edit', '%language_name: this language is the default but neither name or description were provided for this language', null, array( '%language_name' => $translation->attribute( 'language' )->attribute( 'locale_object' )->attribute( 'intl_language_name' ) ) );
+                $messages[] = ezpI18n::tr( 'kernel/state/edit', '%language_name: this language is the default but neither name or description were provided for this language', null, array( '%language_name' => $translation->attribute( 'language' )->attribute( 'locale_object' )->attribute( 'intl_language_name' ) ) );
             }
         }
 
         if ( $translationsWithData == 0 )
         {
             $isValid = false;
-            $messages[] =  ezi18n( 'kernel/state/edit', 'Translations: you need to add at least one localization' );
+            $messages[] =  ezpI18n::tr( 'kernel/state/edit', 'Translations: you need to add at least one localization' );
         }
         else if ( empty( $this->DefaultLanguageID ) && $translationsWithData > 1 )
         {
             $isValid = false;
-            $messages[] =  ezi18n( 'kernel/state/edit', 'Translations: there are multiple localizations but you did not specify which is the default one' );
+            $messages[] =  ezpI18n::tr( 'kernel/state/edit', 'Translations: there are multiple localizations but you did not specify which is the default one' );
         }
 
         return $isValid;
@@ -491,10 +491,10 @@ class eZContentObjectState extends eZPersistentObject
      */
     public static function limitationList()
     {
-        $sql = "SELECT g.identifier group_identifier, s.identifier state_identifier, s.priority, s.id \r\n" .
-               "FROM ezcobj_state s, ezcobj_state_group g \r\n" .
-               "WHERE s.group_id=g.id \r\n" .
-               "AND g.identifier NOT LIKE 'ez%' \r\n" .
+        $sql = "SELECT g.identifier group_identifier, s.identifier state_identifier, s.priority, s.id " .
+               "FROM ezcobj_state s, ezcobj_state_group g " .
+               "WHERE s.group_id=g.id " .
+               "AND g.identifier NOT LIKE 'ez%' " .
                "ORDER BY g.identifier, s.priority";
         $db = eZDB::instance();
         $rows = $db->arrayQuery( $sql );

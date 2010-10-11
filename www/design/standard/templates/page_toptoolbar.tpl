@@ -12,9 +12,9 @@
 
     <td>
          <select name="ClassID">
-	      {section name=Classes loop=$classlist}
-	      <option value="{$Classes:item.id}">{$Classes:item.name}</option>
-	      {/section}
+              {section name=Classes loop=$classlist}
+              <option value="{$Classes:item.id}">{$Classes:item.name}</option>
+              {/section}
          </select>
      </td>
      <td>
@@ -49,11 +49,11 @@
     </td>
     <td align="right" class="toolbar">
       <p class="menuitem">
-      {section show=eq($current_user.contentobject_id,$anonymous_user_id)}
+      {if eq($current_user.contentobject_id,$anonymous_user_id)}
       <a class="menuitem" href={"/user/login/"|ezurl}>{"Login"|i18n("design/standard/layout")}</a>
-      {section-else}
+      {else}
       <a class="menuitem" href={"/user/logout/"|ezurl}>{"Logout"|i18n("design/standard/layout")}</a> ({content_view_gui view=text_linked content_object=$current_user.contentobject})
-      {/section}
+      {/if}
       </p>
     </td>
 </tr>

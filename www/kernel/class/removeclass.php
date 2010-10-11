@@ -1,10 +1,10 @@
 <?php
 //
 //
+// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.2.0
-// BUILD VERSION: 24182
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 4.3.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -22,13 +22,15 @@
 //   MA 02110-1301, USA.
 //
 //
+// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
+//
 
 $Module = $Params['Module'];
 $GroupID = null;
 if ( isset( $Params["GroupID"] ) )
     $GroupID = $Params["GroupID"];
 $http = eZHTTPTool::instance();
-$deleteIDArray = $http->sessionVariable( "DeleteClassIDArray" );
+$deleteIDArray = $http->hasSessionVariable( 'DeleteClassIDArray' ) ? $http->sessionVariable( 'DeleteClassIDArray' ) : array();
 $DeleteResult = array();
 $alreadyRemoved = array();
 
@@ -36,9 +38,8 @@ if ( !$http->hasPostVariable( 'ConfirmButton' ) && !$http->hasPostVariable( 'Can
 {
     // we will remove class - group relations rather than classes if they belongs to more than 1 group:
     $updateDeleteIDArray = true;
-    foreach ( array_keys( $deleteIDArray ) as $key )
+    foreach ( $deleteIDArray as $key => $classID )
     {
-        $classID = $deleteIDArray[$key];
         // for each classes tagged for deleting:
         $class = eZContentClass::fetch( $classID );
         if ( $class )
@@ -112,9 +113,8 @@ foreach ( $deleteIDArray as $deleteID )
 
 $canRemove = ( $canRemoveCount > 0 );
 
-$Module->setTitle( ezi18n( 'kernel/class', 'Remove classes %class_id', null, array( '%class_id' => $ClassID ) ) );
-require_once( "kernel/common/template.php" );
-$tpl = templateInit();
+$Module->setTitle( ezpI18n::tr( 'kernel/class', 'Remove classes %class_id', null, array( '%class_id' => $ClassID ) ) );
+$tpl = eZTemplate::factory();
 
 $tpl->setVariable( 'module', $Module );
 $tpl->setVariable( 'GroupID', $GroupID );
@@ -125,5 +125,7 @@ $tpl->setVariable( 'can_remove', $canRemove );
 $Result = array();
 $Result['content'] = $tpl->fetch( "design:class/removeclass.tpl" );
 $Result['path'] = array( array( 'url' => '/class/grouplist/',
-                                'text' => ezi18n( 'kernel/class', 'Classes' ) ) );
+                                'text' => ezpI18n::tr( 'kernel/class', 'Class groups' ) ) );
+$Result['path'][] = array( 'url' => false,
+                           'text' => ezpI18n::tr( 'kernel/class', 'Remove classes' ) );
 ?>

@@ -4,10 +4,10 @@
 //
 // Created on: <01-Mar-2002 14:23:49 amos>
 //
+// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.2.0
-// BUILD VERSION: 24182
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 4.3.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -24,6 +24,8 @@
 //   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 //   MA 02110-1301, USA.
 //
+//
+// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
 /*! \defgroup eZImage Image conversion and scaling */
@@ -1175,8 +1177,19 @@ class eZImageManager
                 {
                     if ( !$handler )
                         continue;
+
+                    $handlerFilters = array();
+                    $leftoverFilters = array();
+                    foreach ( $filters as $filter )
+                    {
+                        if ( $handler->isFilterSupported( $filter ) )
+                            $handlerFilters[] = $filter;
+                        else
+                            $leftoverFilters[] = $filter;
+                    }
+
                     $outputMimeData = $handler->outputMIMEType( $this, $currentMimeData, $destinationMimeData, $this->SupportedFormats, $aliasName );
-                    if ( $outputMimeData['name'] == $destinationMimeData['name'] )
+                    if ( $outputMimeData['name'] == $destinationMimeData['name'] and count( $handlerFilters ) > 0 )
                     {
                         $nextMimeData = $outputMimeData;
                         $nextHandler = $handler;
@@ -1197,15 +1210,7 @@ class eZImageManager
                         $sourceFile->deleteLocal();
                     return false;
                 }
-                $handlerFilters = array();
-                $leftoverFilters = array();
-                foreach ( $filters as $filter )
-                {
-                    if ( $nextHandler->isFilterSupported( $filter ) )
-                        $handlerFilters[] = $filter;
-                    else
-                        $leftoverFilters[] = $filter;
-                }
+
                 $useTempImage = false;
                 if ( $nextMimeData['name'] == $destinationMimeData['name'] and
                      count( $leftoverFilters ) == 0 )
@@ -1355,16 +1360,48 @@ class eZImageManager
 
     /**
      * Returns a shared instance of the eZImageManager class.
+     * Note: In most cases you'd want to use {@see self:factory()} instead.
      *
      * @return eZImageManager
      */
     static function instance()
     {
-        if ( !isset( $GLOBALS["eZImageManager"] ) )
+        if ( self::$instance === null )
         {
-            $GLOBALS["eZImageManager"] = new eZImageManager();
+            self::$instance = new self();
         }
-        return $GLOBALS["eZImageManager"];
+        return self::$instance;
+    }
+    
+    /**
+     * Returns a shared instance of the eZImageManager class and makes it ready for use.
+     * As in calls {@see self::readINISettings()} and {@see eZImageAnalyzer::readAnalyzerSettingsFromINI()}
+     *
+     * @since 4.3
+     * @return eZImageManager
+     */
+    static function factory()
+    {
+        if ( self::$factory === false )
+        {
+            self::$factory = true;
+            self::instance()->readINISettings();
+            eZImageAnalyzer::readAnalyzerSettingsFromINI();
+        }
+        return self::instance();
+    }
+
+    /**
+     * Reset a shared instance of the eZImageManager class and factory variable.
+     * As used by {@see eZImageManager::instance()} and {@see eZImageManager::factory()}
+     *
+     * @since 4.3
+     */
+    static function resetInstance()
+    {
+        self::$instance = null;
+        self::$factory = false;
+        
     }
 
     /// \privatesection
@@ -1376,5 +1413,21 @@ class eZImageManager
     public $RuleMap;
     public $MIMETypes;
     public $Types = array();
+
+    /**
+     * Singleton instance of eZImageManager used by {@see eZImageManager::instance()}
+     * Reset with {@see eZImageManager::resetInstance()} 
+     * 
+     * @var null|eZImageManager
+     */
+    protected static $instance;
+
+    /**
+     * Factory flag as used by {@see eZImageManager::factory()}
+     * Reset with {@see eZImageManager::resetInstance()} 
+     * 
+     * @var bool
+     */
+    protected static $factory = false;
 }
 ?>

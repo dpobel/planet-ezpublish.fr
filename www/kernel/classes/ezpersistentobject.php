@@ -4,10 +4,10 @@
 //
 // Created on: <16-Apr-2002 11:08:14 amos>
 //
+// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.2.0
-// BUILD VERSION: 24182
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 4.3.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -24,6 +24,8 @@
 //   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 //   MA 02110-1301, USA.
 //
+//
+// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
 /*!
@@ -546,7 +548,7 @@ class eZPersistentObject
                     ++$i;
                 }
                 $cond_text = eZPersistentObject::conditionText( $key_conds );
-                $sql = "UPDATE $table\nSET $field_text$cond_text";
+                $sql = "UPDATE $table SET $field_text$cond_text";
                 $db->query( $sql );
             }
         }
@@ -573,7 +575,7 @@ class eZPersistentObject
         if ( is_array( $conditions ) and
              count( $conditions ) > 0 )
         {
-            $where_text = "\nWHERE  ";
+            $where_text = " WHERE  ";
             $i = 0;
             foreach ( $conditions as $id => $cond )
             {
@@ -791,7 +793,7 @@ class eZPersistentObject
         {
             if ( ( $i % 7 ) == 0 and
                  $i > 0 )
-                $field_text .= ",\n       ";
+                $field_text .= ",       ";
             else if ( $i > 0 )
                 $field_text .= ', ';
             $field_text .= $field_item;
@@ -816,7 +818,7 @@ class eZPersistentObject
             }
             if ( count( $sort_list ) > 0 )
             {
-                $sort_text = "\nORDER BY ";
+                $sort_text = " ORDER BY ";
                 $i = 0;
                 foreach ( $sort_list as $sort_id => $sort_type )
                 {
@@ -839,7 +841,7 @@ class eZPersistentObject
                 $grouping_list = $grouping;
             if ( count( $grouping_list ) > 0 )
             {
-                $grouping_text = "\nGROUP BY ";
+                $grouping_text = " GROUP BY ";
                 $i = 0;
                 foreach ( $grouping_list as $grouping_id )
                 {
@@ -1132,7 +1134,7 @@ static function definition()
                 $query .= $field . "='" . $db->escapeString( $value ) . "'";
             ++$i;
         }
-        $query .= "\n" . 'WHERE ';
+        $query .= ' WHERE ';
         $i = 0;
         foreach( $conditions as $conditionKey => $condition )
         {

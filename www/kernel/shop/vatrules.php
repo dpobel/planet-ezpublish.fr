@@ -2,10 +2,10 @@
 //
 // Created on: <17-Feb-2006 16:58:41 vs>
 //
+// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.2.0
-// BUILD VERSION: 24182
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 4.3.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -23,8 +23,10 @@
 //   MA 02110-1301, USA.
 //
 //
+// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
+//
 
-require_once( "kernel/common/template.php" );
+
 /**
  * Find errors in VAT charging rules.
  *
@@ -47,7 +49,7 @@ function findErrors( $vatRules )
     }
 
     if ( !$defaultRuleExists && count( $vatRules ) > 0 )
-        $errors[] = ezi18n( 'kernel/shop/vatrules', 'No default rule found. ' .
+        $errors[] = ezpI18n::tr( 'kernel/shop/vatrules', 'No default rule found. ' .
                             'Please add rule having "Any" country and "Any" category.' );
 
     // 2. Check for conflicting rules.
@@ -75,12 +77,12 @@ function findErrors( $vatRules )
                 if ( $iCountry == '*' )
                 {
                     $errorMessage = "Conflict: There are multiple default rules.";
-                    $errors[] = ezi18n( 'kernel/shop/vatrules', $errorMessage );
+                    $errors[] = ezpI18n::tr( 'kernel/shop/vatrules', $errorMessage );
                 }
                 else
                 {
                     $errorMessage = "Conflict: There are multiple default rules for country '%1'.";
-                    $errors[] = ezi18n( 'kernel/shop/vatrules', $errorMessage, null, array( $iCountry ) );
+                    $errors[] = ezpI18n::tr( 'kernel/shop/vatrules', $errorMessage, null, array( $iCountry ) );
                 }
             }
             // Intersecting rules.
@@ -89,12 +91,12 @@ function findErrors( $vatRules )
                 if ( $iCountry == '*' )
                 {
                     $errorMessage = "Conflict: The following categories for any country are mentioned in multiple rules: %2.";
-                    $errors[] = ezi18n( 'kernel/shop/vatrules', $errorMessage, null, array( $iCountry, join( ',', $commonCategories ) ) );
+                    $errors[] = ezpI18n::tr( 'kernel/shop/vatrules', $errorMessage, null, array( $iCountry, join( ',', $commonCategories ) ) );
                 }
                 else
                 {
                     $errorMessage = "Conflict: The following categories for country '%1' are mentioned in multiple rules: %2.";
-                    $errors[] = ezi18n( 'kernel/shop/vatrules', $errorMessage, null, array( $iCountry, join( ',', $commonCategories ) ) );
+                    $errors[] = ezpI18n::tr( 'kernel/shop/vatrules', $errorMessage, null, array( $iCountry, join( ',', $commonCategories ) ) );
                 }
             }
         }
@@ -160,7 +162,7 @@ function compareVatRules($a, $b)
 
 $module = $Params['Module'];
 $http   = eZHTTPTool::instance();
-$tpl = templateInit();
+$tpl = eZTemplate::factory();
 
 if ( $http->hasPostVariable( "AddRuleButton" ) )
 {
@@ -208,7 +210,7 @@ $tpl->setVariable( 'rules', $vatRules );
 $tpl->setVariable( 'errors', $errors );
 
 $path = array();
-$path[] = array( 'text' => ezi18n( 'kernel/shop/vatrules', 'VAT rules' ),
+$path[] = array( 'text' => ezpI18n::tr( 'kernel/shop/vatrules', 'VAT rules' ),
                  'url' => false );
 
 $Result = array();

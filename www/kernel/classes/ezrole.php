@@ -4,10 +4,10 @@
 //
 // Created on: <14-Aug-2002 14:08:46 sp>
 //
+// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.2.0
-// BUILD VERSION: 24182
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 4.3.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -24,6 +24,8 @@
 //   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 //   MA 02110-1301, USA.
 //
+//
+// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
 /*! \file
@@ -143,7 +145,7 @@ class eZRole extends eZPersistentObject
 
         $newRole = eZRole::createNew();
         $this->copyPolicies( $newRole->attribute( 'id' ) );
-        $newRole->setAttribute( 'name', ezi18n( 'kernel/role/edit', 'Copy of %rolename', null,
+        $newRole->setAttribute( 'name', ezpI18n::tr( 'kernel/role/edit', 'Copy of %rolename', null,
                                                 array( '%rolename' => $this->attribute( 'name' ) ) ) );
         $newRole->store();
         $db->commit();
@@ -177,7 +179,7 @@ class eZRole extends eZPersistentObject
     */
     static function createNew()
     {
-        $role = new eZRole( array( 'name' => ezi18n( 'kernel/role/edit', 'New role' ),
+        $role = new eZRole( array( 'name' => ezpI18n::tr( 'kernel/role/edit', 'New role' ),
                                    'is_new' => 1 ) );
         $role->store();
         return $role;

@@ -4,10 +4,10 @@
 //
 // Created on: <25-Nov-2002 15:40:10 wy>
 //
+// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.2.0
-// BUILD VERSION: 24182
-// COPYRIGHT NOTICE: Copyright (C) 1999-2009 eZ Systems AS
+// SOFTWARE RELEASE: 4.3.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
 // SOFTWARE LICENSE: GNU General Public License v2.0
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
@@ -25,8 +25,10 @@
 //   MA 02110-1301, USA.
 //
 //
+// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
+//
 
-require_once( "kernel/common/template.php" );
+
 $module = $Params['Module'];
 $discountGroupID = null;
 if ( isset( $Params["DiscountGroupID"] ) )
@@ -137,7 +139,7 @@ foreach ( $ruleList as $rule )
         $ruleValues = eZDiscountSubRuleValue::fetchBySubRuleID( $discountRuleID );
         if ( $ruleValues != null )
         {
-            $limitation = ezi18n( 'kernel/shop', 'Classes' ).' ';
+            $limitation = ezpI18n::tr( 'kernel/shop', 'Classes' ).' ';
             $firstLoop = true;
             foreach ( $ruleValues as $ruleValue )
             {
@@ -160,12 +162,12 @@ foreach ( $ruleList as $rule )
         }
         else
         {
-            $limitation = ezi18n( 'kernel/shop', 'Any class' );
+            $limitation = ezpI18n::tr( 'kernel/shop', 'Any class' );
         }
         $sectionRuleValues = eZDiscountSubRuleValue::fetchBySubRuleID( $discountRuleID, 1 );
         if ( $sectionRuleValues != null )
         {
-            $limitation .= ' '.ezi18n( 'kernel/shop', 'in sections' ).' ';
+            $limitation .= ' '.ezpI18n::tr( 'kernel/shop', 'in sections' ).' ';
             $firstLoop = true;
             foreach ( $sectionRuleValues as $sectionRuleValue )
             {
@@ -188,13 +190,13 @@ foreach ( $ruleList as $rule )
         }
         else
         {
-            $limitation .= ' '.ezi18n( 'kernel/shop', 'in any section' );
+            $limitation .= ' '.ezpI18n::tr( 'kernel/shop', 'in any section' );
         }
         $productRuleValues = eZDiscountSubRuleValue::fetchBySubRuleID( $discountRuleID, 2 );
 
         if ( $productRuleValues != null )
         {
-            $limitation = ezi18n( 'kernel/shop', 'Products' ).' ';
+            $limitation = ezpI18n::tr( 'kernel/shop', 'Products' ).' ';
             $firstLoop = true;
             foreach ( $productRuleValues as $productRuleValue )
             {
@@ -218,7 +220,7 @@ foreach ( $ruleList as $rule )
     }
     else
     {
-        $limitation = ezi18n( 'kernel/shop', 'Any product' );
+        $limitation = ezpI18n::tr( 'kernel/shop', 'Any product' );
     }
 
     $item = array( "name" => $name,
@@ -227,7 +229,7 @@ foreach ( $ruleList as $rule )
                    "limitation" => $limitation );
     $ruleArray[] = $item;
 }
-$tpl = templateInit();
+$tpl = eZTemplate::factory();
 $tpl->setVariable( "module", $module );
 $tpl->setVariable( "customers", $customers );
 $tpl->setVariable( "discountgroup", $discountGroup );
@@ -236,5 +238,5 @@ $tpl->setVariable( "rule_list", $ruleArray );
 $Result = array();
 $Result['content'] = $tpl->fetch( "design:shop/discountgroupmembershipview.tpl" );
 $Result['path'] = array( array( 'url' => '/shop/discountgroup/',
-                                'text' => ezi18n( 'kernel/shop', 'Group view of discount rule' ) ) );
+                                'text' => ezpI18n::tr( 'kernel/shop', 'Group view of discount rule' ) ) );
 ?>
