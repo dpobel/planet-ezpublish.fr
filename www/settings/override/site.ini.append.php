@@ -20,6 +20,9 @@ ActiveExtensions[]=ezoe
 ActiveExtensions[]=ezjscore
 ActiveExtensions[]=autostatus
 
+[URLTranslator]
+TranslatableSystemUrls=disabled
+
 [Session]
 SessionNameHandler=custom
 
