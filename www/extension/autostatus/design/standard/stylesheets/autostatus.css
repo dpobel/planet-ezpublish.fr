@@ -1,0 +1,27 @@
+.waiting
+{
+background:url(../images/loader.gif) no-repeat center 0;
+}
+td.waiting
+{
+height:40px;
+background:url(../images/loader.gif) no-repeat center center;
+}
+.auth
+{
+min-height:20px;
+}
+.status
+{
+width:0.5em;
+}
+table.list tr.exception,
+table.list tr.error 
+{
+background:#fff1f1;
+}
+table.list td.retry-button
+{
+vertical-align:middle;
+text-align:center;
+}
