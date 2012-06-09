@@ -63,7 +63,7 @@
 
 <tr>
     <th width="61%">{'Categories'|i18n( 'design/admin/setup/cache' )}</th>
-    <th width="39%">{''|i18n( 'design/admin/setup/cache' )}</th>
+    <th width="39%"></th>
 </tr>
 
 {* Template cache. *}
@@ -115,7 +115,7 @@
 
 <table class="list" cellspacing="0">
 <tr>
-    <th class="tight"><img src={'toggle-button-16x16.gif'|ezimage} alt="{'Invert selection.'|i18n( 'design/admin/setup/cache' )}" onclick="ezjs_toggleCheckboxes( document.clearcacheform, 'CacheList[]' ); return false;" title="{'Invert selection.'|i18n( 'design/admin/setup/cache' )}" /></th>
+    <th class="tight"><img src={'toggle-button-16x16.gif'|ezimage} width="16" height="16" alt="{'Invert selection.'|i18n( 'design/admin/setup/cache' )}" onclick="ezjs_toggleCheckboxes( document.clearcacheform, 'CacheList[]' ); return false;" title="{'Invert selection.'|i18n( 'design/admin/setup/cache' )}" /></th>
     <th>{'Name'|i18n( 'design/admin/setup/cache' )}</th>
     <th>{'Path'|i18n( 'design/admin/setup/cache' )}</th>
 </tr>
@@ -169,7 +169,7 @@
 <table class="list cache" cellspacing="0">
 <tr>
     <th width="61%">{'Categories'|i18n( 'design/admin/setup/cache' )}</th>
-    <th width="39%">{''|i18n( 'design/admin/setup/cache' )}</th>
+    <th width="39%"></th>
 </tr>
 
 {* Static content cache. *}

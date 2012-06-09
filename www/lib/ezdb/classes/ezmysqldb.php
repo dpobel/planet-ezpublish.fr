@@ -1,40 +1,19 @@
 <?php
-//
-// $Id$
-//
-// Definition of eZMySQLDB class
-//
-// Created on: <12-Feb-2002 15:54:17 bf>
-//
-// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-// SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.4.0
-// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
-// SOFTWARE LICENSE: GNU General Public License v2.0
-// NOTICE: >
-//   This program is free software; you can redistribute it and/or
-//   modify it under the terms of version 2.0  of the GNU General
-//   Public License as published by the Free Software Foundation.
-// 
-//   This program is distributed in the hope that it will be useful,
-//    but WITHOUT ANY WARRANTY; without even the implied warranty of
-//   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//   GNU General Public License for more details.
-// 
-//   You should have received a copy of version 2.0 of the GNU General
-//   Public License along with this program; if not, write to the Free
-//   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
-//   MA 02110-1301, USA.
-// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-//
+/**
+ * File containing the eZMySQLDB class.
+ *
+ * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
+ * @license http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License v2
+ * @version  2012.5
+ * @package lib
+ */
 
-/*!
-  \class eZMySQLDB ezmysqldb.php
-  \ingroup eZDB
-  \brief The eZMySQLDB class provides MySQL implementation of the database interface.
-
-  eZMySQLDB is the MySQL implementation of eZDB.
-  \sa eZDB
+/**
+ * The eZMySQLDB class provides MySQL implementation of the database interface.
+ *
+ * eZMySQLDB is the MySQL implementation of eZDB.
+ * @see eZDB
+ * @deprecated Since 4.5 in favour of {@link eZMySQLiDB}
 */
 class eZMySQLDB extends eZDBInterface
 {
@@ -60,6 +39,8 @@ class eZMySQLDB extends eZDBInterface
             eZDebug::writeWarning( 'MySQL extension was not found, the DB handler will not be initialized.', 'eZMySQLDB' );
             return;
         }
+
+        eZDebug::createAccumulatorGroup( 'mysql_total', 'Mysql Total' );
 
         /// Connect to master server
         if ( !$this->DBWriteConnection )
@@ -92,8 +73,6 @@ class eZMySQLDB extends eZDBInterface
 
         // Initialize TempTableList
         $this->TempTableList = array();
-
-        eZDebug::createAccumulatorGroup( 'mysql_total', 'Mysql Total' );
     }
 
     /*!
@@ -115,29 +94,40 @@ class eZMySQLDB extends eZDBInterface
             ini_set( "mysql.default_socket", $socketPath );
         }
 
-        if ( $this->UsePersistentConnection == true )
-        {
-            $connection = mysql_pconnect( $server, $user, $password );
-        }
-        else
-        {
-            $connection = mysql_connect( $server, $user, $password, true );
-        }
-        $dbErrorText = mysql_error();
+        $oldHandling = eZDebug::setHandleType( eZDebug::HANDLE_EXCEPTION );
+        try {
+            if ( $this->UsePersistentConnection == true )
+            {
+                $connection = mysql_pconnect( $server, $user, $password );
+            }
+            else
+            {
+                $connection = mysql_connect( $server, $user, $password, true );
+            }
+        } catch( ErrorException $e ) {}
+        eZDebug::setHandleType( $oldHandling );
+
+        $this->setError();
         $maxAttempts = $this->connectRetryCount();
         $waitTime = $this->connectRetryWaitTime();
         $numAttempts = 1;
         while ( !$connection && $numAttempts <= $maxAttempts )
         {
             sleep( $waitTime );
-            if ( $this->UsePersistentConnection == true )
-            {
-                $connection = mysql_pconnect( $this->Server, $this->User, $this->Password );
-            }
-            else
-            {
-                $connection = mysql_connect( $this->Server, $this->User, $this->Password );
-            }
+            $oldHandling = eZDebug::setHandleType( eZDebug::HANDLE_EXCEPTION );
+            eZDebug::accumulatorStart( 'mysql_connection', 'mysql_total', 'Database connection' );
+            try {
+                if ( $this->UsePersistentConnection == true )
+                {
+                    $connection = mysql_pconnect( $this->Server, $this->User, $this->Password );
+                }
+                else
+                {
+                    $connection = mysql_connect( $this->Server, $this->User, $this->Password );
+                }
+            } catch( ErrorException $e ) {}
+            eZDebug::accumulatorStop( 'mysql_connection' );
+            eZDebug::setHandleType( $oldHandling );
             $numAttempts++;
         }
         $this->setError();
@@ -146,9 +136,9 @@ class eZMySQLDB extends eZDBInterface
 
         if ( !$connection )
         {
-            eZDebug::writeError( "Connection error: Couldn't connect to database. Please try again later or inform the system administrator.\n$dbErrorText", __CLASS__ );
+            eZDebug::writeError( "Connection error: Couldn't connect to database server. Please try again later or inform the system administrator.\n{$this->ErrorMessage}", __CLASS__ );
             $this->IsConnected = false;
-            throw new eZDBNoConnectionException( $server );
+            throw new eZDBNoConnectionException( $server, $this->ErrorMessage, $this->ErrorNumber );
         }
 
         if ( $this->IsConnected && $db != null )
@@ -156,8 +146,8 @@ class eZMySQLDB extends eZDBInterface
             $ret = mysql_select_db( $db, $connection );
             if ( !$ret )
             {
-                //$this->setError();
-                eZDebug::writeError( "Connection error: " . mysql_errno( $connection ) . ": " . mysql_error( $connection ), "eZMySQLDB" );
+                $this->setError( $connection );
+                eZDebug::writeError( "Connection error: Couldn't select the database. Please try again later or inform the system administrator.\n{$this->ErrorMessage}", __CLASS__ );
                 $this->IsConnected = false;
             }
         }
@@ -216,6 +206,7 @@ class eZMySQLDB extends eZDBInterface
 
         if ( is_array( $charset ) )
         {
+            $realCharset = array();
             foreach ( $charset as $charsetItem )
                 $realCharset[] = eZCharsetInfo::realCharsetCode( $charsetItem );
         }
@@ -348,8 +339,8 @@ class eZMySQLDB extends eZDBInterface
                         }
                     }
 
-                    $analysisText = '';
                     $delimiterLine = array();
+                    $colLine = array();
                     // Generate the column line and the vertical delimiter
                     // The look of the table is taken from the MySQL CLI client
                     // It looks like this:
@@ -378,8 +369,8 @@ class eZMySQLDB extends eZDBInterface
                             $size = $col['size'];
                             $data = isset( $row[$name] ) ? $row[$name] : '';
                             // Align numerical values to the right (ie. pad left)
-                            $rowLine[] = ' ' . str_pad( $row[$name], $size, ' ',
-                                                        is_numeric( $row[$name] ) ? STR_PAD_LEFT : STR_PAD_RIGHT ) . ' ';
+                            $rowLine[] = ' ' . str_pad( $data, $size, ' ',
+                                                        is_numeric( $data ) ? STR_PAD_LEFT : STR_PAD_RIGHT ) . ' ';
                         }
                         $analysisText .= '|' . join( '|', $rowLine ) . "|\n";
                         $analysisText .= $delimiterLine;
@@ -430,7 +421,14 @@ class eZMySQLDB extends eZDBInterface
 
                 // This is to behave the same way as other RDBMS PHP API as PostgreSQL
                 // functions which throws an error with a failing request.
-                trigger_error( "mysql_query(): $errorMessage", E_USER_ERROR );
+                if ( $this->errorHandling == eZDB::ERROR_HANDLING_STANDARD )
+                {
+                    trigger_error( "mysql_query(): $errorMessage", E_USER_ERROR );
+                }
+                else
+                {
+                    throw new eZDBException( $this->ErrorMessage, $this->ErrorNumber );
+                }
 
                 return false;
             }
@@ -826,7 +824,7 @@ class eZMySQLDB extends eZDBInterface
     */
     function rollbackQuery()
     {
-        return $this->query( "ROLLBACK" );
+        return mysql_query( "ROLLBACK", $this->DBWriteConnection );
     }
 
     function lastSerialID( $table = false, $column = false )
@@ -880,12 +878,22 @@ class eZMySQLDB extends eZDBInterface
         }
     }
 
-    function setError()
+    /**
+     * Sets the internal error messages & number
+     * @param int $connection database connection handle, overrides the current one if given
+     */
+    function setError( $connection = false)
     {
         if ( $this->IsConnected )
         {
-            $this->ErrorMessage = mysql_error( $this->DBConnection );
-            $this->ErrorNumber = mysql_errno( $this->DBConnection );
+            if ( $connection === false )
+                $connection = $this->DBConnection;
+
+            if ( is_resource( $connection ) )
+            {
+                $this->ErrorMessage = mysql_error( $connection );
+                $this->ErrorNumber = mysql_errno( $connection );
+            }
         }
         else
         {
@@ -910,9 +918,6 @@ class eZMySQLDB extends eZDBInterface
         {
             return false;
         }
-
-        $dbServerVersion = $this->databaseServerVersion();
-        $dbServerMainVersion = $dbServerVersion['values'][0];
 
         while ( $i < $numRows )
         {

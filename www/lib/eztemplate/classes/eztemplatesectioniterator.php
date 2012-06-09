@@ -1,33 +1,12 @@
 <?php
-//
-// Definition of eZTemplateSectionIterator class
-//
-// Created on: <26-Feb-2004 11:33:05 >
-//
-// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-// SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.4.0
-// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
-// SOFTWARE LICENSE: GNU General Public License v2.0
-// NOTICE: >
-//   This program is free software; you can redistribute it and/or
-//   modify it under the terms of version 2.0  of the GNU General
-//   Public License as published by the Free Software Foundation.
-// 
-//   This program is distributed in the hope that it will be useful,
-//    but WITHOUT ANY WARRANTY; without even the implied warranty of
-//   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//   GNU General Public License for more details.
-// 
-//   You should have received a copy of version 2.0 of the GNU General
-//   Public License along with this program; if not, write to the Free
-//   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
-//   MA 02110-1301, USA.
-// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-//
-
-/*! \file
-*/
+/**
+ * File containing the eZTemplateSectionIterator class.
+ *
+ * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
+ * @license http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License v2
+ * @version  2012.5
+ * @package lib
+ */
 
 /*!
   \class eZTemplateSectionIterator eztemplatesectioniterator.php
@@ -58,7 +37,6 @@ class eZTemplateSectionIterator
                                            'number' => false,
                                            'sequence' => false,
                                            'last' => false );
-        $this->InternalAttributeNames = array_keys( $this->InternalAttributes );
     }
 
     /*!
@@ -97,15 +75,22 @@ class eZTemplateSectionIterator
     */
     function hasAttribute( $name )
     {
-        if ( in_array( $name, $this->InternalAttributeNames ) )
-            return true;
+        switch ( $name )
+        {
+            case "item":
+            case "key":
+            case "index":
+            case "number":
+            case "sequence":
+            case "last":
+                return true;
+        }
         $item = $this->InternalAttributes['item'];
         if ( is_array( $item ) )
         {
-            return in_array( $name, array_keys( $item ) );
+            return array_key_exists( $name, $item );
         }
-        else if ( is_object( $item ) and
-                  method_exists( $item, 'hasAttribute' ) )
+        if ( is_object( $item ) && method_exists( $item, 'hasAttribute' ) )
         {
             return $item->hasAttribute( $name );
         }
@@ -118,21 +103,26 @@ class eZTemplateSectionIterator
     */
     function attribute( $name )
     {
-        if ( in_array( $name, $this->InternalAttributeNames ) )
+        switch ( $name )
         {
-            return $this->InternalAttributes[$name];
+            case "item":
+            case "key":
+            case "index":
+            case "number":
+            case "sequence":
+            case "last":
+                return $this->InternalAttributes[$name];
         }
         $item = $this->InternalAttributes['item'];
         if ( is_array( $item ) )
         {
             return $item[$name];
         }
-        else if ( is_object( $item ) and
-                  method_exists( $item, 'attribute' ) )
+        if ( is_object( $item ) && method_exists( $item, 'attribute' ) )
         {
             return $item->attribute( $name );
         }
-        eZDebug::writeError( "Attribute '$name' does not exist", 'eZTemplateSectionIterator::attribute' );
+        eZDebug::writeError( "Attribute '$name' does not exist", __METHOD__ );
         return null;
     }
 

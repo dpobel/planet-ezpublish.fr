@@ -1,4 +1,8 @@
 
+{foreach ezini( 'ContentEditSettings', 'LeftMenuParts', 'admininterface.ini' ) as $tpl}
+    {include uri=concat( 'design:', $tpl ) object=$object}
+{/foreach}
+
 {include uri="design:content/parts/object_information.tpl" object=$object manage_version_button=true()}
 
 <div class="drafts">
@@ -32,7 +36,7 @@
 </p>
 
 <div class="block">
-<input class="button" type="submit" name="PreviewButton" value="{'Preview'|i18n( 'design/admin/content/edit' )}" title="{'View the draft that is being edited.'|i18n( 'design/admin/content/edit' )}" />
+<input class="button" type="submit" name="PreviewButton" value="{'Preview'|i18n( 'design/admin/content/edit' )}" title="{'Preview the draft that is being edited.'|i18n( 'design/admin/content/edit' )}" />
 </div>
 
 {* DESIGN: Content END *}</div>
@@ -58,7 +62,7 @@
 	{if not( eq($language.locale, $object.current_language_object.locale) )} {* Only providing other languages than current *}
 	<label>
 	<input type="radio" name="FromLanguage" value="{$language.locale}"{if $language.locale|eq($from_language)} checked="checked"{/if} />
-	<img src="{$language.locale|flag_icon}" alt="{$language.locale}" style="vertical-align: middle;" />
+	<img src="{$language.locale|flag_icon}" width="18" height="12" alt="{$language.locale}" style="vertical-align: middle;" />
 	{$language.locale}
 	</label>
 	{/if}

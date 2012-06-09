@@ -2,9 +2,9 @@
 /**
  * File containing DB session handler
  *
- * @copyright Copyright (C) 1999-2010 eZ Systems AS. All rights reserved.
- * @license http://ez.no/licenses/gnu_gpl GNU General Public License v2.0
- * @version 4.4.0
+ * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
+ * @license http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License v2
+ * @version  2012.5
  * @package lib
  */
 
@@ -47,7 +47,7 @@ class ezpSessionHandlerDB extends ezpSessionHandler
     /**
      * Session read handler
      *
-     * @param $sessionId string
+     * @param string $sessionId
      * @return string|false Binary session data
      */
     public function read( $sessionId )
@@ -84,8 +84,8 @@ class ezpSessionHandlerDB extends ezpSessionHandler
     /**
      * Session write handler
      *
-     * @param $sessionId string
-     * @param $sessionData string Binary session data
+     * @param string $sessionId
+     * @param string $sessionData Binary session data
      * @return bool
      */
     public function write( $sessionId, $sessionData )
@@ -129,11 +129,13 @@ class ezpSessionHandlerDB extends ezpSessionHandler
     /**
      * Session destroy handler
      *
-     * @param $sessionId string
+     * @param string $sessionId
      * @return bool
      */
     public function destroy( $sessionId )
     {
+        ezpEvent::getInstance()->notify( 'session/destroy', array( $sessionId ) );
+
         $db = eZDB::instance();
         $escKey = $db->escapeString( $sessionId );
 
@@ -147,13 +149,16 @@ class ezpSessionHandlerDB extends ezpSessionHandler
     /**
      * Regenerate session id
      *
-     * @param $updateBackendData bool (true if we want to keep session data with the new session id)
+     * @param bool $updateBackendData (true if we want to keep session data with the new session id)
      * @return bool
      */
     public function regenerate( $updateBackendData = true )
     {
         $oldSessionId = session_id();
         session_regenerate_id();
+        $newSessionId = session_id();
+
+        ezpEvent::getInstance()->notify( 'session/regenerate', array( $oldSessionId, $newSessionId ) );
 
         if ( $updateBackendData )
         {
@@ -164,7 +169,7 @@ class ezpSessionHandlerDB extends ezpSessionHandler
             }
 
             $escOldKey = $db->escapeString( $oldSessionId );
-            $escNewKey = $db->escapeString( session_id() );
+            $escNewKey = $db->escapeString( $newSessionId );
             $escUserID = $db->escapeString( eZSession::userID() );
             eZSession::triggerCallback( 'regenerate_pre', array( $db, $escNewKey, $escOldKey, $escUserID ) );
 
@@ -179,11 +184,12 @@ class ezpSessionHandlerDB extends ezpSessionHandler
    /**
      * Session gc (garbageCollector) handler
      *
-     * @param $maxLifeTime int
+     * @param int $maxLifeTime
      * @return bool
      */
     public function gc( $maxLifeTime )
     {
+        ezpEvent::getInstance()->notify( 'session/gc', array( $maxLifeTime ) );
         $db = eZDB::instance();
         $gcCompleted = true;
         eZSession::triggerCallback( 'gc_pre', array( $db, $maxLifeTime ) );
@@ -236,6 +242,7 @@ class ezpSessionHandlerDB extends ezpSessionHandler
      */
     public function cleanup()
     {
+        ezpEvent::getInstance()->notify( 'session/cleanup', array() );
         $db = eZDB::instance();
 
         eZSession::triggerCallback( 'cleanup_pre', array( $db ) );

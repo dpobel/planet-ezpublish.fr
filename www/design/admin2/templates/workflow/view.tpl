@@ -79,7 +79,7 @@
 
 <table class="list" cellspacing="0">
 <tr>
-    <th class="tight"><img src={'toggle-button-16x16.gif'|ezimage} alt="{'Invert selection.'|i18n( 'design/admin/workflow/view' )}" title="{'Invert selection.'|i18n( 'design/admin/workflow/view' )}" onclick="ezjs_toggleCheckboxes( document.workflowgroups, 'group_id_checked[]' ); return false;" /></th>
+    <th class="tight"><img src={'toggle-button-16x16.gif'|ezimage} width="16" height="16" alt="{'Invert selection.'|i18n( 'design/admin/workflow/view' )}" title="{'Invert selection.'|i18n( 'design/admin/workflow/view' )}" onclick="ezjs_toggleCheckboxes( document.workflowgroups, 'group_id_checked[]' ); return false;" /></th>
     <th class="wide">{'Group'|i18n( 'design/admin/workflow/view' )}</th>
 </tr>
 {section var=Groups loop=$workflow.ingroup_list sequence=array( bglight, bgdark )}
@@ -144,8 +144,17 @@
 <tr class="{$Events.sequence}">
     <td>{$Events.item.placement}</td>
     <td>{$Events.item.description}</td>
-    <td>{$Events.item.workflow_type.group_name|wash}/{$Events.item.workflow_type.name|wash}</td>
-    <td>{event_view_gui event=$Events.item}</td>
+    <td>{if $Events.item.workflow_type|is_null|not}{$Events.item.workflow_type.group_name|wash}/{$Events.item.workflow_type.name|wash}{/if}</td>
+    <td>
+    {if $Events.item.workflow_type|is_null}
+        <span class="error"><em>
+        {'Error : Could not load workflow event "%eventtype" (event type not available)'|i18n( 'design/admin/workflow/edit',, hash( '%eventtype', $Events.item.workflow_type_string ) )}<br />
+        {'Hint : This can happen when a workflow extension has been disabled'|i18n( 'design/admin/workflow/edit' )}
+        </em></span>
+    {else}
+        {event_view_gui event=$Events.item}
+    {/if}
+    </td>
 </tr>
 {/section}
 </table>

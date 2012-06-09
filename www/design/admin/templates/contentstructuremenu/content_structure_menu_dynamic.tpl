@@ -9,9 +9,9 @@
      $filter_type=cond($root_node.path_array|contains($user_root_node_id), 'include', 'exclude')
      $filter_groups=cond($root_node.path_array|contains($user_root_node_id), array( $user_class_group_id ), array($user_class_group_id, $setup_class_group_id))
     }
-<script language="JavaScript" type="text/javascript" src={"javascript/lib/ezjslibcookiesupport.js"|ezdesign}></script>
+<script type="text/javascript" src={"javascript/lib/ezjslibcookiesupport.js"|ezdesign}></script>
 {if ezini('TreeMenu','PreloadClassIcons','contentstructuremenu.ini')|eq('enabled')}
-    <script language="JavaScript" type="text/javascript" src={"javascript/lib/ezjslibimagepreloader.js"|ezdesign}></script>
+    <script type="text/javascript" src={"javascript/lib/ezjslibimagepreloader.js"|ezdesign}></script>
 {/if}
 
 {def $click_action=ezini('TreeMenu','ItemClickAction','contentstructuremenu.ini')}
@@ -27,8 +27,6 @@
 <script type="text/javascript" src={"javascript/yui/2.7.0/build/json/json-min.js"|ezdesign}></script>
 {literal}
 <script type="text/javascript">
-<!--
-
 if( !Array.prototype.inArray )
 {
     Array.prototype.inArray = function( value )
@@ -511,13 +509,10 @@ function ContentStructureMenu()
         }
     }
 }
-
-// -->
 </script>
 {/literal}
 
 <script type="text/javascript">
-<!--
     var path = [{foreach $module_result.path as $element}{$element.node_id}{delimiter}, {/delimiter}{/foreach}];
     var autoOpenPath = path;
 
@@ -542,6 +537,4 @@ function ContentStructureMenu()
 
     treeMenu.load( false, {$root_node_id}, {$root_node.modified_subnode} );
 {/cache-block}
-
-// -->
 </script>

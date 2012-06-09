@@ -1,30 +1,12 @@
 <?php
-//
-// Definition of eZImageFile class
-//
-// Created on: <30-Apr-2002 16:47:08 bf>
-//
-// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-// SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.4.0
-// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
-// SOFTWARE LICENSE: GNU General Public License v2.0
-// NOTICE: >
-//   This program is free software; you can redistribute it and/or
-//   modify it under the terms of version 2.0  of the GNU General
-//   Public License as published by the Free Software Foundation.
-// 
-//   This program is distributed in the hope that it will be useful,
-//    but WITHOUT ANY WARRANTY; without even the implied warranty of
-//   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//   GNU General Public License for more details.
-// 
-//   You should have received a copy of version 2.0 of the GNU General
-//   Public License along with this program; if not, write to the Free
-//   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
-//   MA 02110-1301, USA.
-// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-//
+/**
+ * File containing the eZImageFile class.
+ *
+ * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
+ * @license http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License v2
+ * @version  2012.5
+ * @package kernel
+ */
 
 /*!
   \class eZImageFile ezimagefile.php
@@ -102,22 +84,29 @@ class eZImageFile extends eZPersistentObject
      *               image files where the url is referenced
      *
      * @todo Rewrite ! A where data_text LIKE '%xxx%' is a resource hog !
-     **/
+     */
     static function fetchImageAttributesByFilepath( $filepath, $contentObjectAttributeID )
     {
         $db = eZDB::instance();
         $contentObjectAttributeID = (int) $contentObjectAttributeID;
-        $query = "SELECT contentobject_id, contentclassattribute_id
-                  FROM   ezcontentobject_attribute
-                  WHERE  id = $contentObjectAttributeID
-                  LIMIT 1";
-        $rows = $db->arrayQuery( $query );
+
+        $cond = array( 'id' => $contentObjectAttributeID );
+        $fields = array( 'contentobject_id', 'contentclassattribute_id' );
+        $limit = array( 'offset' => 0, 'length' => 1 );
+        $rows = eZPersistentObject::fetchObjectList( eZContentObjectAttribute::definition(),
+                                                     $fields,
+                                                     $cond,
+                                                     null,
+                                                     $limit,
+                                                     false );
         if ( count( $rows ) != 1 )
             return array();
 
         $contentObjectID = (int)( $rows[0]['contentobject_id'] );
         $contentClassAttributeID = (int)( $rows[0]['contentclassattribute_id'] );
         $filepath = $db->escapeString( $filepath );
+        // Escape _ in like to avoid it to act as a wildcard !
+        $filepath = addcslashes( $filepath, "_" );
         $query = "SELECT id, version
                   FROM   ezcontentobject_attribute
                   WHERE  contentobject_id = $contentObjectID and
@@ -163,12 +152,12 @@ class eZImageFile extends eZPersistentObject
         if ( !$ignoreUnique )
         {
             // Fetch ezimagefile objects having the $filepath
-            $imageFiles = eZImageFile::fetchByFilePath( false, $filepath, false );
+            $imageFiles = eZImageFile::fetchByFilepath( false, $filepath, false );
             // Checking If the filePath already exists in ezimagefile table
             if ( isset( $imageFiles[ 'contentobject_attribute_id' ] ) )
                 return false;
         }
-        $fileObject = eZImageFile::fetchByFilePath( $contentObjectAttributeID, $filepath );
+        $fileObject = eZImageFile::fetchByFilepath( $contentObjectAttributeID, $filepath );
         if ( $fileObject )
             return false;
         $fileObject = eZImageFile::create( $contentObjectAttributeID, $filepath );
@@ -180,7 +169,7 @@ class eZImageFile extends eZPersistentObject
     {
         if ( empty( $filepath ) )
             return false;
-        $fileObject = eZImageFile::fetchByFilePath( $contentObjectAttributeID, $filepath );
+        $fileObject = eZImageFile::fetchByFilepath( $contentObjectAttributeID, $filepath );
         if ( !$fileObject )
             return false;
         $fileObject->remove();

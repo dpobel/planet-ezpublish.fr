@@ -1,30 +1,12 @@
 <?php
-//
-// Definition of eZLocale class
-//
-// Created on: <01-Mar-2002 13:48:32 amos>
-//
-// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-// SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.4.0
-// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
-// SOFTWARE LICENSE: GNU General Public License v2.0
-// NOTICE: >
-//   This program is free software; you can redistribute it and/or
-//   modify it under the terms of version 2.0  of the GNU General
-//   Public License as published by the Free Software Foundation.
-// 
-//   This program is distributed in the hope that it will be useful,
-//    but WITHOUT ANY WARRANTY; without even the implied warranty of
-//   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//   GNU General Public License for more details.
-// 
-//   You should have received a copy of version 2.0 of the GNU General
-//   Public License along with this program; if not, write to the Free
-//   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
-//   MA 02110-1301, USA.
-// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-//
+/**
+ * File containing the eZLocale class.
+ *
+ * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
+ * @license http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License v2
+ * @version  2012.5
+ * @package lib
+ */
 
 /*! \defgroup eZLocale Locale system */
 
@@ -44,7 +26,6 @@
   Example:
 
 \code
-//include_once( 'lib/ezlocale/classes/ezlocale.php' );
 
 // Fetch the default values supplied by site.ini
 $locale = eZLocale::instance();
@@ -88,7 +69,6 @@ http://www.php.net/manual/en/function.date.php
 The following characters are not recognized in the format string:
 
 - B - Swatch Internet time
-- r - RFC 822 formatted date; e.g. "Thu, 21 Dec 2000 16:01:07 +0200" (added in PHP 4.0.4)
 - S - English ordinal suffix for the day of the month, 2 characters; i.e. "st", "nd", "rd" or "th"
 
 The following characters are recognized in the format string:
@@ -121,6 +101,8 @@ The following characters are recognized in the format string:
 - y - year, 2 digits; e.g. "99"
 - z - day of the year; i.e. "0" to "365"
 - Z - timezone offset in seconds (i.e. "-43200" to "43200"). The offset for timezones west of UTC is always negative, and for those east of UTC is always positive.
+- c - ISO 8601 date; i.e. 2004-02-12T15:19:21+00:00
+- r - RFC 2822 formated date; i.e. Thu, 21 Dec 2000 16:01:07 +0200
 
 \sa eZLanguage
 */
@@ -137,9 +119,9 @@ class eZLocale
     {
         $this->IsValid = false;
         $this->TimePHPArray = array( 'g', 'G', 'h', 'H', 'i', 's', 'U', 'I', 'L', 't' );
-        $this->DatePHPArray = array( 'd', 'j', 'm', 'n', 'O', 'T', 'U', 'w', 'W', 'Y', 'y', 'z', 'Z', 'I', 'L', 't' );
+        $this->DatePHPArray = array( 'd', 'j', 'm', 'n', 'O', 'S', 'T', 'U', 'w', 'W', 'Y', 'y', 'z', 'Z', 'I', 'L', 't' );
         $this->DateTimePHPArray = array( 'd', 'j', 'm', 'n', 'O', 'T', 'U', 'w', 'W', 'Y', 'y', 'z', 'Z',
-                                         'g', 'G', 'h', 'H', 'i', 's', 'U', 'I', 'L', 't', 'a' );
+                                         'g', 'G', 'h', 'H', 'i', 's', 'S', 'U', 'I', 'L', 't', 'a', 'c', 'r' );
         $this->TimeArray = preg_replace( '/.+/', '%$0', $this->TimePHPArray );
         $this->DateArray = preg_replace( '/.+/', '%$0', $this->DatePHPArray );
         $this->DateTimeArray = preg_replace( '/.+/', '%$0', $this->DateTimePHPArray );
@@ -563,12 +545,12 @@ class eZLocale
             }
             else
             {
-                eZDebug::writeError( "Unknown method '$method' specified for attribute '$attribute'", 'eZLocale::attribute' );
+                eZDebug::writeError( "Unknown method '$method' specified for attribute '$attribute'", __METHOD__ );
                 return null;
             }
         }
 
-        eZDebug::writeError( "Attribute '$attribute' does not exist", 'eZLocale::attribute' );
+        eZDebug::writeError( "Attribute '$attribute' does not exist", __METHOD__ );
         return null;
     }
 
@@ -1212,7 +1194,7 @@ class eZLocale
     */
     function formatCleanCurrency( $number )
     {
-        $text = $this->formatCurrencyWithSymbol( $number, '', true );
+        $text = $this->formatCurrencyWithSymbol( $number, '' );
         return trim( $text );
     }
 
@@ -1469,7 +1451,7 @@ class eZLocale
      Returns the eZINI object for the locale ini file.
      \warning Do not modify this object.
     */
-    function &localeFile( $withVariation = false )
+    function localeFile( $withVariation = false )
     {
         $type = $withVariation ? 'variation' : 'default';
         if ( !( $this->LocaleINI[$type] instanceof eZINI ) )
@@ -1488,7 +1470,7 @@ class eZLocale
             $localeFile = $locale . '.ini';
             if ( eZLocale::isDebugEnabled() )
             {
-                eZDebug::writeNotice( "Requesting $localeFile", 'eZLocale::localeFile' );
+                eZDebug::writeNotice( "Requesting $localeFile", __METHOD__ );
             }
             if ( eZINI::exists( $localeFile, 'share/locale' ) )
                 $this->LocaleINI[$type] = eZINI::instance( $localeFile, 'share/locale' );
@@ -1500,7 +1482,7 @@ class eZLocale
      Returns the eZINI object for the country ini file.
      \warning Do not modify this object.
     */
-    function &countryFile( $withVariation = false )
+    function countryFile( $withVariation = false )
     {
         $type = $withVariation ? 'variation' : 'default';
         if ( !( $this->CountryINI[$type] instanceof eZINI ) )
@@ -1516,7 +1498,7 @@ class eZLocale
             $countryFile = 'country/' . $locale . '.ini';
             if ( eZLocale::isDebugEnabled() )
             {
-                eZDebug::writeNotice( "Requesting $countryFile", 'eZLocale::countryFile' );
+                eZDebug::writeNotice( "Requesting $countryFile", __METHOD__ );
             }
             if ( eZINI::exists( $countryFile, 'share/locale' ) )
                 $this->CountryINI[$type] = eZINI::instance( $countryFile, 'share/locale' );
@@ -1528,7 +1510,7 @@ class eZLocale
      Returns the eZINI object for the language ini file.
      \warning Do not modify this object.
     */
-    function &languageFile( $withVariation = false )
+    function languageFile( $withVariation = false )
     {
         $type = $withVariation ? 'variation' : 'default';
         if ( !( $this->LanguageINI[$type] instanceof eZINI ) )
@@ -1544,7 +1526,7 @@ class eZLocale
             $languageFile = 'language/' . $locale . '.ini';
             if ( eZLocale::isDebugEnabled() )
             {
-                eZDebug::writeNotice( "Requesting $languageFile", 'eZLocale::languageFile' );
+                eZDebug::writeNotice( "Requesting $languageFile", __METHOD__ );
             }
             if ( eZINI::exists( $languageFile, 'share/locale' ) )
                 $this->LanguageINI[$type] = eZINI::instance( $languageFile, 'share/locale' );
@@ -1558,7 +1540,7 @@ class eZLocale
      * Use this instead of newing eZLocale to benefit from speed and unified access.
      * note: Use create() if you need to get a new unique copy you can alter.
      *
-     * @param $localeString string|false
+     * @param string|false $localeString
      * @return eZLocale
      */
     static function instance( $localeString = false )
@@ -1718,6 +1700,6 @@ class eZLocale
     public $IntlLanguageName;
     public $CountryNames;
     //@}
-};
+}
 
 ?>

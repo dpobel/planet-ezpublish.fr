@@ -1,33 +1,12 @@
 <?php
-//
-// Definition of eZSubtreeCache class
-//
-// Created on: <21-Mar-2005 16:53:41 dl>
-//
-// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-// SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.4.0
-// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
-// SOFTWARE LICENSE: GNU General Public License v2.0
-// NOTICE: >
-//   This program is free software; you can redistribute it and/or
-//   modify it under the terms of version 2.0  of the GNU General
-//   Public License as published by the Free Software Foundation.
-// 
-//   This program is distributed in the hope that it will be useful,
-//    but WITHOUT ANY WARRANTY; without even the implied warranty of
-//   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//   GNU General Public License for more details.
-// 
-//   You should have received a copy of version 2.0 of the GNU General
-//   Public License along with this program; if not, write to the Free
-//   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
-//   MA 02110-1301, USA.
-// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-//
-
-/*! \file
-*/
+/**
+ * File containing the eZSubtreeCache class.
+ *
+ * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
+ * @license http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License v2
+ * @version  2012.5
+ * @package kernel
+ */
 
 /*!
   \class eZSubtreeCache ezsubtreecache.php
@@ -149,11 +128,11 @@ class eZSubtreeCache
                 {
                     eZDir::mkdir( $expiryCacheDir, false, true );
                 }
-                eZFile::rename( $dir, $expiryCacheDir );
+                eZFile::rename( $dir, $expiryCacheDir, false, eZFile::APPEND_DEBUG_ON_FAILURE );
             }
             else
             {
-                eZDebug::writeWarning( "$dir should be a directory. Template-block caches for 'subtree_expiry' are not removed.", "eZSubtreeCache::renameDir" );
+                eZDebug::writeWarning( "$dir should be a directory. Template-block caches for 'subtree_expiry' are not removed.", __METHOD__ );
             }
         }
     }

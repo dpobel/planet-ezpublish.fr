@@ -1,33 +1,12 @@
 <?php
-//
-// Definition of eZCodeTemplate class
-//
-// Created on: <18-Nov-2004 13:03:44 jb>
-//
-// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-// SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.4.0
-// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
-// SOFTWARE LICENSE: GNU General Public License v2.0
-// NOTICE: >
-//   This program is free software; you can redistribute it and/or
-//   modify it under the terms of version 2.0  of the GNU General
-//   Public License as published by the Free Software Foundation.
-// 
-//   This program is distributed in the hope that it will be useful,
-//    but WITHOUT ANY WARRANTY; without even the implied warranty of
-//   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//   GNU General Public License for more details.
-// 
-//   You should have received a copy of version 2.0 of the GNU General
-//   Public License along with this program; if not, write to the Free
-//   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
-//   MA 02110-1301, USA.
-// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-//
-
-/*! \file
-*/
+/**
+ * File containing the eZCodeTemplate class.
+ *
+ * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
+ * @license http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License v2
+ * @version  2012.5
+ * @package kernel
+ */
 
 /*!
   \class eZCodeTemplate ezcodetemplate.php
@@ -58,6 +37,10 @@ class eZCodeTemplate
         {
             $this->Templates[$key] = array( 'filepath' => $template );
         }
+
+        // The default limit has to be increased to avoid PREG_BACKTRACK_LIMIT_ERROR
+        // when calling preg_*() functions.
+        ini_set( "pcre.backtrack_limit", 1e6);
     }
 
     /*!
@@ -72,8 +55,7 @@ class eZCodeTemplate
     {
         if ( !file_exists( $filePath ) )
         {
-            eZDebug::writeError( "File $filePath does not exist",
-                                 'eZCodeTemplate::apply' );
+            eZDebug::writeError( "File $filePath does not exist", __METHOD__ );
             return self::STATUS_FAILED;
         }
 
@@ -82,8 +64,7 @@ class eZCodeTemplate
         $fd = fopen( $tempFile, 'wb' );
         if ( !$fd )
         {
-            eZDebug::writeError( "Failed to open temporary file $tempFile",
-                                 'eZCodeTemplate::apply' );
+            eZDebug::writeError( "Failed to open temporary file $tempFile", __METHOD__ );
             return self::STATUS_FAILED;
         }
 
@@ -132,8 +113,7 @@ class eZCodeTemplate
                 $elements = explode( ',', $createText );
                 if ( count( $elements ) < 1 )
                 {
-                    eZDebug::writeError( "No template name found in file $filePath at offset $offset",
-                                         'eZCodeTemplate::apply' );
+                    eZDebug::writeError( "No template name found in file $filePath at offset $offset", __METHOD__ );
                     $offset = $end;
                     $error = true;
                     continue;
@@ -144,8 +124,7 @@ class eZCodeTemplate
                 $templateFile = $this->templateFile( $templateName );
                 if ( $templateFile === false )
                 {
-                    eZDebug::writeError( "No template file for template $templateName used in file $filePath at offset $offset",
-                                         'eZCodeTemplate::apply' );
+                    eZDebug::writeError( "No template file for template $templateName used in file $filePath at offset $offset", __METHOD__ );
                     $offset = $end;
                     $error = true;
                     continue;
@@ -153,8 +132,7 @@ class eZCodeTemplate
 
                 if ( !file_exists( $templateFile ) )
                 {
-                    eZDebug::writeError( "Template file $templateFile for template $templateName does not exist",
-                                         'eZCodeTemplate::apply' );
+                    eZDebug::writeError( "Template file $templateFile for template $templateName does not exist", __METHOD__ );
                     $offset = $end;
                     $error = true;
                     continue;
@@ -168,8 +146,7 @@ class eZCodeTemplate
 
                 if ( !file_exists( $templateFile ) )
                 {
-                    eZDebug::writeError( "Template file $templateFile was not found while workin on $filePath at offset $offset",
-                                         'eZCodeTemplate::apply' );
+                    eZDebug::writeError( "Template file $templateFile was not found while workin on $filePath at offset $offset", __METHOD__ );
                     $offset = $end;
                     $error = true;
                     continue;
@@ -199,8 +176,7 @@ class eZCodeTemplate
                             $currentTag = $matches[2];
                             if ( $matches[1] == 'END' )
                             {
-                                eZDebug::writeError( "Tag $currentTag was finished before it was started, skipping it",
-                                                     'eZCodeTemplate::apply' );
+                                eZDebug::writeError( "Tag $currentTag was finished before it was started, skipping it", __METHOD__ );
                                 $currentTag = false;
                                 $error = true;
                             }
@@ -227,15 +203,13 @@ class eZCodeTemplate
                                 }
                                 else
                                 {
-                                    eZDebug::writeError( "End tag $tag does not match start tag $currentTag, skipping it",
-                                                         'eZCodeTemplate::apply' );
+                                    eZDebug::writeError( "End tag $tag does not match start tag $currentTag, skipping it", __METHOD__ );
                                     $error = true;
                                 }
                             }
                             else
                             {
-                                eZDebug::writeError( "Start tag $tag found while $currentTag is active, skipping it",
-                                                     'eZCodeTemplate::apply' );
+                                eZDebug::writeError( "Start tag $tag found while $currentTag is active, skipping it", __METHOD__ );
                                 $error = true;
                             }
                         }

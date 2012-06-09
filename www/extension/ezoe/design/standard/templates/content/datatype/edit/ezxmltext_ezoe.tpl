@@ -51,7 +51,7 @@
     {if $skin_variant}
         {set $editor_css_list = $editor_css_list|append( concat('skins/', $skin, '/ui_', $skin_variant, '.css') )}
     {/if}
-    
+
     {foreach $content_css_list_temp as $css}
         {set $content_css_list = $content_css_list|append( $css|explode( '<skin>' )|implode( $skin ) )}
     {/foreach}
@@ -66,8 +66,6 @@
     {ezscript( $dependency_js_list )}
     <!-- Init TinyMCE script -->
     <script type="text/javascript">
-    <!--
-
     var eZOeAttributeSettings, eZOeGlobalSettings = {ldelim}
         mode : "none",
         theme : "ez",
@@ -79,7 +77,7 @@
         directionality : '{$directionality}',
         theme_advanced_buttons2 : "",
         theme_advanced_buttons3 : "",
-        theme_advanced_blockformats : "p,pre,h1,h2,h3,h4,h5,h6",
+        theme_advanced_blockformats : "p,pre,h1,h2,h3,h4,h5,h6",// removes address tag, not suppored by ezxml
         theme_advanced_path_location : false,// ignore, use theme_advanced_statusbar_location
         theme_advanced_statusbar_location : "bottom",// correct value set by layout code bellow pr attribute
         theme_advanced_toolbar_location : "top",// correct value set by layout code bellow pr attribute
@@ -87,10 +85,10 @@
         theme_advanced_toolbar_floating : true,
         theme_advanced_resize_horizontal : false,
         theme_advanced_resizing : true,
-        valid_elements : "-strong/-b/-bold[class|customattributes],-em/-i/-emphasize[class|customattributes],span[id|type|class|title|customattributes|align|style|view|inline|alt],sub[class|type|customattributes|align],sup[class|type|customattributes|align],u[class|type|customattributes|align],pre[class|title|customattributes],ol[class|customattributes],ul[class|customattributes],li[class|customattributes],a[href|name|target|view|title|class|id|customattributes],p[class|customattributes|align|style],img[src|class|alt|align|inline|id|customattributes|style|type],table[class|border|width|id|title|customattributes|ezborder|bordercolor|align|style],tr,th[class|width|rowspan|colspan|customattributes|align|style],td[class|width|rowspan|colspan|customattributes|align|style],div[id|type|class|title|customattributes|align|style|view|inline|alt],h1[class|customattributes|align|style],h2[class|customattributes|align|style],h3[class|customattributes|align|style],h4[class|customattributes|align|style],h5[class|customattributes|align|style],h6[class|customattributes|align|style],br",
+        valid_elements : "-strong/b[class|customattributes],-em/i[class|customattributes],span[id|type|class|title|customattributes|align|style|view|inline|alt],sub[class|type|customattributes|align],sup[class|type|customattributes|align],u[class|type|customattributes|align],pre[class|title|customattributes],ol[class|customattributes],ul[class|customattributes],li[class|customattributes],a[href|name|target|view|title|class|id|customattributes],p[class|customattributes|align|style],img[id|type|class|title|customattributes|align|style|view|inline|alt|src],table[class|border|width|id|title|customattributes|ezborder|bordercolor|align|style],tr[class|customattributes],th[class|width|rowspan|colspan|customattributes|align|style],td[class|width|rowspan|colspan|customattributes|align|style],div[id|type|class|title|customattributes|align|style|view|inline|alt],h1[class|customattributes|align|style],h2[class|customattributes|align|style],h3[class|customattributes|align|style],h4[class|customattributes|align|style],h5[class|customattributes|align|style],h6[class|customattributes|align|style],br",
         valid_child_elements : "a[%itrans_na],table[tr],tr[td|th],ol/ul[li],h1/h2/h3/h4/h5/h6/pre/strong/b/p/em/i/u/span/sub/sup/li[%itrans|#text]div/pre/td/th[%btrans|%itrans|#text]",
         // cleanup : false,
-        // cleanup_serializer : 'xml',    
+        // cleanup_serializer : 'xml',
         // entity_encoding : 'raw',
         entities : '160,nbsp', // We need to transform nonbreaking white space to encoded form, all other charthers as stored in raw unicode form.
         // remove_linebreaks : false,
@@ -107,6 +105,7 @@
         popup_css : {concat("stylesheets/skins/", $skin, "/dialog.css")|ezdesign},
         //popup_css_add : {"stylesheets/core.css"|ezdesign},
         gecko_spellcheck : true,
+        object_resizing : false,//disable firefox inline image/table resizing
         table_inline_editing : true, // table edit controlls in gecko
         save_enablewhendirty : true,
         ez_root_url : {'/'|ezroot},
@@ -128,7 +127,18 @@
         atd_ignore_enable           : "true",
         /* the URL to the button image to display */
         //atd_button_url              : "atdbuttontr.gif",
-        atd_css_url : {'javascript/plugins/AtD/css/content.css'|ezdesign}
+        atd_css_url : {'javascript/plugins/AtD/css/content.css'|ezdesign},
+        paste_preprocess : function(pl, o) {ldelim}
+            // Strip <a> HTML tags from clipboard content (Happens on Internet Explorer)
+            o.content = o.content.replace( /(\s[a-z]+=")<a\s[^>]+>([^<]+)<\/a>/gi, '$1$2' );
+        {rdelim},
+        paste_postprocess: function(pl, o) {ldelim}
+            // removes \n after <br />, this is for paste of text
+            // with soft carriage return from Word in Firefox
+            // see issue http://issues.ez.no/18702
+            o.node.innerHTML = o.node.innerHTML.replace(/<br\s?.*\/?>\n/gi,'<br>'); 
+        {rdelim}
+
     {rdelim};
 
     {literal}
@@ -161,23 +171,20 @@
     }
 
     {/literal}
-    //-->
     </script>
     {/run-once}
-    
-    
-    
+
+
+
     <div class="oe-window">
         <textarea class="box" id="{$attribute_base}_data_text_{$attribute.id}" name="{$attribute_base}_data_text_{$attribute.id}" cols="88" rows="{$editorRow}">{$input_handler.input_xml}</textarea>
     </div>
-    
+
     <div class="block">
         {if $input_handler.can_disable}
             <input class="button{if $layout_settings['buttons']|contains('disable')} hide{/if}" type="submit" name="CustomActionButton[{$attribute.id}_disable_editor]" value="{'Disable editor'|i18n('design/standard/content/datatype')}" />
         {/if}
         <script type="text/javascript">
-        <!--
-        
         eZOeAttributeSettings = eZOeGlobalSettings;
         eZOeAttributeSettings['ez_attribute_id'] = {$attribute.id};
         eZOeAttributeSettings['theme_advanced_buttons1'] = "{$layout_settings['buttons']|implode(',')}";
@@ -185,8 +192,6 @@
         eZOeAttributeSettings['theme_advanced_toolbar_location'] = "{$layout_settings['toolbar_location']}";
 
         eZOeToggleEditor( '{$attribute_base}_data_text_{$attribute.id}', eZOeAttributeSettings );
-
-        -->
         </script>
     </div>
 <!-- End editor -->

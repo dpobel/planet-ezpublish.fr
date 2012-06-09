@@ -31,13 +31,11 @@
 </form>
 
 {literal}
-<script language="JavaScript" type="text/javascript">
-<!--
+<script type="text/javascript">
     window.onload=function()
     {
         document.getElementById('address').select();
         document.getElementById('address').focus();
     }
--->
 </script>
 {/literal}

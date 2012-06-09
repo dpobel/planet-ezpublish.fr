@@ -1,28 +1,12 @@
 <?php
-//
-// Created on: <09-Feb-2004 09:06:24 dr>
-//
-// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-// SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.4.0
-// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
-// SOFTWARE LICENSE: GNU General Public License v2.0
-// NOTICE: >
-//   This program is free software; you can redistribute it and/or
-//   modify it under the terms of version 2.0  of the GNU General
-//   Public License as published by the Free Software Foundation.
-// 
-//   This program is distributed in the hope that it will be useful,
-//    but WITHOUT ANY WARRANTY; without even the implied warranty of
-//   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//   GNU General Public License for more details.
-// 
-//   You should have received a copy of version 2.0 of the GNU General
-//   Public License along with this program; if not, write to the Free
-//   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
-//   MA 02110-1301, USA.
-// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-//
+/**
+ * File containing the eZPgsqlSchema class.
+ *
+ * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
+ * @license http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License v2
+ * @version  2012.5
+ * @package lib
+ */
 
 /*!
   \class eZPgsqlSchema ezpgsqlschema.php
@@ -342,6 +326,7 @@ class eZPgsqlSchema extends eZDBSchemaInterface
             case 'integer':
             case 'double precision':
             case 'real':
+            case 'bigint':
             {
                 return false;
             } break;
@@ -354,45 +339,34 @@ class eZPgsqlSchema extends eZDBSchemaInterface
         switch ( $type )
         {
             case 'char':
-            {
-                if ( $length == 1 )
-                {
-                    return 'character';
-                }
-                else
-                {
-                    return 'character varying';
-                }
-            } break;
+                return 'character';
+
             case 'int':
-            {
                 return 'integer';
-            } break;
+
+            case 'bigint':
+                return 'bigint';
+
             case 'varchar':
-            {
                 return 'character varying';
-            } break;
+
             case 'longtext':
-            {
                 return 'text';
-            } break;
+
             case 'mediumtext':
-            {
                 return 'text';
-            } break;
+
             case 'text':
-            {
                 return 'text';
-            } break;
+
             case 'float':
+                return 'real';
+
             case 'double':
-            {
                 return 'double precision';
-            } break;
+
             case 'decimal':
-            {
                 return 'numeric';
-            } break;
 
             default:
                 die ( "ERROR UNHANDLED TYPE: $type\n" );
@@ -416,35 +390,30 @@ class eZPgsqlSchema extends eZDBSchemaInterface
         switch ( $type )
         {
             case 'bigint':
-            {
-                return 'int';
-            } break;
+                $length = 20;
+                return 'bigint';
+
             case 'integer':
-            {
                 $length = 11;
                 return 'int';
-            } break;
+
             case 'character varying':
-            {
                 return 'varchar';
-            } break;
+
             case 'text':
-            {
                 return 'longtext';
-            } break;
+
             case 'double precision':
-            {
+                return 'double';
+                
+            case 'real':
                 return 'float';
-            } break;
+
             case 'character':
-            {
-                $lenght = 1;
                 return 'char';
-            } break;
+
             case 'numeric':
-            {
                 return 'decimal';
-            } break;
 
             default:
                 die ( "ERROR UNHANDLED TYPE: $type\n" );
@@ -502,7 +471,7 @@ class eZPgsqlSchema extends eZDBSchemaInterface
      \param $params An associative array with optional parameters which controls the output of SQLs
      \param $withClosure If \c true then the SQLs will contain semi-colons to close them.
     */
-    function generateAddIndexSql( $table_name, $index_name, $def, $params, $withClosure )
+    function generateAddIndexSql( $table_name, $index_name, $def, $params, $withClosure = true )
     {
         $diffFriendly = isset( $params['diff_friendly'] ) ? $params['diff_friendly'] : false;
         $postgresqlCompatible = isset( $params['compatible_sql'] ) ? $params['compatible_sql'] : false;
@@ -566,11 +535,12 @@ class eZPgsqlSchema extends eZDBSchemaInterface
     /*!
      * \private
      */
-    function generateDropIndexSql( $table_name, $index_name, $def, $withClosure )
+    function generateDropIndexSql( $table_name, $index_name, $def, $withClosure = true )
     {
         if ($def['type'] == 'primary' )
         {
-            $sql = "ALTER TABLE $table_name DROP CONSTRAINT $index_name";
+            $sql = "ALTER TABLE $table_name DROP CONSTRAINT "
+                 . $this->primaryKeyIndexName( $table_name, $index_name, $def['fields'] );
         }
         else
         {
@@ -661,6 +631,10 @@ class eZPgsqlSchema extends eZDBSchemaInterface
                 }
                 else if ( $def['type'] == 'float' )
                 {
+                    $sql_def .= "DEFAULT {$def['default']}::real ";
+                }
+                else if ( $def['type'] == 'double' )
+                {
                     $sql_def .= "DEFAULT {$def['default']}::double precision ";
                 }
                 else if ( $def['type'] == 'varchar' )
@@ -723,6 +697,21 @@ class eZPgsqlSchema extends eZDBSchemaInterface
     }
 
     /*!
+     \private
+    */
+    function generateDropFieldSql( $table_name, $field_name, $params )
+    {
+        if ( in_array( $field_name, $this->reservedKeywordList() ) )
+        {
+            $field_name = '"' . $field_name . '"';
+        }
+
+        $sql = "ALTER TABLE $table_name DROP COLUMN $field_name";
+
+        return $sql . ";\n";
+    }
+
+    /*!
      * \private
      */
     function generateAlterFieldSql( $table_name, $field_name, $def, $params )
@@ -770,7 +759,7 @@ class eZPgsqlSchema extends eZDBSchemaInterface
      \param $params An associative array with optional parameters which controls the output of SQLs
      \param $withClosure If \c true then the SQLs will contain semi-colons to close them.
     */
-    function generateTableArrays( $table, $table_def, $params, $withClosure )
+    function generateTableArrays( $table, $table_def, $params, $withClosure = true )
     {
         $diffFriendly = isset( $params['diff_friendly'] ) ? $params['diff_friendly'] : false;
         $postgresqlCompatible = isset( $params['compatible_sql'] ) ? $params['compatible_sql'] : false;
@@ -914,9 +903,7 @@ class eZPgsqlSchema extends eZDBSchemaInterface
 
     function escapeSQLString( $value )
     {
-        $value = str_replace( "'", "\'", $value );
-        $value = str_replace( "\"", "\\\"", $value );
-        return $value;
+        return pg_escape_string( $value );
     }
 
     function schemaType()

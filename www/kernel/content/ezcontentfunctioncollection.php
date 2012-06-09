@@ -1,33 +1,12 @@
 <?php
-//
-// Definition of eZContentFunctionCollection class
-//
-// Created on: <06-Oct-2002 16:19:31 amos>
-//
-// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-// SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.4.0
-// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
-// SOFTWARE LICENSE: GNU General Public License v2.0
-// NOTICE: >
-//   This program is free software; you can redistribute it and/or
-//   modify it under the terms of version 2.0  of the GNU General
-//   Public License as published by the Free Software Foundation.
-// 
-//   This program is distributed in the hope that it will be useful,
-//    but WITHOUT ANY WARRANTY; without even the implied warranty of
-//   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//   GNU General Public License for more details.
-// 
-//   You should have received a copy of version 2.0 of the GNU General
-//   Public License along with this program; if not, write to the Free
-//   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
-//   MA 02110-1301, USA.
-// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-//
-
-/*! \file
-*/
+/**
+ * File containing the eZContentFunctionCollection class.
+ *
+ * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
+ * @license http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License v2
+ * @version  2012.5
+ * @package kernel
+ */
 
 /*!
   \class eZContentFunctionCollection ezcontentfunctioncollection.php
@@ -849,7 +828,12 @@ class eZContentFunctionCollection
         }
 
         $query = "SELECT COUNT($sqlToExcludeDuplicates ezcontentobject.id) AS count
-                  FROM ezkeyword, ezkeyword_attribute_link,ezcontentobject_tree,ezcontentobject,ezcontentclass, ezcontentobject_attribute
+                  FROM ezkeyword
+                      INNER JOIN ezkeyword_attribute_link ON (ezkeyword_attribute_link.keyword_id = ezkeyword.id)
+                      INNER JOIN ezcontentobject_attribute ON (ezcontentobject_attribute.id = ezkeyword_attribute_link.objectattribute_id)
+                      INNER JOIN ezcontentobject ON (ezcontentobject.id = ezcontentobject_attribute.contentobject_id AND ezcontentobject.current_version = ezcontentobject_attribute.version)
+                      INNER JOIN ezcontentobject_tree ON (ezcontentobject_tree.contentobject_id = ezcontentobject.id)
+                      INNER JOIN ezcontentclass ON (ezcontentclass.id = ezcontentobject.contentclass_id)
                        $sqlPermissionChecking[from]
                   WHERE $sqlMatching
                   $showInvisibleNodesCond
@@ -857,15 +841,9 @@ class eZContentFunctionCollection
                   $sqlClassIDs
                   $sqlOwnerString
                   $parentNodeIDString
-                  AND ezcontentclass.version=0
-                  AND ezcontentobject.status=".eZContentObject::STATUS_PUBLISHED."
-                  AND ezcontentobject_attribute.version=ezcontentobject.current_version
-                  AND ezcontentobject_tree.main_node_id=ezcontentobject_tree.node_id
-                  AND ezcontentobject_attribute.contentobject_id=ezcontentobject.id
-                  AND ezcontentobject_tree.contentobject_id = ezcontentobject.id
-                  AND ezcontentclass.id = ezcontentobject.contentclass_id
-                  AND ezcontentobject_attribute.id=ezkeyword_attribute_link.objectattribute_id
-                  AND ezkeyword_attribute_link.keyword_id = ezkeyword.id";
+                  AND ezcontentclass.version = 0
+                  AND ezcontentobject.status = " . eZContentObject::STATUS_PUBLISHED . "
+                  AND ezcontentobject_tree.main_node_id = ezcontentobject_tree.node_id";
 
         $keyWords = $db->arrayQuery( $query );
         // cleanup temp tables
@@ -931,8 +909,7 @@ class eZContentFunctionCollection
         $alphabet = $db->escapeString( $alphabet );
 
         $sortingInfo = array();
-        $sortingInfo['attributeFromSQL'] = ', ezcontentobject_attribute a1';
-        $sortingInfo['attributeWhereSQL'] = '';
+        $sortingInfo['attributeFromSQL'] = '';
         $sqlTarget = $sqlKeyword.',ezcontentobject_tree.node_id';
 
         if ( is_array( $sortBy ) && count ( $sortBy ) > 0 )
@@ -970,12 +947,14 @@ class eZContentFunctionCollection
                     if ( $sortBy[0] == 'attribute' )
                     {
                         // if sort_by is 'attribute' we should add ezcontentobject_name to "FromSQL" and link to ezcontentobject
-                        $sortingInfo['attributeFromSQL']  .= ', ezcontentobject_name, ezcontentobject_attribute a1';
-                        $sortingInfo['attributeWhereSQL'] .= ' ezcontentobject.id = ezcontentobject_name.contentobject_id AND';
+                        $sortingInfo['attributeFromSQL']  .= ' INNER JOIN ezcontentobject_name ON (ezcontentobject_name.contentobject_id = ezcontentobject.id)';
                         $sqlTarget = 'DISTINCT ezcontentobject_tree.node_id, '.$sqlKeyword;
                     }
                     else // for unique declaration
-                        $sortingInfo['attributeFromSQL']  .= ', ezcontentobject_attribute a1';
+                    {
+                        $sortByArray = explode( ' ', $sortingInfo['sortingFields'] );
+                        $sortingInfo['attributeTargetSQL'] .= ', ' . $sortByArray[0];
+                    }
 
                 } break;
             }
@@ -986,8 +965,6 @@ class eZContentFunctionCollection
         {
             $sortingInfo['sortingFields'] = 'ezkeyword.keyword ASC';
         }
-        $sortingInfo['attributeWhereSQL'] .= " a1.version=ezcontentobject.current_version
-                                             AND a1.contentobject_id=ezcontentobject.id AND";
 
         //Adding DISTINCT to avoid duplicates,
         //check if DISTINCT keyword was added before providing clauses for sorting.
@@ -1014,24 +991,25 @@ class eZContentFunctionCollection
         }
 
         $query = "SELECT $sqlTarget
-                  FROM ezkeyword, ezkeyword_attribute_link,ezcontentobject_tree,ezcontentobject,ezcontentclass
+                  FROM ezkeyword
+                       INNER JOIN ezkeyword_attribute_link ON (ezkeyword_attribute_link.keyword_id = ezkeyword.id)
+                       INNER JOIN ezcontentobject_attribute ON (ezcontentobject_attribute.id = ezkeyword_attribute_link.objectattribute_id)
+                       INNER JOIN ezcontentobject ON (ezcontentobject_attribute.version = ezcontentobject.current_version AND ezcontentobject_attribute.contentobject_id = ezcontentobject.id)
+                       INNER JOIN ezcontentobject_tree ON (ezcontentobject_tree.contentobject_id = ezcontentobject.id)
+                       INNER JOIN ezcontentclass ON (ezcontentclass.id = ezcontentobject.contentclass_id)
                        $sortingInfo[attributeFromSQL]
                        $sqlPermissionChecking[from]
                   WHERE
-                  $sortingInfo[attributeWhereSQL]
                   $sqlMatching
                   $showInvisibleNodesCond
                   $sqlPermissionChecking[where]
                   $sqlClassIDString
                   $sqlOwnerString
                   $parentNodeIDString
-                  AND ezcontentclass.version=0
-                  AND ezcontentobject.status=".eZContentObject::STATUS_PUBLISHED."
-                  AND ezcontentobject_tree.main_node_id=ezcontentobject_tree.node_id
-                  AND ezcontentobject_tree.contentobject_id = ezcontentobject.id
-                  AND ezcontentclass.id = ezcontentobject.contentclass_id
-                  AND a1.id=ezkeyword_attribute_link.objectattribute_id
-                  AND ezkeyword_attribute_link.keyword_id = ezkeyword.id ORDER BY {$sortingInfo['sortingFields']}";
+                  AND ezcontentclass.version = 0
+                  AND ezcontentobject.status = ".eZContentObject::STATUS_PUBLISHED."
+                  AND ezcontentobject_tree.main_node_id = ezcontentobject_tree.node_id
+                  ORDER BY {$sortingInfo['sortingFields']}";
 
         $keyWords = $db->arrayQuery( $query, $db_params );
 
@@ -1149,7 +1127,7 @@ class eZContentFunctionCollection
                 }
                 else
                 {
-                    eZDebug::writeWarning( "Unknown relation type: '$relationType'.", "eZContentFunctionCollection::contentobjectRelationTypeMask()" );
+                    eZDebug::writeWarning( "Unknown relation type: '$relationType'.", __METHOD__ );
                 }
             }
         }
@@ -1230,8 +1208,24 @@ class eZContentFunctionCollection
         return array( 'result' =>$relatedObjectsTypedIDArray );
     }
 
-    // Fetches reverse related objects
-    static public function fetchRelatedObjects( $objectID, $attributeID, $allRelations, $groupByAttribute, $sortBy, $limit = false, $offset = false, $asObject = true, $loadDataMap = false, $ignoreVisibility = null )
+
+    /**
+     * Fetches related object for $objectID
+     *
+     * @param int $objectID
+     * @param int $attributeID Relation attribute id
+     * @param int $allRelations Accepted elation bitmask
+     * @param mixed $groupByAttribute
+     * @param array $sortBy
+     * @param int $limit
+     * @param int $offset
+     * @param bool $asObject
+     * @param bool $loadDataMap
+     * @param bool $ignoreVisibility
+     * @param array $relatedClassIdentifiers Array of related class identifiers that will be accepted
+     * @return array ANn array of eZContentObject
+     */
+    static public function fetchRelatedObjects( $objectID, $attributeID, $allRelations, $groupByAttribute, $sortBy, $limit = false, $offset = false, $asObject = true, $loadDataMap = false, $ignoreVisibility = null, array $relatedClassIdentifiers = null )
     {
         if ( !is_numeric( $objectID ) )
         {
@@ -1288,6 +1282,11 @@ class eZContentFunctionCollection
             {
                 $params['AllRelations'] = eZContentFunctionCollection::contentobjectRelationTypeMask( $allRelations );
             }
+        }
+
+        if ( $relatedClassIdentifiers !== null )
+        {
+            $params['RelatedClassIdentifiers'] = $relatedClassIdentifiers;
         }
 
         if ( $attributeID && !is_numeric( $attributeID ) && !is_bool( $attributeID ) )

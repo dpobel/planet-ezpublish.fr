@@ -1,30 +1,12 @@
 <?php
-//
-// Definition of eZOption class
-//
-// Created on: <29-Jul-2004 15:52:24 gv>
-//
-// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-// SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.4.0
-// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
-// SOFTWARE LICENSE: GNU General Public License v2.0
-// NOTICE: >
-//   This program is free software; you can redistribute it and/or
-//   modify it under the terms of version 2.0  of the GNU General
-//   Public License as published by the Free Software Foundation.
-// 
-//   This program is distributed in the hope that it will be useful,
-//    but WITHOUT ANY WARRANTY; without even the implied warranty of
-//   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//   GNU General Public License for more details.
-// 
-//   You should have received a copy of version 2.0 of the GNU General
-//   Public License along with this program; if not, write to the Free
-//   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
-//   MA 02110-1301, USA.
-// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-//
+/**
+ * File containing the eZOption class.
+ *
+ * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
+ * @license http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License v2
+ * @version  2012.5
+ * @package kernel
+ */
 
 /*!
   \class eZMultiOption ezmultioption.php
@@ -114,7 +96,6 @@
   Example of how to crete an option, adding multioptions and options
   and finally retrieving the xml structure.
   \code
-   //include_once( "kernel/classes/datatypes/ezoption/ezmultioption.php" );
    $option = new eZOption( "Car" );
    $newID = $option->addMultiOption("Model",$priority,false);
       $option->addOption( $newID, "", "Model - A", "100", false );
@@ -301,7 +282,7 @@ class eZMultiOption
             } break;
             default:
             {
-                eZDebug::writeError( "Attribute '$name' does not exist", 'eZMultiOption::attribute' );
+                eZDebug::writeError( "Attribute '$name' does not exist", __METHOD__ );
                 return null;
             }break;
         }

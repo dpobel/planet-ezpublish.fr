@@ -1,30 +1,12 @@
 <?php
-//
-// Definition of eZHTTPFile class
-//
-// Created on: <06-May-2002 10:06:57 amos>
-//
-// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-// SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.4.0
-// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
-// SOFTWARE LICENSE: GNU General Public License v2.0
-// NOTICE: >
-//   This program is free software; you can redistribute it and/or
-//   modify it under the terms of version 2.0  of the GNU General
-//   Public License as published by the Free Software Foundation.
-// 
-//   This program is distributed in the hope that it will be useful,
-//    but WITHOUT ANY WARRANTY; without even the implied warranty of
-//   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//   GNU General Public License for more details.
-// 
-//   You should have received a copy of version 2.0 of the GNU General
-//   Public License along with this program; if not, write to the Free
-//   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
-//   MA 02110-1301, USA.
-// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-//
+/**
+ * File containing the eZHTTPFile class.
+ *
+ * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
+ * @license http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License v2
+ * @version  2012.5
+ * @package lib
+ */
 
 /*!
   \class eZHTTPFile ezhttpfile.php
@@ -43,6 +25,9 @@ class eZHTTPFile
     const UPLOADEDFILE_DOES_NOT_EXIST = -1;
     const UPLOADEDFILE_EXCEEDS_PHP_LIMIT = -2;
     const UPLOADEDFILE_EXCEEDS_MAX_SIZE = -3;
+    const UPLOADEDFILE_MISSING_TMP_DIR = -4;
+    const UPLOADEDFILE_CANT_WRITE = -5;
+    const UPLOADEDFILE_UNKNOWN_ERROR = -6;
 
     /*!
      Initializes with a name and http variable.
@@ -191,35 +176,43 @@ class eZHTTPFile
                 return $this->IsTemporary;
             default:
             {
-                eZDebug::writeError( "Attribute '$attr' does not exist", 'eZHTTPFile::attribute' );
+                eZDebug::writeError( "Attribute '$attr' does not exist", __METHOD__ );
                 return null;
             } break;
-        };
+        }
     }
 
-    /*!
-     \return true if the HTTP file $http_name can be fetched. If $maxSize is given,
-     the function returns
-        0 (eZHTTPFile::UPLOADEDFILE_OK) if the file can be fetched,
-       -1 (eZHTTPFile::UPLOADEDFILE_DOES_NOT_EXIST) if there has been no file uploaded,
-       -2 (eZHTTPFile::UPLOADEDFILE_EXCEEDS_PHP_LIMIT) if the file was uploaded but size
-          exceeds the upload_max_size limit (set in the PHP configuration),
-       -3 (eZHTTPFile::UPLOADEDFILE_EXCEEDS_MAX_SIZE) if the file was uploaded but size
-          exceeds $maxSize or MAX_FILE_SIZE variable in the form.
-    */
-    static function canFetch( $http_name, $maxSize = false )
+    /**
+     * Returns whether a file can be fetched.
+     *
+     * @param string $httpName Name of the file.
+     * @param bool|int Whether a maximum file size applies or size in bytes of the maximum allowed.
+     *
+     * @return bool|int true if the HTTP file $httpName can be fetched. If $maxSize is given,
+     * the function returns
+     *  eZHTTPFile::UPLOADEDFILE_OK if the file can be fetched,
+     *  eZHTTPFile::UPLOADEDFILE_DOES_NOT_EXIST if there has been no file uploaded,
+     *  eZHTTPFile::UPLOADEDFILE_EXCEEDS_PHP_LIMIT if the file was uploaded but size
+     *     exceeds the upload_max_size limit (set in the PHP configuration),
+     *  eZHTTPFile::UPLOADEDFILE_EXCEEDS_MAX_SIZE if the file was uploaded but size
+     *     exceeds $maxSize or MAX_FILE_SIZE variable in the form.
+     *  eZHTTPFile::UPLOADEDFILE_MISSING_TMP_DIR if the temporary directory is missing
+     *  eZHTTPFile::UPLOADEDFILE_CANT_WRITE if the file can't be written
+     *  eZHTTPFile::UPLOADEDFILE_UNKNOWN_ERROR if an unknown error occured
+     */
+    static function canFetch( $httpName, $maxSize = false )
     {
-        if ( !isset( $GLOBALS["eZHTTPFile-$http_name"] ) ||
-             !( $GLOBALS["eZHTTPFile-$http_name"] instanceof eZHTTPFile ) )
+        if ( !isset( $GLOBALS["eZHTTPFile-$httpName"] ) ||
+             !( $GLOBALS["eZHTTPFile-$httpName"] instanceof eZHTTPFile ) )
         {
             if ( $maxSize === false )
             {
-                return isset( $_FILES[$http_name] ) and $_FILES[$http_name]['name'] != "" and $_FILES[$http_name]['error'] == 0;
+                return isset( $_FILES[$httpName] ) and $_FILES[$httpName]['name'] != "" and $_FILES[$httpName]['error'] == 0;
             }
 
-            if ( isset( $_FILES[$http_name] ) and $_FILES[$http_name]['name'] != "" )
+            if ( isset( $_FILES[$httpName] ) and $_FILES[$httpName]['name'] != "" )
             {
-                switch ( $_FILES[$http_name]['error'] )
+                switch ( $_FILES[$httpName]['error'] )
                 {
                     case ( UPLOAD_ERR_NO_FILE ):
                     {
@@ -236,10 +229,25 @@ class eZHTTPFile
                         return eZHTTPFile::UPLOADEDFILE_EXCEEDS_MAX_SIZE;
                     }break;
 
+                    case ( UPLOAD_ERR_NO_TMP_DIR ):
+                    {
+                        return eZHTTPFile::UPLOADEDFILE_MISSING_TMP_DIR;
+                    }break;
+
+                    case ( UPLOAD_ERR_CANT_WRITE ):
+                    {
+                        return eZHTTPFile::UPLOADEDFILE_CANT_WRITE;
+                    }break;
+
+                    case ( 0 ):
+                    {
+                        return ( $maxSize == 0 || $_FILES[$httpName]['size'] <= $maxSize )? eZHTTPFile::UPLOADEDFILE_OK:
+                                                                                             eZHTTPFile::UPLOADEDFILE_EXCEEDS_MAX_SIZE;
+                    }break;
+
                     default:
                     {
-                        return ( $maxSize == 0 || $_FILES[$http_name]['size'] <= $maxSize )? eZHTTPFile::UPLOADEDFILE_OK:
-                                                                                             eZHTTPFile::UPLOADEDFILE_EXCEEDS_MAX_SIZE;
+                        return eZHTTPFile::UPLOADEDFILE_UNKNOWN_ERROR;
                     }
                 }
             }

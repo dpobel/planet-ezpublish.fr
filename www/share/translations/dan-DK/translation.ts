@@ -1020,6 +1020,14 @@
         <source>Category</source>
         <translation type="unfinished">Kategori</translation>
     </message>
+    <message>
+        <source>Application name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Confirm removal</source>
+        <translation type="unfinished">Bekræft fjernelse</translation>
+    </message>
 </context>
 <context>
     <name>design/admin/collaboration</name>
@@ -1652,80 +1660,60 @@
 <context>
     <name>design/admin/content/diff</name>
     <message>
-        <source>Versions for &lt;%object_name&gt; [%version_count]</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Show differences</source>
-        <translation type="unfinished">Vis forskelle</translation>
-    </message>
-    <message>
-        <source>Differences between versions %oldVersion and %newVersion</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Vis forskelle</translation>
     </message>
     <message>
         <source>Version</source>
-        <translation type="unfinished">Version</translation>
+        <translation type="obsolete">Version</translation>
     </message>
     <message>
         <source>Status</source>
-        <translation type="unfinished">Status</translation>
+        <translation type="obsolete">Status</translation>
     </message>
     <message>
         <source>Translations</source>
-        <translation type="unfinished">Oversættelser</translation>
+        <translation type="obsolete">Oversættelser</translation>
     </message>
     <message>
         <source>Creator</source>
-        <translation type="unfinished">Forfatter</translation>
+        <translation type="obsolete">Forfatter</translation>
     </message>
     <message>
         <source>Modified</source>
-        <translation type="unfinished">Ændret</translation>
+        <translation type="obsolete">Ændret</translation>
     </message>
     <message>
         <source>Draft</source>
-        <translation type="unfinished">Udkast</translation>
+        <translation type="obsolete">Udkast</translation>
     </message>
     <message>
         <source>Published</source>
-        <translation type="unfinished">Publiceret</translation>
-    </message>
-    <message>
-        <source>Pending</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Publiceret</translation>
     </message>
     <message>
         <source>Archived</source>
-        <translation type="unfinished">Arkiveret</translation>
+        <translation type="obsolete">Arkiveret</translation>
     </message>
     <message>
         <source>Rejected</source>
-        <translation type="unfinished">Afvist</translation>
+        <translation type="obsolete">Afvist</translation>
     </message>
     <message>
         <source>Untouched draft</source>
-        <translation type="unfinished">Urørt udkast</translation>
-    </message>
-    <message>
-        <source>Inline changes</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Urørt udkast</translation>
     </message>
     <message>
         <source>Block changes</source>
-        <translation type="unfinished">Bloker ændringer</translation>
+        <translation type="obsolete">Bloker ændringer</translation>
     </message>
     <message>
         <source>Old version</source>
-        <translation type="unfinished">Gammel version</translation>
+        <translation type="obsolete">Gammel version</translation>
     </message>
     <message>
         <source>New version</source>
-        <translation type="unfinished">Ny version</translation>
-    </message>
-    <message>
-        <source>Versions for &lt;%object_name&gt; (%version_count)</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Ny version</translation>
     </message>
 </context>
 <context>
@@ -1978,7 +1966,7 @@
         <translation type="unfinished">Vis</translation>
     </message>
     <message>
-        <source>View the draft that is being edited.</source>
+        <source>Preview the draft that is being edited.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2190,10 +2178,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Toggle fullscreen editing!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Store draft and exit</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2240,6 +2224,14 @@
     <message>
         <source>Related content (%related_objects)</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>View the draft that is being edited.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Path String</source>
+        <translation type="unfinished">Sti-streng</translation>
     </message>
 </context>
 <context>
@@ -4117,35 +4109,31 @@ Database bogstavkodning</translation>
     <name>design/admin/content/versions</name>
     <message>
         <source>Unable to create new version</source>
-        <translation type="unfinished">Kan ikke oprette en ny version</translation>
+        <translation type="obsolete">Kan ikke oprette en ny version</translation>
     </message>
     <message>
         <source>Version history limit has been exceeded and no archived version can be removed by the system.</source>
-        <translation type="unfinished">Versionshistorie begrænsningen er overskredet og ingen arkiverede versioner kan fjernes fra systemet.</translation>
+        <translation type="obsolete">Versionshistorie begrænsningen er overskredet og ingen arkiverede versioner kan fjernes fra systemet.</translation>
     </message>
     <message>
         <source>You can change your version history settings in content.ini, remove draft versions or edit existing drafts.</source>
-        <translation type="unfinished">Du kan ændre din versionshistorieindstillinger i content.ini, fjerne kladdeversioner eller redigere eksisterende kladder.</translation>
-    </message>
-    <message>
-        <source>Versions for &lt;%object_name&gt; [%version_count]</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Du kan ændre din versionshistorieindstillinger i content.ini, fjerne kladdeversioner eller redigere eksisterende kladder.</translation>
     </message>
     <message>
         <source>Version</source>
-        <translation type="unfinished">Version</translation>
+        <translation type="obsolete">Version</translation>
     </message>
     <message>
         <source>Status</source>
-        <translation type="unfinished">Status</translation>
+        <translation type="obsolete">Status</translation>
     </message>
     <message>
         <source>Creator</source>
-        <translation type="unfinished">Forfatter</translation>
+        <translation type="obsolete">Forfatter</translation>
     </message>
     <message>
         <source>Created</source>
-        <translation type="unfinished">Oprettet</translation>
+        <translation type="obsolete">Oprettet</translation>
     </message>
     <message>
         <source>Draft</source>
@@ -4165,115 +4153,87 @@ Database bogstavkodning</translation>
     </message>
     <message>
         <source>Rejected</source>
-        <translation type="unfinished">Afvist</translation>
+        <translation type="obsolete">Afvist</translation>
     </message>
     <message>
         <source>Edit</source>
-        <translation type="unfinished">Redigér</translation>
+        <translation type="obsolete">Redigér</translation>
     </message>
     <message>
         <source>Remove selected</source>
-        <translation type="unfinished">Fjern valgte</translation>
-    </message>
-    <message>
-        <source>Object information</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Fjern valgte</translation>
     </message>
     <message>
         <source>ID</source>
-        <translation type="unfinished">ID</translation>
+        <translation type="obsolete">ID</translation>
     </message>
     <message>
         <source>Not yet published</source>
-        <translation type="unfinished">Endnu ikke publiceret</translation>
+        <translation type="obsolete">Endnu ikke publiceret</translation>
     </message>
     <message>
         <source>Modified</source>
-        <translation type="unfinished">Ændret</translation>
+        <translation type="obsolete">Ændret</translation>
     </message>
     <message>
         <source>Published version</source>
-        <translation type="unfinished">Offentliggjort version</translation>
+        <translation type="obsolete">Offentliggjort version</translation>
     </message>
     <message>
         <source>Select version #%version_number for removal.</source>
-        <translation type="unfinished">Vælg version #%version_number som skal fjernes.</translation>
+        <translation type="obsolete">Vælg version #%version_number som skal fjernes.</translation>
     </message>
     <message>
         <source>View the contents of version #%version_number. Translation: %translation.</source>
-        <translation type="unfinished">Se indhold i version #%version_number. Oversættelse: %translation.</translation>
-    </message>
-    <message>
-        <source>Copy</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Se indhold i version #%version_number. Oversættelse: %translation.</translation>
     </message>
     <message>
         <source>Create a copy of version #%version_number.</source>
-        <translation type="unfinished">Opret en kopi af version #%version_number.</translation>
+        <translation type="obsolete">Opret en kopi af version #%version_number.</translation>
     </message>
     <message>
         <source>Edit the contents of version #%version_number.</source>
-        <translation type="unfinished">Ret indholdet i version #%version_number.</translation>
+        <translation type="obsolete">Ret indholdet i version #%version_number.</translation>
     </message>
     <message>
         <source>This object does not have any versions.</source>
-        <translation type="unfinished">Dette objekt har ikke nogen versioner.</translation>
+        <translation type="obsolete">Dette objekt har ikke nogen versioner.</translation>
     </message>
     <message>
         <source>Remove the selected versions from the object.</source>
-        <translation type="unfinished">Fjern de valgte versioner fra objektet.</translation>
+        <translation type="obsolete">Fjern de valgte versioner fra objektet.</translation>
     </message>
     <message>
         <source>Untouched draft</source>
         <translation type="unfinished">Urørt udkast</translation>
     </message>
     <message>
-        <source>Back</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Version is not a draft</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Version %1 is not available for editing anymore. Only drafts can be edited.</source>
-        <translation type="unfinished">Version %1 er ikke længere tilgængelig for redigering. Kun kladder kan redigeres.</translation>
+        <translation type="obsolete">Version %1 er ikke længere tilgængelig for redigering. Kun kladder kan redigeres.</translation>
     </message>
     <message>
         <source>To edit this version, first create a copy of it.</source>
-        <translation type="unfinished">For at redigere denne version skal du først oprette en kopi af den.</translation>
+        <translation type="obsolete">For at redigere denne version skal du først oprette en kopi af den.</translation>
     </message>
     <message>
         <source>Version is not yours</source>
-        <translation type="unfinished">Version er ikke din</translation>
-    </message>
-    <message>
-        <source>Version %1 was not created by you. You can only edit your own drafts.</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Version er ikke din</translation>
     </message>
     <message>
         <source>Modified translation</source>
-        <translation type="unfinished">Ændret oversættelse</translation>
+        <translation type="obsolete">Ændret oversættelse</translation>
     </message>
     <message>
         <source>Version #%version_number cannot be removed because it is either the published version of the object or because you do not have permission to remove it.</source>
-        <translation type="unfinished">Version #%version_number kan ikke fjernes, da det enten er den publicerede version af objektet eller fordi, du ikke har tilladelse til at fjerne den.</translation>
-    </message>
-    <message>
-        <source>There is no need to make copies of untouched drafts.</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Version #%version_number kan ikke fjernes, da det enten er den publicerede version af objektet eller fordi, du ikke har tilladelse til at fjerne den.</translation>
     </message>
     <message>
         <source>You cannot make copies of versions because you do not have permission to edit the object.</source>
-        <translation type="unfinished">Du kan ikke lave kopier af versioner, da du ikke har tilladelse til at rette objektet.</translation>
+        <translation type="obsolete">Du kan ikke lave kopier af versioner, da du ikke har tilladelse til at rette objektet.</translation>
     </message>
     <message>
         <source>You cannot edit the contents of version #%version_number either because it is not a draft or because you do not have permission to edit the object.</source>
-        <translation type="unfinished">Du kan ikke redigere indholdet i version #%version_number da ikke er en kladde, eller fordi du ikke har tilladelse til at redigere objektet.</translation>
-    </message>
-    <message>
-        <source>Versions for &lt;%object_name&gt; (%version_count)</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Du kan ikke redigere indholdet i version #%version_number da ikke er en kladde, eller fordi du ikke har tilladelse til at redigere objektet.</translation>
     </message>
 </context>
 <context>
@@ -4465,6 +4425,10 @@ Database bogstavkodning</translation>
         <source>Object ID</source>
         <translation type="unfinished">Objekt-ID</translation>
     </message>
+    <message>
+        <source>Dynamic tree menu is disabled for this siteaccess!</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>design/admin/dashboard/all_latest_content</name>
@@ -4586,7 +4550,7 @@ Database bogstavkodning</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>If your installation is not running eZ Publish Premium, it might not be up to date with the latest maintenance service packs. Contact eZ Systems.</source>
+        <source>If your installation is not running eZ Publish Enterprise, it might not be up to date with the latest maintenance service packs. Contact eZ Systems.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4629,6 +4593,22 @@ Database bogstavkodning</translation>
     </message>
     <message>
         <source>Currently you do not have any products on your wish list.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Published</source>
+        <translation type="unfinished">Publiceret</translation>
+    </message>
+    <message>
+        <source>Edit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit &lt;%item_name&gt;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You do not have permission to edit &lt;%item_name&gt;.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -6083,6 +6063,10 @@ Database bogstavkodning</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Close</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Select</source>
         <translation type="unfinished">Vælg</translation>
     </message>
@@ -6120,6 +6104,30 @@ Database bogstavkodning</translation>
     </message>
     <message>
         <source>last</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Invert selection</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Path String</source>
+        <translation type="unfinished">Sti-streng</translation>
+    </message>
+    <message>
+        <source>Object state</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Node Remote ID and Object Remote ID</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Node Remote ID</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Object Remote ID</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -6879,6 +6887,18 @@ Navigeringsdel</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Siteaccess:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Global (override)</source>
+        <translation type="unfinished">Global (override)</translation>
+    </message>
+    <message>
+        <source>Set</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Change name, email, password, etc.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6928,6 +6948,21 @@ Navigeringsdel</translation>
     </message>
     <message>
         <source>User preferences</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Loading...</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>design/admin/pagelayout/leftmenu</name>
+    <message>
+        <source>Show / Hide leftmenu</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -7128,14 +7163,6 @@ Navigeringsdel</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Enable &amp;quot;Tabs&amp;quot; by default  while browsing content.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Disable &amp;quot;Tabs&amp;quot; by default  while browsing content.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Enable &amp;quot;Tabs&amp;quot; by default while browsing content.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7159,7 +7186,7 @@ Navigeringsdel</translation>
         <translation type="unfinished">Systeminformation</translation>
     </message>
     <message>
-        <source>URL management</source>
+        <source>Link management</source>
         <translation type="unfinished">URL styring</translation>
     </message>
     <message>
@@ -7255,6 +7282,10 @@ Navigeringsdel</translation>
         <source>States</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>URL management</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>design/admin/parts/shop/menu</name>
@@ -7337,6 +7368,10 @@ Navigeringsdele</translation>
     </message>
     <message>
         <source>Roles and policies</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unactivated users</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -9709,10 +9744,6 @@ Navigeringsdel</translation>
         <source>Categories</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source></source>
-        <translation></translation>
-    </message>
 </context>
 <context>
     <name>design/admin/setup/datatypecode</name>
@@ -10440,6 +10471,10 @@ Skabelonoperatør</translation>
     <message>
         <source>Country/region</source>
         <translation type="unfinished">Land/region</translation>
+    </message>
+    <message>
+        <source>Comment</source>
+        <translation type="unfinished">Kommentar</translation>
     </message>
 </context>
 <context>
@@ -12503,18 +12538,6 @@ Datatypenavn</translation>
         <translation type="unfinished">URL</translation>
     </message>
     <message>
-        <source>Valid URLs [%url_list_count]</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Invalid URLs [%url_list_count]</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>All URLs [%url_list_count]</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>All</source>
         <translation type="unfinished">Alle</translation>
     </message>
@@ -12587,15 +12610,27 @@ Datatypenavn</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Valid URLs (%url_list_count)</source>
+        <source>Valid links (%url_list_count)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Invalid URLs (%url_list_count)</source>
+        <source>Invalid links (%url_list_count)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>All URLs (%url_list_count)</source>
+        <source>All links (%url_list_count)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Valid URLs [%url_list_count]</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Invalid URLs [%url_list_count]</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>All URLs [%url_list_count]</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -12718,11 +12753,11 @@ Datatypenavn</translation>
     </message>
     <message>
         <source>Your account is now activated.</source>
-        <translation type="unfinished">Din konto er nu aktiveret.</translation>
+        <translation type="obsolete">Din konto er nu aktiveret.</translation>
     </message>
     <message>
         <source>Sorry, the key submitted was not a valid key. Account was not activated.</source>
-        <translation type="unfinished">Beklager. Den benyttede nøgle er ikke gyldig. Kontoen er ikke aktiveret.</translation>
+        <translation type="obsolete">Beklager. Den benyttede nøgle er ikke gyldig. Kontoen er ikke aktiveret.</translation>
     </message>
     <message>
         <source>Your account was successfully created.</source>
@@ -12739,6 +12774,65 @@ your account.</source>
         <translation type="unfinished">Din konto blev oprettet. En e-mail vil blive sendt til den specificerede
 e-mailadresse. Følg instruktionerne i denne mail for at aktivere
 din konto.</translation>
+    </message>
+    <message>
+        <source>Unactivated users (%users_count)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Toggle selection</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Registration date</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Login</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>E-mail</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Activate selected users</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Activate selected users.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove selected users</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove selected users.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>design/admin/user/activations</name>
+    <message>
+        <source>The following users have been successfully activated:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Some users have not been activated</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The following unactivated users have been successfully removed:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Some users have not been removed</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -13399,6 +13493,14 @@ din konto.</translation>
         <source>The following information is either missing or invalid</source>
         <translation type="unfinished">Følgende oplysninger mangler eller er ugyldige</translation>
     </message>
+    <message>
+        <source>Error : Could not load workflow event &quot;%eventtype&quot; (event type not available)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Hint : This can happen when a workflow extension has been disabled</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>design/admin/workflow/eventtype/edit</name>
@@ -13826,6 +13928,125 @@ din konto.</translation>
     </message>
     <message>
         <source>Workflows (%workflow_count)</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>design/admin2/ajaxupload</name>
+    <message>
+        <source>&lt;em&gt;%file&lt;/em&gt; has successfully been uploaded.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>design/admin2/ajaxuploader</name>
+    <message>
+        <source>Go to the parent level</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Step 1/3: Upload a file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Type</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Section</source>
+        <translation type="unfinished">Sektion</translation>
+    </message>
+    <message>
+        <source>prev</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>next</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Step 2/3: Choose a location for the new &apos;%class&apos; object</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please choose a location for the &apos;%class&apos; object that is going to be created from it.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Choose this location</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Step 3/3: Preview of &apos;%name&apos; (%class)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>File</source>
+        <translation type="unfinished">Fil</translation>
+    </message>
+    <message>
+        <source>Required</source>
+        <translation type="unfinished">Obligatorisk</translation>
+    </message>
+    <message>
+        <source>The name will be autogenerated</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Upload the file</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>design/admin2/content/datatype</name>
+    <message>
+        <source>Upload a file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Upload a file to create a new object and add it to the relation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please choose a location</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Some required fields are empty.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unable to parse the JSON response.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Upload a file and add the resulting object in the relation</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>design/admin2/content/edit</name>
+    <message>
+        <source>Go to the top</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>design/admin2/user/activations</name>
+    <message>
+        <source>There are no unactivated users</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -14423,6 +14644,20 @@ Parametrene er link start og slut tags</translation>
     <message>
         <source>Minute</source>
         <translation type="obsolete">Minut</translation>
+    </message>
+</context>
+<context>
+    <name>design/ezwebin/link</name>
+    <message>
+        <source>Printable version</source>
+        <translation type="unfinished">Printervenlig version</translation>
+    </message>
+</context>
+<context>
+    <name>design/ezwebin/node/removeobject</name>
+    <message>
+        <source>The items contain more than the maximum possible nodes for subtree removal and will not be deleted. You can remove this subtree using the ezsubtreeremove.php script.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -15773,6 +16008,18 @@ Hvis du ønsker at sende kommentarer til den, der godkender, eller hvis du ønsk
         <source>Country/region</source>
         <translation>Land/region</translation>
     </message>
+    <message>
+        <source>Your content is being published</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Publishing finished</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Your content is pending an external action</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>design/standard/content/browse</name>
@@ -16344,7 +16591,7 @@ Hvis du ønsker at sende kommentarer til den, der godkender, eller hvis du ønsk
     </message>
     <message>
         <source>Add object</source>
-        <translation>Tilføj objekt</translation>
+        <translation type="obsolete">Tilføj objekt</translation>
     </message>
     <message>
         <source>Invert selection.</source>
@@ -16622,80 +16869,124 @@ Hvis du ønsker at sende kommentarer til den, der godkender, eller hvis du ønsk
         <source>Your browser does not support html5 audio.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Confirm email</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add an object in the relation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add an existing object</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Browse to add an existing object in this relation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Objects in the relation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove selected elements from the relation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add objects in the relation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add existing objects</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Browse to add existing objects in this relation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Html5 Video</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Html5 Audio</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>design/standard/content/diff</name>
     <message>
         <source>Version</source>
-        <translation>Version</translation>
+        <translation type="obsolete">Version</translation>
     </message>
     <message>
         <source>Status</source>
-        <translation>Status</translation>
+        <translation type="obsolete">Status</translation>
     </message>
     <message>
         <source>Translations</source>
-        <translation>Oversættelser</translation>
+        <translation type="obsolete">Oversættelser</translation>
     </message>
     <message>
         <source>Creator</source>
-        <translation>Forfatter</translation>
+        <translation type="obsolete">Forfatter</translation>
     </message>
     <message>
         <source>Modified</source>
-        <translation>Ændret</translation>
+        <translation type="obsolete">Ændret</translation>
     </message>
     <message>
         <source>Versions for &lt;%object_name&gt; [%version_count]</source>
-        <translation>Versioner for &lt;%object_name&gt; [%version_count]</translation>
+        <translation type="obsolete">Versioner for &lt;%object_name&gt; [%version_count]</translation>
     </message>
     <message>
         <source>Draft</source>
-        <translation>Udkast</translation>
+        <translation type="obsolete">Udkast</translation>
     </message>
     <message>
         <source>Published</source>
-        <translation>Publiceret</translation>
+        <translation type="obsolete">Publiceret</translation>
     </message>
     <message>
         <source>Pending</source>
-        <translation>Venter</translation>
+        <translation type="obsolete">Venter</translation>
     </message>
     <message>
         <source>Archived</source>
-        <translation>Arkiveret</translation>
+        <translation type="obsolete">Arkiveret</translation>
     </message>
     <message>
         <source>Rejected</source>
-        <translation>Afvist</translation>
+        <translation type="obsolete">Afvist</translation>
     </message>
     <message>
         <source>Untouched draft</source>
-        <translation>Urørt udkast</translation>
+        <translation type="obsolete">Urørt udkast</translation>
     </message>
     <message>
         <source>Show differences</source>
-        <translation>Vis forskelle</translation>
+        <translation type="obsolete">Vis forskelle</translation>
     </message>
     <message>
         <source>Differences between versions %oldVersion and %newVersion</source>
-        <translation>Forskelle imellem versionerne %oldVersion og %newVersion</translation>
+        <translation type="obsolete">Forskelle imellem versionerne %oldVersion og %newVersion</translation>
     </message>
     <message>
         <source>Inline changes</source>
-        <translation>Enkeltlinjeændringer</translation>
+        <translation type="obsolete">Enkeltlinjeændringer</translation>
     </message>
     <message>
         <source>Block changes</source>
-        <translation>Bloker ændringer</translation>
+        <translation type="obsolete">Bloker ændringer</translation>
     </message>
     <message>
         <source>Old version</source>
-        <translation>Gammel version</translation>
+        <translation type="obsolete">Gammel version</translation>
     </message>
     <message>
         <source>New version</source>
-        <translation>Ny version</translation>
+        <translation type="obsolete">Ny version</translation>
     </message>
 </context>
 <context>
@@ -17595,74 +17886,74 @@ Hvis du ønsker at sende kommentarer til den, der godkender, eller hvis du ønsk
     <name>design/standard/content/version</name>
     <message>
         <source>Version</source>
-        <translation>Version</translation>
+        <translation type="obsolete">Version</translation>
     </message>
     <message>
         <source>Edit</source>
-        <translation>Rediger</translation>
+        <translation type="obsolete">Rediger</translation>
     </message>
     <message>
         <source>Copy and edit</source>
-        <translation>Kopier og rediger</translation>
+        <translation type="obsolete">Kopier og rediger</translation>
     </message>
     <message>
         <source>Versions for: %1</source>
-        <translation>Versioner af: %1</translation>
+        <translation type="obsolete">Versioner af: %1</translation>
     </message>
     <message>
         <source>Unable to create new version</source>
-        <translation>Kan ikke oprette en ny version</translation>
+        <translation type="obsolete">Kan ikke oprette en ny version</translation>
     </message>
     <message>
         <source>Version history limit has been exceeded and no archived version can be removed by the system.</source>
-        <translation>Versionshistorik begrænsningen er overskredet og ingen arkiverede versioner kan fjernes fra systemet.</translation>
+        <translation type="obsolete">Versionshistorik begrænsningen er overskredet og ingen arkiverede versioner kan fjernes fra systemet.</translation>
     </message>
     <message>
         <source>You can change your version history settings in content.ini, remove draft versions or edit existing drafts.</source>
-        <translation>Du kan ændre din versionshistorikindstillinger i content.ini, fjerne udkastversioner eller redigere eksisterende udkast.</translation>
+        <translation type="obsolete">Du kan ændre din versionshistorikindstillinger i content.ini, fjerne udkastversioner eller redigere eksisterende udkast.</translation>
     </message>
     <message>
         <source>Version %1 is not available for editing any more, only drafts can be edited.</source>
-        <translation>Version %1 er tilgængelig for redigering mere, kun udkast kan redigeres.</translation>
+        <translation type="obsolete">Version %1 er tilgængelig for redigering mere, kun udkast kan redigeres.</translation>
     </message>
     <message>
         <source>Status</source>
-        <translation>Status</translation>
+        <translation type="obsolete">Status</translation>
     </message>
     <message>
         <source>Translations</source>
-        <translation>Oversættelser</translation>
+        <translation type="obsolete">Oversættelser</translation>
     </message>
     <message>
         <source>Creator</source>
-        <translation>Forfatter</translation>
+        <translation type="obsolete">Forfatter</translation>
     </message>
     <message>
         <source>Modified</source>
-        <translation>Ændret</translation>
+        <translation type="obsolete">Ændret</translation>
     </message>
     <message>
         <source>Version is not a draft</source>
-        <translation>Version er ikke en udkast</translation>
+        <translation type="obsolete">Version er ikke en udkast</translation>
     </message>
     <message>
         <source>To edit this version, first create a copy of it.</source>
-        <translation>For at redigere denne version skal du først oprette en kopi af den.</translation>
+        <translation type="obsolete">For at redigere denne version skal du først oprette en kopi af den.</translation>
     </message>
     <message>
         <source>Version is not yours</source>
-        <translation>Version er ikke din</translation>
+        <translation type="obsolete">Version er ikke din</translation>
     </message>
     <message>
         <source>Version %1 was not created by you. You can only edit your own drafts.</source>
-        <translation>Version %1 blev ikke oprettet af dig. Du kan kun redigere dine egne kladder.</translation>
+        <translation type="obsolete">Version %1 blev ikke oprettet af dig. Du kan kun redigere dine egne kladder.</translation>
     </message>
 </context>
 <context>
     <name>design/standard/content/versions</name>
     <message>
         <source>This object does not have any versions.</source>
-        <translation>Dette objekt har ikke nogen versioner.</translation>
+        <translation type="obsolete">Dette objekt har ikke nogen versioner.</translation>
     </message>
 </context>
 <context>
@@ -18483,7 +18774,7 @@ Knap</translation>
     </message>
     <message>
         <source>Printable version</source>
-        <translation>Printervenlig version</translation>
+        <translation type="obsolete">Printervenlig version</translation>
     </message>
     <message>
         <source>Advanced search</source>
@@ -18578,6 +18869,26 @@ Hvis du fjerner dem, vil underområderne også blive fjernet.</translation>
         <source>Cancel removal</source>
         <translation>Annuller fjernelse</translation>
     </message>
+    <message>
+        <source>Please wait while your content is being published</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Your content has been published successfully</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>View the published item</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Publishing has been deferred to crontab and will be published when the operation resumes. The object is also listed in your dashboard under pending items.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>View your pending content</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>design/standard/menuconfig</name>
@@ -18657,7 +18968,7 @@ Hvis du fjerner dem, vil underområderne også blive fjernet.</translation>
     </message>
     <message>
         <source>Are you sure you want to remove these items?</source>
-        <translation>Er du sikker på, at du vil fjerne disse emner?</translation>
+        <translation type="obsolete">Er du sikker på, at du vil fjerne disse emner?</translation>
     </message>
     <message>
         <source>%nodename and its %childcount children. %additionalwarning</source>
@@ -19524,6 +19835,18 @@ Du kan også fjerne pakken uden at afinstallere den fra pakkelisten.</translatio
     <message>
         <source>Clear</source>
         <translation>Tøm</translation>
+    </message>
+    <message>
+        <source>Siteaccess:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Global (override)</source>
+        <translation type="unfinished">Global (override)</translation>
+    </message>
+    <message>
+        <source>Set</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -23489,11 +23812,11 @@ For at gøre det skal du ændre %chown kommandoer under Alternative skal-kommand
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>PHP is currently not configured to register enviroment variables in the global variable $_ENV.</source>
+        <source>PHP is currently not configured to register environment variables in the global variable $_ENV.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Since some extensions might use $_ENV it is recomended to fix it unless you have full controll over all extensions you use!</source>
+        <source>Since some extensions might use $_ENV it is recommended to fix it unless you have full control over all extensions you use!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -24656,16 +24979,16 @@ For at gøre det skal du ændre %chown kommandoer under Alternative skal-kommand
         <translation>Ukendt</translation>
     </message>
     <message>
-        <source>All URLs</source>
-        <translation>Alle URL&apos;er</translation>
+        <source>All links</source>
+        <translation type="obsolete">Alle URL&apos;er</translation>
     </message>
     <message>
-        <source>Invalid URLs</source>
-        <translation>Ugyldige URL&apos;er</translation>
+        <source>Invalid links</source>
+        <translation type="obsolete">Ugyldige URL&apos;er</translation>
     </message>
     <message>
-        <source>Valid URLs</source>
-        <translation>Gyldige URL&apos;er</translation>
+        <source>Valid links</source>
+        <translation type="obsolete">Gyldige URL&apos;er</translation>
     </message>
     <message>
         <source>Information on URL</source>
@@ -24690,6 +25013,18 @@ For at gøre det skal du ændre %chown kommandoer under Alternative skal-kommand
     <message>
         <source>This means that the URL is no longer available or has been moved.</source>
         <translation>Dette betyder at URL ikke længere er tilgængelig eller er blevet flyttet.</translation>
+    </message>
+    <message>
+        <source>All URLs</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Invalid URLs</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Valid URLs</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -24918,6 +25253,10 @@ din konto.</translation>
         <source>The new password must be at least %1 characters long. Please retype your new password.</source>
         <translation type="unfinished">Den nye adgangskode skal være mindst %1 bogstaver lang. Vær venlig at indtaste din nye adgangskode igen.</translation>
     </message>
+    <message>
+        <source>Your email address has been confirmed. An administrator needs to approve your sign up request, before your login becomes valid.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>design/standard/user/</name>
@@ -25029,6 +25368,14 @@ din konto.</translation>
         <translation>Brugernavn
 
 Log ind-navn</translation>
+    </message>
+    <message>
+        <source>Your registration has been approved. You can login with your account %username.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Click the following URL to login:</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -25741,6 +26088,182 @@ Log ind-navn</translation>
     <message>
         <source>Language</source>
         <translation>Sprog</translation>
+    </message>
+</context>
+<context>
+    <name>design/starndard/node</name>
+    <message>
+        <source>Are you sure you want to remove these items?</source>
+        <translation type="unfinished">Er du sikker på, at du vil fjerne disse emner?</translation>
+    </message>
+</context>
+<context>
+    <name>extension/oauth</name>
+    <message>
+        <source>Application authorization</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The application %application_name% has requested access to this website on your behalf.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>extension/oauth/authorize</name>
+    <message>
+        <source>Authorize</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Deny</source>
+        <translation type="unfinished">Afvis</translation>
+    </message>
+</context>
+<context>
+    <name>extension/oauthadmin</name>
+    <message>
+        <source>New REST application</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>oAuth admin</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Confirm removal</source>
+        <translation type="unfinished">Bekræft fjernelse</translation>
+    </message>
+    <message>
+        <source>Application &lt;%application_name&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Last modified</source>
+        <translation type="unfinished">Sidst ændret</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Description</source>
+        <translation type="unfinished">Beskrivelse</translation>
+    </message>
+    <message>
+        <source>Client identifier</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Client secret</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Endpoint URI</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit this application.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translation type="unfinished">Slet</translation>
+    </message>
+    <message>
+        <source>Delete this application.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Are you sure you want to remove this application?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Are you sure you want to remove these applications?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Confirm</source>
+        <translation type="unfinished">Bekræft</translation>
+    </message>
+    <message>
+        <source>Confirm removal of these applications.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit application &lt;%application_name&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use this field to set the application name.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use this field to set the informal application description.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use this field to set the application endpoint URI.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>OK</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>REST applications (%applications_count)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>List of applications</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Invert selection.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Modifier</source>
+        <translation type="unfinished">Modifikator</translation>
+    </message>
+    <message>
+        <source>Modified</source>
+        <translation type="unfinished">Ændret</translation>
+    </message>
+    <message>
+        <source>Select application for removal.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit the &lt;%application_name&gt; application.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove selected</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove the selected applications.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>New application</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Create a new application.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Back</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -26593,6 +27116,11 @@ hvis du valgte mulighed &quot;%3&quot; fra &quot;%4&quot;</translation>
         <comment>eZUserType</comment>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>The emails do not match.</source>
+        <comment>eZUserType</comment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>kernel/classes/datatypes/ezbinaryfile</name>
@@ -26681,6 +27209,10 @@ hvis du valgte mulighed &quot;%3&quot; fra &quot;%4&quot;</translation>
         <source>Object %1 can not be embeded to itself.</source>
         <translation type="unfinished">Objekt %1 kan ikke indsættes i sig selv.</translation>
     </message>
+    <message>
+        <source>%count invalid character(s) have been found and replaced by a space</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>kernel/collaboration</name>
@@ -26761,7 +27293,7 @@ hvis du valgte mulighed &quot;%3&quot; fra &quot;%4&quot;</translation>
     </message>
     <message>
         <source>Versions</source>
-        <translation type="unfinished">Versioner</translation>
+        <translation type="obsolete">Versioner</translation>
     </message>
     <message>
         <source>My bookmarks</source>
@@ -26817,7 +27349,7 @@ hvis du valgte mulighed &quot;%3&quot; fra &quot;%4&quot;</translation>
     </message>
     <message>
         <source>Differences</source>
-        <translation type="unfinished">Forskelle</translation>
+        <translation type="obsolete">Forskelle</translation>
     </message>
     <message>
         <source>Remove translation</source>
@@ -26897,6 +27429,10 @@ hvis du valgte mulighed &quot;%3&quot; fra &quot;%4&quot;</translation>
     </message>
     <message>
         <source>You have already sent a tipafriend mail to this receiver regarding &apos;%1&apos; content</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Publishing queue</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -27067,6 +27603,14 @@ flere underpunkter</translation>
         <source>The size of the uploaded file exceeds the limit set for this site: %1 bytes.</source>
         <translation type="unfinished">Størrelsen på uploadfilen overskrider grænsen, som er angivet for denne side: %1 bytes.</translation>
     </message>
+    <message>
+        <source>The uploaded file size is above the maximum limit.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A system error occured while writing the uploaded file.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>kernel/content/urlalias_global</name>
@@ -27213,6 +27757,25 @@ Navigeringsdel</translation>
     <message>
         <source>Notification settings</source>
         <translation type="unfinished">Beskedindstillinger</translation>
+    </message>
+</context>
+<context>
+    <name>kernel/oauthadmin</name>
+    <message>
+        <source>oAuth admin</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit REST application</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Registered REST applications</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>REST application: %application_name%</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -28167,6 +28730,18 @@ Navigeringsdel</translation>
         <source>Success</source>
         <translation type="unfinished">Succes</translation>
     </message>
+    <message>
+        <source>oAuth</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>authorization</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unactivated users</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>kernel/user/register</name>
@@ -28177,6 +28752,10 @@ Navigeringsdel</translation>
     <message>
         <source>New user registered</source>
         <translation type="unfinished">Ny bruger registreret</translation>
+    </message>
+    <message>
+        <source>User registration approved</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -28266,6 +28845,10 @@ Navigeringsdel</translation>
     <message>
         <source>Payment Gateway</source>
         <translation type="unfinished">Betalings-gateway</translation>
+    </message>
+    <message>
+        <source>Finish User Registration</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

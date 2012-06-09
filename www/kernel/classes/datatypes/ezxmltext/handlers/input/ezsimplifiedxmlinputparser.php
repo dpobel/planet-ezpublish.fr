@@ -1,30 +1,12 @@
 <?php
-//
-// Definition of eZSimplifiedXMLInputParser class
-//
-// Created on: <27-Mar-2006 15:28:39 ks>
-//
-// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-// SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.4.0
-// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
-// SOFTWARE LICENSE: GNU General Public License v2.0
-// NOTICE: >
-//   This program is free software; you can redistribute it and/or
-//   modify it under the terms of version 2.0  of the GNU General
-//   Public License as published by the Free Software Foundation.
-// 
-//   This program is distributed in the hope that it will be useful,
-//    but WITHOUT ANY WARRANTY; without even the implied warranty of
-//   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//   GNU General Public License for more details.
-// 
-//   You should have received a copy of version 2.0 of the GNU General
-//   Public License along with this program; if not, write to the Free
-//   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
-//   MA 02110-1301, USA.
-// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-//
+/**
+ * File containing the eZSimplifiedXMLInputParser class.
+ *
+ * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
+ * @license http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License v2
+ * @version  2012.5
+ * @package kernel
+ */
 
 // if ( !class_exists( 'eZXMLInputParser' ) )
 class eZSimplifiedXMLInputParser extends eZXMLInputParser
@@ -434,7 +416,7 @@ class eZSimplifiedXMLInputParser extends eZXMLInputParser
         $ret = null;
         $parent = $element->parentNode;
         $level = $element->getAttribute( 'level' );
-        if ( !$level )
+        if ( $level < 1 )
         {
             $level = 1;
         }
@@ -808,8 +790,8 @@ class eZSimplifiedXMLInputParser extends eZXMLInputParser
                         return $ret;
 
                     }
-                    // Check mail address validity
-                    if ( preg_match( "/^mailto:(.*)/i" , $url, $mailAddr ) &&
+                    // Check mail address validity following RFC 5322 and RFC 5321
+                    if ( preg_match( "/^mailto:([^.][a-z0-9!#\$%&'*+-\/=?`{|}~^]+@([a-z0-9.-]+))/i" , $url, $mailAddr ) &&
                          !eZMail::validate( $mailAddr[1] ) )
                     {
                         $this->handleError( eZXMLInputParser::ERROR_DATA,

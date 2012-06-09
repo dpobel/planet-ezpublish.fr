@@ -1,0 +1,28 @@
+Bugfixes
+========
+- #15640: PNG transparency is lost when swithed to gd Check for more description: http://issues.ez.no/15640 http://share.ez.no/forums/developer/png-image-resize-loose-transparency
+- #16189: TC-186: Deleted products still appears in the Whishlist
+- #18149: special character not supported by eZXMLInputParser
+- #18238: object state limitation is not applied in notifications
+- #18298: Setting priorities does not work with ezformtoken
+- #18318: Asynchronous publishing hooks are not called
+- #18377: ezpgenerateautoloads.php scans to much directories
+- #18466: Changes to DefaultVersionHistoryLimit not reflected on existing objects
+- #18472: Section changes are not correctly indexed
+- #18487: Search index is not updated when removing a location other than the main one
+- #18503: Objects embedded are shown even after being hidden
+- #18532: Typo in translation on content_structure_menu_dynamic.tpl
+
+Enhancements
+============
+- #16188: TC-186: The Wishlist does not have a Date and action link to edit the content
+- #18512: Custom headers only available for content/view module as a root fallback
+- #18513: Make attribute() template operator more flexible
+
+Pull requests
+=============
+- Merge pull request #103 from thiagocamposviana/master
+- Merge pull request #102 from lafka/doc
+- Merge pull request #92 from freshteapot/comments
+- Merge pull request #94 from freshteapot/setcookie
+- Merge pull request #91 from myxt/localization

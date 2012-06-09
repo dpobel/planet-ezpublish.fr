@@ -1,34 +1,16 @@
 <?php
-//
-// Definition of eZClusterFileHandlerInterface interface
-//
-// <creation-tag>
-//
-// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-// SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.4.0
-// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
-// SOFTWARE LICENSE: GNU General Public License v2.0
-// NOTICE: >
-//   This program is free software; you can redistribute it and/or
-//   modify it under the terms of version 2.0  of the GNU General
-//   Public License as published by the Free Software Foundation.
-// 
-//   This program is distributed in the hope that it will be useful,
-//    but WITHOUT ANY WARRANTY; without even the implied warranty of
-//   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//   GNU General Public License for more details.
-// 
-//   You should have received a copy of version 2.0 of the GNU General
-//   Public License along with this program; if not, write to the Free
-//   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
-//   MA 02110-1301, USA.
-// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-//
+/**
+ * File containing the eZClusterFileHandlerInterface interface.
+ *
+ * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
+ * @license http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License v2
+ * @version  2012.5
+ * @package lib
+ */
 
 /**
  * Cluster file handlers interface
- **/
+ */
 interface eZClusterFileHandlerInterface
 {
     /**
@@ -54,7 +36,7 @@ interface eZClusterFileHandlerInterface
      * @param string $datatype Datatype for the file. Also used to clean cache up
      *
      * @return void
-     **/
+     */
     public function fileStoreContents( $filePath, $contents, $scope = false, $datatype = false );
 
     /**
@@ -65,7 +47,7 @@ interface eZClusterFileHandlerInterface
      * @param string $datatype Datatype for the file. Also used to clean cache up
      * @param bool $storeLocally If true the file will also be stored on the
      *                           local file system.
-     **/
+     */
     public function storeContents( $contents, $scope = false, $datatype = false, $storeLocally = false );
 
     /**
@@ -142,7 +124,7 @@ interface eZClusterFileHandlerInterface
      * used both the $expiry and $ttl check must hold.
      *
      * @todo Reformat the doc so that it's readable
-     **/
+     */
     public function processCache( $retrieveCallback, $generateCallback = null, $ttl = null, $expiry = null, $extraData = null );
 
     /**
@@ -167,7 +149,7 @@ interface eZClusterFileHandlerInterface
      * @param int    $curtime The current time to check against.
      * @param int    $ttl Number of seconds the data can live, set to null to disable TTL.
      * @return bool
-     **/
+     */
     public function isExpired( $expiry, $curtime, $ttl );
 
     /**
@@ -176,7 +158,7 @@ interface eZClusterFileHandlerInterface
      * @param int    $curtime The current time to check against.
      * @param int    $ttl Number of seconds the data can live, set to null to disable TTL.
      * @return bool
-     **/
+     */
     public function isLocalFileExpired( $expiry, $curtime, $ttl );
 
     /**
@@ -185,7 +167,7 @@ interface eZClusterFileHandlerInterface
      * @param int    $curtime The current time to check against.
      * @param int    $ttl Number of seconds the data can live, set to null to disable TTL.
      * @return bool
-     **/
+     */
     public function isDBFileExpired( $expiry, $curtime, $ttl );
 
     /**
@@ -201,7 +183,7 @@ interface eZClusterFileHandlerInterface
      * @see self::processCache()
      * @note Unlike processCache() this returns null if the file cannot be
      *       accessed.
-     **/
+     */
     public function processFile( $callback, $expiry = false, $extraData = null );
 
     /**
@@ -243,13 +225,13 @@ interface eZClusterFileHandlerInterface
     /**
      * Returns file modification time.
      * @return int|null
-     **/
+     */
     public function mtime();
 
     /**
      * Returns file name.
      * @return string
-     **/
+     */
     public function name();
 
     /**
@@ -285,12 +267,12 @@ interface eZClusterFileHandlerInterface
 
     /**
      * Deletes a file that has been fetched before.
-     **/
+     */
     public function deleteLocal();
 
     /**
      * Purges local and remote file data for current file.
-     **/
+     */
     public function purge( $printCallback = false, $microsleep = false, $max = false, $expiry = false );
 
     /**
@@ -307,7 +289,7 @@ interface eZClusterFileHandlerInterface
      *       returns existance status determined in the constructor.
      *
      * @return bool
-     **/
+     */
     public function exists();
 
     /**
@@ -315,7 +297,7 @@ interface eZClusterFileHandlerInterface
      *
      * @deprecated This function should not be used since it cannot handle
      *             reading errors.
-     **/
+     */
     public function passthrough();
 
     /**
@@ -357,12 +339,12 @@ interface eZClusterFileHandlerInterface
      * with '.generating'.
      *
      * @return bool false if the file is being generated, true if it is not
-     **/
+     */
     public function startCacheGeneration();
 
     /**
      * Ends the cache generation started by startCacheGeneration().
-     **/
+     */
     public function endCacheGeneration( $rename = true );
 
     /**
@@ -370,14 +352,14 @@ interface eZClusterFileHandlerInterface
      *
      * Does so by rolling back the current transaction, which should be the
      * .generating file lock
-     **/
+     */
     public function abortCacheGeneration();
 
     /**
      * Checks if the .generating file was changed, which would mean that generation
      * timed out. If not timed out, refreshes the timestamp so that storage won't
      * be stolen
-     **/
+     */
     public function checkCacheGenerationTimeout();
 
     /**
@@ -388,7 +370,7 @@ interface eZClusterFileHandlerInterface
      * it up or disabling it.
      *
      * @return bool
-     **/
+     */
     public function requiresClusterizing();
 
     /**
@@ -396,7 +378,24 @@ interface eZClusterFileHandlerInterface
      * to be purged in order to be physically deleted
      *
      * @since 4.3
+     * @deprecated Deprecated as of 4.5, use {@link eZClusterFileHandlerInterface::requiresPurge()} instead.
+     * @return bool
      */
     public function requiresBinaryPurge();
+
+    /**
+     * This method indicates if the cluster file handler requires binary files
+     * to be purged in order to be physically deleted
+     *
+     * @since 4.5
+     * @return bool
+     */
+    public function requiresPurge();
+
+    /**
+     * Indicates if the handler supports the stalecache feature
+     * @return bool true if it does, false otherwise
+     */
+    public function hasStaleCacheSupport();
 }
 ?>

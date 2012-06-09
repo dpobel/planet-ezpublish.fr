@@ -1,30 +1,12 @@
 <?php
-//
-// Definition of eZSection class
-//
-// Created on: <27-Aug-2002 15:55:18 bf>
-//
-// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-// SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.4.0
-// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
-// SOFTWARE LICENSE: GNU General Public License v2.0
-// NOTICE: >
-//   This program is free software; you can redistribute it and/or
-//   modify it under the terms of version 2.0  of the GNU General
-//   Public License as published by the Free Software Foundation.
-// 
-//   This program is distributed in the hope that it will be useful,
-//    but WITHOUT ANY WARRANTY; without even the implied warranty of
-//   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//   GNU General Public License for more details.
-// 
-//   You should have received a copy of version 2.0 of the GNU General
-//   Public License along with this program; if not, write to the Free
-//   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
-//   MA 02110-1301, USA.
-// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-//
+/**
+ * File containing the eZSection class.
+ *
+ * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
+ * @license http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License v2
+ * @version  2012.5
+ * @package kernel
+ */
 
 /*!
   \class eZSection ezsection.php
@@ -118,6 +100,11 @@ class eZSection extends eZPersistentObject
                                                        null,
                                                        array( "identifier" => $sectionIdentifier ),
                                                        $asObject );
+            if( !$sectionFetched )
+            {
+                return null;
+            }
+
             if( $asObject )
             {
                 // the section identifier index refers to the id index object
@@ -169,7 +156,7 @@ class eZSection extends eZPersistentObject
 
      /*!
      \return the number of active orders
-    */
+     */
     static function sectionCount()
     {
         $db = eZDB::instance();
@@ -178,38 +165,38 @@ class eZSection extends eZPersistentObject
         return $countArray[0]['count'];
     }
 
-   /**
-    * Makes sure the global section ID is propagated to the template override key.
-    * @deprecated since 4.4, global section support has been removed
-    *
-    * @return false
-    */
+    /**
+     * Makes sure the global section ID is propagated to the template override key.
+     * @deprecated since 4.4, global section support has been removed
+     *
+     * @return false
+     */
     static function initGlobalID()
     {
         return false;
     }
 
-   /**
-    * Sets the current global section ID to \a $sectionID in the session and
-    * the template override key
-    * @deprecated since 4.4, global section support has been removed this
-    *             function only sets value to override values for bc.
-    *
-    *  @param int $sectionID
-    */
+    /**
+     * Sets the current global section ID to \a $sectionID in the session and
+     * the template override key
+     * @deprecated since 4.4, global section support has been removed this
+     *             function only sets value to override values for bc.
+     *
+     *  @param int $sectionID
+     */
     static function setGlobalID( $sectionID )
     {
         // eZTemplateDesignResource will read this global variable
         $GLOBALS['eZDesignKeys']['section'] = $sectionID;
     }
 
-   /**
-    * Return the global section ID or \c null if it is not set yet.
-    * @deprecated since 4.4, global section support has been removed and
-    *             null is always returned.
-    *
-    * @return null
-    */
+    /**
+     * Return the global section ID or \c null if it is not set yet.
+     * @deprecated since 4.4, global section support has been removed and
+     *             null is always returned.
+     *
+     * @return null
+     */
     static function globalID()
     {
         return null;

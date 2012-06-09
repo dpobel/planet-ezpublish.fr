@@ -3,10 +3,10 @@
 // Created on: <28-Feb-2008 00:00:00 ar>
 //
 // ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-// SOFTWARE NAME: eZ Online Editor extension for eZ Publish
-// SOFTWARE RELEASE: 4.4.0
-// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
-// SOFTWARE LICENSE: GNU General Public License v2.0
+// SOFTWARE NAME: eZ Publish Community Project
+// SOFTWARE RELEASE:  2012.5
+// COPYRIGHT NOTICE: Copyright (C) 1999-2012 eZ Systems AS
+// SOFTWARE LICENSE: GNU General Public License v2
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
 //   modify it under the terms of version 2.0  of the GNU General
@@ -28,8 +28,6 @@
  * Display the embed view of a object with params for class/inline/view/align/size
  * TODO: support for custom attributes
  */
-
-include_once( 'kernel/common/template.php' );
 
 $embedId         = 0;
 $http            = eZHTTPTool::instance();
@@ -80,31 +78,51 @@ else
 $className = '';
 $size  = 'medium';
 $view  = 'embed';
-$align = 'right';
+$align = 'none';
 //$style = '';//'text-align: left;';
 
-if ( $http->hasPostVariable('inline') &&
+if ( isset( $_GET['inline'] ) && $_GET['inline'] === 'true' )
+{
+    $tagName = 'embed-inline';
+}
+else if ( $http->hasPostVariable('inline') &&
      $http->postVariable('inline') === 'true' )
 {
     $tagName = 'embed-inline';
 }
 
-if ( $http->hasPostVariable('class') )
+if ( isset( $_GET['class'] ) )
+{
+    $className = $_GET['class'];
+}
+else if ( $http->hasPostVariable('class') )
 {
     $className = $http->postVariable('class');
 }
 
-if ( $http->hasPostVariable('size') )
+if ( isset( $_GET['size'] ) )
+{
+    $size = $_GET['size'];
+}
+else if ( $http->hasPostVariable('size') )
 {
     $size = $http->postVariable('size');
 }
 
-if ( $http->hasPostVariable('view') )
+if ( isset( $_GET['view'] ) )
+{
+    $view = $_GET['view'];
+}
+else if ( $http->hasPostVariable('view') )
 {
     $view = $http->postVariable('view');
 }
 
-if ( $http->hasPostVariable('align') )
+if ( isset( $_GET['align'] ) )
+{
+    $align = $_GET['align'] === 'middle' ? 'center' : $_GET['align'];
+}
+else if ( $http->hasPostVariable('align') )
 {
     $align = $http->postVariable('align');
     if ( $align === 'middle' )
@@ -118,7 +136,7 @@ if ( $http->hasPostVariable('align') )
 $res = eZTemplateDesignResource::instance();
 $res->setKeys( array( array('classification', $className) ) );
 
-$tpl = templateInit();
+$tpl = eZTemplate::factory();
 $tpl->setVariable( 'view', $view );
 $tpl->setVariable( 'object', $embedObject );
 $tpl->setVariable( 'link_parameters', array() );

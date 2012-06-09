@@ -1,32 +1,12 @@
 <?php
-//
-// $Id$
-//
-// Definition of eZPostgreSQLLDB class
-//
-// Created on: <25-Feb-2002 14:08:32 bf>
-//
-// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-// SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.4.0
-// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
-// SOFTWARE LICENSE: GNU General Public License v2.0
-// NOTICE: >
-//   This program is free software; you can redistribute it and/or
-//   modify it under the terms of version 2.0  of the GNU General
-//   Public License as published by the Free Software Foundation.
-// 
-//   This program is distributed in the hope that it will be useful,
-//    but WITHOUT ANY WARRANTY; without even the implied warranty of
-//   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//   GNU General Public License for more details.
-// 
-//   You should have received a copy of version 2.0 of the GNU General
-//   Public License along with this program; if not, write to the Free
-//   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
-//   MA 02110-1301, USA.
-// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-//
+/**
+ * File containing the eZPostgreSQLDB class.
+ *
+ * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
+ * @license http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License v2
+ * @version  2012.5
+ * @package lib
+ */
 
 /*!
   \class eZPostgreSQLDB ezpostgresqldb.php
@@ -59,6 +39,8 @@ class eZPostgreSQLDB extends eZDBInterface
             return;
         }
 
+        eZDebug::createAccumulatorGroup( 'postgresql_total', 'Postgresql Total' );
+
         $ini = eZINI::instance();
 
         $server = $this->Server;
@@ -67,6 +49,92 @@ class eZPostgreSQLDB extends eZDBInterface
         $user = $this->User;
         $password = $this->Password;
 
+        $connectString = self::connectString( $this->Server, $this->Port, $this->DB, $this->User, $this->Password );
+
+        if ( $ini->variable( "DatabaseSettings", "UsePersistentConnection" ) == "enabled" &&  function_exists( "pg_pconnect" ))
+        {
+            eZDebugSetting::writeDebug( 'kernel-db-postgresql', $ini->variable( "DatabaseSettings", "UsePersistentConnection" ), "using persistent connection" );
+
+            // avoid automatic SQL errors
+            $oldHandling = eZDebug::setHandleType( eZDebug::HANDLE_EXCEPTION );
+            eZDebug::accumulatorStart( 'postgresql_connection', 'postgresql_total', 'Database connection'  );
+            try {
+                $this->DBConnection = pg_pconnect( $connectString );
+            } catch( ErrorException $e ) {}
+            eZDebug::accumulatorStop( 'postgresql_connection' );
+            eZDebug::setHandleType( $oldHandling );
+
+            $maxAttempts = $this->connectRetryCount();
+            $waitTime = $this->connectRetryWaitTime();
+            $numAttempts = 1;
+            while ( $this->DBConnection == false and $numAttempts <= $maxAttempts )
+            {
+                sleep( $waitTime );
+                $oldHandling = eZDebug::setHandleType( eZDebug::HANDLE_EXCEPTION );
+                eZDebug::accumulatorStart( 'postgresql_connection', 'postgresql_total', 'Database connection'  );
+                try {
+                    $this->DBConnection = pg_pconnect( $connectString );
+                } catch( ErrorException $e ) {}
+                eZDebug::accumulatorStop( 'postgresql_connection' );
+                eZDebug::setHandleType( $oldHandling );
+                $numAttempts++;
+            }
+            if ( $this->DBConnection )
+            {
+                $this->IsConnected = true;
+            }
+            else
+            {
+                throw new eZDBNoConnectionException( $server, $this->ErrorMessage, $this->ErrorNumber );
+            }
+        }
+        else if ( function_exists( "pg_connect" ) )
+        {
+            eZDebugSetting::writeDebug( 'kernel-db-postgresql', "using real connection",  "using real connection" );
+
+            $oldHandling = eZDebug::setHandleType( eZDebug::HANDLE_EXCEPTION );
+            eZDebug::accumulatorStart( 'postgresql_connection', 'postgresql_total', 'Database connection'  );
+            try {
+                $this->DBConnection = pg_connect( $connectString );
+            } catch( ErrorException $e ) {}
+            eZDebug::accumulatorStop( 'postgresql_connection' );
+            eZDebug::setHandleType( $oldHandling );
+
+            $maxAttempts = $this->connectRetryCount();
+            $waitTime = $this->connectRetryWaitTime();
+            $numAttempts = 1;
+            while ( $this->DBConnection == false and $numAttempts <= $maxAttempts )
+            {
+                sleep( $waitTime );
+                $oldHandling = eZDebug::setHandleType( eZDebug::HANDLE_EXCEPTION );
+                eZDebug::accumulatorStart( 'postgresql_connection', 'postgresql_total', 'Database connection'  );
+                try {
+                    $this->DBConnection = pg_connect( $connectString );
+                } catch( ErrorException $e ) {}
+                eZDebug::accumulatorStop( 'postgresql_connection' );
+                eZDebug::setHandleType( $oldHandling );
+                $numAttempts++;
+            }
+            if ( $this->DBConnection )
+            {
+                $this->IsConnected = true;
+            }
+            else
+            {
+                $this->setError();
+                throw new eZDBNoConnectionException( $server, $this->ErrorMessage, $this->ErrorNumber );
+            }
+        }
+        else
+        {
+            $this->IsConnected = false;
+            eZDebug::writeError( "PostgreSQL support not compiled into PHP, contact your system administrator", "eZPostgreSQLDB" );
+
+        }
+    }
+
+    public static function connectString( $server = null, $port = null, $db = null, $user = null, $password = null )
+    {
         $connectParams = array();
         if ( $server !== false and $server !== null )
             $connectParams[] = "host='$server'";
@@ -79,50 +147,7 @@ class eZPostgreSQLDB extends eZDBInterface
         if ( $port )
             $connectParams[] = "port='$port'";
 
-        $connectString = implode( " ", $connectParams );
-
-        if ( $ini->variable( "DatabaseSettings", "UsePersistentConnection" ) == "enabled" &&  function_exists( "pg_pconnect" ))
-        {
-            eZDebugSetting::writeDebug( 'kernel-db-postgresql', $ini->variable( "DatabaseSettings", "UsePersistentConnection" ), "using persistent connection" );
-            $this->DBConnection = pg_pconnect( $connectString );
-            $maxAttempts = $this->connectRetryCount();
-            $waitTime = $this->connectRetryWaitTime();
-            $numAttempts = 1;
-            while ( $this->DBConnection == false and $numAttempts <= $maxAttempts )
-            {
-                sleep( $waitTime );
-                $this->DBConnection = pg_pconnect( $connectString );
-                $numAttempts++;
-            }
-            if ( $this->DBConnection )
-                $this->IsConnected = true;
-            // add error checking
-//          eZDebug::writeError( "Error: could not connect to database." . pg_last_error( $this->DBConnection ), "eZPostgreSQLDB" );
-        }
-        else if ( function_exists( "pg_connect" ) )
-        {
-            eZDebugSetting::writeDebug( 'kernel-db-postgresql', "using real connection",  "using real connection" );
-            $this->DBConnection = pg_connect( $connectString );
-            $maxAttempts = $this->connectRetryCount();
-            $waitTime = $this->connectRetryWaitTime();
-            $numAttempts = 1;
-            while ( $this->DBConnection == false and $numAttempts <= $maxAttempts )
-            {
-                sleep( $waitTime );
-                $this->DBConnection = pg_connect( $connectString );
-                $numAttempts++;
-            }
-            if ( $this->DBConnection )
-                $this->IsConnected = true;
-            else
-                throw new eZDBNoConnectionException( $server );
-        }
-        else
-        {
-            $this->IsConnected = false;
-            eZDebug::writeError( "PostgreSQL support not compiled into PHP, contact your system administrator", "eZPostgreSQLDB" );
-
-        }
+        return implode( " ", $connectParams );
     }
 
     function availableDatabases()
@@ -164,29 +189,46 @@ class eZPostgreSQLDB extends eZDBInterface
     {
         if ( $this->isConnected() )
         {
+            eZDebug::accumulatorStart( 'postgresql_query', 'postgresql_total', 'Postgresql queries' );
             if ( $this->OutputSQL )
             {
-                eZDebug::accumulatorStart( 'postgresql_query', 'postgresql_total', 'Postgresql_queries' );
                 $this->startTimer();
-
             }
-            $result = pg_query( $this->DBConnection, $sql );
+            // postgres will by default cast an error if a query fails
+            // exception handling mode needs to catch this exception and set the $result variable to false
+            if ( $this->errorHandling == eZDB::ERROR_HANDLING_EXCEPTIONS )
+            {
+                $oldHandling = eZDebug::setHandleType( eZDebug::HANDLE_EXCEPTION );
+                try {
+                    $result = pg_query( $this->DBConnection, $sql );
+                } catch( ErrorException $e ) {
+                    $result = false;
+                }
+                eZDebug::setHandleType( $oldHandling );
+            }
+            else
+            {
+                $result = pg_query( $this->DBConnection, $sql );
+            }
+
             if ( $this->OutputSQL )
             {
                 $this->endTimer();
-
                 if ($this->timeTaken() > $this->SlowSQLTimeout)
                 {
-                    eZDebug::accumulatorStop( 'postgresql_query' );
                     $this->reportQuery( 'eZPostgreSQLDB', $sql, false, $this->timeTaken() );
                 }
             }
+            eZDebug::accumulatorStop( 'postgresql_query' );
 
             if ( !$result )
             {
-                eZDebug::writeError( "Error: error executing query: $sql " . pg_last_error( $this->DBConnection ), "eZPostgreSQLDB" );
                 $this->setError();
-
+                eZDebug::writeError( "Error: error executing query: $sql: {$this->ErrorMessage}", "eZPostgreSQLDB" );
+                if ( $this->errorHandling == eZDB::ERROR_HANDLING_EXCEPTIONS )
+                {
+                    throw new eZDBException( $this->ErrorMessage, $this->ErrorNumber );
+                }
                 $this->reportError();
             }
         }
@@ -235,7 +277,12 @@ class eZPostgreSQLDB extends eZDBInterface
                     $sql .= " ";
                 $sql .= "OFFSET $offset";
             }
+
+            eZDebug::accumulatorStart( 'postgresql_query', 'postgresql_total', 'Postgresql queries' );
+
             $result = $this->query( $sql );
+
+            eZDebug::accumulatorStop( 'postgresql_query' );
 
             if ( $result == false )
             {
@@ -244,6 +291,7 @@ class eZPostgreSQLDB extends eZDBInterface
 
             if ( pg_numrows( $result ) > 0 )
             {
+                eZDebug::accumulatorStart( 'postgresql_loop', 'postgresql_total', 'Looping result' );
                 if ( !is_string( $column ) )
                 {
                     for($i = 0; $i < pg_numrows($result); $i++)
@@ -259,6 +307,7 @@ class eZPostgreSQLDB extends eZDBInterface
                         $retArray[$i + $offset] =& $tmp_row[$column];
                     }
                 }
+                eZDebug::accumulatorStart( 'postgresql_loop' );
             }
             pg_free_result( $result );
         }
@@ -370,7 +419,7 @@ class eZPostgreSQLDB extends eZDBInterface
         $relationKind = $this->relationKind( $relationType );
         if ( !$relationKind )
         {
-            eZDebug::writeError( "Unsupported relation type '$relationType'", 'eZPostgreSQLDB::relationCount' );
+            eZDebug::writeError( "Unsupported relation type '$relationType'", __METHOD__ );
             return false;
         }
 
@@ -394,7 +443,7 @@ class eZPostgreSQLDB extends eZDBInterface
         $relationKind = $this->relationKind( $relationType );
         if ( !$relationKind )
         {
-            eZDebug::writeError( "Unsupported relation type '$relationType'", 'eZPostgreSQLDB::relationList' );
+            eZDebug::writeError( "Unsupported relation type '$relationType'", __METHOD__ );
             return false;
         }
 
@@ -439,7 +488,7 @@ class eZPostgreSQLDB extends eZDBInterface
         $relationTypeName = $this->relationName( $relationType );
         if ( !$relationTypeName )
         {
-            eZDebug::writeError( "Unsupported relation type '$relationType'", 'eZPostgreSQLDB::removeRelation' );
+            eZDebug::writeError( "Unsupported relation type '$relationType'", __METHOD__ );
             return false;
         }
 
@@ -503,12 +552,12 @@ class eZPostgreSQLDB extends eZDBInterface
     */
     function rollbackQuery()
     {
-        return $this->query( "ROLLBACK WORK" );
+        return pg_query( $this->DBConnection, "ROLLBACK WORK" );
     }
 
     /**
      * Returns the last serial ID generated with an auto increment field.
-     * 
+     *
      * In this case that means the current value of the sequence assigned
      * <var>$table</var>
      *

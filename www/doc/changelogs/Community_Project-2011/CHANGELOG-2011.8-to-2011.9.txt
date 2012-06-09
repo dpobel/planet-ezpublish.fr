@@ -1,0 +1,112 @@
+Bugfixes
+========
+- #15717: impossible to purge image aliases
+- #18467: User register : sometimes it is impossible to activate account and 2 mails
+- #18508: Need cleanup of abandoned/broken cluster data
+- #18514: Multiplexer - Classes to run workflow is limited by database
+- #18555: Debug by ip not usable if being a proxy
+- #18582: WebDav doesn't work!! - Credits go to Jakub Derdziak :)
+- #18611: Clearing the design base cache causes timeouts
+- #18625: Upgrading from 4.5 to 4.6alpha1 database (mysql) consistency check fails
+- #18638: append() tpl operator generates a warning when adding a scalar value in an array
+- #18652: eZXML removes spaces around adjacent inline tags
+- #18653: Fatal error when searching for some special characters
+
+Enhancements
+============
+- #17226: Disable subtreeexpirycleanup.php cronjob by default, as DelayedCacheBlockCleanup is disabled
+
+Pull requests
+=============
+- #95: from tzilliox/master
+- #104: from alafon/debug-by-ip-018555
+- #105: from crevillo/issue-17226
+- #109: from peterkeung/master
+- #110: from xmak/patch-1
+- #111: from xmak/patch-3
+- #112: from jeromegamez/18423_hostname_fallback
+- #113: from tzilliox/eztemplatedebug
+- #114: from dpobel/admin2_css
+- #115: from jeromegamez/phpdoc_ezsys
+- #116: from eeggenberger/master
+- #117: from emodric/cro_flag
+- #119: from pkamps/StaticCache
+- #121: from nottavi/multilinguishBugs
+
+Miscellaneous
+=============
+- Fixed: make sure to use the global YUI3 config when loading YUI components
+- Fixed: Syntax error regression in eZSys on PHP 5.2
+- PHPDoc & CS: On eZContentFunctions::createAndPublishObject()
+- Fixed: use of .attr() to make sure it is valid for jQuery 1.6
+- WS: Fixed some whitespace issues in index_image_*.php files
+- Remove trailing empty line
+- Re-introduce $_SERVER lazy initialization
+- Fixed a PHP warning eZDFSFileHandler::getFileList()
+- Revert "Refactor deprecated isPHPVersionSufficient"
+- objectname_filter is not working if object is translated
+- new interface added to autoload
+- Fix for Croatian flag not displaying in admin interface
+- Implemented support for PUT and DELETE + fallback to support those over POST with _method param
+- Added: ezorder_nr_incr for postgresql upgrade
+- Changed: set vertical align of icon title to middle
+- Fixed style of table headers to be consistent across browsers
+- Changed: set vertical align to middle in tables
+- Made buttons a bit bigger especially in Chrome/Safari
+- Replace more Doxygen comments with PHPDoc
+- Make the code a little less dense and thus more readable
+- And that's the reason why I love my IDE (PHPStorm)
+- Add some more PHPDocs
+- Refactor deprecated isPHPVersionSufficient
+- Avoid problems with weird PHP versions
+- Update some more PHPDocs
+- Make sure the server port is just one type
+- Make use of the already implemented type hinting
+- Moved class variables from the bottom to the top of the file, changed file and class comments from oxygen to phpdoc
+- Added a default value to Name input and added a smart default value handling
+- Allow you to use eZTemplate::setIsDebugEnabled() to desactivate the template debug in specific views. For example, if you generate XML or JSON views.
+- Added missing documentation on configuration object of eZAjaxUploader
+- Improved: focus the first text input
+- Fixed a typo in location.tpl template for AJAX Uploader
+- Fixed: make sure all strings related to AJAX Uploader can be translated
+- CS & DOC: Add missing trim() and phpdoc in pull request #112
+- Implement: Use new eZSys::clientIp() api introduced in pull #104 for all ip use
+- CS: Two minor fixes for merge 51aaf022c74
+- Added http:// so that parse_url() works.
+- Replaced additional variable in site.ini with parse_url of SiteURL, as suggested by @andrerom
+- Added Variable "DefaultHostName" in site.ini and retrieval of it in eZSys::hostname()
+- Fixed a JavaScript error with Image Editor when Packing is enabled
+- Added static fallback in case that the ServerVariable 'SERVER_PORT' is not set (e.g. during Shell execution)
+- Added fallback from SiteURL (site.ini) in case that the ServerVariable 'HTTP_HOST' is not set (e.g. during Shell execution)
+- Improved error message when JSON response can not be parsed
+- Fixed documentation of eZAjaxUploader and eZModalWindow
+- Added animation when opening and closing an eZModalWindow
+- Added a defaut configuration to eZAjaxUploader and eZModalWindow
+- Fixed a JavaScript when ezformtoken is enabled
+- Added: allow to specify language of objects created with eZContentUpload::handleLocalFile()
+- Improved preview in AJAX Uploader
+- Added DO NOT EDIT FILE comment in new templates
+- Fixed: error messages have no specific style
+- Added the AJAX uploader for ezobjectrelation attributes
+- Readded the grey gradient in the title of the modal window IE
+- Changed the modal window tags to be specific to where we need a modal window
+- Added the default (empty) ezobjectrelationlist_ajaxuploader.tpl to avoid a template engine warning
+- Added: grey gradient in the title of the modal window for IE
+- Implemented: upload from object relation list attributes
+- Added a default gif ajax loader to admin2 design
+- Added eZModalWindow JavaScript component
+- Fixed ezajaxrelations_jquery.js to work the new html code
+- Improved usability of ezobjectrelation content edit
+- Improved usability of ezobjectrelationlist content edit
+- Improved usability of  ezobjectrelationlist class attribute edit
+- Check mail address validity following RFC 5322 and RFC 5321.
+- The text part of the URL datatype ("_ezurl_text_") shouldn't be required since only URL part is esential in this datatype.
+- Allow ezuser fromString to be used for updates
+- Reconfigured branch.
+- Added more inline doc and a note in BC doc.
+- Script commented out instead of removed, as suggested by andrerom.
+- Inline doc added
+- implements the interface
+- interface for staticcache
+- StaticCache Handler instead of hardcoded StaticCache
+- Allow you to use depth uri in the "HostUriMatchMapItems" of your settings. So you can has different siteaccess following uris like that : "paris/fr", "paris/en", "londres/fr", "londres/en".

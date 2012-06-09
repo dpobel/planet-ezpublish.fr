@@ -1,40 +1,19 @@
 <?php
-//
-// Definition of eZFSFileHandler class
-//
-// Created on: <09-Mar-2006 16:40:46 vs>
-//
-// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-// SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.4.0
-// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
-// SOFTWARE LICENSE: GNU General Public License v2.0
-// NOTICE: >
-//   This program is free software; you can redistribute it and/or
-//   modify it under the terms of version 2.0  of the GNU General
-//   Public License as published by the Free Software Foundation.
-// 
-//   This program is distributed in the hope that it will be useful,
-//    but WITHOUT ANY WARRANTY; without even the implied warranty of
-//   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//   GNU General Public License for more details.
-// 
-//   You should have received a copy of version 2.0 of the GNU General
-//   Public License along with this program; if not, write to the Free
-//   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
-//   MA 02110-1301, USA.
-// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-//
-
-/*! \file
-*/
+/**
+ * File containing the eZFSFileHandler class.
+ *
+ * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
+ * @license http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License v2
+ * @version  2012.5
+ * @package kernel
+ */
 
 class eZFSFileHandler
 {
     /**
-    * This should be defined in eZFS2FileHandler, but due to static members
-    * limitations in PHP < 5.3, it is declared here
-    **/
+     * This should be defined in eZFS2FileHandler, but due to static members
+     * limitations in PHP < 5.3, it is declared here
+     */
     const EXPIRY_TIMESTAMP = 233366400;
 
     /**
@@ -142,7 +121,7 @@ class eZFSFileHandler
                 eZDebugSetting::writeDebug( 'kernel-clustering', ' clearstatcache called on ' . $this->filePath, __METHOD__ );
             }
 
-            $this->metaData = @stat( $this->filePath );
+            $this->metaData = file_exists( $this->filePath ) ? stat( $this->filePath ) : false;
             eZDebug::accumulatorStop( 'dbfile' );
         }
     }
@@ -322,12 +301,10 @@ class eZFSFileHandler
      */
     function processCache( $retrieveCallback, $generateCallback = null, $ttl = null, $expiry = null, $extraData = null )
     {
-        $forceDB = false;
         $fname = $this->filePath;
         $args = array( $fname );
         if ( $extraData !== null )
             $args[] = $extraData;
-        $timestamp = null;
         $curtime   = time();
         $tries     = 0;
         $noCache   = false;
@@ -341,7 +318,7 @@ class eZFSFileHandler
         {
             $forceGeneration = false;
             $storeCache      = true;
-            $mtime = @filemtime( $fname );
+            $mtime = file_exists( $fname ) ? filemtime( $fname ) : false;
             if ( $retrieveCallback !== null && !$this->isExpired( $expiry, $curtime, $ttl ) )
             {
                 $args = array( $fname, $mtime );
@@ -395,7 +372,7 @@ class eZFSFileHandler
             {
                 // Lock the entry for exclusive access, if the entry does not exist
                 // it will be inserted with mtime=-1
-                if ( !$this->_exclusiveLock( $fname, 'processCache' ) )
+                if ( !$this->_exclusiveLock( $fname ) )
                 {
                     // Cannot get exclusive lock, so return null.
                     return null;
@@ -404,11 +381,9 @@ class eZFSFileHandler
                 // This is where we perform a two-phase commit. If any other
                 // process or machine has generated the file data and it is valid
                 // we will retry the retrieval part and not do the generation.
-                @clearstatcache();
+                clearstatcache();
                 eZDebugSetting::writeDebug( 'kernel-clustering', "clearstatcache called on $fname", __METHOD__ );
-                $mtime = @filemtime( $fname );
-//                $expiry = max( $curtime, $expiry );
-                if ( $mtime > 0 && !$this->isExpired( $expiry, $curtime, $ttl ) )
+                if ( file_exists( $fname ) && !$this->isExpired( $expiry, $curtime, $ttl ) )
                 {
                     eZDebugSetting::writeDebug( 'kernel-clustering', "File was generated while we were locked, use that instead", __METHOD__ );
                     $this->metaData = false;
@@ -475,10 +450,15 @@ class eZFSFileHandler
      * @param int    $curtime The current time to check against.
      * @param int    $ttl Number of seconds the data can live, set to null to disable TTL.
      * @return bool
-     **/
+     */
     public function isExpired( $expiry, $curtime, $ttl )
     {
-        return self::isFileExpired( $this->filePath, @filemtime( $this->filePath ), $expiry, $curtime, $ttl );
+        if ( !file_exists( $this->filePath ) )
+        {
+            return true;
+        }
+
+        return self::isFileExpired( $this->filePath, filemtime( $this->filePath ), $expiry, $curtime, $ttl );
     }
 
     /*!
@@ -578,7 +558,7 @@ class eZFSFileHandler
      */
     function stat()
     {
-        eZDebugSetting::writeDebug( 'kernel-clustering', $this->metaData, "fs::stat( {$this->filePath} )", __METHOD__ );
+        eZDebugSetting::writeDebug( 'kernel-clustering', $this->metaData, "fs::stat( {$this->filePath} )" );
         return $this->metaData;
     }
 
@@ -744,7 +724,7 @@ class eZFSFileHandler
                 $handler = eZFileHandler::instance( false );
                 $handler->unlink( $path );
                 if ( file_exists( $path ) )
-                    eZDebug::writeError( "File still exists after removal: '$path'", 'fs::fileDelete' );
+                    eZDebug::writeError( "File still exists after removal: '$path'", __METHOD__ );
             }
             else
             {
@@ -781,6 +761,9 @@ class eZFSFileHandler
         {
             eZDir::recursiveDelete( $path );
         }
+
+        eZClusterFileHandler::cleanupEmptyDirectories( $path );
+
         $this->loadMetaData( true );
 
         eZDebug::accumulatorStop( 'dbfile' );
@@ -793,7 +776,7 @@ class eZFSFileHandler
      * @see fetchUnique
      *
      * In case of fetching from filesystem does nothing.
-     **/
+     */
     function fileDeleteLocal( $path )
     {
         eZDebugSetting::writeDebug( 'kernel-clustering', "fs::fileDeleteLocal( '$path' )", __METHOD__ );
@@ -847,7 +830,11 @@ class eZFSFileHandler
                 $mtime = @filemtime( $file );
                 if ( $expiry === false ||
                      $mtime < $expiry ) // remove it if it is too old
+                {
                     @unlink( $file );
+
+                    eZClusterFileHandler::cleanupEmptyDirectories( $file );
+                }
                 ++$count;
             }
             else if ( is_dir( $file ) )
@@ -899,29 +886,18 @@ class eZFSFileHandler
     }
 
     /**
-     * Outputs file contents prepending them with appropriate HTTP headers.
+     * Outputs file contents to the browser
+     * Note: does not handle headers. eZFile::downloadHeaders() can be used for this
      *
-     * \public
+     * @param int $offset Transfer start offset
+     * @param int $length Transfer length, in bytes
      */
-    function passthrough()
+    function passthrough( $offset = 0, $length = false )
     {
-        $path = $this->filePath;
-
-        eZDebugSetting::writeDebug( 'kernel-clustering', "fs::passthrough()", __METHOD__ );
-
+        eZDebugSetting::writeDebug( 'kernel-clustering', "fs::passthrough( '{$this->filePath}' )", __METHOD__ );
         eZDebug::accumulatorStart( 'dbfile', false, 'dbfile' );
 
-        $mimeData = eZMimeType::findByFileContents( $path );
-//        $mimeType = $mimeData['name'];
-        $mimeType = 'application/octec-stream';
-        $contentLength = filesize( $path );
-
-        header( "Content-Length: $contentLength" );
-        header( "Content-Type: $mimeType" );
-        header( "Expires: ". gmdate('D, d M Y H:i:s', time() + 6000) . 'GMT');
-        header( "Connection: close" );
-
-        readfile( $path );
+        eZFile::downloadContent( $this->filePath, $offset, $length );
 
         eZDebug::accumulatorStop( 'dbfile' );
     }
@@ -938,7 +914,7 @@ class eZFSFileHandler
 
         eZDebug::accumulatorStart( 'dbfile', false, 'dbfile' );
         eZFileHandler::copy( $srcPath, $dstPath );
-        eZDebug::accumulatorStop( 'dbfile', false, 'dbfile' );
+        eZDebug::accumulatorStop( 'dbfile' );
     }
 
     /**
@@ -953,7 +929,7 @@ class eZFSFileHandler
 
         eZDebug::accumulatorStart( 'dbfile', false, 'dbfile' );
         eZFileHandler::linkCopy( $srcPath, $dstPath, $symLink );
-        eZDebug::accumulatorStop( 'dbfile', false, 'dbfile' );
+        eZDebug::accumulatorStop( 'dbfile' );
     }
 
     /**
@@ -997,7 +973,7 @@ class eZFSFileHandler
      *
      * @return mixed true if generation lock was granted, an integer matching the
      *               time before the current generation times out
-     **/
+     */
     public function startCacheGeneration()
     {
         return true;
@@ -1005,7 +981,7 @@ class eZFSFileHandler
 
     /**
      * Ends the cache generation started by startCacheGeneration().
-     **/
+     */
     public function endCacheGeneration()
     {
         return true;
@@ -1016,7 +992,7 @@ class eZFSFileHandler
      *
      * Does so by rolling back the current transaction, which should be the
      * .generating file lock
-     **/
+     */
     public function abortCacheGeneration()
     {
         return true;
@@ -1026,7 +1002,7 @@ class eZFSFileHandler
      * Checks if the .generating file was changed, which would mean that generation
      * timed out. If not timed out, refreshes the timestamp so that storage won't
      * be stolen
-     **/
+     */
     public function checkCacheGenerationTimeout()
     {
         return true;
@@ -1036,7 +1012,7 @@ class eZFSFileHandler
      * eZFS only stores data to FS and doesn't require/support clusterizing
      *
      * @return bool false
-     **/
+     */
     public function requiresClusterizing()
     {
         return false;
@@ -1047,8 +1023,27 @@ class eZFSFileHandler
      * Files are stored on plain FS and removed using FS functions
      *
      * @since 4.3
+     * @deprecated Deprecated as of 4.5, use {@link eZFSFileHandler::requiresPurge()} instead.
+     * @return bool
      */
     public function requiresBinaryPurge()
+    {
+        return false;
+    }
+
+    /**
+     * eZFS does not require binary purge.
+     * Files are stored on plain FS and removed using FS functions
+     *
+     * @since 4.5.0
+     * @return bool
+     */
+    public function requiresPurge()
+    {
+        return false;
+    }
+
+    public function hasStaleCacheSupport()
     {
         return false;
     }

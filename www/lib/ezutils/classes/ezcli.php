@@ -1,33 +1,12 @@
 <?php
-//
-// Definition of Command Line Interface functions
-//
-// Created on: <05-Aug-2003 13:00:00 amos>
-//
-// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-// SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.4.0
-// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
-// SOFTWARE LICENSE: GNU General Public License v2.0
-// NOTICE: >
-//   This program is free software; you can redistribute it and/or
-//   modify it under the terms of version 2.0  of the GNU General
-//   Public License as published by the Free Software Foundation.
-// 
-//   This program is distributed in the hope that it will be useful,
-//    but WITHOUT ANY WARRANTY; without even the implied warranty of
-//   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//   GNU General Public License for more details.
-// 
-//   You should have received a copy of version 2.0 of the GNU General
-//   Public License along with this program; if not, write to the Free
-//   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
-//   MA 02110-1301, USA.
-// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-//
-
-/*! \file
-*/
+/**
+ * File containing the eZCLI class.
+ *
+ * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
+ * @license http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License v2
+ * @version  2012.5
+ * @package lib
+ */
 
 /*!
   \class eZCLI ezcli.php
@@ -171,46 +150,46 @@ class eZCLI
 
                                        );
 
-        $this->WebStyles = array( 'warning' => "<font color=\"orange\">",
-                                  'warning-end' => "</font>",
-                                  'error' => "<font color=\"red\">",
-                                  'error-end' => "</font>",
-                                  'failure' => "<font color=\"red\">",
-                                  'failure-end' => "</font>",
-                                  'notice' => "<font color=\"green\">",
-                                  'notice-end' => "</font>",
-                                  'debug' => "<font color=\"brown\">",
-                                  'debug-end' => "</font>",
-                                  'timing' => "<font color=\"blue\">",
-                                  'timing-end' => "</font>",
-                                  'success' => "<font color=\"green\">",
-                                  'success-end' => "</font>",
-                                  'file' => "<i>",
-                                  'file-end' => "</i>",
-                                  'dir' => "<font color=\"blue\">",
-                                  'dir-end' => "</font>",
-                                  'link' => "<font color=\"cyan\">",
-                                  'link-end' => "</font>",
-                                  'symbol' => "<i>",
-                                  'symbol-end' => "</i>",
-                                  'emphasize' => "<i>",
-                                  'emphasize-end' => "</i>",
+        $this->WebStyles = array( 'warning' => '<span class="cli warning" style="color: orange;">',
+                                  'warning-end' => '</span>',
+                                  'error' => '<span class="cli error" style="color: red;">',
+                                  'error-end' => '</span>',
+                                  'failure' => '<span class="cli failure" style="color: red;">',
+                                  'failure-end' => '</span>',
+                                  'notice' => '<span class="cli notice" style="color: green;">',
+                                  'notice-end' => '</span>',
+                                  'debug' => '<span class="cli debug" style="color: brown;">',
+                                  'debug-end' => '</span>',
+                                  'timing' => '<span class="cli timing" style="color: blue;">',
+                                  'timing-end' => '</span>',
+                                  'success' => '<span class="cli success" style="color: green;">',
+                                  'success-end' => '</span>',
+                                  'file' => '<span class="cli file" style="font-style: italic;">',
+                                  'file-end' => '</span>',
+                                  'dir' => '<span class="cli dir" style="color: blue;">',
+                                  'dir-end' => '</span>',
+                                  'link' => '<span class="cli link" style="color: cyan;">',
+                                  'link-end' => '</span>',
+                                  'symbol' => '<span class="cli symbol" style="font-style: italic;">',
+                                  'symbol-end' => '</span>',
+                                  'emphasize' => "<em>",
+                                  'emphasize-end' => "</em>",
                                   'header' => "<h1>",
                                   'header-end' => "</h1>",
-                                  'strong' => "<b>",
-                                  'strong-end' => "</b>",
-                                  'mark' => "",
-                                  'mark-end' => "",
-                                  'bold' => "<b>",
-                                  'bold-end' => "</b>",
-                                  'italic' => "<i>",
-                                  'italic-end' => "</i>",
-                                  'underline' => "<u>",
-                                  'underline-end' => "</u>",
-                                  'paragraph' => "<p>",
-                                  'paragraph-end' => "</p>",
-                                  'normal' => "",
-                                  'normal-end' => "" );
+                                  'strong' => '<strong>',
+                                  'strong-end' => '</strong>',
+                                  'mark' => '',
+                                  'mark-end' => '',
+                                  'bold' => '<span style="font-weight: bold;">',
+                                  'bold-end' => '</span>',
+                                  'italic' => '<span style="font-style: italic;">',
+                                  'italic-end' => '</span>',
+                                  'underline' => '<span style="text-decoration: underline">',
+                                  'underline-end' => '</span>',
+                                  'paragraph' => '<p>',
+                                  'paragraph-end' => '</p>',
+                                  'normal' => '',
+                                  'normal-end' => '' );
 
         $this->EmptyStyles = array();
         foreach ( $this->TerminalStyles as $styleName => $styleValue )
@@ -380,8 +359,6 @@ class eZCLI
     */
     function notice( $string = false, $addEOL = true )
     {
-        if ( $this->isQuiet() )
-            return;
         fputs( STDERR, $string );
         if ( $addEOL )
             fputs( STDERR, $this->endlineString() );
@@ -393,8 +370,6 @@ class eZCLI
     */
     function warning( $string = false, $addEOL = true )
     {
-        if ( $this->isQuiet() )
-            return;
         $string = $this->stylize( 'warning', $string );
         fputs( STDERR, $string );
         if ( $addEOL )
@@ -407,18 +382,19 @@ class eZCLI
     */
     function error( $string = false, $addEOL = true )
     {
-        if ( $this->isQuiet() )
-            return;
         $string = $this->stylize( 'error', $string );
         fputs( STDERR, $string );
         if ( $addEOL )
             fputs( STDERR, $this->endlineString() );
     }
 
-    /*!
-     Sets whether the output(), notice(), warning() and error() methods should print out anything.
-     \sa isQuiet, isLoud
-    */
+    /**
+     * Sets whether the output() method should print out anything.
+     *
+     * @param bool $isQuiet
+     *
+     * @see isQuiet, isLoud
+     */
     function setIsQuiet( $isQuiet )
     {
         $this->IsQuiet = $isQuiet;
@@ -478,8 +454,7 @@ class eZCLI
                 $end = strpos( $configString, ']', $i + 1 );
                 if ( $end === false )
                 {
-                    eZDebug::writeError( "Missing end marker ] in option string at position $i",
-                                         'eZCLI::parseOptionString' );
+                    eZDebug::writeError( "Missing end marker ] in option string at position $i", __METHOD__ );
                     return $optionConfig;
                 }
                 $optionList = substr( $configString, $i + 1, $end - $i - 1 );

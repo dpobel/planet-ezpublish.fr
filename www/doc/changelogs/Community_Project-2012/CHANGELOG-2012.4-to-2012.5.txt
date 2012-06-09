@@ -1,0 +1,34 @@
+Bugfixes
+========
+- #11577: workflow cancelled when reediting the draft of a previously rejected content
+- #11739: others dbs than mysql miss code to sort a search result.
+- #18451: oauth/authorize doesn't work to deny access
+- #18581: XSS issue for ezoption templates
+- #19173: switchlanguage/to loses the search query
+- #19282: Unable to refresh token via POST method after upgrading to 2012.2
+- #19336: flatten.php database timeouts leading to segmentation fault.
+- #19408: A warning should be showed in case custom sso class don't exist
+
+Enhancements
+============
+
+
+Pull requests
+=============
+- #332: from sanpii/master
+- #341: from jihonrado/issue-019282
+- #342: from jihonrado/issue-018451
+- #343: from crevillo/issue-019408
+
+Miscellaneous
+=============
+- Implemented: reindex object when always available flag is changed
+- Fixed: wrong "INNER JOIN" usage since 24bd6d8b3992236a4b5f47852cf335b28b8d50f0
+- Reconfigure master for next version
+- Updated setup wizard styling
+- Adjust CSS for admin2 header media query a bit to suite two header setup for 1100px width screen
+- Fixed EZPNEXT-538 ezdemodesign: Improve out of the box default settings
+- Add BC note on change of behavior in ezpMvcRailsRoute
+- Deprecate byRef use of eZSession::get() and eZHTTPTool->sessionVariable()
+- Undefine HTTP_USER_AGENT and HTTP_ACCEPT headers
+- 

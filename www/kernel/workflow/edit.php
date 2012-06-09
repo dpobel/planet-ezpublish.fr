@@ -1,28 +1,10 @@
 <?php
-//
-// Created on: <16-Apr-2002 11:00:12 amos>
-//
-// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-// SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.4.0
-// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
-// SOFTWARE LICENSE: GNU General Public License v2.0
-// NOTICE: >
-//   This program is free software; you can redistribute it and/or
-//   modify it under the terms of version 2.0  of the GNU General
-//   Public License as published by the Free Software Foundation.
-// 
-//   This program is distributed in the hope that it will be useful,
-//    but WITHOUT ANY WARRANTY; without even the implied warranty of
-//   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//   GNU General Public License for more details.
-// 
-//   You should have received a copy of version 2.0 of the GNU General
-//   Public License along with this program; if not, write to the Free
-//   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
-//   MA 02110-1301, USA.
-// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-//
+/**
+ * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
+ * @license http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License v2
+ * @version  2012.5
+ * @package kernel
+ */
 
 $Module = $Params['Module'];
 
@@ -174,33 +156,19 @@ if ( $http->hasPostVariable( "DeleteGroupButton" ) && $http->hasPostVariable( "g
 $event_list = $workflow->fetchEvents();
 $type_list = eZWorkflowType::fetchRegisteredTypes();
 
-if ( $http->hasPostVariable( "DeleteButton" ) )
-{
-    $db = eZDB::instance();
-    $db->begin();
-
-    if ( eZHTTPPersistence::splitSelected( "WorkflowEvent", $event_list,
-                                           $http, "id",
-                                           $keepers, $rejects ) )
-    {
-        $event_list = $keepers;
-
-        foreach ( $rejects as $reject )
-        {
-            $reject->remove();
-        }
-    }
-    $db->commit();
-
-    $event_list = $workflow->fetchEvents();
-}
-
 // Validate input
 $canStore = true;
 $requireFixup = false;
 foreach( $event_list as $event )
 {
     $eventType = $event->eventType();
+    if ( !$eventType instanceof eZWorkflowEventType )
+    {
+        // Can't find eventype. Most likely deactivated while workflow has not been cleant up
+        eZDebug::writeError( "Couldn't load eventype '{$event->attribute( 'workflow_type_string' )}' for workflow. Is it activated ?", 'eZWorkflow edit' );
+        continue;
+    }
+
     $status = $eventType->validateHTTPInput( $http, "WorkflowEvent", $event, $validation );
 
     if ( $status == eZInputValidator::STATE_INTERMEDIATE )
@@ -215,6 +183,12 @@ if ( $requireFixup )
     foreach( $event_list as $event )
     {
         $eventType = $event->eventType();
+        if ( !$eventType instanceof eZWorkflowEventType )
+        {
+            eZDebug::writeError( "Couldn't load eventype '{$event->attribute( 'workflow_type_string' )}' for workflow. Is it activated ?" );
+            continue;
+        }
+
         $status = $eventType->fixupHTTPInput( $http, "WorkflowEvent", $event );
     }
 }
@@ -223,6 +197,21 @@ $cur_type = 0;
 // Apply HTTP POST variables
 eZHTTPPersistence::fetch( "WorkflowEvent", eZWorkflowEvent::definition(),
                           $event_list, $http, true );
+if ( $http->hasPostVariable( "DeleteButton" ) )
+{
+    if ( eZHTTPPersistence::splitSelected( "WorkflowEvent", $event_list, $http, "id", $keepers, $rejects ) )
+    {
+        $db = eZDB::instance();
+        $db->begin();
+        foreach ( $rejects as $reject )
+        {
+            $reject->remove();
+        }
+        $db->commit();
+        $event_list = $keepers;
+    }
+}
+
 eZHTTPPersistence::fetch( "Workflow", eZWorkflow::definition(),
                           $workflow, $http, false );
 if ( $http->hasPostVariable( "WorkflowTypeString" ) )
@@ -259,6 +248,12 @@ if ( $http->hasPostVariable( "CustomActionButton" ) )
 foreach( $event_list as $event )
 {
     $eventType = $event->eventType();
+    if ( !$eventType instanceof eZWorkflowEventType )
+    {
+        eZDebug::writeError( "Couldn't load eventype '{$event->attribute( 'workflow_type_string' )}' for workflow. Is it activated ?" );
+        continue;
+    }
+
     $eventType->fetchHTTPInput( $http, "WorkflowEvent", $event );
     if ( $customActionAttributeID == $event->attribute( "id" ) )
     {

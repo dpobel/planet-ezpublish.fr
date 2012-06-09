@@ -1,32 +1,14 @@
 <?php
 //
 // $Id: ezmail.php,v 1.44.2.7 2002/06/10 16:41:45 fh Exp $
-//
-// Definition of eZMail class
-//
-// Created on: <15-Mar-2001 20:40:06 fh>
-//
-// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-// SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.4.0
-// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
-// SOFTWARE LICENSE: GNU General Public License v2.0
-// NOTICE: >
-//   This program is free software; you can redistribute it and/or
-//   modify it under the terms of version 2.0  of the GNU General
-//   Public License as published by the Free Software Foundation.
-// 
-//   This program is distributed in the hope that it will be useful,
-//    but WITHOUT ANY WARRANTY; without even the implied warranty of
-//   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//   GNU General Public License for more details.
-// 
-//   You should have received a copy of version 2.0 of the GNU General
-//   Public License along with this program; if not, write to the Free
-//   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
-//   MA 02110-1301, USA.
-// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-//
+/**
+ * File containing the eZMail class.
+ *
+ * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
+ * @license http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License v2
+ * @version  2012.5
+ * @package lib
+ */
 
 /*! \defgroup eZUtils Utility classes */
 
@@ -41,35 +23,35 @@
  \note It's important to note that most methods that return values do an automatic conversion if not specified.
 
   This class will be deprecated in the next eZ Publish release, and replaced with ezcMail from eZ Components.
- 
+
   The eZMail class was used like this (with old smtp class which will be removed):
     $mail = new eZMail();
     $mail->setSender( $fromEmail, $yourName );
     $mail->setReceiver( $receiversEmail, $receiversName );
     $mail->setSubject( $subject );
- 
+
     $smtp = new smtp( $parameters );
     $smtpConnected = $smtp->connect();
     if ( $smtpConnected )
     {
         $result = $smtp->send( $sendData );
     }
-    
+
   Since the smtp class will be removed, ezcMailSmtpTransport from eZ
   Components can be used temporarily instead (the class eZSMTPTransport
   is using ezcMailSmtpTransport instead of smtp as well):
-  
+
     $smtp = new ezcMailSmtpTransport( $host, $username, $password, $port );
     $smtp->send( $mail->Mail );
 
   Instead of the code above, ezcMail will be used together with the SMTP
   transport from eZ Components (MTA transport will work as well):
 
-    $mail = new ezcMail();
-    $mail->from = new ezcMailAddress( $fromEmail, $yourName );
-    $mail->addTo( new ezcMailAddress( $receiversEmail, $receiversName ) );
+    $mail = new ezpMail();
+    $mail->from = new ezcMailAddress( $fromEmail, $yourName, $charset );
+    $mail->addTo( new ezcMailAddress( $receiversEmail, $receiversName, $charset ) );
     $mail->subject = $subject;
-    
+
     $smtp = new ezcMailSmtpTransport( $host, $username, $password, $port );
     $smtp->send( $mail );
 */
@@ -83,7 +65,7 @@ class eZMail
     */
     function eZMail()
     {
-        $this->Mail = new ezcMail();
+        $this->Mail = new ezpMail();
 
         $this->ReceiverElements = array();
         $this->From = false;
@@ -441,7 +423,7 @@ class eZMail
         foreach ( $toElements as $address )
         {
             $name = isset( $address['name'] ) ? $address['name'] : false;
-            $this->Mail->addTo( new ezcMailAddress( $address['email'], $name ) );
+            $this->Mail->addTo( new ezcMailAddress( $address['email'], $name, $this->usedCharset() ) );
         }
         $this->ReceiverElements = $toElements;
     }
@@ -455,7 +437,7 @@ class eZMail
     */
     function setReceiver( $email, $name = false )
     {
-        $this->Mail->to = array( new ezcMailAddress( $email, $name ) );
+        $this->Mail->to = array( new ezcMailAddress( $email, $name, $this->usedCharset() ) );
         $this->ReceiverElements = array( array( 'name' => $name,
                                                 'email' => $email ) );
     }
@@ -470,7 +452,7 @@ class eZMail
     function setReceiverText( $text )
     {
         $this->extractEmail( $text, $email, $name );
-        $this->Mail->to = array( new ezcMailAddress( $email, $name ) );
+        $this->Mail->to = array( new ezcMailAddress( $email, $name, $this->usedCharset() ) );
         $this->ReceiverElements = array( array( 'name' => $name,
                                                 'email' => $email ) );
     }
@@ -482,7 +464,7 @@ class eZMail
     */
     function addReceiver( $email, $name = false )
     {
-        $this->Mail->addTo( new ezcMailAddress( $email, $name ) );
+        $this->Mail->addTo( new ezcMailAddress( $email, $name, $this->usedCharset() ) );
         $this->ReceiverElements[] = array( 'name' => $name,
                                            'email' => $email );
     }
@@ -494,7 +476,7 @@ class eZMail
     */
     function setReplyTo( $email, $name = false )
     {
-        $this->Mail->setHeader( 'Reply-To', new ezcMailAddress( $email, $name ) );
+        $this->Mail->setHeader( 'Reply-To', new ezcMailAddress( $email, $name, $this->usedCharset() ) );
         $this->ReplyTo = array( 'name' => $name,
                                 'email' => $email );
     }
@@ -506,7 +488,7 @@ class eZMail
     */
     function setSender( $email, $name = false )
     {
-        $this->Mail->from = new ezcMailAddress( $email, $name );
+        $this->Mail->from = new ezcMailAddress( $email, $name, $this->usedCharset() );
         $this->From = array( 'name' => $name,
                              'email' => $email );
     }
@@ -519,7 +501,7 @@ class eZMail
     function setSenderText( $text )
     {
         $this->extractEmail( $text, $email, $name );
-        $this->Mail->from = new ezcMailAddress( $email, $name );
+        $this->Mail->from = new ezcMailAddress( $email, $name, $this->usedCharset() );
         $this->From = array( 'name' => $name,
                              'email' => $email );
     }
@@ -535,7 +517,7 @@ class eZMail
         foreach ( $newCc as $address )
         {
             $name = isset( $address['name'] ) ? $address['name'] : false;
-            $this->Mail->addCc( new ezcMailAddress( $address['email'], $name ) );
+            $this->Mail->addCc( new ezcMailAddress( $address['email'], $name, $this->usedCharset() ) );
         }
         $this->CcElements = $newCc;
     }
@@ -547,7 +529,7 @@ class eZMail
     */
     function addCc( $email, $name = false )
     {
-        $this->Mail->addCc( new ezcMailAddress( $email, $name ) );
+        $this->Mail->addCc( new ezcMailAddress( $email, $name, $this->usedCharset() ) );
         $this->CcElements[] = array( 'name' => $name,
                                      'email' => $email );
     }
@@ -563,7 +545,7 @@ class eZMail
         foreach ( $newBcc as $address )
         {
             $name = isset( $address['name'] ) ? $address['name'] : false;
-            $this->Mail->addBcc( new ezcMailAddress( $address['email'], $name ) );
+            $this->Mail->addBcc( new ezcMailAddress( $address['email'], $name, $this->usedCharset() ) );
         }
         $this->BccElements = $newBcc;
     }
@@ -575,7 +557,7 @@ class eZMail
     */
     function addBcc( $email, $name = false )
     {
-        $this->Mail->addBcc( new ezcMailAddress( $email, $name ) );
+        $this->Mail->addBcc( new ezcMailAddress( $email, $name, $this->usedCharset() ) );
         $this->BccElements[] = array( 'name' => $name,
                                       'email' => $email );
     }
@@ -653,7 +635,7 @@ class eZMail
       \deprecated
     */
     function setMessageID( $newMessageID )
-    {      
+    {
         $this->Mail->messageId = $newMessageID;
         $this->MessageID = $newMessageID;
     }
@@ -1188,7 +1170,7 @@ class eZMail
 
     /*!
       Returns the line ending.
-      
+
       \deprecated
     */
     static function lineSeparator()
@@ -1235,7 +1217,7 @@ class eZMail
     public $TextCodec;
     public $MessageID;
     public $MIMEVersion;
-    
+
     /**
      * Contains an object of type ezcMail, which is used to store the
      * mail elements like subject, to, from, body etc, instead of using

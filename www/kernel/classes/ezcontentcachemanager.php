@@ -1,33 +1,12 @@
 <?php
-//
-// Definition of eZContentCacheManager class
-//
-// Created on: <23-Sep-2004 12:52:38 jb>
-//
-// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-// SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.4.0
-// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
-// SOFTWARE LICENSE: GNU General Public License v2.0
-// NOTICE: >
-//   This program is free software; you can redistribute it and/or
-//   modify it under the terms of version 2.0  of the GNU General
-//   Public License as published by the Free Software Foundation.
-// 
-//   This program is distributed in the hope that it will be useful,
-//    but WITHOUT ANY WARRANTY; without even the implied warranty of
-//   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//   GNU General Public License for more details.
-// 
-//   You should have received a copy of version 2.0 of the GNU General
-//   Public License along with this program; if not, write to the Free
-//   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
-//   MA 02110-1301, USA.
-// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-//
-
-/*! \file
-*/
+/**
+ * File containing the eZContentCacheManager class.
+ *
+ * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
+ * @license http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License v2
+ * @version  2012.5
+ * @package kernel
+ */
 
 /*!
   \class eZContentCacheManager ezcontentcachemanager.php
@@ -51,7 +30,8 @@ class eZContentCacheManager
     const CLEAR_RELATING_CACHE = 4;
     const CLEAR_KEYWORD_CACHE  = 8;
     const CLEAR_SIBLINGS_CACHE = 16;
-    const CLEAR_ALL_CACHE      = 31;
+    const CLEAR_CHILDREN_CACHE = 32;
+    const CLEAR_ALL_CACHE      = 63;
     const CLEAR_DEFAULT        = 15; // CLEAR_NODE_CACHE and CLEAR_PARENT_CACHE and CLEAR_RELATING_CACHE and CLEAR_KEYWORD_CACHE
 
     /*!
@@ -275,6 +255,30 @@ class eZContentCacheManager
         }
     }
 
+    /**
+     * For each node in $nodeList finds its children nodes and adds its ids to
+     * the $nodeIDList.
+     *
+     * @param array(eZContentObjectTreeNode) $nodeList
+     * @param array(int) $nodeIDList
+     */
+    public static function appendChildrenNodeIDs( &$nodeList, &$nodeIDList )
+    {
+        $params = array( 'Depth' => 1,
+                         'AsObject' => false );
+        foreach ( $nodeList as $node )
+        {
+            $childNodeList = eZContentObjectTreeNode::subTreeByNodeID( $params, $node->attribute( 'node_id' ) );
+            if ( !empty( $childNodeList ) )
+            {
+                foreach ( $childNodeList as $childNode )
+                {
+                    $nodeIDList[] = $childNode['node_id'];
+                }
+            }
+        }
+    }
+
     /*
      \static
      Reads 'viewcache.ini' file and determines relation between
@@ -341,6 +345,9 @@ class eZContentCacheManager
 
                             if ( in_array( 'siblings', $type ) )
                                 $info['clear_cache_type'] |= self::CLEAR_SIBLINGS_CACHE;
+
+                            if ( in_array( 'children', $type ) )
+                                $info['clear_cache_type'] |= self::CLEAR_CHILDREN_CACHE;
                         }
                     }
                     else
@@ -416,7 +423,7 @@ class eZContentCacheManager
             $msg .= "\r\n";
         }
 
-        eZDebug::writeDebug( $msg, 'eZContentCacheManager::writeDebugBits()' );
+        eZDebug::writeDebug( $msg, __METHOD__ );
     }
 
     /*!
@@ -520,6 +527,23 @@ class eZContentCacheManager
             // drop 'siblings' bit and process parent nodes.
             // since 'sibling' mode is affected to the current object
             $dependentClassInfo['clear_cache_type'] &= ~self::CLEAR_SIBLINGS_CACHE;
+        }
+
+        if ( $clearCacheType & self::CLEAR_CHILDREN_CACHE )
+        {
+            eZContentCacheManager::appendChildrenNodeIDs( $assignedNodes, $nodeList );
+        }
+
+        if ( $dependentClassInfo['clear_cache_type'] & self::CLEAR_CHILDREN_CACHE )
+        {
+            if ( !( $clearCacheType & self::CLEAR_CHILDREN_CACHE ) )
+            {
+                eZContentCacheManager::appendChildrenNodeIDs( $assignedNodes, $nodeList );
+                $handledObjectList[$contentObjectID] |= self::CLEAR_CHILDREN_CACHE;
+            }
+            // drop 'children' bit and process parent nodes.
+            // since 'children' mode is affected to the current object
+            $dependentClassInfo['clear_cache_type'] &= ~self::CLEAR_CHILDREN_CACHE;
         }
 
         if ( isset( $dependentClassInfo['additional_objects'] ) )
@@ -634,11 +658,11 @@ class eZContentCacheManager
 
     /*!
      \static
-     Depreciated. Use 'clearObjectViewCache' instead
+     Deprecated. Use 'clearObjectViewCache' instead
     */
     static function clearViewCache( $objectID, $versionNum = true , $additionalNodeList = false )
     {
-        eZDebug::writeWarning( "'clearViewCache' function was depreciated. Use 'clearObjectViewCache' instead", 'eZContentCacheManager::clearViewCache' );
+        eZDebug::writeWarning( "'clearViewCache' function was deprecated. Use 'clearObjectViewCache' instead", __METHOD__ );
         eZContentCacheManager::clearObjectViewCache( $objectID, $versionNum, $additionalNodeList );
     }
 
@@ -685,12 +709,21 @@ class eZContentCacheManager
         $ini = eZINI::instance();
         if ( $ini->variable( 'ContentSettings', 'StaticCache' ) == 'enabled' )
         {
-            $staticCache = new eZStaticCache();
-            $staticCache->generateAlwaysUpdatedCache();
-            $staticCache->generateNodeListCache( $nodeList );
+            $optionArray = array( 'iniFile'      => 'site.ini',
+                                  'iniSection'   => 'ContentSettings',
+                                  'iniVariable'  => 'StaticCacheHandler' );
+
+            $options = new ezpExtensionOptions( $optionArray );
+
+            $staticCacheHandler = eZExtension::getHandlerClass( $options );
+
+            $staticCacheHandler->generateAlwaysUpdatedCache();
+            $staticCacheHandler->generateNodeListCache( $nodeList );
         }
 
         eZDebug::accumulatorStart( 'node_cleanup', '', 'Node cleanup' );
+
+        $nodeList = ezpEvent::getInstance()->filter( 'content/cache', $nodeList );
 
         eZContentObject::expireComplexViewModeCache();
         $cleanupValue = eZContentCache::calculateCleanupValue( count( $nodeList ) );
@@ -698,7 +731,10 @@ class eZContentCacheManager
         if ( eZContentCache::inCleanupThresholdRange( $cleanupValue ) )
             eZContentCache::cleanup( $nodeList );
         else
+        {
+            eZDebug::writeDebug( "Expiring all view cache since list of nodes({$cleanupValue}) related to object({$objectID}) exeeds site.ini\[ContentSettings]\CacheThreshold", __METHOD__ );
             eZContentObject::expireAllViewCache();
+        }
 
         eZDebug::accumulatorStop( 'node_cleanup' );
         return true;
@@ -789,7 +825,7 @@ class eZContentCacheManager
             $currentSiteAccess = $GLOBALS['eZCurrentAccess'];
 
             // This is the default view parameters for content/view
-            $viewParameters = array( 'offset' => 0,
+            $viewParameters = array( 'offset' => false,
                                      'year' => false,
                                      'month' => false,
                                      'day' => false,
@@ -838,11 +874,11 @@ class eZContentCacheManager
 
                             // Before we generate the view cache we must change the currently logged in user to $previewCacheUser
                             // If not the templates might read in wrong personalized data (preferences etc.)
-                            eZUser::setCurrentlyLoggedInUser( $previewCacheUser, $previewCacheUser->attribute( 'contentobject_id' ) );
+                            eZUser::setCurrentlyLoggedInUser( $previewCacheUser, $previewCacheUser->attribute( 'contentobject_id' ), eZUser::NO_SESSION_REGENERATE );
 
                             // Cache the current node
-                            $cacheFileArray = eZNodeviewfunctions::generateViewCacheFile( $previewCacheUser, $node->attribute( 'node_id' ), 0, false, $language, $viewMode, $viewParameters, $cachedViewPreferences );
-                            $tmpRes = eZNodeviewfunctions::generateNodeView( $tpl, $node, $node->attribute( 'object' ), $language, $viewMode, 0, $cacheFileArray['cache_dir'], $cacheFileArray['cache_path'], true, $viewParameters );
+                            $cacheFileArray = eZNodeviewfunctions::generateViewCacheFile( $previewCacheUser, $node->attribute( 'node_id' ), false, false, $language, $viewMode, $viewParameters, $cachedViewPreferences );
+                            $tmpRes = eZNodeviewfunctions::generateNodeView( $tpl, $node, $node->attribute( 'object' ), $language, $viewMode, false, $cacheFileArray['cache_dir'], $cacheFileArray['cache_path'], true, $viewParameters );
 
                             // Cache the parent node
                             $parentNode = $node->attribute( 'parent' );
@@ -857,7 +893,7 @@ class eZContentCacheManager
                     }
                 }
                 // Restore the old user as the current one
-                eZUser::setCurrentlyLoggedInUser( $user, $user->attribute( 'contentobject_id' ) );
+                eZUser::setCurrentlyLoggedInUser( $user, $user->attribute( 'contentobject_id' ), eZUser::NO_SESSION_REGENERATE );
 
                 // restore siteaccess
                 eZSiteAccess::load( $currentSiteAccess );
@@ -868,9 +904,16 @@ class eZContentCacheManager
         {
             $nodes = array();
             $ini = eZINI::instance();
-            $staticCache = new eZStaticCache();
             $useURLAlias =& $GLOBALS['eZContentObjectTreeNodeUseURLAlias'];
             $pathPrefix = $ini->variable( 'SiteAccessSettings', 'PathPrefix' );
+            
+            // get staticCacheHandler instance
+            $optionArray = array( 'iniFile'      => 'site.ini',
+                                  'iniSection'   => 'ContentSettings',
+                                  'iniVariable'  => 'StaticCacheHandler' );
+
+            $options = new ezpExtensionOptions( $optionArray );
+            $staticCacheHandler = eZExtension::getHandlerClass( $options );
 
             if ( !isset( $useURLAlias ) )
             {
@@ -904,9 +947,9 @@ class eZContentCacheManager
                     {
                         $urlAlias = 'content/view/full/' . $nodeID;
                     }
-                    $staticCache->cacheURL( '/' . $urlAlias, $nodeID );
+                    $staticCacheHandler->cacheURL( '/' . $urlAlias, $nodeID );
                 }
-                $staticCache->generateAlwaysUpdatedCache();
+                $staticCacheHandler->generateAlwaysUpdatedCache();
             }
         }
         eZDebug::accumulatorStop( 'generate_cache' );

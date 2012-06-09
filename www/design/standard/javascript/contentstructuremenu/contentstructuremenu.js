@@ -4,8 +4,8 @@
 // ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
 // SOFTWARE RELEASE: 4.1.x
-// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
-// SOFTWARE LICENSE: GNU General Public License v2.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2012 eZ Systems AS
+// SOFTWARE LICENSE: GNU General Public License v2
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
 //   modify it under the terms of version 2.0  of the GNU General
@@ -115,7 +115,7 @@ function ezcst_findNodeIDInList( node_id )
     var len = gUnfoldedNodesList.length;
     for ( var i = 0; i < len; ++i )
     {
-        if( gUnfoldedNodesList[i] == node_id )
+        if ( gUnfoldedNodesList[i] == node_id )
             return i;
     }
 
@@ -295,7 +295,7 @@ function ezcst_onItemClicked( ezpublish_nodeID, defaultItemClickAction )
 */
 function ezcst_foldUnfold( node, bUpdateCookie, bInitFoldUnfoldLabels, bForceFold, bForceUnfold )
 {
-    if( node )
+    if ( node )
     {
         for ( var i = 0; i < node.childNodes.length; ++i )
         {
@@ -306,7 +306,7 @@ function ezcst_foldUnfold( node, bUpdateCookie, bInitFoldUnfoldLabels, bForceFol
                 var node_id     = bUpdateCookie ? node.getAttribute( "id" ) : null;
                 var link_node   = ezjslib_getHTMLChildNodeByTag( node, "a" );
 
-                if( bInitFoldUnfoldLabels == true)
+                if ( bInitFoldUnfoldLabels == true)
                     ezcst_createUnfoldedLabel( link_node );
 
                 ezcst_changeState( node_id, child, link_node, bForceFold, bForceUnfold );
@@ -519,7 +519,7 @@ function ezcst_initializeMenuState( additionalNodesList, menuNodeID, autoopenCur
 
             // Highlight current node
             var currentNode = ezjslib_getHTMLNodeById( currentNodeID );
-            while( !currentNode && currentNodeID )
+            while ( !currentNode && currentNodeID )
             {
                 // if current viewing node is not in the tree menu(is invesible)
                 // then try to find the nearest visible parent node
@@ -528,7 +528,7 @@ function ezcst_initializeMenuState( additionalNodesList, menuNodeID, autoopenCur
             }
             ezjslib_appendHTMLNodeClassStyle( currentNode, EZCST_HIGHLIGHTED_NODE_CLASS_NAME );
 
-            if( autoopenCurrentNode == "enabled" )
+            if ( autoopenCurrentNode == "enabled" )
             {
                 // unfold current node.
                 ezcst_foldUnfold( currentNode, true, false, false, true );

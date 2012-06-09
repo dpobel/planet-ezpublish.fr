@@ -13,6 +13,12 @@
  * All internal events inside TinyMCE uses this class.
  *
  * @class tinymce.util.Dispatcher
+ * @example
+ * // Creates a custom event
+ * this.onSomething = new tinymce.util.Dispatcher(this);
+ * 
+ * // Dispatch/fire the event
+ * this.onSomething.dispatch('some string');
  */
 tinymce.create('tinymce.util.Dispatcher', {
         scope : null,
@@ -93,7 +99,7 @@ tinymce.create('tinymce.util.Dispatcher', {
                 // And this is also more efficient
                 for (i = 0; i<li.length; i++) {
                         c = li[i];
-                        s = c.cb.apply(c.scope, a);
+                        s = c.cb.apply(c.scope, a.length > 0 ? a : [c.scope]);
 
                         if (s === false)
                                 break;

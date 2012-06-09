@@ -115,7 +115,7 @@
 {else}
 <table class="list" cellspacing="0" >
 <tr>
-    <th class="tight"><img src={'toggle-button-16x16.gif'|ezimage} alt="{'Invert selection.'|i18n( 'design/admin/content/urlalias_global' )}" title="{'Invert selection.'|i18n( 'design/admin/content/urlalias_global' )}" onclick="ezjs_toggleCheckboxes( document.aliasform, 'ElementList[]' ); return false;"/></th>
+    <th class="tight"><img src={'toggle-button-16x16.gif'|ezimage} width="16" height="16" alt="{'Invert selection.'|i18n( 'design/admin/content/urlalias_global' )}" title="{'Invert selection.'|i18n( 'design/admin/content/urlalias_global' )}" onclick="ezjs_toggleCheckboxes( document.aliasform, 'ElementList[]' ); return false;"/></th>
     <th>{'URL alias'|i18n( 'design/admin/content/urlalias_global' )}</th>
     <th>{'Destination'|i18n( 'design/admin/content/urlalias_global' )}</th>
     <th>{'Language'|i18n( 'design/admin/content/urlalias_global' )}</th>
@@ -150,7 +150,7 @@
         </td>
 
         <td>
-            <img src="{$element.language_object.locale|flag_icon}" alt="{$element.language_object.locale|wash}" />
+            <img src="{$element.language_object.locale|flag_icon}" width="18" height="12" alt="{$element.language_object.locale|wash}" />
             &nbsp;
             {$element.language_object.name|wash}
         </td>
@@ -253,7 +253,8 @@
 <div class="block">
     <input type="checkbox" name="AliasRedirects" id="alias_redirects" value="alias_redirects" checked="checked" />
     <label class="radio" for="alias_redirects" title="{'Alias should redirect to its destination'|i18n( 'design/admin/content/urlalias_global' )}">{'Alias should redirect to its destination'|i18n( 'design/admin/content/urlalias' )}</label>
-    <p>With <em>Alias should redirect to its destination</em> checked eZ Publish will redirect to the destination using a HTTP 301 response. Un-check it and the URL will stay the same &#8212; no redirection will be performed.</p>
+    <p>{'With <em>Alias should redirect to its destination</em> checked eZ Publish will redirect to the destination using a HTTP 301 response. Un-check it and the URL will stay the same &#8212; no redirection will be performed.'|i18n( 'design/admin/content/urlalias' )}
+    </p>
 </div>
 
 
@@ -277,8 +278,7 @@
 </form>
 
 {literal}
-<script language="JavaScript" type="text/javascript">
-<!--
+<script type="text/javascript">
 jQuery(function( $ )//called on document.ready
 {
     with( document.aliasform )
@@ -294,6 +294,5 @@ jQuery(function( $ )//called on document.ready
         }
     }
 });
--->
 </script>
 {/literal}

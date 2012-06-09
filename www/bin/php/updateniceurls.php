@@ -1,34 +1,13 @@
 #!/usr/bin/env php
 <?php
-//
-// Definition of Updateniceurls class
-//
-// Created on: <03-Apr-2003 16:05:43 sp>
-//
-// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-// SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.4.0
-// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
-// SOFTWARE LICENSE: GNU General Public License v2.0
-// NOTICE: >
-//   This program is free software; you can redistribute it and/or
-//   modify it under the terms of version 2.0  of the GNU General
-//   Public License as published by the Free Software Foundation.
-// 
-//   This program is distributed in the hope that it will be useful,
-//    but WITHOUT ANY WARRANTY; without even the implied warranty of
-//   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//   GNU General Public License for more details.
-// 
-//   You should have received a copy of version 2.0 of the GNU General
-//   Public License along with this program; if not, write to the Free
-//   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
-//   MA 02110-1301, USA.
-// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-//
-
-/*! \file
-*/
+/**
+ * File containing the updateniceurls.php bin script
+ *
+ * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
+ * @license http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License v2
+ * @version  2012.5
+ * @package kernel
+ */
 
 set_time_limit ( 0 );
 
@@ -95,17 +74,14 @@ if ( $siteAccess )
 
 function changeSiteAccessSetting( $siteAccess )
 {
-    global $isQuiet;
     $cli = eZCLI::instance();
-    if ( file_exists( 'settings/siteaccess/' . $siteAccess) )
+    if ( in_array( $siteAccess, eZINI::instance()->variable( 'SiteAccessSettings', 'AvailableSiteAccessList' ) ) )
     {
-        if ( !$isQuiet )
-            $cli->notice( "Using siteaccess $siteAccess for nice url update" );
+        $cli->output( "Using siteaccess $siteAccess for nice url update" );
     }
     else
     {
-        if ( !$isQuiet )
-            $cli->notice( "Siteaccess $siteAccess does not exist, using default siteaccess" );
+        $cli->notice( "Siteaccess $siteAccess does not exist, using default siteaccess" );
     }
 }
 
@@ -639,8 +615,8 @@ function backupTables( $stage )
 }
 
 
-$cli->notice( "Note: any errors encountered will be logged to urlalias_error.log" );
-$cli->notice( "Using fetch limit: $fetchLimit" );
+$cli->output( "Note: any errors encountered will be logged to urlalias_error.log" );
+$cli->output( "Using fetch limit: $fetchLimit" );
 
 resetErrorLog();
 resetStorageLog();
@@ -680,7 +656,7 @@ if ( $urlCount > 0 )
                 if ( $nodeID == 1 )
                     continue; // Skip the root node
                 $pathIdentificationString = $row['path_identification_string'];
-                $pathIdentificationString = eZURLAliasML::sanitizeURL( $pathIdentificationString, true );
+                $pathIdentificationString = eZURLAliasML::sanitizeURL( $pathIdentificationString );
                 $languageMask = $row['language_mask'];
                 $alwaysAvailable = $languageMask & 1;
                 $action = 'eznode:' . $nodeID;
@@ -733,7 +709,7 @@ if ( $urlCount > 0 )
             {
                 $source = $row['source_url'];
                 $linkID = false;
-                $source = eZURLAliasML::sanitizeURL( $source, true );
+                $source = eZURLAliasML::sanitizeURL( $source );
                 $destination = $row['destination_url'];
                 $aliasRedirects = true;
 
@@ -826,7 +802,7 @@ if ( $urlCount > 0 )
             foreach ( $rows as $key => $row )
             {
                 $forwardFromURL = $row['source_url'];
-                $forwardFromURL = eZURLAliasML::sanitizeURL( $forwardFromURL, true );
+                $forwardFromURL = eZURLAliasML::sanitizeURL( $forwardFromURL );
                 $forwardToID = (int)$row['forward_to_id'];
                 $redirectedSource = false;
                 $linkID = false;
@@ -837,7 +813,7 @@ if ( $urlCount > 0 )
                 if ( count( $rows2 ) != 0 )
                 {
                     $redirectedSource = $rows2[0]['source_url'];
-                    $redirectedSource = eZURLAliasML::sanitizeURL( $redirectedSource, true );
+                    $redirectedSource = eZURLAliasML::sanitizeURL( $redirectedSource );
                 }
                 if ( $redirectedSource === false )
                 {
@@ -931,9 +907,9 @@ if ( $urlCount > 0 )
             {
                 $wildcardType        = (int)$row['is_wildcard']; // 1 is forward, 2 is direct (alias) for now they are both treated as forwarding/redirect
                 $sourceWildcard      = $row['source_url'];
-                $sourceWildcard = eZURLAliasML::sanitizeURL( $sourceWildcard, true );
+                $sourceWildcard = eZURLAliasML::sanitizeURL( $sourceWildcard );
                 $destinationWildcard = $row['destination_url'];
-                $destinationWildcard = eZURLAliasML::sanitizeURL( $destinationWildcard, true );
+                $destinationWildcard = eZURLAliasML::sanitizeURL( $destinationWildcard );
                 if ( $row['is_wildcard'] && $row['is_internal'] != 1 )
                 {
                     // If the wildcard is made by a user we import using the new wildcard system.
@@ -955,7 +931,7 @@ if ( $urlCount > 0 )
                         continue 2;
                     }
                     $fromPath = $matches[1];
-                    $fromPath = eZURLAliasML::sanitizeURL( $fromPath, true );
+                    $fromPath = eZURLAliasML::sanitizeURL( $fromPath );
                     if ( !preg_match( "#^(.*)\{1\}$#", $destinationWildcard, $matches ) )
                     {
                         logError( "Invalid destination wildcard '$destinationWildcard', item is skipped, URL entry ID is " . $row['id'] );
@@ -963,7 +939,7 @@ if ( $urlCount > 0 )
                         continue 2;
                     }
                     $toPath = $matches[1];
-                    $toPath = eZURLAliasML::sanitizeURL( $toPath, true );
+                    $toPath = eZURLAliasML::sanitizeURL( $toPath );
 
                     $newWildcard = $toPath . '/*';
                     $newWildcardSQL = $db->escapeString( $newWildcard );

@@ -1,30 +1,12 @@
 <?php
-//
-// Definition of eZBinaryFileType class
-//
-// Created on: <30-Apr-2002 13:06:21 bf>
-//
-// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-// SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.4.0
-// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
-// SOFTWARE LICENSE: GNU General Public License v2.0
-// NOTICE: >
-//   This program is free software; you can redistribute it and/or
-//   modify it under the terms of version 2.0  of the GNU General
-//   Public License as published by the Free Software Foundation.
-// 
-//   This program is distributed in the hope that it will be useful,
-//    but WITHOUT ANY WARRANTY; without even the implied warranty of
-//   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//   GNU General Public License for more details.
-// 
-//   You should have received a copy of version 2.0 of the GNU General
-//   Public License along with this program; if not, write to the Free
-//   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
-//   MA 02110-1301, USA.
-// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-//
+/**
+ * File containing the eZBinaryFileType class.
+ *
+ * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
+ * @license http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License v2
+ * @version  2012.5
+ * @package kernel
+ */
 
 /*!
   \class eZBinaryFileType ezbinaryfiletype.php
@@ -303,6 +285,11 @@ class eZBinaryFileType extends eZDataType
     function fetchObjectAttributeHTTPInput( $http, $base, $contentObjectAttribute )
     {
         eZBinaryFileType::checkFileUploads();
+        if ( $this->isDeletingFile( $http, $contentObjectAttribute ) )
+        {
+            return false;
+        }
+
         if ( !eZHTTPFile::canFetch( $base . "_data_binaryfilename_" . $contentObjectAttribute->attribute( "id" ) ) )
             return false;
 
@@ -698,8 +685,7 @@ class eZBinaryFileType extends eZDataType
 
         if ( !file_exists( $sourcePath ) )
         {
-            eZDebug::writeError( "The file '$sourcePath' does not exist, cannot initialize file attribute with it",
-                                 'eZBinaryFileType::unserializeContentObjectAttribute' );
+            eZDebug::writeError( "The file '$sourcePath' does not exist, cannot initialize file attribute with it", __METHOD__ );
             return false;
         }
 
@@ -725,8 +711,7 @@ class eZBinaryFileType extends eZDataType
         }
 
         eZFileHandler::copy( $sourcePath, $destinationPath . $basename );
-        eZDebug::writeNotice( 'Copied: ' . $sourcePath . ' to: ' . $destinationPath . $basename,
-                              'eZBinaryFileType::unserializeContentObjectAttribute()' );
+        eZDebug::writeNotice( 'Copied: ' . $sourcePath . ' to: ' . $destinationPath . $basename, __METHOD__ );
 
         $binaryFile->setAttribute( 'contentobject_attribute_id', $objectAttribute->attribute( 'id' ) );
         $binaryFile->setAttribute( 'filename', $basename );
@@ -742,6 +727,28 @@ class eZBinaryFileType extends eZDataType
     function supportsBatchInitializeObjectAttribute()
     {
         return true;
+    }
+
+    /**
+     * Checks if current HTTP request is asking for current binary file deletion
+     * @param eZHTTPTool $http
+     * @param eZContentObjectAttribute $contentObjectAttribute
+     * @return bool
+     */
+    private function isDeletingFile( eZHTTPTool $http, eZContentObjectAttribute $contentObjectAttribute )
+    {
+        $isDeletingFile = false;
+        if ( $http->hasPostVariable( 'CustomActionButton' ) )
+        {
+            $customActionArray = $http->postVariable( 'CustomActionButton' );
+            $attributeID = $contentObjectAttribute->attribute( 'id' );
+            if ( isset( $customActionArray[$attributeID . '_delete_binary'] ) )
+            {
+                $isDeletingFile = true;
+            }
+        }
+
+        return $isDeletingFile;
     }
 }
 

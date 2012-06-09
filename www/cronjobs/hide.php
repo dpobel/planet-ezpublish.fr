@@ -2,9 +2,9 @@
 /**
  * File containing the hide.php cronjob.
  *
- * @copyright Copyright (C) 1999-2010 eZ Systems AS. All rights reserved.
- * @license http://ez.no/licenses/gnu_gpl GNU General Public License v2.0
- * @version 4.4.0
+ * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
+ * @license http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License v2
+ * @version  2012.5
  * @package kernel
  */
 
@@ -12,79 +12,57 @@ $ini = eZINI::instance( 'content.ini' );
 $rootNodeIDList = $ini->variable( 'HideSettings','RootNodeList' );
 $hideAttributeArray = $ini->variable( 'HideSettings', 'HideDateAttributeList' );
 
-$currrentDate = time();
-
-$offset = 0;
-$limit = 50;
+$currentDate = time();
 
 eZINI::instance()->setVariable( 'SiteAccessSettings', 'ShowHiddenNodes', 'false' );
 
 $hiddenNodesParams = array(
     'LoadDataMap' => false,
-    'Limit' => $limit,
-    'Offset' => $offset,
+    'Limit' => 50,
     'SortBy' => array( array( 'published', true ) ) );
 
-$newMemoryUsage = $oldMemoryUsage = 0;
-foreach( $rootNodeIDList as $nodeID )
+foreach ( $rootNodeIDList as $nodeID )
 {
     $rootNode = eZContentObjectTreeNode::fetch( $nodeID );
-    if ( !$isQuiet )
-    {
-        $cli->output( 'Hiding content of node "' . $rootNode->attribute( 'name' ) . '" (' . $nodeID . ')' );
-        $cli->output();
-    }
+    $cli->output( 'Hiding content of node "' . $rootNode->attribute( 'name' ) . '" (' . $nodeID . ')' );
+    $cli->output();
+
     foreach ( $hideAttributeArray as $hideClass => $attributeIdentifier )
     {
-        $offset = 0;
         $countParams = array( 'ClassFilterType' => 'include',
                               'ClassFilterArray' => array( $hideClass ),
                               'Limitation' => array(),
                               'AttributeFilter' => array( 'and',
-                                  array( "{$hideClass}/{$attributeIdentifier}", '<=', $currrentDate ),
+                                  array( "{$hideClass}/{$attributeIdentifier}", '<=', $currentDate ),
                                   array( "{$hideClass}/$attributeIdentifier", '>', 0 ) ) );
 
         $nodeArrayCount = $rootNode->subTreeCount( $countParams );
         if ( $nodeArrayCount > 0 )
         {
-            if ( !$isQuiet )
-            {
-                $cli->output( "Hiding {$nodeArrayCount} node(s) of class {$hideClass}." );
-            }
+            $cli->output( "Hiding {$nodeArrayCount} node(s) of class {$hideClass}." );
 
             do
             {
-                $nodeArray = $rootNode->subTree( $hiddenNodesParams );
+                $nodeArray = $rootNode->subTree( $hiddenNodesParams + $countParams );
 
                 foreach ( $nodeArray as $node )
                 {
+                    $cli->output( 'Hiding node: "' . $node->attribute( 'name' ) . '" (' . $node->attribute( 'node_id' ) . ')' );
                     eZContentObjectTreeNode::hideSubTree( $node );
-                    if ( !$isQuiet )
-                    {
-                        $cli->output( 'Hiding node: "' . $node->attribute( 'name' ) . '" (' . $node->attribute( 'node_id' ) . ')' );
-                    }
                 }
                 // clear memory after every batch
                 eZContentObject::clearCache();
-            } while( is_array( $nodeArray ) and count( $nodeArray ) > 0 );
+            } while ( is_array( $nodeArray ) && !empty( $nodeArray ) );
 
-            if ( !$isQuiet )
-            {
-                $cli->output();
-            }
+            $cli->output();
         }
         else
         {
-            if ( !$isQuiet )
-            {
-                $cli->output( "Nothing to hide." );
-            }
+            $cli->output( "Nothing to hide." );
         }
     }
-    if ( !$isQuiet )
-    {
-        $cli->output();
-    }
+
+    $cli->output();
 }
 
 ?>

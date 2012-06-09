@@ -1,9 +1,11 @@
 <?php
 /**
- * eZPersistentObject definition for ezsite_data table
- * @copyright Copyright (C) 1999-2010 eZ Systems AS. All rights reserved.
- * @licence http://ez.no/licences/gnu_gpl GNU GPLv2
- * @author Jerome Vieilledent
+ * File containing the eZSiteData class.
+ *
+ * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
+ * @license http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License v2
+ * @version  2012.5
+ * @package kernel
  */
 
 class eZSiteData extends eZPersistentObject
@@ -25,16 +27,16 @@ class eZSiteData extends eZPersistentObject
                                                                              'datatype' => 'string',
                                                                              'default'  => null,
                                                                              'required' => true ),
-        
+
                                             ),
-                                            
+
                       'keys'                 => array( 'name' ),
                       'class_name'           => 'eZSiteData',
                       'name'                 => 'ezsite_data',
                       'function_attributes'  => array()
         );
     }
-    
+
     /**
      * Fetches a site data by name
      * @param string $name
@@ -44,7 +46,7 @@ class eZSiteData extends eZPersistentObject
         $result = parent::fetchObject( self::definition(), null, array( 'name' => $name ) );
         return $result;
     }
-    
+
 }
 
 ?>

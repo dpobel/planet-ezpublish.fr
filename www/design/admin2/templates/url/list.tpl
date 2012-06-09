@@ -6,15 +6,15 @@
 
 {switch match=$view_mode}
 {case match='valid'}
-    <h1 class="context-title">{'Valid URLs (%url_list_count)'|i18n( 'design/admin/url/list',, hash( '%url_list_count', $url_list_count) )}</h1>
+    <h1 class="context-title">{'Valid links (%url_list_count)'|i18n( 'design/admin/url/list',, hash( '%url_list_count', $url_list_count) )}</h1>
 {/case}
 
 {case match='invalid'}
-    <h1 class="context-title">{'Invalid URLs (%url_list_count)'|i18n( 'design/admin/url/list',, hash( '%url_list_count', $url_list_count) )}</h1>
+    <h1 class="context-title">{'Invalid links (%url_list_count)'|i18n( 'design/admin/url/list',, hash( '%url_list_count', $url_list_count) )}</h1>
 {/case}
 
 {case}
-    <h1 class="context-title">{'All URLs (%url_list_count)'|i18n( 'design/admin/url/list',, hash( '%url_list_count', $url_list_count) )}</h1>
+    <h1 class="context-title">{'All links (%url_list_count)'|i18n( 'design/admin/url/list',, hash( '%url_list_count', $url_list_count) )}</h1>
 {/case}
 {/switch}
 
@@ -125,7 +125,7 @@
   </td>
 
   {* Edit. *}
-  <td><a href={concat( 'url/edit/', $urls.item.id )|ezurl}><img src={'edit.gif'|ezimage} alt="{'Edit'|i18n( 'design/admin/url/list')}" title="{'Edit URL.'|i18n( 'design/admin/url/list' )}" /></a></td>
+  <td><a href={concat( 'url/edit/', $urls.item.id )|ezurl}><img src={'edit.gif'|ezimage} width="16" height="16" alt="{'Edit'|i18n( 'design/admin/url/list')}" title="{'Edit URL.'|i18n( 'design/admin/url/list' )}" /></a></td>
 
 </tr>
 {/section}

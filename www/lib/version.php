@@ -1,28 +1,12 @@
 <?php
-//
-// Created on: <29-May-2002 10:38:45 bf>
-//
-// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-// SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.4.0
-// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
-// SOFTWARE LICENSE: GNU General Public License v2.0
-// NOTICE: >
-//   This program is free software; you can redistribute it and/or
-//   modify it under the terms of version 2.0  of the GNU General
-//   Public License as published by the Free Software Foundation.
-// 
-//   This program is distributed in the hope that it will be useful,
-//    but WITHOUT ANY WARRANTY; without even the implied warranty of
-//   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//   GNU General Public License for more details.
-// 
-//   You should have received a copy of version 2.0 of the GNU General
-//   Public License along with this program; if not, write to the Free
-//   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
-//   MA 02110-1301, USA.
-// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-//
+/**
+ * File containing the eZPublishSDK class.
+ *
+ * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
+ * @license http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License v2
+ * @version  2012.5
+ * @package lib
+ */
 
 /*!
   \brief contains the eZ Publish SDK version.
@@ -30,12 +14,12 @@
 
 class eZPublishSDK
 {
-    const VERSION_MAJOR = 4;
-    const VERSION_MINOR = 4;
+    const VERSION_MAJOR = 2012;
+    const VERSION_MINOR = 5;
     const VERSION_RELEASE = 0;
-    const VERSION_STATE = '';
-    const VERSION_DEVELOPMENT = false;
-    const VERSION_ALIAS = '4.4';
+    const VERSION_STATE = 'alpha1';
+    const VERSION_DEVELOPMENT = true;
+    const VERSION_ALIAS = '5.0';
 
     /*!
       \return the SDK version as a string
@@ -52,14 +36,10 @@ class eZPublishSDK
         }
         else
         {
-            $versionText = eZPublishSDK::majorVersion() . '.' . eZPublishSDK::minorVersion();
+            $versionText = 'Community Project ' . eZPublishSDK::majorVersion() . '.' . eZPublishSDK::minorVersion();
 //            $development = eZPublishSDK::developmentVersion();
 //            if ( $development !== false )
 //                $versionText .= '.' . $development;
-            if ( $withRelease )
-                $versionText .= "." . eZPublishSDK::release();
-            if ( $withState )
-                $versionText .= eZPublishSDK::state();
         }
         return $versionText;
     }

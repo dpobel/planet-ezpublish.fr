@@ -4,10 +4,10 @@
 // Forked on: <20-Des-2007 13:02:06 ar> from eZDHTMLInput class
 //
 // ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-// SOFTWARE NAME: eZ Online Editor extension for eZ Publish
-// SOFTWARE RELEASE: 4.4.0
-// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
-// SOFTWARE LICENSE: GNU General Public License v2.0
+// SOFTWARE NAME: eZ Publish Community Project
+// SOFTWARE RELEASE:  2012.5
+// COPYRIGHT NOTICE: Copyright (C) 1999-2012 eZ Systems AS
+// SOFTWARE LICENSE: GNU General Public License v2
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
 //   modify it under the terms of version 2.0  of the GNU General
@@ -34,9 +34,6 @@
   \brief The class eZOEXMLInput does
 
 */
-include_once( 'kernel/common/template.php' );
-require_once( 'kernel/common/i18n.php' );
-
 class eZOEXMLInput extends eZXMLInputHandler
 {
      /**
@@ -76,7 +73,7 @@ class eZOEXMLInput extends eZXMLInputHandler
      /**
      * $nativeCustomTags
      * List of custom tags that have a native xhtml counterpart.
-     * {@link eZOEInputParser::tagNameCustomHelper()} hendels
+     * {@link eZOEInputParser::tagNameCustomHelper()} handles
      * input parsing.
      *
      * @static
@@ -150,48 +147,54 @@ class eZOEXMLInput extends eZXMLInputHandler
         {
             self::$browserType = false;
             $userAgent = eZSys::serverVariable( 'HTTP_USER_AGENT' );
+            // Opera 9.6+
             if ( strpos( $userAgent, 'Presto' ) !== false &&
                  preg_match('/Presto\/([0-9\.]+)/i', $userAgent, $browserInfo ) )
             {
                 if ( $browserInfo[1] >= 2.1 )
                     self::$browserType = 'Presto';
             }
-            else if ( strpos( $userAgent, 'Opera' ) !== false &&
-                      preg_match('/Opera\/([0-9\.]+)/i', $userAgent, $browserInfo ) )
-            {
-                // Presto is not part of the user agent string on Opera < 9.6
-                if ( $browserInfo[1] >= 9.5 )
-                    self::$browserType = 'Presto';
-            }
+            // IE 8.0+
             else if ( strpos( $userAgent, 'Trident' ) !== false &&
                       preg_match('/Trident\/([0-9\.]+)/i', $userAgent, $browserInfo ) )
             {
                 if ( $browserInfo[1] >= 4.0 )
                     self::$browserType = 'Trident';
             }
+            // IE 6 & 7
             else if ( strpos( $userAgent, 'MSIE' ) !== false &&
                       preg_match('/MSIE[ \/]([0-9\.]+)/i', $userAgent, $browserInfo ) )
             {
-                // IE didn't have Trident in it's user agent string untill IE 8.0
                 if ( $browserInfo[1] >= 6.0 )
                     self::$browserType = 'Trident';
             }
+            // Firefox 3+
             else if ( strpos( $userAgent, 'Gecko' ) !== false &&
                       preg_match('/rv:([0-9\.]+)/i', $userAgent, $browserInfo ) )
             {
-                if ( $browserInfo[1] >= 1.8 )
+                if ( $browserInfo[1] >= 1.9 )
                     self::$browserType = 'Gecko';
             }
+            // Safari 4+ (and Chrome)
             else if ( strpos( $userAgent, 'WebKit' ) !== false &&
-                      strpos( $userAgent, 'Mobile' ) === false && // Mobile webkit does not have rich text editing support
+                      strpos( $userAgent, 'Mobile' ) === false &&
                       strpos( $userAgent, 'Android' ) === false &&
                       strpos( $userAgent, 'iPad' ) === false &&
                       strpos( $userAgent, 'iPhone' ) === false &&
                       strpos( $userAgent, 'iPod' ) === false &&
                       preg_match('/WebKit\/([0-9\.]+)/i', $userAgent, $browserInfo ) )
             {
-                if ( $browserInfo[1] >= 522.0 )
+                if ( $browserInfo[1] >= 528.16 )
                     self::$browserType = 'WebKit';
+            }
+            // iOS 5+
+            else if ( strpos( $userAgent, 'AppleWebKit' ) !== false &&
+                      strpos( $userAgent, 'Mobile' ) !== false &&
+                      strpos( $userAgent, 'Android' ) === false &&//@todo: remove when Android is supported in TinyMCE
+                      preg_match('/AppleWebKit\/([0-9\.]+)/i', $userAgent, $browserInfo ) )
+            {
+                if ( $browserInfo[1] >= 534.46 )
+                    self::$browserType = 'MobileWebKit';
             }
             if ( self::$browserType === false )
                 eZDebug::writeNotice( 'Browser not supported: ' . $userAgent, __METHOD__ );
@@ -230,13 +233,12 @@ class eZOEXMLInput extends eZXMLInputHandler
      * version
      *
      * @static
-     * @return string ezoe verion number
+     * @return string ezoe version number
      */
     public static function version()
     {
-        $info = ezoeInfo::info();
-        $version = $info['version'];
-        return $version;
+        $info = eZExtension::extensionInfo( 'ezoe' );
+        return $info['version'];
     }
 
      /**
@@ -600,7 +602,7 @@ class eZOEXMLInput extends eZXMLInputHandler
               && $parser->getDeletedEmbedIDArray( $oeini->variable('EditorSettings', 'ValidateEmbedObjects' ) === 'enabled' ) )
             {
                 self::$showEmbedValidationErrors = true;
-                $contentObjectAttribute->setValidationError( ezi18n( 'design/standard/ezoe/handler',
+                $contentObjectAttribute->setValidationError( ezpI18n::tr( 'design/standard/ezoe/handler',
                                          'Some objects used in embed(-inline) tags have been deleted and are no longer available.' ) );
                 return eZInputValidator::STATE_INVALID;
             }
@@ -610,7 +612,7 @@ class eZOEXMLInput extends eZXMLInputHandler
                 $root = $document->documentElement;
                 if ( $root->childNodes->length == 0 )
                 {
-                    $contentObjectAttribute->setValidationError( ezi18n( 'kernel/classes/datatypes',
+                    $contentObjectAttribute->setValidationError( ezpI18n::tr( 'kernel/classes/datatypes',
                                                                          'Content required' ) );
                     return eZInputValidator::STATE_INVALID;
                 }
@@ -618,7 +620,7 @@ class eZOEXMLInput extends eZXMLInputHandler
 
             // Update URL-object links
             $urlIDArray = $parser->getUrlIDArray();
-            if ( count( $urlIDArray ) > 0 )
+            if ( !empty( $urlIDArray ) )
             {
                 self::updateUrlObjectLinks( $contentObjectAttribute, $urlIDArray );
             }
@@ -742,7 +744,7 @@ class eZOEXMLInput extends eZXMLInputHandler
             $output = str_replace( '<p></p>', '<p><br /></p>', $output );
         }
 
-        $output = str_replace( "\n", '', $output );
+        $output = str_replace( array( "\n", "\xC2\xA0" ), array( '', '&nbsp;' ), $output );
 
         if ( $output )
         {
@@ -1223,7 +1225,10 @@ class eZOEXMLInput extends eZXMLInputHandler
                     }
 
                     if ( $alignment === 'center' )
+                    {
                         $objectAttr .= ' align="middle"';
+                        $className .= ' ezoeAlignmiddle'; // align="middle" is not taken into account by browsers on img
+                    }
                     else if ( $alignment )
                         $objectAttr .= ' align="' . $alignment . '"';
 
@@ -1325,7 +1330,7 @@ class eZOEXMLInput extends eZXMLInputHandler
                 }
                 else if ( $inline )
                 {
-                    $imageUrl = self::getCustomAttrbute( $tag, 'image_url' );
+                    $imageUrl = self::getCustomAttribute( $tag, 'image_url' );
                     if ( $imageUrl === null || !$imageUrl )
                     {
                         $imageUrl = self::getDesignFile( $inline );
@@ -1333,6 +1338,13 @@ class eZOEXMLInput extends eZXMLInputHandler
                     }
                     $output .= '<img src="' . $imageUrl . '" class="ezoeItemCustomTag ' . $name .
                                '" type="custom"' . $customAttributePart . $styleString . ' />';
+                }
+                else if ( $tag->textContent === '' )
+                {
+                    // for empty custom tag, just put a paragraph with the name
+                    // of the custom tag in to handle it in the rich text editor
+                    $output .= '<div class="ezoeItemCustomTag ' . $name . '" type="custom"' .
+                                    $customAttributePart . $styleString . '><p>' . $name . '</p></div>';
                 }
                 else
                 {
@@ -1494,7 +1506,8 @@ class eZOEXMLInput extends eZXMLInputHandler
                         if ( $cellContent === '' )
                         {
                             // tinymce has some issues with empty content in some browsers
-                            $cellContent = '<br mce_bogus="1" />';
+                            if ( self::browserSupportsDHTMLType() != 'Trident' )
+                                $cellContent = '<p><br data-mce-bogus="1"/></p>';
                         }
                         if ( $tableCell->nodeName === 'th' )
                         {
@@ -1523,8 +1536,11 @@ class eZOEXMLInput extends eZXMLInputHandler
                     $customAttributePart .= ' style="width:' . $width . ';"';
                 }*/
 
-                if ( is_string( $border ) )
+                if ( $border !== '' && is_string( $border ) )
                 {
+                    if ( $border === '0%' )
+                        $border = '0';// Strip % if 0 to make sure TinyMCE shows a dotted border
+
                     $customAttributePart .= ' border="' . $border . '"';
                 }
 
@@ -1578,7 +1594,7 @@ class eZOEXMLInput extends eZXMLInputHandler
 
                 $customAttributePart = self::getCustomAttrPart( $tag, $styleString );
 
-                $output .= '<a id="' . $name . '" class="mceItemAnchor"' . $customAttributePart .
+                $output .= '<a name="' . $name . '" class="mceItemAnchor"' . $customAttributePart .
                            $styleString . '></a>';
             }break;
 
@@ -1642,7 +1658,7 @@ class eZOEXMLInput extends eZXMLInputHandler
 
                 $attributes[] = 'href="' . $href . '"';
                 // Also set mce_href for use by OE to make sure href attribute is not messed up by IE 6 / 7
-                $attributes[] = 'mce_href="' . $href . '"';
+                $attributes[] = 'data-mce-href="' . $href . '"';
                 if ( $target != '' )
                 {
                     $attributes[] = 'target="' . $target . '"';
@@ -1657,7 +1673,7 @@ class eZOEXMLInput extends eZXMLInputHandler
                 }
 
                 $attributeText = '';
-                if ( count( $attributes ) > 0 )
+                if ( !empty( $attributes ) )
                 {
                     $attributeText = ' ' .implode( ' ', $attributes );
                 }
@@ -1745,7 +1761,7 @@ class eZOEXMLInput extends eZXMLInputHandler
     /*
      * Get custom attribute value
      */
-    public static function getCustomAttrbute( $tag, $attributeName )
+    public static function getCustomAttribute( $tag, $attributeName )
     {
         foreach ( $tag->attributes as $attribute )
         {
@@ -1818,7 +1834,7 @@ class eZOEXMLInput extends eZXMLInputHandler
      * Figgure out if a custom tag is inline or not based on content.ini settings
      *
      * @param string $name Tag name
-     * @return bool|string Return 'image' if tag is inline image, otherwise true/false.
+     * @return bool|string Return 'image' path if tag is inline image, otherwise true/false.
      */
     public static function customTagIsInline( $name )
     {
@@ -1851,10 +1867,10 @@ class eZOEXMLInput extends eZXMLInputHandler
     /*
      * Find out if embed object is image type or not.
      */
-    public static function embedTagIsImageByNode( $node )
+    public static function embedTagIsImageByNode( $xmlNode )
     {
-        $objectID  = $node->getAttribute( 'object_id' );
-        $nodeID    = $node->getAttribute( 'node_id' );
+        $objectID  = $xmlNode->getAttribute( 'object_id' );
+        $nodeID    = $xmlNode->getAttribute( 'node_id' );
         $object    = false;
         $classIdentifier = false;
 
@@ -1864,8 +1880,9 @@ class eZOEXMLInput extends eZXMLInputHandler
         }
         elseif ( is_numeric( $nodeID ) )
         {
-            $node      = eZContentObjectTreeNode::fetch( $nodeID );
-            $object    = $node->object();
+            $node = eZContentObjectTreeNode::fetch( $nodeID );
+            if ( $node instanceof eZContentObjectTreeNode )
+                $object = $node->object();
         }
 
         if ( $object instanceof eZContentObject )
@@ -1936,7 +1953,7 @@ class eZOEXMLInput extends eZXMLInputHandler
      */
     protected static function fetchTemplate( $template, $parameters = array() )
     {
-        $tpl = templateInit();
+        $tpl = eZTemplate::factory();
         $existingPramas = array();
 
         foreach( $parameters as $name => $value )

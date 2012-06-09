@@ -1,30 +1,10 @@
 <?php
-//
-// Created on: <24-Apr-2002 11:18:59 bf>
-//
-// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-// SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.4.0
-// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
-// SOFTWARE LICENSE: GNU General Public License v2.0
-// NOTICE: >
-//   This program is free software; you can redistribute it and/or
-//   modify it under the terms of version 2.0  of the GNU General
-//   Public License as published by the Free Software Foundation.
-// 
-//   This program is distributed in the hope that it will be useful,
-//    but WITHOUT ANY WARRANTY; without even the implied warranty of
-//   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//   GNU General Public License for more details.
-// 
-//   You should have received a copy of version 2.0 of the GNU General
-//   Public License along with this program; if not, write to the Free
-//   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
-//   MA 02110-1301, USA.
-// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-//
-
-
+/**
+ * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
+ * @license http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License v2
+ * @version  2012.5
+ * @package kernel
+ */
 
 $http = eZHTTPTool::instance();
 
@@ -68,6 +48,15 @@ if ( $NodeID < 2 )
 }
 
 $ini = eZINI::instance();
+
+// Be able to filter node id for general use
+$NodeID = ezpEvent::getInstance()->filter( 'content/view', $NodeID, $ini );
+
+$testingHandler = new ezpMultivariateTest( ezpMultivariateTest::getHandler() );
+
+if ( $testingHandler->isEnabled() )
+    $NodeID = $testingHandler->execute( $NodeID );
+
 $viewCacheEnabled = ( $ini->variable( 'ContentSettings', 'ViewCaching' ) == 'enabled' );
 
 if ( isset( $Params['ViewCache'] ) )

@@ -1,30 +1,12 @@
 <?php
-//
-// Definition of eZBinaryFileHandler class
-//
-// Created on: <30-Apr-2002 16:47:08 bf>
-//
-// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-// SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.4.0
-// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
-// SOFTWARE LICENSE: GNU General Public License v2.0
-// NOTICE: >
-//   This program is free software; you can redistribute it and/or
-//   modify it under the terms of version 2.0  of the GNU General
-//   Public License as published by the Free Software Foundation.
-// 
-//   This program is distributed in the hope that it will be useful,
-//    but WITHOUT ANY WARRANTY; without even the implied warranty of
-//   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//   GNU General Public License for more details.
-// 
-//   You should have received a copy of version 2.0 of the GNU General
-//   Public License along with this program; if not, write to the Free
-//   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
-//   MA 02110-1301, USA.
-// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-//
+/**
+ * File containing the eZBinaryFileHandler class.
+ *
+ * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
+ * @license http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License v2
+ * @version  2012.5
+ * @package kernel
+ */
 
 /*!
  \defgroup eZBinaryHandlers Binary file handlers
@@ -75,7 +57,7 @@ class eZBinaryFileHandler
             return $this->Info[$attribute];
         }
 
-        eZDebug::writeError( "Attribute '$attribute' does not exist", 'eZBinaryFileHandler::attribute' );
+        eZDebug::writeError( "Attribute '$attribute' does not exist", __METHOD__ );
         return null;
     }
 
@@ -211,7 +193,7 @@ class eZBinaryFileHandler
             } break;
             default:
             {
-                eZDebug::writeWarning( "Unknown binary file type '$downloadType'", 'eZBinaryFileHandler::downloadURL' );
+                eZDebug::writeWarning( "Unknown binary file type '$downloadType'", __METHOD__ );
             } break;
         }
         $url = "/content/download/$contentObjectID/$contentObjectAttributeID/$downloadType/$name";
@@ -256,7 +238,7 @@ class eZBinaryFileHandler
      * Returns a shared instance of the eZBinaryFileHandler class
      * pr $handlerName as defined in file.ini[BinaryFileSettings]Handler
      *
-     * @param $identifier string|false Uses file.ini[BinaryFileSettings]Handler if false
+     * @param string|false $identifier Uses file.ini[BinaryFileSettings]Handler if false
      * @return eZBinaryFileHandler
      */
     static function instance( $identifier = false )
@@ -279,7 +261,7 @@ class eZBinaryFileHandler
 
             if( $instance === false )
             {
-                eZDebug::writeError( "Could not find binary file handler '$identifier'", 'eZBinaryFileHandler::instance' );
+                eZDebug::writeError( "Could not find binary file handler '$identifier'", __METHOD__ );
             }
         }
         return $instance;

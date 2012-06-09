@@ -1,30 +1,12 @@
 <?php
-//
-// Definition of eZDFSFileHandlerMySQLBackend class
-//
-// Created on: <19-Apr-2006 16:15:17 bd>
-//
-// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-// SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.4.0
-// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
-// SOFTWARE LICENSE: GNU General Public License v2.0
-// NOTICE: >
-//   This program is free software; you can redistribute it and/or
-//   modify it under the terms of version 2.0  of the GNU General
-//   Public License as published by the Free Software Foundation.
-// 
-//   This program is distributed in the hope that it will be useful,
-//    but WITHOUT ANY WARRANTY; without even the implied warranty of
-//   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//   GNU General Public License for more details.
-// 
-//   You should have received a copy of version 2.0 of the GNU General
-//   Public License along with this program; if not, write to the Free
-//   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
-//   MA 02110-1301, USA.
-// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-//
+/**
+ * File containing the eZDFSFileHandlerDFSBackend class.
+ *
+ * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
+ * @license http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License v2
+ * @version  2012.5
+ * @package kernel
+ */
 
 class eZDFSFileHandlerDFSBackend
 {
@@ -42,6 +24,8 @@ class eZDFSFileHandlerDFSBackend
             $mountPointPath = "$mountPointPath/";
 
         $this->mountPointPath = $mountPointPath;
+
+        $this->filePermissionMask = octdec( eZINI::instance()->variable( 'FileSettings', 'StorageFilePermissions' ) );
     }
 
     /**
@@ -49,7 +33,7 @@ class eZDFSFileHandlerDFSBackend
      *
      * @param string $srcFilePath Local source file path
      * @param string $dstFilePath Local destination file path
-     **/
+     */
     public function copyFromDFSToDFS( $srcFilePath, $dstFilePath )
     {
         $this->accumulatorStart();
@@ -59,10 +43,12 @@ class eZDFSFileHandlerDFSBackend
         if ( file_exists( dirname( $dstFilePath ) ) )
         {
             $ret = copy( $srcFilePath, $dstFilePath );
+            if ( $ret )
+                $this->fixPermissions( $dstFilePath );
         }
         else
         {
-            $ret = eZFile::create( basename( $dstFilePath ), dirname( $dstFilePath ), file_get_contents( $srcFilePath ), false );
+            $ret = $this->createFile( $dstFilePath, file_get_contents( $srcFilePath ), false );
         }
 
         $this->accumulatorStop();
@@ -77,7 +63,7 @@ class eZDFSFileHandlerDFSBackend
      *        Destination file path (on FS). If not specified, $srcFilePath is
      *        used
      * @return bool
-     **/
+     */
     public function copyFromDFS( $srcFilePath, $dstFilePath = false )
     {
         $this->accumulatorStart();
@@ -89,9 +75,15 @@ class eZDFSFileHandlerDFSBackend
         $srcFilePath = $this->makeDFSPath( $srcFilePath );
 
         if ( file_exists( dirname( $dstFilePath ) ) )
+        {
             $ret = copy( $srcFilePath, $dstFilePath );
+            if ( $ret )
+                $this->fixPermissions( $dstFilePath );
+        }
         else
-            $ret = eZFile::create( basename( $dstFilePath ), dirname( $dstFilePath ), file_get_contents( $srcFilePath ) );
+        {
+            $ret = $this->createFile( $dstFilePath, file_get_contents( $srcFilePath ) );
+        }
 
         $this->accumulatorStop();
 
@@ -105,7 +97,7 @@ class eZDFSFileHandlerDFSBackend
      * @param string $srcFilePath Local file path to copy from
      * @param string $dstFilePath
      *        Optional path to copy to. If not specified, $srcFilePath is used
-     **/
+     */
     public function copyToDFS( $srcFilePath, $dstFilePath = false )
     {
         $this->accumulatorStart();
@@ -115,7 +107,7 @@ class eZDFSFileHandlerDFSBackend
             $dstFilePath = $srcFilePath;
         }
         $dstFilePath = $this->makeDFSPath( $dstFilePath );
-        $ret = eZFile::create( basename( $dstFilePath ), dirname( $dstFilePath ), file_get_contents( $srcFilePath ), true );
+        $ret = $this->createFile( $dstFilePath, file_get_contents( $srcFilePath ), true );
 
         $this->accumulatorStop();
 
@@ -139,13 +131,21 @@ class eZDFSFileHandlerDFSBackend
             $ret = true;
             foreach( $filePath as $file )
             {
-                $locRet = @unlink( $this->makeDFSPath( $file ) );
+                $dfsPath = $this->makeDFSPath( $file );
+                $locRet = @unlink( $dfsPath );
                 $ret = $ret and $locRet;
+
+                if ( $locRet )
+                    eZClusterFileHandler::cleanupEmptyDirectories( $dfsPath );
             }
         }
         else
         {
-            $ret = @unlink( $this->makeDFSPath( $filePath ) );
+            $dfsPath = $this->makeDFSPath( $filePath );
+            $ret = @unlink( $dfsPath );
+
+            if ( $ret )
+                eZClusterFileHandler::cleanupEmptyDirectories( $dfsPath );
         }
 
         $this->accumulatorStop();
@@ -156,31 +156,18 @@ class eZDFSFileHandlerDFSBackend
     /**
      * Sends the contents of $filePath to default output
      *
-     * @param string $filePath
+     * @param string $filePath File path
+     * @param int $startOffset Starting offset
+     * @param false|int $length Length to transmit, false means everything
      * @return bool true, or false if operation failed
      */
-    public function passthrough( $filePath )
+    public function passthrough( $filePath, $startOffset = 0, $length = false )
     {
-        $this->accumulatorStart();
-
-        $filePath = $this->makeDFSPath( $filePath );
-        if ( !$fp = @fopen( $filePath, 'rb' ) )
-        {
-            return false;
-        }
-        else
-        {
-            // @todo Optimize this by making $length dependant on the filesize
-            while ( $data = fgets( $fp ) )
-            {
-                echo $data;
-            }
-            fclose( $fp );
-        }
-
-        $this->accumulatorStop();
-
-        return true;
+        return eZFile::downloadContent(
+            $this->makeDFSPath( $filePath ),
+            $startOffset,
+            $length
+        );
     }
 
     /**
@@ -210,13 +197,13 @@ class eZDFSFileHandlerDFSBackend
      * @param binary $contents
      *
      * @return bool
-     **/
+     */
     public function createFileOnDFS( $filePath, $contents )
     {
         $this->accumulatorStart();
 
         $filePath = $this->makeDFSPath( $filePath );
-        $ret = eZFile::create( basename( $filePath ), dirname( $filePath ), $contents, false );
+        $ret = $this->createFile( $filePath, $contents, false );
 
         $this->accumulatorStop();
 
@@ -237,7 +224,10 @@ class eZDFSFileHandlerDFSBackend
         $oldPath = $this->makeDFSPath( $oldPath );
         $newPath = $this->makeDFSPath( $newPath );
 
-        $ret = rename( $oldPath, $newPath );
+        $ret = eZFile::rename( $oldPath, $newPath, true );
+
+        if ( $ret )
+            eZClusterFileHandler::cleanupEmptyDirectories( $oldPath );
 
         $this->accumulatorStop();
 
@@ -245,10 +235,31 @@ class eZDFSFileHandlerDFSBackend
     }
 
     /**
+     * Checks if a file exists on the DFS
+     *
+     * @param string $filePath
+     * @return bool
+     */
+    public function existsOnDFS( $filePath )
+    {
+        return file_exists( $this->makeDFSPath( $filePath ) );
+    }
+
+    /**
+     * Returns the mount point
+     *
+     * @return string
+     */
+    public function getMountPoint()
+    {
+        return $this->mountPointPath;
+    }
+
+    /**
      * Computes the DFS file path based on a relative file path
      * @param string $filePath
      * @return string the absolute DFS file path
-     **/
+     */
     protected function makeDFSPath( $filePath )
     {
         return $this->mountPointPath . $filePath;
@@ -264,10 +275,31 @@ class eZDFSFileHandlerDFSBackend
         eZDebug::accumulatorStop( 'mysql_cluster_dfs_operations' );
     }
 
+    protected function fixPermissions( $filePath )
+    {
+        chmod( $filePath, $this->filePermissionMask );
+    }
+
+    protected function createFile( $filePath, $contents, $atomic = true )
+    {
+        $createResult = eZFile::create( basename( $filePath ), dirname( $filePath ), $contents, $atomic );
+
+        if ( $createResult )
+            $this->fixPermissions( $filePath );
+
+        return $createResult;
+    }
+
     /**
      * Path to the local distributed filesystem mount point
      * @var string
-     **/
+     */
     protected $mountPointPath;
+
+    /**
+     * Permission mask that must be applied to created files
+     * @var int
+     */
+    private $filePermissionMask;
 }
 ?>

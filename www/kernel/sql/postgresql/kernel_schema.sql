@@ -568,6 +568,19 @@ CREATE SEQUENCE ezorder_s
 
 
 
+CREATE SEQUENCE ezorder_nr_incr_s
+    START 1
+    INCREMENT 1
+    MAXVALUE 9223372036854775807
+    MINVALUE 1
+    CACHE 1;
+
+
+
+
+
+
+
 CREATE SEQUENCE ezorder_item_s
     START 1
     INCREMENT 1
@@ -646,6 +659,19 @@ CREATE SEQUENCE ezpdf_export_s
 
 
 
+CREATE SEQUENCE ezpending_actions_s
+    START 1
+    INCREMENT 1
+    MAXVALUE 9223372036854775807
+    MINVALUE 1
+    CACHE 1;
+
+
+
+
+
+
+
 CREATE SEQUENCE ezpolicy_s
     START 1
     INCREMENT 1
@@ -686,6 +712,32 @@ CREATE SEQUENCE ezpolicy_limitation_value_s
 
 
 CREATE SEQUENCE ezpreferences_s
+    START 1
+    INCREMENT 1
+    MAXVALUE 9223372036854775807
+    MINVALUE 1
+    CACHE 1;
+
+
+
+
+
+
+
+CREATE SEQUENCE ezprest_authorized_clients_s
+    START 1
+    INCREMENT 1
+    MAXVALUE 9223372036854775807
+    MINVALUE 1
+    CACHE 1;
+
+
+
+
+
+
+
+CREATE SEQUENCE ezprest_clients_s
     START 1
     INCREMENT 1
     MAXVALUE 9223372036854775807
@@ -1241,9 +1293,9 @@ CREATE TABLE ezcollab_group (
 CREATE TABLE ezcollab_item (
     created integer DEFAULT 0 NOT NULL,
     creator_id integer DEFAULT 0 NOT NULL,
-    data_float1 double precision DEFAULT 0::double precision NOT NULL,
-    data_float2 double precision DEFAULT 0::double precision NOT NULL,
-    data_float3 double precision DEFAULT 0::double precision NOT NULL,
+    data_float1 real DEFAULT 0::real NOT NULL,
+    data_float2 real DEFAULT 0::real NOT NULL,
+    data_float3 real DEFAULT 0::real NOT NULL,
     data_int1 integer DEFAULT 0 NOT NULL,
     data_int2 integer DEFAULT 0 NOT NULL,
     data_int3 integer DEFAULT 0 NOT NULL,
@@ -1357,9 +1409,9 @@ CREATE TABLE ezcollab_profile (
 CREATE TABLE ezcollab_simple_message (
     created integer DEFAULT 0 NOT NULL,
     creator_id integer DEFAULT 0 NOT NULL,
-    data_float1 double precision DEFAULT 0::double precision NOT NULL,
-    data_float2 double precision DEFAULT 0::double precision NOT NULL,
-    data_float3 double precision DEFAULT 0::double precision NOT NULL,
+    data_float1 real DEFAULT 0::real NOT NULL,
+    data_float2 real DEFAULT 0::real NOT NULL,
+    data_float3 real DEFAULT 0::real NOT NULL,
     data_int1 integer DEFAULT 0 NOT NULL,
     data_int2 integer DEFAULT 0 NOT NULL,
     data_int3 integer DEFAULT 0 NOT NULL,
@@ -1694,7 +1746,7 @@ CREATE TABLE ezdiscountrule (
 
 
 CREATE TABLE ezdiscountsubrule (
-    discount_percent double precision,
+    discount_percent real,
     discountrule_id integer DEFAULT 0 NOT NULL,
     id integer DEFAULT nextval('ezdiscountsubrule_s'::text) NOT NULL,
     limitation character(1),
@@ -1807,7 +1859,7 @@ CREATE TABLE ezinfocollection_attribute (
     contentclass_attribute_id integer DEFAULT 0 NOT NULL,
     contentobject_attribute_id integer,
     contentobject_id integer,
-    data_float double precision,
+    data_float real,
     data_int integer,
     data_text text,
     id integer DEFAULT nextval('ezinfocollection_attribute_s'::text) NOT NULL,
@@ -2062,14 +2114,24 @@ CREATE TABLE ezorder (
 
 
 
+CREATE TABLE ezorder_nr_incr (
+    id integer DEFAULT nextval('ezorder_nr_incr_s'::text) NOT NULL
+);
+
+
+
+
+
+
+
 CREATE TABLE ezorder_item (
     description character varying(255),
     id integer DEFAULT nextval('ezorder_item_s'::text) NOT NULL,
     is_vat_inc integer DEFAULT 0 NOT NULL,
     order_id integer DEFAULT 0 NOT NULL,
-    price double precision,
+    price real,
     "type" character varying(30),
-    vat_value double precision DEFAULT 0::double precision NOT NULL
+    vat_value real DEFAULT 0::real NOT NULL
 );
 
 
@@ -2158,6 +2220,7 @@ CREATE TABLE ezpdf_export (
 
 
 CREATE TABLE ezpending_actions (
+    id integer DEFAULT nextval('ezpending_actions_s'::text) NOT NULL,
     "action" character varying(64) DEFAULT ''::character varying NOT NULL,
     created integer,
     param text
@@ -2220,6 +2283,67 @@ CREATE TABLE ezpreferences (
 
 
 
+CREATE TABLE ezprest_authcode (
+    client_id character varying(200) DEFAULT ''::character varying NOT NULL,
+    expirytime bigint DEFAULT '0' NOT NULL,
+    id character varying(200) DEFAULT ''::character varying NOT NULL,
+    scope character varying(200),
+    user_id integer DEFAULT 0 NOT NULL
+);
+
+
+
+
+
+
+
+CREATE TABLE ezprest_authorized_clients (
+    created integer,
+    id integer DEFAULT nextval('ezprest_authorized_clients_s'::text) NOT NULL,
+    rest_client_id integer,
+    user_id integer
+);
+
+
+
+
+
+
+
+CREATE TABLE ezprest_clients (
+    client_id character varying(200),
+    client_secret character varying(200),
+    created integer DEFAULT 0 NOT NULL,
+    description text,
+    endpoint_uri character varying(200),
+    id integer DEFAULT nextval('ezprest_clients_s'::text) NOT NULL,
+    name character varying(100),
+    owner_id integer DEFAULT 0 NOT NULL,
+    updated integer DEFAULT 0 NOT NULL,
+    "version" integer DEFAULT 0 NOT NULL
+);
+
+
+
+
+
+
+
+CREATE TABLE ezprest_token (
+    client_id character varying(200) DEFAULT ''::character varying NOT NULL,
+    expirytime bigint DEFAULT '0' NOT NULL,
+    id character varying(200) DEFAULT ''::character varying NOT NULL,
+    refresh_token character varying(200) DEFAULT ''::character varying NOT NULL,
+    scope character varying(200),
+    user_id integer DEFAULT 0 NOT NULL
+);
+
+
+
+
+
+
+
 CREATE TABLE ezproductcategory (
     id integer DEFAULT nextval('ezproductcategory_s'::text) NOT NULL,
     name character varying(255) DEFAULT ''::character varying NOT NULL
@@ -2245,14 +2369,14 @@ CREATE TABLE ezproductcollection (
 
 CREATE TABLE ezproductcollection_item (
     contentobject_id integer DEFAULT 0 NOT NULL,
-    discount double precision,
+    discount real,
     id integer DEFAULT nextval('ezproductcollection_item_s'::text) NOT NULL,
     is_vat_inc integer,
     item_count integer DEFAULT 0 NOT NULL,
     name character varying(255) DEFAULT ''::character varying NOT NULL,
-    price double precision DEFAULT 0::double precision,
+    price real DEFAULT 0::real,
     productcollection_id integer DEFAULT 0 NOT NULL,
-    vat_value double precision
+    vat_value real
 );
 
 
@@ -2267,8 +2391,23 @@ CREATE TABLE ezproductcollection_item_opt (
     name character varying(255) DEFAULT ''::character varying NOT NULL,
     object_attribute_id integer,
     option_item_id integer DEFAULT 0 NOT NULL,
-    price double precision DEFAULT 0::double precision NOT NULL,
+    price real DEFAULT 0::real NOT NULL,
     value character varying(255) DEFAULT ''::character varying NOT NULL
+);
+
+
+
+
+
+
+
+CREATE TABLE ezpublishingqueueprocesses (
+    created integer,
+    ezcontentobject_version_id integer DEFAULT 0 NOT NULL,
+    finished integer,
+    pid integer,
+    started integer,
+    status integer
 );
 
 
@@ -2381,7 +2520,7 @@ CREATE TABLE ezsearch_object_word_link (
     contentclass_attribute_id integer DEFAULT 0 NOT NULL,
     contentclass_id integer DEFAULT 0 NOT NULL,
     contentobject_id integer DEFAULT 0 NOT NULL,
-    frequency double precision DEFAULT 0::double precision NOT NULL,
+    frequency real DEFAULT 0::real NOT NULL,
     id integer DEFAULT nextval('ezsearch_object_word_link_s'::text) NOT NULL,
     identifier character varying(255) DEFAULT ''::character varying NOT NULL,
     integer_value integer DEFAULT 0 NOT NULL,
@@ -2721,7 +2860,7 @@ CREATE TABLE ezvatrule_product_category (
 CREATE TABLE ezvattype (
     id integer DEFAULT nextval('ezvattype_s'::text) NOT NULL,
     name character varying(255) DEFAULT ''::character varying NOT NULL,
-    percentage double precision
+    percentage real
 );
 
 
@@ -3602,6 +3741,46 @@ CREATE INDEX ezpreferences_name ON ezpreferences USING btree (name);
 
 
 CREATE INDEX ezpreferences_user_id_idx ON ezpreferences USING btree (user_id, name);
+
+
+
+
+
+
+
+CREATE INDEX authcode_client_id ON ezprest_authcode USING btree (client_id);
+
+
+
+
+
+
+
+CREATE INDEX client_user ON ezprest_authorized_clients USING btree (rest_client_id, user_id);
+
+
+
+
+
+
+
+CREATE INDEX client_id ON ezprest_clients USING btree (client_id);
+
+
+
+
+
+
+
+CREATE UNIQUE INDEX client_id_unique ON ezprest_clients USING btree (client_id, "version");
+
+
+
+
+
+
+
+CREATE INDEX token_client_id ON ezprest_token USING btree (client_id);
 
 
 
@@ -4524,6 +4703,15 @@ ALTER TABLE ONLY ezorder
 
 
 
+ALTER TABLE ONLY ezorder_nr_incr
+    ADD CONSTRAINT ezorder_nr_incr_pkey PRIMARY KEY (id);
+
+
+
+
+
+
+
 ALTER TABLE ONLY ezorder_item
     ADD CONSTRAINT ezorder_item_pkey PRIMARY KEY (id);
 
@@ -4578,6 +4766,15 @@ ALTER TABLE ONLY ezpdf_export
 
 
 
+ALTER TABLE ONLY ezpending_actions
+    ADD CONSTRAINT ezpending_actions_pkey PRIMARY KEY (id);
+
+
+
+
+
+
+
 ALTER TABLE ONLY ezpolicy
     ADD CONSTRAINT ezpolicy_pkey PRIMARY KEY (id);
 
@@ -4614,6 +4811,42 @@ ALTER TABLE ONLY ezpreferences
 
 
 
+ALTER TABLE ONLY ezprest_authcode
+    ADD CONSTRAINT ezprest_authcode_pkey PRIMARY KEY (id);
+
+
+
+
+
+
+
+ALTER TABLE ONLY ezprest_authorized_clients
+    ADD CONSTRAINT ezprest_authorized_clients_pkey PRIMARY KEY (id);
+
+
+
+
+
+
+
+ALTER TABLE ONLY ezprest_clients
+    ADD CONSTRAINT ezprest_clients_pkey PRIMARY KEY (id);
+
+
+
+
+
+
+
+ALTER TABLE ONLY ezprest_token
+    ADD CONSTRAINT ezprest_token_pkey PRIMARY KEY (id);
+
+
+
+
+
+
+
 ALTER TABLE ONLY ezproductcategory
     ADD CONSTRAINT ezproductcategory_pkey PRIMARY KEY (id);
 
@@ -4643,6 +4876,15 @@ ALTER TABLE ONLY ezproductcollection_item
 
 ALTER TABLE ONLY ezproductcollection_item_opt
     ADD CONSTRAINT ezproductcollection_item_opt_pkey PRIMARY KEY (id);
+
+
+
+
+
+
+
+ALTER TABLE ONLY ezpublishingqueueprocesses
+    ADD CONSTRAINT ezpublishingqueueprocesses_pkey PRIMARY KEY (ezcontentobject_version_id);
 
 
 

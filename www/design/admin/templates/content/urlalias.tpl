@@ -314,8 +314,7 @@
 </form>
 
 {literal}
-<script language="JavaScript" type="text/javascript">
-<!--
+<script type="text/javascript">
     window.onload=function()
     {
         with( document.aliasform )
@@ -331,6 +330,5 @@
             }
         }
     }
--->
 </script>
 {/literal}

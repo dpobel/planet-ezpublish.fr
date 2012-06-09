@@ -1,0 +1,129 @@
+Bugfixes
+========
+- #15035: Webdav Media access buggy when accessing in accentuated language
+- #18886: New user registrations only viewable by Administrator
+- #18986: [eZ Pending Actions] 2 records in less than one second
+- #19030: Improve checking for variable on fetch method, ezcontentobjecttreenode.php
+- #19044: Static cache generation fails in https://
+- #19097: Admin2 reverse object relations tab does not include hidden objects
+- #19098: preview is not working for items in search result (back office of ezp 4.6)
+- #19113: 404 instead of 405 when accessing a resource with a not-supported HTTP method
+- #19116: Using parameters not supported in custom HTTP methods
+- #19125: Concurrent object creation: duplicate key error on ezurlialias_ml
+- #19152: Slow after publish workflow induces Asynchronous Publishing process floods
+
+Pull requests
+=============
+- #120: from pkamps/master
+- #279: from trolek/localization
+- #296: from HenrikWM/patch-1
+- #297: from HenrikWM/patch-2
+- #300: from dspe/master
+
+Miscellaneous
+=============
+- Modified constructor on RAD templateoperator
+- Fixed: wrong documentation in menu.ini
+- Fixed: wrong documentation in menu.ini
+- Added additional check for node
+- Fixed if-modified-since mtime comparison
+- Changed: added button right div by default in the edit toolbar
+- Fixed: transaction counter is not reset after a DB error
+- Text change
+- Text change
+- Refined features/cluster_index formatting
+- Changed the cluster_index.txt feature doc extension (again)
+- Changed the cluster_index.txt feature doc extension
+- Removed unnecessary fclose() on error output
+- Fixed an undefined index notice in ezpClusterGateway
+- Use $cli->output instead of $cli->notice
+- 'is_file()' calles 'file_exists()' internally, use only 'is_file' instead.
+- Fixed an undefined variable error in ezpClusterGateway
+- md5sum() should only attempt to process files, so added a check 'is_file' to prevent a php-error that will be thrown if $file is a directory and not a file.
+- Added support for deleting packages.
+- Removed a debug message
+- Fixed cluster expiry timeout handling
+- Fixed typos
+- Added another usecase example in cluster events doc
+- Moved cluster_events doc to MarkdDown format. Why? Because it's more colorful on Github :-)
+- Fixed the signature of the passthrough method
+- Updated autoload array
+- Added extension point for ezmultivariatetest extension
+- Added some more padding on buttons in admin2
+- PHPDoc: Fixed nitpick by carlos in 4f83e8f030a1ef82405925f7644c5ed4e74a310d#commitcomment-1000289
+- Update doc/features/4.7/cluster_events.rst
+- Added documentation for cluster events feature
+- Fixed phpDoc for eZClusterEventListener::fileExists()
+- Added comment about config.cluster.php in config.php-RECOMMENDED
+- Merge branch 'DfsClusterEvents'
+- Added possibility to have a config.cluster.php, only for cluster configuration (requests coming via index_cluster.php)
+- ClusterIndex: changed the way cluster gateways are instanciated
+- Tweaked index_cluster so that it is able to accept a previously included gateway file
+- Cluster events: Fixed wrong check on event filter returned value
+- Added: support for JSON encoded body with POST request
+- Cluster events: Check of listener implements the right interface
+- Cluster events: Added cluster event loggers
+- ClusterEvents: fixed a wrong argument in fetchMetadata
+- Cluster events: ezpEvent should be instantiated in DFS backend's contructor
+- Cluster events: DFS MySQLi backend now implements eZClusterEventNotifier
+- Cluster events: renamed deleteNametrunk() to deleteByNametrunk() in listener interface
+- Fixed typo in 'Redis'
+- Added cluster event listener registering in eZDFSFileHandler
+- ClusterEvents: added events to the DFS MySQLi backend
+- CS: fixed some issues from https://github.com/ezsystems/ezpublish/pull/120
+- ClusterEvents: basic implementation in _fetchMetadata
+- Added interfaces for cluster event notifier and listener
+- Documentation: dded BC notes for cluster index changes
+- Added feature doc for cluster index
+- Updated autoload with missing cluster index files
+- Added: TODOs
+- Added: FIXMEs
+- Added: method visibility
+- Changed: cluster refactoring: be more OO and testable
+- Changed: refactored cluster gateways to provide db info in CTOR
+- Removed: obsolete ?>
+- Added: missing constant doc and default settings
+- Fixed: getMessage is a method
+- Changed: simplified filename retrieval
+- Optimized: avoid looping over
+- Removed: unused constant
+- Changed: moved ini_set at a place where CLUSTER_ENABLE_DEBUG is defined in all cases
+- Fixed: STORAGE_PORT => CLUSTER_STORAGE_PORT
+- Changed: tightening the retry logic a bit
+- Changed: include -> require to fail if not existing
+- CS: cleanup
+- Fixed unexisting CLUSTER_DEBUG, should be CLUSTER_ENABLE_DEBUG
+- CS: newline at EOF
+- CS: newline at EOF
+- CS: Removed unused code
+- Optimized etag server variables iteration
+- ClusterIndex: removed the unused setDatabase() method
+- ClusterIndex: made  protected instead of private
+- ClusterIndex: index file cleanup + gateway close
+- ClusterIndex: implemented HTTP range for DFS postgres+mysqli
+- ClusterIndex: implemented HTTP range for DFS/MySQLi
+- Whitespaces
+- ClusterIndex: removed deprecated index_image.php
+- ClusterIndex: doc in config.php-RECOMMENDED
+- ClusterIndex: added extension point for custom gateways/cluster handlers
+- ClusterIndex: removed refactored mysql(i) cluster indexes
+- ClusterIndex: fixed error reporting
+- ClusterIndex: fixed license headers + doc
+- ClusterIndex: refactored DB/MySQL + deprecated
+- ClusterIndex: refactored DB/MySQLi index
+- ClusterIndex: fixed an error in the DFS/Postgres class name
+- ClusterIndex: refactored DFS/MySQLi index
+- Cleanup
+- ClusterIndex: made the eTag header depend on http cache being enabled
+- Added global index_cluster.php + config.php
+- Cluster index refactoring
+- Removed leftover postgresql/DB cluster file
+- Replaced tabs with spaces
+- Fixed: CS in persistent object definition
+- localization: change some formats dates in pol-PL locale file
+- Scalar values formated with formatter
+- localization: update pol-PL locale file
+- Nice output for empty an empty array or hash
+- inline documentation updated and added
+- Code makup
+- Dump operator and bug fix in recursive function in case of arrays

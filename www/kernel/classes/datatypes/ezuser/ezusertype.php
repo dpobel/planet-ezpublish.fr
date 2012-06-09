@@ -1,30 +1,12 @@
 <?php
-//
-// Definition of eZUserType class
-//
-// Created on: <30-Apr-2002 13:06:21 bf>
-//
-// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-// SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.4.0
-// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
-// SOFTWARE LICENSE: GNU General Public License v2.0
-// NOTICE: >
-//   This program is free software; you can redistribute it and/or
-//   modify it under the terms of version 2.0  of the GNU General
-//   Public License as published by the Free Software Foundation.
-// 
-//   This program is distributed in the hope that it will be useful,
-//    but WITHOUT ANY WARRANTY; without even the implied warranty of
-//   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//   GNU General Public License for more details.
-// 
-//   You should have received a copy of version 2.0 of the GNU General
-//   Public License along with this program; if not, write to the Free
-//   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
-//   MA 02110-1301, USA.
-// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-//
+/**
+ * File containing the eZUserType class.
+ *
+ * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
+ * @license http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License v2
+ * @version  2012.5
+ * @package kernel
+ */
 
 /*!
   \class eZUserType ezusertype.php
@@ -55,7 +37,8 @@ class eZUserType extends eZDataType
         $res = $db->arrayQuery( "SELECT COUNT(*) AS version_count FROM ezcontentobject_version WHERE contentobject_id = $userID" );
         $versionCount = $res[0]['version_count'];
 
-        if ( $version == null || $versionCount <= 1 )
+        if ( ( $version == null || $versionCount <= 1 )
+                && eZUser::fetch( $userID ) !== null )
         {
             eZUser::removeUser( $userID );
             $db->query( "DELETE FROM ezuser_role WHERE contentobject_id = '$userID'" );
@@ -108,6 +91,7 @@ class eZUserType extends eZDataType
                                                                          'The email address is not valid.' ) );
                     return eZInputValidator::STATE_INVALID;
                 }
+
                 $authenticationMatch = eZUser::authenticationMatch();
                 if ( $authenticationMatch & eZUser::AUTHENTICATE_EMAIL )
                 {
@@ -154,7 +138,7 @@ class eZUserType extends eZDataType
                     }
                     if ( !eZUser::validatePassword( $password ) )
                     {
-                        $minPasswordLength = $ini->hasVariable( 'UserSettings', 'MinPasswordLength' ) ? $ini->variable( 'UserSettings', 'MinPasswordLength' ) : 3;
+                        $minPasswordLength = $ini->variable( 'UserSettings', 'MinPasswordLength' );
                         $contentObjectAttribute->setValidationError( ezpI18n::tr( 'kernel/classes/datatypes',
                                                                              'The password must be at least %1 characters long.', null, array( $minPasswordLength ) ) );
                         return eZInputValidator::STATE_INVALID;
@@ -163,6 +147,19 @@ class eZUserType extends eZDataType
                     {
                         $contentObjectAttribute->setValidationError( ezpI18n::tr( 'kernel/classes/datatypes',
                                                                              'The password must not be "password".' ) );
+                        return eZInputValidator::STATE_INVALID;
+                    }
+                }
+
+                // validate confirm email
+                if ( $ini->variable( 'UserSettings', 'RequireConfirmEmail' ) == 'true' )
+                {
+                    $emailConfirm = $http->postVariable( $base . "_data_user_email_confirm_" . $contentObjectAttribute->attribute( "id" ) );
+                    if ( $email != $emailConfirm )
+                    {
+                        $contentObjectAttribute->setValidationError( ezpI18n::tr( 'kernel/classes/datatypes',
+                                                                             'The emails do not match.',
+                                                                             'eZUserType' ) );
                         return eZInputValidator::STATE_INVALID;
                     }
                 }
@@ -448,8 +445,16 @@ class eZUserType extends eZDataType
         $login = $userData[0];
         $email = $userData[1];
 
-        if ( eZUser::fetchByName( $login ) || eZUser::fetchByEmail( $email ) )
+        $userByUsername = eZUser::fetchByName( $login );
+        if( $userByUsername && $userByUsername->attribute( 'contentobject_id' ) != $contentObjectAttribute->attribute( 'contentobject_id' ) )
             return false;
+
+        if( eZUser::requireUniqueEmail() )
+        {
+            $userByEmail = eZUser::fetchByEmail( $email );
+            if( $userByEmail && $userByEmail->attribute( 'contentobject_id' ) != $contentObjectAttribute->attribute( 'contentobject_id' ) )
+                return false;
+        }
 
         $user = eZUser::create( $contentObjectAttribute->attribute( 'contentobject_id' ) );
 

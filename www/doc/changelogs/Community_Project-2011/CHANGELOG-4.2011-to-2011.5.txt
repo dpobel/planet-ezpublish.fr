@@ -1,0 +1,24 @@
+Bugfixes
+========
+- #12285: undefined when having embed content in embed content
+- #17123: Policy problem with node additionnal locations
+- #18056: URLs and Images in RSS feed do not use absolute URLs
+- #18120: Object State Group Objects ordering not working
+- #18233: The web shop should not use table locking
+- #18253: Fatal error when overriding eZSiteAccess
+- #18258: Ensure that indexing succeeds
+- #18268: Confusion between chi-CN and chi-TW local
+- #18271: Static cache is not generated on Event/Approve objects
+- #18272: SQL parse errors in cleandata.sql
+- #18273: Wrong default parameter value in eZContentClass::instantiate, causing fatal error upon further object edition.
+- #18285: Shop was deprecated in 4.5 but not documented as such in doc/bc
+- #18297: Autolink operator doesn't make difference between a raw URL and an attribute content
+- #18303: Errors are not shown when -q,--quiet is used
+- #18304: eZCLI ignores the quiet mode when used from cronjobs
+- #18318: Asynchronous publishing hooks are not called
+
+Enhancements
+============
+- #16091: Improve content/hide policy limitation
+- #18158: It should be possible to track who and when (un)hided the node.
+

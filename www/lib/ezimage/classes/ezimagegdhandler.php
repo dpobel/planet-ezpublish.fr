@@ -1,33 +1,12 @@
 <?php
-//
-// Definition of eZImageGDHandler class
-//
-// Created on: <16-Oct-2003 14:22:43 amos>
-//
-// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-// SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.4.0
-// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
-// SOFTWARE LICENSE: GNU General Public License v2.0
-// NOTICE: >
-//   This program is free software; you can redistribute it and/or
-//   modify it under the terms of version 2.0  of the GNU General
-//   Public License as published by the Free Software Foundation.
-// 
-//   This program is distributed in the hope that it will be useful,
-//    but WITHOUT ANY WARRANTY; without even the implied warranty of
-//   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//   GNU General Public License for more details.
-// 
-//   You should have received a copy of version 2.0 of the GNU General
-//   Public License along with this program; if not, write to the Free
-//   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
-//   MA 02110-1301, USA.
-// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-//
-
-/*! \file
-*/
+/**
+ * File containing the eZImageGDHandler class.
+ *
+ * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
+ * @license http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License v2
+ * @version  2012.5
+ * @package lib
+ */
 
 /*!
   \class eZImageGDHandler ezimagegdhandler.php
@@ -142,14 +121,12 @@ class eZImageGDHandler extends eZImageHandler
         $destinationMimeType = $destinationMimeData['name'];
         if ( !isset( $this->InputMap[$sourceMimeType] ) )
         {
-            eZDebug::writeError( "MIME-Type $sourceMimeType is not supported as input by GD converter",
-                                 'eZImageGDHandler::convert' );
+            eZDebug::writeError( "MIME-Type $sourceMimeType is not supported as input by GD converter", __METHOD__ );
             return false;
         }
         if ( !isset( $this->OutputMap[$destinationMimeType] ) )
         {
-            eZDebug::writeError( "MIME-Type $destinationMimeType is not supported as output by GD converter",
-                                 'eZImageGDHandler::convert' );
+            eZDebug::writeError( "MIME-Type $destinationMimeType is not supported as output by GD converter", __METHOD__ );
             return false;
         }
 
@@ -161,8 +138,7 @@ class eZImageGDHandler extends eZImageHandler
 
         if ( !file_exists( $inputFile ) )
         {
-            eZDebug::writeError( "Source image $inputFile does not exist, cannot convert",
-                                 'eZImageGDHandler::convert' );
+            eZDebug::writeError( "Source image $inputFile does not exist, cannot convert", __METHOD__ );
             return false;
         }
 
@@ -225,7 +201,7 @@ class eZImageGDHandler extends eZImageHandler
         }
         else
         {
-            eZDebug::writeWarning( "Failed converting $inputFile ($sourceMimeType) to $outputFile ($destinationMimeType)", 'eZImageGDHandler::convert' );
+            eZDebug::writeWarning( "Failed converting $inputFile ($sourceMimeType) to $outputFile ($destinationMimeType)", __METHOD__ );
             return false;
         }
     }
@@ -303,8 +279,7 @@ class eZImageGDHandler extends eZImageHandler
         }
         else
         {
-            eZDebug::writeDebug( "No luminance scale named " . $filterData['name'] . ", applying gray scales",
-                                 'eZImageGDHandler::setImageLuminanceName' );
+            eZDebug::writeDebug( "No luminance scale named " . $filterData['name'] . ", applying gray scales", __METHOD__ );
             $colorScale = array( 1.0, 1.0, 1.0 );
         }
         return $this->setImageLuminanceColorScale( $imageObject, $filterData, $sourceMimeData, $destinationMimeData,
@@ -363,8 +338,7 @@ class eZImageGDHandler extends eZImageHandler
         }
         else
         {
-            eZDebug::writeDebug( "No threshold values named " . $filterData['name'] . ", applying black/white (monochrome) threshold",
-                                 'eZImageGDHandler::setImageLuminanceName' );
+            eZDebug::writeDebug( "No threshold values named " . $filterData['name'] . ", applying black/white (monochrome) threshold", __METHOD__ );
             $thresholdList = array( array( 'threshold' => 127,
                                            'rgb' => array( 0, 0, 0 ) ),
                                     array( 'threshold' => 255,
@@ -660,6 +634,8 @@ class eZImageGDHandler extends eZImageHandler
         $sourceHeight = ImageSY( $imageObject );
 
         $temporaryImageObject = eZImageGDHandler::imageCreate( $destinationWidth, $destinationHeight, eZImageGDHandler::isImageTrueColor( $imageObject, $sourceMimeData ) );
+        imagealphablending( $temporaryImageObject, false );
+        imagesavealpha( $temporaryImageObject, true );
         ImageCopyResampled( $temporaryImageObject, $imageObject,
                             0, 0, 0, 0,
                             $destinationWidth, $destinationHeight, $sourceWidth, $sourceHeight );
@@ -728,8 +704,7 @@ class eZImageGDHandler extends eZImageHandler
         $ini = eZINI::instance( $iniFilename );
         if ( !$ini )
         {
-            eZDebug::writeError( "Failed loading ini file $iniFilename",
-                                 'eZImageGDHandler::createFromINI' );
+            eZDebug::writeError( "Failed loading ini file $iniFilename", __METHOD__ );
             return $handler;
         }
 

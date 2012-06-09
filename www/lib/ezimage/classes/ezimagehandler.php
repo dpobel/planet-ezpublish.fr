@@ -1,33 +1,12 @@
 <?php
-//
-// Definition of eZImageHandler class
-//
-// Created on: <16-Oct-2003 13:58:34 amos>
-//
-// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-// SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.4.0
-// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
-// SOFTWARE LICENSE: GNU General Public License v2.0
-// NOTICE: >
-//   This program is free software; you can redistribute it and/or
-//   modify it under the terms of version 2.0  of the GNU General
-//   Public License as published by the Free Software Foundation.
-// 
-//   This program is distributed in the hope that it will be useful,
-//    but WITHOUT ANY WARRANTY; without even the implied warranty of
-//   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//   GNU General Public License for more details.
-// 
-//   You should have received a copy of version 2.0 of the GNU General
-//   Public License along with this program; if not, write to the Free
-//   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
-//   MA 02110-1301, USA.
-// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-//
-
-/*! \file
-*/
+/**
+ * File containing the eZImageHandler class.
+ *
+ * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
+ * @license http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License v2
+ * @version  2012.5
+ * @package lib
+ */
 
 /*!
   \class eZImageHandler ezimagehandler.php
@@ -190,7 +169,7 @@ class eZImageHandler
      - self::PREPEND_TAG_REPLACE_SUFFIX - Prepends the tag name and replaces the suffix of the url
      The new url is placed in the \a $destinationMimeData.
     */
-    static function rewriteURL( $originalMimeData, &$destinationMimeData, $rewriteType, $aliasName = false )
+    function rewriteURL( $originalMimeData, &$destinationMimeData, $rewriteType, $aliasName = false )
     {
         $extraText = false;
         if ( $aliasName and
@@ -270,8 +249,7 @@ class eZImageHandler
         $success = false;
         $oldmask = umask( 0 );
         if ( !chmod( $filepath, octdec( $perm ) ) )
-            eZDebug::writeError( "Chmod $perm $filepath failed",
-                                 'eZImageHandler::changeFilePermissions' );
+            eZDebug::writeError( "Chmod $perm $filepath failed", __METHOD__ );
         else
             $success = true;
         umask( $oldmask );
@@ -440,7 +418,7 @@ class eZImageHandler
         if ( $mimeType )
         {
             $mimeData = eZMimeType::findByName( $mimeType );
-            eZImageHandler::rewriteURL( $currentMimeData, $mimeData, $this->outputRewriteType(), $aliasName );
+            $this->rewriteURL( $currentMimeData, $mimeData, $this->outputRewriteType(), $aliasName );
         }
         return $mimeData;
     }

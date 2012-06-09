@@ -1,29 +1,11 @@
 #!/usr/bin/env php
 <?php
-//
-// Created on: <18-Mar-2003 17:06:45 amos>
-//
-// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-// SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.4.0
-// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
-// SOFTWARE LICENSE: GNU General Public License v2.0
-// NOTICE: >
-//   This program is free software; you can redistribute it and/or
-//   modify it under the terms of version 2.0  of the GNU General
-//   Public License as published by the Free Software Foundation.
-// 
-//   This program is distributed in the hope that it will be useful,
-//    but WITHOUT ANY WARRANTY; without even the implied warranty of
-//   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//   GNU General Public License for more details.
-// 
-//   You should have received a copy of version 2.0 of the GNU General
-//   Public License along with this program; if not, write to the Free
-//   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
-//   MA 02110-1301, USA.
-// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-//
+/**
+ * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
+ * @license http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License v2
+ * @version  2012.5
+ * @package kernel
+ */
 
 require 'autoload.php';
 
@@ -192,7 +174,7 @@ function helpHelp()
                   "   export\n" .
                   "   add\n" .
                   "   set\n" .
-//                  "   delete (del, remove, rm)\n" .
+                  "   delete (del, remove, rm)\n" .
                   "   list\n" .
                   "   info\n"
                   );
@@ -200,17 +182,14 @@ function helpHelp()
 
 function changeSiteAccessSetting( $siteAccess )
 {
-    global $isQuiet;
     $cli = eZCLI::instance();
     if ( file_exists( 'settings/siteaccess/' . $siteAccess) )
     {
-        if ( !$isQuiet )
-            $cli->notice( "Using siteaccess $siteAccess for nice url update" );
+        $cli->output( "Using siteaccess $siteAccess for nice url update" );
     }
     else
     {
-        if ( !$isQuiet )
-            $cli->notice( "Siteaccess $siteAccess does not exist, using default siteaccess" );
+        $cli->notice( "Siteaccess $siteAccess does not exist, using default siteaccess" );
     }
 }
 
@@ -448,7 +427,7 @@ for ( $i = 1; $i < count( $argv ); ++$i )
                         else if ( $level == 'notice' )
                             $level = eZDebug::LEVEL_NOTICE;
                         else if ( $level == 'timing' )
-                            $level = eZDebug::EZ_LEVEL_TIMING;
+                            $level = eZDebug::LEVEL_TIMING_POINT;
                         $allowedDebugLevels[] = $level;
                     }
                 }
@@ -593,6 +572,11 @@ for ( $i = 1; $i < count( $argv ); ++$i )
                     $commandItem['export-directory'] = $argv[$i];
                 }
             }
+            else if ( $commandItem['command'] == 'delete' )
+            {
+                if ( $commandItem['name'] === false )
+                    $commandItem['name'] = $arg;
+            }
         }
     }
 }
@@ -677,6 +661,14 @@ foreach ( $commandList as $commandItem )
         helpHelp();
         exit( 1 );
     }
+    else if ( $commandItem['command'] == 'delete' )
+    {
+        if ( !$commandItem['name'] )
+        {
+            helpDelete();
+            exit( 1 );
+        }
+    }
     else
     {
         help();
@@ -720,7 +712,7 @@ if ( $dbUser !== false or $dbHost !== false or $dbSocket !== false or
 
     if ( !$db->isConnected() )
     {
-        $str = "Failed to connnect to database: $dbType://$dbUser@$dbHost";
+        $str = "Failed to connect to database: $dbType://$dbUser@$dbHost";
         $cli->error( $str );
         $script->shutdown( 1 );
     }
@@ -849,8 +841,7 @@ foreach ( $commandList as $commandItem )
                         foreach ( $groups as $group )
                         {
                             $package->appendGroup( $group );
-                            if ( !$isQuiet )
-                                $cli->notice( "Added to group $group" );
+                            $cli->output( "Added to group $group" );
                         }
                         $package->store();
                     }
@@ -922,9 +913,8 @@ foreach ( $commandList as $commandItem )
                     case 'state':
                     {
                         $package->setAttribute( $commandItem['attribute'], $commandItem['attribute-value'] );
-                        if ( !$isQuiet )
-                            $cli->notice( "Attribute " . $cli->style( 'symbol' ) . $commandItem['attribute'] . $cli->style( 'emphasize-end' ) .
-                                          " was set to " . $cli->style( 'symbol' ) . $commandItem['attribute-value'] . $cli->style( 'emphasize-end' ) );
+                        $cli->output( "Attribute " . $cli->style( 'symbol' ) . $commandItem['attribute'] . $cli->style( 'emphasize-end' ) .
+                                      " was set to " . $cli->style( 'symbol' ) . $commandItem['attribute-value'] . $cli->style( 'emphasize-end' ) );
                     } break;
                 }
                 $package->store();
@@ -945,7 +935,7 @@ foreach ( $commandList as $commandItem )
 
             if ( $package instanceof eZPackage )
             {
-                $cli->notice( "Package " . $cli->stylize( 'emphasize', $packageName ) . " sucessfully imported" );
+                $cli->output( "Package " . $cli->stylize( 'emphasize', $packageName ) . " sucessfully imported" );
             }
             else if ( $package == eZPackage::STATUS_ALREADY_EXISTS )
             {
@@ -980,7 +970,7 @@ foreach ( $commandList as $commandItem )
                                         'language_map' => $package->defaultLanguageMap() );
             $result = $package->install( $installParameters );
             if ( $result )
-                $cli->notice( "Package " . $cli->stylize( 'emphasize', $package->attribute( 'name' ) ) . " sucessfully installed" );
+                $cli->output( "Package " . $cli->stylize( 'emphasize', $package->attribute( 'name' ) ) . " sucessfully installed" );
             else
                 $cli->error( "Failed to install package " . $cli->stylize( 'emphasize', $package->attribute( 'name' ) ) );
         }
@@ -1000,21 +990,18 @@ foreach ( $commandList as $commandItem )
                 $exportDirectory = $commandItem['export-directory'];
                 if ( !file_exists( $exportDirectory ) )
                 {
-                    if ( !$isQuiet )
-                        $cli->notice( "The directory " . $cli->style( 'dir' ) . $exportDirectory . $cli->style( 'dir-end' ) . " does not exist, cannot export package" );
+                    $cli->warning( "The directory " . $cli->style( 'dir' ) . $exportDirectory . $cli->style( 'dir-end' ) . " does not exist, cannot export package" );
                 }
                 else
                 {
                     $package->exportToArchive( $exportDirectory . eZSys::fileSeparator() . $package->exportName() );
-                    if ( !$isQuiet )
-                        $cli->notice( "Package " . $cli->stylize( 'symbol', $package->attribute( 'name' ) ) . " exported to directory " . $cli->stylize( 'dir', $exportDirectory ) );
+                    $cli->output( "Package " . $cli->stylize( 'symbol', $package->attribute( 'name' ) ) . " exported to directory " . $cli->stylize( 'dir', $exportDirectory ) );
                 }
             }
             else
             {
                 $exportPath = $package->exportToArchive( $package->exportName() );
-                if ( !$isQuiet )
-                    $cli->notice( "Package " . $cli->stylize( 'symbol', $package->attribute( 'name' ) ) . " exported to file " . $cli->stylize( 'file', $exportPath ) );
+                $cli->output( "Package " . $cli->stylize( 'symbol', $package->attribute( 'name' ) ) . " exported to file " . $cli->stylize( 'file', $exportPath ) );
             }
         }
         else
@@ -1053,6 +1040,17 @@ foreach ( $commandList as $commandItem )
         $cli->output( $text );
         $alreadyCreated = true;
         $createdPackages[$commandItem['name']] =& $package;
+    }
+    else if ( $command == 'delete' )
+    {
+        $package = eZPackage::fetch( $commandItem['name'] );
+        if ( $package )
+        {
+            $package->remove();
+            $cli->output( "Package " . $commandItem['name'] . " deleted." );
+        }
+        else
+            $cli->error( "Could not open package " . $commandItem['name'] );
     }
 }
 

@@ -1,33 +1,12 @@
 <?php
-//
-// Definition of Runcronworflows class
-//
-// Created on: <02-���-2002 14:04:21 sp>
-//
-// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-// SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.4.0
-// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
-// SOFTWARE LICENSE: GNU General Public License v2.0
-// NOTICE: >
-//   This program is free software; you can redistribute it and/or
-//   modify it under the terms of version 2.0  of the GNU General
-//   Public License as published by the Free Software Foundation.
-// 
-//   This program is distributed in the hope that it will be useful,
-//    but WITHOUT ANY WARRANTY; without even the implied warranty of
-//   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//   GNU General Public License for more details.
-// 
-//   You should have received a copy of version 2.0 of the GNU General
-//   Public License along with this program; if not, write to the Free
-//   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
-//   MA 02110-1301, USA.
-// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-//
-
-/*! \file
-*/
+/**
+ * File containing the workflow.php cronjob
+ *
+ * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
+ * @license http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License v2
+ * @version  2012.5
+ * @package kernel
+ */
 
 $runInBrowser = true;
 if ( isset( $webOutput ) )
@@ -37,8 +16,7 @@ $db = eZDB::instance();
 
 $workflowProcessList = eZWorkflowProcess::fetchForStatus( eZWorkflow::STATUS_DEFERRED_TO_CRON );
 
-if ( !$isQuiet )
-    $cli->output( "Checking for workflow processes"  );
+$cli->output( "Checking for workflow processes"  );
 $removedProcessCount = 0;
 $processCount = 0;
 $statusMap = array();
@@ -68,10 +46,10 @@ foreach( $workflowProcessList as $process )
              $process->attribute( 'status' ) == eZWorkflow::STATUS_BUSY
            )
         {
-            $bodyMemento = eZOperationMemento::fetchMain( $process->attribute( 'memento_key' ) );
-            $mementoList = eZOperationMemento::fetchList( $process->attribute( 'memento_key' ) );
-            $bodyMemento->remove();
-            foreach( $mementoList as $memento )
+            if ( $bodyMemento = eZOperationMemento::fetchMain( $process->attribute( 'memento_key' ) ) )
+                $bodyMemento->remove();
+
+            foreach ( eZOperationMemento::fetchList( $process->attribute( 'memento_key' ) ) as $memento )
             {
                 $memento->remove();
             }
@@ -119,6 +97,8 @@ foreach( $workflowProcessList as $process )
     }
 
     $db->commit();
+
+    eZStaticCache::executeActions();
 }
 if ( !$isQuiet )
 {

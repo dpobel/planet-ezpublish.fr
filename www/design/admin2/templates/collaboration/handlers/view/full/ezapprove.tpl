@@ -56,7 +56,7 @@
     {/if}
     {if $content_version|null()|not()}
       <p>{"You may edit the draft and publish it, in which case an approval is required again."|i18n('design/admin/collaboration/handler/view/full/ezapprove')}</p>
-      <p><a href={concat("content/edit/",$content_version.contentobject_id)|ezurl}>{"Edit the object"|i18n('design/admin/collaboration/handler/view/full/ezapprove')}</a></p>
+      <p><a href={concat( "content/edit/", $content_version.contentobject_id, "/", $content_version.version )|ezurl}>{"Edit the object"|i18n('design/admin/collaboration/handler/view/full/ezapprove')}</a></p>
     {/if}
   {else}
     {if and( is_set( $contentobject_link ),$contentobject_link )}
@@ -130,7 +130,7 @@
 
 <div class="context-information">
     <p class="modified left">{'Published at'|i18n( 'design/admin/node/view/full' )}: {$content_version.modified|l10n(shortdatetime)}, <a href={$content_version.creator.main_node.url_alias|ezurl}>{$content_version.creator.name|wash}</a></p>
-    <p class="translation right">{$content_version.initial_language.locale_object.intl_language_name}&nbsp;<img src="{$content_version.initial_language.locale|flag_icon}" alt="{$content_version.initial_language.locale_object.intl_language_name}" style="vertical-align: middle;" /></p>
+    <p class="translation right">{$content_version.initial_language.locale_object.intl_language_name}&nbsp;<img src="{$content_version.initial_language.locale|flag_icon}" width="18" height="12" alt="{$content_version.initial_language.locale_object.intl_language_name}" style="vertical-align: middle;" /></p>
     <div class="break"></div>
 </div>
 

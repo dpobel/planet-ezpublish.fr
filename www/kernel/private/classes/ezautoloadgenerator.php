@@ -2,9 +2,9 @@
 /**
  * File containing the eZAutoloadGenerator class.
  *
- * @copyright Copyright (C) 1999-2010 eZ Systems AS. All rights reserved.
- * @license http://ez.no/licenses/gnu_gpl GNU General Public License v2.0
- * @version 4.4.0
+ * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
+ * @license http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License v2
+ * @version  2012.5
  * @package kernel
  */
 
@@ -138,6 +138,16 @@ class eZAutoloadGenerator
      */
     const OUTPUT_PROGRESS_PHASE2 = 2;
 
+    /**
+     * The name of the file which contains default exclude directories for the
+     * autoload generator.
+     */
+    const DEFAULT_EXCLUDE_FILE = '.autoloadignore';
+
+    /**
+     * Undefined token value
+     */
+    const UNDEFINED_TOKEN = -1;
 
     /**
      * Constructs class to generate autoload arrays.
@@ -252,13 +262,34 @@ class eZAutoloadGenerator
                  {
                     chmod( $filePath, 0777 );
                  }
-                 
+
              }
              else
              {
                  throw new Exception( __METHOD__ . ": The file {$filePath} is not writable by the system." );
              }
          }
+    }
+
+    /**
+     * Adds exclude directories specified in the default excludes files, to the exclude array.
+     *
+     * If the default exclude file '.autoloadignore' does not exist, the
+     * function will just return the user specified exclude directories. This function relies on the options
+     * object being available in the instance.
+     *
+     * @return array The exclude directories
+     */
+    protected function handleDefaultExcludeFile()
+    {
+        $defaultExcludeFile = $this->options->basePath . DIRECTORY_SEPARATOR . self::DEFAULT_EXCLUDE_FILE;
+        if ( !file_exists( $defaultExcludeFile ) )
+        {
+            return $this->options->excludeDirs;
+        }
+
+        $defaultExcludeArray = explode( "\n", trim( file_get_contents( $defaultExcludeFile ) ) );
+        return array_merge( $defaultExcludeArray, $this->options->excludeDirs );
     }
 
     /**
@@ -271,7 +302,7 @@ class eZAutoloadGenerator
     protected function fetchFiles()
     {
         $path = $this->options->basePath;
-        $excludeDirs = $this->options->excludeDirs;
+        $excludeDirs = $this->handleDefaultExcludeFile();
 
         // make sure ezcBaseFile::findRecursive and the exclusion filters we pass to it
         // work correctly on systems with another file seperator than the forward slash
@@ -283,7 +314,7 @@ class eZAutoloadGenerator
         {
             foreach ( $excludeDirs as $dir )
             {
-                $extraExcludeDirs[] = "@^{$sanitisedBasePath}{$dirSep}{$dir}{$dirSep}@";
+                $extraExcludeDirs[] = "@^{$sanitisedBasePath}{$dirSep}{$dir}@";
             }
         }
 
@@ -297,8 +328,8 @@ class eZAutoloadGenerator
             {
                 case self::MODE_KERNEL:
                     $extraExcludeKernelDirs = $extraExcludeDirs;
-                    $extraExcludeKernelDirs[] = "@^{$sanitisedBasePath}{$dirSep}extension{$dirSep}@";
-                    $extraExcludeKernelDirs[] = "@^{$sanitisedBasePath}{$dirSep}tests{$dirSep}@";
+                    $extraExcludeKernelDirs[] = "@^{$sanitisedBasePath}{$dirSep}extension@";
+                    $extraExcludeKernelDirs[] = "@^{$sanitisedBasePath}{$dirSep}tests@";
                     $retFiles[self::MODE_KERNEL] = $this->buildFileList( $sanitisedBasePath, $extraExcludeKernelDirs );
                     break;
 
@@ -345,7 +376,7 @@ class eZAutoloadGenerator
     protected function buildFileList( $path, $extraFilter = null )
     {
         $dirSep = preg_quote( DIRECTORY_SEPARATOR );
-        $exclusionFilter = array( "@^{$path}{$dirSep}(var|settings|benchmarks|bin|autoload|port_info|update|templates|tmp|UnitTest|lib{$dirSep}ezc){$dirSep}@" );
+        $exclusionFilter = array( "@^{$path}{$dirSep}(var|settings|benchmarks|bin|autoload|port_info|update|templates|tmp|UnitTest|lib{$dirSep}ezc)@" );
         if ( !empty( $extraFilter ) and is_array( $extraFilter ) )
         {
             foreach( $extraFilter as $filter )
@@ -363,13 +394,13 @@ class eZAutoloadGenerator
 
     /**
      * Uses the walker in ezcBaseFile to find files.
-     * 
+     *
      * This also uses the callback to get progress information about the file search.
      *
-     * @param string $sourceDir 
-     * @param array $includeFilters 
+     * @param string $sourceDir
+     * @param array $includeFilters
      * @param array $excludeFilters
-     * @param eZAutoloadGenerator $gen 
+     * @param eZAutoloadGenerator $gen
      * @return array
      */
     public static function findRecursive( $sourceDir, array $includeFilters = array(), array $excludeFilters = array(), eZAutoloadGenerator $gen )
@@ -381,7 +412,7 @@ class eZAutoloadGenerator
         $context = new ezpAutoloadFileFindContext();
         $context->generator = $gen;
 
-        ezcBaseFile::walkRecursive( $sourceDir, $includeFilters, $excludeFilters,
+        self::walkRecursive( $sourceDir, $includeFilters, $excludeFilters,
                 array( 'eZAutoloadGenerator', 'findRecursiveCallback' ), $context );
 
         // return the found and pattern-matched files
@@ -394,15 +425,125 @@ class eZAutoloadGenerator
     }
 
     /**
-     * Callback used ezcBaseFile 
+     * Walks files and directories recursively on a file system. This methods
+     * is the same as ezcBaseFile::walkRecursive() except that it applies
+     * $excludeFilters directories where the original only applies
+     * $excludeFilters on files. As soon as
+     * https://issues.apache.org/jira/browse/ZETACOMP-85 is implemented, this
+     * method could be removed.
      *
-     * @param string $ezpAutoloadFileFindContext 
-     * @param string $sourceDir 
-     * @param string $fileName 
-     * @param string $fileInfo 
+     * @param mixed $sourceDir
+     * @param array $includeFilters
+     * @param array $excludeFilters
+     * @param mixed $callback
+     * @param mixed $callbackContext
+     *
+     * @throws ezcBaseFileNotFoundException if the $sourceDir directory is not
+     *         a directory or does not exist.
+     * @throws ezcBaseFilePermissionException if the $sourceDir directory could
+     *         not be opened for reading.
+     * @return array
+     */
+    static protected function walkRecursive( $sourceDir, array $includeFilters = array(), array $excludeFilters = array(), $callback, &$callbackContext )
+    {
+        if ( !is_dir( $sourceDir ) )
+        {
+            throw new ezcBaseFileNotFoundException( $sourceDir, 'directory' );
+        }
+        $elements = array();
+
+        // Iterate over the $excludeFilters and prohibit the directory from
+        // being scanned when atleast one of them matches
+        foreach ( $excludeFilters as $filter )
+        {
+            if ( preg_match( $filter, $sourceDir ) )
+            {
+                return $elements;
+            }
+        }
+
+        $d = @dir( $sourceDir );
+        if ( !$d )
+        {
+            throw new ezcBaseFilePermissionException( $sourceDir, ezcBaseFileException::READ );
+        }
+
+        while ( ( $entry = $d->read() ) !== false )
+        {
+            if ( $entry == '.' || $entry == '..' )
+            {
+                continue;
+            }
+
+            $fileInfo = @stat( $sourceDir . DIRECTORY_SEPARATOR . $entry );
+            if ( !$fileInfo )
+            {
+                $fileInfo = array( 'size' => 0, 'mode' => 0 );
+            }
+
+            if ( $fileInfo['mode'] & 0x4000 )
+            {
+                // We need to ignore the Permission exceptions here as it can
+                // be normal that a directory can not be accessed. We only need
+                // the exception if the top directory could not be read.
+                try
+                {
+                    call_user_func_array( $callback, array( $callbackContext, $sourceDir, $entry, $fileInfo ) );
+                    $subList = self::walkRecursive( $sourceDir . DIRECTORY_SEPARATOR . $entry, $includeFilters, $excludeFilters, $callback, $callbackContext );
+                    $elements = array_merge( $elements, $subList );
+                }
+                catch ( ezcBaseFilePermissionException $e )
+                {
+                }
+            }
+            else
+            {
+                // By default a file is included in the return list
+                $ok = true;
+                // Iterate over the $includeFilters and prohibit the file from
+                // being returned when atleast one of them does not match
+                foreach ( $includeFilters as $filter )
+                {
+                    if ( !preg_match( $filter, $sourceDir . DIRECTORY_SEPARATOR . $entry ) )
+                    {
+                        $ok = false;
+                        break;
+                    }
+                }
+                // Iterate over the $excludeFilters and prohibit the file from
+                // being returns when atleast one of them matches
+                foreach ( $excludeFilters as $filter )
+                {
+                    if ( preg_match( $filter, $sourceDir . DIRECTORY_SEPARATOR . $entry ) )
+                    {
+                        $ok = false;
+                        break;
+                    }
+                }
+
+                // If everything's allright, call the callback and add the
+                // entry to the elements array
+                if ( $ok )
+                {
+                    call_user_func( $callback, $callbackContext, $sourceDir, $entry, $fileInfo );
+                    $elements[] = $sourceDir . DIRECTORY_SEPARATOR . $entry;
+                }
+            }
+        }
+        sort( $elements );
+        return $elements;
+    }
+
+    /**
+     * Callback used ezcBaseFile
+     *
+     * @param string $ezpAutoloadFileFindContext
+     * @param string $sourceDir
+     * @param string $fileName
+     * @param string $fileInfo
      * @return void
      */
-    
+
     public static function findRecursiveCallback( ezpAutoloadFileFindContext $context, $sourceDir, $fileName, $fileInfo )
     {
         if ( $fileInfo['mode'] & 0x4000 )
@@ -429,68 +570,109 @@ class eZAutoloadGenerator
                             'classCount' => 0,
                             'classAdded' => 0,
                            );
-
         $this->setStatArray( self::OUTPUT_PROGRESS_PHASE2, $statArray );
-        $this->startProgressOutput( self::OUTPUT_PROGRESS_PHASE2 );
 
-        foreach( $fileList as $file )
+        if ( count( $fileList ) )
         {
-            $this->updateProgressOutput( self::OUTPUT_PROGRESS_PHASE2 );
-            if ( $mode === self::MODE_SINGLE_EXTENSION )
-            {
-                $file = getcwd() . DIRECTORY_SEPARATOR . $this->options->basePath . DIRECTORY_SEPARATOR . $file;
-            }
+            $this->startProgressOutput( self::OUTPUT_PROGRESS_PHASE2 );
 
-            $tokens = @token_get_all( file_get_contents( $file ) );
-            foreach( $tokens as $key => $token )
+            // Compatibility with PHP 5.2 where T_NAMESPACE constant is not available
+            // Assigning the constant value to $tNamespace
+            // 377 is the value for T_NAMESPACE in PHP 5.3.x
+            $tNamespace = defined( 'T_NAMESPACE' ) ? T_NAMESPACE : self::UNDEFINED_TOKEN;
+
+            // Traits support, see http://issues.ez.no/19028
+            $tTrait = defined( 'T_TRAIT' ) ? T_TRAIT : self::UNDEFINED_TOKEN;
+
+            foreach( $fileList as $file )
             {
-                if ( is_array( $token ) )
+                $this->updateProgressOutput( self::OUTPUT_PROGRESS_PHASE2 );
+                if ( $mode === self::MODE_SINGLE_EXTENSION )
                 {
-                    switch( $token[0] )
+                    $file = getcwd() . DIRECTORY_SEPARATOR . $this->options->basePath . DIRECTORY_SEPARATOR . $file;
+                }
+
+                $tokens = @token_get_all( file_get_contents( $file ) );
+                $namespace = null;
+                foreach( $tokens as $key => $token )
+                {
+                    if ( is_array( $token ) )
                     {
-                        case T_CLASS:
-                        case T_INTERFACE:
-                            // Increment stat for found class.
-                            $this->incrementProgressStat( self::OUTPUT_PROGRESS_PHASE2, 'classCount' );
+                        switch( $token[0] )
+                        {
+                            case self::UNDEFINED_TOKEN:
+                                // Unsupported token, do nothing
+                                break;
 
-                            // CLASS_TOKEN - WHITESPACE_TOKEN - TEXT_TOKEN (containing class name)
-                            $className = $tokens[$key+2][1];
+                            // Store namespace name, if applicable, to concatenate with class name
+                            case $tNamespace:
+                                // NAMESPACE_TOKEN - WHITESPACE_TOKEN - TEXT_TOKENS (containing namespace name)
+                                $offset = $key + 2;
+                                $namespace = "";
+                                while ( $tokens[$offset] !== ";" && $tokens[$offset] !== "{" )
+                                {
+                                    if ( is_array( $tokens[$offset] ) )
+                                    {
+                                        $namespace .= $tokens[$offset][1];
+                                    }
 
-                            $filePath = $file;
+                                    $offset++;
+                                }
 
-                            if ( $mode === self::MODE_SINGLE_EXTENSION )
-                            {
-                                $filePath = ezcBaseFile::calculateRelativePath( $filePath, getcwd() . DIRECTORY_SEPARATOR . $this->options->basePath );
-                            }
+                                $namespace = trim( addcslashes( $namespace, '\\' ) );
+                                break;
 
-                            // make sure we store cross-platform file system paths,
-                            // using a forward slash as directory separator
-                            if ( DIRECTORY_SEPARATOR != '/' )
-                            {
-                                $filePath = str_replace( DIRECTORY_SEPARATOR, '/', $filePath );
-                            }
-                            // Here there are two code paths.
-                            // MODE_KERNEL_OVERRIDE will only add a class if
-                            // it exists in the MODE_KERNEL autoload array.
-                            // All other modes will only add a class if the
-                            // class name is unique.
+                            case T_CLASS:
+                            case T_INTERFACE:
+                            case $tTrait:
+                                // Increment stat for found class.
+                                $this->incrementProgressStat( self::OUTPUT_PROGRESS_PHASE2, 'classCount' );
 
-                            $addClass = $this->classCanBeAdded( $className, $filePath, $mode, $retArray );
+                                // CLASS_TOKEN - WHITESPACE_TOKEN - TEXT_TOKEN (containing class name)
+                                $className = $tokens[$key+2][1];
+                                if ( $namespace !== null )
+                                {
+                                    $className = "$namespace\\\\$className";
+                                }
 
-                            if ( $addClass )
-                            {
-                                // increment stat for actually added number of classes.
-                                $this->incrementProgressStat( self::OUTPUT_PROGRESS_PHASE2, 'classAdded' );
+                                $filePath = $file;
 
-                                $retArray[$className] = $filePath;
-                            }
-                            break;
+                                if ( $mode === self::MODE_SINGLE_EXTENSION )
+                                {
+                                    $filePath = ezcBaseFile::calculateRelativePath( $filePath, getcwd() . DIRECTORY_SEPARATOR . $this->options->basePath );
+                                }
+
+                                // make sure we store cross-platform file system paths,
+                                // using a forward slash as directory separator
+                                if ( DIRECTORY_SEPARATOR != '/' )
+                                {
+                                    $filePath = str_replace( DIRECTORY_SEPARATOR, '/', $filePath );
+                                }
+                                // Here there are two code paths.
+                                // MODE_KERNEL_OVERRIDE will only add a class if
+                                // it exists in the MODE_KERNEL autoload array.
+                                // All other modes will only add a class if the
+                                // class name is unique.
+
+                                $addClass = $this->classCanBeAdded( $className, $filePath, $mode, $retArray );
+
+                                if ( $addClass )
+                                {
+                                    // increment stat for actually added number of classes.
+                                    $this->incrementProgressStat( self::OUTPUT_PROGRESS_PHASE2, 'classAdded' );
+
+                                    $retArray[$className] = $filePath;
+                                }
+
+                                break;
+                        }
                     }
                 }
             }
-        }
 
-        $this->stopProgressOutput( self::OUTPUT_PROGRESS_PHASE2 );
+            $this->stopProgressOutput( self::OUTPUT_PROGRESS_PHASE2 );
+            ksort( $retArray );
+        }
 
         if ( $this->output !== null )
         {
@@ -498,7 +680,6 @@ class eZAutoloadGenerator
             $this->log( "Found {$classCount} classes, added {$classAdded} of them to the autoload array." );
         }
 
-        ksort( $retArray );
         return $retArray;
     }
 
@@ -718,9 +899,9 @@ class eZAutoloadGenerator
 /**
  * Autoloader definition for eZ Publish $description files.
  *
- * @copyright Copyright (C) 1999-2010 eZ Systems AS. All rights reserved.
- * @license http://ez.no/licenses/gnu_gpl GNU General Public License v2.0
- * @version 4.4.0
+ * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
+ * @license http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License v2
+ * @version  2012.5
  * @package kernel
  *
  */
@@ -1014,12 +1195,12 @@ END;
 
     /**
      * Calls updateProgress on the output object.
-     * 
+     *
      * If progress output is not enabled or the output object is not set, this
      * method will not do anything.
      *
-     * @param int $phase 
-     * @param string $array 
+     * @param int $phase
+     * @param string $array
      * @return void
      */
     protected function updateProgressOutput( $phase )
@@ -1033,11 +1214,11 @@ END;
 
     /**
      * Increment counters used for statistics in the progress output.
-     * 
+     *
      * If the output object is not set, the method will not do anything.
      *
-     * @param int $phase 
-     * @param array $stat 
+     * @param int $phase
+     * @param array $stat
      * @return void
      */
     protected function incrementProgressStat( $phase, $stat )
@@ -1054,7 +1235,7 @@ END;
     /**
      * Initializes progress output for <var>$phase</var>
      *
-     * @param int $phase 
+     * @param int $phase
      * @return void
      */
     protected function startProgressOutput( $phase )
@@ -1070,7 +1251,7 @@ END;
     /**
      * Stops progress output for <var>$phase</var>
      *
-     * @param int $phase 
+     * @param int $phase
      * @return void
      */
     protected function stopProgressOutput( $phase )
@@ -1086,7 +1267,7 @@ END;
     /**
      * Fetches statistics array for $phase form the output object.
      *
-     * @param int $phase 
+     * @param int $phase
      * @return void
      */
     protected function getStatArray( $phase )
@@ -1101,8 +1282,8 @@ END;
     /**
      * Updates internal statistics data for <var>$phase</var>, with new array <var>$data</var>.
      *
-     * @param int $phase 
-     * @param array $data 
+     * @param int $phase
+     * @param array $data
      * @return void
      */
     protected function setStatArray( $phase, $data )
@@ -1116,16 +1297,83 @@ END;
 
     /**
      * Sets the object to handle out from the autoload generation.
-     * 
+     *
      * Currently this is only handled for the CLI.
      *
      * @see ezpAutoloadCliOutput
-     * @param object $outputObject 
+     * @param object $outputObject
      * @return void
      */
     public function setOutputObject( $outputObject )
     {
         $this->output = $outputObject;
     }
+
+    /**
+     * Create phpunit configuration file adding blacklist from tests/ and extension tests
+     *
+     * It writes file phpunit.xml in ./tests directory
+     *
+     * @return DOMDocument;
+     */
+    public function buildPHPUnitConfigurationFile()
+    {
+        if ( ~$this->mask & self::MODE_TESTS )
+        {
+            return;
+        }
+
+        $this->log( 'Creating phpunit configuration file.' );
+
+        $dom = new DOMDocument( '1.0', 'utf-8' );
+        $dom->formatOutput = true;
+
+        $baseDir = getcwd();
+        $filter = $dom->createElement( 'filter' );
+        $blacklist = $dom->createElement( 'blacklist' );
+
+        /* PHPUnit docs says we should either use whitelist or blacklist ( if a whitelist exists, the blacklsit will be ignored )
+         * Since whitelisting only works on source files containing classes, we base this on blacklisting
+         */
+        /*
+        $whitelist = $dom->createElement( 'whitelist' );
+        $autoloadArray = @include 'autoload/ezp_kernel.php';
+        foreach ( $autoloadArray as $class => $filename )
+        {
+            $file = $dom->createElement( 'file', $baseDir . DIRECTORY_SEPARATOR . $filename );
+            $whitelist->appendChild($file);
+        }
+        $filter->appendChild($whitelist);
+        */
+
+        //Blacklist tests in extension/
+        $extensionDir = $this->options->basePath . '/extension';
+
+        if ( file_exists( $extensionDir ) )
+        {
+            foreach ( scandir( $extensionDir ) as $file )
+            {
+                if ( ( $file === '.' ) || ( $file === '..' ) )
+                    continue;
+
+                $testDirectory = "$extensionDir/$file/tests";
+                if ( is_dir( $testDirectory ) )
+                {
+                    $blacklist->appendChild( $dom->createElement( 'directory', $testDirectory ) );
+                }
+            }
+        }
+
+        $blacklist->appendChild( $dom->createElement( 'directory', "$baseDir/tests" ) );
+        $filter->appendChild( $blacklist );
+        $root = $dom->createElement( 'phpunit' );
+        $root->appendChild( $filter );
+        $dom->appendChild( $root );
+
+        file_put_contents( "$baseDir/tests/phpunit.xml", $dom->saveXML() );
+
+        return $dom;
+    }
+
 }
 ?>

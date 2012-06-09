@@ -7,15 +7,19 @@
 (function() {
 {/literal}
 
-var icons = {ldelim}
+var availableLanguages = {ldelim}{*
+    *}{foreach $locales as $language}{*
+        *}'{$language.locale_code|wash(javascript)}': '{$language.intl_language_name|wash(javascript)}'{*
+        *}{delimiter},{/delimiter}{*
+    *}{/foreach}{*
+*}{rdelim};
 
-{foreach $locales as $locale}
-    '{$locale.locale_code}': '{$locale.locale_code|flag_icon()}'{delimiter},
-
-{/delimiter}
-{/foreach}
-
-{rdelim};
+var icons = {ldelim}{*
+    *}{foreach $locales as $locale}{*
+        *}'{$locale.locale_code}': '{$locale.locale_code|flag_icon()}'{*
+        *}{delimiter},{/delimiter}{*
+    *}{/foreach}{*
+*}{rdelim};
 
 var vcols = {ldelim}
 
@@ -26,7 +30,6 @@ var vcols = {ldelim}
 {/foreach}
 
 {rdelim};
-
 
 var confObj = {ldelim}
 
@@ -42,15 +45,17 @@ var confObj = {ldelim}
 {/switch}
 
     dataSourceURL: "{concat('ezjscore/call/ezjscnode::subtree::', $node.node_id)|ezurl('no')}",
+    editPrefixURL: {'/content/edit/'|ezurl},
     rowsPrPage: {$number_of_items},
     sortOrder: {$node.sort_order},
+    nameFilter: '{$view_parameters.namefilter}',
     defaultShownColumns: vcols,
     navigationPart: "{$section.navigation_part_identifier}",
     cookieName: "eZSubitemColumns",
     cookieSecure: false,
     cookieDomain: "{ezsys(hostname)}",
-    languagesString: "{$node.object.language_js_array}",
-    classesString: "{$node.classes_js_array}",
+    languages: availableLanguages,
+    classesString: {$node.classes_js_array},
     flagIcons: icons
 
 {rdelim}
@@ -79,14 +84,16 @@ var labelsObj = {ldelim}
                         nodeid: "{'Node ID'|i18n( 'design/admin/node/view/full' )|wash('javascript')}",
                         objectid: "{'Object ID'|i18n( 'design/admin/node/view/full' )|wash('javascript')}",
                         noderemoteid: "{'Node remote ID'|i18n( 'design/admin/node/view/full' )|wash('javascript')}",
-                        objectremoteid: "{'Object remote ID'|i18n( 'design/admin/node/view/full' )|wash('javascript')}"
+                        objectremoteid: "{'Object remote ID'|i18n( 'design/admin/node/view/full' )|wash('javascript')}",
+                        objectstate: "{'Object state'|i18n( 'design/admin/node/view/full' )|wash('javascript')}"
                     {rdelim},
 
     TABLE_OPTIONS: {ldelim}
 
                         header: "{'Table options'|i18n( 'design/admin/node/view/full' )|wash('javascript')}",
                         header_noipp: "{'Number of items per page:'|i18n( 'design/admin/node/view/full' )|wash('javascript')}",
-                        header_vtc: "{'Visible table columns:'|i18n( 'design/admin/node/view/full' )|wash('javascript')}"
+                        header_vtc: "{'Visible table columns:'|i18n( 'design/admin/node/view/full' )|wash('javascript')}",
+                        button_close: "{'Close'|i18n( 'design/admin/node/view/full' )|wash('javascript')}"
                    {rdelim},
 
     ACTION_BUTTONS: {ldelim}
@@ -94,6 +101,7 @@ var labelsObj = {ldelim}
                         select: "{'Select'|i18n( 'design/admin/node/view/full' )|wash('javascript')}",
                         select_sav: "{'Select all visible'|i18n( 'design/admin/node/view/full' )|wash('javascript')}",
                         select_sn: "{'Select none'|i18n( 'design/admin/node/view/full' )|wash('javascript')}",
+                        select_inv: "{'Invert selection'|i18n( 'design/admin/node/view/full' )|wash('javascript')}",
                         create_new: "{'Create new'|i18n( 'design/admin/node/view/full' )|wash('javascript')}",
                         more_actions: "{'More actions'|i18n( 'design/admin/node/view/full' )|wash('javascript')}",
                         more_actions_rs: "{'Remove selected'|i18n( 'design/admin/node/view/full' )|wash('javascript')}",
@@ -127,18 +135,18 @@ var labelsObj = {ldelim}
                                                                                      'group_by_class_group', true() ) )}
 
     var createGroups = [
-    
+
     {foreach $can_create_classes as $group}
         "{$group.group_name}"
         {delimiter}
         ,
         {/delimiter}
     {/foreach}
-    
+
     ];
-    
+
     var createOptions = [
-    
+
     {foreach $can_create_classes as $group}
         [
         {foreach $group.items as $can_create_class}
@@ -154,14 +162,14 @@ var labelsObj = {ldelim}
         {/delimiter}
     {/foreach}
     ];
-    
+
 {else}
     var createGroups = [];
     var createOptions = [];
 {/if}
 
 {literal}
-YUILoader.require(['datatable', 'button', 'container', 'cookie']);
+YUILoader.require(['datatable', 'button', 'container', 'cookie', 'element']);
 YUILoader.onSuccess = function() {
     sortableSubitems.init(confObj, labelsObj, createGroups, createOptions);
 };

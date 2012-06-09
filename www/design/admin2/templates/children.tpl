@@ -14,13 +14,14 @@
                                                          'objectname_filter', $view_parameters.namefilter ) )
      $children    = array()
      $priority    = and( eq( $node.sort_array[0][0], 'priority' ), $node.can_edit, $children_count ) }
-     
+
 
 <!-- Children START -->
 
 <div class="context-block">
 <form name="children" method="post" action={'content/action'|ezurl}>
 <input type="hidden" name="ContentNodeID" value="{$node.node_id}" />
+<input type="hidden" name="ContentObjectID" value="{$node.contentobject_id}" />
 
 {if $children_count}
     {set $children = fetch( 'content', 'list', hash( 'parent_node_id', $node.node_id,
@@ -33,7 +34,7 @@
 
 {* DESIGN: Header START *}<div class="box-header">
 
-    <h2 class="context-title"><a href={$node.depth|gt(1)|choose('/'|ezurl,$node.parent.url_alias|ezurl )} title="{'Up one level.'|i18n(  'design/admin/node/view/full'  )}"><img src={'up-16x16-grey.png'|ezimage} alt="{'Up one level.'|i18n( 'design/admin/node/view/full' )}" title="{'Up one level.'|i18n( 'design/admin/node/view/full' )}" /></a>&nbsp;{'Sub items (%children_count)'|i18n( 'design/admin/node/view/full',, hash( '%children_count', $children_count ) )}</h2>
+    <h2 class="context-title"><a href={$node.depth|gt(1)|choose('/'|ezurl,$node.parent.url_alias|ezurl )} title="{'Up one level.'|i18n(  'design/admin/node/view/full'  )}"><img src={'up-16x16-grey.png'|ezimage} width="16" height="16" alt="{'Up one level.'|i18n( 'design/admin/node/view/full' )}" title="{'Up one level.'|i18n( 'design/admin/node/view/full' )}" /></a>&nbsp;{'Sub items (%children_count)'|i18n( 'design/admin/node/view/full',, hash( '%children_count', $children_count ) )}</h2>
 
 {* DESIGN: Header END *}</div>
 
@@ -72,14 +73,24 @@
 
 
 
+    <div class="context-toolbar">
+    {include name=navigator
+             uri='design:navigator/alphabetical.tpl'
+             page_uri=$node.url_alias
+             item_count=$children_count
+             view_parameters=$view_parameters
+             node_id=$node.node_id
+             item_limit=$number_of_items}
+    </div>
+
 {* DESIGN: Content END *}</div>
 
 </form>
 
 </div>
 
-{* Load yui code for subitems diplay even if current node has no children (since cache blocks  does not vary by this) *}
-{ezscript_require( array('ezjsc::yui2', 'ezjsc::yui3', 'ezajaxsubitems_datatable.js') )}
+{* Load yui code for subitems display even if current node has no children (since cache blocks does not vary by this) *}
+{ezscript_require( array('ezjsc::yui2', 'ezajaxsubitems_datatable.js') )}
 
 <!-- Children END -->
 

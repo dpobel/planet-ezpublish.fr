@@ -1,29 +1,12 @@
 <?php
-//
-// Definition of eZDateTimeType class
-//
-//
-// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-// SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.4.0
-// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
-// SOFTWARE LICENSE: GNU General Public License v2.0
-// NOTICE: >
-//   This program is free software; you can redistribute it and/or
-//   modify it under the terms of version 2.0  of the GNU General
-//   Public License as published by the Free Software Foundation.
-// 
-//   This program is distributed in the hope that it will be useful,
-//    but WITHOUT ANY WARRANTY; without even the implied warranty of
-//   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//   GNU General Public License for more details.
-// 
-//   You should have received a copy of version 2.0 of the GNU General
-//   Public License along with this program; if not, write to the Free
-//   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
-//   MA 02110-1301, USA.
-// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-//
+/**
+ * File containing the eZDateTimeType class.
+ *
+ * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
+ * @license http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License v2
+ * @version  2012.5
+ * @package kernel
+ */
 
 /*!
   \class eZDateTimeType ezdatetimetype.php
@@ -297,7 +280,7 @@ class eZDateTimeType extends eZDataType
     */
     function metaData( $contentObjectAttribute )
     {
-        return $contentObjectAttribute->attribute( 'data_int' );
+        return (int)$contentObjectAttribute->attribute( 'data_int' );
     }
     /*!
      \return string representation of an contentobjectattribute data for simplified export
@@ -519,8 +502,7 @@ class eZDateTimeType extends eZDataType
             } break;
             default:
             {
-                eZDebug::writeError( 'Unknown type of DateTime default value. Empty type used instead.',
-                                    'eZDateTimeType::serializeContentClassAttribute()' );
+                eZDebug::writeError( 'Unknown type of DateTime default value. Empty type used instead.', __METHOD__ );
                 $defaultValueNode->setAttribute( 'type', 'empty' );
             } break;
         }
@@ -567,8 +549,7 @@ class eZDateTimeType extends eZDataType
             } break;
             default:
             {
-                eZDebug::writeError( 'Type of DateTime default value is not set. Empty type used as default.',
-                                    'eZDateTimeType::unserializeContentClassAttribute()' );
+                eZDebug::writeError( 'Type of DateTime default value is not set. Empty type used as default.', __METHOD__ );
                 $classAttribute->setAttribute( self::DEFAULT_FIELD, self::DEFAULT_EMTPY );
             } break;
         }

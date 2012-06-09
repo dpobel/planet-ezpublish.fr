@@ -1,30 +1,12 @@
 <?php
-//
-// This is the index_webdav.php file. Manages WebDAV sessions.
-//
-// Created on: <18-Aug-2003 15:15:15 bh>
-//
-// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-// SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.4.0
-// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
-// SOFTWARE LICENSE: GNU General Public License v2.0
-// NOTICE: >
-//   This program is free software; you can redistribute it and/or
-//   modify it under the terms of version 2.0  of the GNU General
-//   Public License as published by the Free Software Foundation.
-// 
-//   This program is distributed in the hope that it will be useful,
-//    but WITHOUT ANY WARRANTY; without even the implied warranty of
-//   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//   GNU General Public License for more details.
-// 
-//   You should have received a copy of version 2.0 of the GNU General
-//   Public License along with this program; if not, write to the Free
-//   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
-//   MA 02110-1301, USA.
-// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-//
+/**
+ * File containing the eZWebDAVFileServer class.
+ *
+ * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
+ * @license http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License v2
+ * @version  2012.5
+ * @package lib
+ */
 
 /*!
   \class eZWebDAVFileServer ezwebdavfileserver.php
@@ -176,7 +158,7 @@ function delDir( $dir )
 
     // Attempt to remove the target dir itself & return status (should be
     // OK as soon as we get this far...
-    $status = rmdir( ${dir} );
+    $status = rmdir( $dir );
 
     return $status;
 }
@@ -273,7 +255,7 @@ class eZWebDAVFileServer extends eZWebDAVServer
         append_to_log( "PUT: tempfile is $tempFile" );
 
         // Attempt to move the file from temp to desired location.
-        eZFile::rename( $tempFile, $realPath );
+        $status = eZFile::rename( $tempFile, $realPath );
 
         // Check status & return corresponding code:
         if ( $status )

@@ -7,8 +7,6 @@
                                            )}
 
 <script type="text/javascript">
-<!--
-
 eZOEPopupUtils.settings.customAttributeStyleMap = {$custom_attribute_style_map};
 eZOEPopupUtils.settings.tagEditTitleText = "{'Edit %tag_name tag'|i18n('design/standard/ezoe', '', hash( '%tag_name', concat('&lt;', $tag_name_alias, '&gt;') ))|wash('javascript')}";
 var ezTagName = '{$tag_name|wash}',{literal} tableSizeGrid = {'rows': 0, 'cols': 0};
@@ -43,7 +41,16 @@ tinyMCEPopup.onInit.add( eZOEPopupUtils.BIND( eZOEPopupUtils.init, window, {
         {
             html += "<tr>";
             for (var x = 0, xl = eZOEPopupUtils.Int(tableSizeGrid['cols'].val(), 2); x < xl; x++)
-                html += '<td><br mce_bogus="1"/></td>';
+            {
+                if ( tinymce.isIE )
+                {
+                    html += '<td></td>';
+                }
+                else
+                {
+                    html += '<td><p><br data-mce-bogus="1"/></p></td>';
+                }
+            }
     
             html += "</tr>";
         }
@@ -97,9 +104,6 @@ function tableSizeGridShowChange( rows, cols, save )
         }
     });
 }
-
-
-// -->
 </script>
 {/literal}
 

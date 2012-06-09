@@ -1,33 +1,12 @@
 <?php
-//
-// Definition of eZFunctionHandler class
-//
-// Created on: <06-Oct-2002 16:25:10 amos>
-//
-// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-// SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.4.0
-// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
-// SOFTWARE LICENSE: GNU General Public License v2.0
-// NOTICE: >
-//   This program is free software; you can redistribute it and/or
-//   modify it under the terms of version 2.0  of the GNU General
-//   Public License as published by the Free Software Foundation.
-// 
-//   This program is distributed in the hope that it will be useful,
-//    but WITHOUT ANY WARRANTY; without even the implied warranty of
-//   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//   GNU General Public License for more details.
-// 
-//   You should have received a copy of version 2.0 of the GNU General
-//   Public License along with this program; if not, write to the Free
-//   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
-//   MA 02110-1301, USA.
-// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-//
-
-/*! \file
-*/
+/**
+ * File containing the eZFunctionHandler class.
+ *
+ * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
+ * @license http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License v2
+ * @version  2012.5
+ * @package lib
+ */
 
 /*!
   \class eZFunctionHandler ezfunctionhandler.php
@@ -65,8 +44,7 @@ class eZFunctionHandler
             $moduleFunctionInfo = eZFunctionHandler::moduleFunctionInfo( $aliasSettings->variable( $aliasFunctionName, 'Module' ) );
             if ( !$moduleFunctionInfo->isValid() )
             {
-                eZDebug::writeError( "Cannot execute function '$aliasFunctionName' in module '$moduleName', no valid data",
-                                     'eZFunctionHandler::executeAlias' );
+                eZDebug::writeError( "Cannot execute function '$aliasFunctionName' in module '$moduleName', no valid data", __METHOD__ );
                 return null;
             }
 
@@ -153,8 +131,7 @@ class eZFunctionHandler
             }
             return $moduleFunctionInfo->execute( $functionName, $functionArray );
         }
-        eZDebug::writeWarning( 'Could not execute. Function ' . $aliasFunctionName. ' not found.' ,
-                               'eZFunctionHandler::executeAlias' );
+        eZDebug::writeWarning( 'Could not execute. Function ' . $aliasFunctionName. ' not found.' , __METHOD__ );
     }
 
     static function execute( $moduleName, $functionName, $functionParameters )
@@ -162,8 +139,7 @@ class eZFunctionHandler
         $moduleFunctionInfo = eZFunctionHandler::moduleFunctionInfo( $moduleName );
         if ( !$moduleFunctionInfo->isValid() )
         {
-            eZDebug::writeError( "Cannot execute function '$functionName' in module '$moduleName', no valid data",
-                                  'eZFunctionHandler::execute' );
+            eZDebug::writeError( "Cannot execute function '$functionName' in module '$moduleName', no valid data", __METHOD__ );
             return null;
         }
 

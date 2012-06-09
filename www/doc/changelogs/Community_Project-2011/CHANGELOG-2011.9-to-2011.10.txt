@@ -1,0 +1,44 @@
+Bugfixes
+========
+- #16471: ezstring default value should not be truncated
+- #17656: Subtree limitation is not properly honored for multi-located contents
+- #18408: ezfile-tmp* files remain when eZFile::rename() fails
+- #18426: #HostUriMatchMapItems[]=example.com;;examle; given in site.ini as example is wrong
+- #18427: doc issue, file.ini instead of php.ini
+- #18538: Adding an attribute to a content class may result in max allowed memory fatal error
+- #18584: PHP notice in Author datatype
+- #18592: php warning on array_merge when 2nd arg is not an array, when a datatype template contains no \n
+- #18612: object relations: no limit + offset
+- #18709: Poll bug, eZ flow default install with content
+- #18711: bug in kernel/user/ezuseroperationcollection.php
+- #18714: admin2: "Select none" button does the same as "Select All Visible" button
+- #18729: Wrong account activation message
+- #18737: Regression in eZXMLInputParser::parseAttributes with attr='0'
+- #18774: An error is given when publishing when using Asynchronous publishing
+- #18793: Ubuntu 11.10 adds PCNTL function to php.ini "disable_functions"
+- #18825: Length should not be taken into account for integer while checking DB consistency
+- #18841: Database upgrade check tool consider "CHAR" type as a field of 1 char exactly
+- #18849: dfscleanup.php won't remove DFS files
+- #18849: dfscleanup.php won't remove DFS files
+- Fixed: an ezpgenerateautoloads.php warning
+- Fixed: host_uri broken by $uriString typo
+
+Enhancements
+============
+- #16171: admin2: window_controls_user.tpl- adding new tabs in own extension
+- #18381: add description/author in ezinfo/about when using extension.xml, to have same behavior as ezinfo.php
+- Added: An `--extension` option to `bin/shell/i18nstats.sh`
+- Added: Doc about namespace support in extensions
+- Added: Initial support for PHPUnit 3.5 in the ezp test runner
+- Added: Missing CONNECTIONTIMEOUT when Setup wizard uses curl
+- Refactored: eZAutoloadGenerator::buildPHPUnitConfigurationFile()   Now it creates a blacklist, not a whitelist   It add tests in extensions to the black list
+
+Pull requests
+=============
+- Merge pull request #126 from thiagocamposviana
+- Merge pull request #134 from jeromegamez
+- Merge pull request #135 from jdespatis
+- Merge pull request #137 from jeromegamez
+- Merge pull request #139 from jdespatis
+- Merge pull request #141 from jdespatis
+- Merge pull request #142 from jdespatis

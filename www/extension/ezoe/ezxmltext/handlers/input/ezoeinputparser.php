@@ -4,10 +4,10 @@
 // Forked on: <20-Des-2007 13:02:06 ar> from eZDHTMLInputParser class
 //
 // ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-// SOFTWARE NAME: eZ Online Editor extension for eZ Publish
-// SOFTWARE RELEASE: 4.4.0
-// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
-// SOFTWARE LICENSE: GNU General Public License v2.0
+// SOFTWARE NAME: eZ Publish Community Project
+// SOFTWARE RELEASE:  2012.5
+// COPYRIGHT NOTICE: Copyright (C) 1999-2012 eZ Systems AS
+// SOFTWARE LICENSE: GNU General Public License v2
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
 //   modify it under the terms of version 2.0  of the GNU General
@@ -35,15 +35,12 @@
   \brief The class eZOEInputParser does
 
 */
-
-require_once( 'kernel/common/i18n.php' );
-
 class eZOEInputParser extends eZXMLInputParser
 {
     /**
      * Used to strip out ezoe, tinymce & browser specific classes
      */
-     const HTML_CLASS_REGEX = "/(webkit-[\w\-]+|Apple-[\w\-]+|mceItem\w+|ezoeItem\w+|mceVisualAid)/i";
+     const HTML_CLASS_REGEX = "/(webkit-[\w\-]+|Apple-[\w\-]+|mceItem\w+|ezoeItem\w+|ezoeAlign\w+|mceVisualAid)/i";
 
     /**
      * Maps input tags (html) to a output tag or a hander to
@@ -204,7 +201,7 @@ class eZOEInputParser extends eZXMLInputParser
     public function process( $text, $createRootNode = true )
     {
         $text = preg_replace( '#<!--.*?-->#s', '', $text ); // remove HTML comments
-        $text = str_replace( array("\xC2\xA0", '&#160;'), '&nbsp;', $text ); // replace Unicode non breaking space with html
+        $text = str_replace( array( '&nbsp;', '&#160;', '&#xa0;' ), "\xC2\xA0", $text );
         return parent::process( $text, $createRootNode );
     }
 
@@ -225,13 +222,20 @@ class eZOEInputParser extends eZXMLInputParser
         if ( $name === '' && isset( $attributes['style'] ) )
         {
             if ( strpos( $attributes['style'], 'font-weight: bold' ) !== false )
+            {
                 $name = 'strong';
+                unset( $attributes['style'] );
+            }
             elseif ( strpos( $attributes['style'], 'font-style: italic' ) !== false )
+            {
                 $name = 'emphasize';
+                unset( $attributes['style'] );
+            }
             elseif ( strpos( $attributes['style'], 'text-decoration: underline' ) !== false
                   && self::customTagIsEnabled('underline') )
             {
                 $name = 'custom';
+                unset( $attributes['style'] );
                 $attributes['name'] = 'underline';
                 $attributes['children_required'] = 'true';
             }
@@ -254,8 +258,8 @@ class eZOEInputParser extends eZXMLInputParser
     }
 
      /**
-     * tagNameHeader (tag mapping handler)
-     * Handles H[1-6] tags and maps them to header tag
+     * tagNameTable (tag mapping handler)
+     * Handles table tag and cleanups some attributes for it
      *
      * @param string $tagName name of input (xhtml) tag
      * @param array $attributes byref value of tag attributes
@@ -295,6 +299,8 @@ class eZOEInputParser extends eZXMLInputParser
                 else
                     $name = 'embed';
 
+                unset( $attributes['inline'] );// unset internal stuff to make sure custom attr with same name works
+
                 if ( isset( $attributes['class'] ) )
                 {
                     $attributes['class'] = self::tagClassNamesCleanup( $attributes['class'] );
@@ -305,9 +311,11 @@ class eZOEInputParser extends eZXMLInputParser
         if ( $name === '' && isset( $attributes['type'] ) && $attributes['type'] === 'custom' )
         {
             $name = 'custom';
+            unset( $attributes['type'] );// unset internal stuff to make sure custom attr with same name works
             if ( $tagName === 'div' )
                 $attributes['children_required'] = 'true';
             $attributes['name'] = self::tagClassNamesCleanup( $attributes['class'] );
+            unset( $attributes['class'] );// unset internal stuff to make sure custom attr with same name works
         }
 
         return $name;
@@ -343,6 +351,7 @@ class eZOEInputParser extends eZXMLInputParser
             if ( isset( $attributes['name'] ) && !isset( $attributes['anchor_name'] ) )
             {
                 $attributes['anchor_name'] = $attributes['name'];
+                unset( $attributes['name'] );// unset internal stuff to make sure custom attr with same name works
             }
         }
         else if ( isset( $attributes['name'] ) )
@@ -352,10 +361,12 @@ class eZOEInputParser extends eZXMLInputParser
         }
         else if ( isset( $attributes['class'] ) && $attributes['class'] === 'mceItemAnchor' )
         {
-            // anchor in TinyMCE / ezoe sense (since links and anchors share the a tag)
+            // anchor in TinyMCE sense (was valid up until TinyMCE 3.2)
             $name = 'anchor';
             // ie bug with name attribute, workaround using id instead
             if ( isset( $attributes['id'] ) ) $attributes['name'] = $attributes['id'];
+            unset( $attributes['class'] );// unset internal stuff to make sure custom attr with same name works
+            unset( $attributes['id'] );
         }
 
         return $name;
@@ -1053,6 +1064,19 @@ class eZOEInputParser extends eZXMLInputParser
     {
         $ret = array();
 
+        $parentNode = $element->parentNode;
+        if ( $parentNode->nodeName === 'custom' &&
+                !$this->XMLSchema->isInline( $parentNode ) &&
+                $parentNode->childNodes->length === 1 &&
+                $parentNode->getAttribute( 'name' ) === $element->textContent )
+        {
+            // removing the paragraph as it is there only to handle the custom
+            // in the rich text editor
+            $parentNode->removeAttribute( 'children_required' );
+            $parentNode->removeChild( $element );
+            return $ret;
+        }
+
         if ( $element->getAttribute( 'ezparser-new-element' ) === 'true' &&
              !$element->hasChildren() )
         {
@@ -1105,7 +1129,7 @@ class eZOEInputParser extends eZXMLInputParser
                 $element->setAttribute( 'object_id', $objectID );
                 if ( !eZContentObject::exists( $objectID ))
                 {
-                    $this->Messages[] = ezi18n( 'design/standard/ezoe/handler',
+                    $this->Messages[] = ezpI18n::tr( 'design/standard/ezoe/handler',
                                                 'Object %1 does not exist.',
                                                 false,
                                                 array( $objectID ) );
@@ -1128,7 +1152,7 @@ class eZOEInputParser extends eZXMLInputParser
                     $node = eZContentObjectTreeNode::fetch( $nodeID );
                     if ( !$node instanceOf eZContentObjectTreeNode )
                     {
-                        $this->Messages[] = ezi18n( 'design/standard/ezoe/handler',
+                        $this->Messages[] = ezpI18n::tr( 'design/standard/ezoe/handler',
                                                     'Node %1 does not exist.',
                                                     false,
                                                     array( $nodeID ) );
@@ -1139,7 +1163,7 @@ class eZOEInputParser extends eZXMLInputParser
                     $node = eZContentObjectTreeNode::fetchByURLPath( $nodePath );
                     if ( !$node instanceOf eZContentObjectTreeNode )
                     {
-                        $this->Messages[] = ezi18n( 'design/standard/ezoe/handler',
+                        $this->Messages[] = ezpI18n::tr( 'design/standard/ezoe/handler',
                                                     'Node &apos;%1&apos; does not exist.',
                                                     false,
                                                     array( $nodePath ) );
@@ -1185,14 +1209,14 @@ class eZOEInputParser extends eZXMLInputParser
                         return $ret;
                     }
 
-                    // Check mail address validity
-                    if ( preg_match( "/^mailto:(.*)/i" , $url, $mailAddr ) )
+                    // Check mail address validity following RFC 5322 and RFC 5321
+                    if ( preg_match( "/^mailto:([^.][a-z0-9!#\$%&'*+-\/=?`{|}~^]+@([a-z0-9.-]+))/i" , $url, $mailAddr ) )
                     {
                         if ( !eZMail::validate( $mailAddr[1] ) )
                         {
                             $this->isInputValid = false;
                             if ( $this->errorLevel >= 0 )
-                                $this->Messages[] = ezi18n( 'kernel/classes/datatypes/ezxmltext',
+                                $this->Messages[] = ezpI18n::tr( 'kernel/classes/datatypes/ezxmltext',
                                                             "Invalid e-mail address: '%1'",
                                                             false,
                                                             array( $mailAddr[1] ) );

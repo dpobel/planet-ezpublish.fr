@@ -1,26 +1,10 @@
 <?php
-//
-// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-// SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.4.0
-// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
-// SOFTWARE LICENSE: GNU General Public License v2.0
-// NOTICE: >
-//   This program is free software; you can redistribute it and/or
-//   modify it under the terms of version 2.0  of the GNU General
-//   Public License as published by the Free Software Foundation.
-// 
-//   This program is distributed in the hope that it will be useful,
-//    but WITHOUT ANY WARRANTY; without even the implied warranty of
-//   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//   GNU General Public License for more details.
-// 
-//   You should have received a copy of version 2.0 of the GNU General
-//   Public License along with this program; if not, write to the Free
-//   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
-//   MA 02110-1301, USA.
-// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-//
+/**
+ * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
+ * @license http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License v2
+ * @version  2012.5
+ * @package kernel
+ */
 
 // Set a default time zone if none is given. The time zone can be overriden
 // in config.php or php.ini.
@@ -30,6 +14,7 @@ if ( !ini_get( 'date.timezone' ) )
 }
 
 define( 'MAX_AGE', 86400 );
+header( 'X-Powered-By: eZ Publish (index_treemenu)' );
 
 if ( isset( $_SERVER['HTTP_IF_MODIFIED_SINCE'] ) )
 {
@@ -37,11 +22,11 @@ if ( isset( $_SERVER['HTTP_IF_MODIFIED_SINCE'] ) )
     header( 'Expires: ' . gmdate( 'D, d M Y H:i:s', time() + MAX_AGE ) . ' GMT' );
     header( 'Cache-Control: max-age=' . MAX_AGE );
     header( 'Last-Modified: ' . gmdate( 'D, d M Y H:i:s', strtotime( $_SERVER['HTTP_IF_MODIFIED_SINCE'] ) ) . ' GMT' );
+    header( 'Pragma: ' );
     exit();
 }
 
 require 'autoload.php';
-require 'kernel/common/ezincludefunctions.php';
 
 // Tweaks ini filetime checks if not defined!
 // This makes ini system not check modified time so
@@ -93,13 +78,10 @@ $uri = eZURI::instance( eZSys::requestURI() );
 
 $GLOBALS['eZRequestedURI'] = $uri;
 
-require 'pre_check.php';
-
 // Check for extension
 eZExtension::activateExtensions( 'default' );
 
 // load siteaccess
-include_once( 'access.php' );
 $access = eZSiteAccess::match( $uri,
                       eZSys::hostname(),
                       eZSys::serverPort(),

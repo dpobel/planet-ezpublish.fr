@@ -1,33 +1,12 @@
 <?php
-//
-// Definition of eZUserLoginHandler class
-//
-// Created on: <24-Jul-2003 15:11:57 wy>
-//
-// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-// SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.4.0
-// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
-// SOFTWARE LICENSE: GNU General Public License v2.0
-// NOTICE: >
-//   This program is free software; you can redistribute it and/or
-//   modify it under the terms of version 2.0  of the GNU General
-//   Public License as published by the Free Software Foundation.
-// 
-//   This program is distributed in the hope that it will be useful,
-//    but WITHOUT ANY WARRANTY; without even the implied warranty of
-//   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//   GNU General Public License for more details.
-// 
-//   You should have received a copy of version 2.0 of the GNU General
-//   Public License along with this program; if not, write to the Free
-//   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
-//   MA 02110-1301, USA.
-// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-//
-
-/*! \file
-*/
+/**
+ * File containing the eZUserLoginHandler class.
+ *
+ * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
+ * @license http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License v2
+ * @version  2012.5
+ * @package kernel
+ */
 
 /*!
   \class eZUserLoginHandler ezuserloginhandler.php
@@ -100,7 +79,7 @@ class eZUserLoginHandler
     /**
      * Returns a new instance of the eZUser class pr $protocol.
      *
-     * @param $protocol string If not set to 'standard' (default), then the code will look
+     * @param string $protocol If not set to 'standard' (default), then the code will look
      *        for handler first in kernel/classes/datatypes/ezuser/, then according to
      *        site.ini[UserSettings]ExtensionDirectory settings
      * @return eZUser
@@ -146,7 +125,7 @@ class eZUserLoginHandler
             }
         }
         // if no one appropriate instance was found
-        eZDebug::writeWarning( "Unable to find user login handler '$protocol', searched for these files: " . implode( ', ', $triedFiles ), 'eZUserLoginHandler::instance()' );
+        eZDebug::writeWarning( "Unable to find user login handler '$protocol', searched for these files: " . implode( ', ', $triedFiles ), __METHOD__ );
         $impl = null;
         return $impl;
     }

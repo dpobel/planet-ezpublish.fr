@@ -2,16 +2,16 @@
 /**
  * File containing the eZContentObjectState class.
  *
- * @copyright Copyright (C) 1999-2010 eZ Systems AS. All rights reserved.
- * @license http://ez.no/licenses/gnu_gpl GNU General Public License v2.0
- * @version 4.4.0
+ * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
+ * @license http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License v2
+ * @version  2012.5
  * @package kernel
  */
 
 /**
  * Class representing a content object state
  *
- * @version 4.4.0
+ * @version  2012.5
  * @package kernel
  */
 class eZContentObjectState extends eZPersistentObject
@@ -30,7 +30,10 @@ class eZContentObjectState extends eZPersistentObject
                                                         "required" => true ),
                                          "group_id" => array( "name" => "GroupID",
                                                               "datatype" => "integer",
-                                                              "required" => true ),
+                                                              "required" => true,
+                                                              "foreign_class" => "eZContentObjectStateGroup",
+                                                              "foreign_attribute" => "id",
+                                                              "multiplicity" => "1..*" ),
                                          "identifier" => array( "name" => "Identifier",
                                                                 "datatype" => "string",
                                                                 "required" => true,

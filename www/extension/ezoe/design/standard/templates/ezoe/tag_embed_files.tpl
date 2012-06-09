@@ -7,8 +7,6 @@
                                            )}
 
 <script type="text/javascript">
-<!--
-
 eZOEPopupUtils.embedObject = {$embed_data};
 eZOEPopupUtils.settings.customAttributeStyleMap = {$custom_attribute_style_map};
 eZOEPopupUtils.settings.tagEditTitleText = "{'Edit %tag_name tag'|i18n('design/standard/ezoe', '', hash( '%tag_name', concat('&lt;', $tag_name_alias, '&gt;') ))|wash('javascript')}";
@@ -138,14 +136,12 @@ function loadEmbedPreview( )
 {
     // Dynamically loads embed preview when attributes change
     var url = tinyMCEPopup.editor.settings.ez_extension_url + '/embed_view/' + eZOEPopupUtils.embedObject['contentobject_id'];
-    var postData = jQuery('#embed_attributes input, #embed_attributes select').serialize();
-    jQuery.post( url, postData, function( data )
+    var getData = eZOEPopupUtils.jqSafeSerilizer('embed_attributes');
+    jQuery.get( url, getData, function( data )
     {
         jQuery('#embed_preview').html( data );
     });
 }
-
-// -->
 </script>
 {/literal}
 

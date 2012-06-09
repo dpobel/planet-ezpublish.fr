@@ -69,7 +69,7 @@
 {else}
 <table class="list" cellspacing="0" >
 <tr>
-    <th class="tight"><img src={'toggle-button-16x16.gif'|ezimage} alt="{'Invert selection.'|i18n( 'design/admin/content/urlalias' )}" title="{'Invert selection.'|i18n( 'design/admin/content/urlalias' )}" onclick="ezjs_toggleCheckboxes( document.aliasform, 'ElementList[]' ); return false;"/></th>
+    <th class="tight"><img src={'toggle-button-16x16.gif'|ezimage} width="16" height="16" alt="{'Invert selection.'|i18n( 'design/admin/content/urlalias' )}" title="{'Invert selection.'|i18n( 'design/admin/content/urlalias' )}" onclick="ezjs_toggleCheckboxes( document.aliasform, 'ElementList[]' ); return false;"/></th>
     <th>{'URL alias'|i18n( 'design/admin/content/urlalias' )}</th>
     <th>{'Language'|i18n( 'design/admin/content/urlalias' )}</th>
     <th>{'Type'|i18n( 'design/admin/content/urlalias' )}</th>
@@ -98,7 +98,7 @@
         </td>
 
         <td>
-            <img src="{$element.language_object.locale|flag_icon}" alt="{$element.language_object.locale|wash}" />
+            <img src="{$element.language_object.locale|flag_icon}" width="18" height="12" alt="{$element.language_object.locale|wash}" />
             &nbsp;
             {$element.language_object.name|wash}
         </td>
@@ -197,7 +197,7 @@
 
         {* Language. *}
         <td>
-        <img src="{$element.language_object.locale|flag_icon}" alt="{$element.language_object.locale|wash}" />
+        <img src="{$element.language_object.locale|flag_icon}" width="18" height="12" alt="{$element.language_object.locale|wash}" />
         &nbsp;
         {$element.language_object.name|wash}
         </td>
@@ -206,7 +206,7 @@
         <td>
             {set $img_title='Edit the contents for language %language.'|i18n( 'design/admin/content/urlalias',, hash( '%language', $language_obj.name ) )}
             {if fetch( content, access, hash( access, 'edit', contentobject, $node, language, $locale ) )}
-                <a href={concat('/content/edit/', $node.contentobject_id, '/f/', $locale)|ezurl}><img src={'edit.gif'|ezimage} alt="{$img_title}" title="{$img_title}" /></a>
+                <a href={concat('/content/edit/', $node.contentobject_id, '/f/', $locale)|ezurl}><img src={'edit.gif'|ezimage} width="16" height="16" alt="{$img_title}" title="{$img_title}" /></a>
             {else}
                 <img src={'edit-disabled.gif'|ezimage} title="{'You cannot edit the contents for language %language because you do not have permission to edit the object.'|i18n( 'design/admin/content/urlalias',, hash( '%language', $language_obj.name ) )}" />
             {/if}
@@ -244,10 +244,10 @@
     <div class="halfelement">
         <label for="ezcontent_urlalias_destination">{"Destination:"|i18n( 'design/admin/content/urlalias' )}</label>
         <input id="ezcontent_urlalias_destination" disabled="disabled" class="box" type="text" name="DestinationText" value="{$node.name|shorten(40)|wash}" title="{'Destination.'|i18n( 'design/admin/content/urlalias' )}" />
-    </div>    
+    </div>
 </div>
 
-{* Language dropdown. *}    
+{* Language dropdown. *}
 <div class="block">
     <label for="ezcontent_urlalias_language">{"Language:"|i18n( 'design/admin/content/urlalias' )}</label>
     {if $node.can_edit}
@@ -286,7 +286,7 @@
         <p>{"<em>Un-check</em> to create the new alias under %link. Leave it checked and the new alias will be created on <em><a href='/'>%siteroot</a></em>."|i18n( 'design/admin/content/urlalias', '', hash( '%link', concat( '<em><a href=', $node.parent.url_alias|ezurl, '>', $node.parent.name|wash, '</a></em>' ),
                                                                                                                                                                                                                 '%siteroot', 'the site root' ) )}</p>
     {/if}
-    
+
 </div>
 
 
@@ -314,8 +314,7 @@
 </form>
 
 {literal}
-<script language="JavaScript" type="text/javascript">
-<!--
+<script type="text/javascript">
 jQuery(function( $ )//called on document.ready
 {
     with( document.aliasform )
@@ -331,6 +330,5 @@ jQuery(function( $ )//called on document.ready
         }
     }
 });
--->
 </script>
 {/literal}

@@ -1,30 +1,12 @@
 <?php
-//
-// Definition of eZBasket class
-//
-// Created on: <04-Jul-2002 15:28:58 bf>
-//
-// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-// SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.4.0
-// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
-// SOFTWARE LICENSE: GNU General Public License v2.0
-// NOTICE: >
-//   This program is free software; you can redistribute it and/or
-//   modify it under the terms of version 2.0  of the GNU General
-//   Public License as published by the Free Software Foundation.
-// 
-//   This program is distributed in the hope that it will be useful,
-//    but WITHOUT ANY WARRANTY; without even the implied warranty of
-//   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//   GNU General Public License for more details.
-// 
-//   You should have received a copy of version 2.0 of the GNU General
-//   Public License along with this program; if not, write to the Free
-//   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
-//   MA 02110-1301, USA.
-// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-//
+/**
+ * File containing the eZBasket class.
+ *
+ * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
+ * @license http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License v2
+ * @version  2012.5
+ * @package kernel
+ */
 
 /*!
   \class eZBasket ezbasket.php
@@ -74,6 +56,7 @@ class eZBasket extends eZPersistentObject
                                                               'foreign_attribute' => 'id',
                                                               'multiplicity' => '1..*') ),
                       'function_attributes' => array( 'items' => 'items',
+                                                      'items_ordered' => 'itemsOrdered',
                                                       'total_ex_vat' => 'totalExVAT',
                                                       'total_inc_vat' => 'totalIncVAT',
                                                       'is_empty' => 'isEmpty',
@@ -86,12 +69,18 @@ class eZBasket extends eZPersistentObject
         return $definition;
     }
 
-    function items( $asObject = true )
+    /**
+     * Fetch basket items (ordered by object id by default)
+     *
+     * @param bool $asObject
+     * @param array|null $sorts Array with sort data sent directly to {@link eZPersistentObject::fetchObjectList()}
+     */
+    function items( $asObject = true, $sorts = array( 'contentobject_id' => 'desc' ) )
     {
         $productItems = eZPersistentObject::fetchObjectList( eZProductCollectionItem::definition(),
                                                              null,
                                                              array( 'productcollection_id' => $this->ProductCollectionID ),
-                                                             array( 'contentobject_id' => 'desc' ),
+                                                             $sorts,
                                                              null,
                                                              $asObject );
         $addedProducts = array();
@@ -150,6 +139,18 @@ class eZBasket extends eZPersistentObject
         }
         return $addedProducts;
     }
+
+    /**
+     * Fetch basket items ordered by id ( the order they are added to basket )
+     *
+     * @param bool $asObject
+     * @param bool $order True (default) for ascending[0->9] and false for decending[9->0]
+     */
+    function itemsOrdered( $asObject = true, $order = true )
+    {
+        return $this->items( $asObject, array( 'id' => ( $order ? 'asc' : 'desc' )) );
+    }
+
     /*!
      Fetching calculated information about the product items.
     */

@@ -1,33 +1,12 @@
 <?php
-//
-// Definition of eZDBFileHandlerMysqlBackend class
-//
-// Created on: <19-Apr-2006 16:15:17 vs>
-//
-// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-// SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.4.0
-// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
-// SOFTWARE LICENSE: GNU General Public License v2.0
-// NOTICE: >
-//   This program is free software; you can redistribute it and/or
-//   modify it under the terms of version 2.0  of the GNU General
-//   Public License as published by the Free Software Foundation.
-// 
-//   This program is distributed in the hope that it will be useful,
-//    but WITHOUT ANY WARRANTY; without even the implied warranty of
-//   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//   GNU General Public License for more details.
-// 
-//   You should have received a copy of version 2.0 of the GNU General
-//   Public License along with this program; if not, write to the Free
-//   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
-//   MA 02110-1301, USA.
-// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-//
-
-/*! \file
-*/
+/**
+ * File containing the eZDBFileHandlerMysqlBackend class.
+ *
+ * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
+ * @license http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License v2
+ * @version  2012.5
+ * @package kernel
+ */
 
 if ( !defined( 'TABLE_METADATA' ) )
     define( 'TABLE_METADATA', 'ezdbfile' );
@@ -37,7 +16,7 @@ if ( !defined( 'TABLE_DATA' ) )
 
 /*
 CREATE TABLE ezdbfile (
-  datatype      VARCHAR(60)   NOT NULL DEFAULT 'application/octet-stream',
+  datatype      VARCHAR(255)   NOT NULL DEFAULT 'application/octet-stream',
   name          TEXT          NOT NULL,
   name_trunk    TEXT          NOT NULL,
   name_hash     VARCHAR(34)   NOT NULL DEFAULT '',
@@ -95,6 +74,7 @@ class eZDBFileHandlerMysqliBackend
 
         $maxTries = $params['max_connect_tries'];
         $tries = 0;
+        eZDebug::accumulatorStart( 'mysql_cluster_connect', 'mysql_cluster_total', 'Cluster_database_connection' );
         while ( $tries < $maxTries )
         {
             /// @todo what if port is null, '' ??? to be tested
@@ -102,6 +82,7 @@ class eZDBFileHandlerMysqliBackend
                 break;
             ++$tries;
         }
+        eZDebug::accumulatorStop( 'mysql_cluster_connect' );
         if ( !$this->db )
             return $this->_die( "Unable to connect to storage server" );
 
@@ -117,6 +98,18 @@ class eZDBFileHandlerMysqliBackend
             {
                 return $this->_die( "Failed to set Database charset to $charset." );
             }
+        }
+    }
+
+    /**
+     * Disconnects the handler from the database
+     */
+    public function _disconnect()
+    {
+        if ( $this->db !== null )
+        {
+            mysqli_close( $this->db );
+            $this->db = null;
         }
     }
 
@@ -240,7 +233,7 @@ class eZDBFileHandlerMysqliBackend
             $fname .= "::_purgeByLike($like, $onlyExpired)";
         else
             $fname = "_purgeByLike($like, $onlyExpired)";
-        $sql = "DELETE FROM " . TABLE_METADATA . " WHERE name LIKE " . $this->_quote( $like );
+        $sql = "DELETE FROM " . TABLE_METADATA . " WHERE name LIKE " . $this->_quote( $like, true );
         if ( $expiry !== false )
             $sql .= " AND mtime < " . (int)$expiry;
         elseif ( $onlyExpired )
@@ -290,7 +283,7 @@ class eZDBFileHandlerMysqliBackend
 
     function _deleteByLikeInner( $like, $fname )
     {
-        $sql = "UPDATE " . TABLE_METADATA . " SET mtime=-ABS(mtime), expired=1\nWHERE name like ". $this->_quote( $like );
+        $sql = "UPDATE " . TABLE_METADATA . " SET mtime=-ABS(mtime), expired=1\nWHERE name like ". $this->_quote( $like, true );
         if ( !$res = $this->_query( $sql, $fname ) )
         {
             return $this->_fail( "Failed to delete files by like: '$like'" );
@@ -352,9 +345,9 @@ class eZDBFileHandlerMysqliBackend
     function _deleteByDirList( $dirList, $commonPath, $commonSuffix, $fname = false )
     {
         if ( $fname )
-            $fname .= "::_deleteByDirList($dirList, $commonPath, $commonSuffix)";
+            $fname .= "::_deleteByDirList(" . join( ", ", $dirList ) . ", $commonPath, $commonSuffix)";
         else
-            $fname = "_deleteByDirList($dirList, $commonPath, $commonSuffix)";
+            $fname = "_deleteByDirList(" . join( ", ", $dirList ) . ", $commonPath, $commonSuffix)";
         return $this->_protect( array( $this, '_deleteByDirListInner' ), $fname,
                                 $dirList, $commonPath, $commonSuffix, $fname );
     }
@@ -369,7 +362,7 @@ class eZDBFileHandlerMysqliBackend
             }
             else
             {
-                $where = "WHERE name LIKE '$commonPath/$dirItem/$commonSuffix%'";
+                $where = "WHERE name LIKE ".$this->_quote( "$commonPath/$dirItem/$commonSuffix%", true );
             }
             $sql = "UPDATE " . TABLE_METADATA . " SET mtime=-ABS(mtime), expired=1\n$where";
             if ( !$res = $this->_query( $sql, $fname ) )
@@ -431,13 +424,13 @@ class eZDBFileHandlerMysqliBackend
     }
 
     /**
-    * Fetches the file $filePath from the database, saving it locally with its
-    * original name, or $uniqueName if given
-    *
-    * @param string $filePath
-    * @param string $uniqueName
-    * @return the file physical path, or false if fetch failed
-    **/
+     * Fetches the file $filePath from the database, saving it locally with its
+     * original name, or $uniqueName if given
+     *
+     * @param string $filePath
+     * @param string $uniqueName
+     * @return the file physical path, or false if fetch failed
+     */
     function _fetch( $filePath, $uniqueName = false )
     {
         $metaData = $this->_fetchMetadata( $filePath );
@@ -512,7 +505,7 @@ class eZDBFileHandlerMysqliBackend
 
         if ( ! $uniqueName === true )
         {
-            eZFile::rename( $tmpFilePath, $filePath );
+            eZFile::rename( $tmpFilePath, $filePath, false, eZFile::CLEAN_ON_FAILURE | eZFile::APPEND_DEBUG_ON_FAILURE );
         }
         else
         {
@@ -593,30 +586,83 @@ class eZDBFileHandlerMysqliBackend
     }
 
     /**
-     * \deprecated This function should not be used since it cannot handle reading errors.
-     *             For the PHP 5 port this should be removed.
+     * Sends a binary file's content to the client
+     *
+     * @param string $filePath File path
+     * @param int $startOffset Starting offset
+     * @param false|int $length Length to transmit, false means everything
+     * @param false|string $fname The function name that started the query
      */
-    function _passThrough( $filePath, $fname = false )
+    function _passThrough( $filePath, $startOffset = 0, $length = false, $fname = false )
     {
         if ( $fname )
             $fname .= "::_passThrough($filePath)";
         else
             $fname = "_passThrough($filePath)";
 
-        $metaData = $this->_fetchMetadata( $filePath, $fname );
-        if ( !$metaData )
-            return false;
+        $where = array();
+        $dbChunkSize = $this->dbparams['chunk_size'];
+        $dbStartOffset = ( $startOffset != 0 ) ? (int) ( floor( $startOffset / $dbChunkSize ) * $dbChunkSize ) : 0;
+        if ( $dbStartOffset !== 0 )
+        {
+            $where[] = "offset >= {$dbStartOffset}";
+        }
 
-        $sql = "SELECT filedata FROM " . TABLE_DATA . " WHERE name_hash=" . $this->md5( $filePath ) . " ORDER BY offset";
-        if ( !$res = $this->_query( $sql, $fname ) )
+        if ( $length !== false )
+        {
+            $where[] = "offset <= " . ( $length + $startOffset - 1 );
+            $endOffset = $length + $startOffset - 1;
+        }
+        else
+        {
+            $metaData = $this->_fetchMetadata( $filePath, $fname );
+            if ( !$metaData )
+            {
+                return false;
+            }
+            $endOffset = $metaData['size'] - 1;
+            unset( $metaData );
+        }
+
+        if ( !$res =
+            $this->_query(
+                "SELECT offset, filedata FROM " . TABLE_DATA . " WHERE name_hash=" . $this->_md5( $filePath ) .
+                ( !empty( $where ) ? " AND " . implode( " AND ", $where ) : "" ) . " " .
+                "ORDER BY offset",
+                $fname
+            ) )
         {
             eZDebug::writeError( "Failed to fetch file data for file '$filePath'.", __METHOD__ );
             return false;
         }
 
-        while ( $row = mysqli_fetch_row( $res ) )
-            echo $row[0];
-
+        while ( $row = mysqli_fetch_assoc( $res ) )
+        {
+            // The first byte to send is part of this first chunk
+            if ( $row['offset'] < $startOffset )
+            {
+                echo substr(
+                    $row['filedata'],
+                    $startOffset - $row['offset'],
+                    // we need the +1 as this is a length, not an offset
+                    $endOffset - $startOffset + 1
+                );
+            }
+            // The last byte to send is part of this last chunk
+            else if ( $row['offset'] + $dbChunkSize > $endOffset )
+            {
+                echo substr(
+                    $row['filedata'],
+                    0,
+                    // we need the +1 as this is a length, not an offset
+                    $endOffset - $row['offset'] + 1
+                );
+            }
+            else
+            {
+                echo $row['filedata'];
+            }
+        }
         mysqli_free_result( $res );
         return true;
     }
@@ -1121,15 +1167,15 @@ class eZDBFileHandlerMysqliBackend
     }
 
     /**
-    * Uses a secondary database connection to check outside the transaction scope
-    * if a file has been generated during the current process execution
-    * @param string $filePath
-    * @param int $expiry
-    * @param int $curtime
-    * @param int $ttl
-    * @param string $fname
-    * @return bool false if the file exists and is not expired, true otherwise
-    **/
+     * Uses a secondary database connection to check outside the transaction scope
+     * if a file has been generated during the current process execution
+     * @param string $filePath
+     * @param int $expiry
+     * @param int $curtime
+     * @param int $ttl
+     * @param string $fname
+     * @return bool false if the file exists and is not expired, true otherwise
+     */
     function _verifyExclusiveLock( $filePath, $expiry, $curtime, $ttl, $fname = false )
     {
         // we need to create a new backend connection in order to be outside the
@@ -1320,18 +1366,32 @@ class eZDBFileHandlerMysqliBackend
         return $res;
     }
 
-    /*!
-     Make sure that $value is escaped and qouted according to type and returned as a string.
-     The returned value can directly be put into SQLs.
+    /**
+     * Make sure that $value is escaped and qouted according to type and returned
+     * as a string.
+     *
+     * @param string $value a SQL parameter to escape
+     * @param bool $escapeUnderscoreWildcards Set to true to escape underscores as well to avoid them to act as wildcards
+     *                                        Highly recommended for LIKE statements !
+     * @return string a string that can safely be used in SQL queries
      */
-    function _quote( $value )
+    function _quote( $value, $escapeUnderscoreWildcards = false )
     {
         if ( $value === null )
+        {
             return 'NULL';
+        }
         elseif ( is_integer( $value ) )
+        {
             return (string)$value;
+        }
         else
-            return "'" . mysqli_real_escape_string( $this->db, $value ) . "'";
+        {
+           if ( $escapeUnderscoreWildcards )
+                return "'" . addcslashes( mysqli_real_escape_string( $this->db, $value ), "_" ) . "'";
+           else
+                return "'" . mysqli_real_escape_string( $this->db, $value ) . "'";
+        }
     }
 
     /*!
@@ -1366,12 +1426,12 @@ class eZDBFileHandlerMysqliBackend
     }
 
     /**
-    * Report SQL $query to debug system.
-    *
-    * @param string $fname The function name that started the query, should contain relevant arguments in the text.
-    * @param int    $timeTaken Number of seconds the query + related operations took (as float).
-    * @param int $numRows Number of affected rows.
-    **/
+     * Report SQL $query to debug system.
+     *
+     * @param string $fname The function name that started the query, should contain relevant arguments in the text.
+     * @param int    $timeTaken Number of seconds the query + related operations took (as float).
+     * @param int $numRows Number of affected rows.
+     */
     function _report( $query, $fname, $timeTaken, $numRows = false )
     {
         if ( !$this->dbparams['sql_output'] )
@@ -1388,18 +1448,18 @@ class eZDBFileHandlerMysqliBackend
     }
 
     /**
-    * Attempts to begin cache generation by creating a new file named as the
-    * given filepath, suffixed with .generating. If the file already exists,
-    * insertion is not performed and false is returned (means that the file
-    * is already being generated)
-    * @param string $filePath
-    * @return array array with 2 indexes: 'result', containing either ok or ko,
-    *         and another index that depends on the result:
-    *         - if result == 'ok', the 'mtime' index contains the generating
-    *           file's mtime
-    *         - if result == 'ko', the 'remaining' index contains the remaining
-    *           generation time (time until timeout) in seconds
-    **/
+     * Attempts to begin cache generation by creating a new file named as the
+     * given filepath, suffixed with .generating. If the file already exists,
+     * insertion is not performed and false is returned (means that the file
+     * is already being generated)
+     * @param string $filePath
+     * @return array array with 2 indexes: 'result', containing either ok or ko,
+     *         and another index that depends on the result:
+     *         - if result == 'ok', the 'mtime' index contains the generating
+     *           file's mtime
+     *         - if result == 'ko', the 'remaining' index contains the remaining
+     *           generation time (time until timeout) in seconds
+     */
     function _startCacheGeneration( $filePath, $generatingFilePath )
     {
         $fname = "_startCacheGeneration( {$filePath} )";
@@ -1475,11 +1535,11 @@ class eZDBFileHandlerMysqliBackend
     }
 
     /**
-    * Ends the cache generation for the current file: moves the (meta)data for
-    * the .generating file to the actual file, and removed the .generating
-    * @param string $filePath
-    * @return bool
-    **/
+     * Ends the cache generation for the current file: moves the (meta)data for
+     * the .generating file to the actual file, and removed the .generating
+     * @param string $filePath
+     * @return bool
+     */
     function _endCacheGeneration( $filePath, $generatingFilePath, $rename )
     {
         $fname = "_endCacheGeneration( $filePath )";
@@ -1561,14 +1621,14 @@ class eZDBFileHandlerMysqliBackend
     }
 
     /**
-    * Checks if generation has timed out by looking for the .generating file
-    * and comparing its timestamp to the one assigned when the file was created
-    *
-    * @param string $generatingFilePath
-    * @param int    $generatingFileMtime
-    *
-    * @return bool true if the file didn't timeout, false otherwise
-    **/
+     * Checks if generation has timed out by looking for the .generating file
+     * and comparing its timestamp to the one assigned when the file was created
+     *
+     * @param string $generatingFilePath
+     * @param int    $generatingFileMtime
+     *
+     * @return bool true if the file didn't timeout, false otherwise
+     */
     function _checkCacheGenerationTimeout( $generatingFilePath, $generatingFileMtime )
     {
         $fname = "_checkCacheGenerationTimeout( $generatingFilePath, $generatingFileMtime )";
@@ -1603,8 +1663,10 @@ class eZDBFileHandlerMysqliBackend
         {
             $query = "SELECT mtime FROM " . TABLE_METADATA . " WHERE name_hash = {$nameHash}";
             $res = mysqli_query( $this->db, $query );
-            mysqli_fetch_row( $res );
-            if( $res and isset( $row[0] ) and $row[0] == $generatingFileMtime );
+            if ( !$res )
+                return false;
+            $row = mysqli_fetch_row( $res );
+            if( isset( $row[0] ) and $row[0] == $generatingFileMtime );
                 return true;
 
             return false;
@@ -1622,11 +1684,11 @@ class eZDBFileHandlerMysqliBackend
     }
 
     /**
-    * Aborts the cache generation process by removing the .generating file
-    * @param string $filePath Real cache file path
-    * @param string $generatingFilePath .generating cache file path
-    * @return void
-    **/
+     * Aborts the cache generation process by removing the .generating file
+     * @param string $filePath Real cache file path
+     * @param string $generatingFilePath .generating cache file path
+     * @return void
+     */
     function _abortCacheGeneration( $generatingFilePath )
     {
         $sql = "DELETE FROM " . TABLE_METADATA . " WHERE name_hash = " . $this->_md5( $generatingFilePath );
@@ -1634,11 +1696,11 @@ class eZDBFileHandlerMysqliBackend
     }
 
     /**
-    * Returns the name_trunk for a file path
-    * @param string $filePath
-    * @param string $scope
-    * @return string
-    **/
+     * Returns the name_trunk for a file path
+     * @param string $filePath
+     * @param string $scope
+     * @return string
+     */
     static function nameTrunk( $filePath, $scope )
     {
         switch ( $scope )
@@ -1673,13 +1735,13 @@ class eZDBFileHandlerMysqliBackend
     }
 
     /**
-    * Returns the remaining time, in seconds, before the generating file times
-    * out
-    *
-    * @param resource $fileRow
-    *
-    * @return int Remaining generation seconds. A negative value indicates a timeout.
-    **/
+     * Returns the remaining time, in seconds, before the generating file times
+     * out
+     *
+     * @param resource $fileRow
+     *
+     * @return int Remaining generation seconds. A negative value indicates a timeout.
+     */
     private function remainingCacheGenerationTime( $row )
     {
         if( !isset( $row[0] ) )
@@ -1689,22 +1751,27 @@ class eZDBFileHandlerMysqliBackend
     }
 
     /**
-     * Returns the list of expired binary files (images + binaries)
+     * Returns the list of expired files
      *
      * @param array $scopes Array of scopes to consider. At least one.
      * @param int $limit Max number of items. Set to false for unlimited.
+     * @param int $expiry Number of seconds, only items older than this will be returned.
      *
      * @return array(filepath)
      *
      * @since 4.3
      */
-    public function expiredFilesList( $scopes, $limit = array( 0, 100 ) )
+    public function expiredFilesList( $scopes, $limit = array( 0, 100 ), $expiry = false )
     {
         if ( count( $scopes ) == 0 )
             throw new ezcBaseValueException( 'scopes', $scopes, "array of scopes", "parameter" );
 
         $scopeString = $this->_sqlList( $scopes );
         $query = "SELECT name FROM " . TABLE_METADATA . " WHERE expired = 1 AND scope IN( $scopeString )";
+        if ( $expiry !== false )
+        {
+            $query .= ' AND mtime < ' . (time() - $expiry);
+        }
         if ( $limit !== false )
         {
             $query .= " LIMIT {$limit[0]}, {$limit[1]}";

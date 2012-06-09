@@ -7,7 +7,7 @@ jQuery(function( $ )
     $('input.ezobject-relation-search-text').keypress( function( e ){
         if ( e.which == 13 )
         {
-                return _search.call( this, e );
+            return _search.call( this, e );
         }
     }).removeClass('hide');
 
@@ -15,14 +15,14 @@ jQuery(function( $ )
     function _search( e )
     {
         e.preventDefault();
-        var box = $( this.parentNode.parentNode.parentNode ), text = box.find('input.ezobject-relation-search-text');
+        var box = $( this.parentNode.parentNode ), text = box.find('input.ezobject-relation-search-text');
         if ( text.val() )
         {
             var params = { 'CallbackID': box.attr('id'), 'EncodingFetchSection': 1 };
-                var node = box.find("*[name*='_for_object_start_node']"), classes = box.find("input[name*='_for_object_class_constraint_list']");
-                if ( node.size() ) params['SearchSubTreeArray'] = node.val();
-                if ( classes.size() ) params['SearchContentClassIdentifier'] = classes.val();
-                $.ez( 'ezjsc::search::' + text.val(), params, _searchCallBack );
+            var node = box.find("*[name*='_for_object_start_node']"), classes = box.find("input[name*='_for_object_class_constraint_list']");
+            if ( node.size() ) params['SearchSubTreeArray'] = node.val();
+            if ( classes.size() ) params['SearchContentClassIdentifier'] = classes.val();
+            $.ez( 'ezjsc::search::' + text.val(), params, _searchCallBack );
         }
         return false;
     }
@@ -32,20 +32,34 @@ jQuery(function( $ )
     {
         if ( data && data.content !== '' )
         {
-            var boxID = '#' + data.content.CallbackID;
-                if ( data.content.SearchResultCount )
+            var boxID = '#' + data.content.CallbackID, boxElem = $( boxID + ' div.ezobject-relation-search-browse'  );
+            if ( data.content.SearchResultCount )
             {
-                var html = '', arr = data.content.SearchResult, pub = $('#ezobjectrelation-search-published-text');
+                boxElem.empty();
+                var arr = data.content.SearchResult, pub = $('#ezobjectrelation-search-published-text');
                 for ( var i = 0, l = arr.length; i < l; i++ )
                 {
-                        html += '<a onclick="return ezajaxrelationsSearchAddObject( this, \'' + boxID + '\', ' + arr[i].id + ',\'' + arr[i].name + '\',\'' + arr[i].class_name + '\',\'' + arr[i].section.name + '\',\'' + pub.val() + '\'  );">' + arr[i].name + '<\/a><br \/>';
+                    var aElem = $( '<a></a>' );
+                    aElem.bind( 'click', { boxID: boxID,
+                                           id: arr[i].id,
+                                           name: arr[i].name,
+                                           className: arr[i].class_name,
+                                           sectionName: arr[i].section.name,
+                                           publishedTxt: pub.val() }, function(e) {
+                        ezajaxrelationsSearchAddObject( this, e.data.boxID, e.data.id, e.data.name, e.data.className, e.data.sectionName, e.data.publishedTxt );
+                    } );
+                    aElem.append( arr[i].name );
+                    aElem.attr( 'title', aElem.text() );
+
+                    boxElem.append( aElem );
+                    boxElem.append( '<br />' );
                 }
-                $( boxID + ' div.ezobject-relation-search-browse'  ).html( html ).show();
+                boxElem.show();
             }
             else
             {
                 var html = '<p class="ezobjectrelation-search-empty-result">' + $('#ezobjectrelation-search-empty-result-text').html().replace( '--search-string--', '<em>' + data.content.SearchString + '<\/em>' ) + '<\/p>';
-                $( boxID + ' div.ezobject-relation-search-browse'  ).html( html ).show();
+                boxElem.html( html ).show();
             }
         }
         else
@@ -64,7 +78,7 @@ jQuery(function( $ )
         {
             if ( tds[1].innerHTML !== '--name--' )
             {
-                    tr = tr.clone(true).insertAfter(tr);
+                tr = tr.clone(true).insertAfter(tr);
                 tds = tr.find('td').slice( 1 );
             }
             else
@@ -78,7 +92,7 @@ jQuery(function( $ )
         }
         else
         {
-                $( boxID + ' input[name*=_data_object_relation_id_]' ).val( id )
+            $( boxID + ' input[name*=_data_object_relation_id_]' ).val( id )
         }
         tds.eq( 0 ).html( name );
         tds.eq( 1 ).html( className );

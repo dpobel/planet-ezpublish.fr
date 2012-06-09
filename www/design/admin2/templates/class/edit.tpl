@@ -1,3 +1,30 @@
+
+
+{* Main window *}
+<form action={concat( $module.functions.edit.uri, '/', $class.id, '/(language)/', $language_code )|ezurl} method="post" id="ClassEdit" name="ClassEdit">
+<input type="hidden" name="ContentClassHasInput" value="1" />
+
+<div id="controlbar-top" class="controlbar controlbar-fixed">
+{* DESIGN: Control bar START *}<div class="box-bc"><div class="box-ml">
+<div class="block">
+<div class="element">
+    <input class="defaultbutton" type="submit" name="StoreButton"   value="{'OK'|i18n( 'design/admin/class/edit' )}" title="{'Store changes and exit from edit mode.'|i18n( 'design/admin/class/edit' )|wash}" />
+
+    {if eq( ezini( 'ClassSettings', 'ApplyButton', 'content.ini' ), 'enabled' )}
+    <input class="button" type="submit" name="ApplyButton"   value="{'Apply'|i18n( 'design/admin/class/edit' )}" title="{'Store changes and continue editing.'|i18n( 'design/admin/class/edit' )|wash}" />
+    {/if}
+
+    <input class="button" type="submit" name="DiscardButton" value="{'Cancel'|i18n( 'design/admin/class/edit' )}" title="{'Discard all changes and exit from edit mode.'|i18n( 'design/admin/class/edit' )|wash}" />
+</div>
+<div class="element">
+    {include uri="design:class/datatypes.tpl" name='DataTypes' id_name='DataTypeStringTop' selection_name='DataTypeString' datatypes=$datatypes current=$datatype}
+    <input class="button" type="submit" name="NewButton" id="NewButtonTop" value="{'Add attribute'|i18n( 'design/admin/class/edit' )}" title="{'Add a new attribute to the class. Use the menu on the left to select the attribute type.'|i18n( 'design/admin/class/edit' )|wash}" />
+</div>
+<div class="float-break"></div>
+</div>
+{* DESIGN: Control bar END *}</div></div>
+</div>
+
 {* Warnings *}
 
 {section show=$validation.processed}
@@ -44,34 +71,6 @@
     {/section}
 {/section}
 
-{* Main window *}
-<form action={concat( $module.functions.edit.uri, '/', $class.id, '/(language)/', $language_code )|ezurl} method="post" id="ClassEdit" name="ClassEdit">
-<input type="hidden" name="ContentClassHasInput" value="1" />
-
-<div id="controlbar-top" class="controlbar">
-{* DESIGN: Control bar START *}<div class="box-bc"><div class="box-ml">
-<div class="block">
-<div class="element">
-    <input class="defaultbutton" type="submit" name="StoreButton"   value="{'OK'|i18n( 'design/admin/class/edit' )}" title="{'Store changes and exit from edit mode.'|i18n( 'design/admin/class/edit' )|wash}" />
-
-    {if eq( ezini( 'ClassSettings', 'ApplyButton', 'content.ini' ), 'enabled' )}
-    <input class="button" type="submit" name="ApplyButton"   value="{'Apply'|i18n( 'design/admin/class/edit' )}" title="{'Store changes and continue editing.'|i18n( 'design/admin/class/edit' )|wash}" />
-    {/if}
-
-    <input class="button" type="submit" name="DiscardButton" value="{'Cancel'|i18n( 'design/admin/class/edit' )}" title="{'Discard all changes and exit from edit mode.'|i18n( 'design/admin/class/edit' )|wash}" />
-</div>
-<div class="element">
-	{include uri="design:class/datatypes.tpl" name='DataTypes' id_name='DataTypeStringTop' selection_name='DataTypeString' datatypes=$datatypes current=$datatype}
-	<input class="button" type="submit" name="NewButton" id="NewButtonTop" value="{'Add attribute'|i18n( 'design/admin/class/edit' )}" title="{'Add a new attribute to the class. Use the menu on the left to select the attribute type.'|i18n( 'design/admin/class/edit' )|wash}" />
-</div>
-<div class="button-right">
-    <a href="JavaScript:void(0);" onclick="jQuery('#page').toggleClass('main-column-only');" class="controlbar-top-full-screen-toggle" title="{'Toggle fullscreen editing!'|i18n( 'design/admin/content/edit' )}">&nbsp;</a>
-</div>
-<div class="float-break"></div>
-</div>
-{* DESIGN: Control bar END *}</div></div>
-</div>
-
 
 <div class="context-block">
 {* DESIGN: Header START *}<div class="box-header">
@@ -88,7 +87,7 @@
 <div class="context-information">
 <p class="left modified">{'Last modified'|i18n( 'design/admin/class/edit' )}:&nbsp;{$class.modified|l10n( shortdatetime )},&nbsp;{$class.modifier.contentobject.name|wash}</p>
 {def $locale = fetch( 'content', 'locale', hash( 'locale_code', $language_code ) )}
-<p class="right translation">{$locale.intl_language_name}&nbsp;<img src="{$language_code|flag_icon}" alt="{$language_code}" style="vertical-align: middle;" /></p>
+<p class="right translation">{$locale.intl_language_name}&nbsp;<img src="{$language_code|flag_icon}" width="18" height="12" alt="{$language_code}" style="vertical-align: middle;" /></p>
 {undef $locale}
 <div class="break"></div>
 </div>
@@ -147,7 +146,7 @@
         <option value="0"{if eq($class.sort_order, 0)} selected="selected"{/if}>{'Descending'|i18n( 'design/admin/class/edit' )}</option>
         <option value="1"{if eq($class.sort_order, 1)} selected="selected"{/if}>{'Ascending'|i18n( 'design/admin/class/edit' )}</option>
     </select>
-    {undef}
+    {undef $sort_fields $title}
     </div>
 
     {* Object availablility. *}
@@ -176,13 +175,13 @@
 <td>
 <table cellspacing="0" summary="{'Class attribute item'|i18n( 'design/admin/class/edit' )}">
 <tr>
-    <th class="tight"><input type="checkbox" name="ContentAttribute_id_checked[]" value="{$Attributes.item.id}" title="{'Select attribute for removal. Click the "Remove selected attributes" button to remove the selected attributes.'|i18n( 'design/admin/class/edit' )|wash}" /></th>
+    <th class="tight"><input type="checkbox" name="ContentAttribute_id_checked[{$Attributes.item.id}]" value="{$Attributes.item.id}" title="{'Select attribute for removal. Click the "Remove selected attributes" button to remove the selected attributes.'|i18n( 'design/admin/class/edit' )|wash}" /></th>
     <th class="wide">{$Attributes.number}. {$Attributes.item.name|wash} [{$Attributes.item.data_type.information.name|wash}] (id:{$Attributes.item.id})</th>
     <th class="tight">
       <div class="listbutton">
           <input type="image" src={'button-move_down.gif'|ezimage} alt="{'Down'|i18n( 'design/admin/class/edit' )}" name="MoveDown_{$Attributes.item.id}" title="{'Use the order buttons to set the order of the class attributes. The up arrow moves the attribute one place up. The down arrow moves the attribute one place down.'|i18n( 'design/admin/class/edit' )|wash}" />&nbsp;
           <input type="image" src={'button-move_up.gif'|ezimage} alt="{'Up'|i18n( 'design/admin/class/edit' )}" name="MoveUp_{$Attributes.item.id}" title="{'Use the order buttons to set the order of the class attributes. The up arrow moves the attribute one place up. The down arrow moves the attribute one place down.'|i18n( 'design/admin/class/edit' )|wash}" />
-          <input size="2" maxlength="4" type="text" name="ContentAttribute_priority[]" value="{$priority_value}" />
+          <input size="2" maxlength="4" type="text" name="ContentAttribute_priority[{$Attributes.item.id}]" value="{$priority_value}" />
       </div>
     </th>
 </tr>
@@ -190,26 +189,26 @@
 <td>&nbsp;</td>
 <!-- Attribute input Start -->
 <td colspan="2">
-<input type="hidden" name="ContentAttribute_id[]" value="{$Attributes.item.id}" />
-<input type="hidden" name="ContentAttribute_position[]" value="{$Attributes.item.placement}" />
+<input type="hidden" name="ContentAttribute_id[{$Attributes.item.id}]" value="{$Attributes.item.id}" />
+<input type="hidden" name="ContentAttribute_position[{$Attributes.item.id}]" value="{$Attributes.item.placement}" />
 
 
 {* Attribute name. *}
 <div class="block">
 <label for="ContentAttribute_name_{$Attributes.item.id}">{'Name'|i18n( 'design/admin/class/edit' )}:</label>
-<input class="box" type="text" id="ContentAttribute_name_{$Attributes.item.id}" name="ContentAttribute_name[]" value="{$Attributes.item.nameList[$language_code]|wash}" title="{'Use this field to set the informal name of the attribute. This field can contain whitespaces and special characters.'|i18n( 'design/admin/class/edit' )|wash}" />
+<input class="box" type="text" id="ContentAttribute_name_{$Attributes.item.id}" name="ContentAttribute_name[{$Attributes.item.id}]" value="{$Attributes.item.nameList[$language_code]|wash}" title="{'Use this field to set the informal name of the attribute. This field can contain whitespaces and special characters.'|i18n( 'design/admin/class/edit' )|wash}" />
 </div>
 
 {* Attribute identifier. *}
 <div class="block">
 <label for="ContentAttribute_identifier_{$Attributes.item.id}">{'Identifier'|i18n( 'design/admin/class/edit' )}:</label>
-<input class="box" type="text" id="ContentAttribute_identifier_{$Attributes.item.id}" name="ContentAttribute_identifier[]" value="{$Attributes.item.identifier}" title="{'Use this field to set the internal name of the attribute. The identifier will be used in templates and in PHP code. Allowed characters are letters, numbers and underscores.'|i18n( 'design/admin/class/edit' )|wash}" />
+<input class="box" type="text" id="ContentAttribute_identifier_{$Attributes.item.id}" name="ContentAttribute_identifier[{$Attributes.item.id}]" value="{$Attributes.item.identifier}" title="{'Use this field to set the internal name of the attribute. The identifier will be used in templates and in PHP code. Allowed characters are letters, numbers and underscores.'|i18n( 'design/admin/class/edit' )|wash}" />
 </div>
 
 {* Attribute description. *}
 <div class="block">
 <label for="ContentAttribute_description_{$Attributes.item.id}">{'Description'|i18n( 'design/admin/class/edit' )}:</label>
-<input class="box" type="text" id="ContentAttribute_description_{$Attributes.item.id}" name="ContentAttribute_description[]" value="{$Attributes.item.descriptionList[$language_code]|wash}" title="{'Use this field to set the informal description of the attribute. This field can contain whitespaces and special characters.'|i18n( 'design/admin/class/edit' )|wash}" />
+<input class="box" type="text" id="ContentAttribute_description_{$Attributes.item.id}" name="ContentAttribute_description[{$Attributes.item.id}]" value="{$Attributes.item.descriptionList[$language_code]|wash}" title="{'Use this field to set the informal description of the attribute. This field can contain whitespaces and special characters.'|i18n( 'design/admin/class/edit' )|wash}" />
 </div>
 
 <!-- Attribute input End -->
@@ -220,7 +219,7 @@
 {* Required. *}
 <div class="element">
 <label for="ContentAttribute_is_required_{$Attributes.item.id}">
-<input type="checkbox" id="ContentAttribute_is_required_{$Attributes.item.id}" name="ContentAttribute_is_required_checked[]" value="{$Attributes.item.id}"  {if $Attributes.item.is_required}checked="checked"{/if} title="{'Use this checkbox to specify whether the user should be forced to enter information into the attribute.'|i18n( 'design/admin/class/edit' )|wash}" />
+<input type="checkbox" id="ContentAttribute_is_required_{$Attributes.item.id}" name="ContentAttribute_is_required_checked[{$Attributes.item.id}]" value="{$Attributes.item.id}"  {if $Attributes.item.is_required}checked="checked"{/if} title="{'Use this checkbox to specify whether the user should be forced to enter information into the attribute.'|i18n( 'design/admin/class/edit' )|wash}" />
 {'Required'|i18n( 'design/admin/class/edit' )}
 </label>
 </div>
@@ -229,9 +228,9 @@
 <div class="element">
 <label for="ContentAttribute_is_searchable_{$Attributes.item.id}">
 {if $Attributes.item.data_type.is_indexable}
-<input type="checkbox" id="ContentAttribute_is_searchable_{$Attributes.item.id}" name="ContentAttribute_is_searchable_checked[]" value="{$Attributes.item.id}"  {if $Attributes.item.is_searchable}checked="checked"{/if} title="{'Use this checkbox to specify whether the contents of the attribute should be indexed by the search engine.'|i18n( 'design/admin/class/edit' )|wash}" />
+<input type="checkbox" id="ContentAttribute_is_searchable_{$Attributes.item.id}" name="ContentAttribute_is_searchable_checked[{$Attributes.item.id}]" value="{$Attributes.item.id}"  {if $Attributes.item.is_searchable}checked="checked"{/if} title="{'Use this checkbox to specify whether the contents of the attribute should be indexed by the search engine.'|i18n( 'design/admin/class/edit' )|wash}" />
 {else}
-<input type="checkbox" id="ContentAttribute_is_searchable_{$Attributes.item.id}" name="ContentAttribute_is_searchable_checked[]" value="" disabled="disabled" title="{'The <%datatype_name> datatype does not support search indexing.'|i18n( 'design/admin/class/edit',, hash( '%datatype_name', $Attributes.item.data_type.information.name ) )|wash}" />
+<input type="checkbox" id="ContentAttribute_is_searchable_{$Attributes.item.id}" name="ContentAttribute_is_searchable_checked[{$Attributes.item.id}]" value="" disabled="disabled" title="{'The <%datatype_name> datatype does not support search indexing.'|i18n( 'design/admin/class/edit',, hash( '%datatype_name', $Attributes.item.data_type.information.name ) )|wash}" />
 {/if}
 {'Searchable'|i18n( 'design/admin/class/edit' )}
 </label>
@@ -241,9 +240,9 @@
 <div class="element">
 <label for="ContentAttribute_is_information_collector_{$Attributes.item.id}">
 {if $Attributes.item.data_type.is_information_collector}
-<input type="checkbox" id="ContentAttribute_is_information_collector_{$Attributes.item.id}" name="ContentAttribute_is_information_collector_checked[]" value="{$Attributes.item.id}"  {if $Attributes.item.is_information_collector}checked="checked"{/if} title="{'Use this checkbox to specify whether the attribute should collect input from users.'|i18n( 'design/admin/class/edit' )|wash}" />
+<input type="checkbox" id="ContentAttribute_is_information_collector_{$Attributes.item.id}" name="ContentAttribute_is_information_collector_checked[{$Attributes.item.id}]" value="{$Attributes.item.id}"  {if $Attributes.item.is_information_collector}checked="checked"{/if} title="{'Use this checkbox to specify whether the attribute should collect input from users.'|i18n( 'design/admin/class/edit' )|wash}" />
 {else}
-<input type="checkbox" id="ContentAttribute_is_information_collector_{$Attributes.item.id}" name="ContentAttribute_is_information_collector_checked[]" value="" disabled="disabled" title="{'The <%datatype_name> datatype cannot be used as an information collector.'|i18n( 'design/admin/class/edit',, hash( '%datatype_name', $Attributes.item.data_type.information.name ) )|wash}" />
+<input type="checkbox" id="ContentAttribute_is_information_collector_{$Attributes.item.id}" name="ContentAttribute_is_information_collector_checked[{$Attributes.item.id}]" value="" disabled="disabled" title="{'The <%datatype_name> datatype cannot be used as an information collector.'|i18n( 'design/admin/class/edit',, hash( '%datatype_name', $Attributes.item.data_type.information.name ) )|wash}" />
 {/if}
 {'Information collector'|i18n( 'design/admin/class/edit' )}
 </label>
@@ -254,7 +253,7 @@
 {* Disable translation. *}
 <div class="element">
 <label for="ContentAttribute_can_translate_{$Attributes.item.id}">
-<input type="checkbox" id="ContentAttribute_can_translate_{$Attributes.item.id}" name="ContentAttribute_can_translate_checked[]" value="{$Attributes.item.id}" {if or( $Attributes.item.can_translate|eq(0), $Attributes.item.data_type.properties.translation_allowed|not )}checked="checked"{/if} {if $Attributes.item.data_type.properties.translation_allowed|not}disabled="disabled"{/if} title="{'Use this checkbox for attributes that contain non-translatable content.'|i18n( 'design/admin/class/edit' )|wash}" />
+<input type="checkbox" id="ContentAttribute_can_translate_{$Attributes.item.id}" name="ContentAttribute_can_translate_checked[{$Attributes.item.id}]" value="{$Attributes.item.id}" {if or( $Attributes.item.can_translate|eq(0), $Attributes.item.data_type.properties.translation_allowed|not )}checked="checked"{/if} {if $Attributes.item.data_type.properties.translation_allowed|not}disabled="disabled"{/if} title="{'Use this checkbox for attributes that contain non-translatable content.'|i18n( 'design/admin/class/edit' )|wash}" />
 {'Disable translation'|i18n( 'design/admin/class/edit' )}
 </label>
 </div>
@@ -262,7 +261,7 @@
 {* Category. *}
 <div class="element">
 <label for="ContentAttribute_category_{$Attributes.item.id}">
-<select id="ContentAttribute_category_{$Attributes.item.id}" name="ContentAttribute_category_select[]"  title="{'Use this category to group attributes together in edit interface, some categories might also be hidden in full view if they are for instance only meta attributes.'|i18n( 'design/admin/class/edit' )|wash}">
+<select id="ContentAttribute_category_{$Attributes.item.id}" name="ContentAttribute_category_select[{$Attributes.item.id}]"  title="{'Use this category to group attributes together in edit interface, some categories might also be hidden in full view if they are for instance only meta attributes.'|i18n( 'design/admin/class/edit' )|wash}">
     <option value="">{'Default'|i18n( 'design/admin/class/edit' )} ({$attribute_categorys[ $attribute_default_category ]|wash})</option>
     {foreach $attribute_categorys as $categoryIdentifier => $categoryName}
         <option value="{$categoryIdentifier|wash}"{if $categoryIdentifier|eq( $Attributes.item.category )} selected="selected"{/if}>{$categoryName|wash}</option>
@@ -303,20 +302,20 @@
 {* DESIGN: Control bar START *}<div class="box-bc">
 
 <div class="block">
-	{* Remove selected attributes button *}
-	<div class="button-left">
-	{if $attributes}
-	<input class="button" type="submit" name="RemoveButton" value="{'Remove selected attributes'|i18n( 'design/admin/class/edit' )}" title="{'Remove the selected attributes.'|i18n( 'design/admin/class/edit' )|wash}" />
-	{else}
-	<input class="button-disabled" type="submit" name="RemoveButton" value="{'Remove selected attributes'|i18n( 'design/admin/class/edit' )}" title="{'Remove the selected attributes.'|i18n( 'design/admin/class/edit' )|wash}" disabled="disabled" />
-	{/if}
-	</div>
-	
-	<div class="button-right">
-	{include uri="design:class/datatypes.tpl" name=DataTypes id_name=DataTypeString datatypes=$datatypes current=$datatype}
-	<input class="button" type="submit" name="NewButton" value="{'Add attribute'|i18n( 'design/admin/class/edit' )}" title="{'Add a new attribute to the class. Use the menu on the left to select the attribute type.'|i18n( 'design/admin/class/edit' )|wash}" />
-	</div>
-	<div class="float-break"></div>
+    {* Remove selected attributes button *}
+    <div class="button-left">
+    {if $attributes}
+    <input class="button" type="submit" name="RemoveButton" value="{'Remove selected attributes'|i18n( 'design/admin/class/edit' )}" title="{'Remove the selected attributes.'|i18n( 'design/admin/class/edit' )|wash}" />
+    {else}
+    <input class="button-disabled" type="submit" name="RemoveButton" value="{'Remove selected attributes'|i18n( 'design/admin/class/edit' )}" title="{'Remove the selected attributes.'|i18n( 'design/admin/class/edit' )|wash}" disabled="disabled" />
+    {/if}
+    </div>
+
+    <div class="button-right">
+    {include uri="design:class/datatypes.tpl" name=DataTypes id_name=DataTypeString datatypes=$datatypes current=$datatype}
+    <input class="button" type="submit" name="NewButton" value="{'Add attribute'|i18n( 'design/admin/class/edit' )}" title="{'Add a new attribute to the class. Use the menu on the left to select the attribute type.'|i18n( 'design/admin/class/edit' )|wash}" />
+    </div>
+    <div class="float-break"></div>
 </div>
 
 <div class="block">
@@ -334,41 +333,43 @@
 
 </div>
 
+<a href="#path" class="scroll-to-top">&uarr;&nbsp;{'Go to the top'|i18n( 'design/admin2/content/edit' )}</a>
 </form>
 
 
 {literal}
-<script language="JavaScript" type="text/javascript">
-<!--
+<script type="text/javascript">
 jQuery(function( $ )//called on document.ready
 {
     var el = $('#LastChangedID input[name^=ContentAttribute_name]');
-    if ( !el.size() )
-    	el = $('#className');
-    window.scrollTo(0, Math.max( el.offset().top - 180, 0 ));
-    el.focus();
+    if ( el.size() ) {
+        window.scrollTo(0, Math.max( el.offset().top - 180, 0 ));
+        el.focus();
+    }
 
     // Axaify all move up/down buttons
     var moveButtons = $('#ezcca-edit-list div.listbutton input[name^=Move]');
     moveButtons.click(function( e )
     {
-    	e.preventDefault();
-    	var tr = $(this).closest('tr.ezcca-edit-list-item'), param = this.name.split('_'), up = param[0] === 'MoveUp';
+        // Prevent form from being sent and make sure user is not able to duble click on button and causing issues
+        e.preventDefault();
+        $('#ezcca-edit-list div.listbutton input[name^=Move]').attr( "disabled", true ).addClass('disabled');
+        var tr = $(this).closest('tr.ezcca-edit-list-item'), param = this.name.split('_'), up = param[0] === 'MoveUp';
 
-    	// swap items in dom
-    	if ( up )
-    	{
+        // swap items in dom, or skip if number is to high / low
+        if ( up )
+        {
             var swap = tr.prev();
-        	if ( !swap.size() )
-                return false;
-        	swap.before( tr );
+            if ( !swap.size() )
+                return onDone();
+            swap.before( tr );
         }
-    	else
-    	{
+        else
+        {
             var swap = tr.next();
-        	if ( !swap.size() )
-                return false;
-        	swap.after( tr );
+            if ( !swap.size() )
+                return onDone();
+            swap.after( tr );
         }
 
         // swap priority number
@@ -377,11 +378,19 @@ jQuery(function( $ )//called on document.ready
         inp2.val( inpv );
 
         // store with ajax request
-        var postVar = { 'ContentClassHasInput': 0 };
+        var postVar = { 'ContentClassHasInput': 0 }, _tokenNode = document.getElementById('ezxform_token_js');
         postVar[ param[0] ] = param[1];
-        $.post( $('#ClassEdit').attr('action'), postVar );
+        if ( _tokenNode ) postVar['ezxform_token'] = _tokenNode.getAttribute('title');
+        $.post( $('#ClassEdit').attr('action'), postVar, onDone );
         return false;
     });
+
+    function onDone()
+    {
+        // Re-enable buttons now that ajax request has returned or it was skipped
+        $('#ezcca-edit-list div.listbutton input[name^=Move]').attr( "disabled", false ).removeClass('disabled');
+        return false;
+    }
 
     // Disable bottom datatype dropp down when using new button in top
     jQuery('#NewButtonTop').click(function()
@@ -389,6 +398,5 @@ jQuery(function( $ )//called on document.ready
         jQuery('#DataTypeString').attr('disabled', true);
     });
 });
--->
 </script>
 {/literal}

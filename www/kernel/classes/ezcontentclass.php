@@ -1,30 +1,12 @@
 <?php
-//
-// Definition of eZContentClass class
-//
-// Created on: <16-Apr-2002 11:08:14 amos>
-//
-// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-// SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.4.0
-// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
-// SOFTWARE LICENSE: GNU General Public License v2.0
-// NOTICE: >
-//   This program is free software; you can redistribute it and/or
-//   modify it under the terms of version 2.0  of the GNU General
-//   Public License as published by the Free Software Foundation.
-// 
-//   This program is distributed in the hope that it will be useful,
-//    but WITHOUT ANY WARRANTY; without even the implied warranty of
-//   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//   GNU General Public License for more details.
-// 
-//   You should have received a copy of version 2.0 of the GNU General
-//   Public License along with this program; if not, write to the Free
-//   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
-//   MA 02110-1301, USA.
-// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-//
+/**
+ * File containing the eZContentClass class.
+ *
+ * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
+ * @license http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License v2
+ * @version  2012.5
+ * @package kernel
+ */
 
 /*!
   \class eZContentClass ezcontentclass.php
@@ -39,6 +21,12 @@ class eZContentClass extends eZPersistentObject
     const VERSION_STATUS_DEFINED = 0;
     const VERSION_STATUS_TEMPORARY = 1;
     const VERSION_STATUS_MODIFIED = 2;
+
+    /**
+     * Max length of content object name.
+     * @var int
+     */
+    const CONTENT_OBJECT_NAME_MAX_LENGTH = 255;
 
     function eZContentClass( $row )
     {
@@ -189,7 +177,7 @@ class eZContentClass extends eZPersistentObject
         unset( $this->CanInstantiateLanguages );
         unset( $this->VersionCount );
         $this->ID = null;
-        $this->RemoteID = md5( (string)mt_rand() . (string)time() );
+        $this->RemoteID = eZRemoteIdUtility::generate( 'class' );
     }
 
     /*!
@@ -227,7 +215,7 @@ class eZContentClass extends eZPersistentObject
             $nameList->initFromString( $optionalValues['name'], $languageLocale );
         else
             $nameList->initFromString( '', $languageLocale );
-            
+
         $descriptionList = new eZSerializedObjectNameList();
         if ( isset( $optionalValues['serialized_description_list'] ) )
             $descriptionList->initFromSerializedList( $optionalValues['serialized_description_list'] );
@@ -250,7 +238,7 @@ class eZContentClass extends eZPersistentObject
             "creator_id" => $userID,
             "modifier_id" => $userID,
             "created" => $dateTime,
-            'remote_id' => md5( (string)mt_rand() . (string)time() ),
+            'remote_id' => eZRemoteIdUtility::generate( 'class' ),
             "modified" => $dateTime,
             "is_container" => $contentClassDefinition[ 'fields' ][ 'is_container' ][ 'default' ],
             "always_available" => $contentClassDefinition[ 'fields' ][ 'always_available' ][ 'default' ],
@@ -461,7 +449,7 @@ class eZContentClass extends eZPersistentObject
         }
         else if ( $accessWord == 'no' )
         {
-            // Cannnot create any objects, return empty list.
+            // Cannot create any objects, return empty list.
             return $classList;
         }
         else
@@ -480,13 +468,15 @@ class eZContentClass extends eZPersistentObject
                     $languageCodeArrayPart = array_intersect( $policy['Language'], $languageCodeList );
                 }
 
-                if ( $classIDArrayPart == '*' )
+                // No class limitation for this policy AND no previous limitation(s)
+                if ( $classIDArrayPart == '*' && empty( $classIDArray ) )
                 {
                     $fetchAll = true;
                     $allowedLanguages['*'] = array_unique( array_merge( $allowedLanguages['*'], $languageCodeArrayPart ) );
                 }
-                else
+                else if ( is_array( $classIDArrayPart ) )
                 {
+                    $fetchAll = false;
                     foreach( $classIDArrayPart as $class )
                     {
                         if ( isset( $allowedLanguages[$class] ) )
@@ -750,7 +740,7 @@ class eZContentClass extends eZPersistentObject
         if ( !$remoteID &&
              $this->Version == eZContentClass::VERSION_STATUS_DEFINED )
         {
-            $this->setAttribute( 'remote_id', md5( (string)mt_rand() . (string)time() ) );
+            $this->setAttribute( 'remote_id', eZRemoteIdUtility::generate( 'class' ) );
             $this->sync( array( 'remote_id' ) );
             $remoteID = eZPersistentObject::attribute( 'remote_id', true );
         }
@@ -837,7 +827,7 @@ You will need to change the class of the node by using the swap functionality.' 
     /*!
      \note Removes class attributes
 
-     \param removeAtttributes Array of attributes to remove
+     \param removeAttributes Array of attributes to remove
      \param version Version to remove( optional )
     */
     function removeAttributes( $removeAttributes = false, $version = false )
@@ -988,7 +978,7 @@ You will need to change the class of the node by using the swap functionality.' 
      * attribute and recreates the class group entries.
      *
      * @note It will remove classes in the previous and specified version before storing.
-     * 
+     *
      * @param array $attributes array of attributes
      * @param int $version version status
      * @since Version 4.3
@@ -999,6 +989,14 @@ You will need to change the class of the node by using the swap functionality.' 
 
         $db = eZDB::instance();
         $db->begin();
+
+        // Before removing anything from the attributes, load attribute information
+        // which might otherwise not accessible when recreating them below.
+        // See issue #18164
+        foreach ( $attributes as $attribute )
+        {
+            $attribute->content();
+        }
 
         $this->removeAttributes( false, $version );
         $this->removeAttributes( false, $previousVersion );
@@ -1020,7 +1018,7 @@ You will need to change the class of the node by using the swap functionality.' 
 
         // Recreate class member entries
         eZContentClassClassGroup::removeClassMembers( $this->ID, $version );
-        
+
         foreach( eZContentClassClassGroup::fetchGroupList( $this->ID, $previousVersion ) as $classgroup )
         {
             $classgroup->setAttribute( 'contentclass_version', $version );
@@ -1366,25 +1364,42 @@ You will need to change the class of the node by using the swap functionality.' 
         return $this->VersionCount;
     }
 
-    /*!
-     Will generate a name for the content object based on the class
-     settings for content object.
-    */
-    function contentObjectName( $contentObject, $version = false, $translation = false )
+    /**
+     * Will generate a name for the content object based on the class
+     * settings for content object limited by self::CONTENT_OBJECT_NAME_MAX_LENGTH.
+     *
+     * @param eZContentObject $contentObject
+     * @param int|false $version
+     * @param string|false $translation
+     * @return string
+     */
+    function contentObjectName( eZContentObject $contentObject, $version = false, $translation = false )
     {
         $contentObjectNamePattern = $this->ContentObjectName;
 
+        $ini = eZINI::instance();
+        $length = (int) $ini->variable('ContentSettings', 'ContentObjectNameLimit');
+        $sequence = $ini->variable('ContentSettings', 'ContentObjectNameLimitSequence');
+        if ( $length < 1 || $length > self::CONTENT_OBJECT_NAME_MAX_LENGTH )
+        {
+            $length = self::CONTENT_OBJECT_NAME_MAX_LENGTH;
+        }
         $nameResolver = new eZNamePatternResolver( $contentObjectNamePattern, $contentObject, $version, $translation );
-        $contentObjectName = $nameResolver->resolveNamePattern();
+        $contentObjectName = $nameResolver->resolveNamePattern( $length, $sequence );
 
         return $contentObjectName;
     }
 
-    /*
-     Will generate a name for the url alias based on the class
-     settings for content object.
-    */
-    function urlAliasName( $contentObject, $version = false, $translation = false )
+    /**
+     * Will generate a name for the url alias based on the class
+     * settings for content object limited by site.ini\[URLTranslator]\UrlAliasNameLimit
+     *
+     * @param eZContentObject $contentObject
+     * @param int|false $version
+     * @param string|false $translation
+     * @return string
+     */
+    function urlAliasName( eZContentObject $contentObject, $version = false, $translation = false )
     {
         if ( $this->URLAliasName )
         {
@@ -1395,8 +1410,9 @@ You will need to change the class of the node by using the swap functionality.' 
             $urlAliasNamePattern = $this->ContentObjectName;
         }
 
+        $length = (int) eZINI::instance()->variable('URLTranslator', 'UrlAliasNameLimit');
         $nameResolver = new eZNamePatternResolver( $urlAliasNamePattern, $contentObject, $version, $translation );
-        $urlAliasName = $nameResolver->resolveNamePattern();
+        $urlAliasName = $nameResolver->resolveNamePattern( $length );
 
         return $urlAliasName;
     }
@@ -1502,7 +1518,7 @@ You will need to change the class of the node by using the swap functionality.' 
 
      \return string with contentclass description.
     */
-    static function descriptionFromSerializedString( $serializedDescriptionList )
+    static function descriptionFromSerializedString( $serializedNameList )
     {
         return eZSerializedObjectNameList::nameFromSerializedString( $serializedNameList );
     }
@@ -1867,7 +1883,7 @@ You will need to change the class of the node by using the swap functionality.' 
 
     /**
      * Expires in-memory cache for eZContentClass.
-     * 
+     *
      * Clears cache for fetched eZContentClass objects,
      * class identifiers and class attributes.
      *
@@ -1984,7 +2000,7 @@ You will need to change the class of the node by using the swap functionality.' 
 
     /**
      * In-memory cache for class identifiers / id matching
-     **/
+     */
     private static $identifierHash = null;
 }
 

@@ -3,10 +3,10 @@
 // Created on: <16-Jun-2008 00:00:00 ar>
 //
 // ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-// SOFTWARE NAME: eZ JSCore extension for eZ Publish
-// SOFTWARE RELEASE: 4.4.0
-// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
-// SOFTWARE LICENSE: GNU General Public License v2.0
+// SOFTWARE NAME: eZ Publish Community Project
+// SOFTWARE RELEASE:  2012.5
+// COPYRIGHT NOTICE: Copyright (C) 1999-2012 eZ Systems AS
+// SOFTWARE LICENSE: GNU General Public License v2
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
 //   modify it under the terms of version 2.0  of the GNU General
@@ -26,45 +26,41 @@
 
 /* 
  * Brief: ezjsc module run
- * A light redirector to be able to run other modules indirectly,
- * when this module has rewrite rules to run under index_ajax.php
- * Net effect is faster execution.
+ * A light redirector to be able to run other modules indirectly w/o having to use empty layout/set/*.
  */
 
 $uriParams = $Params['Parameters'];
 $userParams = $Params['UserParameters'];
 
-// These functions are only set if called via index_ajax.php
-if ( !function_exists( 'hasAccessToBySetting' ) )
+// Functions that earlier existed in index_ajax.php (now removed from ezjscore)
+function exitWithInternalError( $errorText )
 {
-    function exitWithInternalError( $errorText )
-    {
-        header( $_SERVER['SERVER_PROTOCOL'] . ' 500 Internal Server Error' );
-        //include_once( 'extension/ezjscore/classes/ezjscajaxcontent.php' );
-        $contentType = ezjscAjaxContent::getHttpAccept();
-    
-        // set headers
-        if ( $contentType === 'xml' )
-            header('Content-Type: text/xml; charset=utf-8');
-        else if ( $contentType === 'json' )
-            header('Content-Type: text/javascript; charset=utf-8');
-    
-        echo ezjscAjaxContent::autoEncode( array( 'error_text' => $errorText, 'content' => '' ), $contentType );
-        eZExecution::cleanExit();
-    }
+    header( $_SERVER['SERVER_PROTOCOL'] . ' 500 Internal Server Error' );
+    //include_once( 'extension/ezjscore/classes/ezjscajaxcontent.php' );
+    $contentType = ezjscAjaxContent::getHttpAccept();
 
-    function hasAccessToBySetting( $moduleName, $view = false, $policyAccessList = false )
+    // set headers
+    if ( $contentType === 'xml' )
+        header('Content-Type: text/xml; charset=utf-8');
+    else if ( $contentType === 'json' )
+        header('Content-Type: text/javascript; charset=utf-8');
+
+    echo ezjscAjaxContent::autoEncode( array( 'error_text' => $errorText, 'content' => '' ), $contentType );
+    eZExecution::cleanExit();
+}
+
+function hasAccessToBySetting( $moduleName, $view = false, $policyAccessList = false )
+{
+    if ( $policyAccessList !== false )
     {
-        if ( $policyAccessList !== false )
-        {
-            if ( in_array( $moduleName, $policyAccessList) )
-                return true;
-            if ( $view && in_array( $moduleName . '/' . $view, $policyAccessList) )
-                return true;
-        }
-        return false;
+        if ( in_array( $moduleName, $policyAccessList) )
+            return true;
+        if ( $view && in_array( $moduleName . '/' . $view, $policyAccessList) )
+            return true;
     }
-}// if ( !function_exists( 'hasAccessToModule' ) )
+    return false;
+}
+
 
 
 // look for module and view info in uri parameters
@@ -94,7 +90,7 @@ if ( !isset( $moduleViews[ $viewName ] ) )
 }
 
 // Check if module / view is disabled
-$moduleCheck = accessAllowed( $uri );
+$moduleCheck = eZModule::accessAllowed( $uri );
 if ( !$moduleCheck['result'] )
 {
     exitWithInternalError( '$moduleName/$viewName is disabled.' );
@@ -119,5 +115,5 @@ $moduleResult = $module->run( $viewName, $uri->elements( false ), false, $uri->u
 
 // ouput result and end exit cleanly
 eZDB::checkTransactionCounter();
-echo $moduleResult['content'];
+echo ezpEvent::getInstance()->filter( 'response/output', $moduleResult['content'] );
 eZExecution::cleanExit();

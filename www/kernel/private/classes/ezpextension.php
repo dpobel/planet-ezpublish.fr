@@ -2,9 +2,9 @@
 /**
  * File containing the ezpExtension class.
  *
- * @copyright Copyright (C) 1999-2010 eZ Systems AS. All rights reserved.
- * @license http://ez.no/licenses/gnu_gpl GNU General Public License v2.0
- * @version 4.4.0
+ * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
+ * @license http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License v2
+ * @version  2012.5
  * @package kernel
  */
 
@@ -109,7 +109,7 @@ class ezpExtension
         // try extension.xml first
         if ( is_readable( $XMLFilePath = eZExtension::baseDirectory() . "/{$this->name}/extension.xml" ) )
         {
-            $infoFields = array( 'name', 'version', 'copyright', 'license', 'info_url' );
+            $infoFields = array( 'name', 'description', 'version', 'copyright', 'author', 'license', 'info_url' );
 
             libxml_use_internal_errors( true );
             $xml = simplexml_load_file( $XMLFilePath );

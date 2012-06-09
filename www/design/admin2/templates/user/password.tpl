@@ -94,12 +94,10 @@
 
 
 {literal}
-<script language="JavaScript" type="text/javascript">
-<!--
+<script type="text/javascript">
 jQuery(function( $ )//called on document.ready
 {
     document.getElementById('pass').focus();
 });
--->
 </script>
 {/literal}

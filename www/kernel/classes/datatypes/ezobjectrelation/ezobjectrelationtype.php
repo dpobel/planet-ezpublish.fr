@@ -1,30 +1,12 @@
 <?php
-//
-// Definition of eZObjectRelationType class
-//
-// Created on: <16-Apr-2002 11:08:14 amos>
-//
-// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-// SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.4.0
-// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
-// SOFTWARE LICENSE: GNU General Public License v2.0
-// NOTICE: >
-//   This program is free software; you can redistribute it and/or
-//   modify it under the terms of version 2.0  of the GNU General
-//   Public License as published by the Free Software Foundation.
-// 
-//   This program is distributed in the hope that it will be useful,
-//    but WITHOUT ANY WARRANTY; without even the implied warranty of
-//   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//   GNU General Public License for more details.
-// 
-//   You should have received a copy of version 2.0 of the GNU General
-//   Public License along with this program; if not, write to the Free
-//   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
-//   MA 02110-1301, USA.
-// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-//
+/**
+ * File containing the eZObjectRelationType class.
+ *
+ * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
+ * @license http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License v2
+ * @version  2012.5
+ * @package kernel
+ */
 
 /*!
   \class eZObjectRelationType ezobjectrelationtype.php
@@ -335,13 +317,13 @@ class eZObjectRelationType extends eZDataType
                     }
                 }
 
-                    $nodePlacementName = $parameters['base_name'] . '_browse_for_object_start_node';
-                    if ( $http->hasPostVariable( $nodePlacementName ) )
-                    {
-                        $nodePlacement = $http->postVariable( $nodePlacementName );
-                        if ( isset( $nodePlacement[$contentObjectAttribute->attribute( 'id' )] ) )
-                            $browseParameters['start_node'] = eZContentBrowse::nodeAliasID( $nodePlacement[$contentObjectAttribute->attribute( 'id' )] );
-                    }
+                $nodePlacementName = $parameters['base_name'] . '_browse_for_object_start_node';
+                if ( $http->hasPostVariable( $nodePlacementName ) )
+                {
+                    $nodePlacement = $http->postVariable( $nodePlacementName );
+                    if ( isset( $nodePlacement[$contentObjectAttribute->attribute( 'id' )] ) )
+                        $browseParameters['start_node'] = eZContentBrowse::nodeAliasID( $nodePlacement[$contentObjectAttribute->attribute( 'id' )] );
+                }
                 eZContentBrowse::browse( $browseParameters,
                                          $module );
             } break;
@@ -449,7 +431,7 @@ class eZObjectRelationType extends eZDataType
             } break;
             default:
             {
-                eZDebug::writeError( "Unknown objectrelationlist action '$action'", 'eZContentObjectRelationListType::customClassAttributeHTTPAction' );
+                eZDebug::writeError( "Unknown objectrelationlist action '$action'", __METHOD__ );
             } break;
         }
     }

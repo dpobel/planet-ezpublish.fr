@@ -1,31 +1,12 @@
 <?php
-//
-// This is the eZWebDAVContentBackendAuth class. Manages WebDAV authentication.
-// Based on the eZ Components Webdav component.
-//
-// Created on: <14-Jul-2008 15:15:15 as>
-//
-// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-// SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.4.0
-// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
-// SOFTWARE LICENSE: GNU General Public License v2.0
-// NOTICE: >
-//   This program is free software; you can redistribute it and/or
-//   modify it under the terms of version 2.0  of the GNU General
-//   Public License as published by the Free Software Foundation.
-// 
-//   This program is distributed in the hope that it will be useful,
-//    but WITHOUT ANY WARRANTY; without even the implied warranty of
-//   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//   GNU General Public License for more details.
-// 
-//   You should have received a copy of version 2.0 of the GNU General
-//   Public License along with this program; if not, write to the Free
-//   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
-//   MA 02110-1301, USA.
-// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-//
+/**
+ * File containing the eZWebDAVContentBackendAuth class.
+ *
+ * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
+ * @license http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License v2
+ * @version  2012.5
+ * @package kernel
+ */
 
 /*!
   \class eZWebDAVContentBackendAuth ezwebdavcontentbackendauth.php
@@ -54,7 +35,7 @@ class eZWebDAVContentBackendAuth implements ezcWebdavAnonymousAuthenticator, ezc
      * password is valid for him, false otherwise. In case no username and/or
      * password was provided in the request, empty strings are provided as the
      * parameters of this method.
-     * 
+     *
      * @param ezcWebdavBasicAuth $data
      * @return bool
      */
@@ -110,10 +91,10 @@ class eZWebDAVContentBackendAuth implements ezcWebdavAnonymousAuthenticator, ezc
      * var_dump( $auth->authorize( 'johndoe', '/c/connect/some/deeper/path' ) ); // false
      * ?>
      * </code>
-     * 
-     * @param string $user 
-     * @param string $path 
-     * @param int $access 
+     *
+     * @param string $user
+     * @param string $path
+     * @param int $access
      * @return bool
      */
     public function authorize( $user, $path, $access = self::ACCESS_READ )
@@ -204,9 +185,9 @@ class eZWebDAVContentBackendAuth implements ezcWebdavAnonymousAuthenticator, ezc
      *  <li>numbers</li>
      *  <li>dashes (-)</li>
      * </ul>
-     * 
-     * @param string $user 
-     * @param string $lockToken 
+     *
+     * @param string $user
+     * @param string $lockToken
      * @return void
      */
     public function assignLock( $user, $lockToken )
@@ -218,26 +199,26 @@ class eZWebDAVContentBackendAuth implements ezcWebdavAnonymousAuthenticator, ezc
      * Returns if the given $lockToken is owned by the given $user.
      *
      * Returns true, if the $lockToken is owned by $user, false otherwise.
-     * 
-     * @param string $user 
-     * @param string $lockToken 
+     *
+     * @param string $user
+     * @param string $lockToken
      * @return bool
      */
     public function ownsLock( $user, $lockToken )
     {
         // @as @todo implement
     }
-    
+
     /**
-     * Removes the assignement of $lockToken from $user.
+     * Removes the assignment of $lockToken from $user.
      *
      * After a $lockToken has been released from the $user, the {@link
      * ownsLock()} method must return false for the given combination. It might
      * happen, that a lock is to be released, which already has been removed.
      * This case must be ignored by the method.
-     * 
-     * @param string $user 
-     * @param string $lockToken 
+     *
+     * @param string $user
+     * @param string $lockToken
      */
     public function releaseLock( $user, $lockToken )
     {

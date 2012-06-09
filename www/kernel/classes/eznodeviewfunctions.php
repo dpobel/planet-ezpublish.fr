@@ -1,30 +1,12 @@
 <?php
-//
-// Definition of eZNodeviewfunctions class
-//
-// Created on: <20-Apr-2004 11:57:36 bf>
-//
-// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-// SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.4.0
-// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
-// SOFTWARE LICENSE: GNU General Public License v2.0
-// NOTICE: >
-//   This program is free software; you can redistribute it and/or
-//   modify it under the terms of version 2.0  of the GNU General
-//   Public License as published by the Free Software Foundation.
-// 
-//   This program is distributed in the hope that it will be useful,
-//    but WITHOUT ANY WARRANTY; without even the implied warranty of
-//   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//   GNU General Public License for more details.
-// 
-//   You should have received a copy of version 2.0 of the GNU General
-//   Public License along with this program; if not, write to the Free
-//   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
-//   MA 02110-1301, USA.
-// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-//
+/**
+ * File containing the eZNodeviewfunctions class.
+ *
+ * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
+ * @license http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License v2
+ * @version  2012.5
+ * @package kernel
+ */
 
 /*!
   \class eZNodeviewfunctions eznodeviewfunctions.php
@@ -77,8 +59,22 @@ class eZNodeviewfunctions
         return $retval;
     }
 
-    static function generateNodeViewData( $tpl, $node, $object, $languageCode, $viewMode, $offset,
-                                          $viewParameters = array( 'offset' => 0, 'year' => false, 'month' => false, 'day' => false ),
+    /**
+     * Generate result data for a node view
+     *
+     * @param eZTemplate $tpl
+     * @param eZContentObjectTreeNode $node
+     * @param eZContentObject $object
+     * @param false|string $languageCode
+     * @param string $viewMode
+     * @param int $offset
+     * @param array $viewParameters
+     * @param false|array $collectionAttributes
+     * @param bool $validation
+     * @return array Result array for view
+     */
+    static function generateNodeViewData( eZTemplate $tpl, eZContentObjectTreeNode $node, eZContentObject $object, $languageCode, $viewMode, $offset,
+                                          array $viewParameters = array( 'offset' => 0, 'year' => false, 'month' => false, 'day' => false ),
                                           $collectionAttributes = false, $validation = false )
     {
         $section = eZSection::fetch( $object->attribute( 'section_id' ) );
@@ -113,12 +109,20 @@ class eZNodeviewfunctions
 
         $parentClassID = false;
         $parentClassIdentifier = false;
+        $parentNodeRemoteID = false;
+        $parentObjectRemoteID = false;
         $parentNode = $node->attribute( 'parent' );
         if ( is_object( $parentNode ) )
         {
+            $parentNodeRemoteID = $parentNode->attribute( 'remote_id' );
+            $keyArray[] = array( 'parent_node_remote_id', $parentNodeRemoteID );
+
             $parentObject = $parentNode->attribute( 'object' );
             if ( is_object( $parentObject ) )
             {
+                $parentObjectRemoteID = $parentObject->attribute( 'remote_id' );
+                $keyArray[] = array( 'parent_object_remote_id', $parentObjectRemoteID );
+
                 $parentClass = $parentObject->contentClass();
                 if ( is_object( $parentClass ) )
                 {
@@ -173,27 +177,42 @@ class eZNodeviewfunctions
         $tpl->setVariable( 'node_path', $path );
 
         $Result = array();
-        $Result['content'] = $tpl->fetch( 'design:node/view/' . $viewMode . '.tpl' );
+        $Result['content']         = $tpl->fetch( 'design:node/view/' . $viewMode . '.tpl' );
         $Result['view_parameters'] = $viewParameters;
-        $Result['path'] = $path;
-        $Result['title_path'] = $titlePath;
-        $Result['section_id'] = $object->attribute( 'section_id' );
-        $Result['node_id'] = $node->attribute( 'node_id' );
+        $Result['path']            = $path;
+        $Result['title_path']      = $titlePath;
+        $Result['section_id']      = $object->attribute( 'section_id' );
+        $Result['node_id']         = $node->attribute( 'node_id' );
         $Result['navigation_part'] = $navigationPartIdentifier;
 
         $contentInfoArray = array();
-        $contentInfoArray['object_id'] = $object->attribute( 'id' );
-        $contentInfoArray['node_id'] = $node->attribute( 'node_id' );
-        $contentInfoArray['parent_node_id'] =  $node->attribute( 'parent_node_id' );
-        $contentInfoArray['class_id'] = $object->attribute( 'contentclass_id' );
+        $contentInfoArray['object_id']        = $object->attribute( 'id' );
+        $contentInfoArray['node_id']          = $node->attribute( 'node_id' );
+        $contentInfoArray['parent_node_id']   = $node->attribute( 'parent_node_id' );
+        $contentInfoArray['class_id']         = $object->attribute( 'contentclass_id' );
         $contentInfoArray['class_identifier'] = $node->attribute( 'class_identifier' );
-        $contentInfoArray['remote_id'] = $object->attribute( 'remote_id' );
-        $contentInfoArray['node_remote_id'] = $node->attribute( 'remote_id' );
-        $contentInfoArray['offset'] = $offset;
-        $contentInfoArray['viewmode'] = $viewMode;
+        $contentInfoArray['remote_id']        = $object->attribute( 'remote_id' );
+        $contentInfoArray['node_remote_id']   = $node->attribute( 'remote_id' );
+        $contentInfoArray['offset']           = $offset;
+        $contentInfoArray['viewmode']         = $viewMode;
         $contentInfoArray['navigation_part_identifier'] = $navigationPartIdentifier;
-        $contentInfoArray['node_depth'] = $node->attribute( 'depth' );
-        $contentInfoArray['url_alias'] = $node->attribute( 'url_alias' );
+        $contentInfoArray['node_depth']       = $node->attribute( 'depth' );
+        $contentInfoArray['url_alias']        = $node->attribute( 'url_alias' );
+        $contentInfoArray['current_language'] = $object->attribute( 'current_language' );
+        $contentInfoArray['language_mask']    = $object->attribute( 'language_mask' );
+
+        $contentInfoArray['main_node_id']   = $node->attribute( 'main_node_id' );
+        $contentInfoArray['main_node_url_alias'] = false;
+        // Add url alias for main node if it is not current node and user has access to it
+        if ( !$node->isMain() )
+        {
+            $mainNode = $object->mainNode();
+            if ( $mainNode->canRead() )
+            {
+                $contentInfoArray['main_node_url_alias'] = $mainNode->attribute( 'url_alias' );
+            }
+        }
+
         $contentInfoArray['persistent_variable'] = false;
         if ( $tpl->variable( 'persistent_variable' ) !== false )
         {
@@ -201,11 +220,13 @@ class eZNodeviewfunctions
             $keyArray[] = array( 'persistent_variable', $contentInfoArray['persistent_variable'] );
             $res->setKeys( $keyArray );
         }
-        $contentInfoArray['class_group'] = $object->attribute( 'match_ingroup_id_list' );
-        $contentInfoArray['state'] = $object->attribute( 'state_id_array' );
-        $contentInfoArray['state_identifier'] = $object->attribute( 'state_identifier_array' );
-        $contentInfoArray['parent_class_id'] = $parentClassID;
+        $contentInfoArray['class_group']             = $object->attribute( 'match_ingroup_id_list' );
+        $contentInfoArray['state']                   = $object->attribute( 'state_id_array' );
+        $contentInfoArray['state_identifier']        = $object->attribute( 'state_identifier_array' );
+        $contentInfoArray['parent_class_id']         = $parentClassID;
         $contentInfoArray['parent_class_identifier'] = $parentClassIdentifier;
+        $contentInfoArray['parent_node_remote_id']   = $parentNodeRemoteID;
+        $contentInfoArray['parent_object_remote_id'] = $parentObjectRemoteID;
 
         $Result['content_info'] = $contentInfoArray;
 
@@ -408,7 +429,13 @@ class eZNodeviewfunctions
                 {
                     foreach ( $Result['template_list'] as $templateFile )
                     {
-                        if ( @filemtime( $templateFile ) > $mtime )
+                        if ( !file_exists( $templateFile ) )
+                        {
+                            $cacheExpired = true;
+                            $expiryReason = "Content cache is expired by template file '" . $templateFile . "', it does not exist anymore";
+                            break;
+                        }
+                        else if ( filemtime( $templateFile ) > $mtime )
                         {
                             $cacheExpired = true;
                             $expiryReason = "Content cache is expired by template file '" . $templateFile . "'";
@@ -423,6 +450,8 @@ class eZNodeviewfunctions
                 $keyArray = array( array( 'object', $Result['content_info']['object_id'] ),
                                    array( 'node', $Result['content_info']['node_id'] ),
                                    array( 'parent_node', $Result['content_info']['parent_node_id'] ),
+                                   array( 'parent_node_remote_id', $Result['content_info']['parent_node_remote_id'] ),
+                                   array( 'parent_object_remote_id', $Result['content_info']['parent_object_remote_id'] ),
                                    array( 'class', $Result['content_info']['class_id'] ),
                                    array( 'view_offset', $Result['content_info']['offset'] ),
                                    array( 'navigation_part_identifier', $Result['content_info']['navigation_part_identifier'] ),
@@ -470,7 +499,7 @@ class eZNodeviewfunctions
             {
                 return  array( 'content' => $Module->handleError( eZError::KERNEL_NO_DB_CONNECTION, 'kernel' ),
                                'store'   => false );
-     
+
             }
             else
             {
@@ -510,11 +539,11 @@ class eZNodeviewfunctions
                           'store'   => false );
         }
 
-        if ( !$object->canRead() )
+        if ( !$node->canRead() )
         {
             return array( 'content' => $Module->handleError( eZError::KERNEL_ACCESS_DENIED,
                                                              'kernel',
-                                                             array( 'AccessList' => $object->accessList( 'read' ) ) ),
+                                                             array( 'AccessList' => $node->checkAccess( 'read', false, false, true ) ) ),
                           'store'   => false );
         }
 

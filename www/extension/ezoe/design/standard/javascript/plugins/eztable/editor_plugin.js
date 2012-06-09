@@ -29,6 +29,10 @@
                 return elm.innerHTML.replace(/<(br|img|object|embed|input|textarea)[^>]*>/gi, '-').replace(/<[^>]+>/g, '').length == 0;
         };
 
+        function getSpanVal(td, name) {
+                return parseInt(td.getAttribute(name) || 1);
+        }
+
         /**
          * Table Grid class.
          */
@@ -104,12 +108,19 @@
                                 return row[x];
                 };
 
-                function getSpanVal(td, name) {
-                        return parseInt(td.getAttribute(name) || 1);
-                };
+                function setSpanVal(td, name, val) {
+                        if (td) {
+                                val = parseInt(val);
+
+                                if (val === 1)
+                                        td.removeAttribute(name, 1);
+                                else
+                                        td.setAttribute(name, val, 1);
+                        }
+                }
 
                 function isCellSelected(cell) {
-                        return dom.hasClass(cell.elm, 'mceSelected') || cell == selectedCell;
+                        return cell && (dom.hasClass(cell.elm, 'mceSelected') || cell == selectedCell);
                 };
 
                 function getSelectedRows() {
@@ -159,20 +170,21 @@
 
                                         // Add something to the inner node
                                         if (curNode)
-                                                curNode.innerHTML = tinymce.isIE ? '&nbsp;' : '<br _mce_bogus="1" />';
+                                                curNode.innerHTML = tinymce.isIE ? '&nbsp;' : '<br data-mce-bogus="1" />';
 
                                         return false;
                                 }
                         }, 'childNodes');
 
                         cell = cloneNode(cell, false);
-                        cell.rowSpan = cell.colSpan = 1;
+                        setSpanVal(cell, 'rowSpan', 1);
+                        setSpanVal(cell, 'colSpan', 1);
 
                         if (formatNode) {
                                 cell.appendChild(formatNode);
                         } else {
                                 if (!tinymce.isIE)
-                                        cell.innerHTML = '<br _mce_bogus="1" />';
+                                        cell.innerHTML = '<br data-mce-bogus="1" />';
                         }
 
                         return cell;
@@ -254,7 +266,8 @@
                                                 rowSpan = getSpanVal(cell, 'rowspan');
 
                                                 if (colSpan > 1 || rowSpan > 1) {
-                                                        cell.colSpan = cell.rowSpan = 1;
+                                                        setSpanVal(cell, 'rowSpan', 1);
+                                                        setSpanVal(cell, 'colSpan', 1);
 
                                                         // Insert cells right
                                                         for (i = 0; i < colSpan - 1; i++)
@@ -268,7 +281,7 @@
                 };
 
                 function merge(cell, cols, rows) {
-                        var startX, startY, endX, endY, x, y, startCell, endCell, cell, children;
+                        var startX, startY, endX, endY, x, y, startCell, endCell, cell, children, count;
 
                         // Use specified cell and cols/rows
                         if (cell) {
@@ -297,22 +310,33 @@
 
                                 // Set row/col span to start cell
                                 startCell = getCell(startX, startY).elm;
-                                startCell.colSpan = (endX - startX) + 1;
-                                startCell.rowSpan = (endY - startY) + 1;
+                                setSpanVal(startCell, 'colSpan', (endX - startX) + 1);
+                                setSpanVal(startCell, 'rowSpan', (endY - startY) + 1);
 
                                 // Remove other cells and add it's contents to the start cell
                                 for (y = startY; y <= endY; y++) {
                                         for (x = startX; x <= endX; x++) {
+                                                if (!grid[y] || !grid[y][x])
+                                                        continue;
+
                                                 cell = grid[y][x].elm;
 
                                                 if (cell != startCell) {
                                                         // Move children to startCell
                                                         children = tinymce.grep(cell.childNodes);
-                                                        each(children, function(node, i) {
-                                                                // Jump over last BR element
-                                                                if (node.nodeName != 'BR' || i != children.length - 1)
-                                                                        startCell.appendChild(node);
+                                                        each(children, function(node) {
+                                                                startCell.appendChild(node);
                                                         });
+
+                                                        // Remove bogus nodes if there is children in the target cell
+                                                        if (children.length) {
+                                                                children = tinymce.grep(startCell.childNodes);
+                                                                count = 0;
+                                                                each(children, function(node) {
+                                                                        if (node.nodeName == 'BR' && dom.getAttrib(node, 'data-mce-bogus') && count++ < children.length - 1)
+                                                                                startCell.removeChild(node);
+                                                                });
+                                                        }
 
                                                         // Remove cell
                                                         dom.remove(cell);
@@ -326,7 +350,7 @@
                 };
 
                 function insertRow(before) {
-                        var posY, cell, lastCell, x, rowElm, newRow, newCell, otherCell;
+                        var posY, cell, lastCell, x, rowElm, newRow, newCell, otherCell, rowSpan;
 
                         // Find first/last row
                         each(grid, function(row, y) {
@@ -347,30 +371,35 @@
                         });
 
                         for (x = 0; x < grid[0].length; x++) {
+                                // Cell not found could be because of an invalid table structure
+                                if (!grid[posY][x])
+                                        continue;
+
                                 cell = grid[posY][x].elm;
 
                                 if (cell != lastCell) {
                                         if (!before) {
                                                 rowSpan = getSpanVal(cell, 'rowspan');
                                                 if (rowSpan > 1) {
-                                                        cell.rowSpan = rowSpan + 1;
+                                                        setSpanVal(cell, 'rowSpan', rowSpan + 1);
                                                         continue;
                                                 }
                                         } else {
                                                 // Check if cell above can be expanded
                                                 if (posY > 0 && grid[posY - 1][x]) {
                                                         otherCell = grid[posY - 1][x].elm;
-                                                        rowSpan = getSpanVal(otherCell, 'rowspan');
+                                                        rowSpan = getSpanVal(otherCell, 'rowSpan');
                                                         if (rowSpan > 1) {
-                                                                otherCell.rowSpan = rowSpan + 1;
+                                                                setSpanVal(otherCell, 'rowSpan', rowSpan + 1);
                                                                 continue;
                                                         }
                                                 }
                                         }
 
                                         // Insert new cell into new row
-                                        newCell = cloneCell(cell)
-                                        newCell.colSpan = cell.colSpan;
+                                        newCell = cloneCell(cell);
+                                        setSpanVal(newCell, 'colSpan', cell.colSpan);
+
                                         newRow.appendChild(newCell);
 
                                         lastCell = cell;
@@ -404,8 +433,12 @@
                         });
 
                         each(grid, function(row, y) {
-                                var cell = row[posX].elm, rowSpan, colSpan;
+                                var cell, rowSpan, colSpan;
 
+                                if (!row[posX])
+                                        return;
+
+                                cell = row[posX].elm;
                                 if (cell != lastCell) {
                                         colSpan = getSpanVal(cell, 'colspan');
                                         rowSpan = getSpanVal(cell, 'rowspan');
@@ -419,7 +452,7 @@
                                                         fillLeftDown(posX, y, rowSpan - 1, colSpan);
                                                 }
                                         } else
-                                                cell.colSpan++;
+                                                setSpanVal(cell, 'colSpan', cell.colSpan + 1);
 
                                         lastCell = cell;
                                 }
@@ -436,10 +469,10 @@
                                                 each(grid, function(row) {
                                                         var cell = row[x].elm, colSpan;
 
-                                                        colSpan = getSpanVal(cell, 'colspan');
+                                                        colSpan = getSpanVal(cell, 'colSpan');
 
                                                         if (colSpan > 1)
-                                                                cell.colSpan = colSpan - 1;
+                                                                setSpanVal(cell, 'colSpan', colSpan - 1);
                                                         else
                                                                 dom.remove(cell);
                                                 });
@@ -462,10 +495,10 @@
 
                                 // Move down row spanned cells
                                 each(tr.cells, function(cell) {
-                                        var rowSpan = getSpanVal(cell, 'rowspan');
+                                        var rowSpan = getSpanVal(cell, 'rowSpan');
 
                                         if (rowSpan > 1) {
-                                                cell.rowSpan = rowSpan - 1;
+                                                setSpanVal(cell, 'rowSpan', rowSpan - 1);
                                                 pos = getPos(cell);
                                                 fillLeftDown(pos.x, pos.y, 1, 1);
                                         }
@@ -479,12 +512,12 @@
                                         cell = cell.elm;
 
                                         if (cell != lastCell) {
-                                                rowSpan = getSpanVal(cell, 'rowspan');
+                                                rowSpan = getSpanVal(cell, 'rowSpan');
 
                                                 if (rowSpan <= 1)
                                                         dom.remove(cell);
                                                 else
-                                                        cell.rowSpan = rowSpan - 1;
+                                                        setSpanVal(cell, 'rowSpan', rowSpan - 1);
 
                                                 lastCell = cell;
                                         }
@@ -552,7 +585,8 @@
                                 // Remove col/rowspans
                                 for (i = 0; i < cellCount; i++) {
                                         cell = row.cells[i];
-                                        cell.colSpan = cell.rowSpan = 1;
+                                        setSpanVal(cell, 'colSpan', 1);
+                                        setSpanVal(cell, 'rowSpan', 1);
                                 }
 
                                 // Needs more cells
@@ -694,8 +728,10 @@
 
                                 // Add new selection
                                 for (y = startY; y <= maxY; y++) {
-                                        for (x = startX; x <= maxX; x++)
-                                                dom.addClass(grid[y][x].elm, 'mceSelected');
+                                        for (x = startX; x <= maxX; x++) {
+                                                if (grid[y][x])
+                                                        dom.addClass(grid[y][x].elm, 'mceSelected');
+                                        }
                                 }
                         }
                 };
@@ -718,9 +754,9 @@
                 });
         };
 
-        tinymce.create('tinymce.plugins.eZTablePlugin', {
+        tinymce.create('tinymce.plugins.eZTablePlugin', {// *eZ fix: plugin name*
                 init : function(ed, url) {
-                        var winMan, clipboardRows;
+                        var winMan, clipboardRows, hasCellSelection = true; // Might be selected cells on reload
 
                         function createTableGrid(node) {
                                 var selection = ed.selection, tblElm = ed.dom.getParent(node || selection.getNode(), 'table');
@@ -732,7 +768,11 @@
                         function cleanup() {
                                 // Restore selection possibilities
                                 ed.getBody().style.webkitUserSelect = '';
-                                ed.dom.removeClass(ed.dom.select('td.mceSelected,th.mceSelected'), 'mceSelected');
+
+                                if (hasCellSelection) {
+                                        ed.dom.removeClass(ed.dom.select('td.mceSelected,th.mceSelected'), 'mceSelected');
+                                        hasCellSelection = false;
+                                }
                         };
 
                         // Register buttons
@@ -758,12 +798,35 @@
                                 ed.onClick.add(function(ed, e) {
                                         e = e.target;
 
-                                        if (e.nodeName === 'TABLE')
+                                        if (e.nodeName === 'TABLE') {
                                                 ed.selection.select(e);
+                                                ed.nodeChanged();
+                                        }
                                 });
                         }
 
-                        /* handled by the ez theme ( _nodeChanged() )
+                        ed.onPreProcess.add(function(ed, args) {
+                                var nodes, i, node, dom = ed.dom, value;
+
+                                nodes = dom.select('table', args.node);
+                                i = nodes.length;
+                                while (i--) {
+                                        node = nodes[i];
+                                        dom.setAttrib(node, 'data-mce-style', '');
+
+                                        if ((value = dom.getAttrib(node, 'width'))) {
+                                                dom.setStyle(node, 'width', value);
+                                                dom.setAttrib(node, 'width', '');
+                                        }
+
+                                        if ((value = dom.getAttrib(node, 'height'))) {
+                                                dom.setStyle(node, 'height', value);
+                                                dom.setAttrib(node, 'height', '');
+                                        }
+                                }
+                        });
+
+                        /* eZ fix: handled by the ez theme ( _nodeChanged() )
                         // Handle node change updates
                         ed.onNodeChange.add(function(ed, cm, n) {
                                 var p;
@@ -820,15 +883,20 @@
                                                         }
 
                                                         tableGrid.setEndCell(target);
+                                                        hasCellSelection = true;
                                                 }
 
                                                 // Remove current selection
                                                 sel = ed.selection.getSel();
 
-                                                if (sel.removeAllRanges)
-                                                        sel.removeAllRanges();
-                                                else
-                                                        sel.empty();
+                                                try {
+                                                        if (sel.removeAllRanges)
+                                                                sel.removeAllRanges();
+                                                        else
+                                                                sel.empty();
+                                                } catch (ex) {
+                                                        // IE9 might throw errors here
+                                                }
 
                                                 e.preventDefault();
                                         }
@@ -866,7 +934,7 @@
                                                                         return;
                                                                 }
                                                         } while (node = (start ? walker.next() : walker.prev()));
-                                                };
+                                                }
 
                                                 // Try to expand text selection as much as we can only Gecko supports cell selection
                                                 selectedCells = dom.select('td.mceSelected,th.mceSelected');
@@ -874,6 +942,8 @@
                                                         rng = dom.createRng();
                                                         node = selectedCells[0];
                                                         endNode = selectedCells[selectedCells.length - 1];
+                                                        rng.setStartBefore(node);
+                                                        rng.setEndAfter(node);
 
                                                         setPoint(node, 1);
                                                         walker = new tinymce.dom.TreeWalker(node, dom.getParent(selectedCells[0], 'table'));
@@ -900,6 +970,60 @@
                                 ed.onKeyUp.add(function(ed, e) {
                                         cleanup();
                                 });
+
+                                ed.onKeyDown.add(function (ed, e) {
+                                        fixTableCellSelection(ed);
+                                });
+
+                                ed.onMouseDown.add(function (ed, e) {
+                                        if (e.button != 2) {
+                                                fixTableCellSelection(ed);
+                                        }
+                                });
+                                function tableCellSelected(ed, rng, n, currentCell) {
+                                        // The decision of when a table cell is selected is somewhat involved.  The fact that this code is
+                                        // required is actually a pointer to the root cause of this bug. A cell is selected when the start
+                                        // and end offsets are 0, the start container is a text, and the selection node is either a TR (most cases)
+                                        // or the parent of the table (in the case of the selection containing the last cell of a table).
+                                        var TEXT_NODE = 3, table = ed.dom.getParent(rng.startContainer, 'TABLE'),
+                                        tableParent, allOfCellSelected, tableCellSelection;
+                                        if (table)
+                                        tableParent = table.parentNode;
+                                        allOfCellSelected =rng.startContainer.nodeType == TEXT_NODE &&
+                                                rng.startOffset == 0 &&
+                                                rng.endOffset == 0 &&
+                                                currentCell &&
+                                                (n.nodeName=="TR" || n==tableParent);
+                                        tableCellSelection = (n.nodeName=="TD"||n.nodeName=="TH")&& !currentCell;
+                                        return  allOfCellSelected || tableCellSelection;
+                                        // return false;
+                                }
+
+                                // this nasty hack is here to work around some WebKit selection bugs.
+                                function fixTableCellSelection(ed) {
+                                        if (!tinymce.isWebKit)
+                                                return;
+
+                                        var rng = ed.selection.getRng();
+                                        var n = ed.selection.getNode();
+                                        var currentCell = ed.dom.getParent(rng.startContainer, 'TD,TH');
+
+                                        if (!tableCellSelected(ed, rng, n, currentCell))
+                                                return;
+                                                if (!currentCell) {
+                                                        currentCell=n;
+                                                }
+
+                                        // Get the very last node inside the table cell
+                                        var end = currentCell.lastChild;
+                                        while (end.lastChild)
+                                                end = end.lastChild;
+
+                                        // Select the entire table cell. Nothing outside of the table cell should be selected.
+                                        rng.setEnd(end, end.nodeValue.length);
+                                        ed.selection.setRng(rng);
+                                }
+                                ed.plugins.eztable.fixTableCellSelection=fixTableCellSelection;// *eZ fix: plugin name*
 
                                 // Add context menu
                                 if (ed && ed.plugins.contextmenu) {
@@ -951,6 +1075,152 @@
                                                 } else
                                                         m.add({title : 'table.desc', icon : 'table', cmd : 'mceInsertTable'});
                                         });
+                                }
+
+                                // Fix to allow navigating up and down in a table in WebKit browsers.
+                                if (tinymce.isWebKit) {
+                                        function moveSelection(ed, e) {
+                                                var VK = tinymce.VK;
+                                                var key = e.keyCode;
+
+                                                function handle(upBool, sourceNode, event) {
+                                                        var siblingDirection = upBool ? 'previousSibling' : 'nextSibling';
+                                                        var currentRow = ed.dom.getParent(sourceNode, 'tr');
+                                                        var siblingRow = currentRow[siblingDirection];
+
+                                                        if (siblingRow) {
+                                                                moveCursorToRow(ed, sourceNode, siblingRow, upBool);
+                                                                tinymce.dom.Event.cancel(event);
+                                                                return true;
+                                                        } else {
+                                                                var tableNode = ed.dom.getParent(currentRow, 'table');
+                                                                var middleNode = currentRow.parentNode;
+                                                                var parentNodeName = middleNode.nodeName.toLowerCase();
+                                                                if (parentNodeName === 'tbody' || parentNodeName === (upBool ? 'tfoot' : 'thead')) {
+                                                                        var targetParent = getTargetParent(upBool, tableNode, middleNode, 'tbody');
+                                                                        if (targetParent !== null) {
+                                                                                return moveToRowInTarget(upBool, targetParent, sourceNode, event);
+                                                }
+                                                                }
+                                                                return escapeTable(upBool, currentRow, siblingDirection, tableNode, event);
+                                                        }
+                                                }
+
+                                                function getTargetParent(upBool, topNode, secondNode, nodeName) {
+                                                        var tbodies = ed.dom.select('>' + nodeName, topNode);
+                                                        var position = tbodies.indexOf(secondNode);
+                                                        if (upBool && position === 0 || !upBool && position === tbodies.length - 1) {
+                                                                return getFirstHeadOrFoot(upBool, topNode);
+                                                        } else if (position === -1) {
+                                                                var topOrBottom = secondNode.tagName.toLowerCase() === 'thead' ? 0 : tbodies.length - 1;
+                                                                return tbodies[topOrBottom];
+                                                        } else {
+                                                                return tbodies[position + (upBool ? -1 : 1)];
+                                                }
+                                                }
+
+                                                function getFirstHeadOrFoot(upBool, parent) {
+                                                        var tagName = upBool ? 'thead' : 'tfoot';
+                                                        var headOrFoot = ed.dom.select('>' + tagName, parent);
+                                                        return headOrFoot.length !== 0 ? headOrFoot[0] : null;
+                                                }
+
+                                                function moveToRowInTarget(upBool, targetParent, sourceNode, event) {
+                                                        var targetRow = getChildForDirection(targetParent, upBool);
+                                                        targetRow && moveCursorToRow(ed, sourceNode, targetRow, upBool);
+                                                        tinymce.dom.Event.cancel(event);
+                                                        return true;
+                                                }
+
+                                                function escapeTable(upBool, currentRow, siblingDirection, table, event) {
+                                                        var tableSibling = table[siblingDirection];
+                                                        if (tableSibling) {
+                                                                moveCursorToStartOfElement(tableSibling);
+                                                                return true;
+                                                        } else {
+                                                                var parentCell = ed.dom.getParent(table, 'td,th');
+                                                                if (parentCell) {
+                                                                        return handle(upBool, parentCell, event);
+                                                                } else {
+                                                                        var backUpSibling = getChildForDirection(currentRow, !upBool);
+                                                                        moveCursorToStartOfElement(backUpSibling);
+                                                                        return tinymce.dom.Event.cancel(event);
+                                                }
+                                                        }
+                                                }
+
+                                                function getChildForDirection(parent, up) {
+                                                        var child =  parent && parent[up ? 'lastChild' : 'firstChild'];
+                                                        // BR is not a valid table child to return in this case we return the table cell
+                                                        return child && child.nodeName === 'BR' ? ed.dom.getParent(child, 'td,th') : child;
+                                                }
+
+                                                function moveCursorToStartOfElement(n) {
+                                                        ed.selection.setCursorLocation(n, 0);
+                                                }
+
+                                                function isVerticalMovement() {
+                                                        return key == VK.UP || key == VK.DOWN;
+                                                }
+
+                                                function isInTable(ed) {
+                                                        var node = ed.selection.getNode();
+                                                        var currentRow = ed.dom.getParent(node, 'tr');
+                                                        return currentRow !== null;
+                                                }
+
+                                                function columnIndex(column) {
+                                                        var colIndex = 0;
+                                                        var c = column;
+                                                        while (c.previousSibling) {
+                                                                c = c.previousSibling;
+                                                                colIndex = colIndex + getSpanVal(c, "colspan");
+                                                        }
+                                                        return colIndex;
+                                                }
+
+                                                function findColumn(rowElement, columnIndex) {
+                                                        var c = 0;
+                                                        var r = 0;
+                                                        each(rowElement.children, function(cell, i) {
+                                                                c = c + getSpanVal(cell, "colspan");
+                                                                r = i;
+                                                                if (c > columnIndex)
+                                                                        return false;
+                                                        });
+                                                        return r;
+                                                }
+
+                        function moveCursorToRow(ed, node, row, upBool) {
+                            var srcColumnIndex = columnIndex(ed.dom.getParent(node, 'td,th'));
+                            var tgtColumnIndex = findColumn(row, srcColumnIndex);
+                            var tgtNode = row.childNodes[tgtColumnIndex];
+                            var rowCellTarget = getChildForDirection(tgtNode, upBool);
+                            moveCursorToStartOfElement(rowCellTarget || tgtNode);
+                        }
+
+                        function shouldFixCaret(preBrowserNode) {
+                            var newNode = ed.selection.getNode();
+                            var newParent = ed.dom.getParent(newNode, 'td,th');
+                            var oldParent = ed.dom.getParent(preBrowserNode, 'td,th');
+                            return newParent && newParent !== oldParent && checkSameParentTable(newParent, oldParent)
+                        }
+
+                        function checkSameParentTable(nodeOne, NodeTwo) {
+                            return ed.dom.getParent(nodeOne, 'TABLE') === ed.dom.getParent(NodeTwo, 'TABLE');
+                        }
+
+                        if (isVerticalMovement() && isInTable(ed)) {
+                            var preBrowserNode = ed.selection.getNode();
+                            setTimeout(function() {
+                                if (shouldFixCaret(preBrowserNode)) {
+                                    handle(!e.shiftKey && key === VK.UP, preBrowserNode, e);
+                                }
+                            }, 0);
+                                                }
+                                        }
+
+                                        ed.onKeyDown.add(moveSelection);
                                 }
 
                                 // Fixes an issue on Gecko where it's impossible to place the caret behind a table
@@ -1005,11 +1275,30 @@
                                                         ed.dom.remove(last);
                                         });
 
+
+                                        /**
+                                         * Fixes bug in Gecko where shift-enter in table cell does not place caret on new line
+                                         */
+                                        if (tinymce.isGecko) {
+                                                ed.onKeyDown.add(function(ed, e) {
+                                                        if (e.keyCode === tinymce.VK.ENTER && e.shiftKey) {
+                                                                var node = ed.selection.getRng().startContainer;
+                                                                var tableCell = dom.getParent(node, 'td,th');
+                                                                if (tableCell) {
+                                                                        var zeroSizedNbsp = ed.getDoc().createTextNode("\uFEFF");
+                                                                        dom.insertAfter(zeroSizedNbsp, node);
+                                                                }
+                                                        }
+                                                });
+                                        }
+
+
                                         fixTableCaretPos();
+                                        ed.startContent = ed.getContent({format : 'raw'});
                                 }
                         });
 
-            function generalXmlTagPopup( eurl, view, width, height, node )
+            function generalXmlTagPopup( eurl, view, width, height, node )// *eZ fix: custom popup logic*
             {
                 //var ed = this.editor;
                 if ( !view ) view = '/tags/';
@@ -1042,7 +1331,7 @@
 
                                 mceTableMergeCells : function(grid) {
                                         if (!ed.dom.select('td.mceSelected,th.mceSelected').length) {
-                                                generalXmlTagPopup( 'merge_cells', '/dialog/', 310, 140, cell );
+                                                generalXmlTagPopup( 'merge_cells', '/dialog/', 310, 140, cell );// *eZ fix: custom popup logic*
                                         } else
                                                 grid.merge();
                                 },
@@ -1104,15 +1393,15 @@
 
                         // Register dialog commands
                         each({
-                                mceInsertTable : function(ui, val) {
+                                mceInsertTable : function(ui, val) {// *eZ fix: custom popup logic*
                                 generalXmlTagPopup( 'table', false, 460, 360, ui );
                                 },
 
-                                mceTableRowProps : function(ui, val) {
+                                mceTableRowProps : function(ui, val) {// *eZ fix: custom popup logic*
                                     generalXmlTagPopup( 'tr', false, 460, 0, ui );
                                 },
 
-                                mceTableCellProps : function(ui, val) {
+                                mceTableCellProps : function(ui, val) {// *eZ fix: custom popup logic*
                                     var cell = ed.dom.getParent(ed.selection.getNode(), 'th,td');
                                     generalXmlTagPopup( cell.nodeName.toLowerCase(), false, 460, 0, ui );
                                 }
@@ -1121,7 +1410,7 @@
                         });
                 },
                 
-        createControl : function(n, cm)
+        createControl : function(n, cm)// *eZ fix: cutom table menu for having all table options in one button*
         {
             var t = this, c, ed = t.editor;
             if (n == 'tablemenu')
@@ -1151,5 +1440,5 @@
         });
 
         // Register plugin
-    tinymce.PluginManager.add('eztable', tinymce.plugins.eZTablePlugin);
+    tinymce.PluginManager.add('eztable', tinymce.plugins.eZTablePlugin);// *eZ fix: plugin name*
 })(tinymce);

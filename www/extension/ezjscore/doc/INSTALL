@@ -74,24 +74,16 @@ Installation
 
    If you don't manage to get these working, you can disable this feature setting ezjscore.ini[eZJSCore]Packer=disabled
 
- 7. (optional) Speedup ajax calls
-
-    1. Copy or symlink index_ajax.php from this extension to the root folder of eZ Publish (next to index.php)
-
-    2. Add the following rewrite rule:
-
-       * .htaccess
-         RewriteRule ezjscore/call/? index_ajax.php
-         RewriteRule ^index_ajax\.php - [L]
-    
-       * Virtual Host mode
-         RewriteRule ezjscore/call/ /index_ajax.php [L]
 
 
 Using eZ JSCore Server functions from javascript
 ================================================
 
-Yui 3.0 (uses Y.io):
+ezjscore AJAX calls
+-------------------
+
+Yui 3.x (uses Y.io):
+````````````````````
 
 {ezscript_require(array( 'ezjsc::yui3', 'ezjsc::yui3io') )}
 <script type="text/javascript">
@@ -105,10 +97,41 @@ YUI( YUI3_config ).use('io-ez', function( Y )
 
 
 jQuery (uses jQuery.post):
+``````````````````````````
 
 {ezscript_require(array( 'ezjsc::jquery', 'ezjsc::jqueryio') )}
 <script type="text/javascript">
 {literal}
     jQuery.ez( 'ezjsc::time', {postData: 'hi!'}, function(data){ alert(data.error_text || data.content) } );
+{/literal}
+</script>
+
+Set a preference
+----------------
+
+YUI 3.x
+```````
+
+{ezscript_require(array( 'ezjsc::yui3', 'ezjsc::yui3io') )}
+<script type="text/javascript">
+{literal}
+YUI( YUI3_config ).use('io-ez', function( Y )
+{
+    Y.io.ez.setPreference( 'preference_name', 'preference value' );
+    // will post to http://siteURL/user/preferences to set the preference
+    // preference name and value are automatically encoded
+});
+{/literal}
+</script>
+
+jQuery
+``````
+
+{ezscript_require(array( 'ezjsc::jquery', 'ezjsc::jqueryio') )}
+<script type="text/javascript">
+{literal}
+    jQuery.ez.setPreference( 'preference_name', 'preference value' );
+    // will post to http://siteURL/user/preferences to set the preference
+    // preference name and value are automatically encoded
 {/literal}
 </script>

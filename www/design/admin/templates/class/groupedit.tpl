@@ -41,13 +41,11 @@
 
 
 {literal}
-<script language="JavaScript" type="text/javascript">
-<!--
+<script type="text/javascript">
     window.onload=function()
     {
         document.getElementById('classGroupName').select();
         document.getElementById('classGroupName').focus();
     }
--->
 </script>
 {/literal}

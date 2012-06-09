@@ -1,8 +1,7 @@
 /* ADMIN2 ROUNDED CSS 20100107 */
 /*
-   The border-radius (rounded corner) css is supported in
-   FF 3.5+, Safari 3.0+, Chrome, Opera Presto 2.3+ ("10.50") and IE9.
-   And fallbacks gracefully to normal corners in older browsers. 
+   This stylesheet uses CSS3 features for some styling, this is done in such a way to
+   make sure it falls back gracefully in older browsers with almost the same style.
 */
 
 
@@ -60,13 +59,23 @@
 #header
 { 
     border-bottom: 1px solid #666;
-    background: #2ebae0 url('../../images/2/gradient-header.png') repeat-x left top scroll;
+    background-color: #246b99;
+    background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#246b99), to(#3b8bb4));
+    background-image: -moz-linear-gradient(top,  #246b99,  #3b8bb4);
+    background-image: -ms-linear-gradient(top,  #246b99,  #3b8bb4);
+    background-image: -o-linear-gradient(top,  #246b99,  #3b8bb4);
+    background-image: linear-gradient(top,  #246b99,  #3b8bb4);
 }
 
 .loginpage #header
 {
-        border-bottom-width: 0;
-        background: #FEFEFE url('../../images/2/gradient-to-light.png') repeat-x left top scroll;
+    border-bottom-width: 0;
+    background: #fefefe;
+    background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#f5f5f5), to(#fff));
+    background-image: -moz-linear-gradient(top,  #f5f5f5,  #fff);
+    background-image: -ms-linear-gradient(top,  #f5f5f5,  #fff);
+    background-image: -o-linear-gradient(top,  #f5f5f5,  #fff);
+    background-image: linear-gradient(top,  #f5f5f5,  #fff);
 }
 
 /* TOP MENU (TABS) */
@@ -75,13 +84,15 @@
 {
     border: 1px solid #666;
     border-bottom-width: 0;
-    background: #f3f3f3 url('../../images/2/gradient-to-darker.png') repeat-x left top scroll;
-    -moz-border-radius-topleft: 3px;
-    -moz-border-radius-topright: 3px;
-    -webkit-border-top-left-radius: 3px;
-    -webkit-border-top-right-radius: 3px;
+    background-color: #f0f0f0;
+    background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#fdfdfd), to(#e4e3e4));
+    background-image: -moz-linear-gradient(top,  #fdfdfd,  #e4e3e4);
+    background-image: -ms-linear-gradient(top,  #fdfdfd,  #e4e3e4);
+    background-image: -o-linear-gradient(top,  #fdfdfd,  #e4e3e4);
+    background-image: linear-gradient(top,  #fdfdfd,  #e4e3e4);
     border-top-left-radius: 3px;
     border-top-right-radius: 3px;
+    background-clip: padding-box;
 }
 
 ul.tabs li a, ul.tabs li span.disabled
@@ -93,6 +104,7 @@ ul.tabs li a, ul.tabs li span.disabled
 {
     border-bottom: 1px solid #fff;
     background: #fff none;
+    background-clip: padding-box;
 }
 
 .tab-content
@@ -108,7 +120,7 @@ ul.tabs li a, ul.tabs li span.disabled
 
 /* CSS Media Query's to adjust layout based on screen width */
 
-@media all and (max-width: 1080px)
+@media all and (max-width: 1124px)
 {
     #header-logo a, #header-logo span
     {
@@ -129,12 +141,19 @@ a.show-hide-control
     border: 1px solid #999;
     border-left: 0;
     margin-left: 0;
-    -moz-border-radius-bottomright: 3px;
-    -moz-border-radius-topright: 3px;
-    -webkit-border-bottom-right-radius: 3px;
-    -webkit-border-top-right-radius: 3px;
     border-bottom-right-radius: 3px;
     border-top-right-radius: 3px;
+    background-clip: padding-box;
+}
+
+
+#leftmenu a.show-hide-control
+{
+    border:1px solid #999;
+    border-right: 0;
+    border-radius:0;
+    border-bottom-left-radius: 3px;
+    border-top-left-radius: 3px;
 }
 
 a.show-hide-control:hover
@@ -144,13 +163,14 @@ a.show-hide-control:hover
 
 a.show-hide-tabs
 {
-    background-color: white;
-    border: 1px solid #999;
     padding: 0 5px;
-    -moz-border-radius: 3px;
-    -webkit-border-radius: 3px;
     border-radius: 3px;
-    background: #f3f3f3 url('../../images/2/gradient-to-darker.png') repeat-x left top scroll;
+    background-color: #f0f0f0;
+    background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#fdfdfd), to(#e4e3e4));
+    background-image: -moz-linear-gradient(top,  #fdfdfd,  #e4e3e4);
+    background-image: -ms-linear-gradient(top,  #fdfdfd,  #e4e3e4);
+    background-image: -o-linear-gradient(top,  #fdfdfd,  #e4e3e4);
+    background-image: linear-gradient(top,  #fdfdfd,  #e4e3e4);
     border: 1px solid #CCCCCC;
     cursor: pointer;
     font-weight: normal;
@@ -160,6 +180,7 @@ a.show-hide-tabs
     text-decoration: none;
     vertical-align: text-bottom;
     width: auto;
+    background-clip: padding-box;
 }
 
 a.show-hide-tabs:hover
@@ -175,10 +196,17 @@ a.show-hide-tabs:hover
 #controlbar-top .box-bc
 {
     border: 1px solid #ccc;
-    background: #FEFEFE url('../../images/2/gradient-to-light.png') repeat-x left top scroll;
-    -moz-border-radius: 3px;
-    -webkit-border-radius: 3px;
+    background: #f4f4f4;
+    background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#fdfdfd), to(#e4e3e4));
+    background-image: -moz-linear-gradient(top,  #fdfdfd, #e4e3e4);
+    background-image: -ms-linear-gradient(top,  #fdfdfd,  #e4e3e4);
+    background-image: -o-linear-gradient(top,  #fdfdfd,  #e4e3e4);
+    background-image: linear-gradient(top,  #fdfdfd,  #e4e3e4);
     border-radius: 3px;
+    background-clip: padding-box;
+    -moz-box-shadow: 0 4px 4px #aaa;
+    -webkit-box-shadow: 0 4px 4px #aaa;
+    box-shadow: 0 4px 4px #aaa;
 }
 
 .box-bc .box-ml, .box-header .box-ml
@@ -201,12 +229,9 @@ a.show-hide-tabs:hover
 {
     background-color: #F5F5F5;
     border: 1px solid #ccc;
-    -moz-border-radius-bottomleft: 3px;
-    -moz-border-radius-bottomright: 3px;
-    -webkit-border-bottom-left-radius: 3px;
-    -webkit-border-bottom-right-radius: 3px;
     border-bottom-left-radius: 3px;
     border-bottom-right-radius: 3px;
+    background-clip: padding-box;
 }
 
 .context-information
@@ -230,23 +255,24 @@ a.show-hide-tabs:hover
 
 .menu-block li a
 {
-    -moz-border-radius: 3px;
-    -webkit-border-radius: 3px;
     border-radius: 3px;
+    background-clip: padding-box;
 }
 
 /* BUTTONS */
 p.versions
 {
-    -moz-border-radius-bottomleft: 3px;
-    -moz-border-radius-bottomright: 3px;
-    -webkit-border-bottom-left-radius: 3px;
-    -webkit-border-bottom-right-radius: 3px;
     border-bottom-left-radius: 3px;
     border-bottom-right-radius: 3px;
     border: 1px solid #CCCCCC;
     border-top: 0 none;
-    background: #f5f5f5 url(../../images/2/gradient-to-darker.png) repeat-x center bottom scroll;
+    background-color: #f0f0f0;
+    background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#fdfdfd), to(#e4e3e4));
+    background-image: -moz-linear-gradient(top,  #fdfdfd,  #e4e3e4);
+    background-image: -ms-linear-gradient(top,  #fdfdfd,  #e4e3e4);
+    background-image: -o-linear-gradient(top,  #fdfdfd,  #e4e3e4);
+    background-image: linear-gradient(top,  #fdfdfd,  #e4e3e4);
+    background-clip: padding-box;
 }
 p.versions a
 {
@@ -255,15 +281,17 @@ p.versions a
 
 p.table-preferences
 {
-    -moz-border-radius-bottomleft: 3px;
-    -moz-border-radius-bottomright: 3px;
-    -webkit-border-bottom-left-radius: 3px;
-    -webkit-border-bottom-right-radius: 3px;
     border-bottom-left-radius: 3px;
     border-bottom-right-radius: 3px;
     border: 1px solid #CCCCCC;
     border-top: 0 none;
-    background: #D1DFE9 url(../../images/2/gradient-to-darker.png) repeat-x center bottom scroll;
+    background-color: #f0f0f0;
+    background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#fdfdfd), to(#e4e3e4));
+    background-image: -moz-linear-gradient(top,  #fdfdfd,  #e4e3e4);
+    background-image: -ms-linear-gradient(top,  #fdfdfd,  #e4e3e4);
+    background-image: -o-linear-gradient(top,  #fdfdfd,  #e4e3e4);
+    background-image: linear-gradient(top,  #fdfdfd,  #e4e3e4);
+    background-clip: padding-box;
 }
 
 p.table-preferences > a, p.table-preferences > span
@@ -281,39 +309,50 @@ p.table-preferences :last-child
 input.button, input.defaultbutton, input.button-disabled
 {
     color: #fff;
-    background: #D1DFE9 url(../../images/2/gradient-btn-blue.png) repeat-x center bottom scroll;
-    border: 1px solid #dedede;
-    border-color: #aaa #ccc #ccc #aaa;
-    -moz-border-radius: 3px;
-    -webkit-border-radius: 3px;
+    background: #516e9e;
+    background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#5d7db1), to(#445c89));
+    background-image: -moz-linear-gradient(top,  #5d7db1,  #445c89);
+    background-image: -ms-linear-gradient(top,  #5d7db1,  #445c89);
+    background-image: -o-linear-gradient(top,  #5d7db1,  #445c89);
+    background-image: linear-gradient(top,  #5d7db1,  #445c89);
+    border: 1px solid #cfd1d3;
     border-radius: 3px;
+    background-clip: padding-box;
 }
 
-input.defaultbutton, input.button-disabled
+input.defaultbutton, input.button-disabled, input.button[disabled="disabled"]
 {
     background-color: #f5f5f5;
-    background-position: center top;
 }
 
 input.defaultbutton
 {
-    background-image: url(../../images/2/gradient-btn-orange.png);
+    background: #d68916;
+    background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#e99a21), to(#c97d10));
+    background-image: -moz-linear-gradient(top,  #e99a21,  #c97d10);
+    background-image: -ms-linear-gradient(top,  #e99a21,  #c97d10);
+    background-image: -o-linear-gradient(top,  #e99a21,  #c97d10);
+    background-image: linear-gradient(top,  #e99a21,  #c97d10);
 }
 
-input.button-disabled
+input.button-disabled, input.button[disabled="disabled"]
 {
     color: #888;
-    background-image: url(../../images/2/gradient-btn-disabled.png);
+    background: #f3f3f3;
+    background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#fefefe), to(#dfdfdf));
+    background-image: -moz-linear-gradient(top,  #fefefe,  #dfdfdf);
+    background-image: -ms-linear-gradient(top,  #fefefe,  #dfdfdf);
+    background-image: -o-linear-gradient(top,  #fefefe,  #dfdfdf);
+    background-image: linear-gradient(top,  #fefefe,  #dfdfdf);
 }
 
 /* SEARCH */
 #searchtext
 {
     border: 1px solid #666;
-    -moz-border-radius: 3px;
-    -webkit-border-radius: 3px;
     border-radius: 3px;
-    background: #fff url('../../images/2/btn-search.png') no-repeat right center scroll;
+    background: #fff url(../../images/icons-sprite.png) no-repeat right -365px;
+    background-clip: padding-box;
     line-height: 18px !important;
 }
 
@@ -384,25 +423,67 @@ div.pagenavigator span.disabled
     color: #d0d0d0;
 }
 
+div.pagenavigator span.pages span.other, div.pagenavigator span.pages span.current
+{
+    font-size: 0.8em;
+    margin-left: 1px;
+    margin-right: 1px;
+    background-color: #fff;
+    border: 1px solid #CBCBCB;
+    -moz-border-radius: 2px;
+    -webkit-border-radius: 2px;
+    border-radius: 2px;
+    padding: 0.3em 0.5em;
+    text-decoration: none;
+}
+
+div.pagenavigator span.pages span.current
+{
+    background-color: #f4f4f4;
+}
+
+div.alphabetical
+{
+    margin-top: 1.25em;
+}
 
 /* FOOTER */
 
 #footer
 {
     border-top: 1px solid #999;
-    background: #FEFEFE url('../../images/2/gradient-to-light.png') repeat-x left top scroll;
+    background: #fefefe;
+    background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#f5f5f5), to(#fefefe));
+    background-image: -moz-linear-gradient(top,  #f5f5f5,  #fefefe);
+    background-image: -ms-linear-gradient(top,  #f5f5f5,  #fefefe);
+    background-image: -o-linear-gradient(top,  #f5f5f5,  #fefefe);
+    background-image: linear-gradient(top,  #f5f5f5,  #fefefe);
 }
 
 
 /* MISC */
 table.list th, table.special th
 {
-    background: #FAFAFA url('../../images/2/gradient-to-darker.png') repeat-x left bottom scroll;
+    background-color: #f0f0f0;
+    background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#fdfdfd), to(#e4e3e4));
+    background-image: -moz-linear-gradient(top,  #fdfdfd,  #e4e3e4);
+    background-image: -ms-linear-gradient(top,  #fdfdfd,  #e4e3e4);
+    background-image: -o-linear-gradient(top,  #fdfdfd,  #e4e3e4);
+    background-image: linear-gradient(top,  #fdfdfd,  #e4e3e4);
+    padding-top:0;
+    padding-bottom:0;
 }
 
 #leftmenu-design ul
 {
     color: #333;
+}
+
+#editform #leftmenu
+{
+    border:1px solid #ccc;
+    border-radius:3px;
+    background:#f5f5f5;
 }
 
 .settings .current
@@ -427,4 +508,9 @@ table.list th, table.special th
 {
     margin-bottom: -2px;
     padding-top: 9px;
+}
+
+#page .yui-calcontainer .title
+{
+position:absolute;
 }

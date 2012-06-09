@@ -1,33 +1,12 @@
 <?php
-//
-// Definition of eZVATManager class
-//
-// Created on: <16-Feb-2006 23:02:53 vs>
-//
-// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-// SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.4.0
-// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
-// SOFTWARE LICENSE: GNU General Public License v2.0
-// NOTICE: >
-//   This program is free software; you can redistribute it and/or
-//   modify it under the terms of version 2.0  of the GNU General
-//   Public License as published by the Free Software Foundation.
-// 
-//   This program is distributed in the hope that it will be useful,
-//    but WITHOUT ANY WARRANTY; without even the implied warranty of
-//   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//   GNU General Public License for more details.
-// 
-//   You should have received a copy of version 2.0 of the GNU General
-//   Public License along with this program; if not, write to the Free
-//   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
-//   MA 02110-1301, USA.
-// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-//
-
-/*! \file
-*/
+/**
+ * File containing the eZVATManager class.
+ *
+ * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
+ * @license http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License v2
+ * @version  2012.5
+ * @package kernel
+ */
 
 /*!
   \class eZVATManager ezvatmanager.php
@@ -103,7 +82,7 @@ class eZVATManager
             {
                 eZDebug::writeError( "Cannot find user country: please specify its attribute identifier " .
                                        "in the following setting: shop.ini.[VATSettings].UserCountryAttribute",
-                                     'getUserCountryAttributeName' );
+                                     __METHOD__ );
             }
             return null;
         }
@@ -115,7 +94,7 @@ class eZVATManager
             {
                 eZDebug::writeError( "Cannot find user country: empty attribute name specified " .
                                        "in the following setting: shop.ini.[VATSettings].UserCountryAttribute",
-                                     'getUserCountryAttributeName' );
+                                     __METHOD__ );
             }
 
             return null;
@@ -168,7 +147,7 @@ class eZVATManager
                                        $userObject->attribute( 'name' ) .
                                        "' of class '" .
                                        $userObject->attribute( 'class_name' ) . "'.",
-                                     'eZVATManager::getUserCountry' );
+                                     __METHOD__ );
             }
             return null;
         }
@@ -184,7 +163,7 @@ class eZVATManager
                                        $userObject->attribute( 'name' ) .
                                        "' of class '" .
                                        $userObject->attribute( 'class_name' ) . "'." ,
-                                     'eZVATManager::getUserCountry' );
+                                     __METHOD__ );
             }
             return null;
         }
@@ -214,7 +193,7 @@ class eZVATManager
                                        $userObject->attribute( 'name' ) .
                                        "' of class '" .
                                        $userObject->attribute( 'class_name' ) . "'." ,
-                                     'eZVATManager::getUserCountry' );
+                                     __METHOD__ );
             }
             return null;
         }
@@ -247,7 +226,7 @@ class eZVATManager
                                        $userObject->attribute( 'name' ) .
                                        "' of class '" .
                                        $userObject->attribute( 'class_name' ) . "'.",
-                                     'eZVATManager::getUserCountry' );
+                                     __METHOD__ );
             }
 
             return false;
@@ -330,11 +309,10 @@ class eZVATManager
             eZDebug::writeError( "VAT handler '$handlerName' not found, " .
                                    "searched in these directories: " .
                                    implode( ', ', $repositoryDirectories ),
-                                 'eVATManager::loadVATHandler' );
+                                 __METHOD__ );
             return false;
         }
 
-        require_once( $includeFile );
         $className = $handlerName . 'VATHandler';
         return new $className;
     }

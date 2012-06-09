@@ -1,28 +1,12 @@
 <?php
-//
-// Created on: <02-Oct-2006 13:37:23 dl>
-//
-// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-// SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.4.0
-// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
-// SOFTWARE LICENSE: GNU General Public License v2.0
-// NOTICE: >
-//   This program is free software; you can redistribute it and/or
-//   modify it under the terms of version 2.0  of the GNU General
-//   Public License as published by the Free Software Foundation.
-// 
-//   This program is distributed in the hope that it will be useful,
-//    but WITHOUT ANY WARRANTY; without even the implied warranty of
-//   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//   GNU General Public License for more details.
-// 
-//   You should have received a copy of version 2.0 of the GNU General
-//   Public License along with this program; if not, write to the Free
-//   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
-//   MA 02110-1301, USA.
-// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-//
+/**
+ * File containing the eZSerializedObjectNameList class.
+ *
+ * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
+ * @license http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License v2
+ * @version  2012.5
+ * @package kernel
+ */
 
 class eZSerializedObjectNameList
 {
@@ -228,7 +212,7 @@ class eZSerializedObjectNameList
         }
         else
         {
-            eZDebug::writeWarning( "Trying to get name for language '$languageLocale' without initialized name list.", 'eZSerializedObjectNameList::hasNameInLocale' );
+            eZDebug::writeWarning( "Trying to get name for language '$languageLocale' without initialized name list.", __METHOD__ );
         }
 
         return $hasName;
@@ -255,12 +239,12 @@ class eZSerializedObjectNameList
             }
             else
             {
-                eZDebug::writeWarning( "Language locale is not specified while setting name '$name'", 'eZSerializedObjectNameList::setNameByLanguageLocale' );
+                eZDebug::writeWarning( "Language locale is not specified while setting name '$name'", __METHOD__ );
             }
         }
         else
         {
-            eZDebug::writeWarning( "Trying to set name '$name' for language '$languageLocale' without initialized name list.", 'eZSerializedObjectNameList::setNameByLanguageLocale' );
+            eZDebug::writeWarning( "Trying to set name '$name' for language '$languageLocale' without initialized name list.", __METHOD__ );
         }
     }
 
@@ -378,7 +362,7 @@ class eZSerializedObjectNameList
         }
         else
         {
-            eZDebug::writeWarning( "Can't set '$languageLocale' as default language. '$languageLocale' language doesn't exist in system", "eZSerializedObjectNameList::setDefaultLanguageByLocale" );
+            eZDebug::writeWarning( "Can't set '$languageLocale' as default language. '$languageLocale' language doesn't exist in system", __METHOD__ );
         }
 
         return $language;
@@ -450,22 +434,18 @@ class eZSerializedObjectNameList
 
     function prioritizedLanguagesJsArray()
     {
+        $langList = array();
         $languages = $this->prioritizedLanguages();
-
-        $jsArray = array();
-
         foreach ( $languages as $key => $language )
         {
-            $jsArray[] = "{ locale: '".$language->attribute( 'locale' ).
-                "', name: '".$language->attribute( 'name' )."' }";
+            $langList[] = array( 'locale' => $language->attribute( 'locale' ),
+                                 'name'   => $language->attribute( 'name' ) );
         }
 
-        if ( count( $jsArray ) > 0 )
-        {
-            $jsArray = '[ '.implode( ', ', $jsArray ).' ]';
-        }
+        if ( $langList )
+            return json_encode( $langList );
 
-        return $jsArray;
+        return '[]';
     }
 
     function languageLocaleList()
@@ -552,7 +532,7 @@ class eZSerializedObjectNameList
             {
                 $name = $nameList->nameByLanguageLocale( $fromLanguageLocale );
 
-                if ( $tolanguageLocale == 'skip_language' )
+                if ( $toLanguageLocale == 'skip_language' )
                 {
                     // do nothing;
                 }

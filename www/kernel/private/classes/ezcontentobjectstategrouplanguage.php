@@ -2,9 +2,9 @@
 /**
  * File containing the eZContentObjectStateGroupLanguage class.
  *
- * @copyright Copyright (C) 1999-2010 eZ Systems AS. All rights reserved.
- * @license http://ez.no/licenses/gnu_gpl GNU General Public License v2.0
- * @version 4.4.0
+ * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
+ * @license http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License v2
+ * @version  2012.5
  * @package kernel
  */
 
@@ -13,7 +13,7 @@
  *
  * Instances of this class contain the name and description of a content object state group in a specific language.
  *
- * @version 4.4.0
+ * @version  2012.5
  * @package kernel
  * @see eZContentObjectStateGroup
  */
@@ -27,8 +27,11 @@ class eZContentObjectStateGroupLanguage extends eZPersistentObject
     static function definition()
     {
         static $definition = array( "fields" => array( "contentobject_state_group_id" => array( "name" => "ContentObjectStateGroupID",
-                                                                                  "datatype" => "integer",
-                                                                                  "required" => false ),
+                                                                                                "datatype" => "integer",
+                                                                                                "required" => false,
+                                                                                                "foreign_class" => "eZContentObjectStateGroup",
+                                                                                                "foreign_attribute" => "id",
+                                                                                                "multiplicity" => "1..*" ),
                                          "name" => array( "name" => "Name",
                                                           "datatype" => "string",
                                                           "required" => false ),

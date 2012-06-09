@@ -72,6 +72,9 @@
     ----------------
     This setting controls if eZ Publish's autoload system should allow, and
     load classes, which override kernel classes from extensions.
+    NB1: Not all classes can be overridden because of existing includes for eg handlers.
+    NB2: This feature is not covered by support and any kind of kernel overrides
+         needs to be explicitly informed to eZ Systems on support requests.
 */
 //define( 'EZP_AUTOLOAD_ALLOW_KERNEL_OVERRIDE', false );
 
@@ -109,4 +112,122 @@
        spl_autoload_register( 'fooAutoload' );
    </code>
 */
+
+
+
+/*
+   CLUSTERING
+   ----------
+
+   In order to serve binary files over HTTP, eZ Publish needs informations about your cluster backend.
+   Most of these settings will duplicate those found in your file.ini.append.php.
+   You can optionnaly define those constants in config.cluster.php
+*/
+
+/**
+ * Storage backend. Possible values:
+ * - dbmysqli (DB cluster, mysqli based)
+ * - dbmysql (DB cluster, mysql based) DEPRECATED as of 4.7
+ * - dfsmysqli (DFS cluster, mysqli based)
+ * - dfsmysql (DFS cluster, mysql based) DEPRECATED as of 4.7)
+ * - dfspostgres (DFS cluster, postgresql based)
+ * - dboracle (with appropriate extension),
+ * - dfsoracle (with appropriate extension)
+ */
+// define( 'CLUSTER_STORAGE_BACKEND', 'dfsmysqli'  );
+
+/**
+ * Custom cluster storage backend
+ * Root relative path to the custom clustering backend. When provided, the gateway filename won't be built based
+ * on the default path + CLUSTER_STORAGE_BACKEND.
+ *
+ * Example: define( 'CLUSTER_STORAGE_GATEWAY_PATH', 'extension/ezoracle/clusterfilehandlers/gateway/dfs.php' );
+ */
+// define( 'CLUSTER_STORAGE_GATEWAY_PATH', 'extension/name/path/to/gateway.php' );
+
+/**
+ * Cluster storage host.
+ * Required.
+ */
+define( 'CLUSTER_STORAGE_HOST', 'localhost' );
+
+/**
+ * Cluster storage port.
+ * Optional: the default RDBMS port will be used if set to false
+ */
+// define( 'CLUSTER_STORAGE_PORT', 3306 );
+
+/**
+ * Cluster storage user
+ * Required
+ */
+// define( 'CLUSTER_STORAGE_USER', 'dbuser' );
+
+/**
+ * Cluster storage password
+ * Required
+ */
+define( 'CLUSTER_STORAGE_PASS', 'dbpassword' );
+
+/**
+ * Database name
+ * Required for most RDBMS
+ */
+// define( 'CLUSTER_STORAGE_DB', 'ezpcluster' );
+
+/**
+ * Charset to use when communicating with the database.
+ * Must match the value in file.ini
+ */
+// define( 'CLUSTER_STORAGE_CHARSET', 'utf8' );
+
+/**
+ * NFS share path.
+ * Required ONLY for DFS based clusters
+ */
+// define( 'CLUSTER_MOUNT_POINT_PATH', '/media/nfs' );
+
+/**
+ * Enable persistent database connections, for backends with support (currently: Oracle, with appropriate extension)
+ * Optional. Defaults to false.
+ */
+// define( 'CLUSTER_PERSISTENT_CONNECTION', false );
+
+/**
+ * Allow cluster index debugging.
+ * This MAY reveal internal details, and should not be used in a production environnement.
+ * Optional. Defaults to false.
+ */
+// define( 'CLUSTER_ENABLE_DEBUG', true );
+
+/**
+ * Enable HTTP cache features: if-modified-since & eTags
+ * Optional. Defaults to true.
+ */
+// define( 'CLUSTER_ENABLE_HTTP_CACHE', false );
+
+/**
+ * Enable HTTP range support (partial HTTP downloads)
+ * Optional. Defaults to true.
+ * NOTE: This feature is NOT available for DB based cluster handlers, only DFS ones.
+ *       Thus this constant should be set to false is using eZDB.
+ */
+// define( 'CLUSTER_ENABLE_HTTP_RANGE', true );
+
+/**
+ * Enable usage of "Expires" headers.
+ * Optional. Defaults to 86400 (one day).
+ * Possible values: false (disable), or a TTL in seconds.
+ * Can be set to a VERY high value (315569260 for 10 years) as long as you enable
+ * ezjscore.ini/[Packer]/AppendLastModifiedTime so that the generation timestamp is appended
+ * to ezjscore pack files
+ */
+// define( 'CLUSTER_EXPIRY_TIMEOUT', 86400 );
+
+/**
+ * Enable usage of "X-Powered-By" headers.
+ * Optional. Defaults to true.
+ */
+// define( 'CLUSTER_HEADER_X_POWERED_BY', true );
+
 ?>

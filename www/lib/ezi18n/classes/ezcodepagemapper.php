@@ -1,33 +1,12 @@
 <?php
-//
-// Definition of eZCodePageMapper class
-//
-// Created on: <11-Jul-2002 15:39:41 amos>
-//
-// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-// SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.4.0
-// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
-// SOFTWARE LICENSE: GNU General Public License v2.0
-// NOTICE: >
-//   This program is free software; you can redistribute it and/or
-//   modify it under the terms of version 2.0  of the GNU General
-//   Public License as published by the Free Software Foundation.
-// 
-//   This program is distributed in the hope that it will be useful,
-//    but WITHOUT ANY WARRANTY; without even the implied warranty of
-//   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//   GNU General Public License for more details.
-// 
-//   You should have received a copy of version 2.0 of the GNU General
-//   Public License along with this program; if not, write to the Free
-//   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
-//   MA 02110-1301, USA.
-// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-//
-
-/*! \file
-*/
+/**
+ * File containing the eZCodePageMapper class.
+ *
+ * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
+ * @license http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License v2
+ * @version  2012.5
+ * @package lib
+ */
 
 /*!
   \class eZCodePageMapper ezcodepagemapper.php
@@ -182,7 +161,7 @@ class eZCodePageMapper
                 unset( $eZCodePageMapperCacheCodeDate );
                 $in_out_map =& $this->InputOutputMap;
                 $out_in_map =& $this->OutputInputMap;
-                eZDebug::writeDebug( 'loading cache from: ' . $cache, 'eZCodePageMapper::load' );
+                eZDebug::writeDebug( 'loading cache from: ' . $cache, __METHOD__ );
                 include( $cache );
                 if ( isset( $eZCodePageMapperCacheCodeDate ) or
                      $eZCodePageMapperCacheCodeDate == self::CACHE_CODE_DATE )
@@ -232,12 +211,12 @@ class eZCodePageMapper
     }
 
     /**
-     * Returns a shared instance of the eZCodePageMapper pr the 
+     * Returns a shared instance of the eZCodePageMapper pr the
      * $input_charset_code and $output_charset_code params.
      *
-     * @param $input_charset_code string
-     * @param $output_charset_code string
-     * @param $use_cache bool
+     * @param string $input_charset_code
+     * @param string $output_charset_code
+     * @param bool $use_cache
      * @return eZCodePageMapper
      */
     static function instance( $input_charset_code, $output_charset_code, $use_cache = true )

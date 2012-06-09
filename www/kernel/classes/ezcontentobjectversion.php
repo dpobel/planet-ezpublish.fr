@@ -1,30 +1,12 @@
 <?php
-//
-// Definition of eZContentObjectVersion class
-//
-// Created on: <18-Apr-2002 10:05:34 bf>
-//
-// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-// SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.4.0
-// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
-// SOFTWARE LICENSE: GNU General Public License v2.0
-// NOTICE: >
-//   This program is free software; you can redistribute it and/or
-//   modify it under the terms of version 2.0  of the GNU General
-//   Public License as published by the Free Software Foundation.
-// 
-//   This program is distributed in the hope that it will be useful,
-//    but WITHOUT ANY WARRANTY; without even the implied warranty of
-//   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//   GNU General Public License for more details.
-// 
-//   You should have received a copy of version 2.0 of the GNU General
-//   Public License along with this program; if not, write to the Free
-//   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
-//   MA 02110-1301, USA.
-// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-//
+/**
+ * File containing the eZContentObjectVersion class.
+ *
+ * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
+ * @license http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License v2
+ * @version  2012.5
+ * @package kernel
+ */
 
 /*!
   \class eZContentObjectVersion ezcontentobjectversion.php
@@ -43,6 +25,7 @@ class eZContentObjectVersion extends eZPersistentObject
     const STATUS_INTERNAL_DRAFT = 5;
     // used when a workflow event returns FETCH_TEMPLATE_REPEAT to allow editing again
     const STATUS_REPEAT = 6;
+    const STATUS_QUEUED = 7;
 
     function eZContentObjectVersion( $row=array() )
     {
@@ -192,6 +175,43 @@ class eZContentObjectVersion extends eZPersistentObject
                                                           true );
         if ( $versions === null or
              count( $versions ) == 0 )
+            return null;
+        return $versions[0];
+    }
+
+    /**
+     * Fetch the latest draft by user id
+     *
+     * @since 4.7
+     * @param int $objectID
+     * @param int $userID
+     * @param int $languageID
+     * @param int $modified
+     * @return eZContentObjectVersion|null
+     */
+    public static function fetchLatestUserDraft( $objectID, $userID, $languageID, $modified = 0 )
+    {
+        $versions = eZPersistentObject::fetchObjectList(
+            eZContentObjectVersion::definition(),
+            null,
+            array(
+                'creator_id' => $userID,
+                'contentobject_id' => $objectID,
+                'initial_language_id' => $languageID,
+                'modified' => array( '>', $modified ),
+                'status' => array(
+                    array(
+                        eZContentObjectVersion::STATUS_DRAFT,
+                        eZContentObjectVersion::STATUS_INTERNAL_DRAFT
+                    )
+                )
+            ),
+            array( 'modified' => 'desc' ),
+            array( 'offset' => 0, 'length' => 1 ),
+            true
+        );
+
+        if ( empty( $versions ) )
             return null;
         return $versions[0];
     }
@@ -974,13 +994,13 @@ class eZContentObjectVersion extends eZPersistentObject
         $checkIntersect = array_intersect( $versionStatus, $statuses );
         if ( count( $checkIntersect ) != count( $versionStatus ) )
         {
-            eZDebug::writeError( 'Invalid version status was passed in.', 'eZContentObjectVersion::removeVersions()' );
+            eZDebug::writeError( 'Invalid version status was passed in.', __METHOD__ );
             return false;
         }
 
         if ( $limit !== false and ( !is_numeric( $limit ) or $limit < 0 ) )
         {
-            eZDebug::writeError( '$limit must be either false or positive numeric value.', 'eZContentObjectVersion::removeVersions()' );
+            eZDebug::writeError( '$limit must be either false or positive numeric value.', __METHOD__ );
             return false;
         }
 
@@ -993,6 +1013,7 @@ class eZContentObjectVersion extends eZPersistentObject
             $filters['modified'] = array( '<', $expiryTime );
 
         $processedCount = 0;
+        $db = eZDB::instance();
         while ( $processedCount < $limit or !$limit )
         {
             // fetch by versions by preset portion at a time to avoid memory overflow
@@ -1002,13 +1023,12 @@ class eZContentObjectVersion extends eZPersistentObject
             if ( count( $versions ) < 1 )
                 break;
 
-            $db = eZDB::instance();
-            $db->begin();
             foreach ( $versions as $version )
             {
+                $db->begin();
                 $version->removeThis();
+                $db->commit();
             }
-            $db->commit();
             $processedCount += count( $versions );
         }
         return $processedCount;

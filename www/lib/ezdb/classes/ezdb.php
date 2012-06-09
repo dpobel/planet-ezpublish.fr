@@ -1,36 +1,12 @@
 <?php
-//
-// $Id$
-//
-// Definition of eZDB class
-//
-// Created on: <12-Feb-2002 15:41:03 bf>
-//
-// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-// SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.4.0
-// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
-// SOFTWARE LICENSE: GNU General Public License v2.0
-// NOTICE: >
-//   This program is free software; you can redistribute it and/or
-//   modify it under the terms of version 2.0  of the GNU General
-//   Public License as published by the Free Software Foundation.
-// 
-//   This program is distributed in the hope that it will be useful,
-//    but WITHOUT ANY WARRANTY; without even the implied warranty of
-//   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//   GNU General Public License for more details.
-// 
-//   You should have received a copy of version 2.0 of the GNU General
-//   Public License along with this program; if not, write to the Free
-//   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
-//   MA 02110-1301, USA.
-// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-//
-
-/*! \file
- Database abstraction layer.
-*/
+/**
+ * File containing the eZDB class.
+ *
+ * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
+ * @license http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License v2
+ * @version  2012.5
+ * @package lib
+ */
 
 /*! \defgroup eZDB Database abstraction layer */
 
@@ -61,8 +37,6 @@
   Especially when returning the data as an associative array.
 
   \code
-  // include the library
-  //include_once( 'lib/ezdb/classes/ezdb.php' );
 
   // Get the current database instance
   // will create a new database object and connect to the database backend
@@ -86,7 +60,7 @@
 
   foreach ( $rows as $row )
   {
-     print( $row['name']�);
+     print( $row['name'] );
   }
 
   // fetch some data with a limit
@@ -110,7 +84,7 @@ class eZDB
     */
     private function __construct()
     {
-        eZDebug::writeError( 'This class should not be instantiated', 'eZDB::eZDB' );
+        eZDebug::writeError( 'This class should not be instantiated', __METHOD__ );
     }
 
     /*!
@@ -135,9 +109,9 @@ class eZDB
      * Returns a shared instance of the eZDBInterface class aka database object.
      * If you want to change the current database values you should use $forceNewInstance.
      *
-     * @param $databaseImplementation string|false
-     * @param $databaseParameters array|false if array, then key 'use_defaults' (bool) is used.
-     * @param $forceNewInstance bool
+     * @param string|false $databaseImplementation
+     * @param array|false $databaseParameters If array, then key 'use_defaults' (bool) is used.
+     * @param bool $forceNewInstance
      * @return eZDBInterface
      */
     static function instance( $databaseImplementation = false, $databaseParameters = false, $forceNewInstance = false )
@@ -300,10 +274,11 @@ class eZDB
                 $impl->ErrorNumber = -1;
                 if ( $databaseParameters['show_errors'] )
                 {
-                    eZDebug::writeError( 'Database implementation not supported: ' . $databaseImplementation, 'eZDB::instance' );
+                    eZDebug::writeError( 'Database implementation not supported: ' . $databaseImplementation, __METHOD__ );
                 }
             }
 
+            $impl->setErrorHandling( self::$errorHandling );
         }
         return $impl;
     }
@@ -355,6 +330,37 @@ class eZDB
         return $result;
     }
 
+    /**
+     * Sets the default eZDB error handling mode.
+     * Use eZDB::instance()->setErrorHandling() with the same parameters to set error handling for one instance only
+     *
+     * @param int $errorHandling
+     *        Possible values are:pm
+     *        - eZDB::ERROR_HANDLING_STANDARD: backward compatible error handling, using reportError
+     *        - eZDB::ERROR_HANDLING_EXCEPTION: using exceptions
+     * @throw RuntimeException thrown when an invalid error handling is given
+     * @access private
+     * @since 4.5
+     */
+    static function setErrorHandling( $errorHandling )
+    {
+        if ( $errorHandling != self::ERROR_HANDLING_EXCEPTIONS && $errorHandling != self::ERROR_HANDLING_STANDARD )
+            throw new RuntimeException( "Unknown eZDB error handling mode '$errorHandling'" );
+        self::$errorHandling = $errorHandling;
+
+        if ( self::hasInstance() )
+        {
+            self::instance()->setErrorHandling( $errorHandling );
+        }
+    }
+
+    /**
+     * Error handling mode
+     */
+    const ERROR_HANDLING_STANDARD = 1;
+    const ERROR_HANDLING_EXCEPTIONS = 2;
+
+    protected static $errorHandling = self::ERROR_HANDLING_STANDARD;
 }
 
 ?>

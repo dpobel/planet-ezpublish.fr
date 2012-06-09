@@ -1,33 +1,12 @@
 <?php
-//
-// Definition of eZImageAnalyzer class
-//
-// Created on: <03-Nov-2003 15:19:16 amos>
-//
-// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-// SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.4.0
-// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
-// SOFTWARE LICENSE: GNU General Public License v2.0
-// NOTICE: >
-//   This program is free software; you can redistribute it and/or
-//   modify it under the terms of version 2.0  of the GNU General
-//   Public License as published by the Free Software Foundation.
-// 
-//   This program is distributed in the hope that it will be useful,
-//    but WITHOUT ANY WARRANTY; without even the implied warranty of
-//   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//   GNU General Public License for more details.
-// 
-//   You should have received a copy of version 2.0 of the GNU General
-//   Public License along with this program; if not, write to the Free
-//   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
-//   MA 02110-1301, USA.
-// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-//
-
-/*! \file
-*/
+/**
+ * File containing the eZImageAnalyzer class.
+ *
+ * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
+ * @license http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License v2
+ * @version  2012.5
+ * @package lib
+ */
 
 /*! \defgroup eZImageAnalyzer Image analysis
     \ingroup eZImage
@@ -114,8 +93,7 @@ class eZImageAnalyzer
             }
             else
             {
-                eZDebug::writeWarning( "Could not locate Image Analyzer for $analyzerName",
-                                       'eZImageAnalyzer::instance' );
+                eZDebug::writeWarning( "Could not locate Image Analyzer for $analyzerName", __METHOD__ );
             }
         }
         if ( isset( $analyzerData['handlers'][$analyzerName] ) )
@@ -128,8 +106,7 @@ class eZImageAnalyzer
             }
             else
             {
-                eZDebug::writeWarning( "The Image Analyzer class $className was not found, cannot create analyzer",
-                                       'eZImageAnalyzer::instance' );
+                eZDebug::writeWarning( "The Image Analyzer class $className was not found, cannot create analyzer", __METHOD__ );
             }
         }
         return false;
@@ -175,8 +152,7 @@ class eZImageAnalyzer
                 }
             }
             else
-                eZDebug::writeWarning( "INI group $iniGroup does not exist in image.ini",
-                                       'eZImageAnalyzer::readAnalyzerSettingsFromINI' );
+                eZDebug::writeWarning( "INI group $iniGroup does not exist in image.ini", __METHOD__ );
         }
 
         $GLOBALS['eZImageAnalyzer'] = $analyzerData;

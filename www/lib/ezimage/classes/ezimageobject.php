@@ -1,33 +1,12 @@
 <?php
-//
-// Definition of eZImageObject class
-//
-// Created on: <03-Oct-2002 15:05:09 amos>
-//
-// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-// SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.4.0
-// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
-// SOFTWARE LICENSE: GNU General Public License v2.0
-// NOTICE: >
-//   This program is free software; you can redistribute it and/or
-//   modify it under the terms of version 2.0  of the GNU General
-//   Public License as published by the Free Software Foundation.
-// 
-//   This program is distributed in the hope that it will be useful,
-//    but WITHOUT ANY WARRANTY; without even the implied warranty of
-//   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//   GNU General Public License for more details.
-// 
-//   You should have received a copy of version 2.0 of the GNU General
-//   Public License along with this program; if not, write to the Free
-//   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
-//   MA 02110-1301, USA.
-// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-//
-
-/*! \file
-*/
+/**
+ * File containing the eZImageObject class.
+ *
+ * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
+ * @license http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License v2
+ * @version  2012.5
+ * @package lib
+ */
 
 /*!
   \class eZImageObject ezimageobject.php
@@ -184,8 +163,7 @@ class eZImageObject extends eZImageInterface
     {
         if ( !$imageLayer instanceof eZImageLayer )
         {
-            eZDebug::writeWarning( 'Only eZImageLayer objects may be added as layer items',
-                                   'eZImageObject::appendLayer' );
+            eZDebug::writeWarning( 'Only eZImageLayer objects may be added as layer items', __METHOD__ );
             return false;
         }
         ++$this->ImageLayerCounter;
@@ -205,8 +183,7 @@ class eZImageObject extends eZImageInterface
     {
         if ( !$imageLayer instanceof eZImageLayer )
         {
-            eZDebug::writeWarning( 'Only eZImageLayer objects may be added as layer items',
-                                   'eZImageObject::prependLayer' );
+            eZDebug::writeWarning( 'Only eZImageLayer objects may be added as layer items', __METHOD__ );
             return false;
         }
         ++$this->ImageLayerCounter;
@@ -299,7 +276,7 @@ class eZImageObject extends eZImageInterface
                 $hasFirst = true;
             }
             else
-                eZDebug::writeWarning( 'Wrong image type ' . gettype( $layer ), 'eZImageObject::flatten' );
+                eZDebug::writeWarning( 'Wrong image type ' . gettype( $layer ), __METHOD__ );
             ++$i;
         }
         if ( $hasFirst )
@@ -333,7 +310,7 @@ class eZImageObject extends eZImageInterface
                 }
                 else
                 {
-                    eZDebug::writeWarning( 'Wrong image type ' . gettype( $layer ), 'eZImageObject::flatten' );
+                    eZDebug::writeWarning( 'Wrong image type ' . gettype( $layer ), __METHOD__ );
                 }
                 ++$i;
             }

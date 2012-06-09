@@ -1,0 +1,79 @@
+Pull requests
+=============
+- Merge pull request #324 from crevillo/issue-019315
+- Merge pull request #334 from trolek/localization
+- Merge pull request #333 from netbliss/master
+- Merge pull request #331 from taenadil/master
+- Merge pull request #306 from crevillo/issue-019242
+- Merge pull request #328 from ptheo/localization
+- Merge pull request #323 from patrickallaert/optimize-eZTemplateSectionIterator-attributes-handling
+- Merge pull request #320 from ljo/master
+- Merge pull request #319 from trolek/localization
+- Merge pull request #321 from SylvainGuittard/master
+
+Bugfixes
+========
+- #19158: limitation on Group in createPermissionCheckingSQL is very slow in sites with populated groups
+- #19198: Style conflict between Calendar and eZ Flow layout block
+- #19243: Sso login mechanism should break inmediately after found a valid ssouser
+- #19246: Preview not working correctly with Html5 Videos
+- #19297: clustering doesn't respect StoreFilePermissions
+- #19299: Uploading an image to an article in IE8 raises an error
+- #19305: 500 response received when using REST without auth and with non GET verb
+- #19307: Fix and restore eZFS2 unit test
+- #19315: Mysterious variable in site.ini file
+- #19323: Fail to upload docx files with DFS
+- #19337: Database Check Failed after upgrading from Ez Publish 4.6 > 4.7 rc1 with Postgres (step 1) (cherry picked from commit bb1e7d59930b2de932986377551a74d010f16c71)
+- #19354: ezcontentstaging : changing main node assignment is not synced on postgres
+- #19366: Uploading images to a dfs mysql cluster not working
+- #19382: ezformtoken not present in dfs cluster mysql
+- Fixed: array to string conversion in eZXMLTextTest
+- Fixed: not using variable where reference is expected in eZRoleTest
+- Fixed: not using variable where reference is expected in eZPolicyTest
+- Fixed: array to string conversion in eZDFSFileHandler
+- Fixed: array to string conversion in eZDFSFileHandlerMySQLBackend
+- Fixed: array to string conversion in eZDFSFileHandlerMySQLiBackend
+- Fixed: array to string conversion in eZDBFileHandler
+- Fixed: array to string conversion in eZDBFileHandlerMysqliBackend
+- Fixed: array to string conversion in eZDBFileHandlerMysqlBackend
+- Fixed: Using deprecated/removed assertType() calls
+- Fixed test to make it work with PHP 5.2
+- Fixed: change max size of a mimetype to 255 in eZ DFS
+- Fixed the initialization of unit tests related to file handlers and cluster systems
+
+Enhancements
+============
+- #19242: Avoid file_exists calls in sso mechanism
+
+
+Localization
+============
+- localization: updated pol-PL translation.ts
+- Italian translation for 4.7
+- localization: updated ell-GR translation.ts
+- localization: updated ell-GR translation.ts
+- localization: updated ell-GR translation.ts
+- Translating new strings in Swedish, swe-SE, for ezpublish.
+- localization: updated pol-PL translation.ts
+
+
+Miscellaneous
+=============
+- Removed: getName() method that prevents PHPUnit 3.6 to work correctly
+- Removed: uneeded empty constructor
+- Reconfigure branch for rc1 (cherry picked from commit d4bc6a46b9a8fdb5da01de8b26842d239956986a)
+- Reconfigured branch (cherry picked from commit 6c879fd2f3dde2f6eaeec17190c9c56ac5ecd04f)
+- Removed wrong phpunit.xml
+- Skipped DFS/PostgreSQL tests when the extension isn't installed
+- Renamed cluster update SQL file
+- Ref #19323 : Update base schema SQL files forMySQL cluster (DB & DFS)
+- Update site registration text to avoid to long text on small display
+- Disable site registration form on submit
+- Updated site registration with privacy text
+- Updated site registration text in setup wizard
+- Added setting to avoid potential access to blacklisted attributes containing sensitive data
+- Optimized: eZTemplateSectionIterator attributes handling
+- Changed: enable eZFS2 unit tests
+- Syntax fix (information collection)
+- Removed: unused variables
+- Reverted unwanted version change

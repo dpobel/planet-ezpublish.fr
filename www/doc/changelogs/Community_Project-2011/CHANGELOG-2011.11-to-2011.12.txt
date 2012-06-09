@@ -1,0 +1,59 @@
+Bugfixes
+========
+- #18241: Wrong error message when publishing a former draft (Thanks Brendan Pike !)
+- #18259: PHP 5.4 compliance : Bad variable used in eZModuleFunctionInfo::execute(...)
+- #18320: Fatal error on publish when parent translation not available
+- #18475: Login problems for users using IE8 - duplicate session headers
+- #18750: comments made in a webshop order are not visible
+- #18767: eZContentObjectTreeNode::subtree always have at least one order by
+- #18771: i18n translations are not utilized in the versionview
+- #18886: New users only viewable by Administrator until validated
+- #18947: [HipHop check]  is unknown in kernel/content/node_edit.php on line 744
+- #18972: Autoload generation with namespace PHP namespace can be defined using semi colon, but bracket also
+- #18987: ezodf export to openoffice in sequence
+- #19005: Having ezp-next in eZ Publish ends up to fatal error in /setup/info
+- #19026: PHP 5.4 compliance : Bad variable used in eZModuleOperationInfo::execute(...)
+- #19027: PHP 5.4 compliance : New ['REQUEST_TIME'] format makes request date fail or at least inconsistent
+- #19029: Namespace support : backslash is not escaped in generated class name
+- Fixed partially #17073: Vanish wrappers in <script> and <style>
+- Fixed EZPNEXT-179: Error when using namespaces in a REST controller
+- Fixed regression with autoload generator using hardcoded token values
+- Ref #18513 : Fix bad [AttributeOperator] INI section placement
+- Fixed and enabled eZRSSExport unit tests
+- Fixed tests not very gentle with a unique db tests setup
+
+Enhancements
+============
+- #17073: Switch to html5 doctype
+- #19028: PHP 5.4 compliance : Add traits support in autoload system
+
+Pull requests
+=============
+- Merge pull request #266 from jdespatis/clean-wrappers
+- Merge pull request #221 from jdespatis/too-few-args4
+- Merge pull request #239 from trolek/localization
+- Merge pull request #241 from myxt/upstream
+- Merge pull request #253 from jdespatis/error-level
+- Merge pull request #245 from aleblanc/master
+- Merge pull request #250 from crevillo/spanish-translation-etna
+- Merge pull request #256 from KwadroNaut/patch-1
+- Merge pull request #201 from jdespatis/too-many-args8
+- Merge pull request #222 from jdespatis/too-few-args5
+- Merge pull request #223 from jdespatis/too-few-args6
+- Merge pull request #225 from jdespatis/too-few-args7
+- Merge pull request #227 from jdespatis/too-few-args9
+- Merge pull request #228 from jdespatis/too-few-args10
+- Merge pull request #230 from jdespatis/too-few-args12
+- Merge pull request #231 from jdespatis/void1
+- Merge pull request #237 from jdespatis/quiet-func
+- Merge pull request #232 from jdespatis/void2
+- Merge pull request #220 from jdespatis/too-few-args3
+- Merge pull request #219 from jdespatis/too-few-args2
+- Merge pull request #51 from jeromegamez/ezcli_php
+- Merge pull request #259 from jdespatis/new-event
+- Merge pull request #252 from jdespatis/static-httptool
+- Merge pull request #257 from jdespatis/event-doc
+- Merge pull request #254 from jdespatis/pull-119-missing-stuff
+- Merge pull request #246 from jdespatis/apache-config
+- Merge pull request #244 from nfrp/SWE_localization_zwebb
+- Merge pull request #235 from jdespatis/typo

@@ -1,30 +1,12 @@
 <?php
-//
-// Definition of eZTemplateLocaleOperator class
-//
-// Created on: <01-Mar-2002 13:49:40 amos>
-//
-// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-// SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.4.0
-// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
-// SOFTWARE LICENSE: GNU General Public License v2.0
-// NOTICE: >
-//   This program is free software; you can redistribute it and/or
-//   modify it under the terms of version 2.0  of the GNU General
-//   Public License as published by the Free Software Foundation.
-// 
-//   This program is distributed in the hope that it will be useful,
-//    but WITHOUT ANY WARRANTY; without even the implied warranty of
-//   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//   GNU General Public License for more details.
-// 
-//   You should have received a copy of version 2.0 of the GNU General
-//   Public License along with this program; if not, write to the Free
-//   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
-//   MA 02110-1301, USA.
-// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-//
+/**
+ * File containing the eZTemplateLocaleOperator class.
+ *
+ * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
+ * @license http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License v2
+ * @version  2012.5
+ * @package lib
+ */
 
 /*!
   \class eZTemplateLocaleOperator eztemplatelocaleoperator.php
@@ -149,7 +131,6 @@ class eZTemplateLocaleOperator
         $newElements = array();
 
         $newElements[] = eZTemplateNodeTool::createCodePieceElement( '// l10nTransformation begin' . "\n" );
-        $newElements[] = eZTemplateNodeTool::createCodePieceElement( '//include_once("lib/ezlocale/classes/ezlocale.php");' . "\n" );
         $values[] = $parameters[0];
 
         if ( count( $parameters ) > 2 )
@@ -163,7 +144,7 @@ class eZTemplateLocaleOperator
             $newElements[] = eZTemplateNodeTool::createCodePieceElement( "\$locale = eZLocale::instance();\n" );
         }
 
-        if ( !eZTemplateNodeTool::isStaticElement( $parameters[1] ) )
+        if ( !eZTemplateNodeTool::isConstantElement( $parameters[1] ) )
         {
             $newElements[] = eZTemplateNodeTool::createCodePieceElement( '// l10nTransformation: not static' . "\n" );
             $values[] = $parameters[1];
@@ -201,7 +182,7 @@ class eZTemplateLocaleOperator
         {
             $values[] = false;
             $newElements[] = eZTemplateNodeTool::createCodePieceElement( '// l10nTransformation: static' . "\n" );
-            if ( ( $function = eZTemplateNodeTool::elementStaticValue( $parameters[1] ) ) !== false )
+            if ( ( $function = eZTemplateNodeTool::elementConstantValue( $parameters[1] ) ) !== false )
             {
                 $locale = eZLocale::instance();
                 $method = $locale->getFormattingFunction( $function );
@@ -244,20 +225,19 @@ class eZTemplateLocaleOperator
         {
             return false;
         }
-        if ( !eZTemplateNodeTool::isStaticElement( $parameters[1] ) )
+        if ( !eZTemplateNodeTool::isConstantElement( $parameters[1] ) )
         {
             return false;
         }
         else
         {
-            $class = eZTemplateNodeTool::elementStaticValue( $parameters[1] );
+            $class = eZTemplateNodeTool::elementConstantValue( $parameters[1] );
         }
         if ( ( $class == 'custom' ) && ( $paramCount != 3 ) )
         {
             return false;
         }
 
-        $newElements[] = eZTemplateNodeTool::createCodePieceElement( '//include_once("lib/ezlocale/classes/ezlocale.php");' . "\n" );
         $newElements[] = eZTemplateNodeTool::createCodePieceElement( '$locale = eZLocale::instance();' . "\n" );
 
         if ( $class == 'custom' )

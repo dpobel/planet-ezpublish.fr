@@ -1,29 +1,13 @@
 #!/usr/bin/env php
 <?php
-//
-// Created on: <03-Dec-2007 09:51:56 dl>
-//
-// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-// SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.4.0
-// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
-// SOFTWARE LICENSE: GNU General Public License v2.0
-// NOTICE: >
-//   This program is free software; you can redistribute it and/or
-//   modify it under the terms of version 2.0  of the GNU General
-//   Public License as published by the Free Software Foundation.
-// 
-//   This program is distributed in the hope that it will be useful,
-//    but WITHOUT ANY WARRANTY; without even the implied warranty of
-//   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//   GNU General Public License for more details.
-// 
-//   You should have received a copy of version 2.0 of the GNU General
-//   Public License along with this program; if not, write to the Free
-//   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
-//   MA 02110-1301, USA.
-// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-//
+/**
+ * File containing the ezconvertdbcharset.php script.
+ *
+ * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
+ * @license http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License v2
+ * @version  2012.5
+ * @package kernel
+ */
 
 require 'autoload.php';
 
@@ -70,7 +54,7 @@ define( 'EZ_DROP_CONTENTCLASS_ATTRIBUTE_TMP_TABLE_SQL',
 
 /**
  * Class used to store some of the command line arguments
- **/
+ */
 class CommandLineArguments
 {
     protected static $iconvCharacterSet = false;
@@ -381,7 +365,7 @@ function checkDBDriver()
 function checkDBCharset( $iconvCharacterSet )
 {
     $db = eZDB::instance();
-    
+
     if ( $iconvCharacterSet !== false )
     {
         $dbCharset = $iconvCharacterSet;
@@ -843,7 +827,7 @@ function convertArray( $array, $inCharset, $outCharset )
             {
                 if( CommandLineArguments::logFilename() !== false )
                 {
-                    $logString = "ERROR: Unable to predict correct character set while converting array. Value is $value, inCharset : $inCharset, outCharSet : $outCharSet\n";
+                    $logString = "ERROR: Unable to predict correct character set while converting array. Value is $value, inCharset : $inCharset, outCharset : $outCharset\n";
                     file_put_contents( CommandLineArguments::logFilename(), $logString, FILE_APPEND );
                 }
             }
@@ -983,7 +967,7 @@ function convertXMLCustomDataProgress( $row )
  * For some reason, some utf8 encoded text stored in the db might contain
  * illegal utf8 characters.
  * This function will strip/replace such known characters
- **/
+ */
 function removeIllegalUTF8Characters( $text )
 {
     // 0xE2 0x80 0x3F seems to be some kind of quote, replacing it with '
@@ -1028,7 +1012,7 @@ function convertXMLData( $tableInfo, $xmlDataSelectSQLFunction, $xmlDataUpdateSQ
                 // Encoding for xml was not found. Let's now check if it is in utf8
                 // We do this by converting the document from utf8 to utf8
                 // If the size is *not* the same, then it is not in utf8
-                
+
                 $xmlStringTest = removeIllegalUTF8Characters( $xmlStringTest );
                 $encodedXMLTest = iconv( 'utf8', 'utf8', $xmlStringTest );
                 if ( strlen( $encodedXMLTest ) <> strlen( $xmlStringTest ) )

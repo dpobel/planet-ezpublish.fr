@@ -4,8 +4,8 @@
 // ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
 // SOFTWARE RELEASE: 4.1.x
-// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
-// SOFTWARE LICENSE: GNU General Public License v2.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2012 eZ Systems AS
+// SOFTWARE LICENSE: GNU General Public License v2
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
 //   modify it under the terms of version 2.0  of the GNU General
@@ -23,7 +23,7 @@
 // ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
-/*! \file ezjslibmousetracker.js 
+/*! \file ezjslibmousetracker.js
 */
 
 
@@ -48,7 +48,7 @@ function ezjslib_mouseHandler( e )
     {
         e = window.event;
     }
-    if( e.pageX || e.pageY )
+    if ( e.pageX || e.pageY )
     {
         MouseX = e.pageX;
         MouseY = e.pageY;

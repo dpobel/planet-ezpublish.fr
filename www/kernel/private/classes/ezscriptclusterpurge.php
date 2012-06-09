@@ -1,5 +1,14 @@
 <?php
 /**
+ * File containing the eZScriptClusterPurge class.
+ *
+ * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
+ * @license http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License v2
+ * @version  2012.5
+ * @package kernel
+ */
+
+/**
  * This class handles purging of cluster items. It is used by both the script
  * and cronjob.
  *
@@ -8,13 +17,15 @@
  * items, and ended up with an almost constant usage. No particular setting
  * should therefore be required to run it.
  *
- * @copyright Copyright (C) 1999-2010 eZ Systems AS. All rights reserved.
- * @license http://ez.no/licenses/gnu_gpl GNU General Public License v2.0
+ * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
+ * @license http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License v2
  *
  * @property bool optDryRun
  * @property int optIterationLimit
  * @property int optIterationSleep
  * @property bool optMemoryMonitoring
+ * @property array(string) optScopes
+ * @property int optExpiry
  */
 class eZScriptClusterPurge
 {
@@ -25,6 +36,8 @@ class eZScriptClusterPurge
             'iteration-sleep' => 1,
             'iteration-limit' => 100,
             'memory-monitoring' => false,
+            'scopes' => false,
+            'expiry' => 2592000 // 60*60*24*30 = 30 days
         );
     }
 
@@ -38,7 +51,7 @@ class eZScriptClusterPurge
     public static function isRequired()
     {
         $clusterHandler = eZClusterFileHandler::instance();
-        $result = $clusterHandler->requiresBinaryPurge();
+        $result = $clusterHandler->requiresPurge();
 
         return $result;
     }
@@ -47,7 +60,7 @@ class eZScriptClusterPurge
      * Executes the purge operation
      *
      * @todo Endless loop on fetch list. The expired items are returned over and over again
-     **/
+     */
     public function run()
     {
         $cli = eZCLI::instance();
@@ -55,7 +68,7 @@ class eZScriptClusterPurge
         if ( $this->optMemoryMonitoring == true )
         {
             eZLog::rotateLog( self::LOG_FILE );
-            $cli->notice( "Logging memory usage to " . self::LOG_FILE );
+            $cli->output( "Logging memory usage to " . self::LOG_FILE );
         }
 
         if ( $this->optIterationSleep > 0 )
@@ -65,13 +78,13 @@ class eZScriptClusterPurge
 
         $limit = array( 0, $this->optIterationLimit );
 
-        $cli->output( "Purging expired binary items:" );
+        $cli->output( "Purging expired items:" );
 
         self::monitor( "start" );
 
         // Fetch a limited list of purge items from the handler itself
         $clusterHandler = eZClusterFileHandler::instance();
-        while ( $filesList = $clusterHandler->fetchExpiredBinaryItems( $limit ) )
+        while ( $filesList = $clusterHandler->fetchExpiredItems( $this->optScopes, $limit, $this->optExpiry ) )
         {
             self::monitor( "iteration start" );
             foreach( $filesList as $file )
@@ -127,6 +140,16 @@ class eZScriptClusterPurge
             {
                 return $this->options['memory-monitoring'];
             } break;
+
+            case 'optScopes':
+            {
+                return $this->options['scopes'];
+            } break;
+
+            case 'optExpiry':
+            {
+                return $this->options['expiry'];
+            } break;
         }
     }
 
@@ -156,6 +179,16 @@ class eZScriptClusterPurge
             {
                 $this->options['memory-monitoring'] = $propertyValue;
             } break;
+
+            case 'optScopes':
+            {
+                $this->options['scopes'] = $propertyValue;
+            } break;
+
+            case 'optExpiry':
+            {
+                $this->options['expiry'] = $propertyValue;
+            } break;
         }
     }
 
@@ -169,6 +202,6 @@ class eZScriptClusterPurge
 
     private $options = array();
 
-    const LOG_FILE = 'clusterbinarypurge.log';
+    const LOG_FILE = 'clusterpurge.log';
 }
 ?>

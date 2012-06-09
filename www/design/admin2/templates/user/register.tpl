@@ -65,8 +65,7 @@
 
 
 {literal}
-<script language="JavaScript" type="text/javascript">
-<!--
+<script type="text/javascript">
 jQuery(function( $ )//called on document.ready
 {
     with( document.registerform )
@@ -87,6 +86,5 @@ function disableButtons()
     document.getElementById( 'PublishButton' ).disabled = true;
     document.getElementById( 'CancelButton' ).disabled = true;
 }
--->
 </script>
 {/literal}

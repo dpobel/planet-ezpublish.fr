@@ -1,31 +1,12 @@
 <?php
-//
-// Created on: <26-Aug-2003 15:15:32 kk>
-//
-// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-// SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.4.0
-// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
-// SOFTWARE LICENSE: GNU General Public License v2.0
-// NOTICE: >
-//   This program is free software; you can redistribute it and/or
-//   modify it under the terms of version 2.0  of the GNU General
-//   Public License as published by the Free Software Foundation.
-// 
-//   This program is distributed in the hope that it will be useful,
-//    but WITHOUT ANY WARRANTY; without even the implied warranty of
-//   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//   GNU General Public License for more details.
-// 
-//   You should have received a copy of version 2.0 of the GNU General
-//   Public License along with this program; if not, write to the Free
-//   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
-//   MA 02110-1301, USA.
-// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-//
-
-/*! \file
-*/
+/**
+ * File containing the eZPDF class.
+ *
+ * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
+ * @license http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License v2
+ * @version  2012.5
+ * @package lib
+ */
 
 /*!
   \defgroup eZPDF PDF generator library
@@ -70,7 +51,7 @@ class eZPDF
     /*!
      Display the variable.
     */
-    function modify( $tpl, $operatorName, $operatorParameters, $rootNamespace, $currentNamespace, &$operatorValue, $namedParameters )
+    function modify( $tpl, $operatorName, $operatorParameters, $rootNamespace, $currentNamespace, &$operatorValue, $namedParameters, $placement )
     {
         $config = eZINI::instance( 'pdf.ini' );
 
@@ -92,7 +73,7 @@ class eZPDF
                 }
 
                 $operatorValue .= '>';
-                eZDebug::writeNotice( 'PDF: Generating TOC', 'eZPDF::modify' );
+                eZDebug::writeNotice( 'PDF: Generating TOC', __METHOD__ );
             } break;
 
             case 'set_font':
@@ -174,8 +155,7 @@ class eZPDF
 
                 $operatorValue .= '</ezGroup:callTable><C:callNewLine>';
 
-                eZDebug::writeNotice( 'PDF: Added table to PDF',
-                                      'eZPDF::modify' );
+                eZDebug::writeNotice( 'PDF: Added table to PDF', __METHOD__ );
             } break;
 
             case 'header':
@@ -204,7 +184,7 @@ class eZPDF
 
                 eZDebug::writeNotice( 'PDF: Added header: '. $header['text'] .', size: '. $header['size'] .
                                       ', align: '. $header['align'] .', level: '. $header['level'],
-                                      'eZPDF::modify' );
+                                      __METHOD__ );
             } break;
 
             case 'create':
@@ -223,7 +203,7 @@ class eZPDF
             {
                 $operatorValue = '<C:callNewPage><C:callNewLine>';
 
-                eZDebug::writeNotice( 'PDF: New page', 'eZPDF::modify' );
+                eZDebug::writeNotice( 'PDF: New page', __METHOD__ );
             } break;
 
             case 'image':
@@ -262,7 +242,7 @@ class eZPDF
 
                 $operatorValue .= '>';
 
-                eZDebug::writeNotice( 'PDF: Added Image '.$image['src'].' to PDF file', 'eZPDF::modify' );
+                eZDebug::writeNotice( 'PDF: Added Image '.$image['src'].' to PDF file', __METHOD__ );
             } break;
 
             case 'anchor':
@@ -270,7 +250,7 @@ class eZPDF
                 $name = $tpl->elementValue( $operatorParameters[1], $rootNamespace, $currentNamespace );
 
                 $operatorValue = '<C:callAnchor:'. $name['name'] .':FitH:>';
-                eZDebug::writeNotice( 'PDF: Added anchor: '.$name['name'], 'eZPDF::modify' );
+                eZDebug::writeNotice( 'PDF: Added anchor: '.$name['name'], __METHOD__ );
             } break;
 
             case 'link': // external link
@@ -282,7 +262,7 @@ class eZPDF
                                              $link['text'] );
 
                 $operatorValue = '<c:alink:'. rawurlencode( $link['url'] ) .'>'. $link['text'] .'</c:alink>';
-                eZDebug::writeNotice( 'PDF: Added link: '. $link['text'] .', url: '.$link['url'], 'eZPDF::modify' );
+                eZDebug::writeNotice( 'PDF: Added link: '. $link['text'] .', url: '.$link['url'], __METHOD__ );
             } break;
 
             case 'stream':
@@ -299,14 +279,14 @@ class eZPDF
                 $file = eZClusterFileHandler::instance( $filename );
                 $file->storeContents( $this->PDF->ezOutput(), 'viewcache', 'pdf' );
 
-                eZDebug::writeNotice( 'PDF file closed and saved to '. $filename, 'eZPDF::modify' );
+                eZDebug::writeNotice( 'PDF file closed and saved to '. $filename, __METHOD__ );
             } break;
 
             case 'strike':
             {
                 $text = $tpl->elementValue( $operatorParameters[1], $rootNamespace, $currentNamespace );
                 $operatorValue = '<c:strike>'. $text .'</c:strike>';
-                eZDebug::writeNotice( 'Striked text added to PDF: "'. $text .'"', 'eZPDF::modify' );
+                eZDebug::writeNotice( 'Striked text added to PDF: "'. $text .'"', __METHOD__ );
             } break;
 
             /* usage : execute/add text to pdf file, pdf(execute,<text>) */
@@ -338,7 +318,7 @@ class eZPDF
                 $text = $codec->convertString( $text );
 
                 $this->PDF->ezText( $text );
-                eZDebug::writeNotice( 'Execute text in PDF, length: "'. strlen( $text ) .'"', 'eZPDF::modify' );
+                eZDebug::writeNotice( 'Execute text in PDF, length: "'. strlen( $text ) .'"', __METHOD__ );
             } break;
 
             case 'page_number':
@@ -420,7 +400,7 @@ class eZPDF
 
                 $operatorValue .= '</ezGroup:callBlockFrame>';
 
-                eZDebug::writeNotice( 'PDF: Added Block '.$namedParameters['operation'] .': '.$operatorValue, 'eZPDF::modify' );
+                eZDebug::writeNotice( 'PDF: Added Block '.$namedParameters['operation'] .': '.$operatorValue, __METHOD__ );
                 return $operatorValue;
 
             } break;
@@ -610,7 +590,7 @@ class eZPDF
                     $operatorValue .= '>';
                 }
 
-                eZDebug::writeNotice( 'PDF: Added frame '.$frameType .': '.$operatorValue, 'eZPDF::modify' );
+                eZDebug::writeNotice( 'PDF: Added frame '.$frameType .': '.$operatorValue, __METHOD__ );
             } break;
 
             case 'frontpage':
@@ -641,7 +621,7 @@ class eZPDF
 
                 $operatorValue .= '>'. urlencode( $text ) .'</ezGroup:callFrontpage>';
 
-                eZDebug::writeNotice( 'Added content to frontpage: '. $operatorValue, 'eZPDF::modify' );
+                eZDebug::writeNotice( 'Added content to frontpage: '. $operatorValue, __METHOD__ );
             } break;
 
             /* usage: pdf(set_margin( hash( left, <left_margin>,
@@ -689,7 +669,7 @@ class eZPDF
             {
                 $operatorValue = '<C:callIndex>';
 
-                eZDebug::writeNotice( 'Adding Keyword index to PDF', 'eZPDF::modify' );
+                eZDebug::writeNotice( 'Adding Keyword index to PDF', __METHOD__ );
             } break;
 
             case 'ul':
@@ -1072,7 +1052,7 @@ class eZPDF
 
             default:
             {
-                eZDebug::writeError( 'PDF operation "'. $namedParameters['operation'] .'" undefined', 'eZPDF::modify' );
+                eZDebug::writeError( 'PDF operation "'. $namedParameters['operation'] .'" undefined', __METHOD__ );
             }
 
         }

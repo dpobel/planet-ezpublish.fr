@@ -1,0 +1,85 @@
+Bugfixes
+========
+- #18469: Navigation in trash is missing Fixed #018434: No paging while in content/browse in admin2
+- #19146: useless? comment in ezdbinterface. Useless brackets too.
+- #19236: decimals of prices are incorrectly stored (float -> double)
+- #19238: Vulnerability issue
+- #19247: Pause/Resuming a download not working in firefox
+- #19248: ezdb clustering on mysqli is broken in 4.7.0-dev, problem with  in gateway.php
+- #19252: fatal error ezobjectrelationlist
+- #19268: eZHTTPTool::createRedirectUrl() is broken with "override_protocol" param
+- #19284: ezcache script should not fail if data is corrupted
+
+Enhancements
+============
+- #19215: Audit feature should be improved for multisite installations
+
+Pull requests
+=============
+- #281: from trolek/localization2
+- #288: from crevillo/Issue-019146
+- #301: from crevillo/enhancement-019215
+- #302: from martin-damien/master
+- #303: from dpobel/collapsible_event
+- #310: from patrickallaert/PHPUnit-3.6-fix
+- #311: from lafka/master
+- #312: from SylvainGuittard/master
+- #313: from thiagocamposviana/master
+- #315: from thiagocamposviana/master
+- Merge branch 'gggeek-issue_018935'
+- Merge branch 'gggeek-issue_018935_p16_18'
+
+Miscellaneous
+=============
+- finalized pt-BR translation
+- Added some documentation on HTTP_RANGE not supported by eZDB clusters and CLUSTER_ENABLE_HTTP_RANGE that should be set to false in config.cluster.php
+- Added some pt-BR translations
+- French translation finished
+- Fixed a filename mistake in cluster_index.md doc file, reported by @geoffpt
+- Fixed: compatibility with PHPUnit 3.6
+- Admin2: Tweak button border color a bit
+- Fixed unit test failure cause by missing use of
+- Implmented improved registration form
+- Add phpdoc on eZStepInstaller class
+- Improve: Display latest draft for editors when viewing a tree node
+- Make labels of timing points the same for all ezdfs backends
+- Also measure db connection time for ezdfs
+- Add timing point: cluster db connection
+- Add new accumulator: db connection Also improve a bit the postgresql timing points that were severely lacking
+- Add new accumulator: php class autoloading
+- Improved related class filtering pull request code
+- Fixed: make sure we use the ezjscore settings while loading YUI3 modules
+- Implemented opt-in feature: Display latest draft for editors when viewing a tree node
+- Add filter on class d'un fetch related
+- Changed: typo fix (Thanks @jheba)
+- Added two new events: content/view & request/preinput
+- Disabled HTTP Range in DB cluster
+- Added note on change in ezpEvent->filter() signature
+- index_cluster parameters tweak for oracle
+- index_cluster debugging improvement
+- PHPDoc fix
+- Small inclusion fix in index_cluster.php
+- Removed HTTP RANGE support for DB based clusters
+- Reverted: part of e22e25791d803e4cbc8f15a2508abe3b6c90b3c1
+- Changed: Y.eZ.CollapsibleMenu now accepts callbacks and style definition with a function in its configuration
+- Changed the CLUSTER_ENABLE_HTTP_CACHE option behaviour.
+- Locale adjusted with the advice of @patrickallaert
+- Adding esperanto locale.
+- Changed: the language switcher tpl operator also returns the default locale associated with a siteaccess
+- Reverted the constructor change to php5 style as suggested by eZ Systems crew. @see https://github.com/ezsystems/ezpublish/pull/301#issuecomment-4453291 Reverted related doc also.
+- Fixed an error reporting mistake in index_cluster.php
+- Updated autoload after the removal of the postgresql cluster
+- Moved DFS postgresql files to an extension (ezpostgresqlcluster)
+- added doc about bc change.
+- Fixed toolbar display in IE 6 and 7
+- Fixed: avoid a JavaScript when TemplateCompile is disabled
+- Changed doc to phpDoc style
+- localization: added and updated some missing translations
+- Remove dead code in ezdebug
+- One more timing improvement (in timing points)
+- Fix commit 2c94f00e: in cli mode, the number of queries was followed by "KB"
+- Minor formatting improvement: move time accumulators note inside table
+- Allow (end user) to display list of included php files in the debug report
+- Improve debug report display: . show measurement unit in table headers, not in rows (makes easier copy and paste in spreadsheets) . align data cells to the right, to make easy visual understanding of data . do not display table headers (in html mode) when table contents are not to be printed . reword table headers to be more understandable by non-core developers . add new table before timing points: the 3 most important resources (time, memory, db) . reword "end" timing point into "script end" to be more in line with "script start" . add note about time accumulators not adding up to 100% . add at bottom total time for debug report printing (remove time taken for template table printing)
+- Better measurement of time for debug report: - use time from debug messages in debug report instead of time when debug report is printed
+- Better measurement of time for debug report: - start initial time counter before the autoloading mechanism is set up - start/stop accumulators asap in their function calls - allow script to declare and end time before debug is printed - show module start time relative to script start, not at time 0

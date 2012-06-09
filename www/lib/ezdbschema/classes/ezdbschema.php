@@ -1,28 +1,12 @@
 <?php
-//
-// Created on: <28-Jan-2004 15:46:30 dr>
-//
-// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-// SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.4.0
-// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
-// SOFTWARE LICENSE: GNU General Public License v2.0
-// NOTICE: >
-//   This program is free software; you can redistribute it and/or
-//   modify it under the terms of version 2.0  of the GNU General
-//   Public License as published by the Free Software Foundation.
-// 
-//   This program is distributed in the hope that it will be useful,
-//    but WITHOUT ANY WARRANTY; without even the implied warranty of
-//   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//   GNU General Public License for more details.
-// 
-//   You should have received a copy of version 2.0 of the GNU General
-//   Public License along with this program; if not, write to the Free
-//   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
-//   MA 02110-1301, USA.
-// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-//
+/**
+ * File containing the eZDbSchema class.
+ *
+ * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
+ * @license http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License v2
+ * @version  2012.5
+ * @package lib
+ */
 
 /*!
   \class eZDbSchema ezdbschema.php
@@ -36,7 +20,7 @@ class eZDbSchema
     /**
      * Returns a shared instance of the eZDBSchemaInterface class.
      *
-     * @param $params array|eZDBInterface|false if array, following key is needed:
+     * @param array|eZDBInterface|false $params If array, following key is needed:
      *        - instance: the eZDB instance (optional), if none provided, eZDB::instance() will be used.
      * @return eZDBSchemaInterface|false
      */
@@ -71,7 +55,7 @@ class eZDbSchema
         /* Check if we have a handler */
         if ( !isset( $schemaPaths[$dbname] ) or !isset( $schemaHandlerClasses[$dbname] ) )
         {
-            eZDebug::writeError( "No schema handler for database type: $dbname", 'eZDbSchema::instance()' );
+            eZDebug::writeError( "No schema handler for database type: $dbname", __METHOD__ );
             return false;
         }
 
@@ -158,9 +142,9 @@ class eZDbSchema
     }
 
     /**
-    * Merges 2 db schemas, basically appending 2nd on top of 1st
-    * @return array the merged schema
-    */
+     * Merges 2 db schemas, basically appending 2nd on top of 1st
+     * @return array the merged schema
+     */
     static function merge( $schema1, $schema2 )
     {
         $merged = $schema1;

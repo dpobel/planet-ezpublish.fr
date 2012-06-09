@@ -5,10 +5,10 @@
 // Created on: <1-Jul-2008 12:42:08 ar>
 //
 // ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-// SOFTWARE NAME: eZ JSCore extension for eZ Publish
-// SOFTWARE RELEASE: 4.4.0
-// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
-// SOFTWARE LICENSE: GNU General Public License v2.0
+// SOFTWARE NAME: eZ Publish Community Project
+// SOFTWARE RELEASE:  2012.5
+// COPYRIGHT NOTICE: Copyright (C) 1999-2012 eZ Systems AS
+// SOFTWARE LICENSE: GNU General Public License v2
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
 //   modify it under the terms of version 2.0  of the GNU General
@@ -38,7 +38,7 @@ class ezjscServerRouter
     protected $functionArguments = array();
     protected $isTemplateFunction = false;
 
-    protected function ezjscServerRouter( $className, $functionName = 'call', $functionArguments = array(), $isTemplateFunction = false )
+    protected function ezjscServerRouter( $className, $functionName = 'call', array $functionArguments = array(), $isTemplateFunction = false )
     {
         $this->className = $className;
         $this->functionName = $functionName;
@@ -209,8 +209,7 @@ class ezjscServerRouter
     {
         if ( $this->isTemplateFunction )
         {
-            include_once( 'kernel/common/template.php' );
-            $tpl = templateInit();
+            $tpl = eZTemplate::factory();
             $tpl->setVariable( 'arguments', $this->functionArguments );
             $tpl->setVariable( 'environment', $environmentArguments );
             return $tpl->fetch( 'design:' . $this->className . '/' . $this->functionName . '.tpl' );

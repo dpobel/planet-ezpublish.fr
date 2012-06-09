@@ -1,33 +1,12 @@
 <?php
-//
-// Definition of eZINIAddonPackageHandler class
-//
-// Created on: <23-Jul-2003 16:11:42 amos>
-//
-// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-// SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.4.0
-// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
-// SOFTWARE LICENSE: GNU General Public License v2.0
-// NOTICE: >
-//   This program is free software; you can redistribute it and/or
-//   modify it under the terms of version 2.0  of the GNU General
-//   Public License as published by the Free Software Foundation.
-// 
-//   This program is distributed in the hope that it will be useful,
-//    but WITHOUT ANY WARRANTY; without even the implied warranty of
-//   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//   GNU General Public License for more details.
-// 
-//   You should have received a copy of version 2.0 of the GNU General
-//   Public License along with this program; if not, write to the Free
-//   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
-//   MA 02110-1301, USA.
-// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-//
-
-/*! \file
-*/
+/**
+ * File containing the eZINIAddonPackageHandler class.
+ *
+ * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
+ * @license http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License v2
+ * @version  2012.5
+ * @package kernel
+ */
 
 /*!
   \class eZINIAddonPackageHandler ezcontentclasspackagehandler.php
@@ -141,15 +120,13 @@ class eZINIAddonPackageHandler extends eZPackageHandler
 
                 default:
                 {
-                    eZDebug::writeError( 'Unknown remote id type ' . $remoteIDType,
-                                         'eZINIAddonPackageHandler::currentID()' );
+                    eZDebug::writeError( 'Unknown remote id type ' . $remoteIDType, __METHOD__ );
                 } break;
             }
 
             if ( count( $result ) != 1 )
             {
-                eZDebug::writeError( 'Invalid result fetching id from ' . $remoteIDType . ', remote_id: ' . $value,
-                                     'eZINIAddonPackageHandler::currentID()' );
+                eZDebug::writeError( 'Invalid result fetching id from ' . $remoteIDType . ', remote_id: ' . $value, __METHOD__ );
             }
             else
             {
@@ -174,7 +151,7 @@ class eZINIAddonPackageHandler extends eZPackageHandler
         foreach( array_keys( $iniOverrideArray ) as $siteAccess )
         {
             $iniNode = eZINIAddonPackageHandler::iniDOMTree( $filename, $siteAccess, $iniOverrideArray[$siteAccess], $remoteIDArray );
-            if ( !$overrideNode )
+            if ( !$iniNode )
             {
                 continue;
             }
@@ -254,8 +231,7 @@ class eZINIAddonPackageHandler extends eZPackageHandler
                             }
                             else
                             {
-                                eZDebug::writeNotice( 'Could not interpret ' . $valueName . ': ' . $value,
-                                                      'eZINIAddonPackageHandler::iniDOMTree()' );
+                                eZDebug::writeNotice( 'Could not interpret ' . $valueName . ': ' . $value, __METHOD__ );
                             }
                         }
                         if ( $remoteID )
@@ -287,8 +263,7 @@ class eZINIAddonPackageHandler extends eZPackageHandler
                         }
                         else
                         {
-                            eZDebug::writeNotice( 'Could not interpret ' . $blockVariable . ': ' . $variableValue,
-                                                  'eZINIAddonPackageHandler::iniDOMTree()' );
+                            eZDebug::writeNotice( 'Could not interpret ' . $blockVariable . ': ' . $variableValue, __METHOD__ );
                         }
                     }
                     unset( $valueNode );

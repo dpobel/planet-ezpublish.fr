@@ -1,0 +1,118 @@
+Bugfixes
+========
+- #13270: Wrong logic to fetch temporary workflows in workflowlist view
+- #17781: image aliases not restored when restoring object from trash
+- #18066: optimize product statistics view (webshop)
+- #18207: Lots of errors when clearing cache with --purge
+- #18561: IE users are logged out in result of comment posting
+- #18613: Empty ezcontentlanguage_cache.php not being regenerated
+- #18636: Deleting an user that has been updated raises an error
+- #18669: ajax uploader not working with IE8 in Windows7
+- #18670: Media Attribute not showing correctly in class preview
+- #18681: Media Attribute not showing correctly when creating a new object
+- #18703: A user can remove any locations if he has right to delete one
+- #18729: Wrong account activation message
+- #18776: Admin2: Number of items per page returns always to 25
+- #18790: Unable to publish content when object relation list is made required after another required attribute was missing
+- #18815: REST api: can not add filters
+- #18832: editing unactivated registered user causes fatal error
+- #18842: Float values stored using DOUBLE PRECISION instead of REAL in PostgreSQL
+- #18843: PHP Fatal error in Asynchronous publishing
+- #18847: Delay Indexing is not working on Oracle
+- #18851: ctrl+c doesn't stop bin/php/ezasynchronouspublisher.php (oracle)
+- #18857: Error: eZPostgreSQLDB when adding a new Section
+- #18881: Stop producing an error on normal redirection
+- #18897: Driving with brakes on // sql wildcards not escaped // slow queries
+- #18905: DFS: If port param is left empty --> Fatal Error
+- #18908: Error when removing an object
+- #18909: Wrong link in install wizard
+- #18912: eZPgsqlSchema::generateDropFieldSql() does not quote reserved column names
+- #18914: eZPgsqlSchema::generateDropIndexSql uses wrong constraint name
+- #18937: REST : Having a v inside provider prefix makes the request parsing fail
+- #18970: Password in email
+- #18975: order of HostUriMatchMapItems items is crucial when using host_uri matchorder
+- Revert "Fixed #17279: Unable to publish when object relation list is required"
+- Fixed too many args used when calling eZURLAliasML::generateFullSelect
+- Fixed eZURLAliasMLRegression::testURLAliasSplitParentTranslation() to not fail while being run with others tests
+- Fixed eZObjectRelationListDatatypeRegression::testIssue18249() to not fail while being run with others tests
+- Fixed test eZObjectRelationListDatatypeRegression::testIssue18249
+- Made eZMySQLDBFKTest working without db per test option
+- Fixed eZURLAliasML regression tests
+- Fixed unit test on attribute template operator
+- Fixed eZURLAliasMLTest::testChoosePrioritizedRow() to work with any language setup
+- Fixed eZContentObjectTest::testRelatedObjectCount() to empty the trash
+- Fixed a PHP warning when using eZFile::downloadContent() with a non-existent file
+- Fixed some inconsistencies and issues in the french translation
+- Fixed a mistake in the french translation
+- Fixed: decreased dfscleanup sleep time down to 10ms
+- Fixed: eZClusterFileHandler::preFork() should me called BEFORE forking
+- Fixed integer casting
+- Ref #013270: still typo in variable
+
+Enhancements
+============
+- #18862: Fallback on mysql_escape_string to escape string if no connection initialized.
+- Implemented support for PUT and DELETE (REST)
+- Made MySQLi as default for eZDB cluster backend instead of MySQL
+
+Pull requests
+=============
+- Merge pull request #160 from dpobel/fre-fr
+- Merge pull request #218 from trolek/localization
+- Merge pull request #215 from jeromegamez/ezpersistentobject_grouping
+- Merge pull request #138 from jeromegamez/ezpersistentobject
+- Merge pull request #213 from jdespatis/clean-code
+- Merge pull request #211 from jdespatis/unknown-constant1
+- Merge pull request #214 from jdespatis/clean-code1
+- Merge pull request #212 from jdespatis/undeclared-variable24
+- Merge pull request #189 from jdespatis/undeclared-variable24
+- Merge pull request #210 from jdespatis/too-many-args17
+- Merge pull request #209 from jdespatis/too-many-args16
+- Merge pull request #208 from jdespatis/too-many-args15
+- Merge pull request #207 from jdespatis/too-many-args14
+- Merge pull request #206 from jdespatis/too-many-args13
+- Merge pull request #205 from jdespatis/too-many-args12
+- Merge pull request #204 from jdespatis/too-many-args11
+- Merge pull request #202 from jdespatis/too-many-args9
+- Merge pull request #200 from jdespatis/too-many-args7
+- Merge pull request #199 from jdespatis/too-many-args6
+- Merge pull request #186 from jdespatis/undeclared-variable21
+- Merge pull request #177 from jdespatis/undeclared-variable12
+- Merge pull request #198 from jdespatis/too-many-args5
+- Merge pull request #197 from jdespatis/too-many-args4
+- Merge pull request #196 from jdespatis/too-many-args3
+- Merge pull request #195 from jdespatis/too-many-args2
+- Merge pull request #194 from jdespatis/too-many-args1
+- Merge pull request #193 from jdespatis/undeclared-variable28
+- Merge pull request #192 from jdespatis/undeclared-variable27
+- Merge pull request #191 from jdespatis/undeclared-variable26
+- Merge pull request #190 from jdespatis/undeclared-variable25
+- Merge pull request #188 from jdespatis/undeclared-variable23
+- Merge pull request #187 from jdespatis/undeclared-variable22
+- Merge pull request #185 from jdespatis/undeclared-variable20
+- Merge pull request #184 from jdespatis/undeclared-variable19
+- Merge pull request #183 from jdespatis/undeclared-variable18
+- Merge pull request #182 from jdespatis/undeclared-variable17
+- Merge pull request #181 from jdespatis/undeclared-variable16
+- Merge pull request #180 from jdespatis/undeclared-variable15
+- Merge pull request #179 from jdespatis/undeclared-variable14
+- Merge pull request #178 from jdespatis/undeclared-variable13
+- Merge pull request #176 from jdespatis/undeclared-variable11
+- Merge pull request #175 from jdespatis/undeclared-variable10
+- Merge pull request #174 from jdespatis/undeclared-variable9
+- Merge pull request #173 from jdespatis/undeclared-variable8
+- Merge pull request #172 from jdespatis/undeclared-variable7
+- Merge pull request #171 from jdespatis/undeclared-variable6
+- Merge pull request #170 from jdespatis/undeclared-variable5
+- Merge pull request #169 from jdespatis/undeclared-variable4
+- Merge pull request #168 from jdespatis/undeclared-variable3
+- Merge pull request #167 from jdespatis/undeclared-variable2
+- Merge pull request #166 from jdespatis/undeclared-variable
+- Merge pull request #164 from nfrp/localization
+- Merge pull request #163 from trolek/localization
+- Merge pull request #162 from vjeran/localization
+- Merge pull request #161 from nfrp/localization-ita-IT-Netbliss
+- Merge pull request #159 from svda/master
+- Merge pull request #158 from svda/master
+- Merge pull request #155 from SylvainGuittard/master
+- Merge pull request #1 from harryo/master

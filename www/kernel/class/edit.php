@@ -1,29 +1,10 @@
 <?php
-//
-// Created on: <16-Apr-2002 11:00:12 amos>
-//
-// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-// SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.4.0
-// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
-// SOFTWARE LICENSE: GNU General Public License v2.0
-// NOTICE: >
-//   This program is free software; you can redistribute it and/or
-//   modify it under the terms of version 2.0  of the GNU General
-//   Public License as published by the Free Software Foundation.
-// 
-//   This program is distributed in the hope that it will be useful,
-//    but WITHOUT ANY WARRANTY; without even the implied warranty of
-//   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//   GNU General Public License for more details.
-// 
-//   You should have received a copy of version 2.0 of the GNU General
-//   Public License along with this program; if not, write to the Free
-//   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
-//   MA 02110-1301, USA.
-// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-//
-
+/**
+ * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
+ * @license http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License v2
+ * @version  2012.5
+ * @package kernel
+ */
 
 $Module = $Params['Module'];
 $ClassID = $Params['ClassID'];
@@ -46,7 +27,7 @@ switch ( $Params['FunctionName'] )
         eZDebug::writeError( 'Undefined function: ' . $params['Function'] );
         $Module->setExitStatus( eZModule::STATUS_FAILED );
         return;
-    };
+    }
 }
 
 $http = eZHTTPTool::instance();
@@ -233,8 +214,9 @@ if ( $http->hasPostVariable( 'RemoveGroupButton' ) && $http->hasPostVariable( 'g
 }
 
 
-// Ajax actions ( normal ones have "<action>_<attribute_id>" form and are fixed up later in $dataType->fixupClassAttributeHTTPInput )
-if ( $http->hasPostVariable( 'MoveUp' ) )
+// Ajax actions (normal ones have $contentClassHasInput == 1 and are fixed up
+// later in $dataType->fixupClassAttributeHTTPInput)
+if ( $contentClassHasInput == 0 && $http->hasPostVariable( 'MoveUp' ) )
 {
     $attribute = eZContentClassAttribute::fetch( $http->postVariable( 'MoveUp' ), true, eZContentClass::VERSION_STATUS_TEMPORARY,
                                                   array( 'contentclass_id', 'version', 'placement' ) );
@@ -245,7 +227,7 @@ if ( $http->hasPostVariable( 'MoveUp' ) )
     eZDB::checkTransactionCounter();
     eZExecution::cleanExit();
 }
-else if ( $http->hasPostVariable( 'MoveDown' ) )
+else if ( $contentClassHasInput == 0 && $http->hasPostVariable( 'MoveDown' ) )
 {
     $attribute = eZContentClassAttribute::fetch( $http->postVariable( 'MoveDown' ), true, eZContentClass::VERSION_STATUS_TEMPORARY,
                                                   array( 'contentclass_id', 'version', 'placement' ) );
@@ -427,7 +409,7 @@ if ( $contentClassHasInput )
         if ( $http->hasPostVariable( 'ContentAttribute_category_select' ) )
             $categoryArray = $http->postVariable( 'ContentAttribute_category_select' );
 
-        foreach ( $attributes as $key => $attribute )
+        foreach ( $attributes as $attribute )
         {
             $attributeID = $attribute->attribute( 'id' );
             $attribute->setAttribute( 'is_required', in_array( $attributeID, $requireCheckedArray ) );
@@ -438,12 +420,12 @@ if ( $contentClassHasInput )
             // check if the category is set for this attribute key, may not be the case when using old admin and new attributes
             // if this is not set at all, it gets a default value from the DB
             // if it is set, we want to leave it like that of course
-            if ( array_key_exists( $key, $categoryArray ) )
+            if ( isset( $categoryArray[$attributeID] ) )
             {
-                $attribute->setAttribute( 'category', $categoryArray[$key] );
+                $attribute->setAttribute( 'category', $categoryArray[$attributeID] );
             }
 
-            $placement = (int) $placementArray[$key];
+            $placement = (int) $placementArray[$attribute->attribute( 'id' )];
             if ( $attribute->attribute( 'placement' ) != $placement )
                 $attribute->setAttribute( 'placement', $placement );
         }
@@ -464,15 +446,16 @@ $cur_datatype = 'ezstring';
 // Apply HTTP POST variables
 if ( $contentClassHasInput )
 {
-    eZHTTPPersistence::fetch( 'ContentAttribute', eZContentClassAttribute::definition(), $attributes, $http, true );
+    eZHTTPPersistence::fetch( 'ContentAttribute', eZContentClassAttribute::definition(), $attributes, $http, true, 'id' );
     if ( $http->hasPostVariable( 'ContentAttribute_name' ) )
     {
         $attributeNames = $http->postVariable( 'ContentAttribute_name' );
-        foreach( $attributes as $key => $attribute )
+        foreach ( $attributes as $attribute )
         {
+            $key = $attribute->attribute( 'id' );
             if ( isset( $attributeNames[$key] ) )
             {
-                $attributes[$key]->setName( $attributeNames[$key], $EditLanguage );
+                $attribute->setName( $attributeNames[$key], $EditLanguage );
             }
         }
     }
@@ -480,11 +463,12 @@ if ( $contentClassHasInput )
     if ( $http->hasPostVariable( 'ContentAttribute_description' ) )
     {
         $attributeNames = $http->postVariable( 'ContentAttribute_description' );
-        foreach( $attributes as $key => $attribute )
+        foreach ( $attributes as $attribute )
         {
+            $key = $attribute->attribute( 'id' );
             if ( isset( $attributeNames[$key] ) )
             {
-                $attributes[$key]->setDescription( $attributeNames[$key], $EditLanguage );
+                $attribute->setDescription( $attributeNames[$key], $EditLanguage );
             }
         }
     }
@@ -643,16 +627,18 @@ if ( $contentClassHasInput )
 if ( $validationRequired )
 {
     // check for duplicate attribute identifiers in the input
-    if ( count( $attributes ) > 1 )
+    $attributesCount = count( $attributes );
+    if ( $attributesCount > 1 )
     {
-        for( $attrIndex = 0; $attrIndex < count( $attributes ) - 1; $attrIndex++ )
+        $attributesValues = array_values( $attributes );
+        for ( $attrIndex = 0; $attrIndex < $attributesCount - 1; $attrIndex++ )
         {
-            $classAttribute = $attributes[$attrIndex];
+            $classAttribute = $attributesValues[$attrIndex];
             $identifier = $classAttribute->attribute( 'identifier' );
             $placement = $classAttribute->attribute( 'placement' );
-            for ( $attrIndex2 = $attrIndex + 1; $attrIndex2 < count( $attributes ); $attrIndex2++ )
+            for ( $attrIndex2 = $attrIndex + 1; $attrIndex2 < $attributesCount; $attrIndex2++ )
             {
-                $classAttribute2 = $attributes[$attrIndex2];
+                $classAttribute2 = $attributesValues[$attrIndex2];
                 $identifier2 = $classAttribute2->attribute( 'identifier' );
                 $placement2 = $classAttribute2->attribute( 'placement' );
                 if (  $placement ==  $placement2 )
@@ -676,6 +662,8 @@ if ( $validationRequired )
                 }
             }
         }
+
+        unset( $attributesValues );
     }
 }
 

@@ -39,6 +39,11 @@
                  * @param {function} f Function to execute when the event occurs.
                  * @param {Object} s Optional scope to execute the function in.
                  * @return {function} Function callback handler the same as the one passed in.
+                 * @example
+                 * // Adds a click handler to the current document
+                 * tinymce.dom.Event.add(document, 'click', function(e) {
+                 *    console.debug(e.target);
+                 * });
                  */
                 add : function(o, n, f, s) {
                         var cb, t = this, el = t.events, r;
@@ -129,6 +134,14 @@
                  * @param {String} n Event handler name like for example: "click"
                  * @param {function} f Function to remove.
                  * @return {bool/Array} Bool state if true if the handler was removed or an array with states if multiple elements where passed in.
+                 * @example
+                 * // Adds a click handler to the current document
+                 * var func = tinymce.dom.Event.add(document, 'click', function(e) {
+                 *    console.debug(e.target);
+                 * });
+                 * 
+                 * // Removes the click handler from the document
+                 * tinymce.dom.Event.remove(document, 'click', func);
                  */
                 remove : function(o, n, f) {
                         var t = this, a = t.events, s = false, r;
@@ -164,6 +177,11 @@
                  *
                  * @method clear
                  * @param {Object} o DOM element or object to remove all events from.
+                 * @example
+                 * // Cancels all mousedown events in the active editor
+                 * tinyMCE.activeEditor.onMouseDown.add(function(ed, e) {
+                 *    return tinymce.dom.Event.cancel(e);
+                 * });
                  */
                 clear : function(o) {
                         var t = this, a = t.events, i, e;
@@ -297,6 +315,12 @@
                                 return;
                         }
 
+                        // When loaded asynchronously, the DOM Content may already be loaded
+                        if (doc.readyState === 'complete') {
+                                t._pageInit(win);
+                                return;
+                        }
+
                         // Use IE method
                         if (doc.attachEvent) {
                                 doc.attachEvent("onreadystatechange", function() {
@@ -312,7 +336,7 @@
                                                         return;
 
                                                 try {
-                                                        // If IE is used, use the trick by Diego Perini
+                                                        // If IE is used, use the trick by Diego Perini licensed under MIT by request to the author.
                                                         // http://javascript.nwbox.com/IEContentLoaded/
                                                         doc.documentElement.doScroll("left");
                                                 } catch (ex) {
@@ -335,7 +359,7 @@
                 },
 
                 _stoppers : {
-                        preventDefault :  function() {
+                        preventDefault : function() {
                                 this.returnValue = false;
                         },
 

@@ -5,10 +5,10 @@
 // Created on: <5-Aug-2007 00:00:00 ar>
 //
 // ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-// SOFTWARE NAME: eZ JSCore extension for eZ Publish
-// SOFTWARE RELEASE: 4.4.0
-// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
-// SOFTWARE LICENSE: GNU General Public License v2.0
+// SOFTWARE NAME: eZ Publish Community Project
+// SOFTWARE RELEASE:  2012.5
+// COPYRIGHT NOTICE: Copyright (C) 1999-2012 eZ Systems AS
+// SOFTWARE LICENSE: GNU General Public License v2
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
 //   modify it under the terms of version 2.0  of the GNU General
@@ -64,6 +64,8 @@ class ezjscAjaxContent
                                                                                   'xml' => 'xml',
                                                                                   'text' => 'text' ) )
     {
+        $acceptList = array();
+
         if ( isset($_POST['http_accept']) )
             $acceptList = explode( ',', $_POST['http_accept'] );
         else if ( isset($_POST['HTTP_ACCEPT']) )
@@ -72,7 +74,7 @@ class ezjscAjaxContent
             $acceptList = explode( ',', $_GET['http_accept'] );
         else if ( isset($_GET['HTTP_ACCEPT']) )
             $acceptList = explode( ',', $_GET['HTTP_ACCEPT'] );
-        else
+        else if ( isset($_SERVER['HTTP_ACCEPT']) )
             $acceptList = explode( ',', $_SERVER['HTTP_ACCEPT'] );
 
         foreach( $acceptList as $accept )
@@ -123,7 +125,7 @@ class ezjscAjaxContent
         if ( is_array( $mix ) )
             return implode(',', array_map( array('ezjscAjaxContent', 'textEncode'), array_filter( $mix ) ) );
 
-        return $mix;
+        return htmlspecialchars( $mix );
     }
 
     /**
@@ -223,22 +225,24 @@ class ezjscAjaxContent
         if (  !isset( $params['imageDataTypes'] ) )
             $params['imageDataTypes'] = $ini->variable( 'ImageDataTypeSettings', 'AvailableImageDataTypes' );
 
-        $ret                            = array();
-        $attrtibuteArray                = array();
-        $ret['name']                    = $contentObject->attribute( 'name' );
-        $ret['contentobject_id']        = $ret['id'] = (int) $contentObject->attribute( 'id' );
-        $ret['contentobject_remote_id'] = $contentObject->attribute( 'remote_id' );
-        $ret['main_node_id']            = (int)$contentObject->attribute( 'main_node_id' );
-        $ret['version']                 = (int)$contentObject->attribute( 'current_version' );
-        $ret['modified']                = $contentObject->attribute( 'modified' );
-        $ret['published']               = $contentObject->attribute( 'published' );
-        $ret['section_id']              = (int) $contentObject->attribute( 'section_id' );
-        $ret['current_language']        = $contentObject->attribute( 'current_language' );
-        $ret['owner_id']                = (int) $contentObject->attribute( 'owner_id' );
-        $ret['class_id']                = (int) $contentObject->attribute( 'contentclass_id' );
-        $ret['class_name']              = $contentObject->attribute( 'class_name' );
-        $ret['translations']            = eZContentLanguage::decodeLanguageMask($contentObject->attribute( 'language_mask' ), true);
-        $ret['can_edit']                = $contentObject->attribute( 'can_edit' );
+        $ret                                    = array();
+        $attrtibuteArray                        = array();
+        $ret['name']                            = htmlentities( $contentObject->attribute( 'name' ), ENT_QUOTES, "UTF-8" );
+        $ret['contentobject_id']                = $ret['id'] = (int) $contentObject->attribute( 'id' );
+        $ret['contentobject_remote_id']         = $contentObject->attribute( 'remote_id' );
+        $ret['contentobject_state']             = implode( ", ", $contentObject->attribute( 'state_identifier_array' ) );
+        $ret['main_node_id']                    = (int)$contentObject->attribute( 'main_node_id' );
+        $ret['version']                         = (int)$contentObject->attribute( 'current_version' );
+        $ret['modified']                        = $contentObject->attribute( 'modified' );
+        $ret['published']                       = $contentObject->attribute( 'published' );
+        $ret['section_id']                      = (int) $contentObject->attribute( 'section_id' );
+        $ret['current_language']                = $contentObject->attribute( 'current_language' );
+        $ret['owner_id']                        = (int) $contentObject->attribute( 'owner_id' );
+        $ret['class_id']                        = (int) $contentObject->attribute( 'contentclass_id' );
+        $ret['class_name']                      = $contentObject->attribute( 'class_name' );
+        $ret['path_identification_string']      = $node->attribute( 'path_identification_string' );
+        $ret['translations']                    = eZContentLanguage::decodeLanguageMask($contentObject->attribute( 'language_mask' ), true);
+        $ret['can_edit']                        = $contentObject->attribute( 'can_edit' );
 
         if ( isset( $params['formatDate'] ) )
         {
@@ -249,8 +253,16 @@ class ezjscAjaxContent
         if ( isset( $params['fetchCreator'] ) )
         {
             $creator = $contentObject->attribute( 'current' )->attribute('creator');
-            $ret['creator'] = array( 'id' => $creator->attribute( 'id' ),
-                                     'name' => $creator->attribute('name') );
+            if ( $creator instanceof eZContentObject )
+            {
+                $ret['creator'] = array( 'id'   => $creator->attribute( 'id' ),
+                                         'name' => $creator->attribute('name') );
+            }
+            else
+            {
+                $ret['creator'] = array( 'id'   => $contentObject->attribute( 'creator_id' ),
+                                         'name' => null );// user has been deleted
+            }
         }
 
         if ( isset( $params['fetchClassIcon'] ) )
@@ -265,7 +277,10 @@ class ezjscAjaxContent
 
             $operatorName = 'class_icon';
 
-            $operator->modify( $tpl, $operatorName, $operatorParameters, '', '', $operatorValue, $namedParameters );
+            $operator->modify(
+                $tpl, $operatorName, $operatorParameters, '', '',
+                $operatorValue, $namedParameters, array()
+            );
 
             $ret['class_icon'] = $operatorValue;
         }
@@ -273,12 +288,15 @@ class ezjscAjaxContent
         if ( isset( $params['fetchThumbPreview'] ) )
         {
             $thumbUrl = '';
+            $thumbWidth = 0;
+            $thumbHeight = 0;
             $thumbDataType = isset( $params['thumbDataType'] ) ? $params['thumbDataType'] : 'ezimage';
             $thumbImageSize = isset( $params['thumbImageSize'] ) ? $params['thumbImageSize'] : 'small';
 
             foreach( $contentObject->attribute( 'data_map' ) as $key => $atr )
             {
-                if ( $atr->attribute( 'data_type_string' ) == $thumbDataType )
+                if ( $atr->attribute( 'data_type_string' ) == $thumbDataType
+                        && $atr->attribute( 'has_content' ) )
                 {
                     $imageContent = $atr->attribute( 'content' );
 
@@ -289,6 +307,8 @@ class ezjscAjaxContent
                             __METHOD__ );
 
                     $thumbUrl = isset( $imageAlias['full_path'] ) ? $imageAlias['full_path'] : '';
+                    $thumbWidth = isset( $imageAlias['width'] ) ? (int) $imageAlias['width'] : 0;
+                    $thumbHeight = isset( $imageAlias['height'] ) ? (int) $imageAlias['height'] : 0;
 
                     if ( $thumbUrl !== '' )
                         eZURI::transformURI( $thumbUrl, true );
@@ -298,6 +318,8 @@ class ezjscAjaxContent
             }
 
             $ret['thumbnail_url'] = $thumbUrl;
+            $ret['thumbnail_width'] = $thumbWidth;
+            $ret['thumbnail_height'] = $thumbHeight;
         }
 
         if ( $params['fetchSection'] )
@@ -381,6 +403,10 @@ class ezjscAjaxContent
         if ( is_array( $params['dataMap'] ) && is_array(  $params['dataMapType'] ) )
         {
             $dataMap = $contentObject->attribute( 'data_map' );
+            $datatypeBlacklist = array_fill_keys(
+                $ini->variable( 'ContentSettings', 'DatatypeBlackListForExternal' ),
+                true
+            );
             foreach( $dataMap as $key => $atr )
             {
                 $dataTypeString = $atr->attribute( 'data_type_string' );
@@ -397,7 +423,10 @@ class ezjscAjaxContent
                 $attrtibuteArray[ $key ]['id']         = $atr->attribute( 'id' );
                 $attrtibuteArray[ $key ]['type']       = $dataTypeString;
                 $attrtibuteArray[ $key ]['identifier'] = $key;
-                $attrtibuteArray[ $key ]['content']    = $atr->toString();
+                if ( isset ( $datatypeBlacklist[$dataTypeString] ) )
+                    $attrtibuteArray[ $key ]['content'] = null;
+                else
+                    $attrtibuteArray[ $key ]['content'] = $atr->toString();
 
                 // images
                 if ( in_array( $dataTypeString, $params['imageDataTypes'], true) && $atr->hasContent() )

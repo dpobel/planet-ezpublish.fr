@@ -122,8 +122,7 @@
 
 
 {literal}
-<script language="JavaScript" type="text/javascript">
-<!--
+<script type="text/javascript">
     window.onload=function()
     {
         with( editform )
@@ -148,7 +147,6 @@
         // Ask user if she really wants do it, return this to the handler.
         return confirm( question );
     }
--->
 </script>
 {/literal}
 

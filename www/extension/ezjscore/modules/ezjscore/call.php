@@ -3,10 +3,10 @@
 // Created on: <16-Jun-2008 00:00:00 ar>
 //
 // ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-// SOFTWARE NAME: eZ JSCore extension for eZ Publish
-// SOFTWARE RELEASE: 4.4.0
-// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
-// SOFTWARE LICENSE: GNU General Public License v2.0
+// SOFTWARE NAME: eZ Publish Community Project
+// SOFTWARE RELEASE:  2012.5
+// COPYRIGHT NOTICE: Copyright (C) 1999-2012 eZ Systems AS
+// SOFTWARE LICENSE: GNU General Public License v2
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
 //   modify it under the terms of version 2.0  of the GNU General
@@ -41,22 +41,27 @@ else
     $callSeperator = '@SEPERATOR$';
 
 if ( $http->hasPostVariable( 'ezjscServer_stream_seperator' ) )
-    $stramSeperator = $http->postVariable( 'ezjscServer_stream_seperator' );
+    $streamSeperator = $http->postVariable( 'ezjscServer_stream_seperator' );
 else
-    $stramSeperator = '@END$';
+    $streamSeperator = '@END$';
 
 if ( $http->hasPostVariable( 'ezjscServer_function_arguments' ) )
-    $callList = explode( $callSeperator, $http->postVariable( 'ezjscServer_function_arguments' ) );
+    $callList = explode( $callSeperator, strip_tags( $http->postVariable( 'ezjscServer_function_arguments' ) ) );
 else if ( isset( $Params['function_arguments'] ) )
-    $callList = explode( $callSeperator, $Params['function_arguments'] );
+    $callList = explode( $callSeperator, strip_tags( $Params['function_arguments'] ) );
 else
     $callList = array();
 
 // Allow get parameter to be set to test in browser
 if ( isset( $_GET['ContentType'] ) )
+{
     $contentType = $_GET['ContentType'];
+}
 else
+{
     $contentType = ezjscAjaxContent::getHttpAccept();
+    header('Vary: Accept');
+}
 
 // set http headers
 if ( $contentType === 'xml' )
@@ -84,7 +89,7 @@ if ( !$callList )
 }
 
 
-// prepere calls
+// prepare calls
 foreach( $callList as $call )
 {
     $temp = ezjscServerRouter::getInstance( explode( '::', $call ), true, true );
@@ -123,7 +128,7 @@ if ( $callType === 'stream' )
     // set_time_limit(65);
     while( time() < $endTime )
     {
-        echo $stramSeperator . implode( $callSeperator, multipleezjscServerCalls( $callFnList, $contentType ) );
+        echo $streamSeperator . implode( $callSeperator, multipleezjscServerCalls( $callFnList, $contentType ) );
         flush();
         usleep( $callInterval );
     }
@@ -153,7 +158,7 @@ function multipleezjscServerCalls( $calls, $contentType = 'json' )
         }
         else
         {
-            $response['error_text'] = 'Not a valid ezjscServerRouter argument: "' . $call . '"';
+            $response['error_text'] = 'Not a valid ezjscServerRouter argument: "' . htmlentities( $call, ENT_QUOTES ) . '"';
         }
         $r[] = ezjscAjaxContent::autoEncode( $response, $contentType );
     }

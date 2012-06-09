@@ -1,0 +1,34 @@
+Bugfixes
+========
+- #18434: alphabetical navigator falls back to google navigator if not configured
+- #018973: Missing  parameter in modify method
+- #19057: Version editing conflict after draft has been denied
+- #19069: workflow crash
+- #19095: change german translation
+
+Enhancements
+============
+- #019073: show remote id in details tab in administration interface
+
+Pull requests
+=============
+- #255: from jdespatis/magic-tricky-getter
+- #260: from dpobel/yui_modules
+- #264: from Heliopsis-HQ/master
+- #265: from Tharkun/#018973
+- #271: from jdespatis/event-check
+- #283: from myxt/upstream
+- #286: from crevillo/Enhancement-019703
+
+Miscellaneous
+=============
+- Corrected path to template in provided example
+- Fixed: Collapsible content edit left menu breaks the page in Chrome
+- Fixed: wrong use of ezscript_require in object relation(s) edit templates
+- Changed: set the focus to the year input when using the JS calendar
+- Fixed a display issue in IE8 when uncollapsing the content edit left menu
+- Removed div closing that was breaking the tree
+- Adding a check in ezpEvent constructor, as it may be possible to add an empty listener, when a user wants to delete an override
+- No more use static variable to fix that issue, better to use an internal protected temp variable
+- Changed modal window and ajax uploader component to be 2 YUI3 modules
+- the magic getter __get() is never called due to an already existing protected property

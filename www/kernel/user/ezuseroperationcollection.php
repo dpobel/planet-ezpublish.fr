@@ -1,33 +1,12 @@
 <?php
-//
-// Definition of eZUserOperationCollection class
-//
-// Created on: <27-Apr-2009 13:51:17 rp/ar>
-//
-// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-// SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.4.0
-// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
-// SOFTWARE LICENSE: GNU General Public License v2.0
-// NOTICE: >
-//   This program is free software; you can redistribute it and/or
-//   modify it under the terms of version 2.0  of the GNU General
-//   Public License as published by the Free Software Foundation.
-// 
-//   This program is distributed in the hope that it will be useful,
-//    but WITHOUT ANY WARRANTY; without even the implied warranty of
-//   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//   GNU General Public License for more details.
-// 
-//   You should have received a copy of version 2.0 of the GNU General
-//   Public License along with this program; if not, write to the Free
-//   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
-//   MA 02110-1301, USA.
-// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-//
-
-/*! \file
-*/
+/**
+ * File containing the eZUserOperationCollection class.
+ *
+ * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
+ * @license http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License v2
+ * @version  2012.5
+ * @package kernel
+ */
 
 /*!
   \class eZUserOperationCollection ezuseroperationcollection.php
@@ -75,6 +54,10 @@ class eZUserOperationCollection
             {
                 eZUser::removeSessionData( $userID );
             }
+            else
+            {
+                eZUserAccountKey::removeByUserID( $userID );
+            }
             return array( 'status' => true );
         }
         else
@@ -82,6 +65,191 @@ class eZUserOperationCollection
             eZDebug::writeError( "Failed to change settings of user $userID ", __METHOD__ );
             return array( 'status' => false );
         }
+    }
+
+    /**
+     * Send activativation to the user
+     *
+     * If the user is enabled, igore
+     */
+    static public function sendActivationEmail( $userID )
+    {
+        eZDebugSetting::writeNotice( 'kernel-user',  'Sending activation email.', 'user register' );
+        $ini = eZINI::instance();
+
+        $tpl = eZTemplate::factory();
+        $user = eZUser::fetch( $userID );
+        $tpl->setVariable( 'user', $user );
+        $object= eZContentObject::fetch( $userID );
+        $tpl->setVariable( 'object', $object );
+        $hostname = eZSys::hostname();
+        $tpl->setVariable( 'hostname', $hostname );
+
+        // Check whether account activation is required.
+        $verifyUserType = $ini->variable( 'UserSettings', 'VerifyUserType' );
+        $sendUserMail = !!$verifyUserType;
+        // For compatibility with old setting
+        if ( $verifyUserType === 'email'
+          && $ini->hasVariable( 'UserSettings', 'VerifyUserEmail' )
+          && $ini->variable( 'UserSettings', 'VerifyUserEmail' ) !== 'enabled' )
+        {
+            $verifyUserType = false;
+        }
+
+        if ( $verifyUserType === 'email' ) // and if it is email type
+        {
+            // Disable user account and send verification mail to the user
+
+            // Create enable account hash and send it to the newly registered user
+            $hash = md5( mt_rand() . time() . $userID );
+
+            if ( eZOperationHandler::operationIsAvailable( 'user_activation' ) )
+            {
+                $operationResult = eZOperationHandler::execute( 'user',
+                                                                'activation', array( 'user_id'    => $userID,
+                                                                                     'user_hash'  => $hash,
+                                                                                     'is_enabled' => false ) );
+            }
+            else
+            {
+                eZUserOperationCollection::activation( $userID, $hash, false );
+            }
+
+            $tpl->setVariable( 'hash', $hash );
+
+            $sendUserMail = true;
+        }
+        else if ( $verifyUserType )// custom account activation
+        {
+            $verifyUserTypeClass = false;
+            // load custom verify user settings
+            if ( $ini->hasGroup( 'VerifyUserType_' . $verifyUserType ) )
+            {
+                if ( $ini->hasVariable( 'VerifyUserType_' . $verifyUserType, 'File' ) )
+                    include_once( $ini->variable( 'VerifyUserType_' . $verifyUserType, 'File' ) );
+                $verifyUserTypeClass = $ini->variable( 'VerifyUserType_' . $verifyUserType, 'Class' );
+            }
+            // try to call the verify user class with function verifyUser
+            $user = eZContentObject::fetch( $userID );
+            if ( $verifyUserTypeClass && method_exists( $verifyUserTypeClass, 'verifyUser' ) )
+                $sendUserMail  = call_user_func( array( $verifyUserTypeClass, 'verifyUser' ), $user, $tpl );
+            else
+                eZDebug::writeWarning( "Unknown VerifyUserType '$verifyUserType'", 'user/register' );
+        }
+
+        // send verification mail to user if email type or custum verify user type returned true
+        if ( $sendUserMail )
+        {
+            $templateResult = $tpl->fetch( 'design:user/registrationinfo.tpl' );
+            if ( $tpl->hasVariable( 'content_type' ) )
+                $contentType = $tpl->variable( 'content_type' );
+            else
+                $contentType = $ini->variable( 'MailSettings', 'ContentType' );
+
+            $emailSender = $ini->variable( 'MailSettings', 'EmailSender' );
+            if ( $tpl->hasVariable( 'email_sender' ) )
+                $emailSender = $tpl->variable( 'email_sender' );
+            else if ( !$emailSender )
+                $emailSender = $ini->variable( 'MailSettings', 'AdminEmail' );
+
+            if ( $tpl->hasVariable( 'subject' ) )
+                $subject = $tpl->variable( 'subject' );
+            else
+                $subject = ezpI18n::tr( 'kernel/user/register', 'Registration info' );
+
+            $mail = new eZMail();
+            $mail->setSender( $emailSender );
+            $mail->setContentType( $contentType );
+            $user = eZUser::fetch( $userID );
+            $receiver = $user->attribute( 'email' );
+            $mail->setReceiver( $receiver );
+            $mail->setSubject( $subject );
+            $mail->setBody( $templateResult );
+            $mailResult = eZMailTransport::send( $mail );
+        }
+        return array( 'status' => eZModuleOperationInfo::STATUS_CONTINUE );
+    }
+
+
+    static public function checkActivation( $userID )
+    {
+        // check if the account is enabled
+        $user = eZUser::fetch( $userID );
+        if( $user->attribute( 'is_enabled' ) )
+        {
+            eZDebugSetting::writeNotice( 'kernel-user',  'The user is enabled.', 'user register/check activation' );
+            return array( 'status' => eZModuleOperationInfo::STATUS_CONTINUE );
+        }
+        else
+        {
+            eZDebugSetting::writeNotice( 'kernel-user',  'The user is not enabled.', 'user register/check activation' );
+            return array( 'status' => eZModuleOperationInfo::STATUS_HALTED );
+        }
+    }
+
+    /**
+     *  publish the object
+     */
+    static public function publishUserContentObject( $userID )
+    {
+        $object = eZContentObject::fetch( $userID );
+        if( $object->attribute( 'current_version' ) !== '1' )
+        {
+            eZDebug::writeError( 'Current version is wrong for the user object. User ID: ' . $userID , 'user/register' );
+            return array( 'status' => eZModuleOperationInfo::STATUS_CANCELLED );
+        }
+        eZDebugSetting::writeNotice( 'kernel-user' , 'publishing user object', 'user register' );
+        // if the object is already published, continue the operation
+        if( $object->attribute( 'status' ) )
+        {
+            eZDebugSetting::writeNotice( 'kernel-user', 'User object publish is published.', 'user register' );
+            return array( 'status' => eZModuleOperationInfo::STATUS_CONTINUE );
+        }
+        $result = eZOperationHandler::execute( 'content', 'publish', array( 'object_id' => $userID, 'version' => 1 ) );
+        if( $result['status'] === eZModuleOperationInfo::STATUS_HALTED )
+        {
+            eZDebugSetting::writeNotice( 'kernel-user', 'User object publish is in pending.', 'user register' );
+            return array( 'status' => eZModuleOperationInfo::STATUS_HALTED );
+        }
+        return $result;
+    }
+
+    /**
+     *  Send the notification after registeration
+     */
+    static public function sendUserNotification( $userID )
+    {
+        eZDebugSetting::writeNotice( 'Sending approval notification to the user.' , 'kernel-user', 'user register' );
+        $user = eZUser::fetch( $userID );
+        $ini = eZINI::instance();
+        // Send mail
+        $tpl = eZTemplate::factory();
+        $tpl->setVariable( 'user',  $user );
+        $templateResult = $tpl->fetch( 'design:user/registrationapproved.tpl' );
+
+        $mail = new eZMail();
+        if ( $tpl->hasVariable( 'content_type' ) )
+            $mail->setContentType( $tpl->variable( 'content_type' ) );
+
+        $emailSender = $ini->variable( 'MailSettings', 'EmailSender' );
+        if ( $tpl->hasVariable( 'email_sender' ) )
+            $emailSender = $tpl->variable( 'email_sender' );
+        else if ( !$emailSender )
+            $emailSender = $ini->variable( 'MailSettings', 'AdminEmail' );
+
+        if ( $tpl->hasVariable( 'subject' ) )
+            $subject = $tpl->variable( 'subject' );
+        else
+            $subject = ezpI18n::tr( 'kernel/user/register', 'User registration approved' );
+
+        $mail->setSender( $emailSender );
+        $receiver = $user->attribute( 'email' );
+        $mail->setReceiver( $receiver );
+        $mail->setSubject( $subject );
+        $mail->setBody( $templateResult );
+        $mailResult = eZMailTransport::send( $mail );
+
+        return array( 'status' => eZModuleOperationInfo::STATUS_CONTINUE );
     }
 
    /**
@@ -102,7 +270,7 @@ class eZUserOperationCollection
         if ( $user && $userSetting )
         {
             $userChange = $userSetting->attribute( 'is_enabled' ) != $enableUser;
-            
+
             if ( $enableUser )
             {
                 $userSetting->setAttribute( 'is_enabled', 1 );

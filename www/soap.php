@@ -1,31 +1,10 @@
 <?php
-//
-// Created on: <11-Oct-2004 15:41:12 kk>
-//
-// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-// SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.4.0
-// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
-// SOFTWARE LICENSE: GNU General Public License v2.0
-// NOTICE: >
-//   This program is free software; you can redistribute it and/or
-//   modify it under the terms of version 2.0  of the GNU General
-//   Public License as published by the Free Software Foundation.
-// 
-//   This program is distributed in the hope that it will be useful,
-//    but WITHOUT ANY WARRANTY; without even the implied warranty of
-//   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//   GNU General Public License for more details.
-// 
-//   You should have received a copy of version 2.0 of the GNU General
-//   Public License along with this program; if not, write to the Free
-//   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
-//   MA 02110-1301, USA.
-// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-//
-
-/*! \file soap.php
-*/
+/**
+ * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
+ * @license http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License v2
+ * @version  2012.5
+ * @package kernel
+ */
 
 /*!
   \brief The SOAP file will handle all eZ Publish soap requests.
@@ -61,7 +40,7 @@ function eZUpdateDebugSettings()
 $ini = eZINI::instance();
 
 // Initialize/set the index file.
-eZSys::init( 'soap.php', $ini->variable( 'SiteAccessSettings', 'ForceVirtualHost' ) == 'true' );
+eZSys::init( 'soap.php', $ini->variable( 'SiteAccessSettings', 'ForceVirtualHost' ) === 'true' );
 $uri = eZURI::instance( eZSys::requestURI() );
 $GLOBALS['eZRequestedURI'] = $uri;
 
@@ -71,7 +50,6 @@ eZExtension::activateExtensions( 'default' );
 // Extension check end
 
 // Activate correct siteaccess
-include_once( 'access.php' );
 $soapINI = eZINI::instance( 'soap.ini' );
 if ( $soapINI->variable( 'GeneralSettings', 'UseDefaultAccess' ) === 'enabled' )
 {
@@ -95,8 +73,9 @@ eZDebug::checkDebugByUser();
 eZExtension::activateExtensions( 'access' );
 // Siteaccess extension check end
 
-// reload soap.ini cache now that override paths have changed
-$soapINI->loadCache();
+// Now that all extensions are activated and siteaccess has been changed, reset
+// all eZINI instances as they may not take into account siteaccess specific settings.
+eZINI::resetAllInstances( false );
 
 /*!
  Reads settings from i18n.ini and passes them to eZTextCodec.
@@ -123,8 +102,6 @@ $enableSOAP = $soapINI->variable( 'GeneralSettings', 'EnableSOAP' );
 
 if ( $enableSOAP == 'true' )
 {
-    eZSys::init( 'soap.php' );
-
     // Login if we have username and password.
     if ( eZHTTPTool::username() and eZHTTPTool::password() )
         eZUser::loginUser( eZHTTPTool::username(), eZHTTPTool::password() );

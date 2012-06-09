@@ -2,9 +2,9 @@
 /**
  * File containing the eZNamePatternResolver class
  *
- * @copyright Copyright (C) 1999-2010 eZ Systems AS. All rights reserved.
- * @license http://ez.no/licenses/gnu_gpl GNU General Public License v2.0
- * @version 4.4.0
+ * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
+ * @license http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License v2
+ * @version  2012.5
  * @package kernel
  *
  */
@@ -27,13 +27,13 @@
  *
  * Tokens are looked up from left to right. If a match is found for the
  * leftmost token, the 2nd token will not be used. Tokens are representations
- * of atttributes. So a match means that that the current attribute has data.
+ * of attributes. So a match means that that the current attribute has data.
  *
  * tokens are the class attribute identifiers which are used in the class
  * edit-interface.
  *
  * @package kernel
- * @version 4.4.0
+ * @version  2012.5
  */
 class eZNamePatternResolver
 {
@@ -102,10 +102,10 @@ class eZNamePatternResolver
      *
      * @param string $namePattern
      * @param eZContentObject $contentObject
-     * @param int $contentVersion
-     * @param string $contentTranslation
+     * @param int|false $contentVersion
+     * @param string|false $contentTranslation
      */
-    public function __construct( $namePattern, $contentObject, $contentVersion = false, $contentTranslation = false )
+    public function __construct( $namePattern, eZContentObject $contentObject, $contentVersion = false, $contentTranslation = false )
     {
         $this->origNamePattern = $namePattern;
         $this->contentObject = $contentObject;
@@ -118,10 +118,11 @@ class eZNamePatternResolver
     /**
      * Return the real name for an object name pattern
      *
-     * @param string $namePattern
+     * @param int $limit The limit on the string length, by defaul 0 aka none
+     * @param string $sequence End sequence applied to string if limit has been reached
      * @return string
      */
-    public function resolveNamePattern()
+    public function resolveNamePattern( $limit = 0, $sequence = '' )
     {
         // Fetch attributes for present identifiers
         $this->fetchContentAttributes();
@@ -129,7 +130,15 @@ class eZNamePatternResolver
         // Replace tokens with real values
         $objectName = $this->translatePattern();
 
-        return $objectName;
+        // Make sure length is not longer then $limit unless it's 0
+        if ( !$limit || strlen( $objectName ) <= $limit )
+        {
+            return $objectName;
+        }
+        else
+        {
+            return rtrim( substr( $objectName, 0, $limit - strlen( $sequence ) +1 ) ) . $sequence;
+        }
     }
 
     /**

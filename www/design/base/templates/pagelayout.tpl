@@ -1,6 +1,5 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="{$site.http_equiv.Content-language|wash}" lang="{$site.http_equiv.Content-language|wash}">
+<!DOCTYPE html>
+<html lang="{$site.http_equiv.Content-language|wash}">
 
 <head>
 
@@ -23,10 +22,10 @@
 </style>
 
 {section name=JavaScript loop=ezini( 'JavaScriptSettings', 'JavaScriptList', 'design.ini' ) }
-    <script language="JavaScript" type="text/javascript" src={concat( 'javascript/',$:item )|ezdesign}></script>
+    <script type="text/javascript" src={concat( 'javascript/',$:item )|ezdesign}></script>
 {/section}
 {section name=JavaScript loop=ezini( 'JavaScriptSettings', 'FrontendJavaScriptList', 'design.ini' ) }
-    <script language="JavaScript" type="text/javascript" src={concat( 'javascript/',$:item )|ezdesign}></script>
+    <script type="text/javascript" src={concat( 'javascript/',$:item )|ezdesign}></script>
 {/section}
 
 {literal}

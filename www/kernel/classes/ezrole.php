@@ -1,33 +1,12 @@
 <?php
-//
-// Definition of eZRole class
-//
-// Created on: <14-Aug-2002 14:08:46 sp>
-//
-// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-// SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.4.0
-// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
-// SOFTWARE LICENSE: GNU General Public License v2.0
-// NOTICE: >
-//   This program is free software; you can redistribute it and/or
-//   modify it under the terms of version 2.0  of the GNU General
-//   Public License as published by the Free Software Foundation.
-// 
-//   This program is distributed in the hope that it will be useful,
-//    but WITHOUT ANY WARRANTY; without even the implied warranty of
-//   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//   GNU General Public License for more details.
-// 
-//   You should have received a copy of version 2.0 of the GNU General
-//   Public License along with this program; if not, write to the Free
-//   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
-//   MA 02110-1301, USA.
-// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-//
-
-/*! \file
-*/
+/**
+ * File containing the eZRole class.
+ *
+ * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
+ * @license http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License v2
+ * @version  2012.5
+ * @package kernel
+ */
 
 /*! \defgroup eZRole Role based permission system */
 
@@ -484,7 +463,7 @@ class eZRole extends eZPersistentObject
      *        If true, roles will be looked up for all nodes of the id's and it's parents
      *
      * @return array(eZRole)
-     **/
+     */
     static function fetchByUser( $idArray, $recursive = false )
     {
         if ( count( $idArray ) < 1 )
@@ -632,11 +611,12 @@ class eZRole extends eZPersistentObject
     {
         if ( !isset( $this->Policies ) )
         {
+            $sorting = array( 'module_name' => 'asc', 'function_name' => 'asc' );
             $policies = eZPersistentObject::fetchObjectList(
                 eZPolicy::definition(),
                 null,
                 array( 'role_id' => $this->attribute( 'id' ), 'original_id' => 0 ),
-                null, null, true );
+                $sorting, null, true );
 
             if ( $this->LimitIdentifier )
             {
@@ -660,7 +640,7 @@ class eZRole extends eZPersistentObject
      * @param array(eZContentObjectID) $idArray
      *
      * @return array(eZRoleID)
-     **/
+     */
     static function fetchIDListByUser( $idArray )
     {
         $db = eZDB::instance();
@@ -905,16 +885,22 @@ class eZRole extends eZPersistentObject
                                                     $asObject );
     }
 
-    /*!
-     \static
-     \return the number of roles in the database.
-    */
-    static function roleCount()
+    /**
+     * Fetches the count of created roles
+     *
+     * @static
+     * @param boolean $ignoreNew Wether to ignore draft roles
+     *
+     * @return int
+     */
+    static function roleCount( $ignoreNew = true )
     {
-        $db = eZDB::instance();
-
-        $countArray = $db->arrayQuery(  "SELECT count( * ) AS count FROM ezrole WHERE version=0" );
-        return $countArray[0]['count'];
+        $conds = array( 'version' => 0 );
+        if ( $ignoreNew === true )
+        {
+            $conds['is_new'] = 0;
+        }
+        return eZPersistentObject::count( eZRole::definition(), $conds );
     }
 
     /*!

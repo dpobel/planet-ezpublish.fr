@@ -3,7 +3,7 @@
   system translate the names, we use a lookup table for translatable strings.
   If the ini name is not defined here (key), then LinkNames ini value is used.
   For extensions that need to extend this, you either have to override this
-  template or let translations use LinkNames as described in menu.ini. 
+  template or let translations use LinkNames as described in menu.ini.
 *}
 
 {include uri='design:parts/ini_menu.tpl' ini_section='Leftmenu_setup' i18n_hash=hash(
@@ -28,7 +28,7 @@
     'system_information', 'System information'|i18n( 'design/admin/parts/setup/menu' ),
     'upgrade_check',      'Upgrade check'|i18n( 'design/admin/parts/setup/menu' ),
     'triggers',           'Triggers'|i18n( 'design/admin/parts/setup/menu' ),
-    'url_management',     'URL management'|i18n( 'design/admin/parts/setup/menu' ),
+    'url_management',     'Link management'|i18n( 'design/admin/parts/setup/menu' ),
     'url_translator',     'URL translator'|i18n( 'design/admin/parts/setup/menu' ),
     'url_wildcards',      'URL wildcards'|i18n( 'design/admin/parts/setup/menu' ),
     'workflows',          'Workflows'|i18n( 'design/admin/parts/setup/menu' ),
@@ -74,5 +74,3 @@
 <div id="widthcontrol-handler" class="hide">
 <div class="widthcontrol-grippy"></div>
 </div>
-
-<!-- script type="text/javascript" src={"javascript/leftmenu_widthcontrol.js"|ezdesign} charset="utf-8"></script -->

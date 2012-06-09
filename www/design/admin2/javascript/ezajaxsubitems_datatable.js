@@ -31,7 +31,7 @@ var sortableSubitems = function () {
 
     function initDataTable(){
         var formatName = function(cell, record, column, data) {
-            cell.innerHTML =  record.getData('class_icon') + '&nbsp' + '<a href="' + record.getData('url') + '" title="' + data + '">' + data + '</a>';
+            cell.innerHTML =  '<a href="' + record.getData('url') + '" title="' + data + '">' + record.getData('class_icon') + '</a>' + '&nbsp;' + '<a href="' + record.getData('url') + '" title="' + data + '">' + data + '</a>';
         }
 
         var customCheckbox = function(cell, record, column, data) {
@@ -40,37 +40,69 @@ var sortableSubitems = function () {
 
         var customMenu = function(cell, rec, column, data) {
             var createhereMenu = (confObj.classesString != '') ? -1 : "\'child-menu-create-here\'";
-            cell.innerHTML = '<a href="#" onclick="ezpopmenu_showTopLevel(event, \'SubitemsContextMenu\', \{\'%nodeID%\':' + rec.getData('node_id') + ',\'%objectID%\':' + rec.getData('contentobject_id') + ',\'%version%\':' + rec.getData('version') + ',\'%languages%\':' + confObj.languagesString + ',\'%classList%\':' + confObj.classesString + '\ }, \'' + rec.getData('name') + '\', ' + rec.getData('node_id') + ', ' + createhereMenu + '); return false;"><div class="crankfield"></div></a>';
+            var translationArray = [];
+            jQuery(rec.getData('translations')).each(function(i, e) {
+                translationArray.push( { 'locale': e,
+                                         'name': confObj.languages[e] } );
+            });
+            var a = new YAHOO.util.Element(document.createElement('a'));
+            a.on('click', function(e) {
+                ezpopmenu_showTopLevel(e, 'SubitemsContextMenu', { '%nodeID%': rec.getData('node_id'),
+                                                                   '%objectID%': rec.getData('contentobject_id'),
+                                                                   '%version%': rec.getData('version'),
+                                                                   '%languages%': translationArray,
+                                                                   '%classList%': confObj.classesString }, rec.getData('name'), rec.getData('node_id'), createhereMenu );
+            });
+            var div = new YAHOO.util.Element(document.createElement('div'));
+            div.addClass('crankfield');
+            div.appendTo(a);
+
+            a.appendTo(cell);
         }
 
         var thumbView = function(cell, record, column, data) {
-            var th = record.getData('thumbnail_url');
-            if (th)
-                cell.innerHTML = '<div class="thumbview"><div id="thumbfield" class="thumbfield"></div><span><img src="' + th + '" /></span></div>';
-            else
+            var url = record.getData('thumbnail_url');
+            if (url) {
+                var thBack = 'background: url(' + url + ') no-repeat;';
+                var thWidth = ' width: ' + record.getData('thumbnail_width') + 'px;';
+                var thHeight = ' height: ' + record.getData('thumbnail_height') + 'px;';
+                cell.innerHTML = '<div class="thumbview"><div id="thumbfield" class="thumbfield"></div><span><div style="' + thBack + thWidth + thHeight + '"></div></span></div>';
+            }
+            else {
                 cell.innerHTML = '';
+            }
         }
 
         var translationView = function(cell, record, column, data) {
             var html = '';
             jQuery(data).each(function(i, e) {
-                html += '<img src="' + confObj.flagIcons[e] + '" style="margin-right: 4px;" alt="' + e + '" title="' + e + '"/>';
+                if (record.getData('can_edit') === true) {
+                    html += '<a href="' + confObj.editPrefixURL + '/' + record.getData('contentobject_id') + '/f/' + e + '">';
+                }
+                html += '<img src="' + confObj.flagIcons[e] + '" width="18" height="12" style="margin-right: 4px;" alt="' + e + '" title="' + e + '"/>';
+                if (record.getData('can_edit') === true) {
+                    html += '</a>'
+                }
             });
             cell.innerHTML = html;
         }
 
         var updatePriority = function(callback, v) {
             var record = this.getRecord(), dataTable = this.getDataTable(), sortedBy = dataTable.get('sortedBy'), paginator = dataTable.get('paginator');
-            
+
             var onSuccess = function(data) {
+                dataTable.getDataSource().flushCache();
                 if (sortedBy.key == 'priority') {
                     dataTable.onPaginatorChangeRequest(paginator.getState({'page':paginator.getCurrentPage()}));
                 }
             }
-            
-            jQuery.post(jQuery.ez.url + 'call/ezjscnode::updatepriority', { ContentNodeID: record.getData('parent_node_id'), 
-                                                                            PriorityID: [record.getData('node_id')], 
-                                                                            Priority:  [v] }, onSuccess );
+
+            jQuery.ez('ezjscnode::updatepriority', {
+                ContentNodeID: record.getData('parent_node_id'),
+                ContentObjectID: record.getData('contentobject_id'),
+                PriorityID: [record.getData('node_id')],
+                Priority: [v]
+            }, onSuccess);
             callback(true, v);
         }
 
@@ -90,7 +122,8 @@ var sortableSubitems = function () {
             {key:"node_remote_id", label:labelsObj.DATA_TABLE_COLS.noderemoteid, sortable:false, resizeable:true},
             {key:"contentobject_id", label:labelsObj.DATA_TABLE_COLS.objectid, sortable:true, resizeable:true},
             {key:"contentobject_remote_id", label:labelsObj.DATA_TABLE_COLS.objectremoteid, sortable:false, resizeable:true},
-            {key:"priority", label: labelsObj.DATA_TABLE_COLS.priority, sortable:true, resizeable:true, 
+            {key:"contentobject_state", label:labelsObj.DATA_TABLE_COLS.objectstate, sortable:false, resizeable:true},
+            {key:"priority", label: labelsObj.DATA_TABLE_COLS.priority, sortable:true, resizeable:true,
                 editor: new YAHOO.widget.TextboxCellEditor({asyncSubmitter: updatePriority, disableBtns:true, validator:YAHOO.widget.DataTable.validateNumber}) }
         ];
 
@@ -107,19 +140,24 @@ var sortableSubitems = function () {
         }
 
         var sectionParser = function(section) {
-            return section.name;
+            if ( section && section.name )
+                return section.name;
+            return '?';
         }
-        
+
         var translationsParser = function(translations) {
             return translations.language_list;
         }
 
         var creatorParser = function(creator) {
-            return creator.name;
+            if ( creator && creator.name )
+                return creator.name;
+            return '?';
         }
 
         var dataSource = new YAHOO.util.DataSource(confObj.dataSourceURL);
         dataSource.responseType = YAHOO.util.DataSource.TYPE_JSON;
+        dataSource.maxCacheEntries = 20;    // Caches between paginations. Requires a refresh after async updates to priorities
         dataSource.responseSchema = {
             resultsList: "content.list",
             fields: [
@@ -136,9 +174,12 @@ var sortableSubitems = function () {
                 {key:"node_remote_id"},
                 {key:"contentobject_id"},
                 {key:"contentobject_remote_id"},
+                {key:"contentobject_state"},
                 {key:"priority"},
                 {key:"class_icon"},
                 {key:"thumbnail_url"},
+                {key:"thumbnail_height"},
+                {key:"thumbnail_width"},
                 {key:"url"},
                 {key:"parent_node_id"},
                 {key:"can_edit"}
@@ -149,13 +190,13 @@ var sortableSubitems = function () {
         };
 
         var paginator = new YAHOO.widget.Paginator({ rowsPerPage:confObj.rowsPrPage,
-                                                     containers: ["bpg"], 
+                                                     containers: ["bpg"],
                                                      firstPageLinkLabel : labelsObj.ACTION_BUTTONS.first_page,
                                                      lastPageLinkLabel : labelsObj.ACTION_BUTTONS.last_page,
                                                      previousPageLinkLabel : labelsObj.ACTION_BUTTONS.previous_page,
                                                      nextPageLinkLabel : labelsObj.ACTION_BUTTONS.next_page,
                                                      template : '<div class="yui-pg-backward"> {FirstPageLink} {PreviousPageLink} </div>' +
-                                                                '{PageLinks}' + 
+                                                                '{PageLinks}' +
                                                                 '<div class="yui-pg-forward"> {NextPageLink} {LastPageLink} </div>'
                                                      });
 
@@ -181,16 +222,17 @@ var sortableSubitems = function () {
             return "::" + state.pagination.rowsPerPage +
                    "::" + state.pagination.recordOffset +
                    "::" + state.sortedBy.key +
-                   "::" + ((state.sortedBy.dir === YAHOO.widget.DataTable.CLASS_ASC) ? "0" : "1") +
+                   "::" + ((state.sortedBy.dir === YAHOO.widget.DataTable.CLASS_ASC) ? "1" : "0") +
+                   "::" + confObj.nameFilter +
                    "?ContentType=json";
         }
 
         var tableConfig = {
-            initialRequest: "::" + confObj.rowsPrPage + "::0" + "::" + confObj.sortKey + "::" + confObj.sortOrder + "?ContentType=json",   // Initial request for first page of data
+            initialRequest: "::" + confObj.rowsPrPage + "::0" + "::" + confObj.sortKey + "::" + confObj.sortOrder + "::" + confObj.nameFilter + "?ContentType=json",   // Initial request for first page of data
             dynamicData: true,                                                                                                             // Enables dynamic server-driven data
             generateRequest: buildQueryString,
-            sortedBy : {key:confObj.sortKey, 
-                        dir:((confObj.sortOrder === "1") ? YAHOO.widget.DataTable.CLASS_ASC : YAHOO.widget.DataTable.CLASS_DESC) },        // Sets UI initial sort arrow
+            sortedBy : {key:confObj.sortKey,
+                        dir:((confObj.sortOrder === 1) ? YAHOO.widget.DataTable.CLASS_ASC : YAHOO.widget.DataTable.CLASS_DESC) },          // Sets UI initial sort arrow
             paginator: paginator,                                                                                                          // Enables pagination
             MSG_LOADING: labelsObj.DATA_TABLE.msg_loading
         };
@@ -237,7 +279,7 @@ var sortableSubitems = function () {
 
                     YAHOO.util.Event.on("table-option-row-btn-" + rowDef.id, "click", function(e, a) {
                         paginator.setRowsPerPage(a.count);
-                        jQuery.post( jQuery.ez.url.replace( 'ezjscore/', 'user/preferences/set_and_exit/admin_list_limit/' ) + a.id );
+                        $.ez.setPreference('admin_list_limit', a.id);
                     }, rowDef);
                 }
 
@@ -268,8 +310,8 @@ var sortableSubitems = function () {
                         }
                         var shownKeys = [];
                         $('#to-dialog-container input[name=TableOptionColumn]').each(function(i, e) {
-                            if ($(this).attr('checked') == true)
-                                shownKeys.push( $(this).attr('value') );
+                            if ( $(this).prop('checked') )
+                                shownKeys.push( $(this).prop('value') );
                         });
 
                         // Update cookie and local variable
@@ -296,9 +338,9 @@ var sortableSubitems = function () {
         var tblOptsDialog = new YAHOO.widget.SimpleDialog("to-dialog-container", { width: "25em",
                                                                                    visible: false,
                                                                                    modal: true,
-                                                                                   buttons: [ { text: "Close", 
+                                                                                   buttons: [ { text: labelsObj.TABLE_OPTIONS.button_close,
                                                                                                 handler: hideTblOptsDialog } ],
-                                                                                   fixedcenter: true,
+                                                                                   fixedcenter: "contained",
                                                                                    constrainToViewport: true });
 
         var escKeyListener = new YAHOO.util.KeyListener(document, { keys:27 },
@@ -314,12 +356,18 @@ var sortableSubitems = function () {
         // Toolbar buttons: Select, Create new, More actions
 
         var selectItemsBtnAction = function( type, args, item ) {
-            $('#content-sub-items-list').find(':checkbox').attr('checked', item.value);
+            $('#content-sub-items-list').find(':checkbox').prop('checked', item.value);
+        }
+
+        var selectItemsBtnInvert = function( type, args, item ) {
+            var checks = $('#content-sub-items-list').find(':checkbox');
+            checks.each(function(){this.checked = !this.checked;});
         }
 
         var selectItemsBtnActions = [
             { text: labelsObj.ACTION_BUTTONS.select_sav, id: "ezopt-menu-check", value: 1, onclick: { fn: selectItemsBtnAction } },
-            { text: labelsObj.ACTION_BUTTONS.select_sn, id: "ezopt-menu-uncheck", value: 0, onclick: { fn: selectItemsBtnAction } }
+            { text: labelsObj.ACTION_BUTTONS.select_sn, id: "ezopt-menu-uncheck", value: 0, onclick: { fn: selectItemsBtnAction } },
+            { text: labelsObj.ACTION_BUTTONS.select_inv, id: "ezopt-menu-toggle", onclick: { fn: selectItemsBtnInvert } }
         ];
 
         var selectItemsBtn = new YAHOO.widget.Button({ type: "menu",
@@ -353,6 +401,7 @@ var sortableSubitems = function () {
             var groupName = createGroups[i];
             createNewBtnMenu.setItemGroupTitle(groupName, i);
         }
+
 
         var moreActBtnAction = function( type, args, item ) {
             if ($('form[name=children] input[name=DeleteIDArray[]]:checked').length == 0)
@@ -398,7 +447,7 @@ var sortableSubitems = function () {
                                                         id:"ezbtn-options",
                                                         container:"action-controls",
                                                         onclick: { fn: showTblOptsDialog, obj: this, scope: true } });
-    
+
     return subItemsTable;
     }
 
@@ -415,6 +464,6 @@ var sortableSubitems = function () {
             dataTable = initDataTable();
         }
     };
- 
+
 }();
 

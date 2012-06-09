@@ -4,8 +4,8 @@
 // ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 // SOFTWARE NAME: eZ Publish
 // SOFTWARE RELEASE: 4.1.x
-// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
-// SOFTWARE LICENSE: GNU General Public License v2.0
+// COPYRIGHT NOTICE: Copyright (C) 1999-2012 eZ Systems AS
+// SOFTWARE LICENSE: GNU General Public License v2
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
 //   modify it under the terms of version 2.0  of the GNU General
@@ -63,7 +63,7 @@ function ezjslib_findHTMLChildImageNode( node )
 */
 function ezjslib_findHTMLChildNodeByType( node, type )
 {
-    if( node )
+    if ( node )
     {
         for ( var i = 0; i < node.childNodes.length; i++ )
         {
@@ -83,7 +83,7 @@ function ezjslib_findHTMLChildNodeByType( node, type )
 function ezjslib_setTextToHTMLChildTextNode( node, text )
 {
     var textNode = ezjslib_findHTMLChildTextNode( node );
-    if( textNode != null )
+    if ( textNode != null )
     {
         textNode.data = text;
     }
@@ -94,7 +94,7 @@ function ezjslib_setTextToHTMLChildTextNode( node, text )
 function ezjslib_setImageSourceToHTMLChildImageNode( node, imageSource )
 {
     var imageNode = ezjslib_findHTMLChildImageNode( node );
-    if( imageNode != null )
+    if ( imageNode != null )
     {
         imageNode.src = imageSource;
     }
@@ -122,7 +122,7 @@ function ezjslib_removeHTMLChildImageNode( node )
 function ezjslib_removeHTMLChildNodeByType( node, type )
 {
     var textNode = ezjslib_findHTMLChildNodeByType( node, type );
-    if( textNode != null )
+    if ( textNode != null )
     {
         node.removeChild( textNode );
     }
@@ -189,7 +189,7 @@ function ezjslib_getHTMLChildNodeByTag( node, tag )
 */
 function ezjslib_getHTMLChildNodeByProperty( node, propName, propValue )
 {
-    if( node )
+    if ( node )
     {
         for ( var i = 0; i < node.childNodes.length; ++i )
         {
@@ -236,7 +236,7 @@ function ezjslib_appendHTMLNodeClassStyle( node, styleClassName )
  */
 function ezjslib_getStyleObject( objID )
 {
-    if( document.getElementById && document.getElementById( objID ) ) // DOM
+    if ( document.getElementById && document.getElementById( objID ) ) // DOM
     {
         return document.getElementById( objID ).style;
     }
@@ -270,19 +270,19 @@ function ezjslib_getScreenProperties()
   result.Height = 0;
   result.Width = 0;
 
-  if( typeof( window.innerWidth ) == 'number' )
+  if ( typeof( window.innerWidth ) == 'number' )
   {
     // all but IE
     result.Width = window.innerWidth;
     result.Height = window.innerHeight;
   }
-  else if( document.documentElement && ( document.documentElement.clientWidth || document.documentElement.clientHeight ) )
+  else if ( document.documentElement && ( document.documentElement.clientWidth || document.documentElement.clientHeight ) )
   {
     // IE 6
     result.Width = document.documentElement.clientWidth;
     result.Height = document.documentElement.clientHeight;
   }
-  else if( document.body && ( document.body.clientWidth || document.body.clientHeight ) )
+  else if ( document.body && ( document.body.clientWidth || document.body.clientHeight ) )
   {
     // IE 4
     result.Width = document.body.clientWidth;
@@ -290,19 +290,19 @@ function ezjslib_getScreenProperties()
   }
 
   // offsets
-  if( typeof( window.pageYOffset ) == 'number' )
+  if ( typeof( window.pageYOffset ) == 'number' )
   {
     // Netscape compliant
     result.ScrollY = window.pageYOffset;
     result.ScrollX = window.pageXOffset;
   }
-  else if( document.body && ( document.body.scrollLeft || document.body.scrollTop ) )
+  else if ( document.body && ( document.body.scrollLeft || document.body.scrollTop ) )
   {
     // DOM
     result.ScrollY = document.body.scrollTop;
     result.ScrollX = document.body.scrollLeft;
   }
-  else if( document.documentElement && ( document.documentElement.scrollLeft || document.documentElement.scrollTop ) )
+  else if ( document.documentElement && ( document.documentElement.scrollLeft || document.documentElement.scrollTop ) )
   {
     // IE6
     result.ScrollY = document.documentElement.scrollTop;

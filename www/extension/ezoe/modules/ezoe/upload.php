@@ -3,10 +3,10 @@
 // Created on: <10-Feb-2007 00:00:00 ar>
 //
 // ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-// SOFTWARE NAME: eZ Online Editor extension for eZ Publish
-// SOFTWARE RELEASE: 4.4.0
-// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
-// SOFTWARE LICENSE: GNU General Public License v2.0
+// SOFTWARE NAME: eZ Publish Community Project
+// SOFTWARE RELEASE:  2012.5
+// COPYRIGHT NOTICE: Copyright (C) 1999-2012 eZ Systems AS
+// SOFTWARE LICENSE: GNU General Public License v2
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
 //   modify it under the terms of version 2.0  of the GNU General
@@ -24,8 +24,6 @@
 // ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
 //
 
-include_once( 'kernel/common/template.php' );
-
 $objectID        = isset( $Params['ObjectID'] ) ? (int) $Params['ObjectID'] : 0;
 $objectVersion   = isset( $Params['ObjectVersion'] ) ? (int) $Params['ObjectVersion'] : 0;
 $forcedUpload    = isset( $Params['ForcedUpload'] ) ? (int) $Params['ForcedUpload'] : 0;
@@ -42,7 +40,7 @@ if ( isset( $Params['ContentType'] ) && $Params['ContentType'] !== '' )
 
 if ( $objectID === 0  || $objectVersion === 0 )
 {
-   echo ezi18n( 'design/standard/ezoe', 'Invalid or missing parameter: %parameter', null, array( '%parameter' => 'ObjectID/ObjectVersion' ) );
+   echo ezpI18n::tr( 'design/standard/ezoe', 'Invalid or missing parameter: %parameter', null, array( '%parameter' => 'ObjectID/ObjectVersion' ) );
    eZExecution::cleanExit();
 }
 
@@ -59,7 +57,7 @@ else
 
 if ( $result['accessWord'] === 'no' )
 {
-   echo ezi18n( 'design/standard/error/kernel', 'Your current user does not have the proper privileges to access this page.' );
+   echo ezpI18n::tr( 'design/standard/error/kernel', 'Your current user does not have the proper privileges to access this page.' );
    eZExecution::cleanExit();
 }
 
@@ -71,9 +69,9 @@ $imageIni  = eZINI::instance( 'image.ini' );
 $params    = array('dataMap' => array('image'));
 
 
-if ( !$object )
+if ( !$object instanceof eZContentObject || !$object->canEdit() )
 {
-   echo ezi18n( 'design/standard/ezoe', 'Invalid parameter: %parameter = %value', null, array( '%parameter' => 'ObjectId', '%value' => $objectID ) );
+   echo ezpI18n::tr( 'design/standard/ezoe', 'Invalid parameter: %parameter = %value', null, array( '%parameter' => 'ObjectId', '%value' => $objectID ) );
    eZExecution::cleanExit();
 }
 
@@ -83,6 +81,12 @@ if ( !$object )
 // allowed size set in max_post_size in php.ini
 if ( $http->hasPostVariable( 'uploadButton' ) || $forcedUpload )
 {
+    $version   = eZContentObjectVersion::fetchVersion( $objectVersion, $objectID );
+    if ( !$version )
+    {
+        echo ezpI18n::tr( 'design/standard/ezoe', 'Invalid parameter: %parameter = %value', null, array( '%parameter' => 'ObjectVersion', '%value' => $objectVersion ) );
+        eZExecution::cleanExit();
+    }
     $upload = new eZContentUpload();
 
     $location = false;
@@ -98,7 +102,14 @@ if ( $http->hasPostVariable( 'uploadButton' ) || $forcedUpload )
         $objectName = trim( $http->postVariable( 'objectName' ) );
     }
 
-    $uploadedOk = $upload->handleUpload( $result, 'fileName', $location, false, $objectName );
+    $uploadedOk = $upload->handleUpload(
+        $result,
+        'fileName',
+        $location,
+        false,
+        $objectName,
+        $version->attribute( 'initial_language' )->attribute( 'locale' )
+    );
 
 
     if ( $uploadedOk )
@@ -122,7 +133,7 @@ if ( $http->hasPostVariable( 'uploadButton' ) || $forcedUpload )
                 {
                     case 'eztext':
                     case 'ezstring':
-                        // TODO: Validate input ( max lenght )
+                        // TODO: Validate input ( max length )
                         $newObjectDataMap[$key]->setAttribute('data_text', trim( $http->postVariable( $base ) ) );
                         $newObjectDataMap[$key]->store();
                         break;
@@ -156,8 +167,8 @@ if ( $http->hasPostVariable( 'uploadButton' ) || $forcedUpload )
                         break;
                 }
             }
-        }        
-        
+        }
+
         $object->addContentObjectRelation( $newObjectID, $objectVersion, 0, eZContentObject::RELATION_EMBED );
         echo '<html><head><title>HiddenUploadFrame</title><script type="text/javascript">';
         echo 'window.parent.eZOEPopupUtils.selectByEmbedId( ' . $newObjectID . ', ' . $newObjectNodeID . ', "' . $newObjectName . '" );';
@@ -212,9 +223,9 @@ foreach ( $relatedObjects as $relatedObjectKey => $relatedObject )
     $relID            = $relatedObject->attribute( 'id' );
     $classIdentifier  = $relatedObject->attribute( 'class_identifier' );
     $groupName        = isset( $classGroupMap[$classIdentifier] ) ? $classGroupMap[$classIdentifier] : $defaultGroup;
-    
+
     // if ( $hasContentTypeGroup === true && $contentTypeGroupName !== $groupName ) continue;
-    
+
     if ( $groupName === 'images' )
     {
         $objectAttributes = $relatedObject->contentObjectAttributes();
@@ -250,7 +261,7 @@ foreach ( $relatedObjects as $relatedObjectKey => $relatedObject )
     $groupedRelatedObjects[$groupName][] = $item;
 }
 
-$tpl = templateInit();
+$tpl = eZTemplate::factory();
 $tpl->setVariable( 'object', $object );
 $tpl->setVariable( 'object_id', $objectID );
 $tpl->setVariable( 'object_version', $objectVersion );

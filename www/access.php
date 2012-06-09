@@ -2,11 +2,11 @@
 /**
  * File containing (site)access functions
  *
- * @copyright Copyright (C) 1999-2010 eZ Systems AS. All rights reserved.
- * @license http://ez.no/licenses/gnu_gpl GNU General Public License v2.0
- * @version 4.4.0
+ * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
+ * @license http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License v2
+ * @version  2012.5
  * @package index
- * @deprecated This file and its compatibility functions/constants will be removed in "4.6"
+ * @deprecated since 4.4, this file and its compatibility functions/constants will be removed
  */
 
 
@@ -14,6 +14,7 @@
  * Integer constants that identify the siteaccess matching used
  *
  * @see eZSiteAccess class constants
+ * @deprecated Since 4.4
  */
 define( 'EZ_ACCESS_TYPE_DEFAULT', 1 );
 define( 'EZ_ACCESS_TYPE_URI', 2 );
@@ -35,6 +36,7 @@ define( 'EZ_ACCESS_SUBTYPE_POST', 2 );
  *  uri_part => array(string) List of path elements that was used in start of url for the match
  *
  * @see eZSiteAccess::match()
+ * @deprecated Since 4.4
  * @param eZURI $uri
  * @param string $host
  * @param string(numeric) $port
@@ -43,6 +45,7 @@ define( 'EZ_ACCESS_SUBTYPE_POST', 2 );
  */
 function accessType( eZURI $uri, $host, $port, $file )
 {
+    eZDebug::writeStrict( 'Function accessType() has been deprecated in 4.4 in favor of eZSiteAccess::match()', 'Deprecation' );
     return eZSiteAccess::match( $uri, $host, $port, $file );
 }
 
@@ -51,11 +54,13 @@ function accessType( eZURI $uri, $host, $port, $file )
  * access path in eZSys and prepend an override dir to eZINI
  *
  * @see eZSiteAccess::change()
+ * @deprecated Since 4.4
  * @param array $access An associative array with 'name' (string), 'type' (int) and 'uri_part' (array).
  * @return array The $access parameter
  */
 function changeAccess( array $access )
 {
+    eZDebug::writeStrict( 'Function changeAccess() has been deprecated in 4.4 in favor of eZSiteAccess::change()', 'Deprecation' );
     return eZSiteAccess::change( $access );
 }
 
@@ -63,6 +68,7 @@ function changeAccess( array $access )
  * Match a regex expression
  *
  * @see eZSiteAccess::matchRegexp()
+ * @deprecated Since 4.4
  * @param string $text
  * @param string $reg
  * @param int $num
@@ -70,6 +76,7 @@ function changeAccess( array $access )
  */
 function accessMatchRegexp( &$text, $reg, $num )
 {
+    eZDebug::writeStrict( 'Function accessMatchRegexp() has been deprecated in 4.4 in favor of eZSiteAccess::matchRegexp()', 'Deprecation' );
     return eZSiteAccess::matchRegexp( $text, $reg, $num );
 }
 
@@ -77,6 +84,7 @@ function accessMatchRegexp( &$text, $reg, $num )
  * Match a text string with pre or/or post text strings
  *
  * @see eZSiteAccess::matchText()
+ * @deprecated Since 4.4
  * @param string $text
  * @param string $match_pre
  * @param string $match_post
@@ -84,6 +92,7 @@ function accessMatchRegexp( &$text, $reg, $num )
  */
 function accessMatchText( &$text, $match_pre, $match_post )
 {
+    eZDebug::writeStrict( 'Function accessMatchText() has been deprecated in 4.4 in favor of eZSiteAccess::matchText()', 'Deprecation' );
     return eZSiteAccess::matchText( $text, $match_pre, $match_post );
 }
 
@@ -91,6 +100,7 @@ function accessMatchText( &$text, $match_pre, $match_post )
  * Checks if site access debug is enabled
  *
  * @see eZSiteAccess::debugEnabled()
+ * @deprecated Since 4.4
  * @return bool
  */
 function accessDebugEnabled()
@@ -102,6 +112,7 @@ function accessDebugEnabled()
  * Checks if extra site access debug is enabled
  *
  * @see eZSiteAccess::extraDebugEnabled()
+ * @deprecated Since 4.4
  * @return bool
  */
 function accessExtraDebugEnabled()
@@ -113,6 +124,7 @@ function accessExtraDebugEnabled()
  * Checks if access is allowed to a module/view based on site.ini[SiteAccessRules]Rules settings
  *
  * @see eZModule::accessAllowed()
+ * @deprecated Since 4.4
  * @param eZURI $uri
  * @return array An associative array with:
  *   'result'       => bool   Indicates if access is allowed
@@ -122,6 +134,7 @@ function accessExtraDebugEnabled()
  */
 function accessAllowed( eZURI $uri )
 {
+    eZDebug::writeStrict( 'Function accessAllowed() has been deprecated in 4.4 in favor of eZModule::accessAllowed()', 'Deprecation' );
     return eZModule::accessAllowed( $uri );
 }
 

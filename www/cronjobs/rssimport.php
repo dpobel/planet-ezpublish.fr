@@ -1,31 +1,12 @@
 <?php
-//
-// Created on: <24-Sep-2003 16:09:21 sp>
-//
-// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-// SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.4.0
-// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
-// SOFTWARE LICENSE: GNU General Public License v2.0
-// NOTICE: >
-//   This program is free software; you can redistribute it and/or
-//   modify it under the terms of version 2.0  of the GNU General
-//   Public License as published by the Free Software Foundation.
-// 
-//   This program is distributed in the hope that it will be useful,
-//    but WITHOUT ANY WARRANTY; without even the implied warranty of
-//   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//   GNU General Public License for more details.
-// 
-//   You should have received a copy of version 2.0 of the GNU General
-//   Public License along with this program; if not, write to the Free
-//   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
-//   MA 02110-1301, USA.
-// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-//
-
-/*! \file
-*/
+/**
+ * File containing the rssimport.php cronjob
+ *
+ * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
+ * @license http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License v2
+ * @version  2012.5
+ * @package kernel
+ */
 
 //For ezUser, we would make this the ezUser class id but otherwise just pick and choose.
 
@@ -39,18 +20,12 @@ foreach ( $rssImportArray as $rssImport )
     $rssSource = $rssImport->attribute( 'url' );
     $addCount = 0;
 
-    if ( !$isQuiet )
-    {
-        $cli->output( 'RSSImport '.$rssImport->attribute( 'name' ).': Starting.' );
-    }
+    $cli->output( 'RSSImport '.$rssImport->attribute( 'name' ).': Starting.' );
 
     $xmlData = eZHTTPTool::getDataByURL( $rssSource, false, 'eZ Publish RSS Import' );
     if ( $xmlData === false )
     {
-        if ( !$isQuiet )
-        {
-            $cli->output( 'RSSImport '.$rssImport->attribute( 'name' ).': Failed to open RSS feed file: '.$rssSource );
-        }
+        $cli->output( 'RSSImport '.$rssImport->attribute( 'name' ).': Failed to open RSS feed file: '.$rssSource );
         continue;
     }
 
@@ -60,10 +35,7 @@ foreach ( $rssImportArray as $rssImport )
 
     if ( !$success )
     {
-        if ( !$isQuiet )
-        {
-            $cli->output( 'RSSImport '.$rssImport->attribute( 'name' ).': Invalid RSS document.' );
-        }
+        $cli->output( 'RSSImport '.$rssImport->attribute( 'name' ).': Invalid RSS document.' );
         continue;
     }
 
@@ -88,10 +60,7 @@ foreach ( $rssImportArray as $rssImport )
     $importDescription = $rssImport->importDescription();
     if ( $version != $importDescription['rss_version'] )
     {
-        if ( !$isQuiet )
-        {
-            $cli->output( 'RSSImport '.$rssImport->attribute( 'name' ).': Invalid RSS version missmatch. Please reconfigure import.' );
-        }
+        $cli->output( 'RSSImport '.$rssImport->attribute( 'name' ).': Invalid RSS version missmatch. Please reconfigure import.' );
         continue;
     }
 
@@ -124,8 +93,6 @@ eZStaticCache::executeActions();
 */
 function rssImport1( $root, $rssImport, $cli )
 {
-    global $isQuiet;
-
     $addCount = 0;
 
     // Get all items in rss feed
@@ -138,11 +105,7 @@ function rssImport1( $root, $rssImport, $cli )
         $addCount += importRSSItem( $item, $rssImport, $cli, $channel );
     }
 
-    if ( !$isQuiet )
-    {
-        $cli->output( 'RSSImport '.$rssImport->attribute( 'name' ).': End. '.$addCount.' objects added' );
-    }
-
+    $cli->output( 'RSSImport '.$rssImport->attribute( 'name' ).': End. '.$addCount.' objects added' );
 }
 
 /*!
@@ -154,8 +117,6 @@ function rssImport1( $root, $rssImport, $cli )
 */
 function rssImport2( $root, $rssImport, $cli )
 {
-    global $isQuiet;
-
     $addCount = 0;
 
     // Get all items in rss feed
@@ -167,11 +128,7 @@ function rssImport2( $root, $rssImport, $cli )
         $addCount += importRSSItem( $item, $rssImport, $cli, $channel );
     }
 
-    if ( !$isQuiet )
-    {
-        $cli->output( 'RSSImport '.$rssImport->attribute( 'name' ).': End. '.$addCount.' objects added' );
-    }
-
+    $cli->output( 'RSSImport '.$rssImport->attribute( 'name' ).': End. '.$addCount.' objects added' );
 }
 
 /*!
@@ -186,17 +143,13 @@ function rssImport2( $root, $rssImport, $cli )
 */
 function importRSSItem( $item, $rssImport, $cli, $channel )
 {
-    global $isQuiet;
     $rssImportID = $rssImport->attribute( 'id' );
     $rssOwnerID = $rssImport->attribute( 'object_owner_id' ); // Get owner user id
     $parentContentObjectTreeNode = eZContentObjectTreeNode::fetch( $rssImport->attribute( 'destination_node_id' ) ); // Get parent treenode object
 
     if ( $parentContentObjectTreeNode == null )
     {
-        if ( !$isQuiet )
-        {
-            $cli->output( 'RSSImport '.$rssImport->attribute( 'name' ).': Destination tree node seems to be unavailable' );
-        }
+        $cli->output( 'RSSImport '.$rssImport->attribute( 'name' ).': Destination tree node seems to be unavailable' );
         return 0;
     }
 
@@ -207,22 +160,21 @@ function importRSSItem( $item, $rssImport, $cli, $channel )
     // Test for link or guid as unique identifier
     $link = $item->getElementsByTagName( 'link' )->item( 0 );
     $guid = $item->getElementsByTagName( 'guid' )->item( 0 );
+    $rssId = '';
     if ( $link->textContent )
     {
-        $md5Sum = md5( $link->textContent );
+        $rssId = $link->textContent;
     }
     elseif ( $guid->textContent )
     {
-        $md5Sum = md5( $guid->textContent );
+        $rssId = $guid->textContent;
     }
     else
     {
-        if ( !$isQuiet )
-        {
-            $cli->output( 'RSSImport '.$rssImport->attribute( 'name' ).': Item has no unique identifier. RSS guid or link missing.' );
-        }
+        $cli->output( 'RSSImport '.$rssImport->attribute( 'name' ).': Item has no unique identifier. RSS guid or link missing.' );
         return 0;
     }
+    $md5Sum = md5( $rssId );
 
     // Try to fetch RSSImport object with md5 sum matching link.
     $existingObject = eZPersistentObject::fetchObject( eZContentObject::definition(), null,
@@ -231,10 +183,7 @@ function importRSSItem( $item, $rssImport, $cli, $channel )
     // if object exists, continue to next import item
     if ( $existingObject != null )
     {
-        if ( !$isQuiet )
-        {
-            $cli->output( 'RSSImport '.$rssImport->attribute( 'name' ).': Object ( ' . $existingObject->attribute( 'id' ) . ' ) with URL: '.$linkURL.' already exists' );
-        }
+        $cli->output( 'RSSImport ' . $rssImport->attribute( 'name' ) . ': Object ( ' . $existingObject->attribute( 'id' ) . ' ) with ID: "' . $rssId . '" already exists' );
         unset( $existingObject ); // delete object to preserve memory
         return 0;
     }
@@ -388,10 +337,7 @@ function importRSSItem( $item, $rssImport, $cli, $channel )
     $contentObject->store();
     $db->commit();
 
-    if ( !$isQuiet )
-    {
-        $cli->output( 'RSSImport '.$rssImport->attribute( 'name' ).': Object created; ' . $title );
-    }
+    $cli->output( 'RSSImport '.$rssImport->attribute( 'name' ).': Object created; ' . $title );
 
     return 1;
 }

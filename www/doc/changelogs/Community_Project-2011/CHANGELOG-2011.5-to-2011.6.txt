@@ -1,0 +1,40 @@
+Bugfixes
+========
+- #15183: collaboration_participation_view tpl function broken
+- #16796: Command line script siteaccess messages
+- #17279: Unable to publish when object relation list is required
+- #17387: DFS Binary downloads get cached locally
+- #17781: image aliases not restored when restoring object from trash
+- #18164: ezenum values are lost with ezscriptmonitor/eZContentClassEditDeferredHandler
+- #18220: &nbsp; in eZ XML are not part of content
+- #18227: Asynchronous publishing won't clear cache on a DB based cluster setup
+- #18231: Infinite loop on transaction when mysql is gone away
+- #18256: Moved URLs and URLs with incorrect casing produce 2 full page loads
+- #18292: ezfind - Search for article with location deleted generates fatal error
+- #18312: An uploaded image content object, created from a content object, is always created in English
+- #18319: Admin design - Class attribute order up/down buttons lead to empty page
+- #18325: eZSys::isSSL not fail save
+- #18327: workflow description is wrong after deleting one event
+- #18334: : ezsection::fetchByIdentifier() should return null if no section is found
+- #18336: Alignment in table cells is not rendered properly if RenderParagraphInTableCells=disabled.
+- #18339: On eZDFS cluster eZmedia files not removed from hdd
+- #18341: show object states in a backend subitems list
+- #18343: eZSearch::getEngine() does not return a siteaccess specific instance
+- #18353: Node view override keys parent_node_remote_id and parent_object_remote_id don't work with node_view_gui
+- #18358: inconsistency in a method name in eZImageFile class
+- #18401: php warning in content/edit with multilingual install (language translation selection template)
+
+Enhancements
+============
+- #18013: cronjobs/updateviewcount.php is far too much suboptimized
+
+Pull requests
+=============
+- Merge pull request #47 from jeromegamez/minor_changes
+- Merge pull request #57 from patrickallaert/refactoring/remove-never-used-eZTemplateCompiler-code
+- Merge pull request #71 from crevillo/issue-018401
+- Merge pull request #73 from joekepley/issues-018228
+- Merge pull request #74 from jeromegamez/issue018402_ezfile_create
+- Merge pull request #76 from nmeirik/16560_find_object
+- Merge pull request #77 from crevillo/issue-016796
+- Merge pull request #79 from alexsebbane/ezpublish_18389

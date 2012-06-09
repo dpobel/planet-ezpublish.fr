@@ -1,10 +1,4 @@
 <?php
-/**
- * $Id$
- * $HeadURL$
- */
-
-require_once( "kernel/common/template.php" );
 
 $Module = $Params['Module'];
 $Offset = $Params['Offset'];
@@ -15,7 +9,7 @@ if ( !is_numeric( $Offset ) )
 }
 
 $http = eZHTTPTool::instance();
-$tpl = templateInit();
+$tpl = eZTemplate::factory();
 $ini = eZINI::instance();
 $planetINI = eZINI::instance( 'planete.ini' );
 $logSearchStats = $ini->variable( 'SearchSettings', 'LogSearchStats' ) == 'enabled';
@@ -59,7 +53,7 @@ if ( isset( $searchResult["SearchExtras"] ) )
 $Result = array();
 $tpl->setVariable( 'persistent_variable', false );
 $Result['content'] = $tpl->fetch( "design:planet/search.tpl" );
-$Result['path'] = array( array( 'text' => ezi18n( 'kernel/content', 'Search' ),
+$Result['path'] = array( array( 'text' => ezpI18n::tr( 'kernel/content', 'Search' ),
                                 'url' => false ) );
 
 $Result['content_info'] = array();

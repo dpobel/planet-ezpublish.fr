@@ -1,33 +1,12 @@
 <?php
-//
-// Definition of eZTemplateCompiler class
-//
-// Created on: <06-Dec-2002 14:17:10 amos>
-//
-// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-// SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.4.0
-// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
-// SOFTWARE LICENSE: GNU General Public License v2.0
-// NOTICE: >
-//   This program is free software; you can redistribute it and/or
-//   modify it under the terms of version 2.0  of the GNU General
-//   Public License as published by the Free Software Foundation.
-// 
-//   This program is distributed in the hope that it will be useful,
-//    but WITHOUT ANY WARRANTY; without even the implied warranty of
-//   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//   GNU General Public License for more details.
-// 
-//   You should have received a copy of version 2.0 of the GNU General
-//   Public License along with this program; if not, write to the Free
-//   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
-//   MA 02110-1301, USA.
-// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-//
-
-/*! \file
-*/
+/**
+ * File containing the eZTemplateCompiler class.
+ *
+ * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
+ * @license http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License v2
+ * @version  2012.5
+ * @package lib
+ */
 
 /*!
   \class eZTemplateCompiler eztemplatecompiler.php
@@ -417,10 +396,10 @@ class eZTemplateCompiler
                 return true;
             }
             else
-                eZDebug::writeError( "Failed executing compiled template '$phpScript'", 'eZTemplateCompiler::executeCompilation' );
+                eZDebug::writeError( "Failed executing compiled template '$phpScript'", __METHOD__ );
         }
         else
-            eZDebug::writeError( "Unknown compiled template '$phpScript'", 'eZTemplateCompiler::executeCompilation' );
+            eZDebug::writeError( "Unknown compiled template '$phpScript'", __METHOD__ );
         return false;
     }
 
@@ -567,11 +546,6 @@ class eZTemplateCompiler
 //         $php->addCodePiece( "if ( !isset( \$$textName ) )\n    \$$textName = '';\n" );
 //         $php->addSpace();
 
-//         $variableStats = array();
-//         eZTemplateCompiler::prepareVariableStatistics( $tpl, $resourceData, $variableStats );
-//         eZTemplateCompiler::calculateVariableStatistics( $tpl, $rootNode, $resourceData, $variableStats );
-//         print_r( $variableStats );
-
         $transformedTree = array();
         eZTemplateCompiler::processNodeTransformation( $useComments, $php, $tpl, $rootNode, $resourceData, $transformedTree );
 
@@ -640,266 +614,6 @@ class eZTemplateCompiler
         }
 
         return true;
-    }
-
-    static function prepareVariableStatistics( $tpl, &$resourceData, &$stats )
-    {
-//         $path = $resourceData['template-filename'];
-//         $info =& $GLOBALS['eZTemplateCompileVariableInfo'][$path];
-        if ( isset( $resourceData['variable-info'] ) )
-        {
-        }
-    }
-
-    static function calculateVariableStatistics( $tpl, &$node, &$resourceData, &$stats )
-    {
-        $nodeType = $node[0];
-        if ( $nodeType == eZTemplate::NODE_ROOT )
-        {
-            $children = $node[1];
-            $namespace = '';
-            if ( $children )
-            {
-                eZTemplateCompiler::calculateVariableStatisticsChildren( $tpl, $children, $resourceData, $namespace, $stats );
-            }
-        }
-        else
-            $tpl->error( 'calculateVariableStatistics', "Unknown root type $nodeType, should be " . eZTemplate::NODE_ROOT );
-    }
-
-    static function calculateVariableStatisticsChildren( $tpl, &$nodeChildren, &$resourceData, $namespace, &$stats )
-    {
-        foreach ( $nodeChildren as $node )
-        {
-            if ( !isset( $node[0] ) )
-                continue;
-            $nodeType = $node[0];
-            if ( $nodeType == eZTemplate::NODE_ROOT )
-            {
-                $children = $node[1];
-                if ( $children )
-                {
-                    eZTemplateCompiler::calculateVariableStatisticsChildren( $tpl, $children, $resourceData, $namespace, $stats );
-                }
-            }
-            else if ( $nodeType == eZTemplate::NODE_TEXT )
-            {
-                $text = $node[2];
-                $placement = $node[3];
-            }
-            else if ( $nodeType == eZTemplate::NODE_VARIABLE )
-            {
-                $variableData = $node[2];
-                $variablePlacement = $node[3];
-                $variableParameters = false;
-                eZTemplateCompiler::calculateVariableNodeStatistics( $tpl, $variableData, $variablePlacement, $resourceData, $namespace, $stats );
-            }
-            else if ( $nodeType == eZTemplate::NODE_FUNCTION )
-            {
-                $functionChildren = $node[1];
-                $functionName = $node[2];
-                $functionParameters = $node[3];
-                $functionPlacement = $node[4];
-
-                if ( !isset( $tpl->Functions[$functionName] ) )
-                    continue;
-
-                if ( is_array( $tpl->Functions[$functionName] ) )
-                {
-                    $tpl->loadAndRegisterOperators( $tpl->Functions[$functionName] );
-                }
-                $functionObject =& $tpl->Functions[$functionName];
-                if ( is_object( $functionObject ) )
-                {
-                    $hasTransformationSupport = false;
-                    $transformChildren = true;
-                    if ( method_exists( $functionObject, 'functionTemplateStatistics' ) )
-                    {
-                        $functionObject->functionTemplateStatistics( $functionName, $node, $tpl, $resourceData, $namespace, $stats );
-                    }
-                }
-                else if ( $resourceData['test-compile'] )
-                {
-                    $tpl->warning( '', "Operator '$operatorName' is not registered.", $functionPlacement );
-                }
-            }
-        }
-    }
-
-    static function calculateVariableNodeStatistics( $tpl, $variableData, $variablePlacement, &$resourceData, $namespace, &$stats )
-    {
-        if ( !is_array( $variableData ) )
-            return false;
-        foreach ( $variableData as $variableItem )
-        {
-            $variableItemType = $variableItem[0];
-            $variableItemData = $variableItem[1];
-            $variableItemPlacement = $variableItem[2];
-            if ( $variableItemType == eZTemplate::TYPE_STRING or
-                 $variableItemType == eZTemplate::TYPE_IDENTIFIER )
-            {
-            }
-            else if ( $variableItemType == eZTemplate::TYPE_NUMERIC )
-            {
-            }
-            else if ( $variableItemType == eZTemplate::TYPE_ARRAY )
-            {
-            }
-            else if ( $variableItemType == eZTemplate::TYPE_BOOLEAN )
-            {
-            }
-            else if ( $variableItemType == eZTemplate::TYPE_VARIABLE )
-            {
-                $variableNamespace = $variableItemData[0];
-                $variableNamespaceScope = $variableItemData[1];
-                $variableName = $variableItemData[2];
-                if ( $variableNamespaceScope == eZTemplate::NAMESPACE_SCOPE_GLOBAL )
-                    $newNamespace = $variableNamespace;
-                else if ( $variableNamespaceScope == eZTemplate::NAMESPACE_SCOPE_LOCAL )
-                    $newNamespace = $variableNamespace;
-                else if ( $variableNamespaceScope == eZTemplate::NAMESPACE_SCOPE_RELATIVE )
-                    $newNamespace = $tpl->mergeNamespace( $namespace, $variableNamespace );
-                else
-                    $newNamespace = false;
-                eZTemplateCompiler::setVariableStatistics( $stats, $newNamespace, $variableName, array( 'is_accessed' => true ) );
-            }
-            else if ( $variableItemType == eZTemplate::TYPE_ATTRIBUTE )
-            {
-                eZTemplateCompiler::calculateVariableNodeStatistics( $tpl, $variableItemData, $variableItemPlacement, $resourceData, $namespace, $stats );
-            }
-            else if ( $variableItemType == eZTemplate::TYPE_OPERATOR )
-            {
-                $operatorName = $variableItemData[0];
-
-                if ( !isset( $tpl->Operators[$operatorName] ) )
-                    continue;
-
-                if ( is_array( $tpl->Operators[$operatorName] ) )
-                {
-                    $tpl->loadAndRegisterOperators( $tpl->Operators[$operatorName] );
-                }
-                $operator =& $tpl->Operators[$operatorName];
-
-                if ( is_object( $operator ) )
-                {
-                    $hasStats = false;
-                    if ( method_exists( $operator, 'operatorTemplateHints' ) )
-                    {
-                        $hints = $operator->operatorTemplateHints();
-                        if ( isset( $hints[$operatorName] ) )
-                        {
-                            $operatorHints = $hints[$operatorName];
-                            $hasParameters = false;
-                            if ( isset( $operatorHints['parameters'] ) )
-                                $hasParameters = $operatorHints['parameters'];
-                            if ( $hasParameters === true )
-                            {
-                                $parameters = $variableItemData;
-                                $count = count( $parameters ) - 1;
-                                for ( $i = 0; $i < $count; ++$i )
-                                {
-                                    $parameter =& $parameters[$i + 1];
-                                    $parameterData = $parameter[1];
-                                    $parameterPlacement = $parameter[2];
-                                    eZTemplateCompiler::calculateVariableNodeStatistics( $tpl, $parameter, $parameterPlacement,
-                                                                                         $resourceData, $namespace, $stats );
-                                }
-                            }
-                            else if ( is_integer( $hasParameters ) )
-                            {
-                                $parameters = $variableItemData;
-                                $count = min( count( $parameters ) - 1, $hasParameters );
-                                for ( $i = 0; $i < $count; ++$i )
-                                {
-                                    $parameter =& $parameters[$i + 1];
-                                    $parameterData = $parameter[1];
-                                    $parameterPlacement = $parameter[2];
-                                    eZTemplateCompiler::calculateVariableNodeStatistics( $tpl, $parameter, $parameterPlacement,
-                                                                                         $resourceData, $namespace, $stats );
-                                }
-                            }
-                            $hasStats = true;
-                        }
-                    }
-                    if ( !$hasStats and method_exists( $operator, 'operatorTemplateStatistics' ) )
-                    {
-                        $hasStats = $operator->operatorTemplateStatistics( $operatorName, $variableItem, $variablePlacement, $tpl, $resourceData, $namespace, $stats );
-                    }
-                    if ( !$hasStats and method_exists( $operator, 'namedParameterList' ) )
-                    {
-                        $namedParameterList = $operator->namedParameterList();
-                        if ( method_exists( $operator, 'namedParameterPerOperator' ) and
-                             $operator->namedParameterPerOperator() )
-                        {
-                            $namedParameterList = $namedParameterList[$operatorName];
-                        }
-                        $operatorParameters = array_slice( $variableItemData, 1 );
-                        $count = 0;
-                        foreach ( $namedParameterList as $parameterName => $parameterDefinition )
-                        {
-                            $operatorParameter = $operatorParameters[$count];
-                            eZTemplateCompiler::calculateVariableNodeStatistics( $tpl, $operatorParameter, $variablePlacement, $resourceData, $namespace, $stats );
-                            ++$count;
-                        }
-                        $hasStats = true;
-                    }
-                }
-                else if ( $resourceData['test-compile'] )
-                {
-                    $tpl->warning( '', "Operator '$operatorName' is not registered." );
-                }
-            }
-            else if ( $variableItemType == eZTemplate::TYPE_VOID )
-            {
-                $tpl->warning( 'TemplateCompiler::calculateOperatorStatistics', "Void datatype should not be used, ignoring it" );
-            }
-            else
-            {
-                $tpl->warning( 'TemplateCompiler::calculateOperatorStatistics', "Unknown data type $variableItemType, ignoring it" );
-            }
-        }
-        return true;
-    }
-
-    static function setVariableStatistics( &$stats, $namespace, $variableName, $changes )
-    {
-        if ( isset( $stats['variables'][$namespace][$variableName] ) )
-        {
-            $variableStats =& $stats['variables'][$namespace][$variableName];
-        }
-        else
-        {
-            $variableStats = array( 'is_accessed' => false,
-                                    'is_created' => false,
-                                    'is_modified' => false,
-                                    'is_removed' => false,
-                                    'is_local' => false,
-                                    'is_input' => false,
-                                    'namespace' => $namespace,
-                                    'namespace_scope' => false,
-                                    'type' => false );
-            $stats['variables'][$namespace][$variableName] =& $variableStats;
-        }
-        if ( isset( $changes['invalid_access'] ) and $changes['invalid_access'] !== false )
-            $variableStats['invalid_access'] = $changes['invalid_access'];
-        if ( isset( $changes['is_accessed'] ) and $changes['is_accessed'] !== false )
-            $variableStats['is_accessed'] = $changes['is_accessed'];
-        if ( isset( $changes['is_created'] ) and $changes['is_created'] !== false )
-            $variableStats['is_created'] = $changes['is_created'];
-        if ( isset( $changes['is_modified'] ) and $changes['is_modified'] !== false )
-            $variableStats['is_modified'] = $changes['is_modified'];
-        if ( isset( $changes['is_removed'] ) and $changes['is_removed'] !== false )
-            $variableStats['is_removed'] = $changes['is_removed'];
-        if ( isset( $changes['is_local'] ) and $changes['is_local'] !== false )
-            $variableStats['is_local'] = $changes['is_local'];
-        if ( isset( $changes['is_input'] ) and $changes['is_input'] !== false )
-            $variableStats['is_input'] = $changes['is_input'];
-        if ( isset( $changes['namespace'] ) )
-            $variableStats['namespace'] = $changes['namespace'];
-        if ( isset( $changes['namespace_scope'] ) )
-            $variableStats['namespace_scope'] = $changes['namespace_scope'];
-        if ( isset( $changes['type'] ) )
-            $variableStats['type'] = $changes['type'];
     }
 
     /*!
@@ -1842,13 +1556,13 @@ class eZTemplateCompiler
     /*!
      Creates a variable data element for the data \a $staticData and returns it.
      The type of element depends on the type of the data, strings and booleans
-     are returned as EZ_TEMPLATE_TYPE_TEXT and eZTemplate::TYPE_NUMERIC while other
-     types are turned into text and returned as EZ_TEMPLATE_TYPE_TEXT.
+     are returned as eZTemplate::TYPE_STRING and eZTemplate::TYPE_NUMERIC while other
+     types are turned into text and returned as eZTemplate::TYPE_STRING.
     */
     static function createStaticVariableData( $tpl, $staticData, $variableItemPlacement )
     {
         if ( is_string( $staticData ) )
-            return array( EZ_TEMPLATE_TYPE_TEXT,
+            return array( eZTemplate::TYPE_STRING,
                           $staticData,
                           $variableItemPlacement );
         else if ( is_bool( $staticData ) )
@@ -1864,7 +1578,7 @@ class eZTemplateCompiler
                           $staticData,
                           $variableItemPlacement );
         else
-            return array( EZ_TEMPLATE_TYPE_TEXT,
+            return array( eZTemplate::TYPE_STRING,
                           "$staticData",
                           $variableItemPlacement );
     }
@@ -1969,7 +1683,7 @@ $lbracket
         if ( is_object( \$value ) )
         $lbracket
             if ( method_exists( \$value, \"attribute\" ) and
-                 method_exists( \$value, \"hasattribute\" ) )
+                 method_exists( \$value, \"hasAttribute\" ) )
             $lbracket
                 if ( \$value->hasAttribute( \$attributeValue ) )
                 $lbracket
@@ -2006,35 +1720,6 @@ $rbracket
         if ( $textData['counter'] > 0 )
             $name .= $textData['counter'];
         return $name;
-    }
-
-    /*!
-     Increases the counter for the current text name, this ensure a uniqe name for it.
-    */
-    static function increaseCurrentTextName( &$parameters )
-    {
-        $textData = array( 'variable' => 'text',
-                           'counter' => 0 );
-        if ( !isset( $parameters['text-data'] ) )
-            $parameters['text-data'] = $textData;
-
-        $parameters['text-data']['counter']++;
-    }
-
-    /*!
-     Decreases a previosuly increased counter for the current text name.
-    */
-    static function decreaseCurrentTextName( &$parameters )
-    {
-        $textData = array( 'variable' => 'text',
-                           'counter' => 0 );
-        if ( !isset( $parameters['text-data'] ) )
-        {
-            $parameters['text-data'] = $textData;
-            return;
-        }
-
-        $parameters['text-data']['counter']--;
     }
 
     static function boundVariableName( $variableID, $parameters )
@@ -2413,7 +2098,7 @@ $rbracket
                             $modificationCheckText = "file_exists( $phpScriptText )";
                             if  ( eZTemplateCompiler::isDevelopmentModeEnabled() )
                             {
-                                $modificationCheckText = "@filemtime( $phpScriptText ) > filemtime( $uriText )";
+                                $modificationCheckText = "file_exists( $phpScriptText ) && filemtime( $phpScriptText ) > filemtime( $uriText )";
                             }
                             $php->addCodePiece( "\$resourceFound = false;\nif " . ( $resourceData['use-comments'] ? ( "/*TC:" . __LINE__ . "*/" ) : "" ) . "( $phpScriptText !== false and $modificationCheckText )\n{\n", array( 'spacing' => $spacing ) );
                         }
@@ -2429,7 +2114,7 @@ $rbracket
                             $modificationCheckText = "file_exists( $phpScriptText )";
                             if  ( eZTemplateCompiler::isDevelopmentModeEnabled() )
                             {
-                                $modificationCheckText = "@filemtime( $phpScriptText ) > filemtime( $uriText )";
+                                $modificationCheckText = "file_exists( $phpScriptText ) && filemtime( $phpScriptText ) > filemtime( $uriText )";
                             }
                             $php->addCodePiece( "if " . ( $resourceData['use-comments'] ? ( "/*TC:" . __LINE__ . "*/" ) : "" ) . "( $modificationCheckText )\n{\n", array( 'spacing' => $spacing ) );
 
@@ -2624,16 +2309,16 @@ END;
                 $isStaticElement = false;
                 $nodeElements = $node[2];
                 $knownTypes = array();
-                if ( eZTemplateNodeTool::isStaticElement( $nodeElements ) and
+                if ( eZTemplateNodeTool::isConstantElement( $nodeElements ) and
                      !$variableParameters['text-result'] )
                 {
-                    $variableText = $php->thisVariableText( eZTemplateNodeTool::elementStaticValue( $nodeElements ), 0, 0, false );
+                    $variableText = $php->thisVariableText( eZTemplateNodeTool::elementConstantValue( $nodeElements ), 0, 0, false );
                     $isStaticElement = true;
                 }
                 else if ( eZTemplateNodeTool::isPHPVariableElement( $nodeElements ) and
                           !$variableParameters['text-result'] )
                 {
-                    $variableText = '$' . eZTemplateNodeTool::elementStaticValue( $nodeElements );
+                    $variableText = '$' . eZTemplateNodeTool::elementConstantValue( $nodeElements );
                     $isStaticElement = true;
                 }
                 else
@@ -2843,11 +2528,11 @@ else
                                 {
                                     $persistence = array();
                                     $knownTypes = array();
-                                    eZTemplateCompiler::generateVariableCode( $php, $tpl, $nameParameter, $knownTypes, $nameInspection,
-                                                                              $persistence,
-                                                                              array( 'variable' => 'name',
-                                                                                     'counter' => 0 ),
-                                                                              $resourceData );
+                                    eZTemplateCompiler::generateVariableDataCode( $php, $tpl, $nameParameter, $knownTypes, $nameInspection,
+                                                                                  $persistence,
+                                                                                  array( 'variable' => 'name',
+                                                                                         'counter' => 0 ),
+                                                                                  $resourceData );
                                     $php->addCodePiece( "if " . ( $resourceData['use-comments'] ? ( "/*TC:" . __LINE__ . "*/" ) : "" ) . "( \$currentNamespace != '' )
 {
     if ( \$name != '' )
@@ -3133,9 +2818,9 @@ END;
                 $tmpVariableAssignmentCounter = $newParameters['counter'];
                 if ( $tmpVariableAssignmentCounter > 0 )
                     $tmpVariableAssignmentName .= $tmpVariableAssignmentCounter;
-                if ( eZTemplateNodeTool::isStaticElement( $variableDataItem[1] ) )
+                if ( eZTemplateNodeTool::isConstantElement( $variableDataItem[1] ) )
                 {
-                    $attributeStaticValue = eZTemplateNodeTool::elementStaticValue( $variableDataItem[1] );
+                    $attributeStaticValue = eZTemplateNodeTool::elementConstantValue( $variableDataItem[1] );
                     $attributeText = $php->thisVariableText( $attributeStaticValue, 0, 0, false );
                 }
                 else
@@ -3222,9 +2907,9 @@ unset( \$" . $variableAssignmentName . "Data );\n",
                     }
                     ++$paramCount;
                     $code .= '\'' . $key . '\' => ';
-                    if( eZTemplateNodeTool::isStaticElement( $value ) )
+                    if( eZTemplateNodeTool::isConstantElement( $value ) )
                     {
-                        $code .= eZPHPCreator::variableText( eZTemplateNodeTool::elementStaticValue( $value ), 0, 0, false );
+                        $code .= eZPHPCreator::variableText( eZTemplateNodeTool::elementConstantValue( $value ), 0, 0, false );
                         continue;
                     }
                     $code .= '%' . $counter . '%';
@@ -3266,9 +2951,9 @@ unset( \$" . $variableAssignmentName . "Data );\n",
                         $newVariableAssignmentCounter = $newParameters['counter'];
                         if ( $newVariableAssignmentCounter > 0 )
                             $newVariableAssignmentName .= $newVariableAssignmentCounter;
-                        if ( eZTemplateNodeTool::isStaticElement( $value ) )
+                        if ( eZTemplateNodeTool::isConstantElement( $value ) )
                         {
-                            $staticValue = eZTemplateNodeTool::elementStaticValue( $value );
+                            $staticValue = eZTemplateNodeTool::elementConstantValue( $value );
                             $staticValueText = $php->thisVariableText( $staticValue, 0, 0, false );
                             if ( preg_match( "/%code$counter%/", $code ) )
                             {

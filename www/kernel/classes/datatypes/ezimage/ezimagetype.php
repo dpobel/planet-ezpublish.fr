@@ -1,30 +1,12 @@
 <?php
-//
-// Definition of eZImageType class
-//
-// Created on: <30-Apr-2002 13:06:21 bf>
-//
-// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-// SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.4.0
-// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
-// SOFTWARE LICENSE: GNU General Public License v2.0
-// NOTICE: >
-//   This program is free software; you can redistribute it and/or
-//   modify it under the terms of version 2.0  of the GNU General
-//   Public License as published by the Free Software Foundation.
-// 
-//   This program is distributed in the hope that it will be useful,
-//    but WITHOUT ANY WARRANTY; without even the implied warranty of
-//   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//   GNU General Public License for more details.
-// 
-//   You should have received a copy of version 2.0 of the GNU General
-//   Public License along with this program; if not, write to the Free
-//   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
-//   MA 02110-1301, USA.
-// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-//
+/**
+ * File containing the eZImageType class.
+ *
+ * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
+ * @license http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License v2
+ * @version  2012.5
+ * @package kernel
+ */
 
 /*!
   \class eZImageType ezimagetype.php
@@ -62,45 +44,130 @@ class eZImageType extends eZDataType
     */
     function trashStoredObjectAttribute( $contentObjectAttribute, $version = null )
     {
-        $contentObjectAttributeID = $contentObjectAttribute->attribute( "id" );
-        $imageHandler = $contentObjectAttribute->attribute( 'content' );
-        $imageFiles = eZImageFile::fetchForContentObjectAttribute( $contentObjectAttributeID );
-
-        foreach ( $imageFiles as $imageFile )
+        $imageHandler = $contentObjectAttribute->attribute( "content" );
+        $originalAlias = $imageHandler->imageAlias( "original" );
+        $basenameHashed = md5( $originalAlias["basename"] );
+        $trashedFolder = "{$originalAlias["dirpath"]}/trashed";
+        $imageHandler->updateAliasPath( $trashedFolder, $basenameHashed );
+        if ( $imageHandler->isStorageRequired() )
         {
-            if ( $imageFile == null )
-                continue;
-            $existingFilepath = $imageFile;
+            $imageHandler->store( $contentObjectAttribute );
+            $contentObjectAttribute->store();
+        }
 
-            // Check if there are any other records in ezimagefile that point to that filename.
-            $imageObjectsWithSameFileName = eZImageFile::fetchByFilepath( false, $existingFilepath );
-
-            $file = eZClusterFileHandler::instance( $existingFilepath );
-
-            if ( $file->exists() and count( $imageObjectsWithSameFileName ) <= 1 )
+        // Now clean all other aliases, not cleanly registered within the attribute content
+        // First get all remaining aliases full path to then safely move them to the trashed folder
+        $aliasNames = array_keys( $imageHandler->aliasList() );
+        $aliasesPath = array();
+        foreach ( $aliasNames as $aliasName )
+        {
+            if ( $aliasName === "original" )
             {
-                $orig_dir = dirname( $existingFilepath ) . '/trashed';
-                $fileName = basename( $existingFilepath );
+                continue;
+            }
 
-                // create dest filename in the same manner as eZHTTPFile::store()
-                // grab file's suffix
-                $fileSuffix = eZFile::suffix( $fileName );
-                // prepend dot
-                if ( $fileSuffix )
-                    $fileSuffix = '.' . $fileSuffix;
-                // grab filename without suffix
-                $fileBaseName = basename( $fileName, $fileSuffix );
-                // create dest filename
-                $newFileBaseName = md5( $fileBaseName . microtime() . mt_rand() );
-                $newFileName = $newFileBaseName . $fileSuffix;
-                $newFilepath = $orig_dir . '/' . $newFileName;
+            $aliasesPath[] = "{$originalAlias["dirpath"]}/{$originalAlias["basename"]}_{$aliasName}.{$originalAlias["suffix"]}";
+        }
 
-                // rename the file, and update the database data
-                $imageHandler->updateAliasPath( $orig_dir, $newFileBaseName );
-                if ( $imageHandler->isStorageRequired() )
+        if( empty( $aliasesPath ) )
+        {
+            return;
+        }
+        $conds = array(
+            "contentobject_attribute_id" => $contentObjectAttribute->attribute( "id" ),
+            "filepath"                   => array( $aliasesPath )
+        );
+        $remainingAliases = eZPersistentObject::fetchObjectList(
+            eZImageFile::definition(), null,
+            $conds
+        );
+        unset( $conds, $remainingAliasesPath );
+
+        if ( !empty( $remainingAliases ) )
+        {
+            foreach ( $remainingAliases as $remainingAlias )
+            {
+                $filename = basename( $remainingAlias->attribute( "filepath" ) );
+                $newFilePath = $trashedFolder . "/" . $basenameHashed . substr( $filename, strrpos( $filename, '_' ) );
+                eZClusterFileHandler::instance( $remainingAlias->attribute( "filepath" ) )->move( $newFilePath );
+
+                // $newFilePath might have already been processed in eZImageFile
+                // If so, $remainingAlias is a duplicate. We can then remove it safely
+                $imageFile = eZImageFile::fetchByFilepath( false, $newFilePath, false );
+                if ( empty( $imageFile ) )
                 {
-                    $imageHandler->store( $contentObjectAttribute );
-                    $contentObjectAttribute->store();
+                    $remainingAlias->setAttribute( "filepath", $newFilePath );
+                    $remainingAlias->store();
+                }
+                else
+                {
+                    $remainingAlias->remove();
+                }
+            }
+        }
+    }
+
+    public function restoreTrashedObjectAttribute( $contentObjectAttribute )
+    {
+        $imageHandler = $contentObjectAttribute->attribute( "content" );
+        $originalAlias = $imageHandler->imageAlias( "original" );
+        $originalPath = str_replace( "/trashed", "", $originalAlias["dirpath"]);
+        $originalName = $imageHandler->imageName( $contentObjectAttribute, $contentObjectAttribute->objectVersion() );
+        $imageHandler->updateAliasPath( $originalPath, $originalName );
+
+        if ( $imageHandler->isStorageRequired() )
+        {
+            $imageHandler->store( $contentObjectAttribute );
+            $contentObjectAttribute->store();
+        }
+
+        // Now clean all other aliases, not cleanly registered within the attribute content
+        // First get all remaining aliases full path to then safely remove them
+        $aliasNames = array_keys( $imageHandler->aliasList() );
+        $aliasesPath = array();
+        foreach ( $aliasNames as $aliasName )
+        {
+            if ( $aliasName === "original" )
+            {
+                continue;
+            }
+
+            $aliasesPath[] = "{$originalAlias["dirpath"]}/{$originalAlias["basename"]}_{$aliasName}.{$originalAlias["suffix"]}";
+        }
+
+        if( empty( $aliasesPath ) )
+        {
+            return;
+        }
+        $conds = array(
+                "contentobject_attribute_id" => $contentObjectAttribute->attribute( "id" ),
+            "filepath"                   => array( $aliasesPath )
+        );
+        $remainingAliases = eZPersistentObject::fetchObjectList(
+            eZImageFile::definition(), null,
+            $conds
+        );
+        unset( $conds, $remainingAliasesPath );
+
+        if ( !empty( $remainingAliases ) )
+        {
+            foreach ( $remainingAliases as $remainingAlias )
+            {
+                $filename = basename( $remainingAlias->attribute( "filepath" ) );
+                $newFilePath = $originalPath . "/" . $originalName . substr( $filename, strrpos( $filename, '_' ) );
+                eZClusterFileHandler::instance( $remainingAlias->attribute( "filepath" ) )->move( $newFilePath );
+
+                // $newFilePath might have already been processed in eZImageFile
+                // If so, $remainingAlias is a duplicate. We can then remove it safely
+                $imageFile = eZImageFile::fetchByFilepath( false, $newFilePath, false );
+                if ( empty( $imageFile ) )
+                {
+                    $remainingAlias->setAttribute( "filepath", $newFilePath );
+                    $remainingAlias->store();
+                }
+                else
+                {
+                    $remainingAlias->remove();
                 }
             }
         }
@@ -126,7 +193,7 @@ class eZImageType extends eZDataType
      * @param $base:
      * @param $contentObjectAttribute: content object attribute being validated
      * @return validation result- eZInputValidator::STATE_INVALID or eZInputValidator::STATE_ACCEPTED
-     * 
+     *
      * @see kernel/classes/eZDataType#validateObjectAttributeHTTPInput($http, $base, $objectAttribute)
      */
     function validateObjectAttributeHTTPInput( $http, $base, $contentObjectAttribute )
@@ -204,7 +271,7 @@ class eZImageType extends eZDataType
      * Fetch object attribute http input, override the ezDataType method
      * This method is triggered when submiting a http form which includes Image class
      * Image is stored into file system every time there is a file input and validation result is valid.
-     * @param $http http object 
+     * @param $http http object
      * @param $base
      * @param $contentObjectAttribute : the content object attribute being handled
      * @return true if content object is not null, false if content object is null
@@ -222,7 +289,7 @@ class eZImageType extends eZDataType
 
         $content = $contentObjectAttribute->attribute( 'content' );
         $httpFileName = $base . "_data_imagename_" . $contentObjectAttribute->attribute( "id" );
-        
+
         if ( eZHTTPFile::canFetch( $httpFileName ) )
         {
             $httpFile = eZHTTPFile::fetch( $httpFileName );
@@ -234,7 +301,7 @@ class eZImageType extends eZDataType
                     $result = true;
                 }
             }
-        
+
         }
 
         if ( $content )
@@ -243,7 +310,7 @@ class eZImageType extends eZDataType
                 $content->setAttribute( 'alternative_text', $imageAltText );
             $result = true;
         }
-        
+
         return $result;
     }
 

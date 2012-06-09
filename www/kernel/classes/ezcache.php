@@ -2,10 +2,10 @@
 /**
  * File containing the {@link eZCache} class
  *
- * @copyright Copyright (C) 1999-2010 eZ Systems AS. All rights reserved.
- * @license http://ez.no/licenses/gnu_gpl GNU General Public License v2.0
+ * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
+ * @license http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License v2
+ * @version  2012.5
  * @package kernel
- *
  */
 
 /**
@@ -16,7 +16,7 @@
  * Has methods for clearing the various caches according
  * to tag, id or all caches. It also has information for all the caches.
  *
- * @package Kernel
+ * @package kernel
  */
 class eZCache
 {
@@ -45,7 +45,8 @@ class eZCache
                                        'tag' => array( 'ini' ),
                                        'enabled' => true,
                                        'path' => 'var/cache/ini',
-                                       'function' => array( 'eZCache', 'clearGlobalINICache' ) ),
+                                       'function' => array( 'eZCache', 'clearGlobalINICache' ),
+                                       'purge-function' => array( 'eZCache', 'clearGlobalINICache' ) ),
                                 array( 'name' => ezpI18n::tr( 'kernel/cache', 'INI cache' ),
                                        'id' => 'ini',
                                        'tag' => array( 'ini' ),
@@ -70,7 +71,8 @@ class eZCache
                                        'enabled' => true,
                                        'path' => false,
                                        'is-clustered' => true,
-                                       'function' => array( 'eZCache', 'clearClassID' ) ),
+                                       'function' => array( 'eZCache', 'clearClassID' ),
+                                       'purge-function' => array( 'eZCache', 'clearClassID' ) ),
                                 array( 'name' => ezpI18n::tr( 'kernel/cache', 'Sort key cache' ),
                                        'id' => 'sortkey',
                                        'tag' => array( 'content' ),
@@ -78,6 +80,7 @@ class eZCache
                                        'enabled' => true,
                                        'path' => false,
                                        'function' => array( 'eZCache', 'clearSortKey' ),
+                                       'purge-function' => array( 'eZCache', 'clearSortKey' ),
                                        'is-clustered' => true ),
                                 array( 'name' => ezpI18n::tr( 'kernel/cache', 'URL alias cache' ),
                                        'id' => 'urlalias',
@@ -96,6 +99,7 @@ class eZCache
                                        'path' => false,
                                        'enabled' => true,
                                        'function' => array( 'eZCache', 'clearImageAlias' ),
+                                       'purge-function' => array( 'eZCache', 'purgeImageAlias' ),
                                        'is-clustered' => true ),
                                 array( 'name' => ezpI18n::tr( 'kernel/cache', 'Template cache' ),
                                        'id' => 'template',
@@ -143,7 +147,8 @@ class eZCache
                                        'tag' => array( 'content' ),
                                        'path' => false,
                                        'enabled' => true,
-                                       'function' => array( 'eZCache', 'clearContentTreeMenu' ) ),
+                                       'function' => array( 'eZCache', 'clearContentTreeMenu' ),
+                                       'purge-function' => array( 'eZCache', 'clearContentTreeMenu' ) ),
                                 array( 'name' => ezpI18n::tr( 'kernel/cache', 'State limitations cache' ),
                                        'is-clustered' => true,
                                        'id' => 'state_limitations',
@@ -151,13 +156,15 @@ class eZCache
                                        'expiry-key' => 'state-limitations',
                                        'enabled' => true,
                                        'path' => false,
-                                       'function' => array( 'eZCache', 'clearStateLimitations' ) ),
+                                       'function' => array( 'eZCache', 'clearStateLimitations' ),
+                                       'purge-function' => array( 'eZCache', 'clearStateLimitations' ) ),
                                 array( 'name' => ezpI18n::tr( 'kernel/cache', 'Design base cache' ),
                                        'id' => 'design_base',
                                        'tag' => array( 'template' ),
-                                       'enabled' => true,
+                                       'enabled' => $ini->variable( 'DesignSettings', 'DesignLocationCache' ) == 'enabled',
                                        'path' => false,
-                                       'function' => array( 'eZCache', 'clearDesignBaseCache' ) ),
+                                       'function' => array( 'eZCache', 'clearDesignBaseCache' ),
+                                       'purge-function' => array( 'eZCache', 'clearDesignBaseCache' ) ),
                                 /**
                                  * caches the list of active extensions (per siteaccess and global)
                                  * @see eZExtension::activeExtensions()
@@ -168,7 +175,8 @@ class eZCache
                                        'expiry-key' => 'active-extensions-cache',
                                        'enabled' => true,
                                        'path' => false,
-                                       'function' => array( 'eZCache', 'clearActiveExtensions' ) ),
+                                       'function' => array( 'eZCache', 'clearActiveExtensions' ),
+                                       'purge-function' => array( 'eZCache', 'clearActiveExtensions' ) ),
 
                                 array( 'name' => ezpI18n::tr( 'kernel/cache', 'TS Translation cache' ),
                                        'id' => 'translation',
@@ -451,10 +459,12 @@ class eZCache
         $cacheItem['iterationSleep'] = $iterationSleep;
         $cacheItem['iterationMax']   = $iterationMax;
         $cacheItem['expiry']         = $expiry;
-        $functionName = 'function';
+        $functionName = false;
         if ( $purge && isset( $cacheItem['purge-function'] ) )
             $functionName = 'purge-function';
-        if ( isset( $cacheItem[$functionName] ) )
+        else if ( !$purge && isset( $cacheItem['function'] ) )
+            $functionName = 'function';
+        if ( $functionName )
         {
             $function = $cacheItem[$functionName];
             if ( is_callable( $function ) )
@@ -509,6 +519,101 @@ class eZCache
         $expiryHandler = eZExpiryHandler::instance();
         $expiryHandler->setTimestamp( 'image-manager-alias', time() );
         $expiryHandler->store();
+    }
+
+    /**
+     * Purges the image aliases of all ezimage attribute. The original image is
+     * kept.
+     *
+     * @param array $cacheItem
+     * @access public
+     */
+    static function purgeImageAlias( $cacheItem )
+    {
+        // 1. fetch ezcontentclass having an ezimage attribute
+        // 2. fetch objects of these classes
+        // 3. purge image alias for all version
+
+        $imageContentClassAttributes = eZContentClassAttribute::fetchList(
+            true,
+            array(
+                'data_type' => 'ezimage',
+                'version' => eZContentClass::VERSION_STATUS_DEFINED
+            )
+        );
+        $classIds = array();
+        $attributeIdentifiersByClass = array();
+        foreach ( $imageContentClassAttributes as $ccAttr )
+        {
+            $identifier = $ccAttr->attribute( 'identifier' );
+            $ccId = $ccAttr->attribute( 'contentclass_id' );
+            if ( !isset( $attributeIdentifiersByClass[$ccId] ) )
+            {
+                $attributeIdentifiersByClass[$ccId] = array();
+            }
+            $attributeIdentifiersByClass[$ccId][] = $identifier;
+            $classIds[] = $ccId;
+
+        }
+
+        $subTreeParams = array(
+            'ClassFilterType' => 'include',
+            'ClassFilterArray' => $classIds,
+            'MainNodeOnly' => true,
+            'IgnoreVisibility' => true,
+            'LoadDataMap' => false,
+            'Limit' => 100,
+            'Offset' => 0
+        );
+        $count = 0;
+        while ( true )
+        {
+            $nodes = eZContentObjectTreeNode::subTreeByNodeID( $subTreeParams, 1 );
+            if ( empty( $nodes ) )
+            {
+                break;
+            }
+            foreach ( $nodes as $node )
+            {
+                call_user_func( $cacheItem['reporter'], '', $count );
+                $object = $node->attribute( 'object' );
+                self::purgeImageAliasForObject(
+                    $cacheItem, $object, $attributeIdentifiersByClass[$object->attribute( 'contentclass_id' )]
+                );
+                $count++;
+            }
+            eZContentObject::clearCache();
+            $subTreeParams['Offset'] += $subTreeParams['Limit'];
+        }
+        self::clearImageAlias( $cacheItem );
+    }
+
+    /**
+     * The purge the image aliases in all versions of the content object.
+     *
+     * @param array $cacheItem
+     * @param eZContentObject $object
+     * @param array $imageIdentifiers array of ezimage attribute identifiers
+     */
+    private static function purgeImageAliasForObject( array $cacheItem, eZContentObject $object, array $imageIdentifiers )
+    {
+        $versions = $object->attribute( 'versions' );
+        foreach ( $versions as $version )
+        {
+            $dataMap = $version->attribute( 'data_map' );
+            foreach ( $imageIdentifiers as $identifier )
+            {
+                $attr = $dataMap[$identifier];
+                if ( !$attr instanceof eZContentObjectAttribute )
+                {
+                    eZDebug::writeError( "Missing attribute $identifier in object " . $object->attribute( 'id' ) . ", version " . $version->attribute( 'version' ) . ". This indicates data corruption.", __METHOD__ );
+                }
+                elseif ( $attr->attribute( 'has_content' ) )
+                {
+                    $attr->attribute( 'content' )->purgeAllAliases( $attr );
+                }
+            }
+        }
     }
 
     /**
@@ -656,7 +761,14 @@ class eZCache
         $cachePath = eZSys::cacheDirectory();
 
         $fileHandler = eZClusterFileHandler::instance();
-        $fileHandler->fileDeleteByWildcard( $cachePath . '/' . eZTemplateDesignResource::DESIGN_BASE_CACHE_NAME . '*' );
+        if ( !$fileHandler instanceof eZDBFileHandler )
+        {
+            // design base cache is disabled with eZDBFileHandler cluster
+            // handler, see eZTemplateDesignResource::allDesignBases()
+            $fileHandler->fileDelete(
+                $cachePath, eZTemplateDesignResource::DESIGN_BASE_CACHE_NAME
+            );
+        }
     }
 
     /**

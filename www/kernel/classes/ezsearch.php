@@ -1,30 +1,12 @@
 <?php
-//
-// Definition of eZSearch class
-//
-// Created on: <25-Jun-2002 10:56:09 bf>
-//
-// ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-// SOFTWARE NAME: eZ Publish
-// SOFTWARE RELEASE: 4.4.0
-// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
-// SOFTWARE LICENSE: GNU General Public License v2.0
-// NOTICE: >
-//   This program is free software; you can redistribute it and/or
-//   modify it under the terms of version 2.0  of the GNU General
-//   Public License as published by the Free Software Foundation.
-// 
-//   This program is distributed in the hope that it will be useful,
-//    but WITHOUT ANY WARRANTY; without even the implied warranty of
-//   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//   GNU General Public License for more details.
-// 
-//   You should have received a copy of version 2.0 of the GNU General
-//   Public License along with this program; if not, write to the Free
-//   Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
-//   MA 02110-1301, USA.
-// ## END COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-//
+/**
+ * File containing the eZSearch class.
+ *
+ * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
+ * @license http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License v2
+ * @version  2012.5
+ * @package kernel
+ */
 
 /*!
   \class eZSearch
@@ -50,14 +32,11 @@ class eZSearch
     {
         $searchEngine = eZSearch::getEngine();
 
-        if ( is_object( $searchEngine ) && method_exists( $searchEngine, 'needCommit'))
+        if ( $searchEngine instanceof ezpSearchEngine )
         {
             return $searchEngine->needCommit();
         }
-        else
-        {
-            return true;
-        }
+        return true;
     }
     /*!
      \static
@@ -68,44 +47,49 @@ class eZSearch
     {
         $searchEngine = eZSearch::getEngine();
 
-        if ( is_object( $searchEngine ) && method_exists( $searchEngine, 'needRemoveWithUpdate'))
+        if ( $searchEngine instanceof ezpSearchEngine )
         {
             return $searchEngine->needRemoveWithUpdate();
         }
-        else
-        {
-            return true;
-        }
+        return true;
     }
 
-     /*!
-     \static
-     Will remove the index from the given object from the search engine
-     A commit parameter is added since 4.1 to accomodate requirements of several search plugins
-    */
+    /**
+     * Removes object $contentObject from the search database.
+     *
+     * @param eZContentObject $contentObject the content object to remove
+     * @param bool $commit Whether to commit after removing the object
+     * @return bool True if the operation succeed.
+     */
     static function removeObject( $contentObject, $commit = true )
     {
         $searchEngine = eZSearch::getEngine();
 
-        if ( is_object( $searchEngine ) )
+        if ( $searchEngine instanceof ezpSearchEngine )
         {
-            $searchEngine->removeObject( $contentObject, $commit );
+            return $searchEngine->removeObject( $contentObject, $commit );
         }
+
+        return false;
     }
 
-    /*!
-     \static
-     Will index the content object to the search engine.
-     A commit parameter is added since 4.1 to accomodate requirements of several search plugins
-    */
+    /**
+     * Adds object $contentObject to the search database.
+     *
+     * @param eZContentObject $contentObject Object to add to search engine
+     * @param bool $commit Whether to commit after adding the object
+     * @return bool True if the operation succeed.
+     */
     static function addObject( $contentObject, $commit = true )
     {
         $searchEngine = eZSearch::getEngine();
 
-        if ( is_object( $searchEngine ) )
+        if ( $searchEngine instanceof ezpSearchEngine )
         {
-            $searchEngine->addObject( $contentObject, $commit );
+            return $searchEngine->addObject( $contentObject, $commit );
         }
+
+        return false;
     }
 
     /*!
@@ -116,7 +100,7 @@ class eZSearch
     {
         $searchEngine = eZSearch::getEngine();
 
-        if ( is_object( $searchEngine ) )
+        if ( $searchEngine instanceof ezpSearchEngine )
         {
             return $searchEngine->search( $searchText, $params, $searchTypes );
         }
@@ -129,7 +113,7 @@ class eZSearch
     {
         $searchEngine = eZSearch::getEngine();
 
-        if ( is_object( $searchEngine ) )
+        if ( $searchEngine instanceof ezpSearchEngine )
         {
             return $searchEngine->normalizeText( $text );
         }
@@ -149,7 +133,7 @@ class eZSearch
         $andSearchParts = array();
         $searchTypesDefinition = array( 'types' => array(), 'general_filter' => array() );
 
-        if ( is_object( $searchEngine ) )
+        if ( $searchEngine instanceof ezpSearchEngine )
         {
             // This method was renamed in pre 3.5 trunk
             if ( method_exists( $searchEngine, 'supportedSearchTypes' ) )
@@ -434,7 +418,7 @@ class eZSearch
     {
         $searchEngine = eZSearch::getEngine();
 
-        if ( is_object( $searchEngine ) && method_exists( $searchEngine, 'cleanup' ) )
+        if ( $searchEngine instanceof ezpSearchEngine && method_exists( $searchEngine, 'cleanup' ) )
         {
             $searchEngine->cleanup();
         }
@@ -449,7 +433,7 @@ class eZSearch
     static function getEngine()
     {
         // Get instance if already created.
-        $instanceName = 'eZSearchPlugin_' . $GLOBALS['eZCurrentAccess'];
+        $instanceName = "eZSearchPlugin_" . $GLOBALS["eZCurrentAccess"]["name"];
         if ( isset( $GLOBALS[$instanceName] ) )
         {
             return $GLOBALS[$instanceName];
@@ -495,17 +479,37 @@ class eZSearch
         return false;
     }
 
-    /*
-     * @since eZ Publish 4.1
-     * @description new methods that search plugins can implement when meta data is updated (outside publish operations)
+    /**
+     * Notifies search engine about the change of section of a set of objects
      *
+     * @since 4.6
+     * @param array $objectIDs
+     * @param int $sectionID
+     * @return false|mixed false in case method is undefined, otherwise return the result of the search engine call
      */
+    public static function updateObjectsSection( array $objectIDs, $sectionID )
+    {
+        $searchEngine = eZSearch::getEngine();
+        if ( $searchEngine instanceof ezpSearchEngine && method_exists( $searchEngine, 'updateObjectsSection' ) )
+        {
+            return $searchEngine->updateObjectsSection( $objectIDs, $sectionID );
+        }
+        return false;
+    }
 
+    /**
+     * Notifies search engine about section changes
+     *
+     * @since 4.1
+     * @param int $nodeID
+     * @param int $sectionID
+     * @return false|mixed False in case method is undefined, otherwise return the result of the search engine call
+     */
     public static function updateNodeSection( $nodeID, $sectionID )
     {
         $searchEngine = eZSearch::getEngine();
 
-        if ( is_object( $searchEngine ) && method_exists( $searchEngine, 'updateNodeSection'))
+        if ( $searchEngine instanceof ezpSearchEngine && method_exists( $searchEngine, 'updateNodeSection' ) )
         {
             return $searchEngine->updateNodeSection( $nodeID, $sectionID );
         }
@@ -513,11 +517,19 @@ class eZSearch
         return false;
     }
 
+    /**
+     * Notifies search engine about node visibility changes
+     *
+     * @since 4.1
+     * @param int $nodeID
+     * @param string $action "hide" or "show"
+     * @return false|mixed False in case method is undefined, otherwise return the result of the search engine call
+     */
     public static function updateNodeVisibility( $nodeID, $action )
     {
         $searchEngine = eZSearch::getEngine();
 
-        if ( is_object( $searchEngine ) && method_exists( $searchEngine, 'updateNodeVisibility'))
+        if ( $searchEngine instanceof ezpSearchEngine && method_exists( $searchEngine, 'updateNodeVisibility' ) )
         {
             return $searchEngine->updateNodeVisibility( $nodeID, $action );
         }
@@ -525,11 +537,20 @@ class eZSearch
         return false;
     }
 
+    /**
+     * Notifies search engine about new node assignments added
+     *
+     * @since 4.1
+     * @param int $mainNodeID
+     * @param int $objectID
+     * @param array $nodeAssignmentIDList
+     * @return false|mixed False in case method is undefined, otherwise return the result of the search engine call
+     */
     public static function addNodeAssignment( $mainNodeID, $objectID, $nodeAssignmentIDList )
     {
         $searchEngine = eZSearch::getEngine();
 
-        if ( is_object( $searchEngine ) && method_exists( $searchEngine, 'addNodeAssignment'))
+        if ( $searchEngine instanceof ezpSearchEngine && method_exists( $searchEngine, 'addNodeAssignment' ) )
         {
             return $searchEngine->addNodeAssignment( $mainNodeID, $objectID, $nodeAssignmentIDList );
         }
@@ -537,11 +558,21 @@ class eZSearch
         return false;
     }
 
+    /**
+     * Notifies search engine about removed node assignments and what the new main node is (same if not changed)
+     *
+     * @since 4.1
+     * @param int $mainNodeID
+     * @param int $newMainNodeID
+     * @param int $objectID
+     * @param array $nodeAssigmentIDList
+     * @return false|mixed False in case method is undefined, otherwise return the result of the search engine call
+     */
     public static function removeNodeAssignment( $mainNodeID, $newMainNodeID, $objectID, $nodeAssigmentIDList )
     {
         $searchEngine = eZSearch::getEngine();
 
-        if ( is_object( $searchEngine ) && method_exists( $searchEngine, 'removeNodeAssignment'))
+        if ( $searchEngine instanceof ezpSearchEngine && method_exists( $searchEngine, 'removeNodeAssignment' ) )
         {
             return $searchEngine->removeNodeAssignment( $mainNodeID, $newMainNodeID, $objectID, $nodeAssigmentIDList );
         }
@@ -550,17 +581,17 @@ class eZSearch
     }
 
     /**
-     * Removes nodes from the search engine.
+     * Notifies search engine about nodes being removed
      *
+     * @since 4.1
      * @param array $nodeIdList Array of node ID to remove.
-     *
-     * @return false in case of error, otherwise return the result of the search engine call
+     * @return false|mixed False in case method is undefined, otherwise return the result of the search engine call
      */
     public static function removeNodes( array $nodeIdList )
     {
         $searchEngine = self::getEngine();
 
-        if ( is_object( $searchEngine ) && method_exists( $searchEngine, 'removeNodes' ) )
+        if ( $searchEngine instanceof ezpSearchEngine && method_exists( $searchEngine, 'removeNodes' ) )
         {
             return $searchEngine->removeNodes( $nodeIdList );
         }
@@ -568,31 +599,46 @@ class eZSearch
         return false;
     }
 
+    /**
+     * Notifies search engine about updates to object states
+     *
+     * @since 4.1
+     * @param int $objectID
+     * @param array $objectStateList
+     * @return false|mixed False in case method is undefined, otherwise return the result of the search engine call
+     */
     public static function updateObjectState( $objectID, $objectStateList )
     {
         $searchEngine = eZSearch::getEngine();
 
-        if ( is_object( $searchEngine ) && method_exists( $searchEngine, 'updateObjectState'))
+        if ( $searchEngine instanceof ezpSearchEngine && method_exists( $searchEngine, 'updateObjectState' ) )
         {
             return $searchEngine->updateObjectState( $objectID, $objectStateList );
         }
 
         return false;
     }
-    
+
+    /**
+     * Notifies search engine about an swap node operation
+     *
+     * @since 4.1
+     * @param int $nodeID
+     * @param int $selectedNodeID
+     * @param array $nodeIdList
+     * @return false|mixed False in case method is undefined, otherwise return the result of the search engine call
+     */
     public static function swapNode( $nodeID, $selectedNodeID, $nodeIdList = array() )
     {
         $searchEngine = eZSearch::getEngine();
 
-        if ( is_object( $searchEngine ) && method_exists( $searchEngine, 'swapNode'))
+        if ( $searchEngine instanceof ezpSearchEngine && method_exists( $searchEngine, 'swapNode' ) )
         {
             return $searchEngine->swapNode( $nodeID, $selectedNodeID, $nodeIdList = array() );
         }
 
         return false;
     }
-
-    
 }
 
 ?>

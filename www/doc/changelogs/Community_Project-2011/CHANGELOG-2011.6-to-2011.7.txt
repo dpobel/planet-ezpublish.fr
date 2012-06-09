@@ -1,0 +1,26 @@
+Bugfixes
+========
+- #12922: Database transaction error when search phrase longer than 250 characters
+- #14229: Role count might be unconsistent on role/list view
+- #18182: Image ConversionRules not ezdfs cluster compatible
+- #18373: permission problem: Can't create an object of a certain class
+- #18382: Indexing fails on newly added date attribute
+- #18407: Bad progress bar in updatecontentobjectname.php script
+- #18418: pdf.php typo error
+- #18420: Unexpected error #0 when trying to start cache generation on (dfsmysql)
+- #18436: download headers filename error
+- #18444: file.ini settings cannot be made in extensions if using a CLI script
+- #18449: Can't print search results in MSIE
+
+Enhancements
+============
+- #18160: : Don't download all thumbnails from admin interface if not needed
+
+Pull requests
+=============
+- Merge pull request #90 from jeromegamez/018442_unencoded_specialchars
+- Merge pull request #88 from crevillo/issue-018420
+- Merge pull request #87 from alnio/role-count-ignore-drafts-14229
+- Merge pull request #89 from cgjengedal/master
+- Merge pull request #68 from masev/hook-image-alias
+- Merge pull request #83 from crevillo/updatecontenobjectname-work

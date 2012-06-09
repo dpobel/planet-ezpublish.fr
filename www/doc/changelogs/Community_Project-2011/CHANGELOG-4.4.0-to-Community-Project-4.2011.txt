@@ -1,0 +1,148 @@
+Bugfixes
+========
+
+- #03693: Search does not work correctly, whilst running in CGI mode
+- #07591: Automatic virtual host mode detection fails
+- #09160: foward / back link in image gallery not working
+- #11204: Incorrectly generated URLs
+- #11536: Headers inside tables are displayed using a wrong level
+- #13637: Webdav doesn't honor ForceVirtualHost setting - doesn't work in such setup
+- #14255: PHP Notice when running rssimport.php cronjobs
+- #14342: eZContentObjectTreeNode::subTreeByNodeID with Offset but no Limit param
+- #14846: Template function 'attribute_view_gui' with view=plain param doesn't work properly
+- #15023: <header level="-1"> generate fatal error taking a lot of server resources
+- #15045: updateviewcount.php does not take PathPrefix into account
+- #15061: ez scripts that declare support for use_session cannot print help text if db is in siteaccess
+- #15073: object name with text line attribute causes database transaction failure
+- #15108: Raise CacheThreshold to not clear all view cache on normal ezflow frontpages
+- #15128: Losing input when assigning Object state in edit form
+- #15256: ezcache.php doesn't delete global ini cache
+- #15376: ezmultiupload doesn't handle upload_max_filesize and post_max_size limitations (Fixed by patrickallaert)
+- #15459: Cluster : Script for delivering images should not take into account query string
+- #15793: eZDFS: Image files and aliases are not removed when a objectversion is deleted
+- #15918: Moving a node doesn't update search index
+- #15985: Debug notices when translating an object to a new language
+- #16312: Problem creating folders with eZDFS
+- #16614: some update scripts do not load extensions. Will not work in any configuration
+- #16857: Possible issue with transactions in relation with ezmultiplexer, ezoracle and content object states
+- #16959: Problem with images when using more then 255 long title attributes
+- #17164: ezstring datatype pass validation if space is entered
+- #17219: Policy "section/assign" does not uphold subtree limitation
+- #17254: ez still opens a db connection even when sessions are stored in the filesystem
+- #17278: Wrong translation after clearing cache in admin setup tab
+- #17305: Admin2 gives warning in IE if if [TreeMenu]Dynamic=disabled
+- #17325: general digest notification runs out of memory
+- #17327: bump minimum php version checked in setup wizard
+- #17338: Email notification not sent in approval workflow
+- #17340: admin2: cannot get anymore to objects that have a zero-bytes name (no name)
+- #17351: browse_first_placement.tpl in admin and admin2 has wrong variable name
+- #17352: eZKeywordType::fromString() not working with an empty value.
+- #17355: admin2: js error prevents context menu in children items table to pop up
+- #17358: translation cache is expiring all the time
+- #17360: Documentation update
+- #17404: Fatal error when removing a session from session administration in admin interface
+- #17424: Override by table_classification on td/th/tr tags has been broken since 3.9
+- #17443: Subitems does not display if creator has been deleted in admin2
+- #17448: Admin subitems context menu provides edit languages based on parent node instead itself.
+- #17453: ez4.4.0 - section_identifer udpate script 'updatesectionidentifier.php' not working
+- #17459: You can't view cogwheel pop-up menu if the name field has an apostrophe
+- #17519: up and down attribute buttons can corrupt class definition
+- #17523: admin2: default contentclass: Default sorting of children - differs from - Node Order options
+- #17524: URL Wildcard Case-Sensitive
+- #17550: Login unsuccessful after upgrade to 4.4 with DebugByUser enabled
+- #17551: An useless extra test for  in index.php
+- #17552: ezimagealiashandler - minor speedup possible
+- #17593: Siteaccess specific file.ini.append.php is not used
+- #17614: Missing RewriteRule in documentation of eZ 4.4
+- #17622: Using images (image datatype) not working in DFS cluster mode on oracle
+- #17632: Wrong language used for URL alias with a non-default language node
+- #17646: Put big inline JavaScript blocks in a dedicated .js file
+- #17653: Offline kickstart install does not work
+- #17668: fetch for logged_in_users not working in 4.4
+- #17674: Registering a new user raises a php_warning
+- #17684: eZDFSFileHandler::purge with a directory doesn't purge local files
+- #17685: RSS GUID is not persistent
+- #17686: ezdatetime "use seconds" is not supported in admin2 templates
+- #17703: Fatal error when deleting main node having ezfind enabled
+- #17725: children.tpl includes YUI3 loader even if YUI3 is not used anywhere
+- #17732: Editing a class with ezscriptmonitor active dos not show "Class storing defered" in Admin2 Interface
+- #17743: eZContentObjectTreeNode::removeSubtrees does not remove objects hidden by superior
+- #17761: ezcache.php --purge does not purge template-blocks
+- #17763: updatesectionidentifier.php and user extensions
+- #17775: MaxNodesRemoveSubtree warning missing in frontend designs
+- #17778: workflow/view - event_ezmultiplexer.tpl - selected workflow view shows in some cases wrong values
+- #17798: Default value of ignore_visibility param in reverse_related_objects fetch is null
+- #17803: Remote ID aren't unique when forking eZ Publish execution
+- #17805: Attribute id mismatch for new attributes added to class
+- #17816: eZTemplateDesignResource::handleResource() may cause memory leaks
+- #17820: Change priorities don't clear the cache (patch by Damien Pobel)
+- #17822: A useless update query is executed on ezcontentobject_tree during publishing
+- #17831: Translation expiry reset at every request
+- #17836: eZUserType->fromString should check RequireUniqueMail setting
+- #17840: Interrupted operations won't restart where they stopped
+- #17853: Objects erroneously hidden by cronjobs/hide.php script
+- #17860: Some eZUser cache still only used for current user
+- #17870: Bug casting in /lib/eztemplate/classes/eztemplate.php
+- #17916: update isbn script cannot use range.js file anymore
+- #17918: eZINI isLoaded() and resetGlobals() functions ignore the addArrayDefinition key element
+- #17931: suggestion: rename "url management" to "link management"
+- #17932: Indexer crashes on trashed objects
+- #17942: Footers in most interfaces need to be updated with 2011 copyright date
+- #17950: Routes are hardcoded with '/api'.
+- #17951: Potential problem when the REST interface is exposed in a sub-path location
+- #18016: eZSendmailTransport::sendMail() - no errors in an error.log if message cannot be sent
+- #18038: ezmbpaex : Validation Regexp is not stored when creating/editing a user
+- #18040: (Oracle) (Webin) Clicking on "discard draft" button on "Site settings" raises a DB error
+- #18041: Oracle : query error when creating folders
+- #18045: REST schema doesn't work on POSTGRES
+- #18056: URLs and Images in RSS feed do not use absolute URLs
+- #18060: rest api bug: the name of the providers can not be the part of the route
+- #18063: rest api: do not add to final result requestedResponseGroups array if it was not asked for
+- #18073: REST : Give authenticated users access to user-specific content
+- #18081: Response from token endpoint should be in JSON format
+- #18082: OAuth token extraction does not fall back to query variables and http body.
+- #18085: REST : Specific design for oauth login si broken
+- #18086: subitems sort is not working when clicking on a page or next/previous
+- #18096: allow ezsqldumpschema to dump huge datatabases without running out of memory
+- #18108: Verify correct naming and placement of new classes. Part1.
+- #18110: : translation ts files having messages with more than one location elements do not validate
+- #18111: Token expiry time is not configurable at the moment.
+- #18113: REST : refresh_token is not returned when token response_type is requested
+- #18127: php warning in master / slave setup with mysqli
+- #18136: REST : Accessing to an unauthorized content should raise an HTTP 403
+- #18138: REST : Error messages should be displayed in JSON
+- #18144: eZUser->lastVisit() is updated on every request with ezpSessionHandlerPHP
+- #18149: special character not supported by eZXMLInputHandler
+- #18173: OAuth authentication with access token doesn't check client validity
+- #18179: Headers don't comply to OAuth 2.0 r10 spec in case of an OAuth error
+- #18186: Special characters in custom-tags's xml attributes cause crash
+- #18196: AlphabeticalFilter is not working in admin2
+- #18197: i18n doesn't use TS cache when fallback is set to eng-GB
+- #18201: Wrong encoding of class name in gear popup menu
+- #18211: URL datatype is not case sensitive
+- #18214: admin1: js error prevents context menu to pop up
+- #18215: Information stays after deleting a file
+- #18227: Asynchronous publishing won't clear cache on a DB based cluster setup
+
+Enhancements
+============
+
+- #06939: Getting a more realistic last visit time of users that have never logged in
+- #08903: provide sort option for basket
+- #10827: Adding a CLI trash purge script
+- #13304: merge default rewrite rules with the ones documented for vhost setup - improve .htaccess_root
+- #13929: viewcaching.ini : new clear option for "children" needed
+- #16498: ezJSCore : see packed files list in ez debug
+- #16513: Add ability to define Expires offset send by index_cluster.php
+- #17403: Session administration in admin interface only list one session per user
+- #17561: Better utf8 encoding support in eZSys for all supported webservers
+- #17762: Adding canonical link real to header when language different
+- #17797: DFS cluster should not use match by LIKE
+- #17832: Unnecessary emacs script file .revive.el in design/base/templates
+- #17863: Convert settings/*.ini files to UTF-8 charset
+- #17900: eZDebugSetting should lazy load its settings
+- #17946: eZContentObject::fetchByNodeID() should also take an array of NodeIDs as parameter
+- #17954: Make implicit ->load() in eZINI constructor optional
+- #17974: Unable to modify/remove workflow if workflow extension is deactivated
+- #18043: Add support for getting specific column in tree list fetch
+

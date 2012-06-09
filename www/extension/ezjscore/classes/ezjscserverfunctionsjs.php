@@ -5,10 +5,10 @@
 // Created on: <16-Jun-2008 00:00:00 ar>
 //
 // ## BEGIN COPYRIGHT, LICENSE AND WARRANTY NOTICE ##
-// SOFTWARE NAME: eZ JSCore extension for eZ Publish
-// SOFTWARE RELEASE: 4.4.0
-// COPYRIGHT NOTICE: Copyright (C) 1999-2010 eZ Systems AS
-// SOFTWARE LICENSE: GNU General Public License v2.0
+// SOFTWARE NAME: eZ Publish Community Project
+// SOFTWARE RELEASE:  2012.5
+// COPYRIGHT NOTICE: Copyright (C) 1999-2012 eZ Systems AS
+// SOFTWARE LICENSE: GNU General Public License v2
 // NOTICE: >
 //   This program is free software; you can redistribute it and/or
 //   modify it under the terms of version 2.0  of the GNU General
@@ -50,7 +50,7 @@ class ezjscServerFunctionsJs extends ezjscServerFunctions
      *
      * @param array $args
      * @param array $packerFiles ByRef list of files to pack (by ezjscPacker)
-     * @return string Empty string
+     * @return string Empty string, this function only modifies $packerFiles
      */
     public static function yui2( $args, &$packerFiles )
     {
@@ -79,16 +79,18 @@ class ezjscServerFunctionsJs extends ezjscServerFunctions
     {
         if ( isset( $args[0] ) )
         {
-            return 'var YUILoader =  new YAHOO.util.YUILoader({
+            return 'var YUI2_config = {
                 base: \'' . self::getDesignFile( $args[0] ) . '\',
                 loadOptional: true
-            });';
+            };
+            var YUILoader =  new YAHOO.util.YUILoader(YUI2_config);';
         }
 
-        return 'var YUILoader =  new YAHOO.util.YUILoader({
+        return 'var YUI2_config = {
             loadOptional: true,
             combine: true
-        });';
+        };
+        var YUILoader =  new YAHOO.util.YUILoader(YUI2_config);';
     }
 
     /**
@@ -96,7 +98,7 @@ class ezjscServerFunctionsJs extends ezjscServerFunctions
      *
      * @param array $args
      * @param array $packerFiles ByRef list of files to pack (by ezjscPacker)
-     * @return string Empty string
+     * @return string Empty string, this function only modifies $packerFiles
      */
     public static function yui3( $args, &$packerFiles )
     {
@@ -123,10 +125,22 @@ class ezjscServerFunctionsJs extends ezjscServerFunctions
      */
     public static function yui3conf( $args )
     {
-        if ( isset( $args[0] ) )
-            return 'var YUI3_config = { \'base\' : \'' . self::getDesignFile( $args[0] ) . '\', modules: {} };';
+        $options = eZINI::instance( 'ezjscore.ini' )->variable( 'YUI3', 'LoaderOptions' );
 
-        return 'var YUI3_config = { modules: {} };';
+        if ( isset( $args[0] ) )
+        {
+            $options['base'] = self::getDesignFile( $args[0] );
+            if ( !isset( $options['combine'] ) )
+            {
+                $options['combine'] = false;
+            }
+        }
+        if ( !isset( $options['modules'] ) )
+        {
+            $options['modules'] = new stdClass;
+        }
+
+        return 'var YUI3_config = ' . json_encode( $options ) . ';';
     }
 
     /**
@@ -141,7 +155,8 @@ class ezjscServerFunctionsJs extends ezjscServerFunctions
         return "
 YUI( YUI3_config ).add('io-ez', function( Y )
 {
-    var _rootUrl = '$rootUrl', _serverUrl = _rootUrl + 'ezjscore/', _seperator = '@SEPERATOR$', _configBak;
+    var _rootUrl = '$rootUrl', _serverUrl = _rootUrl + 'ezjscore/', _seperator = '@SEPERATOR$', _configBak,
+        _prefUrl = _rootUrl + 'user/preferences';
 
     // (static) Y.io.ez() uses Y.io()
     //
@@ -158,9 +173,12 @@ YUI( YUI3_config ).add('io-ez', function( Y )
         else
             c = Y.merge( {on:{}, data: '', headers: {}, method: 'POST'}, c );
 
+        var _token = '', _tokenNode = document.getElementById('ezxform_token_js');
+        if ( _tokenNode ) _token = '&ezxform_token=' + _tokenNode.getAttribute('title');
+
         // Append function arguments as post param if method is POST
         if ( c.method === 'POST' )
-            c.data += ( c.data !== '' ? '&' : '' ) + 'ezjscServer_function_arguments=' + callArgs;
+            c.data += ( c.data ? '&' : '' ) + 'ezjscServer_function_arguments=' + callArgs + _token;
         else
             url += encodeURIComponent( callArgs );
 
@@ -210,12 +228,24 @@ YUI( YUI3_config ).add('io-ez', function( Y )
             else
                 window.console.log( 'Y.ez(): ' + returnObject.responseJSON.content );
         }
+        _configBak.on.success = _configBak.on.successCallback;
+        _configBak.on.successCallback = undefined;
     }
 
     _ez.url = _serverUrl;
     _ez.root_url = _rootUrl;
     _ez.seperator = _seperator;
     Y.io.ez = _ez;
+    Y.io.ez.setPreference = function( name, value )
+    {
+        var c = {on:{}, data:'', headers: {}, method: 'POST'},
+            _tokenNode = document.getElementById( 'ezxform_token_js' );
+
+        c.data = 'Function=set_and_exit&Key=' + encodeURIComponent( name ) + '&Value=' + encodeURIComponent( value );
+        if ( _tokenNode )
+            c.data += '&ezxform_token=' + _tokenNode.getAttribute( 'title' );
+        return Y.io( _prefUrl, c );
+    }
 }, '3.0.0' ,{requires:['io-base', 'json-parse']});
         ";
     }
@@ -225,6 +255,7 @@ YUI( YUI3_config ).add('io-ez', function( Y )
      *
      * @param array $args
      * @param array $packerFiles ByRef list of files to pack (by ezjscPacker)
+     * @return string Empty string, this function only modifies $packerFiles
      */
     public static function jquery( $args, &$packerFiles )
     {
@@ -243,6 +274,29 @@ YUI( YUI3_config ).add('io-ez', function( Y )
     }
 
     /**
+     * Figures out where to load jQueryUI files from and prepends them to $packerFiles
+     *
+     * @param array $args
+     * @param array $packerFiles ByRef list of files to pack (by ezjscPacker)
+     * @return string Empty string, this function only modifies $packerFiles
+     */
+    public static function jqueryUI( $args, &$packerFiles )
+    {
+        $ezjscoreIni = eZINI::instance( 'ezjscore.ini' );
+        if ( $ezjscoreIni->variable( 'eZJSCore', 'LoadFromCDN' ) === 'enabled' )
+        {
+            $scriptFiles = $ezjscoreIni->variable( 'eZJSCore', 'ExternalScripts' );
+            $packerFiles = array_merge( array( $scriptFiles['jqueryUI'] ), $packerFiles );
+        }
+        else
+        {
+            $scriptFiles = $ezjscoreIni->variable( 'eZJSCore', 'LocalScripts' );
+            $packerFiles = array_merge( array( $scriptFiles['jqueryUI'] ), $packerFiles );
+        }
+        return '';
+    }
+
+    /**
      * Generates the JavaScript needed to do server calls directly from JavaScript in jQuery
      *
      * @param array $args
@@ -253,11 +307,12 @@ YUI( YUI3_config ).add('io-ez', function( Y )
         $rootUrl = self::getIndexDir();
         return "
 (function($) {
-    var _rootUrl = '$rootUrl', _serverUrl = _rootUrl + 'ezjscore/', _seperator = '@SEPERATOR$';
+    var _rootUrl = '$rootUrl', _serverUrl = _rootUrl + 'ezjscore/', _seperator = '@SEPERATOR$',
+        _prefUrl = _rootUrl + 'user/preferences';
 
-// FIX: Ajax is broken on IE8 / IE7 on jQuery 1.4.x as it's trying to use the broken window.XMLHttpRequest object
-if ( window.XMLHttpRequest && window.ActiveXObject )
-    $.ajaxSettings.xhr = function() { try { return new window.ActiveXObject('Microsoft.XMLHTTP'); } catch(e) {} };
+    // FIX: Ajax is broken on IE8 / IE7 on jQuery 1.4.x as it's trying to use the broken window.XMLHttpRequest object
+    if ( window.XMLHttpRequest && window.ActiveXObject )
+        $.ajaxSettings.xhr = function() { try { return new window.ActiveXObject('Microsoft.XMLHTTP'); } catch(e) {} };
 
     // (static) jQuery.ez() uses jQuery.post() (Or jQuery.get() if post paramer is false)
     //
@@ -270,13 +325,22 @@ if ( window.XMLHttpRequest && window.ActiveXObject )
         var url = _serverUrl + 'call/';
         if ( post )
         {
-            // support serializeArray() format
-            if ( post.join !== undefined )
+            var _token = '', _tokenNode = document.getElementById('ezxform_token_js');
+            if ( _tokenNode ) _token = _tokenNode.getAttribute('title');
+            if ( post.join !== undefined )// support serializeArray() format
+            {
                 post.push( { 'name': 'ezjscServer_function_arguments', 'value': callArgs } );
-            else if ( typeof(post) === 'string' )
-                post += ( post !== '' ? '&' : '' ) + 'ezjscServer_function_arguments=' + callArgs;
-            else
+                post.push( { 'name': 'ezxform_token', 'value': _token } );
+            }
+            else if ( typeof(post) === 'string' )// string
+            {
+                post += ( post ? '&' : '' ) + 'ezjscServer_function_arguments=' + callArgs + '&ezxform_token=' + _token;
+            }
+            else // object
+            {
                 post['ezjscServer_function_arguments'] = callArgs;
+                post['ezxform_token'] = _token;
+            }
             return $.post( url, post, callBack, 'json' );
         }
         return $.get( url + encodeURIComponent( callArgs ), {}, callBack, 'json' );
@@ -286,6 +350,16 @@ if ( window.XMLHttpRequest && window.ActiveXObject )
     _ez.seperator = _seperator;
     $.ez = _ez;
 
+    $.ez.setPreference = function( name, value )
+    {
+        var param = {'Function': 'set_and_exit', 'Key': name, 'Value': value};
+            _tokenNode = document.getElementById( 'ezxform_token_js' );
+        if ( _tokenNode )
+            param.ezxform_token = _tokenNode.getAttribute( 'title' );
+
+        return $.post( _prefUrl, param );
+    };
+
     // Method version, for loading response into elements
     // NB: Does not use json (not possible with .load), so ezjscore/call will return string
     function _ezLoad( callArgs, post, selector, callBack )
@@ -293,7 +367,10 @@ if ( window.XMLHttpRequest && window.ActiveXObject )
         callArgs = callArgs.join !== undefined ? callArgs.join( _seperator ) : callArgs;
         var url = _serverUrl + 'call/';
         if ( post )
+        {
             post['ezjscServer_function_arguments'] = callArgs;
+            post['ezxform_token'] = jQuery('#ezxformtoken').attr('title');
+        }
         else
             url += encodeURIComponent( callArgs );
 
@@ -338,7 +415,7 @@ if ( window.XMLHttpRequest && window.ActiveXObject )
 
         // Do not allow to search for more then x items at a time
         $ini = eZINI::instance();
-        $maximumSearchLimit = $ini->variable( 'SearchSettings', 'MaximumSearchLimit' );
+        $maximumSearchLimit = (int) $ini->variable( 'SearchSettings', 'MaximumSearchLimit' );
         if ( $searchLimit > $maximumSearchLimit )
             $searchLimit = $maximumSearchLimit;
 
@@ -359,7 +436,8 @@ if ( window.XMLHttpRequest && window.ActiveXObject )
         // Prepare search parameters
         $params = array( 'SearchOffset' => $searchOffset,
                          'SearchLimit' => $searchLimit,
-                         'SortArray' => array( 'published', 0 )
+                         'SortArray' => array( 'published', 0 ), // Legacy search engine uses SortArray
+                         'SortBy' => array( 'published' => 'desc' ) // eZ Find search method implementation uses SortBy
         );
 
         if ( self::hasPostValue( $http, 'SearchContentClassAttributeID' ) )
@@ -505,11 +583,14 @@ if ( window.XMLHttpRequest && window.ActiveXObject )
 
     /**
      * Reimp
+     *
+     * @param string $fn FunctionName to get cache time for
+     * @return int -1 if function does not support caching, eg: yui3, yui2, jquery & jqueryUI
      */
-    public static function getCacheTime( $functionName )
+    public static function getCacheTime( $fn )
     {
         // Functions that always needs to be executed, since they append other files dynamically
-        if ( $functionName === 'yui3' || $functionName === 'yui2' || $functionName === 'jquery' )
+        if ( $fn === 'yui3' || $fn === 'yui2' || $fn === 'jquery' || $fn === 'jqueryUI' )
             return -1;
 
         static $mtime = null;
