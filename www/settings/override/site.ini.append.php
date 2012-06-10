@@ -14,11 +14,12 @@ SQLOutput=disabled
 [ExtensionSettings]
 ActiveExtensions[]
 ActiveExtensions[]=planete
-#ActiveExtensions[]=ezdevtools
 ActiveExtensions[]=ezclasslists
 ActiveExtensions[]=ezoe
 ActiveExtensions[]=ezjscore
 ActiveExtensions[]=autostatus
+ActiveExtensions[]=ezautosave
+ActiveExtensions[]=ezformtoken
 
 [URLTranslator]
 TranslatableSystemUrls=disabled
