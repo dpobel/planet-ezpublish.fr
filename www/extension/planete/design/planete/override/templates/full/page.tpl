@@ -1,7 +1,3 @@
-{*
- * $Id$
- * $HeadURL$
- *}
 <div class="post">
     <h1><a href={$node.url_alias|ezurl()}>{$node.name|wash()}</a></h1>
     <div class="post-content">

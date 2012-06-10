@@ -1,7 +1,3 @@
-{*
- * $Id$
- * $HeadURL$
- *}
 {if and( is_set( $validation.processed ),
          and( $validation.processed,
               $collection_attributes ) )}

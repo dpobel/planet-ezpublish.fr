@@ -1,7 +1,3 @@
-{*
- * $Id$
- * $HeadURL$
- *}
 {default attribute_base=ContentObjectAttribute}
 {let data_text=cond( is_set( $#collection_attributes[$attribute.id] ),
                      $#collection_attributes[$attribute.id].data_text,

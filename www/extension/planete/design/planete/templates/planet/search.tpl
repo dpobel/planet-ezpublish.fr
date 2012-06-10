@@ -1,7 +1,3 @@
-{*
- * $Id$
- * $HeadURL$
- *}
 <div class="content-search">
     <form action={"planet/search/"|ezurl} method="get">
         <fieldset class="search">

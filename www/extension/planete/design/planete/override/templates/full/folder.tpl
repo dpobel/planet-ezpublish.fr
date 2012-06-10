@@ -1,7 +1,3 @@
-{*
- * $Id$
- * $HeadURL$
- *}
 {def $sites = fetch( content, list, hash( 'parent_node_id', $node.node_id,
                                           'sort_by', array( 'modified_subnode', false() ),
                                           'class_filter_type', include,

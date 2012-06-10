@@ -1,7 +1,3 @@
-{*
- * $Id$
- * $HeadURL$
- *}
 {cache-block keys=array( 'hmenu', cond( is_set( $module_result.node_id ), $module_result.node_id, 0 ) )
              expiry=0
              subtree_expiry=ezini( 'TreeSettings', 'PlanetRootNodeID', 'planete.ini' )}
