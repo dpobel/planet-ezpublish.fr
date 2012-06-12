@@ -22,16 +22,43 @@ $searchTimestamp = false;
 $searchType = "fulltext";
 $subTreeArray = array( $planetINI->variable( 'TreeSettings', 'BlogsNodeID' ) );
 
-$searchResult = eZSearch::search( $searchText, array( "SearchType" => $searchType,
-                                                      "SearchSectionID" => $searchSectionID,
-                                                      "SearchSubTreeArray" => $subTreeArray,
-                                                      'SearchTimestamp' => $searchTimestamp,
-                                                      "SearchLimit" => $pageLimit,
-                                                      "SearchOffset" => $Offset ) );
+$filterList = array();
+if ( $http->hasGetVariable( 'Filter' ) )
+{
+    foreach ( $http->getVariable( 'Filter' ) as $filter )
+    {
+        list( $name, $value ) = explode( ':', $filter, 2 );
+        $filterList[$name] = $value;
+    }
+}
+
+$searchResult = eZSearch::search(
+    $searchText,
+    array(
+        "SearchType" => $searchType,
+        "SearchSectionID" => $searchSectionID,
+        "SearchSubTreeArray" => $subTreeArray,
+        'SearchTimestamp' => $searchTimestamp,
+        "SearchLimit" => $pageLimit,
+        "SearchOffset" => $Offset,
+        "SearchDate" => (int) $http->getVariable( 'DateFilter', 0 ),
+        "SortBy" => array( 'score' => 'asc', 'published' => 'desc' ),
+        "SpellCheck" => array( true, 'default' ),
+        "Facet" => array(
+            array(
+                "field" => "extra_parent_node_name_k",
+                "limit" => 10
+            ),
+        ),
+        "Filter" => $filterList,
+    )
+);
 
 $viewParameters = array( 'offset' => $Offset );
 
 $searchData = false;
+$tpl->setVariable( 'search_filter', $filterList );
+$tpl->setVariable( 'search_date_filter', (int) $http->getVariable( 'DateFilter', 0 ) );
 $tpl->setVariable( "search_data", $searchData );
 $tpl->setVariable( "search_section_id", $searchSectionID );
 $tpl->setVariable( "search_subtree_array", $subTreeArray );

@@ -477,6 +477,7 @@ return array(
       'ezuserSolrStorage'                                       => 'extension/ezfind/classes/solrstorage/ezusersolrstorage.php',
       'ezxFormToken'                                            => 'extension/ezformtoken/event/ezxformtoken.php',
       'ezxmltextSolrStorage'                                    => 'extension/ezfind/classes/solrstorage/ezxmltextsolrstorage.php',
+      'parentIndexParentName'                                   => 'extension/planete/classes/planetindexparentname.php',
       'statusUpdateEvent'                                       => 'extension/autostatus/classes/statusupdateevent.php',
     );
 

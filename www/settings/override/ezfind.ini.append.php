@@ -1,0 +1,6 @@
+<?php /*
+
+[IndexPlugins]
+General[]=planetIndexParentName
+
+*/ ?>

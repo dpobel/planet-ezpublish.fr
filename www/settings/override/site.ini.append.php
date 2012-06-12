@@ -20,6 +20,7 @@ ActiveExtensions[]=ezjscore
 ActiveExtensions[]=autostatus
 ActiveExtensions[]=ezautosave
 ActiveExtensions[]=ezformtoken
+ActiveExtensions[]=ezfind
 
 [URLTranslator]
 TranslatableSystemUrls=disabled
@@ -52,4 +53,8 @@ VarDir=var/planete
 Transport=sendmail
 AdminEmail=dpobel@free.fr
 EmailSender=dpobel@free.fr
+
+[SearchSettings]
+AllowEmptySearch=disabled
+
 */ ?>
