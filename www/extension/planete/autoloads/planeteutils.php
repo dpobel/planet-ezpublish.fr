@@ -1,8 +1,4 @@
 <?php
-/**
- * $Id$
- * $HeadURL$
- */
 
 class eZPlaneteUtils
 {
@@ -11,7 +7,6 @@ class eZPlaneteUtils
     function __construct()
     {
         $this->Operators = array( 'clean_rewrite_xhtml',
-                                  'bookmarkize',
                                   'entity_decode' );
     }
 
@@ -30,13 +25,7 @@ class eZPlaneteUtils
         return array( 'clean_rewrite_xhtml' => array( 'url_site' => array( 'type' => 'string',
                                                                            'required' => true,
                                                                            'default' => '' ) ),
-                      'entity_decode' => array(),
-                      'bookmarkize' => array( 'post_url' => array( 'type' => 'string',
-                                                                   'required' => true,
-                                                                   'default' => '' ),
-                                              'post_name' => array( 'type' => 'string',
-                                                                    'required' => false,
-                                                                    'default' => false ) ) );
+                      'entity_decode' => array() );
     }
 
 
@@ -56,25 +45,8 @@ class eZPlaneteUtils
             $operatorValue = html_entity_decode( $html, ENT_QUOTES,
                                                  $ini->variable( 'CharsetSettings', 'DefaultTemplateCharset' ) );
         }
-        elseif ( $operatorName == 'bookmarkize' )
-        {
-            $url = $operatorValue;
-            $postName = $namedParameters['post_url'];
-            $postURL = $namedParameters['post_url'];
-            if ( isset( $namedParameters['post_name'] ) && $namedParameters['post_name'] )
-            {
-                $postName = $namedParameters['post_name'];
-            }
-            $operatorValue = self::bookmarkize( $url, $postURL, $postName );
-        }
     }
 
-
-    static function bookmarkize( $url, $postURL, $postName )
-    {
-        $url = str_replace( '%url', $postURL, $url );
-        return str_replace( '%title', $postName, $url );
-    }
 
     static function cleanRewriteXHTML( $html, $urlSite )
     {

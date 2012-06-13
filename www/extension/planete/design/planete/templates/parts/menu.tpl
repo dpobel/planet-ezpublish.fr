@@ -1,4 +1,4 @@
-<div id="menu">
+<aside>
     <div class="block flux">
         <p>
             <a href={'feed/planet'|ezurl()} id="rss" title="Suivez le Planet par le flux RSS"><span>Flux RSS</span></a>
@@ -36,10 +36,10 @@
     </div>
     <div class="block">
         <h1><a href={'planet/search'|ezurl()}>Recherche</a></h1>
-        <form id="search" action={'planet/search'|ezurl()} method="get">
+        <form action={'planet/search'|ezurl()} method="get">
         <p>
-            <input type="text" class="text" name="SearchText" value="{cond( ezhttp_hasvariable( 'SearchText', 'get' ), ezhttp( 'SearchText', 'get' )|wash(), '' )}" />
-            <input type="submit" class="button" value="Go !" />
+            <input type="search" name="SearchText" value="{cond( ezhttp_hasvariable( 'SearchText', 'get' ), ezhttp( 'SearchText', 'get' )|wash(), '' )}" />
+            <input type="submit" value="Go !" />
         </p>
         </form>
     </div>
@@ -62,4 +62,4 @@
         </ul>
     </div>
     {/cache-block}
-</div>
+</aside>

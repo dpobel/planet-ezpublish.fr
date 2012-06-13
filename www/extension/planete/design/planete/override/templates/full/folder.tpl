@@ -5,7 +5,7 @@
      $posts = array()
      $meta_description = $node.name
 }
-<div class="post summary">
+<article>
     <h1><a href={$node.url_alias|ezurl()}>{$node.name|wash()}</a></h1>
 {foreach $sites as $site}
     {cache-block keys=array( 'node', $site.node_id ) expiry=0 subtree_expiry=$site.node_id}
@@ -14,7 +14,7 @@
                                               'class_filter_array', array( 'post' ),
                                               'sort_by', array( 'modified', false() ),
                                               'limit', 5 ) )}
-    <div class="post-content">
+    <div>
         <h2><a href={$site.url_alias|ezurl()}>{$site.name|wash()}</a> : les derniers billets</h2>
     {if $posts|not()}
         <p>Pas encore de billet</p>
@@ -33,4 +33,4 @@
 {* persistent variables pour les méta de la page *}
 {set scope='global' persistent_variable=hash( 'title_page', $node.name,
                                               'meta_description', $meta_description|trim )}
-</div>
+</article>

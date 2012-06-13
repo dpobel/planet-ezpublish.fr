@@ -10,17 +10,15 @@
                                           limit, $by_page ) )
      $title = concat( 'Articles de ', $node.name )
      $description = $title}
-<div class="post">
-    <h1 class="blog"><a href={$node.data_map.url.content|ezurl()}>Articles de &laquo;&nbsp;{$node.name|wash()}&nbsp;&raquo;</a> &mdash; <a href={$node.data_map.rss.content|ezurl()}>Flux RSS</a></h1>
-    <div class="post-content">
-    <dl class="post-list">
+<article>
+    <h1><a href={$node.data_map.url.content|ezurl()}>Articles de &laquo;&nbsp;{$node.name|wash()}&nbsp;&raquo;</a> &mdash; <a href={$node.data_map.rss.content|ezurl()}>Flux RSS</a></h1>
+    <dl>
     {foreach $posts as $post}
         {node_view_gui content_node=$post view='line'}
         {set $description = concat( $description, ', ', $post.name )}
     {/foreach}
     </dl>
-    </div>
-</div>
+</article>
 {include name=navigator
          uri='design:navigator/google.tpl'
          page_uri=$node.url_alias

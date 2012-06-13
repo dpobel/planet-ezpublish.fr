@@ -7,14 +7,14 @@
                                          'class_filter_array', ezini( 'MenuContentSettings', 'TopIdentifierList', 'menu.ini' ) ) )
      $current_node_id = cond( is_set( $module_result.node_id ), $module_result.node_id, 0 )
 }
-<div id="header">
-    <p><a href={'/'|ezurl()} title="Planet eZ Publish.fr, ze french corner !"><span>Planet eZ Publish.fr, ze french corner !</span></a></p>
+<header>
+    <p><a href={'/'|ezurl()} title="Planet eZ Publish.fr, ze french corner !">Planet eZ Publish.fr, ze french corner !</a></p>
     <ul>
         <li{cond( $current_node_id|eq( 2 ), ' class="selected"', '' )}><a href={'/'|ezurl()}>Accueil</a></li>
     {foreach $menu as $element}
         <li{cond( $current_node_id|eq( $element.node_id ), ' class="selected"', '' )}><a href={$element.url_alias|ezurl()}>{$element.name|wash()}</a></li>
     {/foreach}
     </ul>
-</div>
+</header>
 {undef $menu $current_node_id}
 {/cache-block}
