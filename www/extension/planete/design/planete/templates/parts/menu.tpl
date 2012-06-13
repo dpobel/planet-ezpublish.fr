@@ -1,4 +1,4 @@
-<aside>
+<aside class="yui3-u-1-4">
     <div class="block flux">
         <p>
             <a href={'feed/planet'|ezurl()} id="rss" title="Suivez le Planet par le flux RSS"><span>Flux RSS</span></a>

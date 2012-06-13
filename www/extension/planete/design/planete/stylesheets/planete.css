@@ -1,0 +1,18 @@
+header p, header ul, footer, .yui3-g
+{
+margin:0 auto;
+max-width:960px;
+}
+img, pre
+{
+max-width:100%;
+}
+pre
+{
+overflow-x:auto;
+overflow-y:hidden;
+}
+header li
+{
+display:inline-block;
+}

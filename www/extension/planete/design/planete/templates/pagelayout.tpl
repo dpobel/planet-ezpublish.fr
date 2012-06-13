@@ -32,10 +32,12 @@
 </head>
 <body>
 {include uri="design:parts/hmenu.tpl"}
-<section class="{cond( is_set( $module_result.node_id ), $module_result.content_info.class_identifier, 'module' )}">
-    {$module_result.content}
-</section>
-{include uri="design:parts/menu.tpl"}
+<div class="yui3-g">
+    <section class="yui3-u-3-4 {cond( is_set( $module_result.node_id ), $module_result.content_info.class_identifier, 'module' )}">
+        {$module_result.content}
+    </section>
+    {include uri="design:parts/menu.tpl"}
+</div>
 <footer>
     <p>Mise sur orbite par <a href="http://ez.no">eZ Publish</a> - Conception, développement et hébergement par <a href="http://pwet.fr/cv">Damien Pobel</a></p>
 <footer>
