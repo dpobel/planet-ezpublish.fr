@@ -40,7 +40,7 @@
 </div>
 <footer>
     <p>Mise sur orbite par <a href="http://ez.no">eZ Publish</a> - Conception, développement et hébergement par <a href="http://pwet.fr/cv">Damien Pobel</a></p>
-<footer>
+</footer>
 <!--DEBUG_REPORT-->
 </body>
 </html>

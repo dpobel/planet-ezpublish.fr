@@ -3,10 +3,40 @@ body
 background:#ccc;
 font-family: Tahoma, Helvetica, Arial, sans-serif;
 }
-.yui3-g, footer
+a
+{
+color:#02274c;
+}
+a:visited
+{
+color:#333;
+}
+a:hover
+{
+color:#ff490f;
+}
+
+h1 a
+{
+text-decoration:none;
+}
+aside h1 a, aside h1 a:visited
+{
+color:#000;
+}
+.yui3-g
 {
 background:#fff;
+border-bottom-right-radius: 5px;
+border-bottom-left-radius: 5px;
 }
+
+.yui3-g, header ul
+{
+-webkit-box-shadow: 0px 0px 15px 0px #222;
+        box-shadow: 0px 0px 15px 0px #222;
+}
+
 header p, header ul, footer, .yui3-g
 {
 margin:0 auto;
@@ -20,10 +50,12 @@ pre
 {
 overflow-x:auto;
 overflow-y:hidden;
+padding-bottom:0.2em;
 }
 footer
 {
 text-align:center;
+margin-top:1em;
 }
 header
 {
@@ -32,6 +64,12 @@ background:#02274c;
 header ul
 {
 background:#416b96;
+border-top-right-radius: 5px;
+border-top-left-radius: 5px;
+}
+header li:first-of-type
+{
+border-top-left-radius: 5px;
 }
 header li
 {
@@ -47,22 +85,50 @@ background-image: -webkit-linear-gradient(top, #416b96, #02274c);
 background-image: -o-linear-gradient(top, #416b96, #02274c);
 background-image: linear-gradient(top, #416b96, #02274c);
 }
-header a
+header a, header a:visited
 {
 color:#fff;
 text-decoration:none;
+display:block;
+}
+header a:hover
+{
+text-decoration:underline;
 }
 header p
 {
 height:100px;
-background:url(../images/head.png) no-repeat center center;
+background:url(../images/head.png) no-repeat 0 center;
 text-indent:-1000px;
 }
 article
 {
-margin:0 1.5em;
+margin:0 1.5em 1.4em 1.5em;
+padding-bottom:1em;
+border-bottom:1px solid #888; /* TODO partial border or hr in the code perhaps ? */
+}
+article h1
+{
+margin-bottom:0.7em;
 }
 article p
 {
 text-align:justify;
+}
+aside h1
+{
+padding:0.3em 0.3em 0.4em 0.7em;
+background:#bbb;
+font-weight:normal;
+border-radius:3px 0 0 3px;
+margin-bottom:0.5em;
+}
+aside ul
+{
+margin-top:0;
+list-style-type:square;
+line-height:1.4em;
+}
+table
+{
 }
