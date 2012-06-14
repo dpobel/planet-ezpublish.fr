@@ -1,8 +1,8 @@
 <aside class="yui3-u-1-4">
     <div class="block flux">
         <p>
-            <a href={'feed/planet'|ezurl()} id="rss" title="Suivez le Planet par le flux RSS"><span>Flux RSS</span></a>
-            <a href="http://twitter.com/pl_ezpublish_fr" id="twitter" title="Suivez le Planet sur Twitter"><span>Twitter du Planet eZ Publish.fr</span></a>
+            <a href={'feed/planet'|ezurl()} id="rss" title="Suivez le Planet par le flux RSS">Flux RSS</a>
+            <a href="http://twitter.com/pl_ezpublish_fr" id="twitter" title="Suivez le Planet sur Twitter">Twitter du Planet eZ Publish.fr</a>
         </p>
     </div>
     {cache-block keys=array( 'menu', ezini( 'TreeSettings', 'BlogsNodeID', 'planete.ini' ) )

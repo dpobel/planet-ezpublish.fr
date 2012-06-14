@@ -1,4 +1,4 @@
-<article>
+<article class="post">
     <h1><a href={$node.url_alias|ezurl()}>{$node.name|wash()}</a></h1>
     <div>
         {attribute_view_gui attribute=$node.data_map.content}
