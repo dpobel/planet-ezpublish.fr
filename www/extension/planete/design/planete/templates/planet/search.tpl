@@ -53,16 +53,25 @@
         </p>
     {/if}
     </fieldset>
-    {if $search_extras.facet_fields.0.queryLimit|count|gt( 1 )}
+    {if $search_extras.facet_fields.0.queryLimit|count}
     <fieldset>
         <legend>Filtrer par auteur</legend>
         <ul class="authors">
         {foreach $search_extras.facet_fields.0.nameList as $value}
-        <li><a href={concat(
-            'planet/search?SearchText=', $search_text|urlencode,
-            '&DateFilter=', $search_date_filter,
-            '&Filter[]=', $search_extras.facet_fields.0.queryLimit[$value]
-        )|wash|ezurl()}>{$value|wash}&nbsp;({$search_extras.facet_fields.0.countList[$value]})</a></li>
+        <li>
+            {if $value|eq( $search_author )}
+            <a class="remove" href={concat(
+                'planet/search?SearchText=', $search_text|urlencode,
+                '&DateFilter=', $search_date_filter
+            )|wash|ezurl()}>Supprimer le filtre "{$value|wash}"</a>
+            {else}
+            <a href={concat(
+                'planet/search?SearchText=', $search_text|urlencode,
+                '&DateFilter=', $search_date_filter,
+                '&Author=', $value|urlencode
+            )|wash|ezurl()}>{$value|wash}&nbsp;({$search_extras.facet_fields.0.countList[$value]})</a>
+            {/if}
+        </li>
         {/foreach}
         </ul>
     </fieldset>

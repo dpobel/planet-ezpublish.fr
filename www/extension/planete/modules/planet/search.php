@@ -22,14 +22,17 @@ $searchTimestamp = false;
 $searchType = "fulltext";
 $subTreeArray = array( $planetINI->variable( 'TreeSettings', 'BlogsNodeID' ) );
 
+$facet =array(
+    array(
+        "field" => "extra_parent_node_name_k",
+        "limit" => 10
+    ),
+);
+
 $filterList = array();
-if ( $http->hasGetVariable( 'Filter' ) )
+if ( $http->hasGetVariable( 'Author' ) )
 {
-    foreach ( $http->getVariable( 'Filter' ) as $filter )
-    {
-        list( $name, $value ) = explode( ':', $filter, 2 );
-        $filterList[$name] = $value;
-    }
+    $filterList[planetIndexParentName::PARENT_NAME_SOLR_ATTRIBUE] = $http->getVariable( 'Author' );
 }
 
 $searchResult = eZSearch::search(
@@ -41,15 +44,13 @@ $searchResult = eZSearch::search(
         'SearchTimestamp' => $searchTimestamp,
         "SearchLimit" => $pageLimit,
         "SearchOffset" => $Offset,
+        "SearchContentClassID" => array(
+            $planetINI->variable( 'ImportSettings', 'PostClassID' )
+        ),
         "SearchDate" => (int) $http->getVariable( 'DateFilter', 0 ),
         "SortBy" => array( 'score' => 'asc', 'published' => 'desc' ),
         "SpellCheck" => array( true, 'default' ),
-        "Facet" => array(
-            array(
-                "field" => "extra_parent_node_name_k",
-                "limit" => 10
-            ),
-        ),
+        "Facet" => $facet,
         "Filter" => $filterList,
     )
 );
@@ -57,7 +58,7 @@ $searchResult = eZSearch::search(
 $viewParameters = array( 'offset' => $Offset );
 
 $searchData = false;
-$tpl->setVariable( 'search_filter', $filterList );
+$tpl->setVariable( 'search_author', $http->getVariable( 'Author', '' ) );
 $tpl->setVariable( 'search_date_filter', (int) $http->getVariable( 'DateFilter', 0 ) );
 $tpl->setVariable( "search_data", $searchData );
 $tpl->setVariable( "search_section_id", $searchSectionID );

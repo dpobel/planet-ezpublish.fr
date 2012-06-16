@@ -410,6 +410,11 @@ padding-bottom:5px;
 {
 padding:0;
 }
+.remove:before
+{
+content: "⨉ ";
+font-weight:bold;
+}
 
 /* custom part */
 .quoteleft, .quoteright
