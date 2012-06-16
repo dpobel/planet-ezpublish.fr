@@ -40,6 +40,13 @@ aside h1 a, aside h1
 {
 color:#000;
 }
+.title-page
+{
+font-size:150%;
+margin:1em;
+border-bottom:1px solid #333;
+padding-bottom:5px;
+}
 .yui3-g
 {
 background:#fff;
@@ -398,13 +405,6 @@ display:inline-block;
 .authors a
 {
 display:block;
-}
-.search-result > h1
-{
-font-size:150%;
-margin:1em;
-border-bottom:1px solid #333;
-padding-bottom:5px;
 }
 .spell a
 {

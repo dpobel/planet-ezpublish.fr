@@ -78,7 +78,7 @@
     {/if}
 </form>
 <div class="search-result">
-    <h1>
+    <h1 class="title-page">
     {if ezhttp_hasvariable( 'SearchText', 'get' )}
         {def $text = ezhttp( 'SearchText', 'get' )}
         Recherche de &laquo;&nbsp;<a class="search-rs" href={concat( 'planet/search?SearchText=', $text|urlencode )|ezurl()}>{$text|wash()}</a>&nbsp;&raquo;&nbsp;:

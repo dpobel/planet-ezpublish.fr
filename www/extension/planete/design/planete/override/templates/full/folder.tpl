@@ -5,8 +5,8 @@
      $posts = array()
      $meta_description = $node.name
 }
+<h1 class="title-page">{$node.name|wash()}</h1>
 <article>
-    <h1><a href={$node.url_alias|ezurl()}>{$node.name|wash()}</a></h1>
 {foreach $sites as $site}
     {cache-block keys=array( 'node', $site.node_id ) expiry=0 subtree_expiry=$site.node_id}
     {set $posts = fetch( content, list, hash( 'parent_node_id', $site.node_id ,
