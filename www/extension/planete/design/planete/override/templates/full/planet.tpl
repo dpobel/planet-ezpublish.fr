@@ -13,6 +13,7 @@
      $title_page = cond( $view_parameters.offset|eq( 0 ), $node.name, concat( $node.name, ' (Page ', $page, ')' ) )
      $meta_description = $title_page}
 {if $posts}
+    <h1 class="title-page">Planète eZ Publish{if $page|ne( 1 )} (page {$page}){/if}</h1>
     {foreach $posts as $post_node}
         {node_view_gui content_node=$post_node view='full'}
         {set $meta_description = concat( $meta_description, ', ', $post_node.name )}

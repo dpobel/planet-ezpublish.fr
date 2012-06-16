@@ -183,6 +183,8 @@ article h1
 {
 margin-bottom:0.5em;
 line-height:1.3em;
+border-bottom:1px dotted #ccc;
+padding-bottom:4px;
 }
 article h1 span
 {

@@ -10,8 +10,8 @@
                                           limit, $by_page ) )
      $title = concat( 'Articles de ', $node.name )
      $description = $title}
+<h1 class="title-page"><a href={$node.data_map.url.content|ezurl()}>Articles de &laquo;&nbsp;{$node.name|wash()}&nbsp;&raquo;</a> &mdash; <a href={$node.data_map.rss.content|ezurl()}>Flux RSS</a></h1>
 <article>
-    <h1><a href={$node.data_map.url.content|ezurl()}>Articles de &laquo;&nbsp;{$node.name|wash()}&nbsp;&raquo;</a> &mdash; <a href={$node.data_map.rss.content|ezurl()}>Flux RSS</a></h1>
     <dl>
     {foreach $posts as $post}
         {node_view_gui content_node=$post view='line'}
