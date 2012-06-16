@@ -40,6 +40,11 @@ aside h1 a, aside h1
 {
 color:#000;
 }
+.planet .title-page
+{
+background:url(../images/planet.png) no-repeat 0 1px;
+padding-left:30px;
+}
 .title-page
 {
 font-size:150%;
