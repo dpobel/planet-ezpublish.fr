@@ -82,8 +82,13 @@ footer
 line-height:2em;
 border-radius:5px;
 text-align:center;
-margin-top:2em;
+margin:2em auto 1em auto;
 background:#fff;
+padding:1em 0 1em 0;
+}
+footer p
+{
+margin:0;
 }
 .flux
 {
@@ -185,6 +190,10 @@ margin-bottom:0.5em;
 line-height:1.3em;
 border-bottom:1px dotted #ccc;
 padding-bottom:4px;
+}
+article h1 a
+{
+display:block;
 }
 article h1 span
 {
