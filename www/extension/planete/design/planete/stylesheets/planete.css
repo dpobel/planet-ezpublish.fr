@@ -2,7 +2,7 @@ body
 {
 background:#dfdfdf;
 font-family: Tahoma, Helvetica, Arial, sans-serif;
-color:#444;
+color:#333;
 padding-bottom:1em;
 }
 a
@@ -117,7 +117,6 @@ border-top-left-radius: 5px;
 header li
 {
 display:inline-block;
-padding:0.7em 1em;
 }
 header .selected
 {
@@ -133,6 +132,10 @@ header a
 color:#fff;
 text-decoration:none;
 display:block;
+}
+header li a
+{
+padding:0.8em 1em;
 }
 header a:hover
 {
@@ -150,6 +153,19 @@ overflow: hidden;
 header p a
 {
 height:100%;
+}
+
+.inline-search
+{
+margin:0.5em 1em 0 0;
+float:right;
+}
+.inline-search .yui3-button
+{
+font-size:90%;
+font-weight:bold;
+color:#fff;
+background-color:#111;
 }
 article
 {
@@ -264,6 +280,64 @@ dl dd
 margin:0.3em 0 1em 0;
 text-align:justify;
 }
+/* general form */
+input[type=search],input[type=text], textarea
+{
+border:1px solid #aaa;
+border-radius:3px;
+padding:3px;
+}
+label
+{
+display:block;
+font-weight:bold;
+}
+
+.help
+{
+font-style:italic;
+}
+.message-success, .message-warning
+{
+margin-bottom:0.5em;
+border-radius:5px;
+}
+.message-warning
+{
+border:2px solid #f00;
+background:#fff2f2;
+}
+.message-success
+{
+border:2px solid #00a013;
+background:#edffef;
+}
+.message-warning h2, .message-success h2
+{
+padding-bottom:4px;
+margin:0.3em
+}
+.message-warning h2
+{
+color:#f00;
+border-bottom:1px solid #f00;
+}
+.message-success h2
+{
+color:#00a013;
+border-bottom:0;
+}
+.message-warning p
+{
+margin:0.3em;
+}
+
+/* contact form */
+.contact input[type=text], .contact textarea
+{
+width:100%;
+}
+
 
 /* custom part */
 .quoteleft, .quoteright

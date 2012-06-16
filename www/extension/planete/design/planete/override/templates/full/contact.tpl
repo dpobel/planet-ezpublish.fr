@@ -23,7 +23,7 @@
             <input type="hidden" name="ContentNodeID" value="{$node.node_id}" />
             <input type="hidden" name="ContentObjectID" value="{$node.contentobject_id}" />
             <input type="hidden" name="ViewMode" value="full" />
-            <input type="submit" value="Envoyer" name="ActionCollectInformation" />
+            <input type="submit" class="yui3-button" value="Envoyer" name="ActionCollectInformation" />
         </p>
         </form>
     </div>

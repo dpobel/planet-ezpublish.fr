@@ -9,6 +9,7 @@ FrontendCSSFileList[]=reset-min.css
 FrontendCSSFileList[]=base-min.css
 FrontendCSSFileList[]=fonts-min.css
 FrontendCSSFileList[]=cssgrids-min.css
+FrontendCSSFileList[]=cssbutton-min.css
 FrontendCSSFileList[]=planete.css
 
 */ ?>

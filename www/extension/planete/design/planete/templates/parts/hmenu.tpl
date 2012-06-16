@@ -14,6 +14,12 @@
     {foreach $menu as $element}
         <li{cond( $current_node_id|eq( $element.node_id ), ' class="selected"', '' )}><a href={$element.url_alias|ezurl()}>{$element.name|wash()}</a></li>
     {/foreach}
+        <li class="inline-search">
+        <form action={'planet/search'|ezurl()} method="get">
+            <input type="search" name="SearchText" value="{cond( ezhttp_hasvariable( 'SearchText', 'get' ), ezhttp( 'SearchText', 'get' )|wash(), '' )}" placeholder="Rechercher" />
+            <input type="submit" class="yui3-button" value="Go!" />
+        </form>
+        </li>
     </ul>
 </header>
 {undef $menu $current_node_id}

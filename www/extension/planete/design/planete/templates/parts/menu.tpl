@@ -34,15 +34,6 @@
         {/foreach}
         {undef $blocks}
     </div>
-    <div class="block">
-        <h1><a href={'planet/search'|ezurl()}>Recherche</a></h1>
-        <form action={'planet/search'|ezurl()} method="get">
-        <p>
-            <input type="search" name="SearchText" value="{cond( ezhttp_hasvariable( 'SearchText', 'get' ), ezhttp( 'SearchText', 'get' )|wash(), '' )}" />
-            <input type="submit" value="Go !" />
-        </p>
-        </form>
-    </div>
     {cache-block keys=array( 'menu', ezini( 'TreeSettings', 'PlanetariumNodeID', 'planete.ini' ) )
                  expiry=0 subtree_expiry=ezini( 'TreeSettings', 'PlanetariumNodeID', 'planete.ini' )}
     <div class="block">
