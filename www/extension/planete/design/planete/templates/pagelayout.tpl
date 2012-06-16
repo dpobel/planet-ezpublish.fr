@@ -28,6 +28,9 @@
     <meta name="generator" content="eZ Publish" />
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
     <link rel="Shortcut icon" href={'favicon.ico'|ezimage()} type="image/x-icon" />
+    <!--[if lt IE 9]>
+    <script src={'javascript/html5shiv.js'|ezdesign}></script>
+    <![endif]-->
 </head>
 <body>
 {include uri="design:parts/hmenu.tpl"}
