@@ -21,6 +21,8 @@ ActiveExtensions[]=autostatus
 ActiveExtensions[]=ezautosave
 ActiveExtensions[]=ezformtoken
 ActiveExtensions[]=ezfind
+ActiveExtensions[]=CssInlineImageOptimizer
+ActiveExtensions[]=frontendperformanceboost
 
 [URLTranslator]
 TranslatableSystemUrls=disabled

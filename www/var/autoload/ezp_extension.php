@@ -10,8 +10,16 @@
  */
 
 return array(
+      'CSSmin'                                                  => 'extension/frontendperformanceboost/lib/cssmin.php',
+      'CssInlineImageOptimizer'                                 => 'extension/CssInlineImageOptimizer/classes/cssinlineimageoptimizer.php',
       'EnchantSpell'                                            => 'extension/ezoe/modules/ezoe/classes/EnchantSpell.php',
       'GoogleSpell'                                             => 'extension/ezoe/modules/ezoe/classes/GoogleSpell.php',
+      'JSCompilerContext'                                       => 'extension/frontendperformanceboost/lib/jsminplus.php',
+      'JSMinPlus'                                               => 'extension/frontendperformanceboost/lib/jsminplus.php',
+      'JSNode'                                                  => 'extension/frontendperformanceboost/lib/jsminplus.php',
+      'JSParser'                                                => 'extension/frontendperformanceboost/lib/jsminplus.php',
+      'JSToken'                                                 => 'extension/frontendperformanceboost/lib/jsminplus.php',
+      'JSTokenizer'                                             => 'extension/frontendperformanceboost/lib/jsminplus.php',
       'Moxiecode_JSON'                                          => 'extension/ezoe/modules/ezoe/classes/utils/mcejson.php',
       'Moxiecode_JSONReader'                                    => 'extension/ezoe/modules/ezoe/classes/utils/mcejson.php',
       'PSpell'                                                  => 'extension/ezoe/modules/ezoe/classes/PSpell.php',
@@ -477,6 +485,13 @@ return array(
       'ezuserSolrStorage'                                       => 'extension/ezfind/classes/solrstorage/ezusersolrstorage.php',
       'ezxFormToken'                                            => 'extension/ezformtoken/event/ezxformtoken.php',
       'ezxmltextSolrStorage'                                    => 'extension/ezfind/classes/solrstorage/ezxmltextsolrstorage.php',
+      'fepCliOptimizer'                                         => 'extension/frontendperformanceboost/classes/fepclioptimizer.php',
+      'fepClosureJavaScriptOptimizer'                           => 'extension/frontendperformanceboost/classes/fepclosurejavascriptoptimizer.php',
+      'fepJSMinPlusJavaScriptOptimizer'                         => 'extension/frontendperformanceboost/classes/fepjsminplusjavascriptoptimizer.php',
+      'fepOptimizer'                                            => 'extension/frontendperformanceboost/classes/fepoptimizer.php',
+      'fepPhpYuiCssCompressorOptimizer'                         => 'extension/frontendperformanceboost/classes/fepphpyuicompressoroptimizer.php',
+      'fepUglifyJavaScriptOptimizer'                            => 'extension/frontendperformanceboost/classes/fepuglifyjavascriptoptimizer.php',
+      'fepYuiCompressorJavaScriptOptimizer'                     => 'extension/frontendperformanceboost/classes/fepyuicompressorjavascriptoptimizer.php',
       'planetIndexParentName'                                   => 'extension/planete/classes/planetindexparentname.php',
       'statusUpdateEvent'                                       => 'extension/autostatus/classes/statusupdateevent.php',
     );

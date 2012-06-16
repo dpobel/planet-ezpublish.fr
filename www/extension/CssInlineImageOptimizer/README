@@ -1,0 +1,11 @@
+Extension to eZ Publish that provides a CSS optimizer for ezjscore that inlines small images as Data URLs in the packed CSS source to minimize number of HTTP requests.
+Will be active when the eZJSCore CSS/JS Packer is enabled and pack level is 2 or higher, i.e. when DevelopmentMode is not enabled.
+
+Installation:
+- Download as zip
+- Unpack to your 'extension' directory
+- Enable the extension either using the admin interface or in "site.ini.append.php" by adding the line "ActiveExtensions[]=cssinlineimageoptimizer" under "[ExtensionSettings]"
+- Regenerate the class autoloads either using the admin interface or by running the command "php bin/php/ezpgenerateautoloads.php"
+
+Requirements:
+ - ezjscore 1.4 or newer where the optimizers are configurable.

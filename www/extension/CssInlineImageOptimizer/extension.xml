@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<software>
+    <metadata>
+        <name>Css Inline Image Optimizer</name>
+        <version>1.0.0</version>
+        <copyright>Copyright (C) 2012 Johan Beronius</copyright>
+        <license>GNU General Public License v2.0</license>
+    </metadata>
+
+    <dependencies>
+        <extends>
+            <extension name="ezjscore" />
+        </extends>
+    </dependencies>
+
+</software>
