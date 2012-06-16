@@ -8,11 +8,15 @@
      $current_node_id = cond( is_set( $module_result.node_id ), $module_result.node_id, 0 )
 }
 <header>
+    <div id="hmask"></div>
     <p><a href={'/'|ezurl()} title="Planet eZ Publish.fr, ze french corner !">Planet eZ Publish.fr, ze french corner !</a></p>
     <ul>
         <li{cond( $current_node_id|eq( 2 ), ' class="selected"', '' )}><a href={'/'|ezurl()}>Accueil</a></li>
     {foreach $menu as $element}
-        <li{cond( $current_node_id|eq( $element.node_id ), ' class="selected"', '' )}><a href={$element.url_alias|ezurl()}>{$element.name|wash()}</a></li>
+        <li{cond(
+            $current_node_id|eq( $element.node_id ),
+            concat( ' class="selected ', $element.url_alias, '"'),
+            concat( ' class="', $element.url_alias, '"' ) )}><a href={$element.url_alias|ezurl()}>{$element.name|wash()}</a></li>
     {/foreach}
         <li class="inline-search">
         <form action={'planet/search'|ezurl()} method="get">

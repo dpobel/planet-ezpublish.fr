@@ -2,6 +2,7 @@
 <html lang="fr-FR">
 <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
 {if is_set( $module_result.content_info.persistent_variable )}
 
     <title>{$module_result.content_info.persistent_variable.title_page|wash()} - {$site.title|wash()}</title>
