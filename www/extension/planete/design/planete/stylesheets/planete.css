@@ -138,6 +138,11 @@ max-width:960px;
     {
     margin-right:0.4em;
     }
+    .info .social
+    {
+    float:none;
+    text-align:left;
+    }
 }
 img, pre
 {
@@ -297,6 +302,11 @@ margin-top:0.5em;
 background:#eee;
 padding:0.4em 0.3em;
 border-radius:5px;
+}
+.social
+{
+float:right;
+text-align:right;
 }
 hr
 {

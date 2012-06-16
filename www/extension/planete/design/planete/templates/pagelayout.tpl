@@ -32,6 +32,17 @@
     <!--[if lt IE 9]>
     <script src={'javascript/html5shiv.js'|ezdesign}></script>
     <![endif]-->
+    {literal}
+    <script type="text/javascript">
+      window.___gcfg = {lang: 'fr'};
+      (function() {
+        var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+        po.src = 'https://apis.google.com/js/plusone.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+      })();
+      !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
+    </script>
+    {/literal}
 </head>
 <body>
 {include uri="design:parts/hmenu.tpl"}
