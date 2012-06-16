@@ -251,6 +251,10 @@ background:#f9f9f9;
 margin:1em 1.5em 1.4em 1.5em;
 font-size:120%;
 }
+.previous, .next
+{
+font-weight:bold;
+}
 .pagenavigator .previous
 {
 display:block;
@@ -281,6 +285,18 @@ margin:0.3em 0 1em 0;
 text-align:justify;
 }
 /* general form */
+fieldset
+{
+border:1px solid #aaa;
+padding:0.5em 1em;
+margin:1em;
+border-radius:5px;
+}
+legend
+{
+padding:0 0.4em;
+font-size:140%;
+}
 input[type=search],input[type=text], textarea
 {
 border:1px solid #aaa;
@@ -331,16 +347,97 @@ border-bottom:0;
 {
 margin:0.3em;
 }
+.buttons
+{
+text-align:center;
+}
 
 /* contact form */
 .contact input[type=text], .contact textarea
 {
 width:100%;
 }
-
+/* search */
+.search input[type=search]
+{
+width:99%;
+}
+.keywords
+{
+text-align:center;
+}
+.search label
+{
+font-weight:normal;
+cursor:pointer;
+}
+.search ul
+{
+list-style-type:none;
+}
+.date-filter
+{
+width:300px;
+}
+.search label, .search a
+{
+padding:0.3em 1em;
+}
+.search li:hover
+{
+background:#eee;
+}
+.authors
+{
+margin:0;
+}
+.authors li
+{
+display:inline-block;
+}
+.authors a
+{
+display:block;
+}
+.search-result > h1
+{
+font-size:150%;
+margin:1em;
+border-bottom:1px solid #333;
+padding-bottom:5px;
+}
+.spell a
+{
+padding:0;
+}
 
 /* custom part */
 .quoteleft, .quoteright
 {
 display:none;
+}
+.object-left
+{
+float:left;
+clear:left;
+margin:0.5em;
+}
+.object-right
+{
+float:right;
+clear:right;
+margin:0.5em;
+}
+.object-center
+{
+margin:0.5em auto;
+text-align:center;
+}
+.object-center p
+{
+text-align:center;
+}
+article img
+{
+border:1px solid #eee;
 }

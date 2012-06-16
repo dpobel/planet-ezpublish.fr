@@ -19,7 +19,7 @@
             <label for="field_{$node.data_map.text.id}">Texte&nbsp;:</label>
             {attribute_view_gui attribute=$node.data_map.text}
         </p>
-        <p>
+        <p class="buttons">
             <input type="hidden" name="ContentNodeID" value="{$node.node_id}" />
             <input type="hidden" name="ContentObjectID" value="{$node.contentobject_id}" />
             <input type="hidden" name="ViewMode" value="full" />

@@ -1,64 +1,74 @@
-<form action={"planet/search/"|ezurl} method="get">
+<form action={"planet/search/"|ezurl} method="get" class="search">
     <fieldset>
         <legend>Recherche</legend>
-        <p>
-            <input type="text" name="SearchText" value="{$search_text|wash}" />
+        <p class="keywords">
+            <input type="search" name="SearchText" value="{$search_text|wash}" placeholder="Mots clés" />
         </p>
-        <p>Date de publication&nbsp;:
-            <ul>
-                <li>
-                    <input type="radio" name="DateFilter" value="0" id="f1"{cond( $search_date_filter|eq( 0 ), ' checked="checked"', '' )} />
-                    <label for="f1">à tout moment</label>
-                </li>
-                <li>
-                    <input type="radio" name="DateFilter" value="1" id="f2"{cond( $search_date_filter|eq( 1 ), ' checked="checked"', '' )} />
-                    <label for="f2">depuis hier</label>
-                </li>
-                <li>
-                    <input type="radio" name="DateFilter" value="2" id="f3"{cond( $search_date_filter|eq( 2 ), ' checked="checked"', '' )} />
-                    <label for="f3">depuis moins d'1 semaine</label>
-                </li>
-                <li>
-                    <input type="radio" name="DateFilter" value="3" id="f4"{cond( $search_date_filter|eq( 3 ), ' checked="checked"', '' )} />
-                    <label for="f4">depuis moins de 1 mois</label>
-                </li>
-                <li>
-                    <input type="radio" name="DateFilter" value="4" id="f5"{cond( $search_date_filter|eq( 4 ), ' checked="checked"', '' )} />
-                    <label for="f5">depuis moins de 3 derniers mois</label>
-                </li>
-                <li>
-                    <input type="radio" name="DateFilter" value="5" id="f6"{cond( $search_date_filter|eq( 5 ), ' checked="checked"', '' )} />
-                    <label for="f6">depuis moins d'an</label>
-                </li>
-            </ul>
-        </p>
-        <p>
-            <input type="submit" value="Rechercher" />
+        <p>Date de publication&nbsp;:</p>
+        <ul class="date-filter">
+            <li>
+                <label for="f1">
+                <input type="radio" name="DateFilter" value="0" id="f1"{cond( $search_date_filter|eq( 0 ), ' checked="checked"', '' )} />
+                à tout moment
+                </label>
+            </li>
+            <li><label for="f2">
+                <input type="radio" name="DateFilter" value="1" id="f2"{cond( $search_date_filter|eq( 1 ), ' checked="checked"', '' )} />
+                depuis hier
+                </label>
+            </li>
+            <li>
+                <label for="f3">
+                <input type="radio" name="DateFilter" value="2" id="f3"{cond( $search_date_filter|eq( 2 ), ' checked="checked"', '' )} />
+                depuis moins d'1 semaine
+                </label>
+            </li>
+            <li>
+                <label for="f4">
+                <input type="radio" name="DateFilter" value="3" id="f4"{cond( $search_date_filter|eq( 3 ), ' checked="checked"', '' )} />
+                depuis moins de 1 mois
+                </label>
+            </li>
+            <li>
+                <label for="f5">
+                <input type="radio" name="DateFilter" value="4" id="f5"{cond( $search_date_filter|eq( 4 ), ' checked="checked"', '' )} />
+                depuis moins de 3 derniers mois
+                </label>
+            </li>
+            <li>
+                <label for="f6">
+                <input type="radio" name="DateFilter" value="5" id="f6"{cond( $search_date_filter|eq( 5 ), ' checked="checked"', '' )} />
+                depuis moins d'an
+                </label>
+            </li>
+        </ul>
+        <p class="buttons">
+            <input type="submit" class="yui3-button" value="Rechercher" />
         </p>
     {if $search_extras.spellcheck_collation}
-        <p>
+        <p class="spell help">
          {def $spell_url=concat('/planet/search/',$search_text|count_chars()|gt(0)|choose('',concat('?SearchText=',$search_extras.spellcheck_collation|urlencode)))|ezurl}
          Vouliez-vous dire <b><a href={$spell_url}>{$search_extras.spellcheck_collation}</a></b>&nbsp;?
         {undef $spell_url}
         </p>
     {/if}
     </fieldset>
-    {if $search_extras.facet_fields.0.queryLimit|count}
+    {if $search_extras.facet_fields.0.queryLimit|count|gt( 1 )}
     <fieldset>
-        <legend>Affiner la recherche</legend>
-        <ul>
+        <legend>Filtrer par auteur</legend>
+        <ul class="authors">
         {foreach $search_extras.facet_fields.0.nameList as $value}
         <li><a href={concat(
-            'planet/search?SearchText=', $search_text,
+            'planet/search?SearchText=', $search_text|urlencode,
             '&DateFilter=', $search_date_filter,
             '&Filter[]=', $search_extras.facet_fields.0.queryLimit[$value]
-        )|ezurl()}>{$value|wash}</a> ({$search_extras.facet_fields.0.countList[$value]})</li>
+        )|wash|ezurl()}>{$value|wash}&nbsp;({$search_extras.facet_fields.0.countList[$value]})</a></li>
         {/foreach}
         </ul>
     </fieldset>
     {/if}
 </form>
-<div>
+<div class="search-result">
     <h1>
     {if ezhttp_hasvariable( 'SearchText', 'get' )}
         {def $text = ezhttp( 'SearchText', 'get' )}
