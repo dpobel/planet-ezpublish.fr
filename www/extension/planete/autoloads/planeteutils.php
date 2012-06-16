@@ -146,6 +146,17 @@ class eZPlaneteUtils
             $aNode = $attr->parentNode;
             $aNode->removeAttributeNode( $attr );
         }
+        // get rid of deprecated table attributes: cellpadding, cellspacing, 
+        // width, summary, border
+        $tableAttributes = $xpath->query(
+            '//@*[local-name( .. ) = "table" and ( local-name() = "summary" or local-name() = "cellpadding" or ' .
+            'local-name() = "cellspacing" or local-name() = "width" or local-name() = "border" )]'
+        );
+        foreach( $tableAttributes as $attr )
+        {
+            $aNode = $attr->parentNode;
+            $aNode->removeAttributeNode( $attr );
+        }
         // remove developper.com stuffs
         $divNodes = $xpath->query( '//div[contains( @style, "font-size" )
                                           and contains( a/@href, "http://blog.developpez.com/" )]' );
