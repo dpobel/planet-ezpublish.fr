@@ -64,7 +64,7 @@
     {include uri="design:parts/menu.tpl"}
 </div>
 <footer>
-    <p>Mise sur orbite par <a href="http://ez.no">eZ Publish</a> - Conception, développement et hébergement par <a href="http://pwet.fr/cv">Damien Pobel</a></p>
+    <p>Mise sur orbite par <a href="http://share.ez.no">eZ Publish {fetch( setup, version )}</a> - Conception, développement et hébergement par <a href="http://pwet.fr/cv">Damien Pobel</a></p>
 </footer>
 <!--DEBUG_REPORT-->
 </body>
