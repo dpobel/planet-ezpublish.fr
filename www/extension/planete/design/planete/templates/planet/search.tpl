@@ -81,7 +81,12 @@
     <h1 class="title-page">
     {if ezhttp_hasvariable( 'SearchText', 'get' )}
         {def $text = ezhttp( 'SearchText', 'get' )}
-        Recherche de &laquo;&nbsp;<a class="search-rs" href={concat( 'planet/search?SearchText=', $text|urlencode )|ezurl()}>{$text|wash()}</a>&nbsp;&raquo;&nbsp;:
+        Recherche de
+        &laquo;&nbsp;<a class="search-rs" href={concat(
+            'planet/search?SearchText=', $text|urlencode,
+            '&DateFilter=', $search_date_filter,
+            '&Author=', $search_author|urlencode
+        )|ezurl()}>{$text|wash()}</a>&nbsp;&raquo;&nbsp;:
         {undef $text}
     {/if}
     {if $search_count|ne( 0 )}
@@ -110,7 +115,7 @@
     {include name=Navigator
          uri='design:navigator/google.tpl'
          page_uri='planet/search'
-         page_uri_suffix=concat( '?SearchText=', $search_text|urlencode )
+         page_uri_suffix=concat( '?SearchText=', $search_text|urlencode, '&DateFilter=', $search_date_filter, '&Author=', $search_author|urlencode )
          item_count=$search_count
          view_parameters=$view_parameters
          item_limit=$page_limit}
