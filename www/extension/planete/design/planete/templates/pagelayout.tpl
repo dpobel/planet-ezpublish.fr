@@ -57,8 +57,8 @@
 </head>
 <body>
 {include uri="design:parts/hmenu.tpl"}
-<div class="yui3-g">
-    <section class="yui3-u-3-4 {cond( is_set( $module_result.node_id ), $module_result.content_info.class_identifier, 'module' )}">
+<div class="yui3-g {cond( is_set( $module_result.node_id ), $module_result.content_info.class_identifier, 'module' )}">
+    <section id="content" class="yui3-u-3-4">
         {$module_result.content}
     </section>
     {include uri="design:parts/menu.tpl"}
@@ -66,6 +66,17 @@
 <footer>
     <p>Mise sur orbite par <a href="http://share.ez.no">eZ Publish {fetch( setup, version )}</a> - Conception, développement et hébergement par <a href="http://pwet.fr/cv">Damien Pobel</a></p>
 </footer>
+{ezscript( 'ezjsc::yui3' )}
+{literal}
+<script>
+YUI(YUI3_config).use('pjax', function (Y) {
+    new Y.Pjax({
+        container: '#content',
+        linkSelector: 'header a'
+    });
+});
+</script>
+{/literal}
 <!--DEBUG_REPORT-->
 </body>
 </html>
