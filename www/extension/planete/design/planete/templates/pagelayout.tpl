@@ -62,17 +62,6 @@
 <footer>
     <p>Mise sur orbite par <a href="http://share.ez.no">eZ Publish {fetch( setup, version )}</a> - Conception, développement et hébergement par <a href="http://pwet.fr/cv">Damien Pobel</a></p>
 </footer>
-{ezscript( 'ezjsc::yui3' )}
-{literal}
-<script>
-YUI(YUI3_config).use('pjax', function (Y) {
-    new Y.Pjax({
-        container: '#content',
-        linkSelector: 'header a'
-    });
-});
-</script>
-{/literal}
 <!--DEBUG_REPORT-->
 </body>
 </html>
