@@ -10,6 +10,7 @@
                                           limit, $by_page ) )
      $title = concat( 'Articles de ', $node.name )
      $description = $title}
+<section class="site">
 <h1 class="title-page"><a href={$node.data_map.url.content|ezurl()}>Articles de &laquo;&nbsp;{$node.name|wash()}&nbsp;&raquo;</a> &mdash; <a href={$node.data_map.rss.content|ezurl()}>Flux RSS</a></h1>
 <article>
     <dl>
@@ -29,5 +30,5 @@
 {* persistent variables pour les méta de la page *}
 {set scope='global' persistent_variable=hash( 'title_page', $title,
                                               'meta_description', $description|shorten( 300 )|simplify|trim )}
-
+</section>
 {undef $posts_count $posts $by_page}

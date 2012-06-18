@@ -1,3 +1,4 @@
+<section class="contact">
 <h1 class="title-page">{$node.name|wash()}</h1>
 <article>
     <div>
@@ -31,3 +32,4 @@
 {set scope='global' persistent_variable=hash( 'title_page', $node.name,
                                               'meta_description', $node.data_map.description.content.output.output_text|strip_tags|shorten( 200 )|simplify|trim )}
 </article>
+</section>

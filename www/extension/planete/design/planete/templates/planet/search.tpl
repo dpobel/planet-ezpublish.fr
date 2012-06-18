@@ -1,3 +1,4 @@
+<section>
 <form action={"planet/search/"|ezurl} method="get" class="search">
     <fieldset>
         <legend>Recherche</legend>
@@ -120,3 +121,4 @@
          view_parameters=$view_parameters
          item_limit=$page_limit}
 </div>
+</section>

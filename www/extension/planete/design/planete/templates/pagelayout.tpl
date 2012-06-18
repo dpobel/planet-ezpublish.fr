@@ -33,34 +33,30 @@
     <script src={'javascript/html5shiv.js'|ezdesign}></script>
     <![endif]-->
     {literal}
-    <script type="text/javascript">
-      // g+
+    <script>
       window.___gcfg = {lang: 'fr'};
-      (function() {
-        var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
-        po.src = 'https://apis.google.com/js/plusone.js';
-        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
-      })();
-      // twitter
-      !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
-
       var _gaq = _gaq || [];
       _gaq.push(['_setAccount', 'UA-32710880-1']);
       _gaq.push(['_trackPageview']);
+
       (function() {
-       var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-       ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        var load = function(src) {
+            var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+            po.src = src;
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+        }
+        load('http://apis.google.com/js/plusone.js');
+        load('http://www.google-analytics.com/ga.js');
        })();
     </script>
     {/literal}
 </head>
 <body>
 {include uri="design:parts/hmenu.tpl"}
-<div class="yui3-g {cond( is_set( $module_result.node_id ), $module_result.content_info.class_identifier, 'module' )}">
-    <section id="content" class="yui3-u-3-4">
-        {$module_result.content}
-    </section>
+<div class="yui3-g">
+    <div id="content" class="yui3-u-3-4">
+    {$module_result.content}
+    </div>
     {include uri="design:parts/menu.tpl"}
 </div>
 <footer>

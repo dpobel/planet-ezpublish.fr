@@ -1,3 +1,4 @@
+<section class="page">
 <h1 class="title-page">{$node.name|wash()}</h1>
 <article class="post">
     <div>
@@ -7,3 +8,4 @@
 {set scope='global' persistent_variable=hash( 'title_page', $node.name,
                                               'meta_description', $node.data_map.content.content.output.output_text|strip_tags|shorten( 200 )|simplify|trim )}
 </article>
+</section>

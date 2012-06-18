@@ -5,7 +5,9 @@
     <div class="info">
         Publié par <a href={$node.parent.data_map.url.content|ezurl()}>{$node.parent.name|wash()}</a> le {$node.object.published|l10n( 'shortdatetime' )}
         <div class="social">
-            <a href="https://twitter.com/share" class="twitter-share-button" data-text="{$node.name|wash()}" data-url={$node.data_map.url.content|wash|ezurl()} data-via="pl_ezpublish_fr" data-lang="fr" data-hashtags="ezpublish">Tweeter</a>
+            <iframe allowtransparency="true" frameborder="0" scrolling="no"
+               src="//platform.twitter.com/widgets/tweet_button.html?text={$node.name|wash()}&url={$node.data_map.url.content|wash|ezurl( 'no' )}&via=pl_ezpublish_fr&lang=fr&hashtags=ezpublish"
+               style="width:130px; height:20px;"></iframe>
             <div class="g-plusone" data-size="medium" data-href={$node.data_map.url.content|wash|ezurl()}></div>
         </div>
     </div>

@@ -5,6 +5,7 @@
      $posts = array()
      $meta_description = $node.name
 }
+<section class="folder">
 <h1 class="title-page">{$node.name|wash()}</h1>
 <article>
 {foreach $sites as $site}
@@ -34,3 +35,4 @@
 {set scope='global' persistent_variable=hash( 'title_page', $node.name,
                                               'meta_description', $meta_description|trim )}
 </article>
+</section>

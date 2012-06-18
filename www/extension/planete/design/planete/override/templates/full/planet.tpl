@@ -12,6 +12,7 @@
      $page = $view_parameters.offset|div( $posts_limit )|ceil()|inc()
      $title_page = cond( $view_parameters.offset|eq( 0 ), $node.name, concat( $node.name, ' (Page ', $page, ')' ) )
      $meta_description = $title_page}
+<section class="planet">
 {if $posts}
     <h1 class="title-page">Planète eZ Publish{if $page|ne( 1 )} (page {$page}){/if}</h1>
     {foreach $posts as $post_node}
@@ -30,5 +31,5 @@
 {* persistent variables pour les méta de la page *}
 {set scope='global' persistent_variable=hash( 'title_page', $title_page,
                                               'meta_description', $meta_description )}
-
+</section>
 {undef $posts $posts_count}
