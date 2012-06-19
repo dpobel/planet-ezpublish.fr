@@ -70,7 +70,6 @@ class eZPlaneteUtils
         $xml = '<div>' . $res . '</div>';
         $dom = new DomDocument();
         $parsing = $dom->loadXML( $xml );
-        eZDebug::writeDebug( $xml );
         if ( $parsing )
         {
             $xpath = new DomXPath( $dom );
