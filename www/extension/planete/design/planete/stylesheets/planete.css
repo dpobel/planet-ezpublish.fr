@@ -8,6 +8,11 @@ padding-bottom:1em;
 a
 {
 color:#416b96;
+-webkit-transition: color linear 0.2s;
+-moz-transition: color linear 0.2s;
+-ms-transition: color linear 0.2s;
+-o-transition: color linear 0.2s;
+transition: color linear 0.2s;
 }
 a:hover
 {
