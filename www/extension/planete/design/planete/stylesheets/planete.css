@@ -470,6 +470,22 @@ margin:0.3em;
 {
 text-align:center;
 }
+.collapsible .inner-collapsible
+{
+overflow:hidden;
+}
+.collapsible legend:hover
+{
+cursor:pointer;
+}
+.collapsed .inner-collapsible
+{
+height:0;
+}
+.collapsible legend:before
+{
+content: "+/- ";
+}
 
 /* contact form */
 .contact input[type=text], .contact textarea
@@ -496,6 +512,7 @@ list-style-type:none;
 }
 .date-filter
 {
+margin-top:0;
 width:300px;
 }
 .search label, .search a
@@ -517,6 +534,10 @@ display:inline-block;
 .authors a
 {
 display:block;
+}
+.spell
+{
+margin:1em 1.5em;
 }
 .spell a
 {

@@ -32,24 +32,6 @@
     <!--[if lt IE 9]>
     <script src={'javascript/html5shiv.js'|ezdesign}></script>
     <![endif]-->
-    {literal}
-    <script>
-      window.___gcfg = {lang: 'fr'};
-      var _gaq = _gaq || [];
-      _gaq.push(['_setAccount', 'UA-32710880-1']);
-      _gaq.push(['_trackPageview']);
-
-      (function() {
-        var load = function(src) {
-            var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
-            po.src = src;
-            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
-        }
-        load('http://apis.google.com/js/plusone.js');
-        load('http://www.google-analytics.com/ga.js');
-       })();
-    </script>
-    {/literal}
 </head>
 <body>
 {include uri="design:parts/hmenu.tpl"}
@@ -62,6 +44,24 @@
 <footer>
     <p>Mise sur orbite par <a href="http://share.ez.no">eZ Publish {fetch( setup, version )}</a> - Conception, développement et hébergement par <a href="http://pwet.fr/cv">Damien Pobel</a></p>
 </footer>
+{literal}
+<script>
+  window.___gcfg = {lang: 'fr'};
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-32710880-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var load = function(src) {
+        var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+        po.src = src;
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+    }
+    load('http://apis.google.com/js/plusone.js');
+    load('http://www.google-analytics.com/ga.js');
+   })();
+</script>
+{/literal}
 <!--DEBUG_REPORT-->
 </body>
 </html>
