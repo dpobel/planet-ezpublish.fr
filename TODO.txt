@@ -1,4 +1,0 @@
-- Make a specific favicon
-- Make a tag system from search engine index ?
-- http://validator.w3.org/feed/docs/warning/MissingAtomSelfLink.html
-- Anonymous notification system
