@@ -24,6 +24,9 @@
         </ul>
     </div>
     {/cache-block}
+
+    {cache-block keys=array( 'menu', ezini( 'TreeSettings', 'BlogsNodeID', 'planete.ini' ) )
+                 expiry=0 subtree_expiry=ezini( 'TreeSettings', 'BlogsNodeID', 'planete.ini' )}
     <div class="block">
         {def $blocks = fetch( content, list, hash( 'parent_node_id', ezini( 'TreeSettings', 'PlanetRootNodeID', 'planete.ini' ),
                                                    'class_filter_type', include,
@@ -34,6 +37,7 @@
         {/foreach}
         {undef $blocks}
     </div>
+    {/cache-block}
     {cache-block keys=array( 'menu', ezini( 'TreeSettings', 'PlanetariumNodeID', 'planete.ini' ) )
                  expiry=0 subtree_expiry=ezini( 'TreeSettings', 'PlanetariumNodeID', 'planete.ini' )}
     <div class="block">
