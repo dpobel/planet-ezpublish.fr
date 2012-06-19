@@ -222,6 +222,7 @@ display:inline-block;
 }
 header .selected
 {
+background-color:#264e76;
 background-image: -moz-linear-gradient(top, #416b96, #02274c);
 background-image: -ms-linear-gradient(top, #416b96, #02274c);
 background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#416b96), to(#02274c));
