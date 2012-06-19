@@ -6,7 +6,7 @@
         Publié par <a href={$node.parent.data_map.url.content|ezurl()}>{$node.parent.name|wash()}</a> le {$node.object.published|l10n( 'shortdatetime' )}
         <div class="social">
             <iframe allowtransparency="true" frameborder="0" scrolling="no"
-               src="//platform.twitter.com/widgets/tweet_button.html?text={$node.name|wash()}&url={$node.data_map.url.content|wash|ezurl( 'no' )}&via=pl_ezpublish_fr&lang=fr&hashtags=ezpublish"
+               src="//platform.twitter.com/widgets/tweet_button.html?text={$node.name|wash()}&amp;url={$node.data_map.url.content|wash|ezurl( 'no' )}&amp;via=pl_ezpublish_fr&amp;lang=fr&amp;hashtags=ezpublish"
                style="width:130px; height:20px;"></iframe>
             <div class="g-plusone" data-size="medium" data-href={$node.data_map.url.content|wash|ezurl()}></div>
         </div>
