@@ -1,8 +1,5 @@
 <?php /*
 
-[ContentSettings]
-StaticCache=enabled
-
 [TemplateSettings]
 ExtensionAutoloadPath[]=planete
 
