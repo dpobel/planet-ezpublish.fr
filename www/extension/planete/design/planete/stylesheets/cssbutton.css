@@ -70,10 +70,11 @@ a.yui3-button {
     background-image: linear-gradient(transparent, rgba(0,0,0, 0.05) 40%, rgba(0,0,0, 0.15));
 }
 
+/* OPTIMIZATION PLANETE
 .yui3-button-active,
 .yui3-button:active {
-    border: inset 1px solid #999;  /*IE 6/7/8*/
-    border: none rgba(0, 0, 0, 0);  /*IE9 + everything else*/
+    border: inset 1px solid #999;
+    border: none rgba(0, 0, 0, 0);
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#1A000000', endColorstr='#26000000', GradientType=0);
     background-image: -webkit-gradient(linear, 0 0, 0 100%, from(rgba(0,0,0, 0.10)), to(rgba(0,0,0, 0.15)));
     background-image: -webkit-linear-gradient(rgba(0,0,0, 0.10), rgba(0,0,0, 0.15));
@@ -101,6 +102,7 @@ a.yui3-button {
     -moz-box-shadow: 0 0 0 1px rgba(0,0,0, 0.25) inset;
     box-shadow: 0 0 0 1px rgba(0,0,0, 0.25) inset;
 }
+END OPTIMIZATION */
 
 /* Firefox: Get rid of the inner focus border */
 .yui3-button::-moz-focus-inner{
@@ -114,6 +116,7 @@ a.yui3-button {
 }
 
 /* Sam */
+/* OPTIMIZATION PLANETE
 .yui3-skin-sam .yui3-button-primary,
 .yui3-skin-sam .yui3-button-selected {
     background-color: #345FCB;
@@ -125,8 +128,9 @@ a.yui3-button {
 .yui3-skin-sam .yui3-button:-moz-focusring {
     outline-color: rgba(0, 0, 0, 0.85);
 }
-
+END OPTIMIZATION */
 /* Night */
+/* OPTIMIZATION PLANETE
 .yui3-skin-night .yui3-button {
     border: 0px;
     background-color: #343536;
@@ -144,5 +148,6 @@ a.yui3-button {
 .yui3-skin-night .yui3-button:-moz-focusring {
     outline-color: rgba(255, 255, 255, 0.85);
 }
+END OPTIMIZATION */
 /* YUI CSS Detection Stamp */
 #yui3-css-stamp.cssbutton { display: none; }
