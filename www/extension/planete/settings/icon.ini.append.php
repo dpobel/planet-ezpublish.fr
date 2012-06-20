@@ -1,8 +1,4 @@
 <?php /*
-#
-# $Id$
-# $HeadURL$
-#
 
 [ClassIcons]
 ClassMap[site]=actions/view_tree.png

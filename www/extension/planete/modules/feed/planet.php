@@ -1,8 +1,4 @@
 <?php
-/**
- * $Id$
- * $HeadURL$
- */
 
 $db = eZDB::instance();
 

@@ -1,8 +1,4 @@
 <?php
-/**
- * $Id$
- * $HeadURL$
- */
 
 $Module = array( "name" => "Feed module" );
 

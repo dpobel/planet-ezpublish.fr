@@ -1,8 +1,4 @@
 <?php
-/**
- * $Id$
- * $HeadURL$
- */
 
 $ini = eZINI::instance();
 $planetINI = eZINI::instance( 'planete.ini' );

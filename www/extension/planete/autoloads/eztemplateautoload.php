@@ -1,8 +1,4 @@
 <?php
-/**
- * $Id$
- * $HeadURL$
- */
 
 $eZTemplateOperatorArray = array();
 
