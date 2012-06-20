@@ -14,4 +14,7 @@ PolicyOmitList[]=planet/search
 AnonymousAccessList[]=feed/planet
 AnonymousAccessList[]=planet/search
 
+[SearchSettings]
+AllowEmptySearch=disabled
+
 */ ?>
