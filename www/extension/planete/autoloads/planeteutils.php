@@ -175,6 +175,23 @@ class eZPlaneteUtils
                 $parent->removeChild( $div );
             }
         }
+        // <pre> : remove empty and trim the not empty ones
+        $preNodes = $xpath->query( '//pre' );
+        if ( $preNodes && $preNodes->length > 0 )
+        {
+            foreach ( $preNodes as $pre )
+            {
+                if ( trim( $pre->textContent ) == '' )
+                {
+                    $pre->parentNode->removeChild( $pre );
+                }
+                else
+                {
+                    $lastChild = $pre->childNodes->item( $pre->childNodes->length - 1 );
+                    $lastChild->nodeValue = trim( $lastChild->nodeValue );
+                }
+            }
+        }
     }
 
     static function cleanScript( $xpath )
