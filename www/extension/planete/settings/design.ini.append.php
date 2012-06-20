@@ -5,11 +5,11 @@ DesignExtensions[]=planete
 
 [StylesheetSettings]
 FrontendCSSFileList[]
-FrontendCSSFileList[]=reset-min.css
-FrontendCSSFileList[]=base-min.css
-FrontendCSSFileList[]=fonts-min.css
-FrontendCSSFileList[]=cssgrids-min.css
-FrontendCSSFileList[]=cssbutton-min.css
+FrontendCSSFileList[]=cssreset.css
+FrontendCSSFileList[]=cssbase.css
+FrontendCSSFileList[]=cssfonts.css
+FrontendCSSFileList[]=cssgrids.css
+FrontendCSSFileList[]=cssbutton.css
 FrontendCSSFileList[]=planete.css
 
 */ ?>
