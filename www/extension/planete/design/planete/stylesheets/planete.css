@@ -1,3 +1,11 @@
+header p
+{
+height:100px;
+background:url(../images/head.png) no-repeat 0 center;
+text-indent: 100%;
+white-space: nowrap;
+overflow: hidden;
+}
 body
 {
 background:#dfdfdf;
@@ -254,14 +262,6 @@ header a:hover
 {
 text-decoration:underline;
 color:#fff;
-}
-header p
-{
-height:100px;
-background:url(../images/head.png) no-repeat 0 center;
-text-indent: 100%;
-white-space: nowrap;
-overflow: hidden;
 }
 header p a
 {
