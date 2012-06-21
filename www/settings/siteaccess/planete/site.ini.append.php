@@ -51,7 +51,6 @@ Rules[]=module;content/advancedsearch
 Rules[]=module;content/browse
 Rules[]=module;content/newcontent
 Rules[]=module;content/tipafriend
-Rules[]=module;ezinfo/about
 Rules[]=module;ezinfo/copyright
 Rules[]=module;ezinfo/is_alive
 

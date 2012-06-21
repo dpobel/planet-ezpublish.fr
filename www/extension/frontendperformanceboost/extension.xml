@@ -5,44 +5,44 @@
         <version>1.0.0</version>
         <copyright>Copyright (C) 2012 Damien Pobel</copyright>
         <license>GNU General Public License v2.0</license>
-    </metadata>
 
-    <software>
-        <uses>
-            <name>YUI CSS compressor PHP port</name>
-            <license>BSD License</license>
-            <copyright>Copyright (c) 2011 Yahoo! and (c) 2012 Tubal Martin</copyright>
-            <info_url>https://github.com/tubalmartin/YUI-CSS-compressor-PHP-port</info_url>
-        </uses>
-        <uses>
-            <name>Google Closure Compiler</name>
-            <license>Apache License version 2.0</license>
-            <copyright>The Closure Compiler Authors</copyright>
-            <info_url>https://developers.google.com/closure/compiler/</info_url>
-            <version>20120305 (revision 1810)</version>
-        </uses>
-        <uses>
-            <name>YUI Compressor</name>
-            <license>BSD License</license>
-            <copyright>Copyright © 2012 Yahoo! Inc.</copyright>
-            <info_url>http://yuilibrary.com/projects/yuicompressor/</info_url>
-            <version>2.4.7</version>
-        </uses>
-        <uses>
-            <name>UglifyJS</name>
-            <license>BSD License</license>
-            <copyright>Copyright 2010 (c) Mihai Bazon</copyright>
-            <info_url>https://github.com/mishoo/UglifyJS</info_url>
-            <version>1.2.6</version>
-        </uses>
-        <uses>
-            <name>JSMinPlus</name>
-            <license>MPL 1.1/GPL 2.0/LGPL 2.1</license>
-            <copyright>Tino Zijdel crisp@tweakers.net</copyright>
-            <info_url>http://crisp.tweakblogs.net/blog/cat/716</info_url>
-            <version>1.4</version>
-        </uses>
-    </software>
+        <software>
+            <uses>
+                <name>YUI CSS compressor PHP port</name>
+                <license>BSD License</license>
+                <copyright>Copyright (c) 2011 Yahoo! and (c) 2012 Tubal Martin</copyright>
+                <info_url>https://github.com/tubalmartin/YUI-CSS-compressor-PHP-port</info_url>
+            </uses>
+            <uses>
+                <name>Google Closure Compiler</name>
+                <license>Apache License version 2.0</license>
+                <copyright>The Closure Compiler Authors</copyright>
+                <info_url>https://developers.google.com/closure/compiler/</info_url>
+                <version>20120305 (revision 1810)</version>
+            </uses>
+            <uses>
+                <name>YUI Compressor</name>
+                <license>BSD License</license>
+                <copyright>Copyright © 2012 Yahoo! Inc.</copyright>
+                <info_url>http://yuilibrary.com/projects/yuicompressor/</info_url>
+                <version>2.4.7</version>
+            </uses>
+            <uses>
+                <name>UglifyJS</name>
+                <license>BSD License</license>
+                <copyright>Copyright 2010 (c) Mihai Bazon</copyright>
+                <info_url>https://github.com/mishoo/UglifyJS</info_url>
+                <version>1.2.6</version>
+            </uses>
+            <uses>
+                <name>JSMinPlus</name>
+                <license>MPL 1.1/GPL 2.0/LGPL 2.1</license>
+                <copyright>Tino Zijdel crisp@tweakers.net</copyright>
+                <info_url>http://crisp.tweakblogs.net/blog/cat/716</info_url>
+                <version>1.4</version>
+            </uses>
+        </software>
+    </metadata>
     <dependencies>
         <extends>
             <extension name="ezjscore" />
