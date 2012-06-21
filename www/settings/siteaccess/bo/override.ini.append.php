@@ -132,18 +132,6 @@ MatchFile=thumbnail/image.tpl
 Subdir=templates
 Match[class_identifier]=image
 
-[window_controls]
-Source=window_controls.tpl
-MatchFile=window_controls_user.tpl
-Subdir=templates
-Match[navigation_part_identifier]=ezusernavigationpart
-
-[windows]
-Source=windows.tpl
-MatchFile=windows_user.tpl
-Subdir=templates
-Match[navigation_part_identifier]=ezusernavigationpart
-
 [embed_image]
 Source=content/view/embed.tpl
 MatchFile=embed_image.tpl
