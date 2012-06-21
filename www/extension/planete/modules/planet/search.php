@@ -33,7 +33,7 @@ $filterList = array();
 $author = trim( $http->getVariable( 'Author', '' ) );
 if ( $author != '' )
 {
-    $filterList[planetIndexParentName::PARENT_NAME_SOLR_ATTRIBUE] = $http->getVariable( 'Author' );
+    $filterList[planetIndexParentName::PARENT_NAME_SOLR_ATTRIBUE] = '"' . $http->getVariable( 'Author' ) . '"';
 }
 
 $searchResult = eZSearch::search(
