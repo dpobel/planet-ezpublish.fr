@@ -34,6 +34,7 @@ SessionNameHandler=custom
 DefaultAccess=planete
 SiteList[]
 SiteList[]=planete
+SiteList[]=bo
 
 [SiteAccessSettings]
 ForceVirtualHost=true
