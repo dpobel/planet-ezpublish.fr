@@ -1,3 +1,0 @@
-*Title: Default child sort per content class
-
-*Documentation:

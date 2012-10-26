@@ -1,6 +1,0 @@
-<?php /*
-
-[RegionalSettings]
-TranslationExtensions[]=autostatus
-
-*/ ?>

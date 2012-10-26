@@ -1,9 +1,0 @@
-*Title: Unique IDs in datatype 'edit' templates.
-
-*Original author: Bard Farstad, Lukasz Serwatka
-
-*Documentation:
-Unique IDs for datatype 'edit' templates were added, like:
-<textarea id="ezcoa-<contentclassattribute_id>-<contentclass_attribute_identifier> ...>
-
-It's usuful for automated testing tools.
