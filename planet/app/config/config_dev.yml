@@ -1,0 +1,23 @@
+imports:
+    - { resource: config.yml }
+
+framework:
+    router:   { resource: "%kernel.root_dir%/config/routing_dev.yml" }
+    profiler: { only_exceptions: false }
+
+web_profiler:
+    toolbar: true
+    position: bottom
+    intercept_redirects: false
+
+# Requirements for less parser
+# Mac OS X:
+# Install Node.js
+# $ sudo port install node
+# Install npm
+# $ sudo port install npm
+# Install less via npm, but globally
+# $ sudo npm install -g less
+assetic:
+    use_controller: true
+

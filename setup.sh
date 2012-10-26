@@ -2,8 +2,19 @@
 #
 #
 
+BASE_DIR=`pwd`
 CONFIG="requirements"
 CONFIG_SEPARATOR='$'
+
+COMPOSER="composer.phar"
+COMPOSER_INSTALL="https://getcomposer.org/installer"
+
+EZPUBLISH5=ezpublish5
+EZPUBLISH_LEGACY=legacy/ezpublish
+EZPUBLISH_LEGACY_EXTENSION_DIR=$EZPUBLISH_LEGACY/extension
+EZPUBLISH_LEGACY_EXTENSIONS=../../extensions
+EZPUBLISH_LEGACY_SETTING_DIR=$EZPUBLISH_LEGACY/settings
+EZPUBLISH_LEGACY_SETTINGS=../../settings
 
 OLD_IFS=$IFS
 IFS=$'\n'
@@ -18,19 +29,44 @@ for DEPENDENCY in `cat "$CONFIG" | egrep -v '^#'` ; do
     if [ -d "$LOCAL_PATH" ] ; then
         echo "  o $LOCAL_PATH exists, trying to update with git"
         cd "$LOCAL_PATH"
-        git checkout "$BRANCH"
-        git pull
-        cd -
+        echo "  o using branch $BRANCH"
+        git checkout "$BRANCH" 2> /dev/null
+        echo "  o updating..."
+        git pull > /dev/null
+        cd "$BASE_DIR"
     else
         echo "  o $LOCAL_PATH does not exists, getting from git"
-        git clone "$GIT" "$LOCAL_PATH"
+        git clone "$GIT" "$LOCAL_PATH" > /dev/null
         cd "$LOCAL_PATH"
-        git checkout "$BRANCH"
-        cd -
+        echo "  o using branch $BRANCH"
+        git checkout "$BRANCH" 2> /dev/null
+        cd "$BASE_DIR"
     fi
 
 done
 
+cd "$EZPUBLISH5"
+echo "eZ Publish5 post install (composer...)"
+if [ -f "$COMPOSER" ] ; then
+    php $COMPOSER self-update
+else
+    curl -s $COMPOSER_INSTALL | php
+fi
 
+php $COMPOSER install
+cd "$BASE_DIR"
+
+echo "eZ Publish legacy settings, extensions and autoload"
+cd "$EZPUBLISH_LEGACY_EXTENSION_DIR"
+find "$EZPUBLISH_LEGACY_EXTENSIONS" -maxdepth 1 -exec ln -s {} \; 2> /dev/null
+cd "$BASE_DIR"
+
+cd "$EZPUBLISH_LEGACY_SETTING_DIR"
+find "$EZPUBLISH_LEGACY_SETTINGS" -maxdepth 1 -exec ln -s {} \; 2> /dev/null
+cd "$BASE_DIR"
+
+cd "$EZPUBLISH_LEGACY"
+php bin/php/ezpgenerateautoloads.php -e
+cd "$BASE_DIR"
 
 IFS=$OLD_IFS

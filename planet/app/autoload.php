@@ -1,0 +1,1 @@
+../../ezpublish5/app/autoload.php
