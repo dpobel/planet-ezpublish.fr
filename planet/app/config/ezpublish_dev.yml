@@ -1,0 +1,25 @@
+ezpublish:
+    siteaccess:
+        default_siteaccess: planete
+        list:
+            - planete
+            - bo
+        groups:
+            planete_group:
+                - planete
+                - bo
+        match:
+            Map\Host:
+                planet.loc: planete
+                www.planet-ezpublish.fr: planete
+                admin.planet.loc: bo
+                admin.planet-ezpublish.fr: bo
+    system:
+        planete_group:
+            url_alias_router: false
+            database:
+                type: mysql
+                user: root
+                password: ""
+                server: localhost
+                database_name: ezplanete
