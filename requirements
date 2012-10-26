@@ -1,0 +1,12 @@
+# Commented lines start with a #
+# ezsetup.sh expects the following fields (separated by $)
+#name$giturl$branch$local destination
+eZ Publish legacy$git@github.com:dpobel/ezpublish.git$master$legacy/ezpublish
+eZ Publish 5$git@github.com:dpobel/ezpublish5.git$master$ezpublish5/ezpublish5
+eZ Publish API$git@github.com:dpobel/ezp-next.git$master$ezpublish5/ezp-next
+Css Inline Image Optimizer$git@github.com:dpobel/CssInlineImageOptimizer.git$master$legacy/extensions/CssInlineImageOptimizer
+Frontend performance boost$git@github.com:dpobel/frontendperformanceboost.git$master$legacy/extensions/frontendperformanceboost
+eZ Autosave LS$git@github.com:dpobel/ezautosave.git$master$legacy/extensions/ezautosave
+eZ Formtoken LS$git@github.com:dpobel/ezformtoken.git$master$legacy/extensions/ezformtoken
+eZ Find LS$git@github.com:dpobel/ezfind.git$master$legacy/extensions/ezfind
+Autostatus$git@github.com:dpobel/autostatus.git$master$legacy/extensions/autostatus
