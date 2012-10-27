@@ -16,6 +16,8 @@ EZPUBLISH_LEGACY_EXTENSIONS=../../extensions
 EZPUBLISH_LEGACY_SETTING_DIR=$EZPUBLISH_LEGACY/settings
 EZPUBLISH_LEGACY_SETTINGS=../../settings
 
+PLANET_BASE=planet
+
 OLD_IFS=$IFS
 IFS=$'\n'
 
@@ -58,15 +60,18 @@ cd "$BASE_DIR"
 
 echo "eZ Publish legacy settings, extensions and autoload"
 cd "$EZPUBLISH_LEGACY_EXTENSION_DIR"
-find "$EZPUBLISH_LEGACY_EXTENSIONS" -maxdepth 1 -exec ln -s {} \; 2> /dev/null
+find "$EZPUBLISH_LEGACY_EXTENSIONS" -maxdepth 1 -mindepth 1 -exec ln -s {} \; 2> /dev/null
 cd "$BASE_DIR"
 
 cd "$EZPUBLISH_LEGACY_SETTING_DIR"
-find "$EZPUBLISH_LEGACY_SETTINGS" -maxdepth 1 -exec ln -s {} \; 2> /dev/null
+find "$EZPUBLISH_LEGACY_SETTINGS" -maxdepth 1 -mindepth 1 -exec ln -s {} \; 2> /dev/null
 cd "$BASE_DIR"
 
 cd "$EZPUBLISH_LEGACY"
 php bin/php/ezpgenerateautoloads.php -e
 cd "$BASE_DIR"
+
+echo "Vidage de cache"
+rm -rf $PLANET_BASE/app/cache/* $PLANET_BASE/app/ezpublish_legacy/var/cache/* $PLANET_BASE/app/ezpublish_legacy/var/planete/cache/*
 
 IFS=$OLD_IFS
