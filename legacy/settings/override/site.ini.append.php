@@ -45,9 +45,11 @@ AvailableSiteAccessList[]=bo
 MatchOrder=host
 HostMatchMapItems[]
 HostMatchMapItems[]=planet.loc;planete
+HostMatchMapItems[]=legacyplanet.loc;planete
 HostMatchMapItems[]=www.planet-ezpublish.fr;planete
 HostMatchMapItems[]=admin.planet.loc;bo
 HostMatchMapItems[]=admin.planet-ezpublish.fr;bo
+HostMatchMapItems[]=admin.legacyplanet.loc;bo
 
 [FileSettings]
 VarDir=var/planete
