@@ -64,7 +64,9 @@ find "$EZPUBLISH_LEGACY_EXTENSIONS" -maxdepth 1 -mindepth 1 -exec ln -s {} \; 2>
 cd "$BASE_DIR"
 
 cd "$EZPUBLISH_LEGACY_SETTING_DIR"
-find "$EZPUBLISH_LEGACY_SETTINGS" -maxdepth 1 -mindepth 1 -exec ln -s {} \; 2> /dev/null
+rm -rf "$EZPUBLISH_LEGACY_SETTING_DIR/{siteaccess,override}"
+ln -s "$EZPUBLISH_LEGACY_SETTINGS/siteaccess"
+ln -s "$EZPUBLISH_LEGACY_SETTINGS/override"
 cd "$BASE_DIR"
 
 cd "$EZPUBLISH_LEGACY"
