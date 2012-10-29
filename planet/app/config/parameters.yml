@@ -1,3 +1,3 @@
 parameters:
     secret: ThisTokenIsNotSoSecretChangeIt
-    ezpublish_legacy.view.default_layout: eZDemoBundle::pagelayout.html.twig
+    ezpublish_legacy.view.default_layout: PlanetBundle::pagelayout.html.twig

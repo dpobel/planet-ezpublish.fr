@@ -3,7 +3,7 @@
 use eZ\Bundle\EzPublishCoreBundle\EzPublishCoreBundle,
     eZ\Bundle\EzPublishLegacyBundle\EzPublishLegacyBundle,
     eZ\Bundle\EzPublishRestBundle\EzPublishRestBundle,
-    EzSystems\DemoBundle\EzSystemsDemoBundle,
+    Planet\PlanetBundle\PlanetBundle,
     Symfony\Bundle\FrameworkBundle\FrameworkBundle,
     Symfony\Bundle\SecurityBundle\SecurityBundle,
     Symfony\Bundle\TwigBundle\TwigBundle,
@@ -25,9 +25,9 @@ class PlanetKernel extends EzPublishKernel
             new AsseticBundle(),
             new SensioGeneratorBundle(),
             new EzPublishCoreBundle(),
-            new EzSystemsDemoBundle(),
             new EzPublishLegacyBundle(),
-            new EzPublishRestBundle()
+            new EzPublishRestBundle(),
+            new PlanetBundle(),
         );
 
         if ( $this->getEnvironment() === 'dev' )
