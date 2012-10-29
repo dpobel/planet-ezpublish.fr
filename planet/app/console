@@ -9,6 +9,7 @@ set_time_limit( 0 );
 
 require_once __DIR__.'/autoload.php';
 require_once __DIR__.'/EzPublishKernel.php';
+require_once __DIR__ . '/PlanetKernel.php';
 
 use eZ\Bundle\EzPublishCoreBundle\Console\Application;
 use Symfony\Component\Console\Input\ArgvInput;
@@ -17,5 +18,5 @@ $input = new ArgvInput();
 $env = $input->getParameterOption( array( '--env', '-e' ), getenv( 'SYMFONY_ENV' ) ?: 'dev' );
 $debug = getenv( 'SYMFONY_DEBUG' ) !== '0' && !$input->hasParameterOption( array( '--no-debug', '' ) ) && $env !== 'prod';
 
-$application = new Application( new EzPublishKernel( $env, $debug ) );
+$application = new Application( new PlanetKernel( $env, $debug ) );
 $application->run( $input );
