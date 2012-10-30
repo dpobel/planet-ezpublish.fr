@@ -3,7 +3,7 @@
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\ClassLoader\ApcClassLoader;
 
-$loader = require_once __DIR__ . '/../app/autoload.php';
+$loader = require_once __DIR__ . '/../ezpublish/autoload.php';
 
 
 // Use APC for autoloading to improve performance:
@@ -16,9 +16,9 @@ $loader = new ApcClassLoader('ezpublish5', $loader);
 $loader->register(true);
 */
 
-require_once __DIR__ . '/../app/EzPublishKernel.php';
-require_once __DIR__ . '/../app/PlanetKernel.php';
-require_once __DIR__ . '/../app/EzPublishCache.php';
+require_once __DIR__ . '/../ezpublish/EzPublishKernel.php';
+require_once __DIR__ . '/../ezpublish/PlanetKernel.php';
+require_once __DIR__ . '/../ezpublish/EzPublishCache.php';
 
 $env = getenv( 'EZPUBLISH_ENV' );
 $debug = false;

@@ -64,7 +64,7 @@ find "$EZPUBLISH_LEGACY_EXTENSIONS" -maxdepth 1 -mindepth 1 -exec ln -s {} \; 2>
 cd "$BASE_DIR"
 
 cd "$EZPUBLISH_LEGACY_SETTING_DIR"
-rm -rf "$EZPUBLISH_LEGACY_SETTING_DIR/{siteaccess,override}"
+rm -rf "$EZPUBLISH_LEGACY_SETTING/{siteaccess,override}"
 ln -s "$EZPUBLISH_LEGACY_SETTINGS/siteaccess"
 ln -s "$EZPUBLISH_LEGACY_SETTINGS/override"
 cd "$BASE_DIR"
@@ -74,6 +74,6 @@ php bin/php/ezpgenerateautoloads.php -e
 cd "$BASE_DIR"
 
 echo "Vidage de cache"
-rm -rf $PLANET_BASE/app/cache/* $PLANET_BASE/app/ezpublish_legacy/var/cache/* $PLANET_BASE/app/ezpublish_legacy/var/planete/cache/*
+rm -rf $PLANET_BASE/ezpublish/cache/* $PLANET_BASE/ezpublish_legacy/var/cache/* $PLANET_BASE/ezpublish_legacy/var/planete/cache/*
 
 IFS=$OLD_IFS
