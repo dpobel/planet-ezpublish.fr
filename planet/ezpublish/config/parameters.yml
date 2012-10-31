@@ -1,6 +1,7 @@
 planet:
     root_location_id: 2
     blogs_location_id: 141
+    planetarium_location_id: 140
 
 parameters:
     secret: ThisTokenIsNotSoSecretChangeIt

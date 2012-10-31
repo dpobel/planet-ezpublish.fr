@@ -239,6 +239,52 @@ class PlanetController extends Controller
             ),
             $response
         );
+    }
+
+
+    /**
+     * Builds the planetarium block
+     *
+     * @todo do NOT hard code the site type id
+     * @return \Symfony\Component\HttpFoundation\Response
+     */   
+    public function planetarium()
+    {
+        $planetariumLocationId = $this->container->getParameter(
+            'planet.planetarium_location_id'
+        );
+        $planetarium = $this->loadLocation( $planetariumLocationId );
+
+        $response = $this->buildResponse(
+            __METHOD__ . $planetariumLocationId,
+            $planetarium->contentInfo->modificationDate
+        );
+        if ( $response->isNotModified( $this->getRequest() ) )
+        {
+            return $response;
+        }
+
+        $contentService = $this->getRepository()->getContentService();
+        $results = $this->contentList(
+            $planetariumLocationId,
+            array( 17 )
+        );
+        $planets = array();
+        foreach ( $results->searchHits as $hit )
+        {
+            $planets[] = $contentService->loadContent(
+                $hit->valueObject->contentInfo->id
+            );
+        }
+
+        return $this->render(
+            'PlanetBundle:parts:planetarium.html.twig',
+            array(
+                'planetarium' => $planetarium,
+                'planets' => $planets,
+            ),
+            $response
+        );
 
     }
 

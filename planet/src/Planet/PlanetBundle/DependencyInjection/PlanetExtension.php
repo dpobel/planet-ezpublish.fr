@@ -27,6 +27,7 @@ class PlanetExtension extends Extension
 
         $container->setParameter( 'planet.root_location_id', $config['root_location_id'] );
         $container->setParameter( 'planet.blogs_location_id', $config['blogs_location_id'] );
+        $container->setParameter( 'planet.planetarium_location_id', $config['planetarium_location_id'] );
     }
 
 }

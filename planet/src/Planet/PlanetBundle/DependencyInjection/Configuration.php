@@ -19,7 +19,6 @@ class Configuration implements ConfigurationInterface
     {
         $treeBuilder = new TreeBuilder();
         $rootNode = $treeBuilder->root( 'planet' );
-        
         $rootNode
             ->children()
                 ->scalarNode( 'root_location_id' )
@@ -27,6 +26,10 @@ class Configuration implements ConfigurationInterface
                     ->cannotBeEmpty()
                 ->end()
                 ->scalarNode( 'blogs_location_id' )
+                    ->isRequired()
+                    ->cannotBeEmpty()
+                ->end()
+                ->scalarNode( 'planetarium_location_id' )
                     ->isRequired()
                     ->cannotBeEmpty()
                 ->end()

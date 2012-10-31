@@ -1,0 +1,10 @@
+<div class="block">
+    <h1><a href="{{ path( planetarium ) }}">{{ planetarium.contentInfo.name }}</a></h1>
+    <ul>
+    {% for planet in planets %}
+        <li>
+            {{ ez_render_field( planet, 'url' ) }}
+        </li>
+    {% endfor %}
+    </ul>
+</div>
