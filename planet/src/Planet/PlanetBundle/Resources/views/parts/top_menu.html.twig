@@ -3,7 +3,7 @@
     <li><a href="{{ path( location ) }}">{{ location.id == rootLocationId ? 'Accueil' : location.contentInfo.name }}</a></li>
 {% endfor %}
     <li class="inline-search">
-        <form action={'planet/search'|ezurl()} method="get">
+        <form action="{{ path( 'ez_legacy', {'module_uri': 'planet/search'} ) }}" method="get">
             <input type="search" name="SearchText" value="" placeholder="Rechercher" />
             <input type="submit" class="yui3-button" value="Go!" />
         </form>
