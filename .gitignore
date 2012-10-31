@@ -6,4 +6,5 @@
 /legacy/extensions/ezformtoken/
 /legacy/extensions/frontendperformanceboost/
 /legacy/ezpublish/
-/planet/app/cache/
+/planet/ezpublish/cache/
+/planet/ezpublish/logs/
