@@ -1,1 +1,54 @@
-{%block content%}{% endblock %}
+<!DOCTYPE html>
+<html lang="fr-FR">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{% block title_page %}{% endblock %}</title>
+    <meta name="description" content="{% block meta_description %}{% endblock %}" />
+
+    {% stylesheets '@PlanetBundle/Resources/public/css/*' %}
+        <link rel="stylesheet" href="{{ asset_url }}" />
+    {% endstylesheets %}
+
+    <link rel="alternate" type="application/rss+xml" title="Flux RSS" href="{{ path( 'ez_legacy', {'module_uri': 'feed/planet'} ) }}" />
+    <meta name="robots" content="noodp" />
+    <meta name="generator" content="eZ Publish 5" />
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+    <link rel="Shortcut icon" href="{{ asset( 'favicon.ico' ) }}" type="image/x-icon" />
+    <!--[if lt IE 9]>
+    <script src="{{ asset( 'extension/planete/design/planete/javascript/html5shiv.js' ) }}"></script>
+    <![endif]-->
+</head>
+<body>
+<header>
+    <div id="hmask"></div>
+    <p><a href="/" title="Planet eZ Publish.fr, ze french corner !">Planet eZ Publish.fr, ze french corner !</a></p>
+    {% render "planet:topMenu" %}
+</header>
+<div class="yui3-g">
+    <div id="content" class="yui3-u-3-4">
+    {%block content%}{% endblock %}
+    </div>
+    {% include "PlanetBundle:parts:side_menu.html.twig" %}
+</div>
+<footer>
+<p>Mise sur orbite par <a href="http://share.ez.no">eZ Publish {% render "planet:poweredBy" %}</a> - Conception, développement et hébergement par <a href="http://pwet.fr/cv">Damien Pobel</a></p>
+</footer>
+<script>
+  window.___gcfg = {lang: 'fr'};
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-32710880-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var load = function(src) {
+        var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+        po.src = src;
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+    }
+    load('http://apis.google.com/js/plusone.js');
+    load('http://www.google-analytics.com/ga.js');
+   })();
+</script>
+</body>
+</html>

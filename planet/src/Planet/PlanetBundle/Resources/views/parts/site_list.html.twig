@@ -1,0 +1,8 @@
+<div class="block">
+    <h1><a href="{{ path( blogs ) }}">{{ blogs.contentInfo.name }}</a></h1>
+    <ul>
+    {% for site in sites %}
+        <li><a href="{{ path( site ) }}">{{ site.contentInfo.name }}</a></li>
+    {% endfor %}
+    </ul>
+</div>

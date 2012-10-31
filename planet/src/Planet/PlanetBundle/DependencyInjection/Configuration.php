@@ -18,11 +18,21 @@ class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('planet');
+        $rootNode = $treeBuilder->root( 'planet' );
+        
+        $rootNode
+            ->children()
+                ->scalarNode( 'root_location_id' )
+                    ->isRequired()
+                    ->cannotBeEmpty()
+                ->end()
+                ->scalarNode( 'blogs_location_id' )
+                    ->isRequired()
+                    ->cannotBeEmpty()
+                ->end()
+            ->end()
+        ;
 
-        // Here you should define the parameters that are allowed to
-        // configure your bundle. See the documentation linked above for
-        // more information on that topic.
 
         return $treeBuilder;
     }

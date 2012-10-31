@@ -1,3 +1,7 @@
+planet:
+    root_location_id: 2
+    blogs_location_id: 141
+
 parameters:
     secret: ThisTokenIsNotSoSecretChangeIt
     ezpublish_legacy.view.default_layout: PlanetBundle::pagelayout.html.twig

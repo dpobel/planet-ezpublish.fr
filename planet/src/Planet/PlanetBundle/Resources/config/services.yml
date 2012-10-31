@@ -1,7 +1,11 @@
 parameters:
-#    planet.example.class: Planet\PlanetBundle\Example
+    planet.controller.class: Planet\PlanetBundle\Controller\PlanetController
 
 services:
-#    planet.example:
-#        class: %planet.example.class%
-#        arguments: [@service_id, "plain_value", %parameter%]
+    planet.controller:
+        class: %planet.controller.class%
+        calls:
+            - [ setContainer, [@service_container] ]
+
+    planet:
+        alias: planet.controller
