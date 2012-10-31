@@ -3,6 +3,10 @@ planet:
     blogs_location_id: 141
     planetarium_location_id: 140
 
+assetic:
+    filters:
+        cssrewrite:
+
 parameters:
     secret: ThisTokenIsNotSoSecretChangeIt
     ezpublish_legacy.view.default_layout: PlanetBundle::pagelayout.html.twig

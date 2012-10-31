@@ -6,7 +6,13 @@
     <title>{% block title_page %}{% endblock %}</title>
     <meta name="description" content="{% block meta_description %}{% endblock %}" />
 
-    {% stylesheets '@PlanetBundle/Resources/public/css/*' %}
+    {% stylesheets
+        'extension/planete/design/planete/stylesheets/cssreset.css'
+        'extension/planete/design/planete/stylesheets/cssbase.css'
+        'extension/planete/design/planete/stylesheets/cssfonts.css'
+        'extension/planete/design/planete/stylesheets/cssgrids.css'
+        'extension/planete/design/planete/stylesheets/cssbutton.css'
+        'extension/planete/design/planete/stylesheets/planete.css' filter="cssrewrite" %}
         <link rel="stylesheet" href="{{ asset_url }}" />
     {% endstylesheets %}
 

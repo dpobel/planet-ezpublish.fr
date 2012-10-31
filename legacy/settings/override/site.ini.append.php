@@ -62,4 +62,7 @@ EmailSender=dpobel@free.fr
 [SearchSettings]
 AllowEmptySearch=disabled
 
+[DebugSettings]
+DebugOutput=enabled
+
 */ ?>
