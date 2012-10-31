@@ -1,0 +1,6 @@
+<div class="block">
+{% for block in blocks %}
+    <h1><span>{{ block.contentInfo.name }}</span></h1>
+    {{ ez_render_field( block, "text" ) }}
+{% endfor %}
+</div>

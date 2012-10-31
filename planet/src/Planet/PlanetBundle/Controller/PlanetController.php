@@ -164,6 +164,60 @@ class PlanetController extends Controller
     }
 
     /**
+     * Builds the rich text block
+     *
+     * @todo do NOT hard code the rich text type id
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function richTextBlock()
+    {
+        $locationService = $this->getRepository()->getLocationService();
+        $rootLocationId = $this->container->getParameter(
+            'planet.root_location_id'
+        );
+        $root = $locationService->loadLocation( $rootLocationId );
+
+        $response = $this->buildResponse(
+            __METHOD__ . $rootLocationId,
+            $root->contentInfo->modificationDate
+        );
+        if ( $response->isNotModified( $this->getRequest() ) )
+        {
+            return $response;
+        }
+
+        $contentService = $this->getRepository()->getContentService();
+        $searchService = $this->getRepository()->getSearchService();
+        $query = new Query();
+        $query->criterion = new Criterion\LogicalAND(
+            array(
+                new Criterion\ParentLocationId( $rootLocationId ),
+                new Criterion\ContentTypeId( array( 23 ) ),
+            )
+        );
+        $query->sortClauses = array(
+            new SortClause\LocationPriority()
+        );
+        $results = $searchService->findContent( $query );
+        $blocks = array();
+        foreach ( $results->searchHits as $hit )
+        {
+            $blocks[] = $contentService->loadContent(
+                $hit->valueObject->contentInfo->id
+            );
+        }
+
+        return $this->render(
+            'PlanetBundle:parts:rich_text_block.html.twig',
+            array(
+                'blocks' => $blocks,
+            ),
+            $response
+        );
+
+    }
+
+    /**
      * Returns the version of eZ Publish (taken from legacy eZPublishSDK)
      *
      * @return \Symfony\Component\HttpFoundation\Response
