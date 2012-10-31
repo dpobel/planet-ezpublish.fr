@@ -158,7 +158,6 @@ class PlanetController extends Controller
      */
     public function siteList()
     {
-        $locationService = $this->getRepository()->getLocationService();
         $blogsLocationId = $this->container->getParameter(
             'planet.blogs_location_id'
         );
@@ -173,6 +172,7 @@ class PlanetController extends Controller
             return $response;
         }
 
+        $contentService = $this->getRepository()->getContentService();
         $results = $this->contentList(
             $blogsLocationId,
             array( 17 ),
@@ -181,10 +181,9 @@ class PlanetController extends Controller
         $sites = array();
         foreach ( $results->searchHits as $hit )
         {
-            $location = $locationService->loadLocation(
-                $hit->valueObject->contentInfo->mainLocationId
+            $sites[] = $contentService->loadContent(
+                $hit->valueObject->id
             );
-            $sites[] = $location;
         }
 
         return $this->render(
