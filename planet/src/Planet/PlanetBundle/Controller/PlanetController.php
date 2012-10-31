@@ -13,6 +13,13 @@ use eZ\Publish\Core\MVC\Symfony\Controller\Controller,
 class PlanetController extends Controller
 {
     /**
+     * Array of the already loaded locations
+     *
+     * @var \eZ\Publish\Core\Repository\Values\Content\Location[]
+     */
+    protected $locationsMap = array();
+
+    /**
      * Build the response so that depending on settings it's cacheable
      *
      * @param string $etag
@@ -49,6 +56,51 @@ class PlanetController extends Controller
     }
 
     /**
+     * Loads a location by its id and store it in a local map
+     *
+     * @param int id
+     * @return \eZ\Publish\Core\Repository\Values\Content\Location
+     */
+    protected function loadLocation( $id )
+    {
+        if ( !isset( $this->locationsMap[$id] ) )
+        {
+            $this->locationsMap[$id] = $this->getRepository()
+                ->getLocationService()
+                ->loadLocation( $id );
+        }
+        return $this->locationsMap[$id];
+    }
+
+    /**
+     * Searches for content under $parentLocationId being of the specified
+     * types sorted with $sortClauses
+     *
+     * @param int $parentLocationId
+     * @param array $contentTypeIds
+     * @param array $sortClauses
+     * @return \eZ\Publish\API\Repository\Values\Content\Search\SearchResult
+     */
+    protected function contentList(
+        $parentLocationId, array $contentTypeIds, array $sortClauses = array()
+    )
+    {
+        $searchService = $this->getRepository()->getSearchService();
+        $query = new Query();
+        $query->criterion = new Criterion\LogicalAND(
+            array(
+                new Criterion\ParentLocationId( $parentLocationId ),
+                new Criterion\ContentTypeId( $contentTypeIds ),
+            )
+        );
+        if ( !empty( $sortClauses ) )
+        {
+            $query->sortClauses = $sortClauses;
+        }
+        return $searchService->findContent( $query );
+    }
+
+    /**
      * Builds the top menu ie first level items of classes folder, page or
      * contact.
      *
@@ -58,10 +110,11 @@ class PlanetController extends Controller
     public function topMenu()
     {
         $locationService = $this->getRepository()->getLocationService();
+
         $rootLocationId = $this->container->getParameter(
             'planet.root_location_id'
         );
-        $root = $locationService->loadLocation( $rootLocationId );
+        $root = $this->loadLocation( $rootLocationId );
 
         $response = $this->buildResponse(
             __METHOD__ . $rootLocationId,
@@ -72,18 +125,11 @@ class PlanetController extends Controller
             return $response;
         }
 
-        $searchService = $this->getRepository()->getSearchService();
-        $query = new Query();
-        $query->criterion = new Criterion\LogicalAND(
-            array(
-                new Criterion\ParentLocationId( $rootLocationId ),
-                new Criterion\ContentTypeId( array( 1, 20, 21 ) ),
-            )
+        $results = $this->contentList(
+            $rootLocationId,
+            array( 1, 20, 21 ),
+            array( new SortClause\LocationPriority() )
         );
-        $query->sortClauses = array(
-            new SortClause\LocationPriority()
-        );
-        $results = $searchService->findContent( $query );
         $items = array( $root );
         foreach ( $results->searchHits as $hit )
         {
@@ -116,7 +162,7 @@ class PlanetController extends Controller
         $blogsLocationId = $this->container->getParameter(
             'planet.blogs_location_id'
         );
-        $blogs = $locationService->loadLocation( $blogsLocationId );
+        $blogs = $this->loadLocation( $blogsLocationId );
 
         $response = $this->buildResponse(
             __METHOD__ . $blogsLocationId,
@@ -127,18 +173,11 @@ class PlanetController extends Controller
             return $response;
         }
 
-        $searchService = $this->getRepository()->getSearchService();
-        $query = new Query();
-        $query->criterion = new Criterion\LogicalAND(
-            array(
-                new Criterion\ParentLocationId( $blogsLocationId ),
-                new Criterion\ContentTypeId( array( 17 ) ),
-            )
+        $results = $this->contentList(
+            $blogsLocationId,
+            array( 17 ),
+            array( new SortClause\DateModified( Query::SORT_DESC ) )
         );
-        $query->sortClauses = array(
-            new SortClause\DateModified( Query::SORT_DESC )
-        );
-        $results = $searchService->findContent( $query );
         $sites = array();
         foreach ( $results->searchHits as $hit )
         {
@@ -166,11 +205,10 @@ class PlanetController extends Controller
      */
     public function richTextBlock()
     {
-        $locationService = $this->getRepository()->getLocationService();
         $rootLocationId = $this->container->getParameter(
             'planet.root_location_id'
         );
-        $root = $locationService->loadLocation( $rootLocationId );
+        $root = $this->loadLocation( $rootLocationId );
 
         $response = $this->buildResponse(
             __METHOD__ . $rootLocationId,
@@ -182,18 +220,10 @@ class PlanetController extends Controller
         }
 
         $contentService = $this->getRepository()->getContentService();
-        $searchService = $this->getRepository()->getSearchService();
-        $query = new Query();
-        $query->criterion = new Criterion\LogicalAND(
-            array(
-                new Criterion\ParentLocationId( $rootLocationId ),
-                new Criterion\ContentTypeId( array( 23 ) ),
-            )
+        $results = $this->contentList(
+            $rootLocationId,
+            array( 23 )
         );
-        $query->sortClauses = array(
-            new SortClause\LocationPriority()
-        );
-        $results = $searchService->findContent( $query );
         $blocks = array();
         foreach ( $results->searchHits as $hit )
         {
