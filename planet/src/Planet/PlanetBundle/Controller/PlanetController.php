@@ -53,7 +53,6 @@ class PlanetController extends Controller
      * contact.
      *
      * @todo do NOT hard code the types id
-     * @todo correctly get the UrlAlias
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function topMenu()
@@ -72,9 +71,6 @@ class PlanetController extends Controller
         {
             return $response;
         }
-
-        //$urlAliasService = $this->getRepository()->getUrlAliasService();
-        //$urlAliasRoot = $urlAliasService->reverseLookup( $root, 'fre-FR' );
 
         $searchService = $this->getRepository()->getSearchService();
         $query = new Query();
@@ -111,7 +107,6 @@ class PlanetController extends Controller
      * Builds the site list block
      *
      * @todo do NOT hard code the site type id
-     * @todo correctly get the UrlAlias
      * @todo sort by modified_subnode instead of last modified
      * @return \Symfony\Component\HttpFoundation\Response
      */
