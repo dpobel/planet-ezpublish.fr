@@ -6,7 +6,7 @@
 
 {% block title_page %}
 {% spaceless %}
-{{ location.contentInfo.name }}{{ suffix }}
+{{ location.contentInfo.name }}{{ suffix }} - {{ parent() }}
 {% endspaceless %}
 {% endblock %}
 

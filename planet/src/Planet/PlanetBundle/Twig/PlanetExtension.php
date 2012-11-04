@@ -27,6 +27,7 @@ class PlanetExtension extends \Twig_Extension
                 ),
                 'page' => array(
                     'posts' => $this->container->getParameter( 'planet.page.posts' ),
+                    'title' => $this->container->getParameter( 'planet.page.title' ),
                 )
             )
         );

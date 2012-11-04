@@ -5,6 +5,7 @@ planet:
         planetarium: 140
     page:
         posts: 10
+        title: "Planète eZ Publish, Ze french corner!"
 
 assetic:
     filters:
