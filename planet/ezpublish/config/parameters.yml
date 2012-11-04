@@ -1,7 +1,10 @@
 planet:
-    root_location_id: 2
-    blogs_location_id: 141
-    planetarium_location_id: 140
+    tree:
+        root: 2
+        blogs: 141
+        planetarium: 140
+    page:
+        posts: 10
 
 assetic:
     filters:

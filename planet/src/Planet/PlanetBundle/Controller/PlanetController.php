@@ -112,7 +112,7 @@ class PlanetController extends Controller
         $locationService = $this->getRepository()->getLocationService();
 
         $rootLocationId = $this->container->getParameter(
-            'planet.root_location_id'
+            'planet.tree.root'
         );
         $root = $this->loadLocation( $rootLocationId );
 
@@ -159,7 +159,7 @@ class PlanetController extends Controller
     public function siteList()
     {
         $blogsLocationId = $this->container->getParameter(
-            'planet.blogs_location_id'
+            'planet.tree.blogs'
         );
         $blogs = $this->loadLocation( $blogsLocationId );
 
@@ -205,7 +205,7 @@ class PlanetController extends Controller
     public function richTextBlock()
     {
         $rootLocationId = $this->container->getParameter(
-            'planet.root_location_id'
+            'planet.tree.root'
         );
         $root = $this->loadLocation( $rootLocationId );
 
@@ -250,7 +250,7 @@ class PlanetController extends Controller
     public function planetarium()
     {
         $planetariumLocationId = $this->container->getParameter(
-            'planet.planetarium_location_id'
+            'planet.tree.planetarium'
         );
         $planetarium = $this->loadLocation( $planetariumLocationId );
 

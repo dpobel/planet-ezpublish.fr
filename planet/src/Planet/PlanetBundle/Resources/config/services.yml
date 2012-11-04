@@ -1,5 +1,6 @@
 parameters:
     planet.controller.class: Planet\PlanetBundle\Controller\PlanetController
+    planet.twig_extension.class: Planet\PlanetBundle\Twig\PlanetExtension
 
 services:
     planet.controller:
@@ -9,3 +10,9 @@ services:
 
     planet:
         alias: planet.controller
+
+    planet.twig_extension:
+        class: %planet.twig_extension.class%
+        arguments: [@service_container]
+        tags:
+            - { name: twig.extension }

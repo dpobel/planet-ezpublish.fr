@@ -25,9 +25,15 @@ class PlanetExtension extends Extension
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
 
-        $container->setParameter( 'planet.root_location_id', $config['root_location_id'] );
-        $container->setParameter( 'planet.blogs_location_id', $config['blogs_location_id'] );
-        $container->setParameter( 'planet.planetarium_location_id', $config['planetarium_location_id'] );
+        $settings = array();
+        foreach ( $config['tree'] as $k => $val )
+        {
+            $container->setParameter( 'planet.tree.' . $k, $val );
+        }
+        foreach ( $config['page'] as $k => $val )
+        {
+            $container->setParameter( 'planet.page.' . $k, $val );
+        }
     }
 
 }
