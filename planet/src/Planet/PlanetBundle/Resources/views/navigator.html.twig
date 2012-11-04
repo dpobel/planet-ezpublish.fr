@@ -1,0 +1,22 @@
+{% if total > limit %}
+    {% set total_pages = (total / limit)|number_format() %}
+    {% set current = (offset / limit)|number_format() %}
+    {% set next_offset = offset + limit %}
+    {% set prev_offset = offset - limit %}
+    <div class="pagenavigator">
+    <p>
+        {% if offset > 0 %}
+            <span class="previous"><a href="{{ prev_offset <= 0 ? url : url ~ "/(offset)/" ~ prev_offset }}">&laquo;&nbsp;Précédent</a></span>
+        {% endif %}
+        {% set url = url == "/" ? "" : url %}
+
+        {% if current < total_pages %}
+        <span class="next"><a href="{{ url ~ "/(offset)/" ~ next_offset }}">Suivant&nbsp;&raquo;</a></span>
+        {% endif %}
+
+        {# TODO: add pages #}
+
+    </p>
+    <div class="break"></div>
+    </div>
+{% endif %}

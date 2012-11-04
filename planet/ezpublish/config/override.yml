@@ -1,0 +1,9 @@
+ezpublish:
+    system:
+        planete:
+            location_view:
+                full:
+                    planet_full:
+                        template: PlanetBundle:full:planet.html.twig
+                        match:
+                            Identifier\ContentType: planet

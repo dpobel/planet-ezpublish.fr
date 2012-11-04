@@ -1,0 +1,23 @@
+{% extends noLayout ? viewbaseLayout : "PlanetBundle::pagelayout.html.twig" %}
+
+{% set offset = app.request.attributes.get( 'viewParameters' ).offset ? app.request.attributes.get( 'viewParameters' ).offset : 0 %}
+{% set page = (offset / 10)|number_format() + 1 %}
+{% set suffix = page != 1 ? " (Page " ~ page ~ ")" : "" %}
+
+{% block title_page %}
+{% spaceless %}
+{{ location.contentInfo.name }}{{ suffix }}
+{% endspaceless %}
+{% endblock %}
+
+{% block content %}
+<section class="planet">
+    <h1 class="title-page">Planète eZ Publish{{ suffix }}</h1>
+
+    {% render "planet:postList" with
+        {'rootLocationId': planet.tree.blogs, 'limit': 10, 'offset': offset, 'viewType': 'full'},
+        {'standalone': true}
+    %}
+
+</section>
+{% endblock %}

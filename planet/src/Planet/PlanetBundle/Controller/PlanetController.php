@@ -101,6 +101,38 @@ class PlanetController extends Controller
     }
 
     /**
+     * Searches for content under $parentLocationId at any level being of the
+     * specified types sorted with $sortClauses
+     *
+     * @param int $parentLocationId
+     * @param array $contentTypeIds
+     * @param array $sortClauses
+     * @param int $limit
+     * @param int $offset
+     * @return \eZ\Publish\API\Repository\Values\Content\Search\SearchResult
+     */
+    protected function contentTree(
+        $parentLocationId, array $contentTypeIds, array $sortClauses = array(), $limit = 0, $offset = 0
+    )
+    {
+        $searchService = $this->getRepository()->getSearchService();
+        $query = new Query();
+        $query->criterion = new Criterion\LogicalAND(
+            array(
+                new Criterion\Subtree( $parentLocationId ),
+                new Criterion\ContentTypeId( $contentTypeIds ),
+            )
+        );
+        if ( !empty( $sortClauses ) )
+        {
+            $query->sortClauses = $sortClauses;
+        }
+        $query->limit = $limit;
+        $query->offset = $offset;
+        return $searchService->findContent( $query );
+    }
+
+    /**
      * Builds the top menu ie first level items of classes folder, page or
      * contact.
      *
@@ -147,6 +179,60 @@ class PlanetController extends Controller
             ),
             $response
         );
+    }
+
+    /**
+     * Builds the post list under $rootLocationId and run the $viewType on each
+     * of them
+     *
+     * @param int $rootLocationId
+     * @param string $viewType
+     * @param int $limit
+     * @param int $offset
+     * @todo do NOT hard code the post type id
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function postList( $rootLocationId, $viewType, $limit = null, $offset = 0 )
+    {
+        $root = $this->loadLocation( $rootLocationId );
+        $response = $this->buildResponse(
+            __METHOD__ . $rootLocationId,
+            $root->contentInfo->modificationDate
+        );
+        if ( $response->isNotModified( $this->getRequest() ) )
+        {
+            return $response;
+        }
+        $locationService = $this->getRepository()->getLocationService();
+        $results = $this->contentTree(
+            $root->pathString,
+            array( 18 ),
+            array( new SortClause\DatePublished( Query::SORT_DESC ) ),
+            $limit,
+            $offset
+        );
+        $posts = array();
+        foreach ( $results->searchHits as $hit )
+        {
+            $posts[] = $hit->valueObject;
+        }
+        return $this->render(
+            'PlanetBundle::posts_list.html.twig',
+            array(
+                'total' => $results->totalCount,
+                'offset' => $offset,
+                'root' => $this->loadLocation(
+                    $this->container->getParameter(
+                        'planet.tree.root'
+                    )
+                ),
+                'posts' => $posts,
+                'viewType' => $viewType,
+            ),
+            $response
+        );
+
+
     }
 
     /**

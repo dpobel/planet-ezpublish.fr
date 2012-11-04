@@ -1,0 +1,10 @@
+
+{% for post in posts %}
+    {% render "ez_content:viewLocation" with
+        {'locationId': post.contentInfo.mainLocationId, 'viewType': 'full', 'noLayout': 1}
+    %}
+{% endfor %}
+
+{% include "PlanetBundle::navigator.html.twig" with
+    {'total': total, 'url': path( root ), 'offset': offset, 'limit': planet.page.posts}
+%}

@@ -1,3 +1,6 @@
+imports:
+    - { resource: override.yml }
+
 ezpublish:
     siteaccess:
         default_siteaccess: planete
