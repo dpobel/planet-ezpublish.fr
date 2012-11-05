@@ -60,18 +60,39 @@ class PlanetExtension extends \Twig_Extension
         return $global;
     }
 
+    /**
+     * Returns the parent location of $location
+     *
+     * @param Location $location
+     * @return \eZ\Publish\Core\Repository\Values\Content\Location
+     */
     public function parentLocation( Location $location )
     {
         $repository = $this->container->get( 'ezpublish.api.repository' );
         return $repository->getLocationService()->loadLocation( $location->parentLocationId );
     }
 
+    /**
+     * Returns the content associated with the $location
+     *
+     * @param Location $location
+     * @return \eZ\Publish\Core\Repository\Values\Content\Content
+     */
     public function getContent( Location $location )
     {
         $repository = $this->container->get( 'ezpublish.api.repository' );
         return $repository->getContentService()->loadContent( $location->contentInfo->id );
     }
 
+    /**
+     * Clean up the stored HTML to avoid various issues (injection, broken
+     * links, ...)
+     *
+     * @param string $html
+     * @param string $baseUri
+     * @return string
+     * @todo rewrite the code in the Symfony stack
+     */
     public function cleanRewriteXHTML( $html, $baseUri )
     {
         return \eZPlaneteUtils::cleanRewriteXHTML( $html, $baseUri );
