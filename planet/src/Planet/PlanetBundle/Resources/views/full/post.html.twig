@@ -1,0 +1,35 @@
+{% extends noLayout ? viewbaseLayout : "PlanetBundle::pagelayout.html.twig" %}
+
+{% set parent = parent_location( location ) %}
+{% set parentContent = location_content( parent ) %}
+
+{% block content %}
+<article class="post">
+    <h1>{{ ez_render_field(
+        content, "url",
+        {
+            'template': 'PlanetBundle:fields:planet_fields.html.twig',
+            'prefix': parent.contentInfo.name,
+            'anchor': location.contentInfo.name
+        }
+    ) }}</h1>
+    <div>{{ ez_render_field(
+        content, "html",
+        {
+            'template': 'PlanetBundle:fields:planet_fields.html.twig',
+            'baseUrl':  parentContent.getField( 'url' ).value.link
+        }
+    ) }}</div>
+    <div class="info">
+        Publié par <a href="{{ parentContent.getField( 'url' ).value.link }}">{{ parent.contentInfo.name }}</a>
+        le <time datetime="{{ content.contentInfo.creationDate|date( 'c' ) }}">{{ content.contentInfo.creationDate|date( 'd/m/Y H:i' ) }}</time>
+        <div class="social">
+            <iframe allowtransparency="true" frameborder="0" scrolling="no"
+               src="//platform.twitter.com/widgets/tweet_button.html?text={{ location.contentInfo.name }}&amp;url={{ content.getField( 'url' ).value.link|escape( 'url' ) }}&amp;via=pl_ezpublish_fr&amp;lang=fr&amp;hashtags=ezpublish"
+               style="width:130px; height:20px;"></iframe>
+            <div class="g-plusone" data-size="medium" data-href="{{ content.getField( 'url' ).value.link }}"></div>
+        </div>
+    </div>
+</article>
+<hr />
+{% endblock %}

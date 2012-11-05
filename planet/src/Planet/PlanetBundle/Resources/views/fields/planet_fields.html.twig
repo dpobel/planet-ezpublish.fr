@@ -1,0 +1,9 @@
+
+{% block ezurl_field %}
+    <a href="{{ field.value.link }}"><span>{{ prefix }}&nbsp;: </span>{{ anchor }}</a>
+{% endblock %}
+
+
+{% block eztext_field %}
+    {{ field.value|clean_rewrite_xhtml( baseUrl )|raw }}
+{% endblock %}

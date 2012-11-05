@@ -2,6 +2,8 @@
 
 namespace Planet\PlanetBundle\Twig;
 
+use eZ\Publish\Core\Repository\Values\Content\Location;
+
 class PlanetExtension extends \Twig_Extension
 {
     protected $container;
@@ -14,6 +16,30 @@ class PlanetExtension extends \Twig_Extension
     public function getName()
     {
         return 'Planet';
+    }
+
+    public function getFunctions()
+    {
+        return array(
+            'parent_location' => new \Twig_Function_Method(
+                $this,
+                'parentLocation'
+            ),
+            'location_content' => new \Twig_Function_Method(
+                $this,
+                'getContent'
+            )
+        );
+    }
+
+    public function getFilters()
+    {
+        return array(
+            'clean_rewrite_xhtml' => new \Twig_Filter_Method(
+                $this,
+                'cleanRewriteXHTML'
+            )
+        );
     }
 
     public function getGlobals()
@@ -32,6 +58,23 @@ class PlanetExtension extends \Twig_Extension
             )
         );
         return $global;
+    }
+
+    public function parentLocation( Location $location )
+    {
+        $repository = $this->container->get( 'ezpublish.api.repository' );
+        return $repository->getLocationService()->loadLocation( $location->parentLocationId );
+    }
+
+    public function getContent( Location $location )
+    {
+        $repository = $this->container->get( 'ezpublish.api.repository' );
+        return $repository->getContentService()->loadContent( $location->contentInfo->id );
+    }
+
+    public function cleanRewriteXHTML( $html, $baseUri )
+    {
+        return \eZPlaneteUtils::cleanRewriteXHTML( $html, $baseUri );
     }
 
 }

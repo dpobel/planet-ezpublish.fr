@@ -7,3 +7,7 @@ ezpublish:
                         template: PlanetBundle:full:planet.html.twig
                         match:
                             Identifier\ContentType: planet
+                    post_full:
+                        template: PlanetBundle:full:post.html.twig
+                        match:
+                            Identifier\ContentType: post
