@@ -136,10 +136,11 @@ class PlanetController extends Controller
      * Builds the top menu ie first level items of classes folder, page or
      * contact.
      *
+     * @param int|null $selected the selected location id
      * @todo do NOT hard code the types id
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function topMenu()
+    public function topMenu( $selected = null )
     {
         $locationService = $this->getRepository()->getLocationService();
 
@@ -149,7 +150,7 @@ class PlanetController extends Controller
         $root = $this->loadLocation( $rootLocationId );
 
         $response = $this->buildResponse(
-            __METHOD__ . $rootLocationId,
+            __METHOD__ . $rootLocationId . '-' . $selected,
             $root->contentInfo->modificationDate
         );
         if ( $response->isNotModified( $this->getRequest() ) )
@@ -174,6 +175,7 @@ class PlanetController extends Controller
         return $this->render(
             'PlanetBundle:parts:top_menu.html.twig',
             array(
+                'selected' => $selected,
                 'rootLocationId' => $rootLocationId,
                 'items' => $items,
             ),

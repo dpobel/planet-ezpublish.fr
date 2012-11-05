@@ -10,6 +10,11 @@
 {% endspaceless %}
 {% endblock %}
 
+{% block top_menu %}
+    {% set selected = location.id %}
+    {{ parent() }}
+{% endblock %}
+
 {% block content %}
 <section class="planet">
     <h1 class="title-page">Planète eZ Publish{{ suffix }}</h1>

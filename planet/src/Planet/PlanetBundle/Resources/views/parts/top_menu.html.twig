@@ -1,6 +1,6 @@
 <ul>
 {% for location in items %}
-    <li><a href="{{ path( location ) }}">{{ location.id == rootLocationId ? 'Accueil' : location.contentInfo.name }}</a></li>
+    <li{{ location.id == selected ? ' class="selected"' : '' }}><a href="{{ path( location ) }}">{{ location.id == rootLocationId ? 'Accueil' : location.contentInfo.name }}</a></li>
 {% endfor %}
     <li class="inline-search">
         <form action="{{ path( 'ez_legacy', {'module_uri': 'planet/search'} ) }}" method="get">
