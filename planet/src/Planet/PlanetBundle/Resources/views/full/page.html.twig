@@ -1,0 +1,21 @@
+{% extends noLayout ? viewbaseLayout : "PlanetBundle::pagelayout.html.twig" %}
+
+{% block title_page %}
+{% spaceless %}
+{{ location.contentInfo.name }}{{ suffix }} - {{ parent() }}
+{% endspaceless %}
+{% endblock %}
+
+{% block top_menu %}
+    {% set selected = location.id %}
+    {{ parent() }}
+{% endblock %}
+
+{% block content %}
+<section class="page">
+<h1 class="title-page">{{ location.contentInfo.name }}</h1>
+<article class="post">
+    {{ ez_render_field( content, "content" ) }}
+</article>
+</section>
+{% endblock %}
