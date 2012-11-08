@@ -60,6 +60,8 @@ class PlanetController extends Controller
      *
      * @param int id
      * @return \eZ\Publish\Core\Repository\Values\Content\Location
+     * @todo move this in a dedicated service (override of the default
+     * LocationService ?)
      */
     protected function loadLocation( $id )
     {
@@ -79,6 +81,8 @@ class PlanetController extends Controller
      * @param int $parentLocationId
      * @param array $contentTypeIds
      * @param array $sortClauses
+     * @todo move this in a dedicated service (override of the default
+     * LocationService ?)
      * @return \eZ\Publish\API\Repository\Values\Content\Search\SearchResult
      */
     protected function contentList(
@@ -109,6 +113,8 @@ class PlanetController extends Controller
      * @param array $sortClauses
      * @param int $limit
      * @param int $offset
+     * @todo move this in a dedicated service (override of the default
+     * LocationService ?)
      * @return \eZ\Publish\API\Repository\Values\Content\Search\SearchResult
      */
     protected function contentTree(
