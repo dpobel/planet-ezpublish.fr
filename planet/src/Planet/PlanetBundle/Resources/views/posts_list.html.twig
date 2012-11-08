@@ -1,7 +1,7 @@
 
 {% for post in posts %}
     {% render "ez_content:viewLocation" with
-        {'locationId': post.contentInfo.mainLocationId, 'viewType': 'full'}
+        {'locationId': post.contentInfo.mainLocationId, 'viewType': viewType}
     %}
 {% endfor %}
 
