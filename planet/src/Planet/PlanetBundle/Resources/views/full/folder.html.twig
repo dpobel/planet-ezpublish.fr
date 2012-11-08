@@ -1,0 +1,23 @@
+{% extends noLayout ? viewbaseLayout : "PlanetBundle::pagelayout.html.twig" %}
+
+{% block title_page %}
+{% spaceless %}
+{{ location.contentInfo.name }} - {{ parent() }}
+{% endspaceless %}
+{% endblock %}
+
+{% block top_menu %}
+    {% set selected = location.id %}
+    {{ parent() }}
+{% endblock %}
+
+{% block content %}
+<section class="folder">
+<h1 class="title-page">{{ location.contentInfo.name }}</h1>
+<article>
+{% for site in sites %}
+    {% render "ez_content:viewLocation" with {'locationId': site.id, 'viewType': 'last_news'}, {standalone: true} %}
+{% endfor %}
+</article>
+</section>
+{% endblock %}

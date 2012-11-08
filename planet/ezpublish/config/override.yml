@@ -11,3 +11,21 @@ ezpublish:
                         template: PlanetBundle:full:post.html.twig
                         match:
                             Identifier\ContentType: post
+                    page_full:
+                        template: PlanetBundle:full:page.html.twig
+                        match:
+                            Identifier\ContentType: page
+                    folder_full:
+                        template: PlanetBundle:full:folder.html.twig
+                        match:
+                            Identifier\ContentType: folder
+                last_news:
+                    site_last_news:
+                        template: PlanetBundle:last_news:site.html.twig
+                        match:
+                            Identifier\ContentType: site
+                line:
+                    post:
+                        template: PlanetBundle:line:post.html.twig
+                        match:
+                            Identifier\ContentType: post

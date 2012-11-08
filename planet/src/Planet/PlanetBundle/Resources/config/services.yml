@@ -1,6 +1,7 @@
 parameters:
     planet.controller.class: Planet\PlanetBundle\Controller\PlanetController
     planet.twig_extension.class: Planet\PlanetBundle\Twig\PlanetExtension
+    planet.pre_content_view_listener.class: Planet\PlanetBundle\EventListener\PreContentViewListener
 
 services:
     planet.controller:
@@ -16,3 +17,9 @@ services:
         arguments: [@service_container]
         tags:
             - { name: twig.extension }
+
+    planet.pre_content_view_listener:
+        class: %planet.pre_content_view_listener.class%
+        arguments: [@ezpublish.api.repository]
+        tags:
+            - {name: kernel.event_listener, event: ezpublish.pre_content_view, method: onPreContentView}

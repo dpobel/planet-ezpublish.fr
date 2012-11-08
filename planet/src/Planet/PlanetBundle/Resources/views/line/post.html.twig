@@ -1,0 +1,7 @@
+{% extends viewbaseLayout %}
+
+{% block content %}
+<li>
+    <a href="{{ content.getField( 'url' ).value.link }}">{{ location.contentInfo.name }}</a>
+</li>
+{% endblock %}

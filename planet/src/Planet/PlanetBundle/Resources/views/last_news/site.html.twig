@@ -1,0 +1,16 @@
+{% extends viewbaseLayout %}
+
+{% block content %}
+<div>
+    <h2>
+        <a href="{{ path( location ) }}">{{ location.contentInfo.name }}</a>
+        : les derniers billets
+    </h2>
+    <ul>
+    {% render "planet:postList" with
+        {'rootLocationId': location.id, 'viewType': 'line', limit: 5, 'navigator': false}
+    %}
+    </ul>
+
+</div>
+{% endblock %}
