@@ -191,10 +191,11 @@ class PlanetController extends Controller
      * @param string $viewType
      * @param int $limit
      * @param int $offset
+     * @param bool $navigator
      * @todo do NOT hard code the post type id
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function postList( $rootLocationId, $viewType, $limit = null, $offset = 0 )
+    public function postList( $rootLocationId, $viewType, $limit = null, $offset = 0, $navigator = true )
     {
         $root = $this->loadLocation( $rootLocationId );
         $response = $this->buildResponse(
@@ -230,6 +231,7 @@ class PlanetController extends Controller
                 ),
                 'posts' => $posts,
                 'viewType' => $viewType,
+                'navigator' => (bool) $navigator,
             ),
             $response
         );

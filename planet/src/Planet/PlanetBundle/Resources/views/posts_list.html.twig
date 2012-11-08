@@ -5,6 +5,8 @@
     %}
 {% endfor %}
 
-{% include "PlanetBundle::navigator.html.twig" with
-    {'total': total, 'url': path( root ), 'offset': offset, 'limit': planet.page.posts}
-%}
+{% if navigator %}
+    {% include "PlanetBundle::navigator.html.twig" with
+        {'total': total, 'url': path( root ), 'offset': offset, 'limit': planet.page.posts}
+    %}
+{% endif %}
