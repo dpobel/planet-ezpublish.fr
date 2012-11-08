@@ -3,24 +3,24 @@ ezpublish:
         planete:
             location_view:
                 full:
-                    planet_full:
+                    planet:
                         template: PlanetBundle:full:planet.html.twig
                         match:
                             Identifier\ContentType: planet
-                    post_full:
+                    post:
                         template: PlanetBundle:full:post.html.twig
                         match:
                             Identifier\ContentType: post
-                    page_full:
+                    page:
                         template: PlanetBundle:full:page.html.twig
                         match:
                             Identifier\ContentType: page
-                    folder_full:
+                    folder:
                         template: PlanetBundle:full:folder.html.twig
                         match:
                             Identifier\ContentType: folder
                 last_news:
-                    site_last_news:
+                    site:
                         template: PlanetBundle:last_news:site.html.twig
                         match:
                             Identifier\ContentType: site
