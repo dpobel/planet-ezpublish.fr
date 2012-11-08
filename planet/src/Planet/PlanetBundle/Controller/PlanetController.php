@@ -87,7 +87,7 @@ class PlanetController extends Controller
     {
         $searchService = $this->getRepository()->getSearchService();
         $query = new Query();
-        $query->criterion = new Criterion\LogicalAND(
+        $query->criterion = new Criterion\LogicalAnd(
             array(
                 new Criterion\ParentLocationId( $parentLocationId ),
                 new Criterion\ContentTypeId( $contentTypeIds ),
@@ -117,7 +117,7 @@ class PlanetController extends Controller
     {
         $searchService = $this->getRepository()->getSearchService();
         $query = new Query();
-        $query->criterion = new Criterion\LogicalAND(
+        $query->criterion = new Criterion\LogicalAnd(
             array(
                 new Criterion\Subtree( $parentLocationId ),
                 new Criterion\ContentTypeId( $contentTypeIds ),
