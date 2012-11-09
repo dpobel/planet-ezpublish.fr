@@ -175,6 +175,8 @@ foreach ( $blogNodes as $blog )
             if ( isset( $item->published ) )
             {
                 $ts = $item->published->date->format( 'U' );
+                eZContentObject::clearCache( $contentObject->attribute( 'id' ) );
+                $contentObject = eZContentObject::fetch( $contentObject->attribute( 'id' ) );
                 $contentObject->setAttribute( 'published', $ts );
                 $contentObject->setAttribute( 'modified', $ts );
                 $contentObject->store();
