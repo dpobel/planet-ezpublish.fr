@@ -1,0 +1,13 @@
+
+Scripts to launch:
+==================
+
+- extension/planete/bin/update/5.0/fixpublishedversions.php
+  Make sure only one version is in the state 'published' at a time, otherwise
+  the new public API crashes
+
+- extension/planete/bin/update/5.0/fixcontentobjectmodifieddate.php
+  Fix ezcontentobject.modified = 0
+
+ update/common/scripts/updatecontentobjectname.php
+  Because some names are corrupted...
