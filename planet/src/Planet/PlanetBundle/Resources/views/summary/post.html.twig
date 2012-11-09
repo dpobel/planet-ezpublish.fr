@@ -1,0 +1,13 @@
+{% extends viewbaseLayout %}
+
+{% block content %}
+<dt><a href="{{ content.getField( 'url' ).value.link }}">{{ location.contentInfo.name }}</a></dt>
+<dd>
+{{ ez_render_field(
+    content, 'html',
+    {
+        'template': 'PlanetBundle:fields:planet_fields.html.twig',
+        'maxLength': 350
+    }
+) }}
+{% endblock %}

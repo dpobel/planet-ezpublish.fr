@@ -11,6 +11,10 @@ ezpublish:
                         template: PlanetBundle:full:post.html.twig
                         match:
                             Identifier\ContentType: post
+                    site:
+                        template: PlanetBundle:full:site.html.twig
+                        match:
+                            Identifier\ContentType: site
                     page:
                         template: PlanetBundle:full:page.html.twig
                         match:
@@ -27,5 +31,10 @@ ezpublish:
                 line:
                     post:
                         template: PlanetBundle:line:post.html.twig
+                        match:
+                            Identifier\ContentType: post
+                summary:
+                    post:
+                        template: PlanetBundle:summary:post.html.twig
                         match:
                             Identifier\ContentType: post

@@ -5,5 +5,9 @@
 
 
 {% block eztext_field %}
+{% if baseUrl %}
     {{ field.value|clean_rewrite_xhtml( baseUrl )|raw }}
+{% elseif maxLength %}
+    {{ field.value|strip_tags|entity_decode|shorten( maxLength ) }}
+{% endif %}
 {% endblock %}

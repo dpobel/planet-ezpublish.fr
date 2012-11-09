@@ -28,7 +28,7 @@ class PlanetExtension extends \Twig_Extension
             'location_content' => new \Twig_Function_Method(
                 $this,
                 'getContent'
-            )
+            ),
         );
     }
 
@@ -38,7 +38,19 @@ class PlanetExtension extends \Twig_Extension
             'clean_rewrite_xhtml' => new \Twig_Filter_Method(
                 $this,
                 'cleanRewriteXHTML'
-            )
+            ),
+            'shorten' => new \Twig_Filter_Method(
+                $this,
+                'shorten'
+            ),
+            'strip_tags' => new \Twig_Filter_Method(
+                $this,
+                'stripTags'
+            ),
+            'entity_decode' => new \Twig_Filter_Method(
+                $this,
+                'entityDecode'
+            ),
         );
     }
 
@@ -96,6 +108,48 @@ class PlanetExtension extends \Twig_Extension
     public function cleanRewriteXHTML( $html, $baseUri )
     {
         return \eZPlaneteUtils::cleanRewriteXHTML( $html, $baseUri );
+    }
+
+    /**
+     * strip_tags for twig filter
+     *
+     * @param string $html
+     * @return string
+     */
+    public function stripTags( $html )
+    {
+        return strip_tags( $html );
+    }
+
+    /**
+     * Shortens the $text to $maxLength. If the text is longer than $maxLength,
+     * it adds the suffix to shortened text.
+     *
+     * @param string $text
+     * @param int $maxLength
+     * @param string $suffix
+     * @return string
+     */
+    public function shorten( $text, $maxLength, $suffix = '...' )
+    {
+        if ( mb_strlen( $text ) <= $maxLength )
+        {
+            return $text;
+        }
+        return mb_substr( $text, 0, $maxLength - 3 ) . $suffix;
+    }
+
+    /**
+     * Wrapper to html_entity_decode
+     *
+     * @param string $html
+     * @return string
+     */
+    public function entityDecode( $html )
+    {
+        return html_entity_decode(
+            $html, ENT_QUOTES, 'UTF-8'
+        );
     }
 
 }
