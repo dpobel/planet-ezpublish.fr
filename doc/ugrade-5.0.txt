@@ -3,14 +3,18 @@ Scripts to launch:
 ==================
 
 - extension/planete/bin/update/5.0/fixpublishedversions.php
-  Make sure only one version is in the state 'published' at a time, otherwise
+  Makes sure only one version is in the state 'published' at a time, otherwise
   the new public API crashes
 
 - extension/planete/bin/update/5.0/fixcontentobjectmodifieddate.php
-  Fix ezcontentobject.modified = 0
+  Fixes ezcontentobject.modified = 0
 
 - extension/planete/bin/update/5.0/removepostsidentifier.php
   Removes the ezidentifier attribute in post content class
+
+- extension/planete/bin/update/5.0/removesitesidentifier.php
+  Removes the ezidentifier attribute in site content class and replaces it by
+  an ezinteger one with the same value.
 
 - bin/php/updateniceurls.php
 
