@@ -26,5 +26,41 @@ ezpublish:
                 password: ""
                 server: localhost
                 database_name: ezplanete
+            var_dir: var/planete
+        planete:
+            image_variations:
+                reference:
+                    reference: null
+                    filters:
+                        - { name: geometry/scaledownonly, params: [600, 600] }
+                        - { name: progressive }
+                small:
+                    reference: reference
+                    filters:
+                        - { name: geometry/scaledownonly, params: [100, 100] }
+                        - { name: optimize }
+                tiny:
+                    reference: reference
+                    filters:
+                        - { name: geometry/scaledownonly, params: [30, 30] }
+                        - { name: optimize }
+                medium:
+                    reference: reference
+                    filters:
+                        - { name: geometry/scaledownonly, params: [200, 200] }
+                        - { name: optimize }
+                large:
+                    reference: reference
+                    filters:
+                        - { name: geometry/scaledownonly, params: [300, 300] }
+                        - { name: optimize }
+                rss:
+                    reference: reference
+                    filters:
+                        - { name: geometry/scale, params: [88, 31] }
+                        - { name: optimize }
         bo:
             url_alias_router: false
+    imagemagick:
+        enabled: true
+        path: /usr/bin/convert
