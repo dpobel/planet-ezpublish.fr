@@ -32,19 +32,32 @@ if ( $class instanceof eZContentClass )
             if ( $attribute->attribute( 'id' ) == $attr->attribute( 'id' ) )
             {
                 unset( $attributes[$k] );
-                break;
+                continue;
+            }
+            else
+            {
+                $attr->setAttribute( 'version', eZContentClass::VERSION_STATUS_TEMPORARY );
+                $attr->store();
             }
         }
         $params = array();
         $db->begin();
         $class->setAttribute( 'url_alias_name', '' );
-        $class->remove( false, eZContentClass::VERSION_STATUS_TEMPORARY );
-        $class->setAttribute(
-            'version', eZContentClass::VERSION_STATUS_TEMPORARY
+        $class->setAttribute( 'version', eZContentClass::VERSION_STATUS_TEMPORARY );
+        $classID = $class->attribute( 'id' );
+        $classGroups = eZContentClassClassGroup::fetchGroupList(
+            $classID, eZContentClass::VERSION_STATUS_DEFINED
         );
-        $class->storeVersioned(
-            $attributes, eZContentClass::VERSION_STATUS_TEMPORARY
-        );
+        foreach ( $classGroups as $classGroup )
+        {
+            $groupID = $classGroup->attribute( 'group_id' );
+            $groupName = $classGroup->attribute( 'group_name' );
+            $ingroup = eZContentClassClassGroup::create(
+                $classID, eZContentClass::VERSION_STATUS_TEMPORARY,
+                $groupID, $groupName
+            );
+            $ingroup->store();
+        }
         eZExtension::getHandlerClass(
             new ezpExtensionOptions(
                 array(
