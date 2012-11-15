@@ -43,10 +43,6 @@ class PlanetExtension extends \Twig_Extension
                 $this,
                 'shorten'
             ),
-            'strip_tags' => new \Twig_Filter_Method(
-                $this,
-                'stripTags'
-            ),
             'entity_decode' => new \Twig_Filter_Method(
                 $this,
                 'entityDecode'
@@ -108,17 +104,6 @@ class PlanetExtension extends \Twig_Extension
     public function cleanRewriteXHTML( $html, $baseUri )
     {
         return \eZPlaneteUtils::cleanRewriteXHTML( $html, $baseUri );
-    }
-
-    /**
-     * strip_tags for twig filter
-     *
-     * @param string $html
-     * @return string
-     */
-    public function stripTags( $html )
-    {
-        return strip_tags( $html );
     }
 
     /**
