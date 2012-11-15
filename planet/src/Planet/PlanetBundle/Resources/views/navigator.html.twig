@@ -1,20 +1,56 @@
 {% if total > limit %}
-    {% set total_pages = (total / limit)|number_format() %}
-    {% set current = (offset / limit)|number_format() %}
+    {% set total_pages = (total / limit)|number_format() + 1 %}
+    {% set current = (offset / limit)|number_format() + 1 %}
     {% set next_offset = offset + limit %}
     {% set prev_offset = offset - limit %}
+    {% set left = 6 %}
+    {% set right = 6 %}
     <div class="pagenavigator">
     <p>
+        {% set url = url == "/" ? "" : url %}
+
         {% if offset > 0 %}
             <span class="previous"><a href="{{ prev_offset <= 0 ? url : url ~ "/(offset)/" ~ prev_offset }}">&laquo;&nbsp;Précédent</a></span>
         {% endif %}
-        {% set url = url == "/" ? "" : url %}
 
         {% if current < total_pages %}
         <span class="next"><a href="{{ url ~ "/(offset)/" ~ next_offset }}">Suivant&nbsp;&raquo;</a></span>
         {% endif %}
 
-        {# TODO: add pages #}
+        <span class="pages">
+
+        {% set start = current - left %}
+        {% set start = start < 1 ? 1 : start %}
+        {% set end = current + right %}
+        {% set end = end > total_pages ? total_pages : end %}
+
+        {% if start > 1 %}
+            <span class="other"><a href="{{ url == "" ? "/" : url }}">1</a></span>
+            {% if start > 2 %}
+            <span class="other">...</span>
+            {% endif %}
+        {% endif %}
+
+
+        {% for i in start..end %}
+            {% set offset = (i - 1) * limit %}
+            {% if i == current %}
+                <span class="current">{{ i  }}</span>
+            {% else %}
+                {% if offset == 0 %}
+                <span class="other"><a href="{{ url == "" ? "/" : url }}">{{ i }}</a></span>
+                {% else %}
+                <span class="other"><a href="{{ url ~ "/(offset)/" ~ offset }}">{{ i }}</a></span>
+                {% endif %}
+            {% endif %}
+        {% endfor %}
+        {% if end < total_pages %}
+            {% if end < total_pages - 1 %}
+            <span class="other">...</span>
+            {% endif %}
+            <span class="other"><a href="{{ url ~ "/(offset)/" ~ ((total_pages - 1) * limit) }}">{{ total_pages }}</a></span>
+        {% endif %}
+        </span>
 
     </p>
     <div class="break"></div>
