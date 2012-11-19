@@ -5,7 +5,7 @@ require 'autoload.php';
 $cli = eZCLI::instance();
 $script = eZScript::instance(
     array(
-        'description' => "Update the post content class to not use any ezidentifier",
+        'description' => "Update the site content class to not use any ezidentifier",
         'use-session' => false,
         'use-modules' => true,
         'use-extensions' => true
