@@ -3,6 +3,10 @@ parameters:
     planet.twig_extension.class: Planet\PlanetBundle\Twig\PlanetExtension
     planet.pre_content_view_listener.class: Planet\PlanetBundle\EventListener\PreContentViewListener
 
+    # override the default repository to be able to override
+    # the default location service...
+    ezpublish.signalslot.repository.class: Planet\PlanetBundle\Repository\Repository
+
 services:
     planet.controller:
         class: %planet.controller.class%

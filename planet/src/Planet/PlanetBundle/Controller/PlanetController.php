@@ -13,13 +13,6 @@ use eZ\Publish\Core\MVC\Symfony\Controller\Controller,
 class PlanetController extends Controller
 {
     /**
-     * Array of the already loaded locations
-     *
-     * @var \eZ\Publish\Core\Repository\Values\Content\Location[]
-     */
-    protected $locationsMap = array();
-
-    /**
      * Build the response so that depending on settings it's cacheable
      *
      * @param string $etag
@@ -55,88 +48,6 @@ class PlanetController extends Controller
         return $response;
     }
 
-    /**
-     * Loads a location by its id and store it in a local map
-     *
-     * @param int id
-     * @return \eZ\Publish\Core\Repository\Values\Content\Location
-     * @todo move this in a dedicated service (override of the default
-     * LocationService ?)
-     */
-    protected function loadLocation( $id )
-    {
-        if ( !isset( $this->locationsMap[$id] ) )
-        {
-            $this->locationsMap[$id] = $this->getRepository()
-                ->getLocationService()
-                ->loadLocation( $id );
-        }
-        return $this->locationsMap[$id];
-    }
-
-    /**
-     * Searches for content under $parentLocationId being of the specified
-     * types sorted with $sortClauses
-     *
-     * @param int $parentLocationId
-     * @param array $contentTypeIds
-     * @param array $sortClauses
-     * @todo move this in a dedicated service (override of the default
-     * LocationService ?)
-     * @return \eZ\Publish\API\Repository\Values\Content\Search\SearchResult
-     */
-    protected function contentList(
-        $parentLocationId, array $contentTypeIds, array $sortClauses = array()
-    )
-    {
-        $searchService = $this->getRepository()->getSearchService();
-        $query = new Query();
-        $query->criterion = new Criterion\LogicalAnd(
-            array(
-                new Criterion\ParentLocationId( $parentLocationId ),
-                new Criterion\ContentTypeId( $contentTypeIds ),
-            )
-        );
-        if ( !empty( $sortClauses ) )
-        {
-            $query->sortClauses = $sortClauses;
-        }
-        return $searchService->findContent( $query );
-    }
-
-    /**
-     * Searches for content under $parentLocationId at any level being of the
-     * specified types sorted with $sortClauses
-     *
-     * @param int $parentLocationId
-     * @param array $contentTypeIds
-     * @param array $sortClauses
-     * @param int $limit
-     * @param int $offset
-     * @todo move this in a dedicated service (override of the default
-     * LocationService ?)
-     * @return \eZ\Publish\API\Repository\Values\Content\Search\SearchResult
-     */
-    protected function contentTree(
-        $parentLocationId, array $contentTypeIds, array $sortClauses = array(), $limit = 0, $offset = 0
-    )
-    {
-        $searchService = $this->getRepository()->getSearchService();
-        $query = new Query();
-        $query->criterion = new Criterion\LogicalAnd(
-            array(
-                new Criterion\Subtree( $parentLocationId ),
-                new Criterion\ContentTypeId( $contentTypeIds ),
-            )
-        );
-        if ( !empty( $sortClauses ) )
-        {
-            $query->sortClauses = $sortClauses;
-        }
-        $query->limit = $limit;
-        $query->offset = $offset;
-        return $searchService->findContent( $query );
-    }
 
     /**
      * Builds the top menu ie first level items of classes folder, page or
@@ -153,7 +64,7 @@ class PlanetController extends Controller
         $rootLocationId = $this->container->getParameter(
             'planet.tree.root'
         );
-        $root = $this->loadLocation( $rootLocationId );
+        $root = $locationService->loadLocation( $rootLocationId );
 
         $response = $this->buildResponse(
             __METHOD__ . $rootLocationId . '-' . $selected,
@@ -164,7 +75,7 @@ class PlanetController extends Controller
             return $response;
         }
 
-        $results = $this->contentList(
+        $results = $locationService->contentList(
             $rootLocationId,
             array( 1, 20, 21 ),
             array( new SortClause\LocationPriority() )
@@ -203,7 +114,8 @@ class PlanetController extends Controller
      */
     public function postList( $rootLocationId, $viewType, $limit = null, $offset = 0, $navigator = true )
     {
-        $root = $this->loadLocation( $rootLocationId );
+        $locationService = $this->getRepository()->getLocationService();
+        $root = $locationService->loadLocation( $rootLocationId );
         $response = $this->buildResponse(
             __METHOD__ . $rootLocationId,
             $root->contentInfo->modificationDate
@@ -212,8 +124,7 @@ class PlanetController extends Controller
         {
             return $response;
         }
-        $locationService = $this->getRepository()->getLocationService();
-        $results = $this->contentTree(
+        $results = $locationService->contentTree(
             $root->pathString,
             array( 18 ),
             array( new SortClause\DatePublished( Query::SORT_DESC ) ),
@@ -230,7 +141,7 @@ class PlanetController extends Controller
             array(
                 'total' => $results->totalCount,
                 'offset' => $offset,
-                'root' => $this->loadLocation(
+                'root' => $locationService->loadLocation(
                     $this->container->getParameter(
                         'planet.tree.root'
                     )
@@ -257,7 +168,8 @@ class PlanetController extends Controller
         $blogsLocationId = $this->container->getParameter(
             'planet.tree.blogs'
         );
-        $blogs = $this->loadLocation( $blogsLocationId );
+        $locationService = $this->getRepository()->getLocationService();
+        $blogs = $locationService->loadLocation( $blogsLocationId );
 
         $response = $this->buildResponse(
             __METHOD__ . $blogsLocationId,
@@ -269,7 +181,7 @@ class PlanetController extends Controller
         }
 
         $contentService = $this->getRepository()->getContentService();
-        $results = $this->contentList(
+        $results = $locationService->contentList(
             $blogsLocationId,
             array( 17 ),
             array( new SortClause\DateModified( Query::SORT_DESC ) )
@@ -303,7 +215,8 @@ class PlanetController extends Controller
         $rootLocationId = $this->container->getParameter(
             'planet.tree.root'
         );
-        $root = $this->loadLocation( $rootLocationId );
+        $locationService = $this->getRepository()->getLocationService();
+        $root = $locationService->loadLocation( $rootLocationId );
 
         $response = $this->buildResponse(
             __METHOD__ . $rootLocationId,
@@ -315,7 +228,7 @@ class PlanetController extends Controller
         }
 
         $contentService = $this->getRepository()->getContentService();
-        $results = $this->contentList(
+        $results = $locationService->contentList(
             $rootLocationId,
             array( 23 )
         );
@@ -348,7 +261,8 @@ class PlanetController extends Controller
         $planetariumLocationId = $this->container->getParameter(
             'planet.tree.planetarium'
         );
-        $planetarium = $this->loadLocation( $planetariumLocationId );
+        $locationService = $this->getRepository()->getLocationService();
+        $planetarium = $locationService->loadLocation( $planetariumLocationId );
 
         $response = $this->buildResponse(
             __METHOD__ . $planetariumLocationId,
@@ -360,7 +274,7 @@ class PlanetController extends Controller
         }
 
         $contentService = $this->getRepository()->getContentService();
-        $results = $this->contentList(
+        $results = $locationService->contentList(
             $planetariumLocationId,
             array( 17 )
         );
