@@ -3,7 +3,8 @@
 namespace Planet\PlanetBundle\Repository;
 
 use eZ\Publish\Core\SignalSlot\Repository as SignalSlotRepository,
-    Planet\PlanetBundle\Repository\LocationService;
+    Planet\PlanetBundle\Repository\LocationService,
+    Planet\PlanetBundle\Repository\ContentTypeService;
 
 
 class Repository extends SignalSlotRepository
@@ -18,4 +19,12 @@ class Repository extends SignalSlotRepository
         return $this->locationService;
     }
 
+    public function getContentTypeService()
+    {
+        if ( $this->contentTypeService !== null )
+            return $this->contentTypeService;
+
+        $this->contentTypeService = new ContentTypeService( $this->repository->getContentTypeService(), $this->signalDispatcher );
+        return $this->contentTypeService;
+    }
 }
