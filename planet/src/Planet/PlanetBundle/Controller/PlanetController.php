@@ -54,7 +54,6 @@ class PlanetController extends Controller
      * contact.
      *
      * @param int|null $selected the selected location id
-     * @todo do NOT hard code the types id
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function topMenu( $selected = null )
@@ -77,7 +76,7 @@ class PlanetController extends Controller
 
         $results = $locationService->contentList(
             $rootLocationId,
-            array( 1, 20, 21 ),
+            array( 'folder', 'contact', 'page' ),
             array( new SortClause\LocationPriority() )
         );
         $items = array( $root );
@@ -109,7 +108,6 @@ class PlanetController extends Controller
      * @param int $limit
      * @param int $offset
      * @param bool $navigator
-     * @todo do NOT hard code the post type id
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function postList( $rootLocationId, $viewType, $limit = null, $offset = 0, $navigator = true )
@@ -126,7 +124,7 @@ class PlanetController extends Controller
         }
         $results = $locationService->contentTree(
             $root->pathString,
-            array( 18 ),
+            array( 'post' ),
             array( new SortClause\DatePublished( Query::SORT_DESC ) ),
             $limit,
             $offset
@@ -159,7 +157,6 @@ class PlanetController extends Controller
     /**
      * Builds the site list block
      *
-     * @todo do NOT hard code the site type id
      * @todo sort by modified_subnode instead of last modified
      * @return \Symfony\Component\HttpFoundation\Response
      */
@@ -183,7 +180,7 @@ class PlanetController extends Controller
         $contentService = $this->getRepository()->getContentService();
         $results = $locationService->contentList(
             $blogsLocationId,
-            array( 17 ),
+            array( 'site' ),
             array( new SortClause\DateModified( Query::SORT_DESC ) )
         );
         $sites = array();
@@ -207,7 +204,6 @@ class PlanetController extends Controller
     /**
      * Builds the rich text block
      *
-     * @todo do NOT hard code the rich text type id
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function richTextBlock()
@@ -230,7 +226,7 @@ class PlanetController extends Controller
         $contentService = $this->getRepository()->getContentService();
         $results = $locationService->contentList(
             $rootLocationId,
-            array( 23 )
+            array( 'rich_block' )
         );
         $blocks = array();
         foreach ( $results->searchHits as $hit )
@@ -253,7 +249,6 @@ class PlanetController extends Controller
     /**
      * Builds the planetarium block
      *
-     * @todo do NOT hard code the site type id
      * @return \Symfony\Component\HttpFoundation\Response
      */   
     public function planetarium()
@@ -276,7 +271,7 @@ class PlanetController extends Controller
         $contentService = $this->getRepository()->getContentService();
         $results = $locationService->contentList(
             $planetariumLocationId,
-            array( 17 )
+            array( 'site' )
         );
         $planets = array();
         foreach ( $results->searchHits as $hit )

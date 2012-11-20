@@ -35,7 +35,7 @@ class PreContentViewListener
             $locationService = $this->repository->getLocationService();
             $result = $locationService->contentList(
                 $folder->id,
-                array( 17 ),
+                array( 'site' ),
                 array(
                     new SortClause\DateModified( Query::SORT_DESC )
                 )
