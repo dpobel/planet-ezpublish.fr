@@ -84,11 +84,12 @@ class LocationService extends SignalSlotLocationService
         array $sortClauses = array(), $limit = null, $offset = 0
     )
     {
+        $parentLocation = $this->loadLocation( $parentLocationId );
         $searchService = $this->repository->getSearchService();
         $query = new Query();
         $query->criterion = new Criterion\LogicalAnd(
             array(
-                new Criterion\Subtree( $parentLocationId ),
+                new Criterion\Subtree( $parentLocation->pathString ),
                 new Criterion\ContentTypeId(
                     $this->typeIdentifiersToIds( $typeIdentifiers )
                 ),

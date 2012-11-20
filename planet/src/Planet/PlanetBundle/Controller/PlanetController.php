@@ -123,7 +123,7 @@ class PlanetController extends Controller
             return $response;
         }
         $results = $locationService->contentTree(
-            $root->pathString,
+            $rootLocationId,
             array( 'post' ),
             array( new SortClause\DatePublished( Query::SORT_DESC ) ),
             $limit,
