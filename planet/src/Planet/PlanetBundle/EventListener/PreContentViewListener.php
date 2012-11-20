@@ -4,7 +4,6 @@ namespace Planet\PlanetBundle\EventListener;
 
 use eZ\Publish\Core\MVC\Symfony\Event\PreContentViewEvent,
     eZ\Publish\API\Repository\Values\Content\Query,
-    eZ\Publish\API\Repository\Values\Content\Query\Criterion,
     eZ\Publish\API\Repository\Values\Content\Query\SortClause,
     eZ\Publish\API\Repository\Repository;
 
@@ -34,18 +33,13 @@ class PreContentViewListener
         {
             $folder = $view->getParameter( 'location' );
             $locationService = $this->repository->getLocationService();
-            $searchService = $this->repository->getSearchService();
-            $query = new Query();
-            $query->criterion = new Criterion\LogicalAnd(
+            $result = $locationService->contentList(
+                $folder->id,
+                array( 17 ),
                 array(
-                    new Criterion\ParentLocationId( $folder->id ),
-                    new Criterion\ContentTypeId( array( 17 ) ),
+                    new SortClause\DateModified( Query::SORT_DESC )
                 )
             );
-            $query->sortClauses = array(
-                new SortClause\DateModified( Query::SORT_DESC )
-            );
-            $result = $searchService->findContent( $query );
             $sites = array();
             foreach ( $result->searchHits as $hit )
             {
