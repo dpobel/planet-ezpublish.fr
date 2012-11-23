@@ -7,6 +7,7 @@ CONFIG="requirements"
 CONFIG_SEPARATOR='$'
 
 COMPOSER="composer.phar"
+COMPOSER_JSON="composer.json"
 COMPOSER_INSTALL="https://getcomposer.org/installer"
 
 EZPUBLISH5=ezpublish5
@@ -71,6 +72,11 @@ cd "$BASE_DIR"
 
 cd "$EZPUBLISH_LEGACY"
 php bin/php/ezpgenerateautoloads.php -e
+cd "$BASE_DIR"
+cd "$PLANET_BASE"
+ln -s ../$EZPUBLISH5/$COMPOSER
+ln -s ../$EZPUBLISH5/$COMPOSER_JSON
+php "$COMPOSER" dump-autoload
 cd "$BASE_DIR"
 
 echo "Vidage de cache"
