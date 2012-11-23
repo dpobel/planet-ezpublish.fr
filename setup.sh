@@ -22,6 +22,12 @@ PLANET_BASE=planet
 OLD_IFS=$IFS
 IFS=$'\n'
 
+while getopts "t" opt : do
+    case $opt in
+        t ) CONFIG="$CONFIG.test" ;;
+        * ) exit 1 ;;
+    esac
+done
 
 for DEPENDENCY in `cat "$CONFIG" | egrep -v '^#'` ; do
     NAME=`echo $DEPENDENCY|cut -d "$CONFIG_SEPARATOR" -f 1`
@@ -59,20 +65,23 @@ fi
 php $COMPOSER install
 cd "$BASE_DIR"
 
-echo "eZ Publish legacy settings, extensions and autoload"
-cd "$EZPUBLISH_LEGACY_EXTENSION_DIR"
-find "$EZPUBLISH_LEGACY_EXTENSIONS" -maxdepth 1 -mindepth 1 -exec ln -s {} \; 2> /dev/null
-cd "$BASE_DIR"
+if [ -d "$EZPUBLISH_LEGACY" ] ; then
+    echo "eZ Publish legacy settings, extensions and autoload"
+    cd "$EZPUBLISH_LEGACY_EXTENSION_DIR"
+    find "$EZPUBLISH_LEGACY_EXTENSIONS" -maxdepth 1 -mindepth 1 -exec ln -s {} \; 2> /dev/null
+    cd "$BASE_DIR"
 
-cd "$EZPUBLISH_LEGACY_SETTING_DIR"
-rm -rf "$EZPUBLISH_LEGACY_SETTING/{siteaccess,override}"
-ln -s "$EZPUBLISH_LEGACY_SETTINGS/siteaccess"
-ln -s "$EZPUBLISH_LEGACY_SETTINGS/override"
-cd "$BASE_DIR"
+    cd "$EZPUBLISH_LEGACY_SETTING_DIR"
+    rm -rf "$EZPUBLISH_LEGACY_SETTING/{siteaccess,override}"
+    ln -s "$EZPUBLISH_LEGACY_SETTINGS/siteaccess"
+    ln -s "$EZPUBLISH_LEGACY_SETTINGS/override"
+    cd "$BASE_DIR"
 
-cd "$EZPUBLISH_LEGACY"
-php bin/php/ezpgenerateautoloads.php -e
-cd "$BASE_DIR"
+    cd "$EZPUBLISH_LEGACY"
+    php bin/php/ezpgenerateautoloads.php -e
+    cd "$BASE_DIR"
+fi
+
 cd "$PLANET_BASE"
 ln -s ../$EZPUBLISH5/$COMPOSER
 ln -s ../$EZPUBLISH5/$COMPOSER_JSON
@@ -80,6 +89,10 @@ php "$COMPOSER" dump-autoload
 cd "$BASE_DIR"
 
 echo "Vidage de cache"
-rm -rf $PLANET_BASE/ezpublish/cache/* $PLANET_BASE/ezpublish_legacy/var/cache/* $PLANET_BASE/ezpublish_legacy/var/planete/cache/*
+rm -rf $PLANET_BASE/ezpublish/cache/*
+
+if [ -d "$EZPUBLISH_LEGACY" ] ; then
+    rm -rf $PLANET_BASE/ezpublish_legacy/var/cache/* $PLANET_BASE/ezpublish_legacy/var/planete/cache/*
+fi
 
 IFS=$OLD_IFS
