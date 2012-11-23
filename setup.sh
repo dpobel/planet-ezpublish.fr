@@ -22,9 +22,9 @@ PLANET_BASE=planet
 OLD_IFS=$IFS
 IFS=$'\n'
 
-while getopts "t" opt : do
+while getopts "t" opt ; do
     case $opt in
-        t ) CONFIG="$CONFIG.test" ;;
+        t ) CONFIG="$CONFIG.tests" ;;
         * ) exit 1 ;;
     esac
 done
