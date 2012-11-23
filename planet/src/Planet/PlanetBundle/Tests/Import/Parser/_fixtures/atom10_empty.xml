@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="fr-FR">
+  <id>http://www.planet-ezpublish.fr/rss/feed/atom</id>
+  <title>New RSS Export</title>
+  <updated>2012-11-23T08:12:13+00:00</updated>
+  <author>
+    <name>Administrator User</name>
+    <email>dp@ez.no</email>
+  </author>
+  <link href="http://www.planet-ezpublish.fr/"/>
+  <generator version="dev" uri="http://ezcomponents.org/docs/tutorials/Feed">eZ Components Feed</generator>
+  <subtitle></subtitle>
+</feed>
