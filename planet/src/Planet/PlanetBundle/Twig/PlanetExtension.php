@@ -128,11 +128,14 @@ class PlanetExtension extends \Twig_Extension
      */
     public function shorten( $text, $maxLength, $suffix = '...' )
     {
-        if ( mb_strlen( $text ) <= $maxLength )
+        mb_internal_encoding( 'UTF-8' ); // move this in a "global" init
+        $len = mb_strlen( $text );
+        $slen = mb_strlen( $suffix );
+        if ( $len <= $maxLength || $len < $slen )
         {
             return $text;
         }
-        return mb_substr( $text, 0, $maxLength - 3 ) . $suffix;
+        return mb_substr( $text, 0, $len - $slen ) . $suffix;
     }
 
     /**
