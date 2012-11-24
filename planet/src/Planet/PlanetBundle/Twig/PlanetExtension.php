@@ -2,13 +2,24 @@
 
 namespace Planet\PlanetBundle\Twig;
 
-use eZ\Publish\Core\Repository\Values\Content\Location;
+use eZ\Publish\Core\Repository\Values\Content\Location,
+    Symfony\Component\DependencyInjection\ContainerInterface;
 
 class PlanetExtension extends \Twig_Extension
 {
+    /**
+     * Service container
+     *
+     * @var Symfony\Component\DependencyInjection\ContainerInterface $container
+     */
     protected $container;
 
-    public function __construct( $container )
+    /**
+     * Contructor of the planet twig extension
+     *
+     * @param Symfony\Component\DependencyInjection\ContainerInterface $container
+     */
+    public function __construct( ContainerInterface $container )
     {
         $this->container = $container;
     }
