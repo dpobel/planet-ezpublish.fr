@@ -60,7 +60,7 @@ ezpublish:
                         - { name: geometry/scale, params: [88, 31] }
                         - { name: optimize }
         bo:
-            url_alias_router: false
+            legacy_mode: true
     imagemagick:
         enabled: true
         path: /usr/bin/convert
