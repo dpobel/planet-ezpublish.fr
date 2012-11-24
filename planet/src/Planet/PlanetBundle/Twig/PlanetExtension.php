@@ -3,7 +3,8 @@
 namespace Planet\PlanetBundle\Twig;
 
 use eZ\Publish\Core\Repository\Values\Content\Location,
-    Symfony\Component\DependencyInjection\ContainerInterface;
+    Symfony\Component\DependencyInjection\ContainerInterface,
+    eZPlaneteUtils;
 
 class PlanetExtension extends \Twig_Extension
 {
@@ -114,7 +115,7 @@ class PlanetExtension extends \Twig_Extension
      */
     public function cleanRewriteXHTML( $html, $baseUri )
     {
-        return \eZPlaneteUtils::cleanRewriteXHTML( $html, $baseUri );
+        return eZPlaneteUtils::cleanRewriteXHTML( $html, $baseUri );
     }
 
     /**

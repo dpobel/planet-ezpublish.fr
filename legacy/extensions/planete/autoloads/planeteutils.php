@@ -67,7 +67,7 @@ class eZPlaneteUtils
         $tidy->cleanRepair();
         $res = (string) $tidy;
         // manual cleanup
-        $xml = '<div>' . $res . '</div>';
+        $xml = '<div>' . trim( $res ) . '</div>';
         $dom = new DomDocument();
         $parsing = $dom->loadXML( $xml );
         if ( $parsing )
@@ -80,7 +80,7 @@ class eZPlaneteUtils
             // rewriting malformed URIs
             self::rewriteURI( $xpath, $urlSite );
             $res = str_replace( '<?xml version="1.0"?>', '', $dom->saveXML() );
-            return $res;
+            return trim( $res );
         }
         else
         {
@@ -112,16 +112,27 @@ class eZPlaneteUtils
     {
         // remove <br /> at the beginning
         $root = $xpath->document->documentElement;
+        $toRemove = array();
         foreach( $root->childNodes as $child )
         {
-            if ( $child->localName == 'br' )
+            if (
+                $child->localName == 'br'
+                || (
+                    $child->nodeType === XML_TEXT_NODE
+                    && trim( $child->nodeValue ) === ''
+                )
+            )
             {
-                $root->removeChild( $child );
+                $toRemove[] = $child;
             }
             else
             {
                 break ;
             }
+        }
+        foreach ( $toRemove as $r )
+        {
+            $r->parentNode->removeChild( $r );
         }
 
         // get rid of <a /> used as anchor

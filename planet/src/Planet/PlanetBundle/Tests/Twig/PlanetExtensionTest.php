@@ -18,6 +18,134 @@ class PlanetExtensionTest extends PHPUnit_Framework_TestCase
 
 
     /**
+     * @dataProvider providerCleanRewriteXHTML
+     */
+    public function testCleanRewriteXHTML( $html, $baseUri, $expected )
+    {
+        $extension = new PlanetExtension( $this->getContainerMock() );
+        if ( $expected === '' )
+        {
+            self::assertEquals(
+                $expected,
+                $extension->cleanRewriteXHTML( $html, $baseUri )
+            );
+        }
+        else
+        {
+            self::assertXmlStringEqualsXmlString(
+                $expected,
+                $extension->cleanRewriteXHTML( $html, $baseUri )
+            );
+        }
+    }
+
+    public function providerCleanRewriteXHTML()
+    {
+        return array(
+            array(
+                '',
+                '',
+                ''
+            ),
+            array(
+                '   ',
+                '',
+                ''
+            ),
+            array(
+                '<p>test</p>',
+                '',
+                '<div><p>test</p></div>'
+            ),
+            array(
+                '<p>test',
+                '',
+                '<div><p>test</p></div>'
+            ),
+            array(
+                '<P>test</P>',
+                '',
+                '<div><p>test</p></div>'
+            ),
+            array(
+                '<p><script>alert("toto");</script>test</p>',
+                '',
+                '<div><p>test</p></div>'
+            ),
+            array(
+                '<p onclick=\'alert("toto");\'>test</p>',
+                '',
+                '<div><p>test</p></div>'
+            ),
+            array(
+                '<br><br><br><p>test</p>',
+                '',
+                '<div><p>test</p></div>'
+            ),
+            array(
+                '<br /><br /><br /><p>test</p>',
+                '',
+                '<div><p>test</p></div>'
+            ),
+            array(
+                '<p><a name="anchor"></a>test</p>',
+                '',
+                '<div><p>test</p></div>'
+            ),
+            array(
+                '<p><a href="http://test" target="_blank">test</a></p>',
+                '',
+                '<div><p><a href="http://test">test</a></p></div>'
+            ),
+            array(
+                '<p align="center">test</p>',
+                '',
+                '<div><p>test</p></div>'
+            ),
+            array(
+                '<img src="http://test/img.png" valign="middle" alt="" />',
+                '',
+                '<div><img src="http://test/img.png" alt=""/></div>'
+            ),
+            array(
+                '<table summary="" border="0" cellspacing="2" cellpadding="3" width="200"><tr><td>table</td></tr></table>',
+                '',
+                '<div><table><tr><td>table</td></tr></table></div>',
+            ),
+            array(
+                '<p>test</p><div style="font-size:2em;"><a href="http://blog.developpez.com/">test</a></div>',
+                '',
+                '<div><p>test</p></div>'
+            ),
+            array(
+                '<p>test</p><div class="tweetmeme_button">test</div>',
+                '',
+                '<div><p>test</p></div>'
+            ),
+            array(
+                '<p>test</p><pre></pre>',
+                '',
+                '<div><p>test</p></div>'
+            ),
+            array(
+                '<p>test</p><pre> code    </pre>',
+                '',
+                '<div><p>test</p><pre>code</pre></div>'
+            ),
+            array(
+                '<p><a href="/test">test</a></p>',
+                'http://example.com',
+                '<div><p><a href="http://example.com/test">test</a></p></div>'
+            ),
+            array(
+                '<p><img src="/test" alt="" /></p>',
+                'http://example.com',
+                '<div><p><img src="http://example.com/test" alt="" /></p></div>'
+            ),
+        );
+    }
+
+    /**
      * @dataProvider providerShorten
      */
     public function testShorten( $string, $max, $suffix, $expected )
