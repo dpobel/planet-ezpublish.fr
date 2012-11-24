@@ -1,0 +1,5 @@
+<?php
+
+
+require __DIR__ . '/../ezpublish_legacy/autoload.php';
+require __DIR__ . '/bootstrap.php.cache';
