@@ -11,6 +11,7 @@ parameters:
 services:
     planet.controller:
         class: %planet.controller.class%
+        arguments: [@ezpublish.view_manager]
         calls:
             - [ setContainer, [@service_container] ]
 

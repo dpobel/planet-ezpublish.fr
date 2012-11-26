@@ -2,7 +2,7 @@
 
 namespace Planet\PlanetBundle\Controller;
 
-use eZ\Publish\Core\MVC\Symfony\Controller\Controller,
+use eZ\Publish\Core\MVC\Symfony\Controller\Content\ViewController as Controller,
     Symfony\Component\HttpFoundation\Response,
     eZ\Publish\API\Repository\Values\Content\Query,
     eZ\Publish\API\Repository\Values\Content\Query\Criterion,
@@ -12,42 +12,6 @@ use eZ\Publish\Core\MVC\Symfony\Controller\Controller,
 
 class PlanetController extends Controller
 {
-    /**
-     * Build the response so that depending on settings it's cacheable
-     *
-     * @param string $etag
-     * @param DateTime $lastModified
-     * @return \Symfony\Component\HttpFoundation\Response
-     * @todo taken for ViewController, should be defined in one of the base;
-     * controller.
-     */
-    protected function buildResponse( $etag, DateTime $lastModified )
-    {
-        $request = $this->getRequest();
-        $response = new Response();
-        if ( $this->getParameter( 'content.view_cache' ) === true )
-        {
-            $response->setPublic();
-            $response->setEtag( $etag );
-
-            // If-None-Match is the request counterpart of Etag response header
-            // Making the response to vary against it ensures that an HTTP
-            // reverse proxy caches the different possible variations of the
-            // response as it can depend on user role for instance.
-            if ( $request->headers->has( 'If-None-Match' )
-                && $this->getParameter( 'content.ttl_cache' ) === true )
-            {
-                $response->setVary( 'If-None-Match' );
-                $response->setMaxAge(
-                    $this->getParameter( 'content.default_ttl' )
-                );
-            }
-
-            $response->setLastModified( $lastModified );
-        }
-        return $response;
-    }
-
 
     /**
      * Builds the top menu ie first level items of classes folder, page or
