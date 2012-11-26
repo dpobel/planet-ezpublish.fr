@@ -30,20 +30,6 @@ class PlanetExtension extends \Twig_Extension
         return 'Planet';
     }
 
-    public function getFunctions()
-    {
-        return array(
-            'parent_location' => new \Twig_Function_Method(
-                $this,
-                'parentLocation'
-            ),
-            'location_content' => new \Twig_Function_Method(
-                $this,
-                'getContent'
-            ),
-        );
-    }
-
     public function getFilters()
     {
         return array(
@@ -78,30 +64,6 @@ class PlanetExtension extends \Twig_Extension
             )
         );
         return $global;
-    }
-
-    /**
-     * Returns the parent location of $location
-     *
-     * @param Location $location
-     * @return \eZ\Publish\Core\Repository\Values\Content\Location
-     */
-    public function parentLocation( Location $location )
-    {
-        $repository = $this->container->get( 'ezpublish.api.repository' );
-        return $repository->getLocationService()->loadLocation( $location->parentLocationId );
-    }
-
-    /**
-     * Returns the content associated with the $location
-     *
-     * @param Location $location
-     * @return \eZ\Publish\Core\Repository\Values\Content\Content
-     */
-    public function getContent( Location $location )
-    {
-        $repository = $this->container->get( 'ezpublish.api.repository' );
-        return $repository->getContentService()->loadContent( $location->contentInfo->id );
     }
 
     /**

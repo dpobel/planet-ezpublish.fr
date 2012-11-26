@@ -1,8 +1,5 @@
 {% extends noLayout ? viewbaseLayout : "PlanetBundle::pagelayout.html.twig" %}
 
-{% set parent = parent_location( location ) %}
-{% set parentContent = location_content( parent ) %}
-
 {% block content %}
 <article class="post">
     <h1>{{ ez_render_field(
