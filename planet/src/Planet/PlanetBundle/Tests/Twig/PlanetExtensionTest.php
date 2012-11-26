@@ -9,10 +9,18 @@ use PHPUnit_Framework_TestCase,
 
 class PlanetExtensionTest extends PHPUnit_Framework_TestCase
 {
+    const TREE_ROOT = 42;
+    const TREE_BLOGS = 4242;
+    const TREE_PLANETARIUM = 424242;
+
+    const PAGE_POSTS = 11;
+    const PAGE_TITLE = "Title!";
+
     protected function getContainerMock()
     {
         return $this->getMock(
-            'Symfony\\Component\\DependencyInjection\\Container'
+            'Symfony\\Component\\DependencyInjection\\Container',
+            array( 'getParameter' )
         );
     }
 
@@ -239,7 +247,34 @@ class PlanetExtensionTest extends PHPUnit_Framework_TestCase
         return $data;
     }
 
+    public function testGetGlobals()
+    {
+        $mock = $this->getContainerMock();
+        $mock->expects( $this->any() )
+            ->method( 'getParameter' )
+            ->will( $this->returnValueMap(
+                array(
+                    array( 'planet.tree.root', self::TREE_ROOT ),
+                    array( 'planet.tree.blogs', self::TREE_BLOGS ),
+                    array( 'planet.tree.planetarium', self::TREE_PLANETARIUM ),
+                    array( 'planet.page.posts', self::PAGE_POSTS ),
+                    array( 'planet.page.title', self::PAGE_TITLE ),
+                )
+            )
+        );
+        $extension = new PlanetExtension( $mock );
 
+        $globals = $extension->getGlobals();
+        self::assertTrue( is_array( $globals ) );
+        self::assertTrue( is_array( $globals['planet'] ) );
+        self::assertTrue( is_array( $globals['planet']['tree'] ) );
+        self::assertTrue( is_array( $globals['planet']['page'] ) );
+        self::assertEquals( self::TREE_ROOT, $globals['planet']['tree']['root'] );
+        self::assertEquals( self::TREE_BLOGS, $globals['planet']['tree']['blogs'] );
+        self::assertEquals( self::TREE_PLANETARIUM, $globals['planet']['tree']['planetarium'] );
+        self::assertEquals( self::PAGE_POSTS, $globals['planet']['page']['posts'] );
+        self::assertEquals( self::PAGE_TITLE, $globals['planet']['page']['title'] );
+    }
 
 }
 
