@@ -6,6 +6,7 @@ use Planet\PlanetBundle\Import\Parser,
     ezcFeed,
     ezcFeedParseErrorException,
     ezcBaseFileNotFoundException,
+    DateTime,
 
     Planet\PlanetBundle\Import\Post,
 
@@ -59,7 +60,18 @@ class Feed implements Parser
             if ( isset( $item->Content ) && isset( $item->Content->encoded ) )
                 $post->text = trim( $item->Content->encoded );
             $post->url = trim( $item->link[0] );
-            $post->publishedDate = $item->published->date;
+            if ( isset( $item->published ) )
+            {
+                $post->publishedDate = $item->published->date;
+            }
+            elseif ( isset( $item->DublinCore ) && isset( $item->DublinCore->date[0] ) )
+            {
+                $post->publishedDate = $item->DublinCore->date[0]->date;
+            }
+            else
+            {
+                $post->publishedDate = new DateTime();
+            }
             $result[] = $post;
         }
 

@@ -50,7 +50,7 @@ class FeedTest extends PHPUnit_Framework_TestCase
             $expected = $posts[$k];
             foreach ( $expected as $property => $value )
             {
-                self::assertEquals( $value, $element->{$property} );
+                self::assertEquals( $value, $element->{$property}, "Comparing {$property}" );
             }
         }
 
@@ -66,9 +66,9 @@ class FeedTest extends PHPUnit_Framework_TestCase
                 'posts' => array(),
             ),
             array(
-                'id' => 'RSS2, 4 posts',
+                'id' => 'RSS2, 5 posts',
                 'file' => 'rss2.xml',
-                'count' => 4,
+                'count' => 5,
                 'posts' => array(
                     array(
                         'id' => 'aec379c141ec0cd59b4766ed9888c86f',
@@ -78,6 +78,13 @@ class FeedTest extends PHPUnit_Framework_TestCase
                         'publishedDate' => DateTime::createFromFormat(
                             DateTime::RSS, 'Wed, 20 Jun 2012 20:58:58 +0000'
                         )
+                    ),
+                    array(
+                        'id' => 'aec379c141ec0cd59b4766ed9888c86f',
+                        'title' => 'Peinture fraîche sur le Planet eZ Publish.fr',
+                        'text' => '<p>Hello!</p>',
+                        'url' => 'http://pwet.fr/blog/peinture_fraiche_sur_le_planet_ez_publish_fr',
+                        'publishedDate' => new DateTime(),
                     ),
                     array(
                         'id' => 'aec379c141ec0cd59b4766ed9888c86f',
@@ -111,7 +118,7 @@ class FeedTest extends PHPUnit_Framework_TestCase
             array(
                 'id' => 'Atom 1.0, 4 posts',
                 'file' => 'atom10.xml',
-                'count' => 3,
+                'count' => 4,
                 'posts' => array(
                     array(
                         'id' => 'aec379c141ec0cd59b4766ed9888c86f',
@@ -121,6 +128,13 @@ class FeedTest extends PHPUnit_Framework_TestCase
                         'publishedDate' => DateTime::createFromFormat(
                             DateTime::ATOM, '2012-11-12T15:54:38+00:00'
                         )
+                    ),
+                    array(
+                        'id' => 'aec379c141ec0cd59b4766ed9888c86f',
+                        'title' => 'Simple entry with id',
+                        'text' => '<p>Hello!</p>',
+                        'url' => 'http://www.planet-ezpublish.fr/simple-entry',
+                        'publishedDate' => new DateTime(),
                     ),
                     array(
                         'id' => 'http://www.planet-ezpublish.fr/simple-entry-id',
@@ -148,6 +162,44 @@ class FeedTest extends PHPUnit_Framework_TestCase
                 'count' => 0,
                 'posts' => array()
             ),
+            array(
+                'id' => 'RSS1, 3 posts',
+                'file' => 'rss1.xml',
+                'count' => 3,
+                'posts' => array(
+                    array(
+                        'id' => 'http://test/1',
+                        'title' => 'Test 1',
+                        'text' => 'Test 1 description',
+                        'publishedDate' => DateTime::createFromFormat(
+                            DateTime::ATOM, '2012-11-28T16:45:49+00:00'
+                        ),
+                    ),
+                    array(
+                        'id' => 'http://test/2',
+                        'title' => 'Test 2',
+                        'text' => '<p>Hello !</p>',
+                        'publishedDate' => DateTime::createFromFormat(
+                            DateTime::ATOM, '2012-10-28T16:45:49+00:00'
+                        ),
+                    ),
+                    array(
+                        'id' => 'http://test/3',
+                        'title' => 'Test 3',
+                        'text' => '<p>Hello !</p>',
+                        'publishedDate' => DateTime::createFromFormat(
+                            DateTime::ATOM, '2012-09-28T16:45:49+00:00'
+                        ),
+                    ),
+                ),
+            ),
+            array(
+                'id' => 'RSS1',
+                'file' => 'rss1_empty.xml',
+                'count' => 0,
+                'posts' => array(),
+            ),
+
         );
 
     }

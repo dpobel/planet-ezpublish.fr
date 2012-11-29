@@ -29,6 +29,22 @@
       <wfw:commentRss>http://pwet.fr/feed/comment/69791</wfw:commentRss>
     </item>
     <item>
+      <title>Peinture fraîche sur le Planet eZ Publish.fr</title>
+      <link>http://pwet.fr/blog/peinture_fraiche_sur_le_planet_ez_publish_fr</link>
+      <description>&lt;p&gt;Hello!&lt;/p&gt;</description>
+      <category>Responsive design</category>
+      <category>eZ Publish</category>
+      <category>git</category>
+      <category>Navigateur</category>
+      <category>RSS</category>
+      <category>eZ Find</category>
+      <category>Solr</category>
+      <comments>http://pwet.fr/blog/peinture_fraiche_sur_le_planet_ez_publish_fr#comments</comments>
+      <guid isPermaLink="false">aec379c141ec0cd59b4766ed9888c86f</guid>
+      <wfw:comment>http://pwet.fr/blog/peinture_fraiche_sur_le_planet_ez_publish_fr#comments</wfw:comment>
+      <wfw:commentRss>http://pwet.fr/feed/comment/69791</wfw:commentRss>
+    </item>
+    <item>
       <title>Content encoded</title>
       <link>http://pwet.fr/blog/peinture_fraiche_sur_le_planet_ez_publish_fr</link>
       <description>Hello</description>

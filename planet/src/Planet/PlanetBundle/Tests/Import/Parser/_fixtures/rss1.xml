@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" media="screen" href="/~d/styles/rss1frenchfull.xsl"?>
+<?xml-stylesheet type="text/css" media="screen" href="http://feeds.feedburner.com/~d/styles/itemcontent.css"?>
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:sy="http://purl.org/rss/1.0/modules/syndication/" xmlns:admin="http://webns.net/mvcb/" xmlns:cc="http://web.resource.org/cc/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns="http://purl.org/rss/1.0/" xmlns:feedburner="http://rssnamespace.org/feedburner/ext/1.0">
+  <channel rdf:about="http://planete-accessibilite.com/">
+    <title>Planète Accessibilité</title>
+    <description>La fraîche actualité de l'accessibilité numérique</description>
+    <link>http://planete-accessibilite.com/</link>
+    <dc:language/>
+    <dc:creator/>
+    <dc:rights/>
+    <dc:date>2012-11-28T17:59:46+00:00</dc:date>
+    <admin:generatorAgent rdf:resource="http://moonmoon.inertie.org/"/>
+    <items>
+      <rdf:Seq>
+        <rdf:li rdf:resource="http://test/1"/>
+        <rdf:li rdf:resource="http://test/2"/>
+        <rdf:li rdf:resource="http://test/3"/>
+      </rdf:Seq>
+    </items>
+    <atom10:link xmlns:atom10="http://www.w3.org/2005/Atom" rel="self" type="application/rdf+xml" href="http://feeds.feedburner.com/PlaneteAccessibilite"/>
+    <feedburner:info uri="planeteaccessibilite"/>
+    <atom10:link xmlns:atom10="http://www.w3.org/2005/Atom" rel="hub" href="http://pubsubhubbub.appspot.com/"/>
+    <feedburner:feedFlare href="http://add.my.yahoo.com/content?lg=fr&amp;url=http%3A%2F%2Ffeeds.feedburner.com%2FPlaneteAccessibilite" src="http://us.i1.yimg.com/us.yimg.com/i/us/my/bn/intatm_fr_1.gif">Subscribe with Mon Yahoo!</feedburner:feedFlare>
+    <feedburner:feedFlare href="http://www.newsgator.com/ngs/subscriber/subext.aspx?url=http%3A%2F%2Ffeeds.feedburner.com%2FPlaneteAccessibilite" src="http://www.newsgator.com/images/ngsub1.gif">Subscribe with NewsGator</feedburner:feedFlare>
+    <feedburner:feedFlare href="http://www.bloglines.com/sub/http://feeds.feedburner.com/PlaneteAccessibilite" src="http://www.bloglines.com/images/sub_modern11.gif">Subscribe with Bloglines</feedburner:feedFlare>
+    <feedburner:feedFlare href="http://www.netvibes.com/subscribe.php?url=http%3A%2F%2Ffeeds.feedburner.com%2FPlaneteAccessibilite" src="http://www.netvibes.com/img/add2netvibes.gif">Subscribe with Netvibes</feedburner:feedFlare>
+    <feedburner:feedFlare href="http://fusion.google.com/add?feedurl=http%3A%2F%2Ffeeds.feedburner.com%2FPlaneteAccessibilite" src="http://buttons.googlesyndication.com/fusion/add.gif">Subscribe with Google</feedburner:feedFlare>
+    <feedburner:feedFlare href="http://www.pageflakes.com/subscribe.aspx?url=http%3A%2F%2Ffeeds.feedburner.com%2FPlaneteAccessibilite" src="http://www.pageflakes.com/ImageFile.ashx?instanceId=Static_4&amp;fileName=ATP_blu_91x17.gif">Subscribe with Pageflakes</feedburner:feedFlare>
+    <feedburner:feedFlare href="http://www.plusmo.com/add?url=http%3A%2F%2Ffeeds.feedburner.com%2FPlaneteAccessibilite" src="http://plusmo.com/res/graphics/fbplusmo.gif">Subscribe with Plusmo</feedburner:feedFlare>
+    <feedburner:feedFlare href="http://www.thefreedictionary.com/_/hp/AddRSS.aspx?http%3A%2F%2Ffeeds.feedburner.com%2FPlaneteAccessibilite" src="http://img.tfd.com/hp/addToTheFreeDictionary.gif">Subscribe with The Free Dictionary</feedburner:feedFlare>
+    <feedburner:feedFlare href="http://www.bitty.com/manual/?contenttype=rssfeed&amp;contentvalue=http%3A%2F%2Ffeeds.feedburner.com%2FPlaneteAccessibilite" src="http://www.bitty.com/img/bittychicklet_91x17.gif">Subscribe with Bitty Browser</feedburner:feedFlare>
+    <feedburner:feedFlare href="http://www.newsalloy.com/?rss=http%3A%2F%2Ffeeds.feedburner.com%2FPlaneteAccessibilite" src="http://www.newsalloy.com/subrss3.gif">Subscribe with NewsAlloy</feedburner:feedFlare>
+    <feedburner:feedFlare href="http://www.live.com/?add=http%3A%2F%2Ffeeds.feedburner.com%2FPlaneteAccessibilite" src="http://tkfiles.storage.msn.com/x1piYkpqHC_35nIp1gLE68-wvzLZO8iXl_JMledmJQXP-XTBOLfmQv4zhj4MhcWEJh_GtoBIiAl1Mjh-ndp9k47If7hTaFno0mxW9_i3p_5qQw">Subscribe with Live.com</feedburner:feedFlare>
+    <feedburner:feedFlare href="http://mix.excite.eu/add?feedurl=http%3A%2F%2Ffeeds.feedburner.com%2FPlaneteAccessibilite" src="http://image.excite.co.uk/mix/addtomix.gif">Subscribe with Excite MIX</feedburner:feedFlare>
+    <feedburner:feedFlare href="http://download.attensa.com/app/get_attensa.html?feedurl=http%3A%2F%2Ffeeds.feedburner.com%2FPlaneteAccessibilite" src="http://www.attensa.com/blogs/attensa/WindowsLiveWriter/BadgeredintoBadges_10C02/attensa_feed_button5.gif">Subscribe with Attensa for Outlook</feedburner:feedFlare>
+    <feedburner:feedFlare href="http://www.webwag.com/wwgthis.php?url=http%3A%2F%2Ffeeds.feedburner.com%2FPlaneteAccessibilite" src="http://www.webwag.com/images/wwgthis.gif">Subscribe with Webwag</feedburner:feedFlare>
+    <feedburner:feedFlare href="http://www.podcastready.com/oneclick_bookmark.php?url=http%3A%2F%2Ffeeds.feedburner.com%2FPlaneteAccessibilite" src="http://www.podcastready.com/images/podcastready_button.gif">Subscribe with Podcast Ready</feedburner:feedFlare>
+    <feedburner:feedFlare href="http://www.flurry.com/pushRssFeed.do?r=fb&amp;url=http%3A%2F%2Ffeeds.feedburner.com%2FPlaneteAccessibilite" src="http://www.flurry.com/images/flurry_rss_logo2.gif">Subscribe with Flurry</feedburner:feedFlare>
+    <feedburner:feedFlare href="http://www.wikio.com/subscribe?url=http%3A%2F%2Ffeeds.feedburner.com%2FPlaneteAccessibilite" src="http://www.wikio.com/shared/img/add2wikio.gif">Subscribe with Wikio</feedburner:feedFlare>
+    <feedburner:feedFlare href="http://www.dailyrotation.com/index.php?feed=http%3A%2F%2Ffeeds.feedburner.com%2FPlaneteAccessibilite" src="http://www.dailyrotation.com/rss-dr2.gif">Subscribe with Daily Rotation</feedburner:feedFlare>
+    <feedburner:browserFriendly>Merci de porter un intérêt à Planète Accessibilité. En souscrivant à ce flux de syndication, vous recevrez automatiquement toutes les actualités francophones traitant de l'accessibilité numérique. En cas de problème, n'hésitez pas à contacter l'administration de cette planète à sebastien@planete-accessibilite.com.</feedburner:browserFriendly>
+  </channel>
+  <item rdf:about="http://test/1">
+    <title>Test 1</title>
+    <link>http://test/1</link>
+    <dc:date>2012-11-28T16:45:49+00:00</dc:date>
+    <dc:language>fr</dc:language>
+    <dc:creator>Olivier</dc:creator>
+    <dc:subject/>
+    <description>Test 1 description</description>
+    <feedburner:origLink>http://accessiblog.fr/2012/11/journee-de-laccessibilite-a-laduloa/?utm_source=rss&amp;amp;utm_medium=rss&amp;amp;utm_campaign=journee-de-laccessibilite-a-laduloa</feedburner:origLink>
+  </item>
+  <item rdf:about="http://test/2">
+    <title>Test 2</title>
+    <link>http://test/2</link>
+    <dc:date>2012-10-28T16:45:49+00:00</dc:date>
+    <dc:language>fr</dc:language>
+    <dc:creator>Olivier</dc:creator>
+    <dc:subject/>
+    <description>Test 2 description</description>
+    <content:encoded><![CDATA[<p>Hello !</p>]]></content:encoded>
+    <feedburner:origLink>http://accessiblog.fr/2012/11/journee-de-laccessibilite-a-laduloa/?utm_source=rss&amp;amp;utm_medium=rss&amp;amp;utm_campaign=journee-de-laccessibilite-a-laduloa</feedburner:origLink>
+  </item>
+  <item rdf:about="http://test/3">
+    <title>Test 3</title>
+    <link>http://test/3</link>
+    <dc:date>2012-09-28T16:45:49+00:00</dc:date>
+    <dc:language>fr</dc:language>
+    <dc:creator>Olivier</dc:creator>
+    <dc:subject/>
+    <description>Test 3 description</description>
+    <content:encoded><![CDATA[<p>Hello !</p>]]></content:encoded>
+  </item>
+</rdf:RDF>

@@ -23,6 +23,17 @@
     <published>2012-11-12T15:54:38+00:00</published>
   </entry>
   <entry>
+    <id>aec379c141ec0cd59b4766ed9888c86f</id>
+    <title>Simple entry with id</title>
+    <updated>2012-11-12T15:54:38+00:00</updated>
+    <author>
+      <name>Administrator User</name>
+      <email>dp@ez.no</email>
+    </author>
+    <link href="http://www.planet-ezpublish.fr/simple-entry"/>
+    <summary>&lt;p&gt;Hello!&lt;/p&gt;</summary>
+  </entry>
+  <entry>
     <id>http://www.planet-ezpublish.fr/simple-entry-id</id>
     <title>Simple entry with url as id</title>
     <updated>2012-11-12T15:54:38+00:00</updated>
