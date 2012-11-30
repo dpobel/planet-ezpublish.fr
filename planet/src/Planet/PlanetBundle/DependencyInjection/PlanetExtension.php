@@ -34,6 +34,10 @@ class PlanetExtension extends Extension
         {
             $container->setParameter( 'planet.page.' . $k, $val );
         }
+        foreach ( $config['import'] as $k => $val )
+        {
+            $container->setParameter( 'planet.import.' . $k, $val );
+        }
     }
 
 }

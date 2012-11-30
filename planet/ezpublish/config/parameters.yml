@@ -6,6 +6,14 @@ planet:
     page:
         posts: 10
         title: "Planète eZ Publish, Ze french corner!"
+    import:
+        user_id: 14
+        type_identifier: 'post'
+        mapping:
+            # Post property: '<post type field identifier>'
+            title: 'title'
+            text: 'html'
+            url: 'url'
 
 assetic:
     filters:

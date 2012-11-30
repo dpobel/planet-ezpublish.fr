@@ -2,7 +2,7 @@ parameters:
     planet.controller.class: Planet\PlanetBundle\Controller\PlanetController
     planet.twig_extension.class: Planet\PlanetBundle\Twig\PlanetExtension
     planet.pre_content_view_listener.class: Planet\PlanetBundle\EventListener\PreContentViewListener
-    planet.importer.feed.class: Planet\PlanetBundle\Import\Importer\Feed
+    planet.importer.class: Planet\PlanetBundle\Import\Importer
 
     # override the default repository to be able to override
     # the default location service...
@@ -30,7 +30,7 @@ services:
         tags:
             - {name: kernel.event_listener, event: ezpublish.pre_content_view, method: onPreContentView}
 
-    planet.importer.feed:
-        class: %planet.importer.feed.class%
-        arguments: [@ezpublish.api.repository]
+    planet.importer:
+        class: %planet.importer.class%
+        arguments: [@ezpublish.api.repository, @ezpublish.config.resolver]
 
