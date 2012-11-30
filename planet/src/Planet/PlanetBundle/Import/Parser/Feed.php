@@ -14,7 +14,7 @@ use Planet\PlanetBundle\Import\Parser,
     Planet\PlanetBundle\Import\Parser\Exception\NotFound;
 
 /**
- * Feed parser. It is able to parse RSS2 or ATOM feed and find in it posts.
+ * Feed parser. It is able to parse RSS or ATOM feed and find posts in it.
  */
 class Feed implements Parser
 {
