@@ -40,6 +40,7 @@ class FeedTest extends PHPUnit_Framework_TestCase
     public function testValidFile( $id, $file, $count, array $posts )
     {
         $feed = new Feed( $this->getFixtureFile( $file ) );
+        $now = new DateTime();
         $result = $feed->parse();
 
         self::assertTrue( is_array( $result ) );
@@ -50,6 +51,8 @@ class FeedTest extends PHPUnit_Framework_TestCase
             $expected = $posts[$k];
             foreach ( $expected as $property => $value )
             {
+                if ( $property === 'publishedDate' && $value === null )
+                    $value = $now;
                 self::assertEquals( $value, $element->{$property}, "Comparing {$property}" );
             }
         }
@@ -84,7 +87,7 @@ class FeedTest extends PHPUnit_Framework_TestCase
                         'title' => 'Peinture fraîche sur le Planet eZ Publish.fr',
                         'text' => '<p>Hello!</p>',
                         'url' => 'http://pwet.fr/blog/peinture_fraiche_sur_le_planet_ez_publish_fr',
-                        'publishedDate' => new DateTime(),
+                        'publishedDate' => null,
                     ),
                     array(
                         'id' => 'aec379c141ec0cd59b4766ed9888c86f',
@@ -134,7 +137,7 @@ class FeedTest extends PHPUnit_Framework_TestCase
                         'title' => 'Simple entry with id',
                         'text' => '<p>Hello!</p>',
                         'url' => 'http://www.planet-ezpublish.fr/simple-entry',
-                        'publishedDate' => new DateTime(),
+                        'publishedDate' => null,
                     ),
                     array(
                         'id' => 'http://www.planet-ezpublish.fr/simple-entry-id',
