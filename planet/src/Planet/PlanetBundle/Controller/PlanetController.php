@@ -2,7 +2,7 @@
 
 namespace Planet\PlanetBundle\Controller;
 
-use eZ\Publish\Core\MVC\Symfony\Controller\Content\ViewController as Controller,
+use Planet\PlanetBundle\Controller\ViewController as Controller,
     Symfony\Component\HttpFoundation\Response,
     eZ\Publish\API\Repository\Values\Content\Query,
     eZ\Publish\API\Repository\Values\Content\Query\Criterion,
@@ -33,6 +33,7 @@ class PlanetController extends Controller
             __METHOD__ . $rootLocationId . '-' . $selected,
             $root->contentInfo->modificationDate
         );
+        $response->headers->set( 'X-Location-Id', $rootLocationId );
         if ( $response->isNotModified( $this->getRequest() ) )
         {
             return $response;
@@ -82,6 +83,7 @@ class PlanetController extends Controller
             __METHOD__ . $rootLocationId,
             $root->contentInfo->modificationDate
         );
+        $response->headers->set( 'X-Location-Id', $rootLocationId );
         if ( $response->isNotModified( $this->getRequest() ) )
         {
             return $response;
@@ -136,6 +138,7 @@ class PlanetController extends Controller
             __METHOD__ . $blogsLocationId,
             $blogs->contentInfo->modificationDate
         );
+        $response->headers->set( 'X-Location-Id', $blogsLocationId );
         if ( $response->isNotModified( $this->getRequest() ) )
         {
             return $response;
@@ -186,6 +189,7 @@ class PlanetController extends Controller
             __METHOD__ . $rootLocationId,
             $root->contentInfo->modificationDate
         );
+        $response->headers->set( 'X-Location-Id', $rootLocationId );
         if ( $response->isNotModified( $this->getRequest() ) )
         {
             return $response;
@@ -231,6 +235,7 @@ class PlanetController extends Controller
             __METHOD__ . $planetariumLocationId,
             $planetarium->contentInfo->modificationDate
         );
+        $response->headers->set( 'X-Location-Id', $planetariumLocationId );
         if ( $response->isNotModified( $this->getRequest() ) )
         {
             return $response;

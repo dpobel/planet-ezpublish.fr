@@ -6,8 +6,8 @@
         </p>
     </div>
 
-    {% render 'planet:siteList' %}
-    {% render 'planet:richTextBlock' %}
-    {% render 'planet:planetarium' %}
+    {% render 'planet:siteList' with {}, {standalone: true} %}
+    {% render 'planet:richTextBlock' with {}, {'standalone': true} %}
+    {% render 'planet:planetarium' with {}, {'standalone': true} %}
 
 </aside>

@@ -30,7 +30,7 @@
     <div id="hmask"></div>
     <p><a href="/" title="{{ planet.page.title }}">{{ planet.page.title }}</a></p>
     {% block top_menu %}
-        {% render "planet:topMenu" with {'selected': selected} %}
+        {% render "planet:topMenu" with {'selected': selected}, {'standalone': true} %}
     {% endblock %}
 </header>
 <div class="yui3-g">

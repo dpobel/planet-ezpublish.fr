@@ -8,6 +8,8 @@ parameters:
     # the default location service...
     ezpublish.signalslot.repository.class: Planet\PlanetBundle\Repository\Repository
 
+    ezpublish.controller.content.view.class: Planet\PlanetBundle\Controller\ViewController
+
 services:
     planet.controller:
         class: %planet.controller.class%

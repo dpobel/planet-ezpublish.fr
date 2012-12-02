@@ -18,7 +18,6 @@
 {% block content %}
 <section class="planet">
     <h1 class="title-page">Planète eZ Publish{{ suffix }}</h1>
-
     {% render "planet:postList" with
         {'rootLocationId': planet.tree.blogs, 'limit': 10, 'offset': offset, 'viewType': 'full'},
         {'standalone': true}

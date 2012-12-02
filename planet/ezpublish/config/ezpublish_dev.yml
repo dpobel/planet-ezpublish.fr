@@ -28,6 +28,10 @@ ezpublish:
                 database_name: ezplanete
             var_dir: var/planete
         planete:
+            content:
+                view_cache: true
+                ttl_cache: true
+                default_ttl: 86400
             image_variations:
                 reference:
                     reference: null
