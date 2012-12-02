@@ -121,9 +121,10 @@ class Importer
             $content->contentInfo
         );
         $contentStruct = $contentService->newContentUpdateStruct();
-        $contentStruct->setField( 'title', $post->title );
-        $contentStruct->setField( 'html', $post->text );
-        $contentStruct->setField( 'url',  $post->url );
+        foreach ( $postInfo->getMapping() as $prop => $field )
+        {
+            $contentStruct->setField( $field, $post->{$prop} );
+        }
 
         $contentDraft = $contentService->updateContent(
             $contentDraft->versionInfo,
@@ -159,10 +160,11 @@ class Importer
         $contentStruct->remoteId = $this->buildContentRemoteId(
             $post, $postInfo->getParentLocationId()
         );
-
-        $contentStruct->setField( 'title', $post->title );
-        $contentStruct->setField( 'html', $post->text );
-        $contentStruct->setField( 'url',  $post->url );
+        
+        foreach ( $postInfo->getMapping() as $prop => $field )
+        {
+            $contentStruct->setField( $field, $post->{$prop} );
+        }
 
         $draft = $contentService->createContent(
             $contentStruct,

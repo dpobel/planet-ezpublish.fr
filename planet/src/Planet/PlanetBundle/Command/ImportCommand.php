@@ -35,11 +35,12 @@ class ImportCommand extends ContainerAwareCommand
             );
             try
             {
-                $importer->import(
+                $results = $importer->import(
                     new PostImportStruct(
                         $container->getParameter( 'planet.import.user_id' ),
                         $container->getParameter( 'planet.import.type_identifier' ),
-                        $site->contentInfo->mainLocationId
+                        $site->contentInfo->mainLocationId,
+                        $container->getParameter( 'planet.import.mapping' )
                     ),
                     new Feed( $site->getField( 'rss' )->value->link )
                 );

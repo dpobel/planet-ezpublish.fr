@@ -36,6 +36,13 @@ class PostImportStruct
      */
     protected $parentLocationId;
 
+    /**
+     * Mapping between Post properties and type fields
+     *
+     * @var array
+     */
+    protected $mapping;
+
 
     /**
      * Builds the PostImportStruct
@@ -46,7 +53,7 @@ class PostImportStruct
      * @param array $mapping
      */
     public function __construct(
-        $userId, $contentTypeIdentifier, $parentLocationId
+        $userId, $contentTypeIdentifier, $parentLocationId, array $mapping
     )
     {
         if ( !is_numeric( $userId ) )
@@ -70,6 +77,7 @@ class PostImportStruct
         $this->userId = (int)$userId;
         $this->contentTypeIdentifier = (string)$contentTypeIdentifier;
         $this->parentLocationId = (int)$parentLocationId;
+        $this->mapping = $mapping;
     }
 
     /**
@@ -100,6 +108,16 @@ class PostImportStruct
     public function getParentLocationId()
     {
         return $this->parentLocationId;
+    }
+
+    /**
+     * Returns the mapping between Post properties and type fields.
+     *
+     * @return array
+     */
+    public function getMapping()
+    {
+        return $this->mapping;
     }
 
     /**

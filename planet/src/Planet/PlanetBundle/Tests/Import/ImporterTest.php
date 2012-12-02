@@ -111,7 +111,7 @@ class ImporterTest extends PHPUnit_Framework_TestCase
             ->method( 'parse' )
             ->will( $this->returnValue( array() ) );
 
-        $struct = new PostImportStruct( 14, 'post', 2 );
+        $struct = new PostImportStruct( 14, 'post', 2, array() );
 
         $importer = new Importer( $repo, $config );
         $result = $importer->import( $struct, $parser );

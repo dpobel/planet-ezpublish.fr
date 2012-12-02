@@ -15,17 +15,17 @@ class PostImportStructTest extends PHPUnit_Framework_TestCase
      * @dataProvider dataWrongParameters
      * @expectedException InvalidArgumentException
      */
-    function testWrongParameter( $userId, $typeIdentifier, $parentLocationId )
+    function testWrongParameter( $userId, $typeIdentifier, $parentLocationId, array $mapping )
     {
-        new PostImportStruct( $userId, $typeIdentifier, $parentLocationId );
+        new PostImportStruct( $userId, $typeIdentifier, $parentLocationId, $mapping );
     }
 
     public function dataWrongParameters()
     {
         return array(
-            array( 'aa', 2, 'aa' ),
-            array( 14, 2, 'aa' ),
-            array( 14, 'post', 'aa' ),
+            array( 'aa', 2, 'aa', array() ),
+            array( 14, 2, 'aa', array() ),
+            array( 14, 'post', 'aa', array() ),
         );
     }
 
@@ -34,6 +34,11 @@ class PostImportStructTest extends PHPUnit_Framework_TestCase
         $userId = 14;
         $typeIdentifier = 'post';
         $parentLocationId = 60;
+        $mapping = array(
+            'title' => 'title',
+            'text' => 'html',
+            'url' => 'link'
+        );
 
         $userServiceMock = $this->getMock(
             'eZ\\Publish\\API\\Repository\\UserService'
@@ -49,7 +54,7 @@ class PostImportStructTest extends PHPUnit_Framework_TestCase
             ->with( $this->equalTo( $typeIdentifier ) );
 
         $struct = new PostImportStruct(
-            $userId, $typeIdentifier, $parentLocationId
+            $userId, $typeIdentifier, $parentLocationId, $mapping
         );
 
         self::assertTrue( is_integer( $struct->getUserId() ) );
@@ -67,6 +72,13 @@ class PostImportStructTest extends PHPUnit_Framework_TestCase
         );
         self::assertEquals(
             $parentLocationId, $struct->getParentLocationId()
+        );
+
+        self::assertTrue(
+            is_array( $struct->getMapping() )
+        );
+        self::assertEquals(
+            $mapping, $struct->getMapping()
         );
     }
 
