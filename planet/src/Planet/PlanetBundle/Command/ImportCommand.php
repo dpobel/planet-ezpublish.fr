@@ -8,10 +8,14 @@ use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand,
     Symfony\Component\Console\Input\InputArgument,
     Symfony\Component\Console\Input\InputOption,
 
+    eZ\Publish\API\Repository\Values\Content\Content,
+
     Planet\PlanetBundle\Import\Parser\Feed,
     Planet\PlanetBundle\Import\Parser\Exception\NotFound as FeedNotFound,
     Planet\PlanetBundle\Import\Parser\Exception\Invalid as InvalidFeed,
-    Planet\PlanetBundle\Import\PostImportStruct;
+    Planet\PlanetBundle\Import\PostImportStruct,
+
+    DateTime;
 
 class ImportCommand extends ContainerAwareCommand
 {
@@ -44,6 +48,12 @@ class ImportCommand extends ContainerAwareCommand
                     ),
                     new Feed( $site->getField( 'rss' )->value->link )
                 );
+                $updated = $results->getUpdated();
+                $created = $results->getCreated();
+                if ( !empty( $created ) || !empty( $updated ) )
+                {
+                    $this->touchSite( $site );
+                }
             }
             catch( FeedNotFound $e )
             {
@@ -58,6 +68,32 @@ class ImportCommand extends ContainerAwareCommand
             $output->writeLn( ' OK' );
         }
 
+    }
+
+    /**
+     * Update the modification_date field of the $site with the current
+     * datetime.
+     *
+     * @param eZ\Publish\API\Repository\Values\Content\Content $site 
+     * @return eZ\Publish\API\Repository\Values\Content\Content
+     */
+    protected function touchSite( Content $site )
+    {
+        $contentService = $this->getContainer()
+            ->get( 'ezpublish.api.repository' )
+            ->getContentService();
+
+        $contentDraft = $contentService->createContentDraft(
+            $site->contentInfo
+        );
+        $contentStruct = $contentService->newContentUpdateStruct();
+        $contentStruct->setField( 'modification_date', new DateTime() );
+        
+        $contentDraft = $contentService->updateContent(
+            $contentDraft->versionInfo,
+            $contentStruct
+        );
+        return $contentService->publishVersion( $contentDraft->versionInfo );
     }
 
     protected function getSiteList()
