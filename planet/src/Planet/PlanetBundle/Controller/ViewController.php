@@ -6,6 +6,10 @@ use eZ\Publish\Core\MVC\Symfony\Controller\Content\ViewController as APIViewCont
     Symfony\Component\HttpFoundation\Response,
     DateTime;
 
+/**
+ * Override the default view controller to workaround
+ * https://jira.ez.no/browse/EZP-20184
+ */
 class ViewController extends APIViewController
 {
 
@@ -26,6 +30,7 @@ class ViewController extends APIViewController
                 && $this->getParameter( 'content.ttl_cache' ) === true )
             {
                 $response->setVary( 'If-None-Match' );
+                // CHANGE IS HERE
                 $response->setSharedMaxAge(
                     $this->getParameter( 'content.default_ttl' )
                 );
