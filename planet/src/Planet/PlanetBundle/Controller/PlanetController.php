@@ -89,7 +89,7 @@ class PlanetController extends Controller
         $results = $locationService->contentTree(
             $rootLocationId,
             array( 'post' ),
-            array( new SortClause\DatePublished( Query::SORT_DESC ) ),
+            array( new SortClause\Field( 'post', 'date', Query::SORT_DESC ) ),
             $limit,
             $offset
         );
@@ -145,7 +145,11 @@ class PlanetController extends Controller
         $results = $locationService->contentList(
             $blogsLocationId,
             array( 'site' ),
-            array( new SortClause\DateModified( Query::SORT_DESC ) )
+            array(
+                new SortClause\Field(
+                    'site', 'modification_date', Query::SORT_DESC
+                )
+            )
         );
         $sites = array();
         foreach ( $results->searchHits as $hit )

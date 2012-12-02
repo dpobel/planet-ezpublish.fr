@@ -37,7 +37,9 @@ class PreContentViewListener
                 $folder->id,
                 array( 'site' ),
                 array(
-                    new SortClause\DateModified( Query::SORT_DESC )
+                    new SortClause\Field(
+                        'site', 'modification_date', Query::SORT_DESC
+                    )
                 )
             );
             $sites = array();
