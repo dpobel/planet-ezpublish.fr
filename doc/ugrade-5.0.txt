@@ -6,6 +6,9 @@ Scripts to launch:
   Makes sure only one version is in the state 'published' at a time, otherwise
   the new public API crashes
 
+- Run the SQL query:
+  update ezcontentobject, ezcontentobject_version set ezcontentobject.status=1 where ezcontentobject.status=0 and ezcontentobject_version.contentobject_id = ezcontentobject.id and ezcontentobject_version.status=1;
+
 - extension/planete/bin/update/5.0/fixcontentobjectmodifieddate.php
   Fixes ezcontentobject.modified = 0
 
@@ -15,6 +18,10 @@ Scripts to launch:
 - extension/planete/bin/update/5.0/removesitesidentifier.php
   Removes the ezidentifier attribute in site content class and replaces it by
   an ezinteger one with the same value.
+
+- extension/planete/bin/update/5.0/adddateattribute.php
+  Add a date attribute to site and post classes to not rely on modified_subnode
+  nor published meta attribute.
 
 - bin/php/updateniceurls.php
 
