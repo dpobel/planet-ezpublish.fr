@@ -1,7 +1,9 @@
 ################## Planet ##################################
 SHELL=/bin/sh
 PHP=/usr/bin/php5
-PLANET=/home/tigrou/web/planet-ezpublish.fr/www/
+PLANET=/web/sites/planet-ezpublish.fr/www
+PLANET_LEGACY="$PLANET/ezpublish_legacy/"
 # toutes les demies heures
-58  * * * *     cd $PLANET ; $PHP runcronjobs.php planete >> /tmp/planet-ezpublish.fr.log 2>&1
-28  * * * *     cd $PLANET ; $PHP runcronjobs.php planete >> /tmp/planet-ezpublish.fr.log 2>&1
+58  * * * *     cd $PLANET_LEGACY ; $PHP runcronjobs.php planete >> /tmp/planet-ezpublish.fr.log 2>&1
+12  * * * *     cd $PLANET ; $PHP ezpublish/console -v planet:import-feeds
+42  * * * *     cd $PLANET ; $PHP ezpublish/console -v planet:import-feeds
