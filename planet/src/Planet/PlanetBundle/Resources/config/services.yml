@@ -10,6 +10,8 @@ parameters:
 
     ezpublish.controller.content.view.class: Planet\PlanetBundle\Controller\ViewController
 
+    ezpublish_legacy.view_decorator.twig.class: Planet\PlanetBundle\Legacy\View\TwigContentViewLayoutDecorator
+
 services:
     planet.controller:
         class: %planet.controller.class%
