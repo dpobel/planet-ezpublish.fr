@@ -98,7 +98,7 @@ class PlanetExtension extends \Twig_Extension
         {
             return $text;
         }
-        return mb_substr( $text, 0, $len - $slen ) . $suffix;
+        return mb_substr( $text, 0, $maxLength - $slen ) . $suffix;
     }
 
     /**

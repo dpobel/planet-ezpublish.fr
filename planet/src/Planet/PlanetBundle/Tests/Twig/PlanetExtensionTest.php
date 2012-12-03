@@ -186,7 +186,7 @@ class PlanetExtensionTest extends PHPUnit_Framework_TestCase
                 '0123456789',
                 5,
                 $dots,
-                '0123456' . $dots
+                '01' . $dots
             ),
             array( 
                 '0é234éèçùà',
@@ -204,7 +204,7 @@ class PlanetExtensionTest extends PHPUnit_Framework_TestCase
                 '0é234éèçùà',
                 5,
                 $dots,
-                '0é234éè' . $dots
+                '0é' . $dots
             ),
             array( 
                 '0123456789',
@@ -222,7 +222,7 @@ class PlanetExtensionTest extends PHPUnit_Framework_TestCase
                 '0123456789',
                 5,
                 $utf8Dots,
-                '012345678' . $utf8Dots
+                '0123' . $utf8Dots
             ),
             array( 
                 '0é234éèçùà',
@@ -240,7 +240,7 @@ class PlanetExtensionTest extends PHPUnit_Framework_TestCase
                 '0é234éèçùà',
                 5,
                 $utf8Dots,
-                '0é234éèçù' . $utf8Dots
+                '0é23' . $utf8Dots
             ),
 
         );
