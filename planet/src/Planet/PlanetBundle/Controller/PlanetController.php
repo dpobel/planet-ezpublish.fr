@@ -106,11 +106,7 @@ class PlanetController extends Controller
             array(
                 'total' => $results->totalCount,
                 'offset' => $offset,
-                'root' => $locationService->loadLocation(
-                    $this->container->getParameter(
-                        'planet.tree.root'
-                    )
-                ),
+                'root' => $root,
                 'posts' => $posts,
                 'viewType' => $viewType,
                 'navigator' => (bool) $navigator,
