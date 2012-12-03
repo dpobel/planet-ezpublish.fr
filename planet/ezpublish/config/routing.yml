@@ -1,3 +1,6 @@
+planetRoutes:
+    resource: "@PlanetBundle/Resources/config/routing.yml"
+
 _ezpublishRoutes:
     resource: "@EzPublishCoreBundle/Resources/config/routing/internal.yml"
 

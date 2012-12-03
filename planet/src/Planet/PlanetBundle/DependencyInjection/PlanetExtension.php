@@ -38,6 +38,9 @@ class PlanetExtension extends Extension
         {
             $container->setParameter( 'planet.import.' . $k, $val );
         }
+        foreach ( $config['feed'] as $k => $val )
+        {
+            $container->setParameter( 'planet.feed.' . $k, $val );
+        }
     }
-
 }

@@ -1,0 +1,4 @@
+planetFeed:
+    pattern: /feed/planet
+    defaults:
+        _controller: planet.controller:feed

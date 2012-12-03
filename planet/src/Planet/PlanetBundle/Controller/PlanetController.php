@@ -7,12 +7,13 @@ use Planet\PlanetBundle\Controller\ViewController as Controller,
     eZ\Publish\API\Repository\Values\Content\Query,
     eZ\Publish\API\Repository\Values\Content\Query\Criterion,
     eZ\Publish\API\Repository\Values\Content\Query\SortClause,
+    ezcFeed,
+    eZPlaneteUtils,
     DateTime;
 
 
 class PlanetController extends Controller
 {
-
     /**
      * Builds the top menu ie first level items of classes folder, page or
      * contact.
@@ -278,6 +279,86 @@ class PlanetController extends Controller
         return $response;
     }
 
+    /**
+     * Build the RSS2 feed of the planet
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function feed()
+    {
+        $locationService = $this->getRepository()->getLocationService();
+        $blogsLocationId = $this->container->getParameter(
+            'planet.tree.blogs'
+        );
+        $posts = $locationService->contentTree(
+            $blogsLocationId,
+            array( 'post' ),
+            array(
+                new SortClause\Field( 'post', 'date', Query::SORT_DESC ),
+            ),
+            (int)$this->container->getParameter( 'planet.feed.posts' )
+        );
+        $response = $this->buildResponse(
+            __FUNCTION__ . $blogsLocationId,
+            $posts->searchHits[0]->valueObject->contentInfo->modificationDate
+        );
+        $response->headers->set( 'X-Location-Id', $blogsLocationId );
+        if ( $response->isNotModified( $this->getRequest() ) )
+        {
+            return $response;
+        }
+        $blogs = $locationService->loadLocation( $blogsLocationId );
+
+        $feed = new ezcFeed();
+        $feed->title = $this->container->getParameter(
+            'planet.feed.title'
+        );
+        $feed->description = '';
+        $feed->published = time();
+        $feed->updated = $blogs->contentInfo->modificationDate;
+        $link = $feed->add( 'link' );
+        $link->href = 'http://' .
+            $this->container->getParameter( 'planet.feed.url_base' );
+
+        foreach ( $posts->searchHits as $hit )
+        {
+            $post = $hit->valueObject;
+            $location = $locationService->loadLocation(
+                $post->contentInfo->mainLocationId
+            );
+            $item = $feed->add( 'item' );
+            $item->title = htmlspecialchars(
+                $post->contentInfo->name, ENT_NOQUOTES, 'UTF-8'
+            );
+            $guid = $item->add( 'id' );
+            $guid->id = $location->remoteId;
+            $guid->isPermaLink = "false";
+            $item->link = htmlspecialchars(
+                $post->getField( 'url' )->value->link,
+                ENT_NOQUOTES, 'UTF-8'
+            );
+            $item->pubDate = $post->getField( 'date' )->value;
+            $item->published = $post->getField( 'date' )->value;
+            $item->description = eZPlaneteUtils::cleanRewriteXHTML(
+                $post->getField( 'html' )->value->text,
+                $post->getField( 'url' )->value->link
+            );
+            $dublinCore = $item->addModule( 'DublinCore' );
+            $creator = $dublinCore->add( 'creator' );
+            $parentLocation =
+            $creator->name = htmlspecialchars(
+                $locationService->loadLocation(
+                    $location->parentLocationId
+                )->contentInfo->name,
+                ENT_NOQUOTES, 'UTF-8'
+            );
+        }
+
+        $xml = $feed->generate( 'rss2' );
+        $response->headers->set( 'content-type', $feed->getContentType() );
+        $response->setContent( $xml );
+        return $response;
+    }
 
 }
 

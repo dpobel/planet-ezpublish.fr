@@ -15,6 +15,10 @@ planet:
             text: 'html'
             url: 'url'
             publishedDate: 'date'
+    feed:
+        title: "Flux RSS du Planet eZ Publish.fr"
+        url_base: "http://www.planet-ezpublish.fr/"
+        posts: 20
 
 assetic:
     filters:
