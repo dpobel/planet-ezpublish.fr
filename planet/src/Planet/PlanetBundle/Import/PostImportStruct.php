@@ -12,6 +12,7 @@ use \InvalidArgumentException,
  * - the id of the user that will own the content
  * - the content type identifier of the object to be created/updated
  * - the parent location id under which the content will be placed.
+ * - the mapping between Post properties and the type fields
  */
 class PostImportStruct
 {
