@@ -31,6 +31,9 @@ Scripts to launch:
   Removes the ezidentifier attribute in site content class and replaces it by
   an ezinteger one with the same value.
 
+- bin/php/flatten.php -s bo all
+  Clean up!
+
 - extension/planete/bin/update/5.0/adddateattribute.php
   Add a date attribute to site and post classes to not rely on modified_subnode
   nor published meta attribute.
