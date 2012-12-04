@@ -1,3 +1,11 @@
+Configuration before launching scripts
+======================================
+- disabled ezfind
+- disabled autostatus
+- in settings/override/site.ini.append.php:
+  [SearchSettings]
+  DelayedIndexing=enabled
+
 
 Scripts to launch:
 ==================
