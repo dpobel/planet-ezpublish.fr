@@ -1,5 +1,74 @@
-# eZ Publish settings
-# Settings placed here will be common to all environments.
-# Create an ezpublish_<env>.yml that imports this file (e.g. ezpublish_dev.yml).
-#
-# This file will be filled by setup wizard.
+imports:
+    - { resource: override.yml }
+
+ezpublish:
+    siteaccess:
+        default_siteaccess: planete
+        list:
+            - planete
+            - bo
+        groups:
+            planete_group:
+                - planete
+                - bo
+        match:
+            Map\Host:
+                planet.loc: planete
+                www.planet-ezpublish.fr: planete
+                admin.planet.loc: bo
+                admin.planet-ezpublish.fr: bo
+    system:
+        planete_group:
+            database:
+                type: mysql
+                user: root
+                password: ""
+                server: localhost
+                database_name: ezplanete
+            languages:
+                - fre-FR
+            var_dir: var/planete
+            image_variations:
+                reference:
+                    reference: null
+                    filters:
+                        - { name: geometry/scaledownonly, params: [600, 600] }
+                        - { name: progressive }
+                small:
+                    reference: reference
+                    filters:
+                        - { name: geometry/scaledownonly, params: [100, 100] }
+                        - { name: optimize }
+                tiny:
+                    reference: reference
+                    filters:
+                        - { name: geometry/scaledownonly, params: [30, 30] }
+                        - { name: optimize }
+                medium:
+                    reference: reference
+                    filters:
+                        - { name: geometry/scaledownonly, params: [200, 200] }
+                        - { name: optimize }
+                large:
+                    reference: reference
+                    filters:
+                        - { name: geometry/scaledownonly, params: [300, 300] }
+                        - { name: optimize }
+                rss:
+                    reference: reference
+                    filters:
+                        - { name: geometry/scale, params: [88, 31] }
+                        - { name: optimize }
+        planete:
+            content:
+                view_cache: true
+                ttl_cache: true
+                default_ttl: 86400
+
+        bo:
+            legacy_mode: true
+    imagemagick:
+        enabled: true
+        path: /usr/bin/convert
+    http_cache:
+        purge_type: local
