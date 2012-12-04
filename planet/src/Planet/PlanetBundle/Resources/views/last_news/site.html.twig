@@ -8,7 +8,7 @@
     </h2>
     <ul>
     {% render "planet:postList" with
-        {'rootLocationId': location.id, 'viewType': 'line', limit: 5, 'navigator': false},
+        {'rootLocationId': location.id, 'paginationLocationId': location.id, 'viewType': 'line', limit: 5, 'navigator': false},
         {standalone: true}
     %}
     </ul>

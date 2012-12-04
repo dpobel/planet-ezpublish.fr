@@ -70,13 +70,14 @@ class PlanetController extends Controller
      * of them
      *
      * @param int $rootLocationId
+     * @param int $paginationLocationId
      * @param string $viewType
      * @param int $limit
      * @param int $offset
      * @param bool $navigator
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function postList( $rootLocationId, $viewType, $limit = null, $offset = 0, $navigator = true )
+    public function postList( $rootLocationId, $paginationLocationId, $viewType, $limit = null, $offset = 0, $navigator = true )
     {
         $locationService = $this->getRepository()->getLocationService();
         $root = $locationService->loadLocation( $rootLocationId );
@@ -107,6 +108,7 @@ class PlanetController extends Controller
                 'total' => $results->totalCount,
                 'offset' => $offset,
                 'root' => $root,
+                'paginationRoot' => $locationService->loadLocation( $paginationLocationId ),
                 'posts' => $posts,
                 'viewType' => $viewType,
                 'navigator' => (bool) $navigator,

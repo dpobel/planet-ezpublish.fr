@@ -19,7 +19,7 @@
     ) }}</div>
     <div class="info">
         Publié par <a href="{{ parentContent.getField( 'url' ).value.link }}">{{ parent.contentInfo.name }}</a>
-        le <time datetime="{{ content.contentInfo.creationDate|date( 'c' ) }}">{{ content.contentInfo.creationDate|date( 'd/m/Y H:i' ) }}</time>
+        le <time datetime="{{ content.getField( 'date' ).value|date( 'c' ) }}">{{ content.getField( 'date' ).value|date( 'd/m/Y H:i' ) }}</time>
         <div class="social">
             <iframe allowtransparency="true" frameborder="0" scrolling="no"
                src="//platform.twitter.com/widgets/tweet_button.html?text={{ location.contentInfo.name }}&amp;url={{ content.getField( 'url' ).value.link|escape( 'url' ) }}&amp;via=pl_ezpublish_fr&amp;lang=fr&amp;hashtags=ezpublish"

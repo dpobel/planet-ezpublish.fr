@@ -21,7 +21,7 @@
 <article>
     <dl>
     {% render "planet:postList" with
-        {'rootLocationId': location.id, 'limit': 10, 'offset': offset, 'viewType': 'summary'},
+        {'rootLocationId': location.id, 'paginationLocationId': location.id, 'limit': 10, 'offset': offset, 'viewType': 'summary'},
         {'standalone': true}
     %}
     </dl>

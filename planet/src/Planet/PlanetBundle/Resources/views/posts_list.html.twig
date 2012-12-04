@@ -7,6 +7,6 @@
 
 {% if navigator %}
     {% include "PlanetBundle::navigator.html.twig" with
-        {'total': total, 'url': path( root ), 'offset': offset, 'limit': planet.page.posts}
+        {'total': total, 'url': path( paginationRoot ), 'offset': offset, 'limit': planet.page.posts}
     %}
 {% endif %}
