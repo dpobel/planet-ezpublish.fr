@@ -5,5 +5,5 @@ PLANET=/web/sites/planet-ezpublish.fr/www
 PLANET_LEGACY="$PLANET/ezpublish_legacy/"
 # toutes les demies heures
 58  * * * *     cd $PLANET_LEGACY ; $PHP runcronjobs.php planete >> /tmp/planet-ezpublish.fr.log 2>&1
-12  * * * *     cd $PLANET ; $PHP ezpublish/console -v planet:import-feeds
-42  * * * *     cd $PLANET ; $PHP ezpublish/console -v planet:import-feeds
+12  * * * *     cd $PLANET ; $PHP ezpublish/console --env=prod -v planet:import-feeds
+42  * * * *     cd $PLANET ; $PHP ezpublish/console --env=prod -v planet:import-feeds
