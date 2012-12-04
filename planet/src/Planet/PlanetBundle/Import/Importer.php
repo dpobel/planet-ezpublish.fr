@@ -24,19 +24,11 @@ class Importer
      */
     protected $repository;
 
-    /**
-     * The configuration resolver
-     *
-     * @var eZ\Publish\Core\MVC\ConfigResolverInterface
-     */
-    protected $configResolver;
-
     const REMOTE_ID_SUFFIX = '_Planete_RSSImport';
 
-    public function __construct( Repository $repository, ConfigResolverInterface $config )
+    public function __construct( Repository $repository )
     {
         $this->repository = $repository;
-        $this->configResolver = $config;
     }
 
     /**
@@ -187,17 +179,6 @@ class Importer
         return md5( $post->id )
             . '_' . $parentLocationId
             . self::REMOTE_ID_SUFFIX;
-    }
-
-    /**
-     * Returns the language code to use while creating content
-     *
-     * @return string
-     */
-    protected function getLanguageCode()
-    {
-        $languages = $this->configResolver->getParameter( 'languages' );
-        return $languages[0];
     }
 
 }

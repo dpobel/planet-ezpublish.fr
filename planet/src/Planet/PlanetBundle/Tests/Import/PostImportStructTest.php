@@ -15,17 +15,19 @@ class PostImportStructTest extends PHPUnit_Framework_TestCase
      * @dataProvider dataWrongParameters
      * @expectedException InvalidArgumentException
      */
-    function testWrongParameter( $userId, $typeIdentifier, $parentLocationId, array $mapping )
+    function testWrongParameter( $userId, $typeIdentifier, $parentLocationId, $localeCode, array $mapping )
     {
-        new PostImportStruct( $userId, $typeIdentifier, $parentLocationId, $mapping );
+        new PostImportStruct( $userId, $typeIdentifier, $parentLocationId, $localeCode, $mapping );
     }
 
     public function dataWrongParameters()
     {
         return array(
-            array( 'aa', 2, 'aa', array() ),
-            array( 14, 2, 'aa', array() ),
-            array( 14, 'post', 'aa', array() ),
+            array( 'aa', 2, 'aa', 2, array() ),
+            array( 14, 2, 'aa', 2, array() ),
+            array( 14, 'post', 'aa', 2, array() ),
+            array( 14, 'post', 2, 2, array() ),
+            array( 14, 'post', 2, array( 'fre-FR', 'elfique' ), array() ),
         );
     }
 
@@ -34,6 +36,7 @@ class PostImportStructTest extends PHPUnit_Framework_TestCase
         $userId = 14;
         $typeIdentifier = 'post';
         $parentLocationId = 60;
+        $localeCode = 'fre-FR';
         $mapping = array(
             'title' => 'title',
             'text' => 'html',
@@ -54,7 +57,7 @@ class PostImportStructTest extends PHPUnit_Framework_TestCase
             ->with( $this->equalTo( $typeIdentifier ) );
 
         $struct = new PostImportStruct(
-            $userId, $typeIdentifier, $parentLocationId, $mapping
+            $userId, $typeIdentifier, $parentLocationId, $localeCode, $mapping
         );
 
         self::assertTrue( is_integer( $struct->getUserId() ) );
@@ -80,6 +83,11 @@ class PostImportStructTest extends PHPUnit_Framework_TestCase
         self::assertEquals(
             $mapping, $struct->getMapping()
         );
+
+        self::assertTrue(
+            is_string( $struct->getLocaleCode() )
+        );
+        self::assertEquals( $localeCode, $struct->getLocaleCode() );
     }
 
 }

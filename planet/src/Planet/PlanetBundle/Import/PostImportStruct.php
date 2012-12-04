@@ -38,6 +38,13 @@ class PostImportStruct
     protected $parentLocationId;
 
     /**
+     * The locale code to use while creating content
+     *
+     * @var string
+     */
+    protected $localeCode;
+
+    /**
      * Mapping between Post properties and type fields
      *
      * @var array
@@ -51,10 +58,11 @@ class PostImportStruct
      * @param int $user
      * @param string $contentType
      * @param int $parentLocation
+     * @param string $localeCode
      * @param array $mapping
      */
     public function __construct(
-        $userId, $contentTypeIdentifier, $parentLocationId, array $mapping
+        $userId, $contentTypeIdentifier, $parentLocationId, $localeCode, array $mapping
     )
     {
         if ( !is_numeric( $userId ) )
@@ -69,6 +77,12 @@ class PostImportStruct
                 "parentLocationId parameter should be an int, input: {$parentLocationId}"
             );
         }
+        if ( !is_string( $localeCode ) )
+        {
+            throw new InvalidArgumentException(
+                "localeCode parameter should be a string, input: {$localeCode}"
+            );
+        }
         if ( !is_string( $contentTypeIdentifier ) )
         {
             throw new InvalidArgumentException(
@@ -78,6 +92,7 @@ class PostImportStruct
         $this->userId = (int)$userId;
         $this->contentTypeIdentifier = (string)$contentTypeIdentifier;
         $this->parentLocationId = (int)$parentLocationId;
+        $this->localeCode = (string)$localeCode;
         $this->mapping = $mapping;
     }
 
@@ -143,6 +158,16 @@ class PostImportStruct
         return $typeService->loadContentTypeByIdentifier(
             $this->contentTypeIdentifier
         );
+    }
+
+    /**
+     * Returns the locale code
+     *
+     * @return string
+     */
+    public function getLocaleCode()
+    {
+        return $this->localeCode;
     }
 
 

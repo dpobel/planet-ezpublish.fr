@@ -36,5 +36,5 @@ services:
 
     planet.importer:
         class: %planet.importer.class%
-        arguments: [@ezpublish.api.repository, @ezpublish.config.resolver]
+        arguments: [@ezpublish.api.repository]
 

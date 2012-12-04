@@ -28,6 +28,9 @@ class ImportCommand extends ContainerAwareCommand
     protected function execute( InputInterface $input, OutputInterface $output )
     {
         $container = $this->getContainer();
+        $configResolver = $container->get( 'ezpublish.config.resolver' );
+
+        $languages = $configResolver->getParameter( 'languages' );
 
         $importer = $container->get( 'planet.importer' );
 
@@ -44,6 +47,7 @@ class ImportCommand extends ContainerAwareCommand
                         $container->getParameter( 'planet.import.user_id' ),
                         $container->getParameter( 'planet.import.type_identifier' ),
                         $site->contentInfo->mainLocationId,
+                        $languages[0],
                         $container->getParameter( 'planet.import.mapping' )
                     ),
                     new Feed( $site->getField( 'rss' )->value->link )
