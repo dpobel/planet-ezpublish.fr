@@ -147,7 +147,7 @@ class Importer
         );
         $contentStruct = $contentService->newContentCreateStruct(
             $contentType,
-            $this->getLanguageCode()
+            $postInfo->getLocaleCode()
         );
         $contentStruct->remoteId = $this->buildContentRemoteId(
             $post, $postInfo->getParentLocationId()
