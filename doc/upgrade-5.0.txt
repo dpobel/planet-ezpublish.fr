@@ -12,8 +12,9 @@ Scripts to launch:
 - extension/planete/bin/update/5.0/fixcontentobjectmodifieddate.php
   Fixes ezcontentobject.modified = 0
 
-- extension/planete/bin/update/5.0/emptyplanetarium.php
-  Removes the post in the planetarium
+- extension/planete/bin/update/5.0/emptytwitterattributes.php
+  Empty the twitter attribute so that further scripts do not automatically
+  tweet!
 
 - extension/planete/bin/update/5.0/removepostsidentifier.php
   Removes the ezidentifier attribute in post content class
