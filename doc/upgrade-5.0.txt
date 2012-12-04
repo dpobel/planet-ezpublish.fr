@@ -12,7 +12,7 @@ Scripts to launch:
 - extension/planete/bin/update/5.0/fixcontentobjectmodifieddate.php
   Fixes ezcontentobject.modified = 0
 
-- extension/planete/bin/update/5.0/emptytwitterattributes.php
+- extension/planete/bin/update/5.0/emptytwitterattribute.php
   Empty the twitter attribute so that further scripts do not automatically
   tweet!
 
