@@ -271,7 +271,10 @@ class PlanetController extends Controller
     {
         $response = new Response();
         $response->setPublic();
-        $response->setContent( \eZPublishSDK::version() );
+        $response->setContent(
+            \eZPublishSDK::version( true, false, false )
+            . " (Github clone du 04/12/12)"
+        );
         return $response;
     }
 
