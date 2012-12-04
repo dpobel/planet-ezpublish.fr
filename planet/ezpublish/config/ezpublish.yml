@@ -15,6 +15,7 @@ ezpublish:
             Map\Host:
                 planet.loc: planete
                 www.planet-ezpublish.fr: planete
+                dev.planet-ezpublish.fr: planete
                 admin.planet.loc: bo
                 admin.planet-ezpublish.fr: bo
     system:
