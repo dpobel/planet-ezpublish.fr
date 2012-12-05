@@ -52,9 +52,8 @@ class ImportCommand extends ContainerAwareCommand
                     ),
                     new Feed( $site->getField( 'rss' )->value->link )
                 );
-                $updated = $results->getUpdated();
                 $created = $results->getCreated();
-                if ( !empty( $created ) || !empty( $updated ) )
+                if ( !empty( $created ) )
                 {
                     $this->touchSite( $site );
                 }
