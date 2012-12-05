@@ -68,25 +68,25 @@ class PostImportStruct
         if ( !is_numeric( $userId ) )
         {
             throw new InvalidArgumentException(
-                "userId parameter should be an int, input: {$userId}"
+                "userId parameter should be an int, input: " . gettype( $userId )
             );
         }
         if ( !is_numeric( $parentLocationId ) )
         {
             throw new InvalidArgumentException(
-                "parentLocationId parameter should be an int, input: {$parentLocationId}"
+                "parentLocationId parameter should be an int, input: " . gettype( $parentLocationId )
             );
         }
         if ( !is_string( $localeCode ) )
         {
             throw new InvalidArgumentException(
-                "localeCode parameter should be a string, input: {$localeCode}"
+                "localeCode parameter should be a string, input: " . gettype( $localeCode )
             );
         }
         if ( !is_string( $contentTypeIdentifier ) )
         {
             throw new InvalidArgumentException(
-                "contentTypeIdentifier parameter should be a string, input: {$contentTypeIdentifier}"
+                "contentTypeIdentifier parameter should be a string, input: ". gettype( $contentTypeIdentifier )
             );
         }
         $this->userId = (int)$userId;
