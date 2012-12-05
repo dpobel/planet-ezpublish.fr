@@ -72,7 +72,7 @@ if [ -d "$EZPUBLISH_LEGACY" ] ; then
     cd "$BASE_DIR"
 
     cd "$EZPUBLISH_LEGACY_SETTING_DIR"
-    rm -rf "$EZPUBLISH_LEGACY_SETTING/{siteaccess,override}"
+    rm -rf "$EZPUBLISH_LEGACY_SETTING/siteaccess" "$EZPUBLISH_LEGACY_SETTING/override"
     ln -s "$EZPUBLISH_LEGACY_SETTINGS/siteaccess"
     ln -s "$EZPUBLISH_LEGACY_SETTINGS/override"
     cd "$BASE_DIR"
@@ -83,8 +83,8 @@ if [ -d "$EZPUBLISH_LEGACY" ] ; then
 fi
 
 cd "$PLANET_BASE"
-ln -s ../$EZPUBLISH5/$COMPOSER
-ln -s ../$EZPUBLISH5/$COMPOSER_JSON
+[ ! -L "$COMPOSER" ] && ln -s ../$EZPUBLISH5/$COMPOSER
+[ ! -L "$COMPOSER_JSON" ] && ln -s ../$EZPUBLISH5/$COMPOSER_JSON
 php "$COMPOSER" dump-autoload
 cd "$BASE_DIR"
 
