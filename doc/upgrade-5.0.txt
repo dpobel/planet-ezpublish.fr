@@ -38,6 +38,9 @@ Scripts to launch:
   Empty the twitter attribute so that further scripts do not automatically
   tweet!
 
+- extension/planete/bin/update/5.0/fixsitedate.php
+  Make sure the order in left columns and in /blogs is OK
+
 - bin/php/updateniceurls.php
 
 - update/common/scripts/updatecontentobjectname.php
