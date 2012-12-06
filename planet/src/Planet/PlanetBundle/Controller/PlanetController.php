@@ -338,8 +338,8 @@ class PlanetController extends Controller
                 $post->getField( 'url' )->value->link,
                 ENT_NOQUOTES, 'UTF-8'
             );
-            $item->pubDate = $post->getField( 'date' )->value;
-            $item->published = $post->getField( 'date' )->value;
+            $item->pubDate = $post->getField( 'date' )->value->value;
+            $item->published = $post->getField( 'date' )->value->value;
             $item->description = eZPlaneteUtils::cleanRewriteXHTML(
                 $post->getField( 'html' )->value->text,
                 $post->getField( 'url' )->value->link
