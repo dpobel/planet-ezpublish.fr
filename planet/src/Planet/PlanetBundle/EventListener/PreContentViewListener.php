@@ -5,7 +5,8 @@ namespace Planet\PlanetBundle\EventListener;
 use eZ\Publish\Core\MVC\Symfony\Event\PreContentViewEvent,
     eZ\Publish\API\Repository\Values\Content\Query,
     eZ\Publish\API\Repository\Values\Content\Query\SortClause,
-    eZ\Publish\API\Repository\Repository;
+    eZ\Publish\API\Repository\Repository,
+    Planet\PlanetBundle\Operation\Manager as OperationManager;
 
 class PreContentViewListener
 {
@@ -16,9 +17,17 @@ class PreContentViewListener
      */
     protected $repository;
 
-    public function __construct( Repository $repository )
+    /**
+     * The operation manager
+     *
+     * @var \Planet\PlanetBundle\Operation\Manager
+     */
+    protected $operation;
+
+    public function __construct( Repository $repository, OperationManager $operation )
     {
         $this->repository = $repository;
+        $this->operation = $operation;
     }
 
     public function onPreContentView( PreContentViewEvent $event )
@@ -33,7 +42,7 @@ class PreContentViewListener
         {
             $folder = $view->getParameter( 'location' );
             $locationService = $this->repository->getLocationService();
-            $result = $locationService->contentList(
+            $result = $this->operation->contentList(
                 $folder->id,
                 array( 'site' ),
                 array(

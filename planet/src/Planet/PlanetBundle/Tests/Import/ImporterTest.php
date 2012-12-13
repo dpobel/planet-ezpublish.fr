@@ -11,6 +11,7 @@ use PHPUnit_Framework_TestCase,
     Planet\PlanetBundle\Import\Parser,
     Planet\PlanetBundle\Import\Post,
     Planet\PlanetBundle\Import\ImportResultStruct,
+    Planet\PlanetBundle\Operation\Manager as OperationManager,
 
     eZ\Publish\Core\Base\Exceptions\NotFoundException,
 
@@ -113,7 +114,8 @@ class ImporterTest extends PHPUnit_Framework_TestCase
 
         $struct = new PostImportStruct( 14, 'post', 2, 'fre-FR', array() );
 
-        $importer = new Importer( $repo, $config );
+        $operation = new OperationManager( $repo );
+        $importer = new Importer( $repo, $operation );
         $result = $importer->import( $struct, $parser );
         self::assertTrue( $result instanceof ImportResultStruct );
         self::assertEquals( array(), $result->getUnchanged() );

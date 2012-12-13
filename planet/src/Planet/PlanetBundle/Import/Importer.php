@@ -6,6 +6,7 @@ use Planet\PlanetBundle\Import\Parser as ParserInterface,
     Planet\PlanetBundle\Import\PostImportStruct,
     Planet\PlanetBundle\Import\Post,
     Planet\PlanetBundle\Import\ImportResultStruct,
+    Planet\PlanetBundle\Operation\Manager as OperationManager,
 
     eZ\Publish\Core\Base\Exceptions\NotFoundException,
     eZ\Publish\Core\MVC\ConfigResolverInterface,
@@ -24,11 +25,19 @@ class Importer
      */
     protected $repository;
 
+    /**
+     * The operation manager
+     *
+     * @var \Planet\PlanetBundle\Operation\Manager
+     */
+    protected $operation;
+
     const REMOTE_ID_SUFFIX = '_Planete_RSSImport';
 
-    public function __construct( Repository $repository )
+    public function __construct( Repository $repository, OperationManager $operation )
     {
         $this->repository = $repository;
+        $this->operation = $operation;
     }
 
     /**

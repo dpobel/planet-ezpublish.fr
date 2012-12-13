@@ -1,36 +1,23 @@
 <?php
 
-namespace Planet\PlanetBundle\Repository;
+namespace Planet\PlanetBundle\Operation;
 
-use eZ\Publish\Core\SignalSlot\LocationService as SignalSlotLocationService,
-    eZ\Publish\API\Repository\Values\Content\Query,
+use eZ\Publish\API\Repository\Values\Content\Query,
     eZ\Publish\API\Repository\Values\Content\Query\Criterion,
-    eZ\Publish\API\Repository\Repository as RepositoryInterface,
-    eZ\Publish\API\Repository\LocationService as LocationServiceInterface,
-    eZ\Publish\Core\SignalSlot\SignalDispatcher;
+    eZ\Publish\API\Repository\Repository;
 
-class LocationService extends SignalSlotLocationService
+class Manager
 {
+    /**
+     * The repository
+     *
+     * @var \eZ\Publish\API\Repository\Repository
+     */
+    protected $repository;
 
-    protected $locationsMap = array();
-
-    public function __construct(
-        RepositoryInterface $repository,
-        LocationServiceInterface $service,
-        SignalDispatcher $signalDispatcher
-    )
+    public function __construct( Repository $repository )
     {
-        parent::__construct( $service, $signalDispatcher );
         $this->repository = $repository;
-    }
-
-    public function loadLocation( $locationId )
-    {
-        if ( !isset( $this->locationsMap[$locationId] ) )
-        {
-            $this->locationsMap[$locationId] = parent::loadLocation( $locationId );
-        }
-        return $this->locationsMap[$locationId];
     }
 
     /**
@@ -44,7 +31,7 @@ class LocationService extends SignalSlotLocationService
      * @param int $offset
      * @return \eZ\Publish\API\Repository\Values\Content\Search\SearchResult
      */
-    /*public function contentList(
+    public function contentList(
         $parentLocationId, array $typeIdentifiers = array(),
         array $sortClauses = array(), $limit = null, $offset = 0
     )
@@ -66,7 +53,7 @@ class LocationService extends SignalSlotLocationService
         $query->limit = $limit;
         $query->offset = $offset;
         return $searchService->findContent( $query );
-    }*/
+    }
 
     /**
      * Searches for content under $parentLocationId at any level being of the
@@ -79,12 +66,13 @@ class LocationService extends SignalSlotLocationService
      * @param int $offset
      * @return \eZ\Publish\API\Repository\Values\Content\Search\SearchResult
      */
-    /*public function contentTree(
+    public function contentTree(
         $parentLocationId, array $typeIdentifiers = array(),
         array $sortClauses = array(), $limit = null, $offset = 0
     )
     {
-        $parentLocation = $this->loadLocation( $parentLocationId );
+        $locationService = $this->repository->getLocationService();
+        $parentLocation = $locationService->loadLocation( $parentLocationId );
         $searchService = $this->repository->getSearchService();
         $query = new Query();
         $query->criterion = new Criterion\LogicalAnd(
@@ -103,7 +91,6 @@ class LocationService extends SignalSlotLocationService
         $query->offset = $offset;
         return $searchService->findContent( $query );
     }
-
 
     protected function typeIdentifiersToIds( array $identifiers )
     {
@@ -125,6 +112,8 @@ class LocationService extends SignalSlotLocationService
             }
         }
         return $ids;
-    }*/
+    }
+
 
 }
+
