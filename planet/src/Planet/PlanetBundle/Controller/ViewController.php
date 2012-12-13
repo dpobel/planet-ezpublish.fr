@@ -9,12 +9,14 @@ use eZ\Publish\Core\MVC\Symfony\Controller\Content\ViewController as APIViewCont
 /**
  * Override the default view controller to workaround
  * https://jira.ez.no/browse/EZP-20184
+ * and make sure the etag contains the last modifcation date
  */
 class ViewController extends APIViewController
 {
 
     protected function buildResponse( $etag, DateTime $lastModified )
     {
+        $etag .= $lastModified->format( 'U' );
         $request = $this->getRequest();
         $response = new Response();
         if ( $this->getParameter( 'content.view_cache' ) === true )
