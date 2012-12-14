@@ -22,6 +22,127 @@ class Manager
 
     /**
      * Searches for content under $parentLocationId being of the specified
+     * types sorted with $sortClauses and returns an array of Location
+     *
+     * @param int $parentLocationId
+     * @param array $typeIdentifiers
+     * @param array $sortClauses
+     * @param int|null $limit
+     * @param int $offset
+     * @return \eZ\Publish\API\Repository\Values\Content\Location[]
+     */
+    public function locationList(
+        $parentLocationId, array $typeIdentifiers = array(),
+        array $sortClauses = array(), $limit = null, $offset = 0
+    )
+    {
+        $search = $this->searchList(
+            $parentLocationId, $typeIdentifiers,
+            $sortClauses, $limit, $offset
+        );
+        $locationService = $this->repository->getLocationService();
+        $results = array();
+        foreach ( $search->searchHits as $hit )
+        {
+            $results[] = $locationService->loadLocation(
+                $hit->valueObject->contentInfo->mainLocationId
+            );
+        }
+        return $results;
+    }
+
+    /**
+     * Searches for content under $parentLocationId at any level being of the
+     * specified types sorted with $sortClauses and returns an array of Location
+     *
+     * @param int $parentLocationId
+     * @param array $typeIdentifiers
+     * @param array $sortClauses
+     * @param int|null $limit
+     * @param int $offset
+     * @return \eZ\Publish\API\Repository\Values\Content\Location[]
+     */
+    public function locationTree(
+        $parentLocationId, array $typeIdentifiers = array(),
+        array $sortClauses = array(), $limit = null, $offset = 0
+    )
+    {
+        $search = $this->searchTree(
+            $parentLocationId, $typeIdentifiers,
+            $sortClauses, $limit, $offset
+        );
+        $locationService = $this->repository->getLocationService();
+        $results = array();
+        foreach ( $search->searchHits as $hit )
+        {
+            $results[] = $locationService->loadLocation(
+                $hit->valueObject->contentInfo->mainLocationId
+            );
+        }
+        return $results;
+    }
+
+
+    /**
+     * Searches for content under $parentLocationId being of the specified
+     * types sorted with $sortClauses and returns an array of Content.
+     *
+     * @param int $parentLocationId
+     * @param array $typeIdentifiers
+     * @param array $sortClauses
+     * @param int|null $limit
+     * @param int $offset
+     * @return \eZ\Publish\API\Repository\Values\Content\Content[]
+     */
+    public function contentList(
+        $parentLocationId, array $typeIdentifiers = array(),
+        array $sortClauses = array(), $limit = null, $offset = 0
+    )
+    {
+        $search = $this->searchList(
+            $parentLocationId, $typeIdentifiers,
+            $sortClauses, $limit, $offset
+        );
+        $results = array();
+        foreach ( $search->searchHits as $hit )
+        {
+            $results[] = $hit->valueObject;
+        }
+        return $results;
+    }
+
+    /**
+     * Searches for content under $parentLocationId at any level being of the
+     * specified types sorted with $sortClauses and returns an array of Content
+     *
+     * @param int $parentLocationId
+     * @param array $typeIdentifiers
+     * @param array $sortClauses
+     * @param int|null $limit
+     * @param int $offset
+     * @return \eZ\Publish\API\Repository\Values\Content\Content[]
+     */
+    public function contentTree(
+        $parentLocationId, array $typeIdentifiers = array(),
+        array $sortClauses = array(), $limit = null, $offset = 0
+    )
+    {
+        $search = $this->searchTree(
+            $parentLocationId, $typeIdentifiers,
+            $sortClauses, $limit, $offset
+        );
+        $results = array();
+        foreach ( $search->searchHits as $hit )
+        {
+            $results[] = $hit->valueObject;
+        }
+        return $results;
+    }
+
+
+
+    /**
+     * Searches for content under $parentLocationId being of the specified
      * types sorted with $sortClauses
      *
      * @param int $parentLocationId
@@ -31,7 +152,7 @@ class Manager
      * @param int $offset
      * @return \eZ\Publish\API\Repository\Values\Content\Search\SearchResult
      */
-    public function contentList(
+    public function searchList(
         $parentLocationId, array $typeIdentifiers = array(),
         array $sortClauses = array(), $limit = null, $offset = 0
     )
@@ -66,7 +187,7 @@ class Manager
      * @param int $offset
      * @return \eZ\Publish\API\Repository\Values\Content\Search\SearchResult
      */
-    public function contentTree(
+    public function searchTree(
         $parentLocationId, array $typeIdentifiers = array(),
         array $sortClauses = array(), $limit = null, $offset = 0
     )

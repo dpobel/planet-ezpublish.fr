@@ -42,7 +42,7 @@ class PreContentViewListener
         {
             $folder = $view->getParameter( 'location' );
             $locationService = $this->repository->getLocationService();
-            $result = $this->operation->contentList(
+            $sites = $this->operation->locationList(
                 $folder->id,
                 array( 'site' ),
                 array(
@@ -51,13 +51,6 @@ class PreContentViewListener
                     )
                 )
             );
-            $sites = array();
-            foreach ( $result->searchHits as $hit )
-            {
-                $sites[] = $locationService->loadLocation(
-                    $hit->valueObject->contentInfo->mainLocationId
-                );
-            }
             $view->addParameters( array( 'sites' => $sites ) );
         }
         elseif (

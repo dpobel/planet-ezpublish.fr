@@ -57,19 +57,12 @@ class PlanetController extends Controller
             return $response;
         }
 
-        $results = $this->operation->contentList(
+        $items = $this->operation->locationList(
             $rootLocationId,
             array( 'folder', 'contact', 'page' ),
             array( new SortClause\LocationPriority() )
         );
-        $items = array( $root );
-        foreach ( $results->searchHits as $hit )
-        {
-            $location = $locationService->loadLocation(
-                $hit->valueObject->contentInfo->mainLocationId
-            );
-            $items[] = $location;
-        }
+        array_unshift( $items, $root );
 
         return $this->render(
             'PlanetBundle:parts:top_menu.html.twig',
@@ -107,7 +100,7 @@ class PlanetController extends Controller
         {
             return $response;
         }
-        $results = $this->operation->contentTree(
+        $results = $this->operation->searchTree(
             $rootLocationId,
             array( 'post' ),
             array( new SortClause\Field( 'post', 'date', Query::SORT_DESC ) ),
@@ -161,7 +154,7 @@ class PlanetController extends Controller
         }
 
         $contentService = $this->getRepository()->getContentService();
-        $results = $this->operation->contentList(
+        $sites = $this->operation->contentList(
             $blogsLocationId,
             array( 'site' ),
             array(
@@ -170,14 +163,6 @@ class PlanetController extends Controller
                 )
             )
         );
-        $sites = array();
-        foreach ( $results->searchHits as $hit )
-        {
-            $sites[] = $contentService->loadContent(
-                $hit->valueObject->id
-            );
-        }
-
         return $this->render(
             'PlanetBundle:parts:site_list.html.twig',
             array(
@@ -212,17 +197,10 @@ class PlanetController extends Controller
         }
 
         $contentService = $this->getRepository()->getContentService();
-        $results = $this->operation->contentList(
+        $blocks = $this->operation->contentList(
             $rootLocationId,
             array( 'rich_block' )
         );
-        $blocks = array();
-        foreach ( $results->searchHits as $hit )
-        {
-            $blocks[] = $contentService->loadContent(
-                $hit->valueObject->contentInfo->id
-            );
-        }
 
         return $this->render(
             'PlanetBundle:parts:rich_text_block.html.twig',
@@ -258,17 +236,10 @@ class PlanetController extends Controller
         }
 
         $contentService = $this->getRepository()->getContentService();
-        $results = $this->operation->contentList(
+        $planets = $this->operation->contentList(
             $planetariumLocationId,
             array( 'site' )
         );
-        $planets = array();
-        foreach ( $results->searchHits as $hit )
-        {
-            $planets[] = $contentService->loadContent(
-                $hit->valueObject->contentInfo->id
-            );
-        }
 
         return $this->render(
             'PlanetBundle:parts:planetarium.html.twig',
@@ -308,7 +279,7 @@ class PlanetController extends Controller
         $blogsLocationId = $this->container->getParameter(
             'planet.tree.blogs'
         );
-        $posts = $this->operation->contentTree(
+        $posts = $this->operation->searchTree(
             $blogsLocationId,
             array( 'post' ),
             array(

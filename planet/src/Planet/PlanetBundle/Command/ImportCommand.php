@@ -106,19 +106,10 @@ class ImportCommand extends ContainerAwareCommand
         $operation = $container->get( 'planet.operation.manager' );
         $contentService = $repository->getContentService();
 
-        $result = $operation->contentTree(
+        return $operation->contentTree(
             $container->getParameter( 'planet.tree.root' ),
             array( 'site' )
         );
-
-        $sites = array();
-        foreach ( $result->searchHits as $hit )
-        {
-            $sites[] = $contentService->loadContent(
-                $hit->valueObject->id
-            );
-        }
-        return $sites;
     }
 
 
