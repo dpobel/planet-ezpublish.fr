@@ -102,9 +102,7 @@ class ImportCommand extends ContainerAwareCommand
     protected function getSiteList()
     {
         $container = $this->getContainer();
-        $repository = $container->get( 'ezpublish.api.repository' );
         $operation = $container->get( 'planet.operation.manager' );
-        $contentService = $repository->getContentService();
 
         return $operation->contentTree(
             $container->getParameter( 'planet.tree.root' ),
