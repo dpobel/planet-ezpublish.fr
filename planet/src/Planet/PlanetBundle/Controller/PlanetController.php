@@ -306,8 +306,7 @@ class PlanetController extends Controller
         $feed->published = time();
         $feed->updated = $blogs->contentInfo->modificationDate;
         $link = $feed->add( 'link' );
-        $link->href = 'http://' .
-            $this->container->getParameter( 'planet.feed.url_base' );
+        $link->href = $this->container->getParameter( 'planet.feed.url_base' );
 
         foreach ( $posts->searchHits as $hit )
         {
