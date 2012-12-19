@@ -3,7 +3,8 @@
 namespace Planet\PlanetBundle\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase,
-    Planet\PlanetBundle\Controller\PlanetController;
+    Planet\PlanetBundle\Controller\PlanetController,
+    DomDocument;
 
 class PlanetControllerTest extends WebTestCase
 {
@@ -18,6 +19,57 @@ class PlanetControllerTest extends WebTestCase
                 'SCRIPT_FILENAME' => 'index.php'
             )
         );
+    }
+
+    public function testFeed()
+    {
+        $crawler = $this->client->request( 'GET', "/feed/planet" );
+        $response = $this->client->getResponse();
+        $container = $this->client->getContainer();
+
+        self::assertEquals( 200, $response->getStatusCode() );
+        self::assertEquals(
+            $container->getParameter( 'planet.tree.blogs' ),
+            $response->headers->get( 'X-Location-Id' )
+        );
+        self::assertEquals(
+            'application/rss+xml',
+            $response->headers->get( 'Content-Type' )
+        );
+        $dom = new DomDocument();
+        self::assertTrue( $dom->loadXML( $response->getContent() ) );
+        self::assertEquals(
+            $container->getParameter( 'planet.feed.posts' ),
+            $crawler->filter( 'item' )->count()
+        );
+        self::assertEquals(
+            $container->getParameter( 'planet.feed.title' ),
+            $crawler->filter( 'channel > title' )->text()
+        );
+        self::assertEquals(
+            $container->getParameter( 'planet.feed.url_base' ),
+            $crawler->filter( 'channel > link' )->text()
+        );
+
+        $that = $this;
+        $crawler->filter( 'item' )->each(
+            function ( $node ) use ( $that )
+            {
+                $that->assertEquals( 1, count( $node->getElementsByTagName( 'title' ) ) );
+                $that->assertEquals( 1, count( $node->getElementsByTagName( 'link' ) ) );
+                $that->assertEquals( 1, count( $node->getElementsByTagName( 'description' ) ) );
+                $that->assertEquals( 1, count( $node->getElementsByTagName( 'guid' ) ) );
+                $that->assertEquals( 1, count( $node->getElementsByTagName( 'pubDate' ) ) );
+                $that->assertEquals( 1, count( $node->getElementsByTagName( 'creator' ) ) );
+                $that->assertTrue( $node->getElementsByTagName( 'title' )->item( 0 )->nodeValue != '' );
+                $that->assertTrue( $node->getElementsByTagName( 'link' )->item( 0 )->nodeValue != '' );
+                $that->assertTrue( $node->getElementsByTagName( 'description' )->item( 0 )->nodeValue != '' );
+                $that->assertTrue( $node->getElementsByTagName( 'guid' )->item( 0 )->nodeValue != '' );
+                $that->assertTrue( $node->getElementsByTagName( 'pubDate' )->item( 0 )->nodeValue != '' );
+                $that->assertTrue( $node->getElementsByTagName( 'creator' )->item( 0 )->nodeValue != '' );
+            }
+        );
+
     }
 
     public function testPoweredBy()
