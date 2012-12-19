@@ -4,6 +4,8 @@ namespace Planet\PlanetBundle\Operation;
 
 use eZ\Publish\API\Repository\Values\Content\Query,
     eZ\Publish\API\Repository\Values\Content\Query\Criterion,
+    eZ\Publish\API\Repository\Values\Content\Content,
+    eZ\Publish\API\Repository\Values\ContentType\ContentType,
     eZ\Publish\API\Repository\Repository;
 
 class Manager
@@ -19,6 +21,78 @@ class Manager
     {
         $this->repository = $repository;
     }
+
+    /**
+     * Publishes a new content of type $contentType under $parentLocationId and
+     * returns the content
+     *
+     * @param ContentType $contentType
+     * @param int $parentLocationId
+     * @param array $contentStructMeta the meta data to set on the contentCreateStruct
+     * @param array $fieldValues the field values indexed by field identifier
+     * @param string $localeCode the locale code (eng-GB, fre-FR, ...)
+     * @return \eZ\Publish\API\Repository\Values\Content\Content
+     */
+    public function publishContent(
+        ContentType $contentType, $parentLocationId, array $contentStructMeta,
+        array $fieldValues, $localeCode
+    )
+    {
+        $contentService = $this->repository->getContentService();
+        $locationService = $this->repository->getLocationService();
+
+        $locationStruct = $locationService->newLocationCreateStruct(
+            $parentLocationId
+        );
+        $contentStruct = $contentService->newContentCreateStruct(
+            $contentType, $localeCode
+        );
+        foreach ( $contentStructMeta as $key => $val )
+        {
+            $contentStruct->{$key} = $val;
+        }
+
+        foreach ( $fieldValues as $field => $value )
+        {
+            $contentStruct->setField( $field, $value );
+        }
+
+        $draft = $contentService->createContent(
+            $contentStruct,
+            array( $locationStruct )
+        );
+        return $contentService->publishVersion(
+            $draft->versionInfo
+        );
+    }
+
+    /**
+     * Updates and publishes a new version of $content with the $fieldValues
+     *
+     * @param Content $content
+     * @param array $fieldValues
+     * @return \eZ\Publish\API\Repository\Values\Content\Content
+     */
+    public function updateContent( Content $content, array $fieldValues )
+    {
+        $contentService = $this->repository->getContentService();
+
+        $contentDraft = $contentService->createContentDraft(
+            $content->contentInfo
+        );
+        $contentStruct = $contentService->newContentUpdateStruct();
+        foreach ( $fieldValues as $field => $value )
+        {
+            $contentStruct->setField( $field, $value );
+        }
+
+        $contentDraft = $contentService->updateContent(
+            $contentDraft->versionInfo,
+            $contentStruct
+        );
+        return $contentService->publishVersion( $contentDraft->versionInfo );
+    }
+
 
     /**
      * Searches for content under $parentLocationId being of the specified

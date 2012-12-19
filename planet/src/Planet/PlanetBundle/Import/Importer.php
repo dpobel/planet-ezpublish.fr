@@ -116,22 +116,15 @@ class Importer
      */
     protected function updatePost( Content $content, PostImportStruct $postInfo, Post $post )
     {
-        $contentService = $this->repository->getContentService();
-
-        $contentDraft = $contentService->createContentDraft(
-            $content->contentInfo
-        );
-        $contentStruct = $contentService->newContentUpdateStruct();
+        $fieldValues = array();
         foreach ( $postInfo->getMapping() as $prop => $field )
         {
-            $contentStruct->setField( $field, $post->{$prop} );
+            $fieldValues[$field] = $post->{$prop};
         }
 
-        $contentDraft = $contentService->updateContent(
-            $contentDraft->versionInfo,
-            $contentStruct
+        return $this->operation->updateContent(
+            $content, $fieldValues
         );
-        return $contentService->publishVersion( $contentDraft->versionInfo );
     }
 
 
@@ -144,35 +137,24 @@ class Importer
      */
     protected function createPost( PostImportStruct $postInfo, Post $post )
     {
-        $contentService = $this->repository->getContentService();
-        $locationService = $this->repository->getLocationService();
-
-        $contentType = $postInfo->getContentType(
-            $this->repository->getContentTypeService()
-        );
-
-        $locationStruct = $locationService->newLocationCreateStruct(
-            $postInfo->getParentLocationId()
-        );
-        $contentStruct = $contentService->newContentCreateStruct(
-            $contentType,
-            $postInfo->getLocaleCode()
-        );
-        $contentStruct->remoteId = $this->buildContentRemoteId(
-            $post, $postInfo->getParentLocationId()
-        );
-        
+        $fieldValues = array();
         foreach ( $postInfo->getMapping() as $prop => $field )
         {
-            $contentStruct->setField( $field, $post->{$prop} );
+            $fieldValues[$field] = $post->{$prop};
         }
 
-        $draft = $contentService->createContent(
-            $contentStruct,
-            array( $locationStruct )
-        );
-        return $contentService->publishVersion(
-            $draft->versionInfo
+        return $this->operation->publishContent(
+            $postInfo->getContentType(
+                $this->repository->getContentTypeService()
+            ),
+            $postInfo->getParentLocationId(),
+            array(
+                'remoteId' => $this->buildContentRemoteId(
+                    $post, $postInfo->getParentLocationId()
+                )
+            ),
+            $fieldValues,
+            $postInfo->getLocaleCode()
         );
     }
 
