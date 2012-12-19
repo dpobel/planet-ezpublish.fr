@@ -2,7 +2,7 @@
 
 namespace Planet\PlanetBundle\Tests\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase,
+use Planet\PlanetBundle\Tests\WebTestCase,
     Planet\PlanetBundle\Controller\PlanetController,
     DomDocument;
 
