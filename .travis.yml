@@ -1,6 +1,12 @@
 language: php
+
 php:
     - "5.4"
     - "5.3"
-before_script: ./setup.sh -t
+
+before_script:
+    - ./setup.sh -t
+    - mysql -e "create database IF NOT EXISTS ezplanete;" -uroot
+    - cat data/ezplanete.sql | mysql -u root ezplanete
+
 script: phpunit -c planet/ezpublish/
