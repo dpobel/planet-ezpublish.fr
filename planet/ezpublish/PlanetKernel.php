@@ -12,6 +12,7 @@ use eZ\Bundle\EzPublishCoreBundle\EzPublishCoreBundle,
     Symfony\Component\Config\Loader\LoaderInterface,
     Sensio\Bundle\GeneratorBundle\SensioGeneratorBundle;
 
+require_once __DIR__ . '/EzPublishKernel.php';
 
 class PlanetKernel extends EzPublishKernel
 {
