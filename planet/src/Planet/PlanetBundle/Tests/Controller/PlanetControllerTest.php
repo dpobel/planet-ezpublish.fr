@@ -15,7 +15,6 @@ class PlanetControllerTest extends WebTestCase
         $this->client = static::createClient(
             array(),
             array(
-                'SERVER_NAME' => 'planet.loc',
                 'SCRIPT_FILENAME' => 'index.php'
             )
         );
