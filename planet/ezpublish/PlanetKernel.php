@@ -2,7 +2,6 @@
 
 use eZ\Bundle\EzPublishCoreBundle\EzPublishCoreBundle,
     eZ\Bundle\EzPublishLegacyBundle\EzPublishLegacyBundle,
-    eZ\Bundle\EzPublishRestBundle\EzPublishRestBundle,
     Planet\PlanetBundle\PlanetBundle,
     Symfony\Bundle\FrameworkBundle\FrameworkBundle,
     Symfony\Bundle\SecurityBundle\SecurityBundle,
@@ -27,7 +26,6 @@ class PlanetKernel extends EzPublishKernel
             new SensioGeneratorBundle(),
             new EzPublishCoreBundle(),
             new EzPublishLegacyBundle(),
-            new EzPublishRestBundle(),
             new PlanetBundle(),
         );
 
