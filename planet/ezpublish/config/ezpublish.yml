@@ -73,3 +73,10 @@ ezpublish:
         path: /usr/bin/convert
     http_cache:
         purge_type: local
+stash:
+    caches:
+        default:
+            handlers:
+                - FileSystem
+            inMemory: true
+            registerDoctrineAdapter: false

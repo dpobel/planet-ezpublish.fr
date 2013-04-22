@@ -20,10 +20,13 @@
 <h1 class="title-page"><a href="{{ content.getField( 'url' ).value.link }}">Articles de &laquo;&nbsp;{{ location.contentInfo.name }}&nbsp;&raquo;</a> &mdash; {{ ez_render_field( content, "rss" ) }}</h1>
 <article>
     <dl>
-    {% render "planet:postList" with
-        {'rootLocationId': location.id, 'paginationLocationId': location.id, 'limit': 10, 'offset': offset, 'viewType': 'summary'},
-        {'standalone': true}
-    %}
+    {{ render(
+        controller(
+            "planet:postList",
+            {'rootLocationId': location.id, 'paginationLocationId': location.id, 'limit': 10, 'offset': offset, 'viewType': 'summary'}
+        ),
+        {'strategy': 'esi'}
+    ) }}
     </dl>
 </article>
 

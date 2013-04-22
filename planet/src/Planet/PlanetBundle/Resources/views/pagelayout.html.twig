@@ -29,7 +29,13 @@
     <div id="hmask"></div>
     <p><a href="/" title="{{ planet.page.title }}">{{ planet.page.title }}</a></p>
     {% block top_menu %}
-        {% render "planet:topMenu" with {'selected': selected}, {'standalone': true} %}
+        {{ render(
+            controller(
+                "planet:topMenu",
+                {'selected': selected}
+            ),
+            {'strategy': 'esi'}
+        ) }}
     {% endblock %}
 </header>
 <div class="yui3-g">
@@ -39,7 +45,7 @@
     {% include "PlanetBundle:parts:side_menu.html.twig" %}
 </div>
 <footer>
-<p>Mise sur orbite par <a href="http://share.ez.no">eZ Publish {% render "planet:poweredBy" %}</a> - Conception, développement et hébergement par <a href="http://damien.pobel.fr/">Damien Pobel</a></p>
+<p>Mise sur orbite par <a href="http://share.ez.no">eZ Publish {{ render( controller( "planet:poweredBy" ) ) }}</a> - Conception, développement et hébergement par <a href="http://damien.pobel.fr/">Damien Pobel</a></p>
 </footer>
 <script>
   window.___gcfg = {lang: 'fr'};

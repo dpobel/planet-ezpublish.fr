@@ -2,38 +2,29 @@
 /**
  * File containing the EzPublishKernel class.
  *
- * @copyright Copyright (C) 1999-2012 eZ Systems AS. All rights reserved.
+ * @copyright Copyright (C) 1999-2013 eZ Systems AS. All rights reserved.
  * @license http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License v2
  * @version //autogentag//
  */
 
-use eZ\Bundle\EzPublishCoreBundle\EzPublishCoreBundle,
-    eZ\Bundle\EzPublishLegacyBundle\EzPublishLegacyBundle,
-    eZ\Bundle\EzPublishRestBundle\EzPublishRestBundle,
-    EzSystems\DemoBundle\EzSystemsDemoBundle,
-    Symfony\Component\HttpKernel\Kernel,
-    Symfony\Bundle\FrameworkBundle\FrameworkBundle,
-    Symfony\Bundle\SecurityBundle\SecurityBundle,
-    Symfony\Bundle\TwigBundle\TwigBundle,
-    Symfony\Bundle\AsseticBundle\AsseticBundle,
-    Symfony\Bundle\WebProfilerBundle\WebProfilerBundle,
-    Symfony\Component\Config\Loader\LoaderInterface,
-    Sensio\Bundle\GeneratorBundle\SensioGeneratorBundle;
+use eZ\Bundle\EzPublishCoreBundle\EzPublishCoreBundle;
+use Egulias\ListenersDebugCommandBundle\EguliasListenersDebugCommandBundle;
+use eZ\Bundle\EzPublishLegacyBundle\EzPublishLegacyBundle;
+use eZ\Bundle\EzPublishRestBundle\EzPublishRestBundle;
+use EzSystems\DemoBundle\EzSystemsDemoBundle;
+use Symfony\Component\HttpKernel\Kernel;
+use Symfony\Bundle\FrameworkBundle\FrameworkBundle;
+use Symfony\Bundle\SecurityBundle\SecurityBundle;
+use Symfony\Bundle\TwigBundle\TwigBundle;
+use Symfony\Bundle\MonologBundle\MonologBundle;
+use Symfony\Bundle\AsseticBundle\AsseticBundle;
+use Symfony\Bundle\WebProfilerBundle\WebProfilerBundle;
+use Symfony\Component\Config\Loader\LoaderInterface;
+use Sensio\Bundle\GeneratorBundle\SensioGeneratorBundle;
+use Tedivm\StashBundle\TedivmStashBundle;
 
 class EzPublishKernel extends Kernel
 {
-    /**
-     * Constructor.
-     *
-     * @param string $environment The environment
-     * @param bool $debug Whether to enable debugging or not
-     */
-    public function __construct( $environment, $debug )
-    {
-        parent::__construct( $environment, $debug );
-        $this->loadClassCache();
-    }
-
     /**
      * Returns an array of bundles to registers.
      *
@@ -47,17 +38,20 @@ class EzPublishKernel extends Kernel
             new FrameworkBundle(),
             new SecurityBundle(),
             new TwigBundle(),
+            new MonologBundle(),
             new AsseticBundle(),
             new SensioGeneratorBundle(),
+            new TedivmStashBundle(),
             new EzPublishCoreBundle(),
             new EzPublishLegacyBundle(),
             new EzSystemsDemoBundle(),
-            new EzPublishRestBundle()
+            new EzPublishRestBundle(),
         );
 
         if ( $this->getEnvironment() === 'dev' )
         {
             $bundles[] = new WebProfilerBundle();
+            $bundles[] = new EguliasListenersDebugCommandBundle();
         }
 
         return $bundles;
@@ -77,7 +71,7 @@ class EzPublishKernel extends Kernel
         {
             $loader->load( __DIR__ . '/config/ezpublish_' . $this->getEnvironment() . '.yml' );
         }
-        catch( \InvalidArgumentException $e )
+        catch ( \InvalidArgumentException $e )
         {
             $loader->load( __DIR__ . '/config/ezpublish_setup.yml' );
         }

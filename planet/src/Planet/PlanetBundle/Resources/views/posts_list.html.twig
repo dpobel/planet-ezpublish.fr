@@ -1,8 +1,11 @@
 {% for post in posts %}
-    {% render "ez_content:viewLocation" with
-        {'locationId': post.contentInfo.mainLocationId, 'viewType': viewType},
-        {'standalone': true}
-    %}
+    {{ render(
+        controller(
+            "ez_content:viewLocation",
+            {'locationId': post.contentInfo.mainLocationId, 'viewType': viewType}
+        ),
+        {'strategy': 'esi'}
+    ) }}
 {% endfor %}
 
 {% if navigator %}

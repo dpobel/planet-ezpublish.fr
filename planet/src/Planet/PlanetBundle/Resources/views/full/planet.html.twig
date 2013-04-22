@@ -18,9 +18,12 @@
 {% block content %}
 <section class="planet">
     <h1 class="title-page">Planète eZ Publish{{ suffix }}</h1>
-    {% render "planet:postList" with
-        {'rootLocationId': planet.tree.blogs, 'paginationLocationId': location.id, 'limit': 10, 'offset': offset, 'viewType': 'full'},
-        {'standalone': true}
-    %}
+    {{ render(
+        controller(
+            "planet:postList",
+            {'rootLocationId': planet.tree.blogs, 'paginationLocationId': location.id, 'limit': 10, 'offset': offset, 'viewType': 'full'}
+        ),
+        {'strategy': 'esi'}
+    ) }}
 </section>
 {% endblock %}

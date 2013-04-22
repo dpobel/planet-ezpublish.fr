@@ -7,10 +7,13 @@
         : les derniers billets
     </h2>
     <ul>
-    {% render "planet:postList" with
-        {'rootLocationId': location.id, 'paginationLocationId': location.id, 'viewType': 'line', limit: 5, 'navigator': false},
-        {standalone: true}
-    %}
+    {{ render(
+        controller(
+            "planet:postList",
+            {'rootLocationId': location.id, 'paginationLocationId': location.id, 'viewType': 'line', 'limit': 5, 'navigator': false}
+        ),
+        {'strategy': 'esi'}
+    ) }}
     </ul>
 
 </div>

@@ -2,7 +2,7 @@
 
 namespace Planet\PlanetBundle\Controller;
 
-use Planet\PlanetBundle\Controller\ViewController as Controller,
+use eZ\Publish\Core\MVC\Symfony\Controller\Content\ViewController as Controller,
     Symfony\Component\HttpFoundation\Response,
     eZ\Publish\API\Repository\Values\Content\Query,
     eZ\Publish\API\Repository\Values\Content\Query\Criterion,

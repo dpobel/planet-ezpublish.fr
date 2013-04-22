@@ -6,8 +6,8 @@
         </p>
     </div>
 
-    {% render 'planet:siteList' with {}, {standalone: true} %}
-    {% render 'planet:richTextBlock' with {}, {'standalone': true} %}
-    {% render 'planet:planetarium' with {}, {'standalone': true} %}
+    {{ render( controller( 'planet:siteList' ), {'strategy': 'esi'} ) }}
+    {{ render( controller( 'planet:richTextBlock' ), {'strategy': 'esi'} ) }}
+    {{ render( controller( 'planet:planetarium' ), {'strategy': 'esi'} ) }}
 
 </aside>

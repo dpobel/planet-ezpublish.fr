@@ -8,8 +8,6 @@ parameters:
     # the default location service...
     ezpublish.signalslot.repository.class: Planet\PlanetBundle\Repository\Repository
 
-    ezpublish.controller.content.view.class: Planet\PlanetBundle\Controller\ViewController
-
     ezpublish_legacy.view_decorator.twig.class: Planet\PlanetBundle\Legacy\View\TwigContentViewLayoutDecorator
 
 services:
