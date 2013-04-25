@@ -5,7 +5,6 @@ use Symfony\Component\ClassLoader\ApcClassLoader;
 
 $loader = require_once __DIR__ . '/../ezpublish/autoload.php';
 
-
 // Use APC for autoloading to improve performance:
 // Change 'ezpublish5' to a unique prefix in order to prevent cache key conflicts
 // with other applications also using APC.

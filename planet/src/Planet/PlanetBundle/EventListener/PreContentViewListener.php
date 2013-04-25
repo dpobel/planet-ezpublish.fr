@@ -58,7 +58,7 @@ class PreContentViewListener
             }
             $view->addParameters( array( 'sites' => $sites ) );
         }
-        elseif (
+        else if (
             is_string( $identifier )
             && strpos( $identifier, 'full:post' ) !== false
             && $view->hasParameter( 'location' )

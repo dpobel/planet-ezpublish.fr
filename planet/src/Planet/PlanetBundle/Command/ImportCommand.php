@@ -2,20 +2,17 @@
 
 namespace Planet\PlanetBundle\Command;
 
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand,
-    Symfony\Component\Console\Input\InputInterface,
-    Symfony\Component\Console\Output\OutputInterface,
-    Symfony\Component\Console\Input\InputArgument,
-    Symfony\Component\Console\Input\InputOption,
-
-    eZ\Publish\API\Repository\Values\Content\Content,
-
-    Planet\PlanetBundle\Import\Parser\Feed,
-    Planet\PlanetBundle\Import\Parser\Exception\NotFound as FeedNotFound,
-    Planet\PlanetBundle\Import\Parser\Exception\Invalid as InvalidFeed,
-    Planet\PlanetBundle\Import\PostImportStruct,
-
-    DateTime;
+use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Input\InputOption;
+use eZ\Publish\API\Repository\Values\Content\Content;
+use Planet\PlanetBundle\Import\Parser\Feed;
+use Planet\PlanetBundle\Import\Parser\Exception\NotFound as FeedNotFound;
+use Planet\PlanetBundle\Import\Parser\Exception\Invalid as InvalidFeed;
+use Planet\PlanetBundle\Import\PostImportStruct;
+use DateTime;
 
 class ImportCommand extends ContainerAwareCommand
 {
@@ -58,7 +55,7 @@ class ImportCommand extends ContainerAwareCommand
                     $this->touchSite( $site );
                 }
             }
-            catch( FeedNotFound $e )
+            catch ( FeedNotFound $e )
             {
                 $output->writeLn( ' KO (feed not found)' );
                 continue;
@@ -91,7 +88,7 @@ class ImportCommand extends ContainerAwareCommand
         );
         $contentStruct = $contentService->newContentUpdateStruct();
         $contentStruct->setField( 'modification_date', new DateTime() );
-        
+
         $contentDraft = $contentService->updateContent(
             $contentDraft->versionInfo,
             $contentStruct
@@ -118,6 +115,4 @@ class ImportCommand extends ContainerAwareCommand
         }
         return $sites;
     }
-
-
 }

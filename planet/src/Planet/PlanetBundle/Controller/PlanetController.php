@@ -123,12 +123,10 @@ class PlanetController extends Controller
                 'paginationRoot' => $locationService->loadLocation( $paginationLocationId ),
                 'posts' => $posts,
                 'viewType' => $viewType,
-                'navigator' => (bool) $navigator,
+                'navigator' => (bool)$navigator,
             ),
             $response
         );
-
-
     }
 
     /**
@@ -224,12 +222,11 @@ class PlanetController extends Controller
         );
     }
 
-
     /**
      * Builds the planetarium block
      *
      * @return \Symfony\Component\HttpFoundation\Response
-     */   
+     */
     public function planetarium()
     {
         $planetariumLocationId = $this->container->getParameter(
@@ -366,6 +363,4 @@ class PlanetController extends Controller
         $response->setContent( $xml );
         return $response;
     }
-
 }
-

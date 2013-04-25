@@ -2,8 +2,8 @@
 
 namespace Planet\PlanetBundle\Tests\Controller;
 
-use PHPUnit_Framework_TestCase,
-    Planet\PlanetBundle\Controller\PlanetController;
+use PHPUnit_Framework_TestCase;
+use Planet\PlanetBundle\Controller\PlanetController;
 
 class PlanetControllerTest extends PHPUnit_Framework_TestCase
 {
