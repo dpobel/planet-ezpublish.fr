@@ -40,7 +40,12 @@
 </header>
 <div class="yui3-g">
     <div id="content" class="yui3-u-3-4">
-    {%block content%}{% endblock %}
+        {%block content%}
+            {% if module_result %}
+                {# we are in a legacy rendered module #}
+                {{ module_result.content|raw }}
+            {% endif %}
+        {% endblock %}
     </div>
     {% include "PlanetBundle:parts:side_menu.html.twig" %}
 </div>

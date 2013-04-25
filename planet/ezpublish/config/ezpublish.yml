@@ -80,3 +80,6 @@ stash:
                 - FileSystem
             inMemory: true
             registerDoctrineAdapter: false
+parameters:
+    ezpublish_legacy.planete.module_default_layout: PlanetBundle::pagelayout.html.twig
+
