@@ -18,11 +18,21 @@ class PlanetControllerTest extends PHPUnit_Framework_TestCase
             ->getMock();
     }
 
+    protected function getContentHelperMock()
+    {
+        return $this
+            ->getMockBuilder(
+                'Planet\\PlanetBundle\\Helper\\Content'
+            )
+            ->disableOriginalConstructor()
+            ->getMock();
+    }
 
     public function testPoweredBy()
     {
         $controller = new PlanetController(
-            $this->getViewManagerMock()
+            $this->getViewManagerMock(),
+            $this->getContentHelperMock()
         );
         $response = $controller->poweredBy();
 

@@ -1,36 +1,24 @@
 <?php
 
-namespace Planet\PlanetBundle\Repository;
+namespace Planet\PlanetBundle\Helper;
 
-use eZ\Publish\Core\SignalSlot\LocationService as SignalSlotLocationService,
-    eZ\Publish\API\Repository\Values\Content\Query,
-    eZ\Publish\API\Repository\Values\Content\Query\Criterion,
-    eZ\Publish\API\Repository\Repository as RepositoryInterface,
-    eZ\Publish\API\Repository\LocationService as LocationServiceInterface,
-    eZ\Publish\Core\SignalSlot\SignalDispatcher;
+use eZ\Publish\Core\SignalSlot\LocationService as SignalSlotLocationService;
+use eZ\Publish\API\Repository\Values\Content\Query;
+use eZ\Publish\API\Repository\Values\Content\Query\Criterion;
+use eZ\Publish\API\Repository\Repository as RepositoryInterface;
+use eZ\Publish\API\Repository\LocationService as LocationServiceInterface;
+use eZ\Publish\Core\SignalSlot\SignalDispatcher;
 
-class LocationService extends SignalSlotLocationService
+class Content
 {
+    /**
+     * @var eZ\Publish\API\Repository\Repository
+     */
+    protected $repository;
 
-    protected $locationsMap = array();
-
-    public function __construct(
-        RepositoryInterface $repository,
-        LocationServiceInterface $service,
-        SignalDispatcher $signalDispatcher
-    )
+    public function __construct( RepositoryInterface $repository )
     {
-        parent::__construct( $service, $signalDispatcher );
         $this->repository = $repository;
-    }
-
-    public function loadLocation( $locationId )
-    {
-        if ( !isset( $this->locationsMap[$locationId] ) )
-        {
-            $this->locationsMap[$locationId] = parent::loadLocation( $locationId );
-        }
-        return $this->locationsMap[$locationId];
     }
 
     /**
@@ -84,7 +72,8 @@ class LocationService extends SignalSlotLocationService
         array $sortClauses = array(), $limit = null, $offset = 0
     )
     {
-        $parentLocation = $this->loadLocation( $parentLocationId );
+        $locationService = $this->repository->getLocationService();
+        $parentLocation = $locationService->loadLocation( $parentLocationId );
         $searchService = $this->repository->getSearchService();
         $query = new Query();
         $query->criterion = new Criterion\LogicalAnd(
@@ -103,7 +92,6 @@ class LocationService extends SignalSlotLocationService
         $query->offset = $offset;
         return $searchService->findContent( $query );
     }
-
 
     protected function typeIdentifiersToIds( array $identifiers )
     {

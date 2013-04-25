@@ -106,7 +106,7 @@ class ImportCommand extends ContainerAwareCommand
         $contentService = $repository->getContentService();
         $locationService = $repository->getLocationService();
 
-        $result = $locationService->contentTree(
+        $result = $container->get( 'planet.helper.content' )->contentTree(
             $container->getParameter( 'planet.tree.root' ),
             array( 'site' )
         );
@@ -114,9 +114,7 @@ class ImportCommand extends ContainerAwareCommand
         $sites = array();
         foreach ( $result->searchHits as $hit )
         {
-            $sites[] = $contentService->loadContent(
-                $hit->valueObject->id
-            );
+            $sites[] = $hit->valueObject;
         }
         return $sites;
     }

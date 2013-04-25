@@ -2,18 +2,30 @@
 
 namespace Planet\PlanetBundle\Controller;
 
-use eZ\Publish\Core\MVC\Symfony\Controller\Content\ViewController as Controller,
-    Symfony\Component\HttpFoundation\Response,
-    eZ\Publish\API\Repository\Values\Content\Query,
-    eZ\Publish\API\Repository\Values\Content\Query\Criterion,
-    eZ\Publish\API\Repository\Values\Content\Query\SortClause,
-    ezcFeed,
-    eZPlaneteUtils,
-    DateTime;
-
+use eZ\Publish\Core\MVC\Symfony\Controller\Content\ViewController as Controller;
+use Symfony\Component\HttpFoundation\Response;
+use eZ\Publish\API\Repository\Values\Content\Query;
+use eZ\Publish\API\Repository\Values\Content\Query\Criterion;
+use eZ\Publish\API\Repository\Values\Content\Query\SortClause;
+use eZ\Publish\Core\MVC\Symfony\View\Manager as ViewManager;
+use Planet\PlanetBundle\Helper\Content as ContentHelper;
+use ezcFeed;
+use eZPlaneteUtils;
+use DateTime;
 
 class PlanetController extends Controller
 {
+    /**
+     * @var Planet\PlanetBundle\Helper\Content;
+     */
+    protected $contentHelper;
+
+    public function __construct( ViewManager $viewManager, ContentHelper $helper )
+    {
+        parent::__construct( $viewManager );
+        $this->contentHelper = $helper;
+    }
+
     /**
      * Builds the top menu ie first level items of classes folder, page or
      * contact.
@@ -40,7 +52,7 @@ class PlanetController extends Controller
             return $response;
         }
 
-        $results = $locationService->contentList(
+        $results = $this->contentHelper->contentList(
             $rootLocationId,
             array( 'folder', 'contact', 'page' ),
             array( new SortClause\LocationPriority() )
@@ -90,7 +102,7 @@ class PlanetController extends Controller
         {
             return $response;
         }
-        $results = $locationService->contentTree(
+        $results = $this->contentHelper->contentTree(
             $rootLocationId,
             array( 'post' ),
             array( new SortClause\Field( 'post', 'date', Query::SORT_DESC ) ),
@@ -144,7 +156,7 @@ class PlanetController extends Controller
         }
 
         $contentService = $this->getRepository()->getContentService();
-        $results = $locationService->contentList(
+        $results = $this->contentHelper->contentList(
             $blogsLocationId,
             array( 'site' ),
             array(
@@ -156,9 +168,7 @@ class PlanetController extends Controller
         $sites = array();
         foreach ( $results->searchHits as $hit )
         {
-            $sites[] = $contentService->loadContent(
-                $hit->valueObject->id
-            );
+            $sites[] = $hit->valueObject;
         }
 
         return $this->render(
@@ -195,16 +205,14 @@ class PlanetController extends Controller
         }
 
         $contentService = $this->getRepository()->getContentService();
-        $results = $locationService->contentList(
+        $results = $this->contentHelper->contentList(
             $rootLocationId,
             array( 'rich_block' )
         );
         $blocks = array();
         foreach ( $results->searchHits as $hit )
         {
-            $blocks[] = $contentService->loadContent(
-                $hit->valueObject->contentInfo->id
-            );
+            $blocks[] = $hit->valueObject;
         }
 
         return $this->render(
@@ -241,16 +249,14 @@ class PlanetController extends Controller
         }
 
         $contentService = $this->getRepository()->getContentService();
-        $results = $locationService->contentList(
+        $results = $this->contentHelper->contentList(
             $planetariumLocationId,
             array( 'site' )
         );
         $planets = array();
         foreach ( $results->searchHits as $hit )
         {
-            $planets[] = $contentService->loadContent(
-                $hit->valueObject->contentInfo->id
-            );
+            $planets[] = $hit->valueObject;
         }
 
         return $this->render(
