@@ -43,7 +43,7 @@ class PlanetControllerTest extends PHPUnit_Framework_TestCase
         self::assertTrue(
             strpos(
                 $response->getContent(),
-                \eZPublishSDK::version( true, false, false )
+                'eZ Publish'
             ) !== false
         );
     }
