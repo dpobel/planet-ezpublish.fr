@@ -150,6 +150,11 @@ class PlanetExtensionTest extends PHPUnit_Framework_TestCase
                 'http://example.com',
                 '<div><p><img src="http://example.com/test" alt="" /></p></div>'
             ),
+            array(
+                '<div><iframe src="//www.youtube.com/embed/cxBUanbJCn0?vq=hd720"></iframe></div>',
+                '',
+                '<div><iframe src="//www.youtube.com/embed/cxBUanbJCn0?vq=hd720"></iframe></div>'
+            ),
         );
     }
 
