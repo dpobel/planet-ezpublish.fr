@@ -91,8 +91,9 @@ class eZPlaneteUtils
 
     static function rewriteURI( $xpath, $urlSite )
     {
-        $attributeNodes = $xpath->query( '//@*[( local-name() = "href" or local-name() = "src" )
-                                                and not( starts-with( ., "http" ) )]' );
+        $attributeNodes = $xpath->query(
+            '//@*[( local-name() = "href" or local-name() = "src" ) and not( starts-with( ., "http" ) ) and not( starts-with( ., "//" ) )]'
+        );
         $urlInfo = parse_url( $urlSite );
         foreach( $attributeNodes as $attribute )
         {
